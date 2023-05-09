@@ -63,6 +63,219 @@ export interface Database {
           stripe_customer_id?: string
         }
       }
+      internal_blog_author_posts: {
+        Row: {
+          author_id: string
+          post_id: string
+        }
+        Insert: {
+          author_id: string
+          post_id: string
+        }
+        Update: {
+          author_id?: string
+          post_id?: string
+        }
+      }
+      internal_blog_author_profiles: {
+        Row: {
+          avatar_url: string
+          bio: string
+          created_at: string | null
+          display_name: string
+          facebook_handle: string | null
+          instagram_handle: string | null
+          linkedin_handle: string | null
+          twitter_handle: string | null
+          updated_at: string | null
+          user_id: string
+          website_url: string | null
+        }
+        Insert: {
+          avatar_url: string
+          bio: string
+          created_at?: string | null
+          display_name: string
+          facebook_handle?: string | null
+          instagram_handle?: string | null
+          linkedin_handle?: string | null
+          twitter_handle?: string | null
+          updated_at?: string | null
+          user_id: string
+          website_url?: string | null
+        }
+        Update: {
+          avatar_url?: string
+          bio?: string
+          created_at?: string | null
+          display_name?: string
+          facebook_handle?: string | null
+          instagram_handle?: string | null
+          linkedin_handle?: string | null
+          twitter_handle?: string | null
+          updated_at?: string | null
+          user_id?: string
+          website_url?: string | null
+        }
+      }
+      internal_blog_posts: {
+        Row: {
+          content: string
+          cover_image: string | null
+          created_at: string | null
+          id: string
+          is_featured: boolean | null
+          seo_data: Json | null
+          slug: string
+          status:
+            | Database["public"]["Enums"]["internal_blog_post_status"]
+            | null
+          summary: string
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          content: string
+          cover_image?: string | null
+          created_at?: string | null
+          id: string
+          is_featured?: boolean | null
+          seo_data?: Json | null
+          slug: string
+          status?:
+            | Database["public"]["Enums"]["internal_blog_post_status"]
+            | null
+          summary: string
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          content?: string
+          cover_image?: string | null
+          created_at?: string | null
+          id?: string
+          is_featured?: boolean | null
+          seo_data?: Json | null
+          slug?: string
+          status?:
+            | Database["public"]["Enums"]["internal_blog_post_status"]
+            | null
+          summary?: string
+          title?: string
+          updated_at?: string | null
+        }
+      }
+      internal_changelog: {
+        Row: {
+          changes: string
+          created_at: string | null
+          id: string
+          title: string
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          changes: string
+          created_at?: string | null
+          id: string
+          title: string
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          changes?: string
+          created_at?: string | null
+          id?: string
+          title?: string
+          updated_at?: string | null
+          user_id?: string | null
+        }
+      }
+      internal_feedback_comments: {
+        Row: {
+          content: string
+          created_at: string | null
+          id: string
+          thread_id: string | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          id: string
+          thread_id?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          id?: string
+          thread_id?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+      }
+      internal_feedback_threads: {
+        Row: {
+          added_to_roadmap: boolean | null
+          content: string
+          created_at: string | null
+          id: string
+          open_for_public_discussion: boolean | null
+          priority:
+            | Database["public"]["Enums"]["internal_feedback_thread_priority"]
+            | null
+          status:
+            | Database["public"]["Enums"]["internal_feedback_thread_status"]
+            | null
+          title: string
+          type:
+            | Database["public"]["Enums"]["internal_feedback_thread_type"]
+            | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          added_to_roadmap?: boolean | null
+          content: string
+          created_at?: string | null
+          id: string
+          open_for_public_discussion?: boolean | null
+          priority?:
+            | Database["public"]["Enums"]["internal_feedback_thread_priority"]
+            | null
+          status?:
+            | Database["public"]["Enums"]["internal_feedback_thread_status"]
+            | null
+          title: string
+          type?:
+            | Database["public"]["Enums"]["internal_feedback_thread_type"]
+            | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          added_to_roadmap?: boolean | null
+          content?: string
+          created_at?: string | null
+          id?: string
+          open_for_public_discussion?: boolean | null
+          priority?:
+            | Database["public"]["Enums"]["internal_feedback_thread_priority"]
+            | null
+          status?:
+            | Database["public"]["Enums"]["internal_feedback_thread_status"]
+            | null
+          title?: string
+          type?:
+            | Database["public"]["Enums"]["internal_feedback_thread_type"]
+            | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+      }
       organization_credits: {
         Row: {
           credits: number
@@ -259,29 +472,6 @@ export interface Database {
           user_id?: string
         }
       }
-      project_team_members: {
-        Row: {
-          created_at: string | null
-          id: number
-          project_team_id: number
-          role: Database["public"]["Enums"]["project_team_member_role"]
-          user_id: string
-        }
-        Insert: {
-          created_at?: string | null
-          id?: number
-          project_team_id: number
-          role?: Database["public"]["Enums"]["project_team_member_role"]
-          user_id: string
-        }
-        Update: {
-          created_at?: string | null
-          id?: number
-          project_team_id?: number
-          role?: Database["public"]["Enums"]["project_team_member_role"]
-          user_id?: string
-        }
-      }
       projects: {
         Row: {
           created_at: string
@@ -359,6 +549,29 @@ export interface Database {
           status?: Database["public"]["Enums"]["subscription_status"] | null
           trial_end?: string | null
           trial_start?: string | null
+        }
+      }
+      team_members: {
+        Row: {
+          created_at: string | null
+          id: number
+          project_team_id: number
+          role: Database["public"]["Enums"]["project_team_member_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: number
+          project_team_id: number
+          role?: Database["public"]["Enums"]["project_team_member_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: number
+          project_team_id?: number
+          role?: Database["public"]["Enums"]["project_team_member_role"]
+          user_id?: string
         }
       }
       teams: {
@@ -495,9 +708,22 @@ export interface Database {
           member_id: string
         }[]
       }
-      get_organization_id_by_team_id: {
+      get_organization_id_by_team_id:
+        | {
+            Args: {
+              p_id: number
+            }
+            Returns: string
+          }
+        | {
+            Args: {
+              p_id: number
+            }
+            Returns: string
+          }
+      get_organization_id_for_project_id: {
         Args: {
-          p_id: number
+          project_id: string
         }
         Returns: string
       }
@@ -533,6 +759,12 @@ export interface Database {
           user_id: string
         }[]
       }
+      get_team_id_for_project_id: {
+        Args: {
+          project_id: string
+        }
+        Returns: number
+      }
       increment_credits: {
         Args: {
           org_id: string
@@ -563,6 +795,16 @@ export interface Database {
     }
     Enums: {
       app_admin_role: "moderator" | "admin" | "super_admin"
+      internal_blog_post_status: "draft" | "published"
+      internal_feedback_thread_priority: "low" | "medium" | "high"
+      internal_feedback_thread_status:
+        | "open"
+        | "under_review"
+        | "planned"
+        | "closed"
+        | "in_progress"
+        | "completed"
+      internal_feedback_thread_type: "bug" | "feature_request" | "general"
       maintenance_status: "inactive" | "active" | "scheduled"
       organization_join_invitation_link_status:
         | "active"
