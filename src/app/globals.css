@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+[data-nextjs-scroll-focus-boundary] {
+  height: 100%;
+  width: 100%;
+}
+
+@tailwind utilities;

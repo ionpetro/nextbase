@@ -1,0 +1,36 @@
+import { AuthProvider } from '@/types';
+import * as SocialIcons from '@/components/presentational/tailwind/Auth/Icons';
+
+function capitalize(word: string) {
+  const lower = word.toLowerCase();
+  return word.charAt(0).toUpperCase() + lower.slice(1);
+}
+
+export const RenderProviders = ({
+  providers,
+  onProviderLoginRequested,
+  isLoading,
+}: {
+  providers: AuthProvider[];
+  onProviderLoginRequested: (provider: AuthProvider) => void;
+  isLoading: boolean;
+}) => {
+  return (
+    <div className="space-y-2">
+      {providers.map((provider) => {
+        const AuthIcon = SocialIcons[provider];
+        return (
+          <button
+            disabled={isLoading}
+            onClick={() => onProviderLoginRequested(provider)}
+            key={provider}
+            className="border overflow-auto flex w-full items-center justify-center py-1.5 space-x-2 border-slate-400  text-base  text-slate-700 rounded-md hover:bg-slate-100 hover:text-slate-900"
+          >
+            <AuthIcon />
+            <span className="text-base">{capitalize(provider)}</span>
+          </button>
+        );
+      })}
+    </div>
+  );
+};
