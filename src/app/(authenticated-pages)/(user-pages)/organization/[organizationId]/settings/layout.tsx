@@ -3,14 +3,14 @@
 import { TabsNavigation } from '@/components/presentational/tailwind/TabsNavigation';
 import { useMemo } from 'react';
 import { FiUsers, FiDollarSign, FiEdit } from 'react-icons/fi';
-import { useOrganizationIdLayoutContext } from '../../OrganizationIdLayoutContext';
+import { useOrganizationContext } from '@/contexts/OrganizationContext';
 
 export default function OrganizationSettingsLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { organizationId } = useOrganizationIdLayoutContext();
+  const { organizationId } = useOrganizationContext();
   const tabs = useMemo(() => {
     return [
       {

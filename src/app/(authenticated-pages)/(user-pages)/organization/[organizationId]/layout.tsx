@@ -1,7 +1,7 @@
 import { getOrganizationById } from '@/utils/supabase-queries';
 import createClient from '@/utils/supabase-server';
 import { ReactNode } from 'react';
-import { OrganizationClientLayout } from './OrganizationClientLayout';
+import { SpecificOrganizationClientLayout } from './SpecificOrganizationClientLayout';
 
 export default async function Layout({
   children,
@@ -17,10 +17,10 @@ export default async function Layout({
     params.organizationId
   );
   return (
-    <OrganizationClientLayout
+    <SpecificOrganizationClientLayout
       initialOrganizationByIdData={organizationByIdData}
     >
       {children}
-    </OrganizationClientLayout>
+    </SpecificOrganizationClientLayout>
   );
 }

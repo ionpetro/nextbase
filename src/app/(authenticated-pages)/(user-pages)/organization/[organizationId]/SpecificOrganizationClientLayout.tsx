@@ -15,14 +15,14 @@ import { match } from 'path-to-regexp';
 import { ReactNode } from 'react';
 import { FiArrowLeft, FiSettings } from 'react-icons/fi';
 import { VscSettings } from 'react-icons/vsc';
-import { useOrganizationIdLayoutContext } from '../OrganizationIdLayoutContext';
 import { Button } from '@/components/ui/Button'
 import { CreateTeamDialog } from '@/components/presentational/tailwind/CreateTeamDialog';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
+import { useOrganizationContext } from '@/contexts/OrganizationContext';
 const matchSettingsPath = match('/organization/:organizationId/settings/(.*)?');
 
-export function OrganizationClientLayout({
+export function SpecificOrganizationClientLayout({
   children,
   initialOrganizationByIdData,
 }: {
@@ -31,7 +31,7 @@ export function OrganizationClientLayout({
 }) {
   const pathname = usePathname();
   const isSettingsPath = pathname ? matchSettingsPath(pathname) : false;
-  const { organizationId } = useOrganizationIdLayoutContext();
+  const { organizationId } = useOrganizationContext();
   const { data: _data, isLoading, error } = useGetOrganizationById(
     organizationId,
     initialOrganizationByIdData

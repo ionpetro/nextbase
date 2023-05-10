@@ -15,7 +15,7 @@ import { getActiveProductsWithPrices } from '@/utils/supabase-queries';
 import { useMemo, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { FiCheck, FiExternalLink, FiX } from 'react-icons/fi';
-import { useOrganizationIdLayoutContext } from '../../../OrganizationIdLayoutContext';
+import { useOrganizationContext } from '@/contexts/OrganizationContext';
 
 
 type Product = NonNullable<UnwrapPromise<ReturnType<typeof getActiveProductsWithPrices>>>
@@ -31,7 +31,7 @@ function ChoosePricingTable({
 }: {
   isOrganizationAdmin: boolean;
 }) {
-  const { organizationId } = useOrganizationIdLayoutContext();
+  const { organizationId } = useOrganizationContext();
   const [pricingMode, setPricingMode] = useState<'month' | 'year'>('month');
   const {
     data: activeProducts,
@@ -178,7 +178,7 @@ function ChoosePricingTable({
 }
 
 export function OrganizationSubscripionDetails() {
-  const { organizationId } = useOrganizationIdLayoutContext();
+  const { organizationId } = useOrganizationContext();
   const { data, isLoading, error } =
     useGetOrganizationSubscription(organizationId);
   const { mutate, isLoading: isLoadingCustomerPortalLink } =

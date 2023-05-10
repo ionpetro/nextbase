@@ -87,13 +87,7 @@ export function OrganizationList({
               <TableHeader> Owner</TableHeader>
 
             </th>
-            <th
-              scope="col"
-              className="p-0"
-            >
-              <TableHeader> Plan</TableHeader>
 
-            </th>
           </tr>
         </thead>
         <tbody className="bg-white ">
@@ -116,20 +110,6 @@ export function OrganizationList({
               // User profile will always be there
               throw new Error('Owner user profile not found');
             }
-
-            const subscription = Array.isArray(organization.subscriptions)
-              ? organization.subscriptions[0]
-              : organization.subscriptions;
-
-            const price = Array.isArray(subscription?.prices)
-              ? subscription?.prices[0]
-              : subscription?.prices;
-
-            const product = Array.isArray(price?.products)
-              ? price?.products[0]
-              : price?.products;
-
-            const planName = product?.name;
 
             return (
               <tr key={organization.id} className="text-sm">
@@ -158,11 +138,6 @@ export function OrganizationList({
                 <td className="p-0">
                   <TableCell classname='px-6 py-4'>
                     {ownerUserProfile.full_name}
-                  </TableCell>
-                </td>
-                <td className="p-0">
-                  <TableCell classname='px-6 py-4'>
-                    - {planName}
                   </TableCell>
                 </td>
               </tr>

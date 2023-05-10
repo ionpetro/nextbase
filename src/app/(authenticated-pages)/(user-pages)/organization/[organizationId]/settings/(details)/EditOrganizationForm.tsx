@@ -4,14 +4,14 @@ import H3 from '@/components/presentational/tailwind/Text/H3';
 import { classNames } from '@/utils/classNames';
 import { useUpdateOrganizationTitleMutation } from '@/utils/react-query-hooks';
 import { useState } from 'react';
-import { useOrganizationIdLayoutContext } from '../../../OrganizationIdLayoutContext';
+import { useOrganizationContext } from '@/contexts/OrganizationContext';
 
 export function EditOrganizationForm({
   initialTitle,
 }: {
   initialTitle: string;
 }) {
-  const { organizationId: organizationId } = useOrganizationIdLayoutContext();
+  const { organizationId } = useOrganizationContext();
 
   const { mutate, isLoading } = useUpdateOrganizationTitleMutation({
     organizationId,

@@ -1,5 +1,4 @@
 'use client';
-import { useOrganizationIdLayoutContext } from '../../../OrganizationIdLayoutContext';
 import moment from 'moment';
 import { useState } from 'react';
 import { LoadingSpinner } from '@/components/presentational/tailwind/LoadingSpinner';
@@ -19,10 +18,11 @@ import {
 import { Button } from '@/components/presentational/tailwind/Button';
 import { classNames } from '@/utils/classNames';
 import { InviteOrganizationMemberDialog } from '@/components/presentational/tailwind/InviteOrganizationMemberDialog';
+import { useOrganizationContext } from '@/contexts/OrganizationContext';
 
 function InviteUser() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const { organizationId } = useOrganizationIdLayoutContext();
+  const { organizationId } = useOrganizationContext();
   const { mutate, isLoading } = useInviteUserMutation(organizationId, {
     onSuccess: () => {
       toast('Invitation sent');
@@ -57,7 +57,7 @@ function InviteUser() {
 }
 
 function TeamMembers() {
-  const { organizationId } = useOrganizationIdLayoutContext();
+  const { organizationId } = useOrganizationContext();
   const { data, isLoading } = useGetTeamMembersInOrganization(organizationId);
   const { data: isOrganizationAdmin, isLoading: isOrganizationAdminLoading } =
     useGetIsOrganizationAdmin(organizationId);
@@ -99,7 +99,7 @@ function TeamMembers() {
 }
 
 function TeamInvitations() {
-  const { organizationId } = useOrganizationIdLayoutContext();
+  const { organizationId } = useOrganizationContext();
   const { data, isLoading } =
     useGetTeamInvitationsInOrganization(organizationId);
   if (isLoading)
