@@ -128,7 +128,7 @@ export const getPendingTeamInvitationsInOrganization = async (
   organizationId: string
 ) => {
   const { data, error } = await supabase
-    .from('organization_team_invitations')
+    .from('organization_join_invitations')
     .select(
       '*, inviter:user_profiles!inviter_user_id(*), invitee:user_profiles!invitee_user_id(*)'
     )

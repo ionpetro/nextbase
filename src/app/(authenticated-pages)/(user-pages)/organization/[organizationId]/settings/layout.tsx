@@ -19,8 +19,8 @@ export default function OrganizationSettingsLayout({
         icon: <FiEdit />,
       },
       {
-        label: 'Team',
-        href: `/organization/${organizationId}/settings/team`,
+        label: 'Organization Members',
+        href: `/organization/${organizationId}/settings/members`,
         icon: <FiUsers />,
       },
       {

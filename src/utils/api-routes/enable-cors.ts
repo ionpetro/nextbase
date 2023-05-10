@@ -1,9 +1,10 @@
+import { DEV_PORT } from '@/constants';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 //TODO: Add your allowed origins here
 const allowedOrigins = [
-  'http://localhost:3000',
-  'https://localhost:3000',
+  `http://localhost:${DEV_PORT}`,
+  `https://localhost:${DEV_PORT}`,
   'http://demo.usenextbase.com',
   'https://demo.usenextbase.com',
   'http://usenextbase.com',

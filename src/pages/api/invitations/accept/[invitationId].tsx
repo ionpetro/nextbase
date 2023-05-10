@@ -18,7 +18,7 @@ async function AcceptInvitationHandler(
   if (typeof invitationId === 'string') {
     // update invitation status
     const invitationResponse = await supabaseClient
-      .from('organization_team_invitations')
+      .from('organization_join_invitations')
       .update({
         status: 'finished_accepted',
         invitee_user_id: user.id, // Add this information here, so that our database function can add this id to the team members table

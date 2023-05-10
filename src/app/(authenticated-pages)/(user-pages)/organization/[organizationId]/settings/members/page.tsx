@@ -19,6 +19,7 @@ import {
 } from '@/utils/react-query-hooks';
 import { Button } from '@/components/presentational/tailwind/Button';
 import { classNames } from '@/utils/classNames';
+import { InviteOrganizationMemberDialog } from '@/components/presentational/tailwind/InviteOrganizationMemberDialog';
 
 function InviteUser() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -41,34 +42,13 @@ function InviteUser() {
 
   return (
     <>
-      <Button
-        withMaintenanceMode
-        onClick={() => {
-          setIsModalOpen(true);
-        }}
-        className={classNames(
-          'flex items-center justify-center rounded border border-transparent py-2 px-4 text-sm font-medium  shadow-sm focus:outline-none focus:ring-2  focus:ring-offset-2',
-          'bg-blue-500 focus:ring-blue-500 hover:bg-blue-600  text-white'
-        )}
-      >
-        <FiPlus
-          className="text-sm"
-          style={{
-            position: 'relative',
-            top: -1,
-          }}
-        />
-        <span>Invite User</span>
-      </Button>
-      <InviteTeamMemberModal
-        isOpen={isModalOpen}
-        onClose={() => {
-          setIsModalOpen(false);
-        }}
-        onInvite={(email) => {
+
+      <InviteOrganizationMemberDialog
+        onInvite={(email, role) => {
           mutate({
             email,
             organizationId: organizationId,
+            role
           });
         }}
         isLoading={isLoading}

@@ -21,7 +21,7 @@ import {
   createTeam,
 } from './supabase-queries';
 import supabaseClient from './supabase-browser';
-import { AuthProvider, Table, UnwrapPromise } from '@/types';
+import { AuthProvider, Table, Enum, UnwrapPromise } from '@/types';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
@@ -282,15 +282,18 @@ export const useInviteUserMutation = (
     async ({
       email,
       organizationId,
+      role
     }: {
       email: string;
       organizationId: string;
+      role: Enum<'organization_member_role'>;
     }) => {
       return axios.post(
         '/api/invitations/create',
         {
           email,
           organizationId,
+          role
         },
         {
           withCredentials: true,

@@ -53,7 +53,7 @@ ALTER TYPE "public"."organization_joining_status" OWNER TO "postgres";
 -- Name: organization_member_role; Type: TYPE; Schema: public; Owner: postgres
 --
 
-CREATE TYPE "public"."organization_member_role" AS ENUM ('owner', 'admin', 'member');
+CREATE TYPE "public"."organization_member_role" AS ENUM ('owner', 'admin', 'member', 'readonly');
 ALTER TYPE "public"."organization_member_role" OWNER TO "postgres";
 
 

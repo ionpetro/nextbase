@@ -294,6 +294,7 @@ export interface Database {
         Row: {
           created_at: string
           id: string
+          invitee_team_role: Database["public"]["Enums"]["organization_member_role"]
           invitee_user_email: string
           invitee_user_id: string | null
           inviter_user_id: string
@@ -303,6 +304,7 @@ export interface Database {
         Insert: {
           created_at?: string
           id?: string
+          invitee_team_role?: Database["public"]["Enums"]["organization_member_role"]
           invitee_user_email: string
           invitee_user_id?: string | null
           inviter_user_id: string
@@ -312,6 +314,7 @@ export interface Database {
         Update: {
           created_at?: string
           id?: string
+          invitee_team_role?: Database["public"]["Enums"]["organization_member_role"]
           invitee_user_email?: string
           invitee_user_id?: string | null
           inviter_user_id?: string
