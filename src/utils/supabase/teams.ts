@@ -21,23 +21,6 @@ export const getUserTeamRole = async (
   return row?.role ?? null;
 };
 
-export const getUserTeamsInOrganization = async (
-  supabase: AppSupabaseClient,
-  organizationId: string
-) => {
-  const { data, error } = await supabase
-    .from('project_teams')
-    .select('*')
-    .eq('organization_id', organizationId);
-
-  if (error) {
-
-    throw error;
-  }
-
-  return data;
-};
-
 export const addUserToProjectTeam = async (
   supabase: AppSupabaseClient,
   userId: string,
@@ -117,7 +100,7 @@ export const getTeamsInOrganization = async (
   organizationId: string
 ) => {
   const { data, error } = await supabase
-    .from('project_teams')
+    .from('teams')
     .select('*')
     .eq('organization_id', organizationId)
     .order('created_at', { ascending: true });

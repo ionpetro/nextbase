@@ -28,7 +28,6 @@ export function TeamContextProvider({
   teamId: number;
   teamRole: Enum<'project_team_member_role'> | null;
 }) {
-  console.log('TeamContextProvider rendering');
 
   const { organizationRole } = useOrganizationContext();
 
