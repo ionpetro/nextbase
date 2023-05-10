@@ -4,7 +4,7 @@ import { useLoggedInUser } from "@/hooks/useLoggedInUser";
 import { useQuery } from "@tanstack/react-query";
 import supabaseClient from '@/utils/supabase-browser';
 
-export const userGetUserOrganizationRole = (
+export const useGetUserOrganizationRole = (
   organizationId: string,
   {
     initialData,

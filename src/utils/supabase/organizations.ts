@@ -165,7 +165,7 @@ export const getUserOrganizationRole = async (
   supabase: AppSupabaseClient,
   userId: string,
   organizationId: string
-): Promise<Enum<'organization_member_role'> | null> => {
+): Promise<Enum<'organization_member_role'>> => {
   const { data, error } = await supabase
     .from('organization_members')
     .select('*')
@@ -173,9 +173,11 @@ export const getUserOrganizationRole = async (
     .eq('organization_id', organizationId)
     .single();
 
-  if (error || !data) {
-    return null;
+  if (error) {
+    throw error;
+  } else if (!data) {
+    throw new Error('User is not a member of this organization');
   }
 
-  return data.member_role ?? null;
+  return data.member_role
 };
