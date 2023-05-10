@@ -69,7 +69,7 @@
     "zod": "^3.21.4"
   },
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 4000",
     "email:dev": "email dev",
     "start": "next start",
     "generate:types:local": "export $(cat .env.local | xargs) &&  supabase gen types typescript --project-id ${SUPABASE_PROJECT_REF} --schema public > src/lib/database.types.ts",
