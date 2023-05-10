@@ -16,7 +16,7 @@ const PendingInvitationsTable = ({
     status: string;
     acceptURL: string;
     declineURL: string;
-    role: Enum<'project_team_member_role'>;
+    role: Enum<'organization_member_role'>;
   }>;
 }) => {
   return (
@@ -141,7 +141,7 @@ export const PendingInvitationsList = ({
         inviterUserFullName: inviter.full_name ?? invitation.invitee_user_email,
         organizationTitle: organization.title,
         status: invitation.status,
-        role: invitation.invitee_team_role,
+        role: invitation.invitee_organization_role,
         acceptURL: toSiteURL(`/api/invitations/accept/${invitation.id}`),
         declineURL: toSiteURL(`/api/invitations/decline/${invitation.id}`),
       };

@@ -67,7 +67,7 @@ async function createInvitationHandler(
         inviter_user_id: user.id,
         status: 'active',
         organization_id: organizationId,
-        invitee_team_role: parsedBody.role,
+        invitee_organization_role: parsedBody.role,
       })
       .select('*')
       .single();

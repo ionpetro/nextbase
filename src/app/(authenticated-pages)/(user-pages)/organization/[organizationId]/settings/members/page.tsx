@@ -9,7 +9,6 @@ import { TeamMembersTableProps } from '@/components/presentational/tailwind/Team
 import { TeamInvitationsTable } from '@/components/presentational/tailwind/TeamInvitationsTable';
 import { TeamInvitationsTableProps } from '@/components/presentational/tailwind/TeamInvitationsTable/types';
 import { FiPlus } from 'react-icons/fi';
-import { InviteTeamMemberModal } from '@/components/presentational/tailwind/InviteTeamMemberModal/InviteTeamMemberModal';
 import { toast } from 'react-hot-toast';
 import {
   useGetIsOrganizationAdmin,

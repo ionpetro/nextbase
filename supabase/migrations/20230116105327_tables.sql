@@ -63,7 +63,7 @@ CREATE TABLE "public"."organization_join_invitations" (
   "id" "uuid" DEFAULT "extensions"."uuid_generate_v4"() NOT NULL,
   "invitee_user_email" character varying NOT NULL,
   "organization_id" "uuid" NOT NULL,
-  "invitee_team_role" "public"."organization_member_role" NOT NULL DEFAULT 'member'::organization_member_role,
+  "invitee_organization_role" "public"."organization_member_role" NOT NULL DEFAULT 'member'::organization_member_role,
   "invitee_user_id" "uuid"
 );
 -- ALTER TABLE "public"."organization_join_invitations" OWNER TO "supabase_admin";

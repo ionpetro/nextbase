@@ -294,7 +294,7 @@ export interface Database {
         Row: {
           created_at: string
           id: string
-          invitee_team_role: Database["public"]["Enums"]["organization_member_role"]
+          invitee_organization_role: Database["public"]["Enums"]["organization_member_role"]
           invitee_user_email: string
           invitee_user_id: string | null
           inviter_user_id: string
@@ -304,7 +304,7 @@ export interface Database {
         Insert: {
           created_at?: string
           id?: string
-          invitee_team_role?: Database["public"]["Enums"]["organization_member_role"]
+          invitee_organization_role?: Database["public"]["Enums"]["organization_member_role"]
           invitee_user_email: string
           invitee_user_id?: string | null
           inviter_user_id: string
@@ -314,7 +314,7 @@ export interface Database {
         Update: {
           created_at?: string
           id?: string
-          invitee_team_role?: Database["public"]["Enums"]["organization_member_role"]
+          invitee_organization_role?: Database["public"]["Enums"]["organization_member_role"]
           invitee_user_email?: string
           invitee_user_id?: string | null
           inviter_user_id?: string
@@ -819,7 +819,7 @@ export interface Database {
         | "joinied"
         | "declined_invitation"
         | "joined"
-      organization_member_role: "owner" | "admin" | "member"
+      organization_member_role: "owner" | "admin" | "member" | "readonly"
       pricing_plan_interval: "day" | "week" | "month" | "year"
       pricing_type: "one_time" | "recurring"
       project_status: "draft" | "pending_approval" | "approved" | "completed"

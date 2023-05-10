@@ -59,7 +59,7 @@ CREATE FUNCTION "public"."handle_add_organization_member_after_invitation_accept
 INSERT INTO organization_members(member_id, member_role, organization_id)
 VALUES (
     NEW.invitee_user_id,
-    NEW.invitee_team_role,
+    NEW.invitee_organization_role,
     NEW.organization_id
   );
 RETURN NEW;
