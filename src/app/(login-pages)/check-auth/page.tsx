@@ -2,13 +2,11 @@
 import { Anchor } from '@/components/Anchor';
 import { T } from '@/components/ui/Typography';
 import { useUser } from '@supabase/auth-helpers-react';
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { useDidMount, useTimeoutWhen } from 'rooks';
+import { useTimeoutWhen } from 'rooks';
 
 export default function HomePage() {
   const user = useUser();
-  const router = useRouter();
   const [loadingState, setLoadingState] = useState<
     'loading' | 'logged-in' | 'logged-out'
   >('loading');
@@ -33,7 +31,9 @@ export default function HomePage() {
 
   useEffect(() => {
     if (loadingState === 'logged-in') {
-      router.replace('/dashboard');
+      // router.replace is rendering a cached page
+      // only this is working
+      window.location.href = '/dashboard';
     }
   }, [loadingState]);
 
