@@ -1,7 +1,7 @@
-import { getTeamMembersByTeamId } from '@/utils/supabase-queries';
+import { getTeamMembersByTeamId } from '@/utils/supabase/teams';
 import { z } from 'zod';
 import createClient from '@/utils/supabase-server';
-import { ProjectTeamMembersTable } from '@/components/presentational/tailwind/ProjectTeamMembersTable';
+import { ProjectTeamMembersTable } from './ProjectTeamMembersTable';
 
 const paramsSchema = z.object({
   teamId: z.coerce.number(),

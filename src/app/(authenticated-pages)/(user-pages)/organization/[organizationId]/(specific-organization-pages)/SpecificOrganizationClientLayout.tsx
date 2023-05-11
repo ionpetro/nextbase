@@ -3,7 +3,6 @@ import { Anchor } from '@/components/Anchor';
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading/PageHeading';
 import Overline from '@/components/presentational/tailwind/Text/Overline';
 import {
-  OrganizationByIdData,
   useCreateTeamMutation,
 } from '@/utils/react-query-hooks';
 import moment from 'moment';
@@ -16,24 +15,21 @@ import { Button } from '@/components/ui/Button'
 import { CreateTeamDialog } from '@/components/presentational/tailwind/CreateTeamDialog';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
-import { OrganizationContextProvider } from '@/contexts/OrganizationContext';
-import { Enum } from '@/types';
+import { OrganizationContextProvider, useOrganizationContext } from '@/contexts/OrganizationContext';
 const matchSettingsPath = match('/organization/:organizationId/settings/(.*)?');
 
 export function SpecificOrganizationClientLayout({
   children,
-  organizationByIdData,
-  organizationRole,
-  organizationId
 }: {
   children: ReactNode;
-  organizationId: string;
-  organizationByIdData: OrganizationByIdData;
-  organizationRole: Enum<'organization_member_role'>
 }) {
   const pathname = usePathname();
   const isSettingsPath = pathname ? matchSettingsPath(pathname) : false;
-
+  const {
+    organizationByIdData,
+    organizationId,
+    organizationRole
+  } = useOrganizationContext();
   const router = useRouter();
   const { mutate, isLoading: isCreatingTeam } = useCreateTeamMutation({
     onSuccess: (team) => {

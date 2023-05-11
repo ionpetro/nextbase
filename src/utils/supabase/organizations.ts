@@ -107,7 +107,7 @@ export const updateOrganizationTitle = async (
   return data;
 };
 
-export const getTeamMembersInOrganization = async (
+export const getMembersInOrganization = async (
   supabase: AppSupabaseClient,
   organizationId: string
 ) => {

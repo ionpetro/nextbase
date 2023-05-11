@@ -423,3 +423,56 @@ export const getProjectComments = async (
 
   return data.map(normalizeComment);
 };
+
+export const updateUserRoleInTeam = async (
+  supabase: AppSupabaseClient,
+  userId: string,
+  teamId: number,
+  newRole: Enum<'project_team_member_role'>
+) => {
+  const { data, error } = await supabase
+    .from('team_members')
+    .update({ role: newRole })
+    .eq('user_id', userId)
+    .eq('team_id', teamId);
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};
+
+export const getTeamMembersByTeamId = async (
+  supabase: AppSupabaseClient,
+  teamId: number
+) => {
+  const { data, error } = await supabase
+    .from('team_members')
+    .select('*, user_profiles(*)')
+    .eq('team_id', teamId);
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};
+
+export const removeUserFromTeam = async (
+  supabase: AppSupabaseClient,
+  userId: string,
+  teamId: number
+) => {
+  const { data, error } = await supabase
+    .from('team_members')
+    .delete()
+    .eq('user_id', userId)
+    .eq('team_id', teamId);
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};

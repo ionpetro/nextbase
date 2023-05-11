@@ -1,7 +1,7 @@
 import { getOrganizationById } from '@/utils/supabase-queries';
 import createClient from '@/utils/supabase-server';
 import { ReactNode } from 'react';
-import { SpecificOrganizationClientLayout } from './SpecificOrganizationClientLayout';
+import { OrganizationLayoutContextProvider } from './OrganizationLayoutContextProvider';
 import { z } from 'zod';
 import { AppSupabaseClient } from '@/types';
 import { getUserOrganizationRole } from '@/utils/supabase/organizations';
@@ -56,13 +56,13 @@ export default async function Layout({
       organizationId
     );
     return (
-      <SpecificOrganizationClientLayout
+      <OrganizationLayoutContextProvider
         organizationId={organizationId}
         organizationByIdData={organizationByIdData}
         organizationRole={organizationRole}
       >
         {children}
-      </SpecificOrganizationClientLayout>
+      </OrganizationLayoutContextProvider>
     );
   } catch (error) {
     console.log(error);

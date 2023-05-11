@@ -1,5 +1,5 @@
 import { UnwrapPromise } from "@/types";
-import { getUserOrganizationRole } from "../supabase/organizations";
+import { getMembersInOrganization, getUserOrganizationRole } from "@/utils/supabase/organizations";
 import { useLoggedInUser } from "@/hooks/useLoggedInUser";
 import { useQuery } from "@tanstack/react-query";
 import supabaseClient from '@/utils/supabase-browser';
@@ -27,4 +27,12 @@ export const useGetUserOrganizationRole = (
       initialData,
     }
   );
+};
+
+
+
+export const useGetMembersInOrganization = (organizationId: string) => {
+  return useQuery(['getMembersInOrganization', organizationId], async () => {
+    return getMembersInOrganization(supabaseClient, organizationId);
+  });
 };

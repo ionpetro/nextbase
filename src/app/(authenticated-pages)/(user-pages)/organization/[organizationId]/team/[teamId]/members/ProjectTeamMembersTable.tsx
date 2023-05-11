@@ -2,11 +2,11 @@
 import { T } from '@/components/ui/Typography';
 import { UnwrapPromise } from '@/types';
 import {
-  useGetProjectTeamMembers,
+  useGetTeamMembers,
   useRemoveUserFromTeam,
   useUpdateUserRoleInTeam,
-} from '@/utils/react-query-hooks';
-import { getTeamMembersByTeamId } from '@/utils/supabase-queries';
+} from '@/utils/react-queries/teams';
+import { getTeamMembersByTeamId } from '@/utils/supabase/teams';
 import { AddUserToTeamDialog } from './AddUserToTeamDialog';
 import { ConfirmRemoveUserFromTeamDialog } from './ConfirmRemoveUserFromTeamDialog';
 import { ProjectTeamMemberRoleSelect } from './ProjectTeamMemberRoleSelect';
@@ -20,7 +20,7 @@ export function ProjectTeamMembersTable({
   teamId: number;
 }) {
   const { canUserManageTeam } = useTeamContext();
-  const { data: teamMembers } = useGetProjectTeamMembers(
+  const { data: teamMembers } = useGetTeamMembers(
     teamId,
     teamMembersInitial
   );
