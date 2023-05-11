@@ -7,10 +7,10 @@ export const getUserTeamRole = async (
   teamId: number
 ): Promise<Enum<'project_team_member_role'> | null> => {
   const { data, error } = await supabase
-    .from('project_team_members')
+    .from('team_members')
     .select('*')
     .eq('user_id', userId)
-    .eq('project_team_id', teamId);
+    .eq('team_id', teamId);
 
   const row = data?.[0];
 
@@ -28,21 +28,21 @@ export const addUserToProjectTeam = async (
   role: Enum<'project_team_member_role'>
 ) => {
   const rowCount = await supabase
-    .from('project_team_members')
+    .from('team_members')
     .select('id')
     .eq('user_id', userId)
-    .eq('project_team_id', teamId);
+    .eq('team_id', teamId);
 
   if (rowCount.error || rowCount.data?.length > 0) {
     throw new Error('User already in team');
   }
 
   const { data, error } = await supabase
-    .from('project_team_members')
+    .from('team_members')
     .insert({
       user_id: userId,
       role: role,
-      project_team_id: teamId,
+      team_id: teamId,
     })
     .select('*')
     .single();
@@ -62,10 +62,10 @@ export const updateUserRoleInProjectTeam = async (
   newRole: Enum<'project_team_member_role'>
 ) => {
   const { data, error } = await supabase
-    .from('project_team_members')
+    .from('team_members')
     .update({ role: newRole })
     .eq('user_id', userId)
-    .eq('project_team_id', projectId);
+    .eq('team_id', projectId);
 
   if (error) {
 
@@ -81,7 +81,7 @@ export const createTeamInOrganization = async (
   teamName: string
 ) => {
   const { data, error } = await supabase
-    .from('project_teams')
+    .from('teams')
     .insert({
       organization_id: organizationId,
       name: teamName,
@@ -117,7 +117,7 @@ export const getTeamsInOrganization = async (
 
 export const getTeam = async (supabase: AppSupabaseClient, teamId: number) => {
   const { data, error } = await supabase
-    .from('project_teams')
+    .from('teams')
     .select('*')
     .eq('id', teamId)
     .single();
@@ -241,7 +241,7 @@ export const getProjectTeamById = async (
   teamId: number
 ) => {
   const { data, error } = await supabase
-    .from('project_teams')
+    .from('teams')
     .select('*')
     .eq('id', teamId)
     .single();

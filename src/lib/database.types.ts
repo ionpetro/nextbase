@@ -479,6 +479,7 @@ export interface Database {
         Row: {
           created_at: string
           id: string
+          name: string
           organization_id: string | null
           project_status: Database["public"]["Enums"]["project_status"]
           team_id: number | null
@@ -487,6 +488,7 @@ export interface Database {
         Insert: {
           created_at?: string
           id?: string
+          name?: string
           organization_id?: string | null
           project_status?: Database["public"]["Enums"]["project_status"]
           team_id?: number | null
@@ -495,6 +497,7 @@ export interface Database {
         Update: {
           created_at?: string
           id?: string
+          name?: string
           organization_id?: string | null
           project_status?: Database["public"]["Enums"]["project_status"]
           team_id?: number | null
@@ -558,22 +561,22 @@ export interface Database {
         Row: {
           created_at: string | null
           id: number
-          project_team_id: number
           role: Database["public"]["Enums"]["project_team_member_role"]
+          team_id: number
           user_id: string
         }
         Insert: {
           created_at?: string | null
           id?: number
-          project_team_id: number
           role?: Database["public"]["Enums"]["project_team_member_role"]
+          team_id: number
           user_id: string
         }
         Update: {
           created_at?: string | null
           id?: number
-          project_team_id?: number
           role?: Database["public"]["Enums"]["project_team_member_role"]
+          team_id?: number
           user_id?: string
         }
       }
@@ -762,11 +765,27 @@ export interface Database {
           user_id: string
         }[]
       }
+      get_team_admins_by_team_id: {
+        Args: {
+          team_id: number
+        }
+        Returns: {
+          user_id: string
+        }[]
+      }
       get_team_id_for_project_id: {
         Args: {
           project_id: string
         }
         Returns: number
+      }
+      get_team_members_team_id: {
+        Args: {
+          team_id: number
+        }
+        Returns: {
+          user_id: string
+        }[]
       }
       increment_credits: {
         Args: {

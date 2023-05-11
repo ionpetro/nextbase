@@ -11,7 +11,6 @@ const paramsSchema = z.object({
   organizationId: z.string(),
 });
 
-type ParamsType = z.infer<typeof paramsSchema>;
 
 
 async function fetchData(supabase: AppSupabaseClient, organizationId: string) {

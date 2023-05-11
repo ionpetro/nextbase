@@ -1,15 +1,15 @@
 import { AppSupabaseClient } from '@/types';
+import { getApprovedProjectsByTeamId } from '@/utils/supabase/teams';
 import { z } from 'zod';
 import createClient from '@/utils/supabase-server';
-import { DraftTeamProjectsList } from './DraftTeamProjectsList';
-import { getDraftProjectsByTeamId } from '@/utils/supabase/teams';
+import { ApprovedTeamProjectsList } from './ApprovedTeamProjectsList';
 
 const paramsSchema = z.object({
   teamId: z.coerce.number(),
 });
 
-async function fetchRuns(supabase: AppSupabaseClient, teamId: number) {
-  const data = await getDraftProjectsByTeamId(supabase, teamId);
+async function fetchProjects(supabase: AppSupabaseClient, teamId: number) {
+  const data = await getApprovedProjectsByTeamId(supabase, teamId);
   return data;
 }
 
@@ -23,10 +23,10 @@ export default async function TeamPage({
   const supabase = createClient();
   const parsedParams = paramsSchema.parse(params);
   const { teamId } = parsedParams;
-  const runs = await fetchRuns(supabase, teamId);
+  const projects = await fetchProjects(supabase, teamId);
   return (
     <div className="space-y-4">
-      <DraftTeamProjectsList initialRuns={runs} />
+      <ApprovedTeamProjectsList initialProjects={projects} />
     </div>
   );
-}
+};

@@ -53,7 +53,7 @@ SELECT TO authenticated USING (
       )
       OR (
         auth.uid() IN (
-          SELECT get_project_members_by_team_id(teams.id) AS get_project_members_by_team_id
+          SELECT get_team_members_team_id(teams.id) AS get_team_members_team_id
         )
       )
     )
@@ -103,7 +103,7 @@ SELECT TO authenticated USING (
       )
       OR (
         auth.uid() IN (
-          SELECT get_project_members_by_team_id(projects.team_id) AS get_project_members_by_team_id
+          SELECT get_team_members_team_id(projects.team_id) AS get_team_members_team_id
         )
       )
       OR (
@@ -165,7 +165,7 @@ INSERT TO authenticated WITH CHECK (
       )
       OR (
         auth.uid() IN (
-          SELECT get_project_members_by_team_id(get_team_id_for_project_id(project_id)) AS get_project_members_by_team_id
+          SELECT get_team_members_team_id(get_team_id_for_project_id(project_id)) AS get_team_members_team_id
         )
       )
     )
@@ -181,7 +181,7 @@ SELECT TO authenticated USING (
       )
       OR (
         auth.uid() IN (
-          SELECT get_project_members_by_team_id(get_team_id_for_project_id(project_id)) AS get_project_members_by_team_id
+          SELECT get_team_members_team_id(get_team_id_for_project_id(project_id)) AS get_team_members_team_id
         )
       )
     )

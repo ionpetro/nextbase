@@ -65,19 +65,19 @@ END;
 $function$;
 -- Get project admins of a team
 -- This function is used to get all admins of a team
-CREATE OR REPLACE FUNCTION public.get_project_admins_by_team_id(team_id bigint) RETURNS TABLE(user_id uuid) LANGUAGE plpgsql SECURITY DEFINER AS $function$ BEGIN RETURN QUERY
+CREATE OR REPLACE FUNCTION public.get_team_admins_by_team_id(team_id bigint) RETURNS TABLE(user_id uuid) LANGUAGE plpgsql SECURITY DEFINER AS $function$ BEGIN RETURN QUERY
 SELECT team_members.user_id
 FROM team_members
-WHERE team_members.project_team_id = $1
+WHERE team_members.team_id = $1
   AND role = 'admin';
 END;
 $function$;
 -- Get project members of a team
 -- This function is used to get all members of a team
-CREATE OR REPLACE FUNCTION public.get_project_members_by_team_id(team_id bigint) RETURNS TABLE(user_id uuid) LANGUAGE plpgsql SECURITY DEFINER AS $function$ BEGIN RETURN QUERY
+CREATE OR REPLACE FUNCTION public.get_team_members_team_id(team_id bigint) RETURNS TABLE(user_id uuid) LANGUAGE plpgsql SECURITY DEFINER AS $function$ BEGIN RETURN QUERY
 SELECT team_members.user_id
 FROM team_members
-WHERE team_members.project_team_id = $1;
+WHERE team_members.team_id = $1;
 END;
 $function$;
 -- Add credits to an organization on creation

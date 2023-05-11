@@ -36,8 +36,6 @@ export default async function OrganizationPage({
       ) : (
         <p>No teams</p>
       )}
-      {/* <FileUpload />
-      <OrganizationHistoryList initialRuns={runs} /> */}
     </div>
   );
 }

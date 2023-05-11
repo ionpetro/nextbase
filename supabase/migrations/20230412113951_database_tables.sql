@@ -21,7 +21,7 @@ CREATE TABLE "public"."team_members" (
   "created_at" timestamp WITH time zone DEFAULT NOW(),
   "user_id" uuid NOT NULL,
   "role" project_team_member_role NOT NULL DEFAULT 'member'::project_team_member_role,
-  "project_team_id" bigint NOT NULL
+  "team_id" bigint NOT NULL
 );
 
 CREATE TABLE "public"."teams" (
@@ -35,6 +35,7 @@ ALTER TABLE "public"."teams" enable ROW LEVEL SECURITY;
 
 CREATE TABLE "public"."projects" (
   "id" "uuid" DEFAULT "extensions"."uuid_generate_v4"() NOT NULL,
+  "name" text NOT NULL,
   "created_at" timestamp(3) without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
   "updated_at" timestamp(3) without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
   "organization_id" uuid,
