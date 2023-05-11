@@ -18,6 +18,7 @@ import { TeamGraphs } from '../TeamGraphs';
 import HelpCard from '@/components/ui/Card/HelpCard';
 import organisationshelp from "public/assets/help-assets/organisations-teams.png";
 import teamsprojects from "public/assets/help-assets/teams-projects.png";
+import { CreateProjectDialog } from '@/components/presentational/tailwind/CreateProjectDialog';
 
 const paramsSchema = z.object({
   teamId: z.coerce.number(),
@@ -71,10 +72,7 @@ export default async function Layout({
             subheading="Manage your team and projects here."
           >
             <div className="mt-3 text-gray-400 text-3xl space-x-2">
-              <Button>
-                <BsPlusLg className="text-white mr-2" />
-                Create Project
-              </Button>
+              <CreateProjectDialog onConfirm={console.log} isLoading={false} />
               <Button variant={"outline"}>
                 <IoMdSettings className="text-slate-600 mr-2" />
                 View Team Settings
