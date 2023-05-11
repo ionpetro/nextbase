@@ -10,6 +10,14 @@ import { ArrowLeft } from 'lucide-react';
 import { TeamContextProvider } from '@/contexts/TeamContext';
 import { getOrganizationById } from '@/utils/supabase/organizations';
 import { getProjectTeamById, getUserTeamRole } from '@/utils/supabase/teams';
+import PageHeadingWithActions from '@/components/ui/Headings/PageHeadingWithActions';
+import { BsPlusLg } from 'react-icons/bs';
+import { IoMdSettings } from 'react-icons/io';
+import { Button } from '@/components/ui/Button';
+import { TeamGraphs } from '../TeamGraphs';
+import HelpCard from '@/components/ui/Card/HelpCard';
+import organisationshelp from "public/assets/help-assets/organisations-teams.png";
+import teamsprojects from "public/assets/help-assets/teams-projects.png";
 
 const paramsSchema = z.object({
   teamId: z.coerce.number(),
@@ -41,23 +49,56 @@ export default async function Layout({
   return (
     <TeamContextProvider teamId={teamId} teamRole={teamRole}>
       <div className="space-y-8 pt-4 max-w-7xl px-8">
-        <div className="flex gap-1 items-center">
-          <ArrowLeft size="12" />
-          <T.Subtle>
-            <Anchor
-              className="underline"
-              href={`/organization/${organizationByIdData.id}`}
-            >
-              Back to {organizationByIdData.title}
-            </Anchor>
-          </T.Subtle>
+        <div className="space-y-10">
+          <div className="space-x-6">
+            <span className="text-base py-2 font-[600] text-slate-500">
+              <Anchor href="/dashboard">Dashboard</Anchor>
+            </span>
+            <span className="text-base  py-2 font-[600] text-slate-500">/</span>
+            <span className="text-base py-2 font-[600] text-slate-500">
+              <Anchor href={`/organization/${organizationByIdData.id}`}>{
+                organizationByIdData.title}</Anchor>
+            </span>
+            <span className="text-base  py-2 font-[600] text-slate-500">/</span>
+            <span className="text-base py-2 bg-blue-50 rounded-lg px-4 font-[700] text-blue-600">
+              {teamByIdData.name}
+            </span>
+          </div>
         </div>
         <div className="space-y-2">
-          <Overline>Team</Overline>
-          <T.H1>{teamByIdData.name}</T.H1>
+          <PageHeadingWithActions
+            heading={teamByIdData.name}
+            subheading="Manage your team and projects here."
+          >
+            <div className="mt-3 text-gray-400 text-3xl space-x-2">
+              <Button>
+                <BsPlusLg className="text-white mr-2" />
+                Create Project
+              </Button>
+              <Button variant={"outline"}>
+                <IoMdSettings className="text-slate-600 mr-2" />
+                View Team Settings
+              </Button>
+            </div>
+          </PageHeadingWithActions>
           <TeamClientLayout>
             <div>{children}</div>
           </TeamClientLayout>
+        </div>
+        <TeamGraphs />
+        {/* Help Cards */}
+        <div className="grid grid-cols-2 space-x-6 w-full">
+          <HelpCard
+            heading="Teams within Organisations"
+            subheading="Without Organisations you can't make Teams"
+            image={organisationshelp}
+          />
+
+          <HelpCard
+            heading="Projects within Teams"
+            subheading="Build Projects within Teams and Organisations"
+            image={teamsprojects}
+          />
         </div>
       </div>
     </TeamContextProvider>
