@@ -2,7 +2,7 @@
 import { T } from '@/components/ui/Typography';
 import { Table } from '@/types';
 import { useTeamContext } from '@/contexts/TeamContext';
-import { ProjectsTable } from '../ProjectsTable';
+import { ProjectsTable } from '../../ProjectsTable';
 import { useGetApprovedProjectsByTeam } from '@/utils/react-queries/projects';
 
 function TableContainer({ projects }: { projects: Table<'projects'>[] }) {
