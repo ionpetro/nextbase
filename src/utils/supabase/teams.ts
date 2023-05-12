@@ -115,19 +115,7 @@ export const getTeamsInOrganization = async (
   return data;
 };
 
-export const getTeam = async (supabase: AppSupabaseClient, teamId: number) => {
-  const { data, error } = await supabase
-    .from('teams')
-    .select('*')
-    .eq('id', teamId)
-    .single();
 
-  if (error) {
-    throw error;
-  }
-
-  return data;
-};
 
 export const getProjectsByTeamId = async (
   supabase: AppSupabaseClient,
@@ -236,7 +224,7 @@ export const getProjectsUnAssignedToTeam = async (
   return data;
 };
 
-export const getProjectTeamById = async (
+export const getTeamById = async (
   supabase: AppSupabaseClient,
   teamId: number
 ) => {

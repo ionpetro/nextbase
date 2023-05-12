@@ -9,7 +9,7 @@ import { Anchor } from '@/components/Anchor';
 import { ArrowLeft } from 'lucide-react';
 import { TeamContextProvider } from '@/contexts/TeamContext';
 import { getOrganizationById } from '@/utils/supabase/organizations';
-import { getProjectTeamById, getUserTeamRole } from '@/utils/supabase/teams';
+import { getTeamById, getUserTeamRole } from '@/utils/supabase/teams';
 import PageHeadingWithActions from '@/components/ui/Headings/PageHeadingWithActions';
 import { BsPlusLg } from 'react-icons/bs';
 import { IoMdSettings } from 'react-icons/io';
@@ -43,12 +43,12 @@ export default async function Layout({
 
   const [organizationByIdData, teamByIdData, teamRole] = await Promise.all([
     getOrganizationById(supabase, organizationId),
-    getProjectTeamById(supabase, teamId),
+    getTeamById(supabase, teamId),
     getUserTeamRole(supabase, data.session.user.id, teamId),
   ]);
 
   return (
-    <TeamContextProvider teamId={teamId} teamRole={teamRole}>
+    <TeamContextProvider teamByIdData={teamByIdData} teamId={teamId} teamRole={teamRole}>
       <div className="space-y-8 pt-4 max-w-7xl px-8">
         <div className="space-y-10">
           <div className="space-x-6">
@@ -66,23 +66,9 @@ export default async function Layout({
             </span>
           </div>
         </div>
-        <div className="space-y-2">
-          <PageHeadingWithActions
-            heading={teamByIdData.name}
-            subheading="Manage your team and projects here."
-          >
-            <div className="mt-3 text-gray-400 text-3xl space-x-2">
-              <CreateProjectDialog onConfirm={console.log} isLoading={false} />
-              <Button variant={"outline"}>
-                <IoMdSettings className="text-slate-600 mr-2" />
-                View Team Settings
-              </Button>
-            </div>
-          </PageHeadingWithActions>
-          <TeamClientLayout>
-            <div>{children}</div>
-          </TeamClientLayout>
-        </div>
+        <TeamClientLayout>
+          {children}
+        </TeamClientLayout>
         <TeamGraphs />
         {/* Help Cards */}
         <div className="grid grid-cols-2 space-x-6 w-full">
