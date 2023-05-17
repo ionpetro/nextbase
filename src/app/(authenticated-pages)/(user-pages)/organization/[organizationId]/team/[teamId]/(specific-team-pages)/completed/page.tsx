@@ -1,5 +1,5 @@
 import { AppSupabaseClient } from '@/types';
-import { getCompletedProjectsByTeamId } from '@/utils/supabase/teams';
+import { getCompletedProjectsByTeamId } from '@/utils/supabase/projects';
 import { z } from 'zod';
 import createClient from '@/utils/supabase-server';
 import { CompletedTeamProjectsList } from './CompletedTeamProjectsList';

@@ -14,7 +14,7 @@ import { BsPlusLg } from "react-icons/bs";
 import { IoMdSettings } from "react-icons/io";
 import Link from "next/link";
 import { Badge } from "@/components/ui/Badge";
-import { TeamGraphs } from "../../TeamGraphs";
+import { TeamGraphs } from "../../../TeamGraphs";
 
 type Project = {
   id: number;

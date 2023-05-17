@@ -18,6 +18,7 @@ import { Button } from '@/components/ui/Button';
 import { IoMdSettings } from 'react-icons/io';
 import { Anchor } from '@/components/Anchor';
 import { useMemo } from "react";
+import { useCreateProject } from "@/utils/react-queries/projects";
 
 export const SpecificTeamClientLayout = ({ children }: { children: React.ReactNode }) => {
   const {
@@ -28,6 +29,10 @@ export const SpecificTeamClientLayout = ({ children }: { children: React.ReactNo
     teamId,
     teamByIdData,
   } = useTeamContext();
+  const {
+    mutate: createProject,
+    isLoading: isCreatingProject,
+  } = useCreateProject()
   const tabs = useMemo(() => {
     return [
       {
@@ -76,7 +81,13 @@ export const SpecificTeamClientLayout = ({ children }: { children: React.ReactNo
         subheading="Manage your team and projects here."
       >
         <div className="mt-3 text-gray-400 text-3xl space-x-2">
-          <CreateProjectDialog onConfirm={console.log} isLoading={false} />
+          <CreateProjectDialog onConfirm={(name) => {
+            createProject({
+              name,
+              teamId,
+              organizationId
+            })
+          }} isLoading={isCreatingProject} />
           <Anchor
             href={`/organization/${organizationId}/team//${teamId}/settings`}
           >

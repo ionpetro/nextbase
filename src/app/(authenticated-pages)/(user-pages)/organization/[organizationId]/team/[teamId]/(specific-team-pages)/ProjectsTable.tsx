@@ -7,8 +7,6 @@ import { Table } from '@/types';
 import { Check, ExternalLink, Pen, ThumbsUp, Timer } from 'lucide-react';
 import moment from 'moment';
 
-
-
 export const ProjectsTable = ({ projects }: { projects: Table<'projects'>[] }) => {
   if (projects.length === 0) {
     return (
@@ -54,6 +52,42 @@ export const ProjectsTable = ({ projects }: { projects: Table<'projects'>[] }) =
                       <td className="p-0 ">
                         <TableCell classname="px-6 py-4">
                           {/* Add your project status rendering logic here */}
+                          {project.project_status === 'completed' ? (
+                            <div className="flex items-center space-x-2">
+                              <Check size={16} />
+                              <T.P className="text-xs text-green-500">
+                                Completed
+                              </T.P>
+                            </div>
+                          ) : project.project_status === 'pending_approval' ? (
+                            <div className="flex items-center space-x-2">
+                              <Pen size={16} />
+                              <T.P className="text-xs text-yellow-500">
+                                Pending Approval
+                              </T.P>
+                            </div>
+                          ) : project.project_status === 'approved' ? (
+                            <div className="flex items-center space-x-2">
+                              <ThumbsUp size={16} />
+                              <T.P className="text-xs text-green-500">
+                                Approved
+                              </T.P>
+                            </div>
+                          ) : project.project_status === 'draft' ? (
+                            <div className="flex items-center space-x-2">
+                              <Timer size={16} />
+                              <T.P className="text-xs text-blue-500">
+                                Draft
+                              </T.P>
+                            </div>
+                          ) : (
+                            <div className="flex items-center space-x-2">
+                              <Timer size={16} />
+                              <T.P className="text-xs text-blue-500 capitalize">
+                                {String(project.project_status).replace('_', ' ')}
+                              </T.P>
+                            </div>
+                          )}
                         </TableCell>
                       </td>
                       <td className="p-0 ">

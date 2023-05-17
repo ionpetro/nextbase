@@ -1,7 +1,7 @@
 import { AppSupabaseClient } from '@/types';
 import { z } from 'zod';
 import createClient from '@/utils/supabase-server';
-import { getDraftProjectsByTeamId } from '@/utils/supabase/teams';
+import { getDraftProjectsByTeamId } from '@/utils/supabase/projects';
 import { DraftTeamProjectsList } from './DraftTeamProjectsList';
 
 const paramsSchema = z.object({

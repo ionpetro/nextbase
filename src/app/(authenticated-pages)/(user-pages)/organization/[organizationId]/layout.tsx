@@ -44,6 +44,9 @@ async function fetchData(supabase: AppSupabaseClient, organizationId: string) {
 export default async function Layout({
   children,
   params,
+}: {
+  children: ReactNode;
+  params: any;
 }) {
   try {
     const { organizationId } = paramsSchema.parse(params);

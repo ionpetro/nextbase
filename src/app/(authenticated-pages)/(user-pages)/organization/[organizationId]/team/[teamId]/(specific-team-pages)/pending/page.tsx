@@ -2,7 +2,7 @@ import { AppSupabaseClient } from '@/types';
 import { z } from 'zod';
 import createClient from '@/utils/supabase-server';
 import { PendingApprovalTeamProjectsList } from './PendingApprovalTeamProjectsList';
-import { getPendingApprovalProjectsByTeamId } from '@/utils/supabase/teams';
+import { getPendingApprovalProjectsByTeamId } from '@/utils/supabase/projects';
 
 const paramsSchema = z.object({
   teamId: z.coerce.number(),

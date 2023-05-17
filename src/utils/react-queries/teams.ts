@@ -1,7 +1,7 @@
 import { useLoggedInUser } from "@/hooks/useLoggedInUser";
 import { Enum, Table, UnwrapPromise } from "@/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { addUserToProjectTeam, getTeamById, getTeamMembersByTeamId, getTeamsInOrganization, getUserTeamRole, removeUserFromTeam, updateUserRoleInProjectTeam } from "../supabase/teams";
+import { addUserToTeam, getTeamById, getTeamMembersByTeamId, getTeamsInOrganization, getUserTeamRole, removeUserFromTeam, updateUserRoleInProjectTeam } from "../supabase/teams";
 import supabaseClient from '@/utils/supabase-browser';
 import { useRef } from "react";
 import { toast } from 'react-hot-toast';
@@ -71,7 +71,7 @@ export const useAddUserToProjectTeam = () => {
       teamId: number;
       role: Enum<'project_team_member_role'>;
     }) => {
-      return addUserToProjectTeam(supabaseClient, userId, teamId, role);
+      return addUserToTeam(supabaseClient, userId, teamId, role);
     },
     {
       onMutate: () => {
