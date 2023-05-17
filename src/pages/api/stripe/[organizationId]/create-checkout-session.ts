@@ -6,6 +6,17 @@ import { Session, User } from '@supabase/supabase-js';
 import { getURL } from '@/utils/helpers';
 import { stripe } from '@/utils/stripe';
 import { errors } from '@/utils/errors';
+import { z } from 'zod';
+
+const requestPayloadSchema = z.object({
+  priceId: z.string(),
+  isTrial: z.boolean().optional().default(false),
+})
+
+const TRIAL_DAYS = 14;
+const TRIAL_DURATION = TRIAL_DAYS * 24 * 60 * 60; // 14 days in seconds
+
+export type RequestPayload = z.infer<typeof requestPayloadSchema>;
 
 async function createCheckoutSession(
   req: NextApiRequest,
@@ -16,7 +27,10 @@ async function createCheckoutSession(
 ) {
   if (req.method === 'POST') {
     const { organizationId } = req.query;
-    const { priceId } = req.body;
+    const {
+      priceId,
+      isTrial
+    } = requestPayloadSchema.parse(req.body);
     if (typeof organizationId !== 'string') {
       return res.status(400).json({
         error: { statusCode: 400, message: 'Invalid organization id' },
@@ -52,28 +66,58 @@ async function createCheckoutSession(
         email: user.email || '',
       });
       if (!customer) throw Error('Could not get customer');
+      if (isTrial) {
 
-      const stripeSession = await stripe.checkout.sessions.create({
-        payment_method_types: ['card'],
-        billing_address_collection: 'required',
-        customer,
-        line_items: [
-          {
-            price: priceId,
-            quantity: 1,
+        const stripeSession = await stripe.checkout.sessions.create({
+          payment_method_types: ['card'],
+          billing_address_collection: 'required',
+          customer,
+          line_items: [
+            {
+              price: priceId,
+              quantity: 1,
+            },
+          ],
+          mode: 'subscription',
+          allow_promotion_codes: true,
+          subscription_data: {
+            trial_period_days: TRIAL_DAYS,
+            trial_settings: {
+              end_behavior: {
+                missing_payment_method: 'cancel',
+              }
+            },
+            metadata: {},
           },
-        ],
-        mode: 'subscription',
-        allow_promotion_codes: true,
-        subscription_data: {
-          trial_from_plan: true,
-          metadata: {},
-        },
-        success_url: `${getURL()}/organization/${organizationId}/settings/billing`,
-        cancel_url: `${getURL()}/organization/${organizationId}/settings/billing`,
-      });
+          success_url: `${getURL()}/organization/${organizationId}/settings/billing`,
+          cancel_url: `${getURL()}/organization/${organizationId}/settings/billing`,
+        });
 
-      return res.status(200).json({ sessionId: stripeSession.id });
+        return res.status(200).json({ sessionId: stripeSession.id });
+      } else {
+
+        const stripeSession = await stripe.checkout.sessions.create({
+          payment_method_types: ['card'],
+          billing_address_collection: 'required',
+          customer,
+          line_items: [
+            {
+              price: priceId,
+              quantity: 1,
+            },
+          ],
+          mode: 'subscription',
+          allow_promotion_codes: true,
+          subscription_data: {
+            trial_from_plan: true,
+            metadata: {},
+          },
+          success_url: `${getURL()}/organization/${organizationId}/settings/billing`,
+          cancel_url: `${getURL()}/organization/${organizationId}/settings/billing`,
+        });
+
+        return res.status(200).json({ sessionId: stripeSession.id });
+      }
     } catch (error: unknown) {
       errors.add(error);
       if (error instanceof Error) {

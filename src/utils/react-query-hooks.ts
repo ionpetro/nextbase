@@ -356,9 +356,11 @@ export const useCreateOrganizationCheckoutSessionMutation = ({
     async ({
       organizationId: organizationId,
       priceId,
+      isTrial = false,
     }: {
       organizationId: string;
       priceId: string;
+      isTrial?: boolean;
     }) => {
       return axios.post<{
         sessionId: string;
@@ -366,6 +368,7 @@ export const useCreateOrganizationCheckoutSessionMutation = ({
         `/api/stripe/${organizationId}/create-checkout-session`,
         {
           priceId,
+          isTrial
         },
         {
           withCredentials: true,

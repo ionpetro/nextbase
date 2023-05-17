@@ -16,6 +16,7 @@ import { useMemo, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { FiCheck, FiExternalLink, FiX } from 'react-icons/fi';
 import { useOrganizationContext } from '@/contexts/OrganizationContext';
+import { Button } from '@/components/ui/Button';
 
 
 type Product = NonNullable<UnwrapPromise<ReturnType<typeof getActiveProductsWithPrices>>>
@@ -146,22 +147,31 @@ function ChoosePricingTable({
                       <span className="ml-3">A premium feature</span>
                     </li>
                   </ul>
-                  <div className="flex justify-center items-center rounded-xl py-1 text-center text-white text-xl">
+                  <div className="rounded-xl py-1 text-center text-white text-xl space-y-2">
                     {isOrganizationAdmin ? (
-                      <button
-                        className={classNames(
-                          'flex w-full items-center justify-center rounded border border-transparent py-2 px-4 text-sm font-medium  shadow-sm focus:outline-none focus:ring-2  focus:ring-offset-2',
-                          'bg-blue-500 focus:ring-blue-500 hover:bg-blue-600  text-white'
-                        )}
-                        onClick={() => {
-                          mutate({
-                            organizationId: organizationId,
-                            priceId: priceId,
-                          });
-                        }}
-                      >
-                        {isCreatingCheckoutSession ? 'Loading...' : 'Choose'}
-                      </button>
+                      <>
+                        <Button
+                          onClick={() => {
+                            mutate({
+                              organizationId: organizationId,
+                              priceId: priceId,
+                              isTrial: true,
+                            });
+                          }}
+                        >
+                          Start free trial
+                        </Button>
+                        <Button
+                          onClick={() => {
+                            mutate({
+                              organizationId: organizationId,
+                              priceId: priceId,
+                            });
+                          }}
+                        >
+                          {isCreatingCheckoutSession ? 'Loading...' : 'Choose'}
+                        </Button>
+                      </>
                     ) : (
                       <span className="text-sm bg-green-50 px-3 py-2 text-gray-900 rounded-lg">
                         Contact your administrator to upgrade plan
