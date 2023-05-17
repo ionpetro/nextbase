@@ -10,6 +10,7 @@ import { RxActivityLog } from 'react-icons/rx';
 import { RiRoadMapLine } from 'react-icons/ri';
 import { MdOutlineFeedback } from 'react-icons/md';
 import { SelectSeparator } from '@/components/ui/Select';
+import { Home } from 'lucide-react';
 
 type LinksProps = {
   isExpanded: boolean;
@@ -33,6 +34,12 @@ function Links({ isExpanded, toggleIsExpanded }: LinksProps) {
     <div className={sidebarContainerClassName}>
       {user ? (
         <>
+          <SidebarLink
+            href="/dashboard"
+            icon={<Home />}
+            label="Back to Dashboard"
+            isExpanded={isExpanded}
+          />
           <SidebarLink
             href="/app_admin"
             icon={<FiSettings />}

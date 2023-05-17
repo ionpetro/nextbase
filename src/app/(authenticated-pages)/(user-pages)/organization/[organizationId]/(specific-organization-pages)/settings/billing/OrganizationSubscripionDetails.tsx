@@ -38,6 +38,7 @@ function ChoosePricingTable({
     isLoading: isLoadingProducts,
     error,
   } = useGetAllActiveProducts();
+  console.log({ activeProducts });
   const { mutate, isLoading: isCreatingCheckoutSession } =
     useCreateOrganizationCheckoutSessionMutation({
       onSuccess: async (sessionId) => {
@@ -194,8 +195,7 @@ export function OrganizationSubscripionDetails() {
     useGetIsOrganizationAdmin(organizationId);
 
 
-
-  if (isLoading || !data) {
+  if (isLoading) {
     return (
       <div>
         <LoadingSpinner className="text-blue-500" />
