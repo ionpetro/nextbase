@@ -274,6 +274,7 @@ export const useSubmitProjectForApproval = () => {
         });
         queryClient.invalidateQueries(['getDraftProjectsByTeam', projectId]);
         queryClient.invalidateQueries(['getPendingApprovalProjectsByTeam', projectId]);
+        queryClient.invalidateQueries(['getProjectById', projectId]);
       },
       onError: (error) => {
         toast.error(String(error), {
@@ -302,6 +303,7 @@ export const useCompleteProject = () => {
         });
         queryClient.invalidateQueries(['getApprovedProjectsByTeam', projectId]);
         queryClient.invalidateQueries(['getCompletedProjectsByTeam', projectId]);
+        queryClient.invalidateQueries(['getProjectById', projectId]);
       },
       onError: (error) => {
         toast.error(String(error), {
@@ -330,6 +332,7 @@ export const useApproveProject = () => {
         });
         queryClient.invalidateQueries(['getPendingApprovalProjectsByTeam', projectId]);
         queryClient.invalidateQueries(['getApprovedProjectsByTeam', projectId]);
+        queryClient.invalidateQueries(['getProjectById', projectId]);
       },
       onError: (error) => {
         toast.error(String(error), {
@@ -358,6 +361,7 @@ export const useRejectProject = () => {
         });
         queryClient.invalidateQueries(['getPendingApprovalProjectsByTeam', projectId]);
         queryClient.invalidateQueries(['getDraftProjectsByTeam', projectId]);
+        queryClient.invalidateQueries(['getProjectById', projectId]);
       },
       onError: (error) => {
         toast.error(String(error), {
