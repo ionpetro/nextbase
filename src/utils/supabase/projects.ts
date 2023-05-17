@@ -252,7 +252,8 @@ export const getProjectComments = async (
   const { data, error } = await supabase
     .from('project_comments')
     .select('*, user_profiles(*)')
-    .eq('project_id', projectId);
+    .eq('project_id', projectId)
+    .order('created_at', { ascending: false });
   if (error) {
 
     throw error;
