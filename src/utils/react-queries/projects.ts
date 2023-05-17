@@ -1,6 +1,6 @@
 import { Enum, Table } from "@/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getApprovedProjectsByTeamId, getCompletedProjectsByTeamId, getDraftProjectsByTeamId, getPendingApprovalProjectsByTeamId, createProject, deleteProject, updateProjectName, updateProjectStatus, getProjectById, addProjectComment, getProjectComments, submitProjectForApproval, markProjectAsCompleted, approveProject, completeProject, rejectProject } from "../supabase/projects";
+import { getApprovedProjectsByTeamId, getCompletedProjectsByTeamId, getDraftProjectsByTeamId, getPendingApprovalProjectsByTeamId, createProject, deleteProject, updateProjectName, updateProjectStatus, getProjectById, addProjectComment, getProjectComments, submitProjectForApproval, approveProject, completeProject, rejectProject } from "../supabase/projects";
 import supabaseClient from '@/utils/supabase-browser';
 import { useRef } from "react";
 import { toast } from "react-hot-toast";
@@ -284,7 +284,7 @@ export const useSubmitProjectForApproval = () => {
   );
 };
 
-// React Query Wrapper for markProjectAsCompleted
+// React Query Wrapper for completeProject
 export const useCompleteProject = () => {
   const toastRef = useRef<string | null>(null);
   const queryClient = useQueryClient();
