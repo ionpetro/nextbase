@@ -1,7 +1,7 @@
 import { LoadingSpinner } from '@/components/presentational/tailwind/LoadingSpinner';
 import { PricingModeToggle } from '@/components/presentational/tailwind/PricingModeToggle';
 import H3 from '@/components/presentational/tailwind/Text/H3';
-import { UnwrapPromise } from '@/types';
+import { Table, UnwrapPromise } from '@/types';
 import { classNames } from '@/utils/classNames';
 import {
   useCreateOrganizationCheckoutSessionMutation,
@@ -17,29 +17,20 @@ import { toast } from 'react-hot-toast';
 import { FiCheck, FiExternalLink, FiX } from 'react-icons/fi';
 import { useOrganizationContext } from '@/contexts/OrganizationContext';
 import { Button } from '@/components/ui/Button';
+import { T } from '@/components/ui/Typography';
+import { useGetNormalizedSubscription } from '@/utils/react-queries/subscriptions';
+import { formatNormalizedSubscription } from '@/utils/formatNormalizedSubscription';
 
 
-type Product = NonNullable<UnwrapPromise<ReturnType<typeof getActiveProductsWithPrices>>>
-
-function isNonNullableProduct(
-  product: ReturnType<typeof useGetAllActiveProducts>['data']
-): product is Product {
-  return Boolean(product);
-}
-
-function ChoosePricingTable({
-  isOrganizationAdmin,
-}: {
-  isOrganizationAdmin: boolean;
-}) {
-  const { organizationId } = useOrganizationContext();
+function ChoosePricingTable() {
+  const { organizationId, organizationRole } = useOrganizationContext();
+  const isOrganizationAdmin = organizationRole === 'admin' || organizationRole === 'owner';
   const [pricingMode, setPricingMode] = useState<'month' | 'year'>('month');
   const {
     data: activeProducts,
     isLoading: isLoadingProducts,
     error,
   } = useGetAllActiveProducts();
-  console.log({ activeProducts });
   const { mutate, isLoading: isCreatingCheckoutSession } =
     useCreateOrganizationCheckoutSessionMutation({
       onSuccess: async (sessionId) => {
@@ -189,60 +180,40 @@ function ChoosePricingTable({
 }
 
 export function OrganizationSubscripionDetails() {
-  const { organizationId } = useOrganizationContext();
-  const { data, isLoading, error } =
-    useGetOrganizationSubscription(organizationId);
+  const { organizationId, normalizedSubscription, organizationRole } = useOrganizationContext();
+  const isOrganizationAdmin = organizationRole === 'admin' || organizationRole === 'owner';
+
+
   const { mutate, isLoading: isLoadingCustomerPortalLink } =
     useCreateOrganizationCustomerPortalMutation({
       onSuccess: (url) => {
         window.location.assign(url);
-      },
-      onError: (error) => {
-        toast.error(String(error));
-      },
+      }
     });
-  const { data: isOrganizationAdmin, isLoading: isOrganizationAdminLoading } =
-    useGetIsOrganizationAdmin(organizationId);
 
+  const subscriptionDetails = formatNormalizedSubscription(normalizedSubscription);
 
-  if (isLoading) {
-    return (
-      <div>
-        <LoadingSpinner className="text-blue-500" />
+  if (!subscriptionDetails.title || normalizedSubscription.type === 'no-subscription') {
+    return <>
+      <div className="space-y-1">
+        <H3>Subscription</H3>
+        <p className="text-gray-500 text-sm">
+          This organization doesn't have any plan at the moment.
+        </p>
       </div>
-    );
-  } else if (isOrganizationAdminLoading) {
-    return (
-      <div>
-        <LoadingSpinner className="text-blue-500" />
-      </div>
-    );
-  } else if (error) {
-    return (
-      <>
-        <div className="space-y-1">
-          <H3>Subscription</H3>
-          <p className="text-gray-500 text-sm">
-            This organization doesn't have any plan at the moment.
-          </p>
-        </div>
-        <ChoosePricingTable isOrganizationAdmin={isOrganizationAdmin ?? false} />
-      </>
-    );
+      <ChoosePricingTable />
+    </>
   }
 
-  const prices = Array.isArray(data?.prices) ? data?.prices[0] : data?.prices;
-  const products = Array.isArray(prices?.products)
-    ? prices?.products[0]
-    : prices?.products;
+
+
   return (
     <div className="space-y-4">
       <div className="space-y-1">
         <H3>Subscription</H3>
-        <p className="text-gray-700 text-base">
-          Subscription details You are currently on the{' '}
-          <span className="text-blue-500">{products?.name} 🎉</span>.
-        </p>
+        <T.P>You are currently on the{' '}
+          <span className="text-blue-500">{subscriptionDetails.title} <span>{subscriptionDetails.sidenote}</span></span>. </T.P>
+        <T.Subtle>{subscriptionDetails.description}</T.Subtle>
       </div>
       {isOrganizationAdmin ? (
         <div className="space-y-2">
@@ -251,7 +222,6 @@ export function OrganizationSubscripionDetails() {
               'inline-flex space-x-1 items-center  justify-center rounded border border-transparent py-2 px-4 text-sm font-medium  shadow-sm focus:outline-none focus:ring-2  focus:ring-offset-2',
               'bg-blue-500 focus:ring-blue-500 hover:bg-blue-600  text-white'
             )}
-            disabled={isLoading}
             onClick={() => {
               mutate({
                 organizationId: organizationId,

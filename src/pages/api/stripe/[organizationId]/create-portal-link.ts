@@ -6,6 +6,8 @@ import { Session, User } from '@supabase/supabase-js';
 import { getURL } from '@/utils/helpers';
 import { stripe } from '@/utils/stripe';
 import { errors } from '@/utils/errors';
+import Stripe from 'stripe';
+import { handleError } from '@/utils/api-routes/handle-error';
 
 async function createCheckoutSession(
   req: NextApiRequest,
@@ -54,16 +56,7 @@ async function createCheckoutSession(
 
       return res.status(200).json({ url });
     } catch (error: unknown) {
-      errors.add(error);
-      if (error instanceof Error) {
-        res
-          .status(500)
-          .json({ error: { statusCode: 500, message: error.message } });
-      } else {
-        res
-          .status(500)
-          .json({ error: { statusCode: 500, message: String(error) } });
-      }
+      handleError(error, res);
     }
   } else {
     res.setHeader('Allow', 'POST');

@@ -60,3 +60,71 @@ export type DropzoneFileWithDuration = DropzoneFile & {
 export type CommentWithUser = Table<'project_comments'> & {
   user_profile: Table<'user_profiles'>;
 };
+
+
+
+export type NoSubscription = {
+  type: 'no-subscription';
+};
+
+export type TrialSubscription = {
+  type: 'trialing';
+  trialStart: string;
+  trialEnd: string;
+  product: Table<'products'>;
+  price: Table<'prices'>;
+  subscription: Table<'subscriptions'>;
+};
+
+export type ActiveSubscription = {
+  type: 'active';
+  product: Table<'products'>;
+  price: Table<'prices'>;
+  subscription: Table<'subscriptions'>;
+};
+
+export type PastDueSubscription = {
+  type: 'past_due';
+  product: Table<'products'>;
+  price: Table<'prices'>;
+  subscription: Table<'subscriptions'>;
+};
+
+export type CanceledSubscription = {
+  type: 'canceled';
+  product: Table<'products'>;
+  price: Table<'prices'>;
+  subscription: Table<'subscriptions'>;
+};
+
+export type PausedSubscription = {
+  type: 'paused';
+  product: Table<'products'>;
+  price: Table<'prices'>;
+  subscription: Table<'subscriptions'>;
+};
+
+export type IncompleteSubscription = {
+  type: 'incomplete';
+  product: Table<'products'>;
+  price: Table<'prices'>;
+  subscription: Table<'subscriptions'>;
+};
+
+export type IncompleteExpiredSubscription = {
+  type: 'incomplete_expired';
+  product: Table<'products'>;
+  price: Table<'prices'>;
+  subscription: Table<'subscriptions'>;
+};
+
+export type UnpaidSubscription = {
+  type: 'unpaid';
+  product: Table<'products'>;
+  price: Table<'prices'>;
+  subscription: Table<'subscriptions'>;
+};
+
+
+
+export type NormalizedSubscription = NoSubscription | TrialSubscription | ActiveSubscription | PastDueSubscription | CanceledSubscription | PausedSubscription | IncompleteSubscription | IncompleteExpiredSubscription | UnpaidSubscription;

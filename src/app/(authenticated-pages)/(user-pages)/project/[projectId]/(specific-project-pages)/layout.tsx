@@ -10,6 +10,7 @@ import { TeamContextProvider } from "@/contexts/TeamContext";
 import { ProjectContextProvider } from "@/contexts/ProjectContext";
 import { Anchor } from "@/components/Anchor";
 import { SpecificProjectClientLayout } from "./SpecificProjectClientLayout";
+import { getNormalizedSubscription } from "@/utils/supabase/subscriptions";
 
 const paramsSchema = z.object({
   projectId: z.string(),
@@ -34,6 +35,7 @@ async function fetchdata(
     organizationRole,
     teamByIdData,
     teamRole,
+    normalizedSubscription
   ] = await Promise.all([
     getOrganizationById(supabase, projectByIdData.organization_id),
     getUserOrganizationRole(
@@ -47,6 +49,7 @@ async function fetchdata(
       sessionResponse.session.user.id,
       projectByIdData.team_id
     ),
+    getNormalizedSubscription(supabase, projectByIdData.organization_id)
   ]);
 
   return {
@@ -55,6 +58,7 @@ async function fetchdata(
     organizationRole,
     teamByIdData,
     teamRole,
+    normalizedSubscription
   }
 
 }
@@ -74,12 +78,14 @@ export default async function ProjectLayout({
     organizationRole,
     teamByIdData,
     teamRole,
+    normalizedSubscription
   } = await fetchdata(
     projectId
   );
   return <OrganizationContextProvider
     organizationRole={organizationRole}
     organizationId={organizationByIdData.id}
+    normalizedSubscription={normalizedSubscription}
     organizationByIdData={organizationByIdData} >
     <TeamContextProvider teamByIdData={teamByIdData} teamId={teamByIdData.id} teamRole={teamRole}>
       <ProjectContextProvider projectByIdData={projectByIdData}>

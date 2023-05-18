@@ -1,11 +1,12 @@
 import { getOrganizationById } from '@/utils/supabase-queries';
 import createClient from '@/utils/supabase-server';
 import { ReactNode } from 'react';
-import { OrganizationLayoutContextProvider } from './OrganizationLayoutContextProvider';
 import { z } from 'zod';
 import { AppSupabaseClient } from '@/types';
 import { getUserOrganizationRole } from '@/utils/supabase/organizations';
 import { notFound } from 'next/navigation';
+import { getNormalizedSubscription } from '@/utils/supabase/subscriptions';
+import { OrganizationContextProvider } from '@/contexts/OrganizationContext';
 
 const paramsSchema = z.object({
   organizationId: z.string(),
@@ -26,6 +27,7 @@ async function fetchData(supabase: AppSupabaseClient, organizationId: string) {
   const [
     organizationByIdData,
     organizationRole,
+    normalizedSubscription
   ] = await Promise.all([
     getOrganizationById(supabase, organizationId),
     getUserOrganizationRole(
@@ -33,11 +35,13 @@ async function fetchData(supabase: AppSupabaseClient, organizationId: string) {
       sessionResponse.session.user.id,
       organizationId
     ),
+    getNormalizedSubscription(supabase, organizationId)
   ]);
 
   return {
     organizationByIdData,
-    organizationRole
+    organizationRole,
+    normalizedSubscription
   };
 }
 
@@ -53,19 +57,21 @@ export default async function Layout({
     const supabase = createClient();
     const {
       organizationByIdData,
-      organizationRole
+      organizationRole,
+      normalizedSubscription
     } = await fetchData(
       supabase,
       organizationId
     );
     return (
-      <OrganizationLayoutContextProvider
+      <OrganizationContextProvider
+        normalizedSubscription={normalizedSubscription}
+        organizationRole={organizationRole}
         organizationId={organizationId}
         organizationByIdData={organizationByIdData}
-        organizationRole={organizationRole}
       >
         {children}
-      </OrganizationLayoutContextProvider>
+      </OrganizationContextProvider>
     );
   } catch (error) {
     console.log(error);

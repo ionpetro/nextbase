@@ -7,6 +7,7 @@ import { getURL } from '@/utils/helpers';
 import { stripe } from '@/utils/stripe';
 import { errors } from '@/utils/errors';
 import { z } from 'zod';
+import { handleError } from '@/utils/api-routes/handle-error';
 
 const requestPayloadSchema = z.object({
   priceId: z.string(),
@@ -119,16 +120,7 @@ async function createCheckoutSession(
         return res.status(200).json({ sessionId: stripeSession.id });
       }
     } catch (error: unknown) {
-      errors.add(error);
-      if (error instanceof Error) {
-        res
-          .status(500)
-          .json({ error: { statusCode: 500, message: error.message } });
-      } else {
-        res
-          .status(500)
-          .json({ error: { statusCode: 500, message: String(error) } });
-      }
+      handleError(error, res);
     }
   } else {
     res.setHeader('Allow', 'POST');

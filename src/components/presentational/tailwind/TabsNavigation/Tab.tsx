@@ -1,3 +1,4 @@
+'use client';
 import { Anchor } from '@/components/Anchor';
 import { usePathname } from 'next/navigation';
 import { TabProps } from './types';

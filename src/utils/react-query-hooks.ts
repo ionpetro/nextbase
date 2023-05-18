@@ -28,6 +28,7 @@ import { toast } from 'react-hot-toast';
 import { useLoggedInUser } from '@/hooks/useLoggedInUser';
 import { uploadPublicUserAvatar } from './supabase-storage-queries';
 import { useRef } from 'react';
+import { getPossibleAxiosErrorMessage } from './getAxiosErrorMessage';
 
 // update organization title mutation
 
@@ -409,6 +410,8 @@ export const useCreateOrganizationCustomerPortalMutation = ({
         onSuccess?.(axiosResponse.data.url);
       },
       onError: (error) => {
+        const errorMessage = getPossibleAxiosErrorMessage(error);
+        toast.error(`Error creating portal link: ${errorMessage}`);
         onError?.(error);
       },
     }
