@@ -52,7 +52,7 @@ export function ClientLayout({
       />
       <div className="flex h-full">
         {isUserAppAdmin && isAppAdminLayout ? <AppAdminSidebar isUserAppAdmin={isUserAppAdmin} userProfile={userProfile} /> : <UserSidebar isUserAppAdmin={isUserAppAdmin} userProfile={userProfile} />}
-        <div className=" flex-1 h-auto max-w-[1296px] overflow-auto">
+        <div className=" flex-1 h-auto overflow-auto">
           <div className=" px-12 py-8 space-y-10">
             {children}
           </div>

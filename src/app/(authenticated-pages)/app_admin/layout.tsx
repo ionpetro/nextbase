@@ -60,7 +60,7 @@ export default async function Layout({
     if (!isUserAppAdmin) {
       return redirect('/dashboard');
     }
-    return <div className="flex-1 h-auto max-w-[1296px] overflow-auto">
+    return <div className="flex-1 h-autooverflow-auto">
       <div className="px-12 py-8 space-y-6">
         <div className="space-y-2">
           <BasicPageHeading
