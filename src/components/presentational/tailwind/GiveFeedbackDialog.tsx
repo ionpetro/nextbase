@@ -8,6 +8,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Enum } from "@/types";
 import { useState } from 'react';
+import { MessageSquareDashed, Voicemail } from 'lucide-react';
 
 type FeedbackType = Enum<'internal_feedback_thread_type'>;
 
@@ -27,7 +28,11 @@ const feedbackSchema = z.object({
 
 type FeedbackFormType = z.infer<typeof feedbackSchema>;
 
-export const GiveFeedbackDialog = () => {
+export const GiveFeedbackDialog = ({
+  isExpanded
+}: {
+  isExpanded: boolean;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const { control, handleSubmit, formState } = useForm<FeedbackFormType>({
     resolver: zodResolver(feedbackSchema),
@@ -51,7 +56,9 @@ export const GiveFeedbackDialog = () => {
       setIsOpen(newIsOpen);
     }}>
       <DialogTrigger>
-        <Button variant='link'>Give Feedback</Button>
+        <Button variant='link'>
+          {isExpanded ? 'Give Feedback' : <MessageSquareDashed />}
+        </Button>
       </DialogTrigger>
 
       <DialogContent>

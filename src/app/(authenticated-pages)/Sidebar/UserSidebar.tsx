@@ -55,7 +55,7 @@ export function UserSidebar({
     />
     <div />
     <div className="space-y-2">
-      <GiveFeedbackDialog />
+      <GiveFeedbackDialog isExpanded={isExpanded} />
       <SidebarBottom
         avatarUrl={avatarUrl}
         userFullname={userProfile.full_name ?? 'User'}
