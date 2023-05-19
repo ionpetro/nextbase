@@ -104,15 +104,18 @@ const copyBillingDetailsToCustomer = async (
 ) => {
   //Todo: check this assertion
   const customer = payment_method.customer as string;
-  const { name, phone, address } = payment_method.billing_details;
-  if (!name || !phone || !address) return;
+  const { name: _name, phone: _phone, address: _address } = payment_method.billing_details;
+  const name = _name ?? undefined;
+  const phone = _phone ?? undefined;
+  const address = _address ?? undefined;
+
   const addressParam: Stripe.AddressParam = {
-    country: address.country ?? undefined,
-    line1: address.line1 ?? undefined,
-    line2: address.line2 ?? undefined,
-    postal_code: address.postal_code ?? undefined,
-    state: address.state ?? undefined,
-    city: address.city ?? undefined,
+    country: address?.country ?? undefined,
+    line1: address?.line1 ?? undefined,
+    line2: address?.line2 ?? undefined,
+    postal_code: address?.postal_code ?? undefined,
+    state: address?.state ?? undefined,
+    city: address?.city ?? undefined,
   }
   await stripe.customers.update(customer, { name, phone, address: addressParam });
   const { error } = await supabaseAdmin
@@ -190,12 +193,57 @@ const manageSubscriptionStatusChange = async (
 
   // For a new subscription copy the billing details to the customer object.
   // NOTE: This is a costly operation and should happen at the very end.
-  if (createAction && subscription.default_payment_method && organizationId)
+  if (subscription.default_payment_method && organizationId)
     await copyBillingDetailsToCustomer(
       organizationId,
       subscription.default_payment_method as Stripe.PaymentMethod
     );
 };
+
+export const updatePaymentMethod = async (
+  paymentMethodId: string,
+  customerId: string
+) => {
+
+  const { data: customerData, error: noCustomerError } = await supabaseAdmin
+    .from('customers')
+    .select('*')
+    .eq('stripe_customer_id', customerId)
+    .single();
+
+  if (noCustomerError) throw noCustomerError;
+
+  const { organization_id: organizationId } = customerData!;
+
+  const paymentMethod = await stripe.paymentMethods.retrieve(paymentMethodId);
+  const billingAddress = paymentMethod.billing_details;
+  const { name: _name, phone: _phone, address: _address } = billingAddress;
+  const address = _address ?? undefined
+  const name = _name ?? undefined
+  const phone = _phone ?? undefined
+  const addressParam: Stripe.AddressParam = {
+    country: address?.country ?? undefined,
+    line1: address?.line1 ?? undefined,
+    line2: address?.line2 ?? undefined,
+    postal_code: address?.postal_code ?? undefined,
+    state: address?.state ?? undefined,
+    city: address?.city ?? undefined,
+  }
+  await stripe.customers.update(customerId, { name, phone, address: addressParam });
+  await stripe.customers.update(customerId, { name, phone, address: addressParam });
+
+  const { error } = await supabaseAdmin
+    .from('organizations_private_info')
+    .update({
+      billing_address: { ...address },
+      payment_method: {
+        ...paymentMethod[paymentMethod.type],
+      },
+    })
+    .eq('id', organizationId);
+  if (error) throw error;
+}
+
 
 export const getUsersPaginated = async (
   pageNumber = 0,

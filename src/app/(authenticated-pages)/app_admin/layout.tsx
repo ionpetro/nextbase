@@ -5,9 +5,9 @@ import { errors } from '@/utils/errors';
 import { getIsAppAdmin } from '@/utils/supabase-queries';
 import createClient from '@/utils/supabase-server';
 import { User } from '@supabase/supabase-js';
-import { DollarSign, FileLineChart } from 'lucide-react';
+import { FileLineChart } from 'lucide-react';
 import { redirect } from 'next/navigation';
-import { FiBarChart, FiBriefcase, FiSettings, FiUsers } from 'react-icons/fi';
+import { FiBriefcase, FiSettings, FiUsers } from 'react-icons/fi';
 
 const tabs = [
   {
