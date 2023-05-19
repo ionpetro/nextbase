@@ -3,7 +3,6 @@ import {
   upsertProductRecord,
   upsertPriceRecord,
   manageSubscriptionStatusChange,
-  updatePaymentMethod,
 } from '@/utils/supabase-admin';
 import { NextApiRequest, NextApiResponse } from 'next';
 import Stripe from 'stripe';
