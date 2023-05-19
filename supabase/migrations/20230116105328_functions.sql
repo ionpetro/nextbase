@@ -16,20 +16,32 @@ END IF;
 END;
 $function$;
 
-CREATE FUNCTION "public"."disable_maintenance_mode"() RETURNS "void" LANGUAGE "plpgsql" SECURITY DEFINER AS $$ BEGIN
+CREATE FUNCTION "public"."disable_maintenance_mode"() RETURNS "void" AS $$ BEGIN IF CURRENT_ROLE NOT IN (
+  'service_role',
+  'supabase_admin',
+  'dashboard_user',
+  'postgres'
+) THEN RAISE EXCEPTION 'Only service_role, supabase_admin, dashboard_user, postgres can execute this function';
+END IF;
 UPDATE app_settings
 SET maintenance_status = 'inactive'
 WHERE TRUE;
 END;
-$$;
+$$ LANGUAGE "plpgsql";
 
 
-CREATE FUNCTION "public"."enable_maintenance_mode"() RETURNS "void" LANGUAGE "plpgsql" SECURITY DEFINER AS $$ BEGIN
+CREATE FUNCTION "public"."enable_maintenance_mode"() RETURNS "void" AS $$ BEGIN IF CURRENT_ROLE NOT IN (
+  'service_role',
+  'supabase_admin',
+  'dashboard_user',
+  'postgres'
+) THEN RAISE EXCEPTION 'Only service_role, supabase_admin, dashboard_user, postgres can execute this function';
+END IF;
 UPDATE app_settings
 SET maintenance_status = 'active'
 WHERE TRUE;
 END;
-$$;
+$$ LANGUAGE "plpgsql";
 
 CREATE FUNCTION "public"."get_organization_admin_ids"("organization_id" "uuid") RETURNS TABLE("member_id" "uuid") LANGUAGE "plpgsql" SECURITY DEFINER AS $$ BEGIN -- This function returns the member_id column for all rows in the organization_members table
 -- where the organization_id column matches the organization_id argument.
@@ -122,18 +134,30 @@ END;
 $$;
 
 
-CREATE FUNCTION "public"."make_user_app_admin"("user_id" "uuid") RETURNS "void" LANGUAGE "plpgsql" SECURITY DEFINER AS $$ BEGIN
+CREATE FUNCTION "public"."make_user_app_admin"("user_id" "uuid") RETURNS "void" AS $$ BEGIN IF CURRENT_ROLE NOT IN (
+  'service_role',
+  'supabase_admin',
+  'dashboard_user',
+  'postgres'
+) THEN RAISE EXCEPTION 'Only service_role, supabase_admin, dashboard_user, postgres can execute this function';
+END IF;
 UPDATE auth.users
 SET is_super_admin = TRUE
 WHERE id = user_id;
 END;
-$$;
+$$ LANGUAGE "plpgsql";
 ALTER FUNCTION "public"."make_user_app_admin"("user_id" "uuid") OWNER TO "postgres";
 
 
-CREATE FUNCTION "public"."remove_app_admin_privilege_for_user"("user_id" "uuid") RETURNS "void" LANGUAGE "plpgsql" SECURITY DEFINER AS $$ BEGIN
+CREATE FUNCTION "public"."remove_app_admin_privilege_for_user"("user_id" "uuid") RETURNS "void" AS $$ BEGIN IF CURRENT_ROLE NOT IN (
+  'service_role',
+  'supabase_admin',
+  'dashboard_user',
+  'postgres'
+) THEN RAISE EXCEPTION 'Only service_role, supabase_admin, dashboard_user, postgres can execute this function';
+END IF;
 UPDATE auth.users
 SET is_super_admin = false
 WHERE id = user_id;
 END;
-$$;
+$$ LANGUAGE "plpgsql";

@@ -36,12 +36,14 @@ CREATE OR REPLACE FUNCTION public.app_admin_get_all_organizations(
     owner_full_name character varying,
     owner_email character varying,
     credits bigint
-  ) LANGUAGE plpgsql SECURITY DEFINER AS $function$ BEGIN RETURN QUERY WITH team_member_counts AS (
-    SELECT organization_id,
-      COUNT(*) AS COUNT
-    FROM public.organization_members
-    GROUP BY organization_id
-  )
+  ) AS $function$ BEGIN IF CURRENT_ROLE <> 'service_role' THEN RAISE EXCEPTION 'Only service_role can execute this function';
+END IF;
+RETURN QUERY WITH team_member_counts AS (
+  SELECT organization_id,
+    COUNT(*) AS COUNT
+  FROM public.organization_members
+  GROUP BY organization_id
+)
 SELECT DISTINCT ON (p."id") p."id",
   p."created_at",
   p."title",
@@ -64,9 +66,33 @@ ORDER BY p."id",
   p."created_at" DESC OFFSET (PAGE - 1) * page_size
 LIMIT page_size;
 END;
-$function$;
+$function$ LANGUAGE plpgsql;
 -- Get all users
 -- This function is used by the app admin to get all users
+CREATE OR REPLACE VIEW public.app_admin_all_users AS
+SELECT u.id,
+  u.email,
+  u.created_at,
+  u.updated_at,
+  user_profiles.full_name,
+  user_profiles.avatar_url,
+  public.check_if_user_is_app_admin(u.id) AS is_app_admin,
+  u.confirmed_at,
+  CASE
+    WHEN u.confirmed_at IS NOT NULL THEN TRUE
+    ELSE false
+  END AS is_confirmed,
+  u.last_sign_in_at
+FROM auth.users AS u
+  JOIN public.user_profiles ON u.id = user_profiles.id
+WHERE (
+    CURRENT_USER = 'service_role'
+    OR CURRENT_USER = 'supabase_admin'
+    OR CURRENT_USER = 'postgres'
+    OR HAS_TABLE_PRIVILEGE(CURRENT_USER, 'auth.users', 'SELECT')
+  );
+;
+
 CREATE OR REPLACE FUNCTION public.app_admin_get_all_users(
     search_query character varying DEFAULT ''::character varying,
     PAGE integer DEFAULT 1,
@@ -80,35 +106,28 @@ CREATE OR REPLACE FUNCTION public.app_admin_get_all_users(
     avatar_url character varying,
     is_app_admin boolean,
     confirmed_at timestamp WITH time zone,
-    is_confirmed boolean
-  ) LANGUAGE plpgsql SECURITY DEFINER AS $function$ BEGIN RETURN QUERY
-SELECT u."id",
-  u."email",
-  u."created_at",
-  u."updated_at",
-  "user_profiles"."full_name",
-  "user_profiles"."avatar_url",
-  (
-    SELECT "public"."check_if_user_is_app_admin"(u."id") AS "check_if_user_is_app_admin"
-  ) AS "is_app_admin",
-  u."confirmed_at",
-  CASE
-    WHEN (u."confirmed_at" IS NOT NULL) THEN TRUE
-    ELSE false
-  END AS "is_confirmed"
-FROM (
-    "auth"."users" AS u
-    JOIN "public"."user_profiles" ON ((u."id" = "user_profiles"."id"))
-  )
+    is_confirmed boolean,
+    last_sign_in_at timestamp WITH time zone
+  ) AS $$ BEGIN IF CURRENT_ROLE NOT IN (
+    'service_role',
+    'supabase_admin',
+    'dashboard_user',
+    'postgres'
+  ) THEN RAISE EXCEPTION 'Only service_role, supabase_admin, dashboard_user, postgres can execute this function';
+END IF;
+RETURN QUERY
+SELECT *
+FROM public.app_admin_all_users
 WHERE (
-    u."id"::TEXT = search_query
-    OR u."email" ILIKE '%' || search_query || '%'
-    OR "user_profiles"."full_name" ILIKE '%' || search_query || '%'
+    app_admin_all_users.id::TEXT = search_query
+    OR app_admin_all_users.email ILIKE '%' || search_query || '%'
+    OR app_admin_all_users.full_name ILIKE '%' || search_query || '%'
   )
-ORDER BY u."created_at" DESC OFFSET (PAGE - 1) * page_size
+ORDER BY app_admin_all_users.created_at DESC OFFSET (PAGE - 1) * page_size
 LIMIT page_size;
 END;
-$function$;
+$$ LANGUAGE plpgsql;
+
 -- Decrement credits
 -- This function is used to decrement credits for an organization
 CREATE OR REPLACE FUNCTION public.decrement_credits(org_id uuid, amount integer) RETURNS void LANGUAGE plpgsql SECURITY DEFINER AS $function$ BEGIN -- Decrement the credits column by the specified amount

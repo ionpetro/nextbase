@@ -10,7 +10,7 @@ type StatusText = {
 export function formatNormalizedSubscription(subscription: NormalizedSubscription): StatusText {
   const currentDate = moment();
   const threeDaysFromNow = moment().add(3, 'days');
-
+  let description = '';
   switch (subscription.type) {
     case 'no-subscription':
       return {
@@ -19,7 +19,7 @@ export function formatNormalizedSubscription(subscription: NormalizedSubscriptio
         description: 'You currently do not have a subscription. Start a free trial now to enjoy all our features!',
       };
     case 'trialing':
-      let description = `Your ${subscription.product.name} Plan trial started on ${moment(subscription.subscription.trial_start).format('MMMM Do, YYYY')} and ends on ${moment(subscription.subscription.trial_end).format('MMMM Do, YYYY')}. Enjoy all the features during this trial period.`;
+      description = `Your ${subscription.product.name} Plan trial started on ${moment(subscription.subscription.trial_start).format('MMMM Do, YYYY')} and ends on ${moment(subscription.subscription.trial_end).format('MMMM Do, YYYY')}. Enjoy all the features during this trial period.`;
       if (subscription.subscription.canceled_at) {
         return {
           title: `${subscription.product.name} Plan`,

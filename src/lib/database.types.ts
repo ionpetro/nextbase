@@ -617,23 +617,38 @@ export interface Database {
       user_profiles: {
         Row: {
           avatar_url: string | null
+          created_at: string
           full_name: string | null
           id: string
         }
         Insert: {
           avatar_url?: string | null
+          created_at?: string
           full_name?: string | null
           id: string
         }
         Update: {
           avatar_url?: string | null
+          created_at?: string
           full_name?: string | null
           id?: string
         }
       }
     }
     Views: {
-      [_ in never]: never
+      app_admin_all_users: {
+        Row: {
+          avatar_url: string | null
+          confirmed_at: string | null
+          created_at: string | null
+          email: string | null
+          full_name: string | null
+          id: string | null
+          is_app_admin: boolean | null
+          is_confirmed: boolean | null
+          updated_at: string | null
+        }
+      }
     }
     Functions: {
       app_admin_get_all_organizations: {
@@ -670,6 +685,43 @@ export interface Database {
           is_confirmed: boolean
         }[]
       }
+      app_admin_get_organizations_created_per_month: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          month: string
+          number_of_organizations: number
+        }[]
+      }
+      app_admin_get_projects_created_per_month: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          month: string
+          number_of_projects: number
+        }[]
+      }
+      app_admin_get_recent_30_day_signin_count: {
+        Args: Record<PropertyKey, never>
+        Returns: number
+      }
+      app_admin_get_total_organization_count: {
+        Args: Record<PropertyKey, never>
+        Returns: number
+      }
+      app_admin_get_total_project_count: {
+        Args: Record<PropertyKey, never>
+        Returns: number
+      }
+      app_admin_get_total_user_count: {
+        Args: Record<PropertyKey, never>
+        Returns: number
+      }
+      app_admin_get_users_created_per_month: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          month: string
+          number_of_users: number
+        }[]
+      }
       check_if_authenticated_user_owns_email: {
         Args: {
           email: string
@@ -696,6 +748,13 @@ export interface Database {
       enable_maintenance_mode: {
         Args: Record<PropertyKey, never>
         Returns: undefined
+      }
+      get_app_admin_organizations_created_per_month: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          month: string
+          number_of_organizations: number
+        }[]
       }
       get_invited_organizations_for_user_v2: {
         Args: {
@@ -813,6 +872,10 @@ export interface Database {
           user_id: string
         }
         Returns: undefined
+      }
+      test_role: {
+        Args: Record<PropertyKey, never>
+        Returns: string
       }
     }
     Enums: {

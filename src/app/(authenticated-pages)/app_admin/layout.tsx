@@ -5,14 +5,15 @@ import { errors } from '@/utils/errors';
 import { getIsAppAdmin } from '@/utils/supabase-queries';
 import createClient from '@/utils/supabase-server';
 import { User } from '@supabase/supabase-js';
+import { DollarSign, FileLineChart } from 'lucide-react';
 import { redirect } from 'next/navigation';
-import { FiBriefcase, FiSettings, FiUsers } from 'react-icons/fi';
+import { FiBarChart, FiBriefcase, FiSettings, FiUsers } from 'react-icons/fi';
 
 const tabs = [
   {
-    label: 'Application Settings',
+    label: 'Admin Dashboard',
     href: `/app_admin`,
-    icon: <FiSettings />,
+    icon: <FileLineChart />,
   },
   {
     label: 'Users',
@@ -24,6 +25,11 @@ const tabs = [
     href: `/app_admin/organizations`,
     icon: <FiBriefcase />,
   },
+  {
+    label: 'Application Settings',
+    href: `/app_admin/settings`,
+    icon: <FiSettings />,
+  }
 ]
 
 async function fetchData(supabaseClient: AppSupabaseClient, authUser: User) {

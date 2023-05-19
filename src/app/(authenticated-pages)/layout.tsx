@@ -7,6 +7,12 @@ import { errors } from '@/utils/errors';
 import { ReactNode } from 'react';
 import { redirect } from 'next/navigation';
 
+
+// do not cache this layout
+export const dynamic = 'force-dynamic';
+export const fetchCache = 'only-no-store';
+
+
 async function fetchData(supabaseClient: AppSupabaseClient, authUser: User) {
   const [isUserAppAdmin, userProfile] = await Promise.all([
     getIsAppAdmin(supabaseClient, authUser),
@@ -18,10 +24,8 @@ async function fetchData(supabaseClient: AppSupabaseClient, authUser: User) {
 
 export default async function Layout({
   children,
-  sidebar
 }: {
   children: ReactNode;
-  sidebar: ReactNode
 }) {
   const supabase = createClient();
   const { data, error } = await supabase.auth.getUser();
@@ -42,7 +46,7 @@ export default async function Layout({
     );
 
     return (
-      <ClientLayout sidebar={sidebar} isUserAppAdmin={isUserAppAdmin} userProfile={userProfile}>
+      <ClientLayout isUserAppAdmin={isUserAppAdmin} userProfile={userProfile}>
         {children}
       </ClientLayout>
     );

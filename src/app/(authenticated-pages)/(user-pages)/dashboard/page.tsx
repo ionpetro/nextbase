@@ -21,6 +21,7 @@ const fetchData = async (supabaseClient: AppSupabaseClient) => {
 
 export default async function DashboardPage() {
   const supabase = createClient();
+
   const { initialOrganizationsList, pendingInvitations } = await fetchData(
     supabase
   ); return (

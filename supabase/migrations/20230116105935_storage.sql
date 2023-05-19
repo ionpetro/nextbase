@@ -108,19 +108,3 @@ SELECT USING (bucket_id = 'public-assets');
 
 INSERT INTO app_settings (id)
 VALUES (1) ON CONFLICT DO NOTHING;
-
-
-GRANT EXECUTE ON FUNCTION public.make_user_app_admin(uuid) TO PUBLIC;
-REVOKE EXECUTE ON FUNCTION public.make_user_app_admin(uuid)
-FROM anon;
-REVOKE EXECUTE ON FUNCTION public.make_user_app_admin(uuid)
-FROM authenticated;
-GRANT EXECUTE ON FUNCTION public.make_user_app_admin(uuid) TO postgres;
-GRANT EXECUTE ON FUNCTION public.make_user_app_admin(uuid) TO service_role;
-GRANT EXECUTE ON FUNCTION public.remove_app_admin_privilege_for_user(uuid) TO PUBLIC;
-REVOKE EXECUTE ON FUNCTION public.remove_app_admin_privilege_for_user(uuid)
-FROM anon;
-REVOKE EXECUTE ON FUNCTION public.remove_app_admin_privilege_for_user(uuid)
-FROM authenticated;
-GRANT EXECUTE ON FUNCTION public.remove_app_admin_privilege_for_user(uuid) TO postgres;
-GRANT EXECUTE ON FUNCTION public.remove_app_admin_privilege_for_user(uuid) TO service_role;
