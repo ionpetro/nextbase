@@ -39,7 +39,7 @@ export function UserSidebar({
   >
     <div >
       <Anchor
-        href="/app_admin"
+        href="/dashboard"
         className={nextbaseIconClassName}
       >
         <Image width={28} src={Logo} alt="Logo Login" />
