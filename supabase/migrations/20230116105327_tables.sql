@@ -24,8 +24,7 @@ ALTER TABLE "public"."organizations" OWNER TO "postgres";
 CREATE TABLE "public"."user_profiles" (
   "id" "uuid" NOT NULL,
   "full_name" character varying,
-  "avatar_url" character varying,
-  "created_at" timestamp WITH time zone DEFAULT "now"() NOT NULL,
+  "avatar_url" character varying "created_at" timestamp WITH time zone DEFAULT "now"() NOT NULL,
 );
 ALTER TABLE "public"."user_profiles" OWNER TO "postgres";
 CREATE TABLE "public"."app_settings" (
@@ -310,4 +309,4 @@ ALTER TABLE ONLY "public"."user_profiles"
 ADD CONSTRAINT "user_profiles_id_fkey" FOREIGN KEY ("id") REFERENCES "auth"."users"("id");
 --
 -- Name: products Active products are visible to everyone; Type: POLICY; Schema: public; Owner: postgres
-- -
+--
