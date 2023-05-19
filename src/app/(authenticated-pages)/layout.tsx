@@ -29,15 +29,15 @@ export default async function Layout({
 }) {
   const supabase = createClient();
   const { data, error } = await supabase.auth.getUser();
-  if (error) {
-    errors.add(error);
-    return <p>Error: An error occurred.</p>;
-  }
+
   if (!data.user) {
     // This is unreachable because the user is authenticated
     // But we need to check for it anyway for TypeScript.
     return redirect('/check-auth');
+  } else if (error) {
+    return <p>Error: An error occurred.</p>;
   }
+
 
   try {
     const { isUserAppAdmin, userProfile } = await fetchData(
