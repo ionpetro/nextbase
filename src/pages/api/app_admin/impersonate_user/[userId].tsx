@@ -51,10 +51,10 @@ const ImpersonateUser = async (
 
       if (process.env.NEXT_PUBLIC_SITE_URL !== undefined) {
         // change the origin of the link to the site url
-        const dashboardUrl = new URL(process.env.NEXT_PUBLIC_SITE_URL);
-        dashboardUrl.pathname = '/dashboard';
+        const checkAuthUrl = new URL(process.env.NEXT_PUBLIC_SITE_URL);
+        checkAuthUrl.pathname = '/check-auth';
         const url = new URL(action_link);
-        url.searchParams.set('redirect_to', dashboardUrl.toString());
+        url.searchParams.set('redirect_to', checkAuthUrl.toString());
         res.json({
           url,
         });
