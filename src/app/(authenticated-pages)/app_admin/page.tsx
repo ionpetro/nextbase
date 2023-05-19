@@ -121,17 +121,38 @@ async function getTotalProjectsCount() {
 
 async function getOrganizationCountByMonth() {
   const { data } = await supabaseAdmin.rpc('app_admin_get_organizations_created_per_month');
-  return data ?? [];
+  if (!data) {
+    return []
+  }
+  const formattedData = data.map((d) => ({
+    ...d,
+    month: new Date(d.month).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }),
+  }));
+  return formattedData
 }
 
 async function getProjectCountByMonth() {
   const { data } = await supabaseAdmin.rpc('app_admin_get_projects_created_per_month');
-  return data ?? [];
+  if (!data) {
+    return []
+  }
+  const formattedData = data.map((d) => ({
+    ...d,
+    month: new Date(d.month).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }),
+  }));
+  return formattedData
 }
 
 async function getUserCountByMonth() {
   const { data } = await supabaseAdmin.rpc('app_admin_get_users_created_per_month');
-  return data ?? [];
+  if (!data) {
+    return []
+  }
+  const formattedData = data.map((d) => ({
+    ...d,
+    month: new Date(d.month).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }),
+  }));
+  return formattedData
 }
 
 async function getActiveUsers() {
