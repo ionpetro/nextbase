@@ -10,6 +10,7 @@ import { Table } from "@/types";
 import { useUserProfile } from "@/utils/react-queries/user";
 import { getUserAvatarUrl } from "@/utils/helpers";
 import { useLoggedInUserEmail } from "@/hooks/useLoggedInUserEmail";
+import { GiveFeedbackDialog } from "@/components/presentational/tailwind/GiveFeedbackDialog";
 
 export function UserSidebar({
   isUserAppAdmin,
@@ -53,11 +54,14 @@ export function UserSidebar({
       toggleIsExpanded={toggleIsExpanded}
     />
     <div />
-    <SidebarBottom
-      avatarUrl={avatarUrl}
-      userFullname={userProfile.full_name ?? 'User'}
-      isExpanded={isExpanded}
-      userEmail={userEmail}
-    />
+    <div className="space-y-2">
+      <GiveFeedbackDialog />
+      <SidebarBottom
+        avatarUrl={avatarUrl}
+        userFullname={userProfile.full_name ?? 'User'}
+        isExpanded={isExpanded}
+        userEmail={userEmail}
+      />
+    </div>
   </div>;
 }
