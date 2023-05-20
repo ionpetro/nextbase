@@ -3,7 +3,7 @@ import nextra from 'nextra';
 
 const withNextra = nextra({
   theme: 'nextra-theme-docs',
-  themeConfig: './src/pages/theme.config.tsx',
+  themeConfig: './src/nextra/theme.config.tsx',
   staticImage: true,
   latex: true,
   flexsearch: {
