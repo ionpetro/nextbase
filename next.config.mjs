@@ -1,6 +1,18 @@
 /** @type {import('next').NextConfig} */
+import nextra from 'nextra';
 
-export default {
+const withNextra = nextra({
+  theme: 'nextra-theme-docs',
+  themeConfig: './src/pages/theme.config.tsx',
+  staticImage: true,
+  latex: true,
+  flexsearch: {
+    codeblocks: false,
+  },
+  defaultShowCopyCode: true,
+});
+
+export default withNextra({
   images: {
     remotePatterns: [
       {
@@ -33,4 +45,4 @@ export default {
 
     return config;
   },
-};
+});

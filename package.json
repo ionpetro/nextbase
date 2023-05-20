@@ -49,6 +49,8 @@
     "lucide-react": "^0.206.0",
     "moment": "^2.29.4",
     "next": "^13.4.1",
+    "nextra": "^2.5.2",
+    "nextra-theme-docs": "^2.5.2",
     "nprogress": "^0.2.0",
     "path-to-regexp": "^6.2.1",
     "react": "^18.2.0",
