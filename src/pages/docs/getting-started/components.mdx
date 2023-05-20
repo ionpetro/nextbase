@@ -8,23 +8,6 @@ let a = 1;
 console.log(a);
 ```
 
-## Component
-
-{/* Import CSS modules */}
-import styles from '@/nextra/components/counters.module.css'
-
-export const Counter = () => {
-  return (
-    <div>
-      <button onClick={() => console.log('hey')} className={styles.counter}>
-        Hey
-      </button>
-    </div>
-  );
-};
-
-<Counter />
-
 ## External Component
 
 import Counters from '@/nextra/components/counters';
