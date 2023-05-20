@@ -11,12 +11,12 @@ async function fetchTeams(organizationId: string) {
 
 const paramsSchema = z.object({
   organizationId: z.string(),
-})
+});
 
 export default async function OrganizationPage({
-  params
+  params,
 }: {
-  params: z.infer<typeof paramsSchema>
+  params: z.infer<typeof paramsSchema>;
 }) {
   // Add dashed border
   const { organizationId } = paramsSchema.parse(params);

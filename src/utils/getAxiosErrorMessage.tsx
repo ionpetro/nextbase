@@ -1,7 +1,11 @@
-import { AxiosError } from "axios";
+import { AxiosError } from 'axios';
 
 function isAxiosError(error: any): error is AxiosError<Error> {
-  return error.isAxiosError && error.response.data && 'message' in error.response.data;
+  return (
+    error.isAxiosError &&
+    error.response.data &&
+    'message' in error.response.data
+  );
 }
 
 export function getPossibleAxiosErrorMessage(error: unknown): string {
@@ -20,5 +24,4 @@ export function getPossibleAxiosErrorMessage(error: unknown): string {
     }
     return errMsg;
   }
-
 }

@@ -9,9 +9,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/Dialog';
 import { T } from '@/components/ui/Typography';
-import {
-  useAddUserToProjectTeam,
-} from '@/utils/react-queries/teams';
+import { useAddUserToProjectTeam } from '@/utils/react-queries/teams';
 
 import { Plus } from 'lucide-react';
 import { useState } from 'react';
@@ -51,22 +49,22 @@ export const AddUserToTeamDialog = () => {
     isOrganizationTeamMembersDataLoading || !organizationTeamMembers
       ? []
       : organizationTeamMembers.map((member) => {
-        const userProfile = Array.isArray(member.user_profiles)
-          ? member.user_profiles[0]
-          : member.user_profiles;
-        if (!userProfile) {
-          throw new Error('User profile not found');
-        }
-        return {
-          value: userProfile.id,
-          label: userProfile.full_name ?? userProfile.id,
-        };
-      });
+          const userProfile = Array.isArray(member.user_profiles)
+            ? member.user_profiles[0]
+            : member.user_profiles;
+          if (!userProfile) {
+            throw new Error('User profile not found');
+          }
+          return {
+            value: userProfile.id,
+            label: userProfile.full_name ?? userProfile.id,
+          };
+        });
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="gap-1" >
+        <Button className="gap-1">
           <Plus size="16" /> <span>Add User</span>
         </Button>
       </DialogTrigger>
@@ -131,11 +129,7 @@ export const AddUserToTeamDialog = () => {
             ></Controller>
           </div>
           <DialogFooter>
-            <Button
-              type="submit"
-
-              disabled={!formState.isValid}
-            >
+            <Button type="submit" disabled={!formState.isValid}>
               Yes, add to team
             </Button>
             <Button

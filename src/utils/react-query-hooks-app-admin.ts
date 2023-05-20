@@ -6,9 +6,7 @@ import {
   ADMIN_ORGANIZATION_LIST_VIEW_PAGE_SIZE,
   ADMIN_USER_LIST_VIEW_PAGE_SIZE,
 } from '@/constants';
-import {
-  UnwrapPromise,
-} from '@/types';
+import { UnwrapPromise } from '@/types';
 import {
   useInfiniteQuery,
   useQuery,

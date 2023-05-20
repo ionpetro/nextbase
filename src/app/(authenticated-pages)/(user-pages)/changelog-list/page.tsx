@@ -1,5 +1,5 @@
-import BasicPageHeading from "@/components/ui/Headings/BasicPageHeading";
-import ChangeLogListCard from "@/components/ui/ChangeLog/ChangeLogListCard";
+import BasicPageHeading from '@/components/ui/Headings/BasicPageHeading';
+import ChangeLogListCard from '@/components/ui/ChangeLog/ChangeLogListCard';
 
 export default function Page() {
   return (

@@ -1,6 +1,9 @@
 import { Stripe } from 'stripe';
 
-export async function isCustomerInFreeTrial(stripe: Stripe, customerId: string): Promise<boolean> {
+export async function isCustomerInFreeTrial(
+  stripe: Stripe,
+  customerId: string
+): Promise<boolean> {
   const customer = await stripe.customers.retrieve(customerId);
   const subscription = await stripe.subscriptions.list({
     customer: customer.id,
@@ -10,7 +13,10 @@ export async function isCustomerInFreeTrial(stripe: Stripe, customerId: string):
   return subscription.data.length > 0;
 }
 
-export async function hasCustomerSubscription(stripe: Stripe, customerId: string): Promise<boolean> {
+export async function hasCustomerSubscription(
+  stripe: Stripe,
+  customerId: string
+): Promise<boolean> {
   const subscriptions = await stripe.subscriptions.list({
     customer: customerId,
     status: 'all',
@@ -19,7 +25,10 @@ export async function hasCustomerSubscription(stripe: Stripe, customerId: string
   return subscriptions.data.length > 0;
 }
 
-export async function daysLeftInTrial(stripe: Stripe, customerId: string): Promise<number | null> {
+export async function daysLeftInTrial(
+  stripe: Stripe,
+  customerId: string
+): Promise<number | null> {
   const subscriptions = await stripe.subscriptions.list({
     customer: customerId,
     status: 'trialing',
@@ -32,9 +41,10 @@ export async function daysLeftInTrial(stripe: Stripe, customerId: string): Promi
   const trialEnd = subscriptions.data[0].trial_end;
   const currentTime = Math.floor(Date.now() / 1000);
 
-  return trialEnd ? Math.max(Math.ceil((trialEnd - currentTime) / 86400), 0) : null;
+  return trialEnd
+    ? Math.max(Math.ceil((trialEnd - currentTime) / 86400), 0)
+    : null;
 }
-
 
 export async function startFreeTrial(
   stripe: Stripe,

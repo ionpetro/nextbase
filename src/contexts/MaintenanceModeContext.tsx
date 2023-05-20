@@ -19,7 +19,8 @@ export function MaintenanceModeContextProvider({
   );
   // THIS is a hack to bypass the ts error as
   // the _isInMaintenanceMode is never null since there is an initial value
-  const isInMaintenanceMode = _isInMaintenanceMode ?? initialIsAppInMaintenanceMode;
+  const isInMaintenanceMode =
+    _isInMaintenanceMode ?? initialIsAppInMaintenanceMode;
   return (
     <MaintenanceModeContext.Provider value={isInMaintenanceMode}>
       {children}

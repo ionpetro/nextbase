@@ -1,24 +1,23 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/Button";
-import BasicPageHeading from "@/components/ui/Headings/BasicPageHeading";
-import ChangeLogListCard from "@/components/ui/ChangeLog/ChangeLogListCard";
-import LargeSectionHeading from "@/components/ui/Headings/LargeSectionHeading";
+import { Button } from '@/components/ui/Button';
+import BasicPageHeading from '@/components/ui/Headings/BasicPageHeading';
+import ChangeLogListCard from '@/components/ui/ChangeLog/ChangeLogListCard';
+import LargeSectionHeading from '@/components/ui/Headings/LargeSectionHeading';
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-} from "@/components/ui/DropdownMenu";
+} from '@/components/ui/DropdownMenu';
 
-import { AiOutlineFilter } from "react-icons/ai";
-import { useState } from "react";
-import InternalRoadmapCard from "@/components/ui/Card/InternalRoadmapCard";
+import { AiOutlineFilter } from 'react-icons/ai';
+import { useState } from 'react';
+import InternalRoadmapCard from '@/components/ui/Card/InternalRoadmapCard';
 
 export default function Page() {
   return (
     <div className="space-y-10">
-
       {/* Create Changelog Page */}
       <BasicPageHeading
         heading="Create Changelog"
@@ -28,7 +27,7 @@ export default function Page() {
       {/* Content Page */}
       <div
         className="grid grid-cols-2 gap-10 "
-        style={{ gridTemplateColumns: "768px auto" }}
+        style={{ gridTemplateColumns: '768px auto' }}
       >
         <div>
           {/* Create Changelog Card */}

@@ -1,24 +1,25 @@
-import { OrganizationContextProvider } from "@/contexts/OrganizationContext";
-import { AppSupabaseClient } from "@/types";
-import { getOrganizationById, getUserOrganizationRole } from "@/utils/supabase/organizations";
-import { getProjectById } from "@/utils/supabase/projects";
-import { getTeamById, getUserTeamRole } from "@/utils/supabase/teams";
-import { ReactNode } from "react";
-import { z } from "zod";
+import { OrganizationContextProvider } from '@/contexts/OrganizationContext';
+import { AppSupabaseClient } from '@/types';
+import {
+  getOrganizationById,
+  getUserOrganizationRole,
+} from '@/utils/supabase/organizations';
+import { getProjectById } from '@/utils/supabase/projects';
+import { getTeamById, getUserTeamRole } from '@/utils/supabase/teams';
+import { ReactNode } from 'react';
+import { z } from 'zod';
 import createClient from '@/utils/supabase-server';
-import { TeamContextProvider } from "@/contexts/TeamContext";
-import { ProjectContextProvider } from "@/contexts/ProjectContext";
-import { Anchor } from "@/components/Anchor";
-import { SpecificProjectClientLayout } from "./SpecificProjectClientLayout";
-import { getNormalizedSubscription } from "@/utils/supabase/subscriptions";
+import { TeamContextProvider } from '@/contexts/TeamContext';
+import { ProjectContextProvider } from '@/contexts/ProjectContext';
+import { Anchor } from '@/components/Anchor';
+import { SpecificProjectClientLayout } from './SpecificProjectClientLayout';
+import { getNormalizedSubscription } from '@/utils/supabase/subscriptions';
 
 const paramsSchema = z.object({
   projectId: z.string(),
 });
 
-async function fetchdata(
-  projectId: string
-) {
+async function fetchdata(projectId: string) {
   const supabase = createClient();
   const { data: sessionResponse, error: userError } =
     await supabase.auth.getSession();
@@ -35,7 +36,7 @@ async function fetchdata(
     organizationRole,
     teamByIdData,
     teamRole,
-    normalizedSubscription
+    normalizedSubscription,
   ] = await Promise.all([
     getOrganizationById(supabase, projectByIdData.organization_id),
     getUserOrganizationRole(
@@ -49,7 +50,7 @@ async function fetchdata(
       sessionResponse.session.user.id,
       projectByIdData.team_id
     ),
-    getNormalizedSubscription(supabase, projectByIdData.organization_id)
+    getNormalizedSubscription(supabase, projectByIdData.organization_id),
   ]);
 
   return {
@@ -58,18 +59,16 @@ async function fetchdata(
     organizationRole,
     teamByIdData,
     teamRole,
-    normalizedSubscription
-  }
-
+    normalizedSubscription,
+  };
 }
-
 
 export default async function ProjectLayout({
   params,
-  children
+  children,
 }: {
   children: ReactNode;
-  params: any
+  params: any;
 }) {
   const { projectId } = paramsSchema.parse(params);
   const {
@@ -78,21 +77,24 @@ export default async function ProjectLayout({
     organizationRole,
     teamByIdData,
     teamRole,
-    normalizedSubscription
-  } = await fetchdata(
-    projectId
+    normalizedSubscription,
+  } = await fetchdata(projectId);
+  return (
+    <OrganizationContextProvider
+      organizationRole={organizationRole}
+      organizationId={organizationByIdData.id}
+      normalizedSubscription={normalizedSubscription}
+      organizationByIdData={organizationByIdData}
+    >
+      <TeamContextProvider
+        teamByIdData={teamByIdData}
+        teamId={teamByIdData.id}
+        teamRole={teamRole}
+      >
+        <ProjectContextProvider projectByIdData={projectByIdData}>
+          <SpecificProjectClientLayout>{children}</SpecificProjectClientLayout>
+        </ProjectContextProvider>
+      </TeamContextProvider>
+    </OrganizationContextProvider>
   );
-  return <OrganizationContextProvider
-    organizationRole={organizationRole}
-    organizationId={organizationByIdData.id}
-    normalizedSubscription={normalizedSubscription}
-    organizationByIdData={organizationByIdData} >
-    <TeamContextProvider teamByIdData={teamByIdData} teamId={teamByIdData.id} teamRole={teamRole}>
-      <ProjectContextProvider projectByIdData={projectByIdData}>
-        <SpecificProjectClientLayout>
-          {children}
-        </SpecificProjectClientLayout>
-      </ProjectContextProvider>
-    </TeamContextProvider>
-  </OrganizationContextProvider>;
 }

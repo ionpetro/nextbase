@@ -7,7 +7,11 @@ async function getCurrentMRR() {
   startOfMonth.setDate(1);
   startOfMonth.setHours(0, 0, 0, 0);
 
-  const endOfMonth = new Date(startOfMonth.getFullYear(), startOfMonth.getMonth() + 1, 1);
+  const endOfMonth = new Date(
+    startOfMonth.getFullYear(),
+    startOfMonth.getMonth() + 1,
+    1
+  );
 
   const subscriptions = await stripe.subscriptions.list({
     created: {
@@ -20,7 +24,10 @@ async function getCurrentMRR() {
   let mrr = 0;
   subscriptions.data.forEach((sub) => {
     if (sub.status === 'active' || sub.status === 'trialing') {
-      mrr += ((sub.items.data[0].price.unit_amount ?? 0) * (sub.items.data[0].quantity ?? 0)) / 100;
+      mrr +=
+        ((sub.items.data[0].price.unit_amount ?? 0) *
+          (sub.items.data[0].quantity ?? 0)) /
+        100;
     }
   });
 
@@ -33,11 +40,19 @@ async function getMRR() {
   startDate.setDate(1);
   startDate.setHours(0, 0, 0, 0);
 
-  const monthlyMRR: { month: string, mrr: string }[] = [];
+  const monthlyMRR: { month: string; mrr: string }[] = [];
 
   for (let i = 0; i <= 12; i++) {
-    const startOfMonth = new Date(startDate.getFullYear(), startDate.getMonth() + i, 1);
-    const endOfMonth = new Date(startDate.getFullYear(), startDate.getMonth() + i + 1, 1);
+    const startOfMonth = new Date(
+      startDate.getFullYear(),
+      startDate.getMonth() + i,
+      1
+    );
+    const endOfMonth = new Date(
+      startDate.getFullYear(),
+      startDate.getMonth() + i + 1,
+      1
+    );
 
     const subscriptions = await stripe.subscriptions.list({
       created: {
@@ -50,12 +65,18 @@ async function getMRR() {
     let mrr = 0;
     subscriptions.data.forEach((sub) => {
       if (sub.status === 'active' || sub.status === 'trialing') {
-        mrr += ((sub.items.data[0].price.unit_amount ?? 0) * (sub.items.data[0].quantity ?? 0)) / 100;
+        mrr +=
+          ((sub.items.data[0].price.unit_amount ?? 0) *
+            (sub.items.data[0].quantity ?? 0)) /
+          100;
       }
     });
 
     monthlyMRR.push({
-      month: startOfMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }),
+      month: startOfMonth.toLocaleDateString('en-US', {
+        month: 'long',
+        year: 'numeric',
+      }),
       mrr: mrr.toFixed(2),
     });
   }
@@ -75,8 +96,16 @@ async function getChurnRate() {
   }> = [];
 
   for (let i = 0; i <= 12; i++) {
-    const startOfMonth = new Date(startDate.getFullYear(), startDate.getMonth() + i, 1);
-    const endOfMonth = new Date(startDate.getFullYear(), startDate.getMonth() + i + 1, 1);
+    const startOfMonth = new Date(
+      startDate.getFullYear(),
+      startDate.getMonth() + i,
+      1
+    );
+    const endOfMonth = new Date(
+      startDate.getFullYear(),
+      startDate.getMonth() + i + 1,
+      1
+    );
 
     const subscriptionsCreated = await stripe.subscriptions.list({
       created: {
@@ -91,10 +120,14 @@ async function getChurnRate() {
     );
 
     const churnRate =
-      (canceledSubscriptions.length / (subscriptionsCreated.data.length || 1)) * 100;
+      (canceledSubscriptions.length / (subscriptionsCreated.data.length || 1)) *
+      100;
 
     monthlyChurnRates.push({
-      month: startOfMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }),
+      month: startOfMonth.toLocaleDateString('en-US', {
+        month: 'long',
+        year: 'numeric',
+      }),
       churnRate: churnRate.toFixed(2),
     });
   }
@@ -102,29 +135,25 @@ async function getChurnRate() {
   return monthlyChurnRates;
 }
 
-
-
 export default async function Payments() {
   const churnRate = await getChurnRate();
   const mrr = await getMRR();
-  return <div className="space-y-4">
-    <div className="grid grid-cols-3">
-      <div className="space-y-2">
-        <T.H3>Churn Rate</T.H3>
-        <pre>
-          {JSON.stringify(churnRate, null, 2)}
-        </pre>
-      </div>
-      <div className="space-y-2">
-        <T.H3>MRR</T.H3>
-        <pre>
-          {JSON.stringify(mrr, null, 2)}
-        </pre>
-      </div>
-      <div className="space-y-2">
-        <T.H3>Current MRR</T.H3>
-        <span>{await getCurrentMRR()}</span>
+  return (
+    <div className="space-y-4">
+      <div className="grid grid-cols-3">
+        <div className="space-y-2">
+          <T.H3>Churn Rate</T.H3>
+          <pre>{JSON.stringify(churnRate, null, 2)}</pre>
+        </div>
+        <div className="space-y-2">
+          <T.H3>MRR</T.H3>
+          <pre>{JSON.stringify(mrr, null, 2)}</pre>
+        </div>
+        <div className="space-y-2">
+          <T.H3>Current MRR</T.H3>
+          <span>{await getCurrentMRR()}</span>
+        </div>
       </div>
     </div>
-  </div>
+  );
 }

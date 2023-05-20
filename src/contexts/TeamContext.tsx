@@ -2,7 +2,10 @@
 import { createContext, useContext } from 'react';
 import { useOrganizationContext } from './OrganizationContext';
 import { Enum, Table } from '@/types';
-import { useGetUserTeamRole, useGetTeamById } from '@/utils/react-queries/teams';
+import {
+  useGetUserTeamRole,
+  useGetTeamById,
+} from '@/utils/react-queries/teams';
 
 type TeamContextType = {
   teamId: number;
@@ -32,16 +35,13 @@ export function TeamContextProvider({
   teamRole: Enum<'project_team_member_role'> | null;
   teamByIdData: Table<'teams'>;
 }) {
-
   const { organizationRole } = useOrganizationContext();
 
   const { data: _teamRoleData } = useGetUserTeamRole(teamId, {
     initialUserTeamRole: teamRoleProp,
   });
 
-  const {
-    data: _teamByIdData,
-  } = useGetTeamById(teamId, teamByIdDataProp);
+  const { data: _teamByIdData } = useGetTeamById(teamId, teamByIdDataProp);
 
   // These are just workarounds to get around typescript complaining about
   // the data being null. It's not null, but typescript doesn't know that.

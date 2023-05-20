@@ -20,10 +20,7 @@ export function ProjectTeamMembersTable({
   teamId: number;
 }) {
   const { canUserManageTeam } = useTeamContext();
-  const { data: teamMembers } = useGetTeamMembers(
-    teamId,
-    teamMembersInitial
-  );
+  const { data: teamMembers } = useGetTeamMembers(teamId, teamMembersInitial);
   const { mutate: updateRole } = useUpdateUserRoleInTeam();
   const { mutate: removeUser } = useRemoveUserFromTeam();
   if (!teamMembers) {

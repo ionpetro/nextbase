@@ -1,4 +1,4 @@
-import { AppSupabaseClient } from "@/types";
+import { AppSupabaseClient } from '@/types';
 
 export const getUserPendingInvitationsByEmail = async (
   supabase: AppSupabaseClient,

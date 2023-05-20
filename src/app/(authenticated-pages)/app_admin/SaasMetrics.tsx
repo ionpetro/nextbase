@@ -10,12 +10,12 @@ import {
   Tooltip,
   Area,
   AreaChart,
-} from "recharts";
-import { ContentType } from "recharts/types/component/Tooltip";
+} from 'recharts';
+import { ContentType } from 'recharts/types/component/Tooltip';
 import {
   NameType,
   ValueType,
-} from "recharts/types/component/DefaultTooltipContent";
+} from 'recharts/types/component/DefaultTooltipContent';
 
 const CustomTooltip: ContentType<ValueType, NameType> = ({
   active,
@@ -34,27 +34,33 @@ const CustomTooltip: ContentType<ValueType, NameType> = ({
   return null;
 };
 
-export function SaaSMetricsGraphs({ churnRateData, mrrData, organizationCountByMonth, projectCountByMonth, userCountByMonth }: {
+export function SaaSMetricsGraphs({
+  churnRateData,
+  mrrData,
+  organizationCountByMonth,
+  projectCountByMonth,
+  userCountByMonth,
+}: {
   churnRateData: Array<{
-    month: string,
-    churnRate: string,
-  }>,
+    month: string;
+    churnRate: string;
+  }>;
   mrrData: Array<{
-    month: string,
-    mrr: string,
-  }>,
+    month: string;
+    mrr: string;
+  }>;
   organizationCountByMonth: Array<{
-    month: string,
-    number_of_organizations: number,
-  }>,
+    month: string;
+    number_of_organizations: number;
+  }>;
   projectCountByMonth: Array<{
-    month: string,
-    number_of_projects: number,
-  }>,
+    month: string;
+    number_of_projects: number;
+  }>;
   userCountByMonth: Array<{
-    month: string,
-    number_of_users: number,
-  }>,
+    month: string;
+    number_of_users: number;
+  }>;
 }) {
   return (
     <div>
@@ -65,9 +71,7 @@ export function SaaSMetricsGraphs({ churnRateData, mrrData, organizationCountByM
               <h2 className="text-xl font-bold text-slate-900">
                 Churn Rate Analytics
               </h2>
-              <p className="text-base text-slate-500">
-                Monthly churn rate
-              </p>
+              <p className="text-base text-slate-500">Monthly churn rate</p>
             </div>
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart
@@ -83,7 +87,12 @@ export function SaaSMetricsGraphs({ churnRateData, mrrData, organizationCountByM
                 <XAxis dataKey="month" />
                 <YAxis />
                 <Tooltip content={CustomTooltip} />
-                <Area type="monotone" dataKey="churnRate" stroke="#3B81F5" fill="url(#colorGradient)" />
+                <Area
+                  type="monotone"
+                  dataKey="churnRate"
+                  stroke="#3B81F5"
+                  fill="url(#colorGradient)"
+                />
                 <defs>
                   <linearGradient
                     id="colorGradient"
@@ -125,7 +134,12 @@ export function SaaSMetricsGraphs({ churnRateData, mrrData, organizationCountByM
                 <XAxis dataKey="month" />
                 <YAxis />
                 <Tooltip content={CustomTooltip} />
-                <Area type="monotone" dataKey="mrr" stroke="#3B81F5" fill="url(#colorGradient)" />
+                <Area
+                  type="monotone"
+                  dataKey="mrr"
+                  stroke="#3B81F5"
+                  fill="url(#colorGradient)"
+                />
                 <defs>
                   <linearGradient
                     id="colorGradient"
@@ -166,7 +180,12 @@ export function SaaSMetricsGraphs({ churnRateData, mrrData, organizationCountByM
                 <XAxis dataKey="month" />
                 <YAxis />
                 <Tooltip content={CustomTooltip} />
-                <Area type="monotone" dataKey="number_of_organizations" stroke="#3B81F5" fill="url(#colorGradient)" />
+                <Area
+                  type="monotone"
+                  dataKey="number_of_organizations"
+                  stroke="#3B81F5"
+                  fill="url(#colorGradient)"
+                />
                 <defs>
                   <linearGradient
                     id="colorGradient"
@@ -181,7 +200,6 @@ export function SaaSMetricsGraphs({ churnRateData, mrrData, organizationCountByM
                 </defs>
               </AreaChart>
             </ResponsiveContainer>
-
           </div>
         </div>
         <div className="flex rounded-xl p-6 border border-slate-300 w-full">
@@ -190,9 +208,7 @@ export function SaaSMetricsGraphs({ churnRateData, mrrData, organizationCountByM
               <h2 className="text-xl font-bold text-slate-900">
                 Projects by Month
               </h2>
-              <p className="text-base text-slate-500">
-                Number of projects
-              </p>
+              <p className="text-base text-slate-500">Number of projects</p>
             </div>
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart
@@ -208,7 +224,12 @@ export function SaaSMetricsGraphs({ churnRateData, mrrData, organizationCountByM
                 <XAxis dataKey="month" />
                 <YAxis />
                 <Tooltip content={CustomTooltip} />
-                <Area type="monotone" dataKey="number_of_projects" stroke="#3B81F5" fill="url(#colorGradient)" />
+                <Area
+                  type="monotone"
+                  dataKey="number_of_projects"
+                  stroke="#3B81F5"
+                  fill="url(#colorGradient)"
+                />
                 <defs>
                   <linearGradient
                     id="colorGradient"
@@ -231,10 +252,7 @@ export function SaaSMetricsGraphs({ churnRateData, mrrData, organizationCountByM
               <h2 className="text-xl font-bold text-slate-900">
                 Users by Month
               </h2>
-              <p className="text-base text-slate-500">
-                Number of users
-              </p>
-
+              <p className="text-base text-slate-500">Number of users</p>
             </div>
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart
@@ -250,7 +268,12 @@ export function SaaSMetricsGraphs({ churnRateData, mrrData, organizationCountByM
                 <XAxis dataKey="month" />
                 <YAxis />
                 <Tooltip content={CustomTooltip} />
-                <Area type="monotone" dataKey="number_of_users" stroke="#3B81F5" fill="url(#colorGradient)" />
+                <Area
+                  type="monotone"
+                  dataKey="number_of_users"
+                  stroke="#3B81F5"
+                  fill="url(#colorGradient)"
+                />
                 <defs>
                   <linearGradient
                     id="colorGradient"
@@ -269,5 +292,5 @@ export function SaaSMetricsGraphs({ churnRateData, mrrData, organizationCountByM
         </div>
       </div>
     </div>
-  )
+  );
 }

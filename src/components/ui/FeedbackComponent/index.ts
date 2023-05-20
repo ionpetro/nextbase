@@ -1,1 +1,1 @@
-export * from "./FeedbackComponent";
+export * from './FeedbackComponent';

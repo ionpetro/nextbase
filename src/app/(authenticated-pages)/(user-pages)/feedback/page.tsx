@@ -1,86 +1,86 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/Button/ButtonShadcn";
-import FeedbackComponent from "@/components/ui/FeedbackComponent/FeedbackComponent";
-import BasicPageHeading from "@/components/ui/Headings/BasicPageHeading";
-import { Switch } from "@/components/ui/Switch";
-import { Label } from "@/components/ui/Label";
+import { Button } from '@/components/ui/Button/ButtonShadcn';
+import FeedbackComponent from '@/components/ui/FeedbackComponent/FeedbackComponent';
+import BasicPageHeading from '@/components/ui/Headings/BasicPageHeading';
+import { Switch } from '@/components/ui/Switch';
+import { Label } from '@/components/ui/Label';
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-} from "@radix-ui/react-dropdown-menu";
-import { AiOutlineFilter } from "react-icons/ai";
-import { Badge } from "@/components/ui/Badge";
-import { useState } from "react";
-import userImage from "public/assets/user-image.png";
-import adminImage from "public/assets/admin-image.png";
-import HelpCard from "@/components/ui/Card/HelpCard";
-import organisationshelp from "public/assets/help-assets/organisations-teams.png";
-import teamsprojects from "public/assets/help-assets/teams-projects.png";
+} from '@radix-ui/react-dropdown-menu';
+import { AiOutlineFilter } from 'react-icons/ai';
+import { Badge } from '@/components/ui/Badge';
+import { useState } from 'react';
+import userImage from 'public/assets/user-image.png';
+import adminImage from 'public/assets/admin-image.png';
+import HelpCard from '@/components/ui/Card/HelpCard';
+import organisationshelp from 'public/assets/help-assets/organisations-teams.png';
+import teamsprojects from 'public/assets/help-assets/teams-projects.png';
 
 export default function Page() {
   const feedbacks = [
     {
       id: 1,
-      full_name: "user_1",
-      feedback: "Great product, highly recommend",
-      email_id: "user_1@gmail.com",
-      type: "Feature request",
-      priority: "High priority",
-      created_at: "2021-08-01",
-      status: "Open",
+      full_name: 'user_1',
+      feedback: 'Great product, highly recommend',
+      email_id: 'user_1@gmail.com',
+      type: 'Feature request',
+      priority: 'High priority',
+      created_at: '2021-08-01',
+      status: 'Open',
     },
     {
       id: 2,
-      full_name: "user_2",
-      feedback: "Poor user experience, needs improvement",
-      email_id: "user_2@gmail.com",
-      type: "Bug report",
-      priority: "Low priority",
-      created_at: "2021-08-02",
-      status: "In progress",
+      full_name: 'user_2',
+      feedback: 'Poor user experience, needs improvement',
+      email_id: 'user_2@gmail.com',
+      type: 'Bug report',
+      priority: 'Low priority',
+      created_at: '2021-08-02',
+      status: 'In progress',
     },
     {
       id: 3,
-      full_name: "user_3",
-      feedback: "Confusing interface, hard to navigate",
-      email_id: "user_3@gmail.com",
-      type: "Usability issue",
-      priority: "Medium priority",
-      created_at: "2021-08-03",
-      status: "Closed",
+      full_name: 'user_3',
+      feedback: 'Confusing interface, hard to navigate',
+      email_id: 'user_3@gmail.com',
+      type: 'Usability issue',
+      priority: 'Medium priority',
+      created_at: '2021-08-03',
+      status: 'Closed',
     },
     {
       id: 4,
-      full_name: "user_4",
-      feedback: "Missing important feature, please add",
-      email_id: "user_4@gmail.com",
-      type: "Feature request",
-      priority: "High priority",
-      created_at: "2021-08-04",
-      status: "Open",
+      full_name: 'user_4',
+      feedback: 'Missing important feature, please add',
+      email_id: 'user_4@gmail.com',
+      type: 'Feature request',
+      priority: 'High priority',
+      created_at: '2021-08-04',
+      status: 'Open',
     },
     {
       id: 5,
-      full_name: "user_5",
-      feedback: "Crashes frequently, unusable",
-      email_id: "user_5@gmail.com",
-      type: "Bug report",
-      priority: "High priority",
-      created_at: "2021-08-05",
-      status: "In progress",
+      full_name: 'user_5',
+      feedback: 'Crashes frequently, unusable',
+      email_id: 'user_5@gmail.com',
+      type: 'Bug report',
+      priority: 'High priority',
+      created_at: '2021-08-05',
+      status: 'In progress',
     },
     {
       id: 6,
-      full_name: "user_6",
-      feedback: "Great job, keep up the good work",
-      email_id: "user_6@gmail.com",
-      type: "General feedback",
-      priority: "Low priority",
-      created_at: "2021-08-06",
-      status: "Closed",
+      full_name: 'user_6',
+      feedback: 'Great job, keep up the good work',
+      email_id: 'user_6@gmail.com',
+      type: 'General feedback',
+      priority: 'Low priority',
+      created_at: '2021-08-06',
+      status: 'Closed',
     },
   ];
 
@@ -89,12 +89,12 @@ export default function Page() {
   }>({});
 
   const [filters, setFilters] = useState({
-    status: "",
-    type: "",
-    priority: "",
-    statusText: "Status",
-    typeText: "Type",
-    priorityText: "Priority",
+    status: '',
+    type: '',
+    priority: '',
+    statusText: 'Status',
+    typeText: 'Type',
+    priorityText: 'Priority',
   });
 
   // Handle filter change event and update state accordingly (for dropdown menu)
@@ -119,14 +119,14 @@ export default function Page() {
 
   const mapStatusToVariant = (status: string) => {
     switch (status) {
-      case "Closed":
-        return "success";
-      case "Open":
-        return "warning";
-      case "In progress":
-        return "information";
+      case 'Closed':
+        return 'success';
+      case 'Open':
+        return 'warning';
+      case 'In progress':
+        return 'information';
       default:
-        return "default";
+        return 'default';
     }
   };
   return (
@@ -155,7 +155,7 @@ export default function Page() {
                 <DropdownMenuTrigger>
                   <Button variant="outline">
                     <AiOutlineFilter className="text-xl mr-2" />
-                    {filters.statusText}{" "}
+                    {filters.statusText}{' '}
                     {selectedBadges.status && (
                       <Badge
                         className="ml-1"
@@ -174,7 +174,7 @@ export default function Page() {
                     <DropdownMenuItem
                       onClick={() =>
                         handleFilterChange(
-                          "status",
+                          'status',
                           uniqueStatus,
                           `Status:`,
                           uniqueStatus
@@ -204,7 +204,7 @@ export default function Page() {
                     <DropdownMenuItem
                       onClick={() =>
                         handleFilterChange(
-                          "priority",
+                          'priority',
                           uniquePriority,
                           `Priority: ${uniquePriority}`
                         )
@@ -236,7 +236,7 @@ export default function Page() {
             <textarea
               placeholder="Write your Response here"
               className="rounded-lg w-full h-[224px] p-3 border b-slate-300"
-            />{" "}
+            />{' '}
             <div className="flex space-x-2 justify-end">
               <Button variant="outline">Cancel</Button>
               <Button variant="default"> Submit</Button>

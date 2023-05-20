@@ -1,4 +1,4 @@
-import { useLoggedInUser } from "./useLoggedInUser"
+import { useLoggedInUser } from './useLoggedInUser';
 
 export const useLoggedInUserEmail = (): string => {
   const user = useLoggedInUser();
@@ -6,4 +6,4 @@ export const useLoggedInUserEmail = (): string => {
     throw new Error('Unreachable: Email does not exist');
   }
   return user.email;
-}
+};

@@ -1,5 +1,5 @@
-import { AppSupabaseClient, CommentWithUser, Enum, Table } from "@/types";
-import { getUserOrganizationRole } from "./organizations";
+import { AppSupabaseClient, CommentWithUser, Enum, Table } from '@/types';
+import { getUserOrganizationRole } from './organizations';
 
 export const getUserTeamRole = async (
   supabase: AppSupabaseClient,
@@ -15,7 +15,7 @@ export const getUserTeamRole = async (
   const row = data?.[0];
 
   if (error) {
-    console.log(error)
+    console.log(error);
   }
 
   return row?.role ?? null;
@@ -48,7 +48,6 @@ export const addUserToTeam = async (
     .single();
 
   if (error) {
-
     throw error;
   }
 
@@ -68,7 +67,6 @@ export const updateUserRoleInProjectTeam = async (
     .eq('team_id', projectId);
 
   if (error) {
-
     throw error;
   }
 
@@ -115,7 +113,6 @@ export const getTeamsInOrganization = async (
   return data;
 };
 
-
 export const getTeamById = async (
   supabase: AppSupabaseClient,
   teamId: number
@@ -127,7 +124,6 @@ export const getTeamById = async (
     .single();
 
   if (error) {
-
     throw error;
   }
 
@@ -150,9 +146,6 @@ export const getCanUserManageTeam = async (
   }
   return false;
 };
-
-
-
 
 export const updateUserRoleInTeam = async (
   supabase: AppSupabaseClient,

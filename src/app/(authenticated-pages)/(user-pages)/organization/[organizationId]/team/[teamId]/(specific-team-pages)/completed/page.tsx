@@ -29,4 +29,4 @@ export default async function TeamPage({
       <CompletedTeamProjectsList initialProjects={projects} />
     </div>
   );
-};
+}

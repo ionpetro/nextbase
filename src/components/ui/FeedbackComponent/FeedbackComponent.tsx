@@ -1,4 +1,4 @@
-import Image, { StaticImageData } from "next/image";
+import Image, { StaticImageData } from 'next/image';
 
 type FeedbackComponentProps = {
   userName: string;
@@ -16,7 +16,7 @@ export default function FeedbackComponent({
       <Image
         src={userImage}
         width={48}
-        alt={""}
+        alt={''}
         className="rounded-full mt-2 border b-slate-400"
       />
 

@@ -43,8 +43,10 @@ export const getUserAvatarUrl = ({
     : fallbackAvatarUrl ?? placeholderAvatarUrl;
 };
 
-export const getPublicUserAvatarUrl = (possibleAvatarUrl?: string | null | undefined) => {
+export const getPublicUserAvatarUrl = (
+  possibleAvatarUrl?: string | null | undefined
+) => {
   const placeholderAvatarUrl = `https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp`;
 
   return possibleAvatarUrl ?? placeholderAvatarUrl;
-}
+};

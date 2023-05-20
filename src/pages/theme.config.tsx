@@ -1,5 +1,5 @@
-import React from 'react'
-import { DocsThemeConfig } from 'nextra-theme-docs'
+import React from 'react';
+import { DocsThemeConfig } from 'nextra-theme-docs';
 
 const config: DocsThemeConfig = {
   logo: <span>Nextbase</span>,
@@ -12,6 +12,6 @@ const config: DocsThemeConfig = {
   footer: {
     text: 'Nextbase',
   },
-}
+};
 
-export default config
+export default config;

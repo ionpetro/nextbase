@@ -4,7 +4,7 @@ import { RenderUsers } from './RenderUsers';
 export default async function AdminPanel() {
   const data = await getUsersPaginated(0, undefined);
   return (
-    <div >
+    <div>
       <RenderUsers userData={data} />
     </div>
   );

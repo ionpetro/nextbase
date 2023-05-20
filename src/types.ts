@@ -48,7 +48,6 @@ export type AuthProvider =
   | 'twitter'
   | 'workos';
 
-
 export type DropzoneFile = File & {
   path: string;
 };
@@ -60,8 +59,6 @@ export type DropzoneFileWithDuration = DropzoneFile & {
 export type CommentWithUser = Table<'project_comments'> & {
   user_profile: Table<'user_profiles'>;
 };
-
-
 
 export type NoSubscription = {
   type: 'no-subscription';
@@ -125,6 +122,13 @@ export type UnpaidSubscription = {
   subscription: Table<'subscriptions'>;
 };
 
-
-
-export type NormalizedSubscription = NoSubscription | TrialSubscription | ActiveSubscription | PastDueSubscription | CanceledSubscription | PausedSubscription | IncompleteSubscription | IncompleteExpiredSubscription | UnpaidSubscription;
+export type NormalizedSubscription =
+  | NoSubscription
+  | TrialSubscription
+  | ActiveSubscription
+  | PastDueSubscription
+  | CanceledSubscription
+  | PausedSubscription
+  | IncompleteSubscription
+  | IncompleteExpiredSubscription
+  | UnpaidSubscription;

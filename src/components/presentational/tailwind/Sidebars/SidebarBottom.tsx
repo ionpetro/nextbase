@@ -17,17 +17,14 @@ export const SidebarBottom = ({
 }) => {
   const userClassName = cn(
     `flex w-full gap-3 mb-2 items-center py-3 text-white h-[80px] border-t border-slate-600`,
-    isExpanded ? "px-4 pl-5 justify-start" : "justify-center",
+    isExpanded ? 'px-4 pl-5 justify-start' : 'justify-center',
     'group hover:cursor-pointer'
   );
 
   return (
     <div className="cursor-pointer">
       <Menu as="div" className="relative">
-        <Menu.Button
-          as="div"
-          className={userClassName}
-        >
+        <Menu.Button as="div" className={userClassName}>
           <Image
             width="32"
             height="32"

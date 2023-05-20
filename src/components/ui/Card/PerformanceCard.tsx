@@ -1,5 +1,5 @@
-import { Button } from "../Button";
-import { BsPlusLg } from "react-icons/bs";
+import { Button } from '../Button';
+import { BsPlusLg } from 'react-icons/bs';
 
 export default function PerformanceCard() {
   return (

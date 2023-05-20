@@ -2,39 +2,39 @@
 import TableCell from '@/components/ui/Table/TableCell';
 import TableHeader from '@/components/ui/Table/TableHeader';
 import { DBFunction } from '@/types';
-import {
-  useGetOrganizationsInfiniteQuery,
-} from '@/utils/react-query-hooks-app-admin';
+import { useGetOrganizationsInfiniteQuery } from '@/utils/react-query-hooks-app-admin';
 
 import moment from 'moment';
 import { useState } from 'react';
 import { FiMail } from 'react-icons/fi';
 import { useDebouncedValue } from 'rooks';
 
-
 function RenderOrganization({
   organization,
 }: {
   organization: DBFunction<'app_admin_get_all_organizations'>[number];
 }) {
-
   return (
     <tr key={organization.id}>
       <td className="p-0">
         <TableCell classname="px-6 py-4 truncate">
-          {organization.title ?? '-'}</TableCell>
+          {organization.title ?? '-'}
+        </TableCell>
       </td>
       <td className="p-0">
         <TableCell classname="px-6 py-4 truncate">
-          {moment(organization.created_at).format('DD MMM YYYY')}</TableCell>
+          {moment(organization.created_at).format('DD MMM YYYY')}
+        </TableCell>
       </td>
       <td className="p-0">
         <TableCell classname="px-6 py-4 truncate">
-          {organization.team_members_count ?? '-'}</TableCell>
+          {organization.team_members_count ?? '-'}
+        </TableCell>
       </td>
       <td className="p-0">
         <TableCell classname="px-6 py-4 truncate">
-          {organization.owner_full_name}</TableCell>
+          {organization.owner_full_name}
+        </TableCell>
       </td>
 
       <td className="p-0">
@@ -48,7 +48,8 @@ function RenderOrganization({
             >
               <FiMail />
             </a>
-          </span></TableCell>
+          </span>
+        </TableCell>
       </td>
     </tr>
   );
@@ -99,36 +100,21 @@ export function RenderOrganizations({
         <table className="min-w-full divide-y divide-gray-300 shadow rounded-sm">
           <thead className="bg-gray-50">
             <tr>
-              <th
-                scope="col"
-                className="p-0"
-              >
+              <th scope="col" className="p-0">
                 <TableHeader>Title</TableHeader>
               </th>
-              <th
-                scope="col"
-                className="p-0"
-              >
+              <th scope="col" className="p-0">
                 <TableHeader>Created At</TableHeader>
               </th>
-              <th
-                scope="col"
-                className="p-0"
-              >
+              <th scope="col" className="p-0">
                 <TableHeader>Team Member Count</TableHeader>
               </th>
 
-              <th
-                scope="col"
-                className="p-0"
-              >
+              <th scope="col" className="p-0">
                 <TableHeader>Owner Name</TableHeader>
               </th>
 
-              <th
-                scope="col"
-                className="p-0"
-              >
+              <th scope="col" className="p-0">
                 <TableHeader>Actions</TableHeader>
               </th>
             </tr>

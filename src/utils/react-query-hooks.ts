@@ -283,7 +283,7 @@ export const useInviteUserMutation = (
     async ({
       email,
       organizationId,
-      role
+      role,
     }: {
       email: string;
       organizationId: string;
@@ -294,7 +294,7 @@ export const useInviteUserMutation = (
         {
           email,
           organizationId,
-          role
+          role,
         },
         {
           withCredentials: true,
@@ -369,7 +369,7 @@ export const useCreateOrganizationCheckoutSessionMutation = ({
         `/api/stripe/${organizationId}/create-checkout-session`,
         {
           priceId,
-          isTrial
+          isTrial,
         },
         {
           withCredentials: true,

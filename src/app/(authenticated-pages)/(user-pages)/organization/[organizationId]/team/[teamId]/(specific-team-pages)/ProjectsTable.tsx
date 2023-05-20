@@ -7,7 +7,11 @@ import { Table } from '@/types';
 import { Check, ExternalLink, Pen, ThumbsUp, Timer } from 'lucide-react';
 import moment from 'moment';
 
-export const ProjectsTable = ({ projects }: { projects: Table<'projects'>[] }) => {
+export const ProjectsTable = ({
+  projects,
+}: {
+  projects: Table<'projects'>[];
+}) => {
   if (projects.length === 0) {
     return (
       <T.P className="my-6 text-sm text-slate-900">
@@ -42,7 +46,9 @@ export const ProjectsTable = ({ projects }: { projects: Table<'projects'>[] }) =
                   {projects.map((project) => (
                     <tr className="p-0" key={project.id}>
                       <td className="p-0 ">
-                        <TableCell classname="px-6 py-4">{project.name}</TableCell>
+                        <TableCell classname="px-6 py-4">
+                          {project.name}
+                        </TableCell>
                       </td>
                       <td className="p-0 ">
                         <TableCell classname="px-6 py-4">
@@ -76,15 +82,16 @@ export const ProjectsTable = ({ projects }: { projects: Table<'projects'>[] }) =
                           ) : project.project_status === 'draft' ? (
                             <div className="flex items-center space-x-2">
                               <Timer size={16} />
-                              <T.P className="text-xs text-blue-500">
-                                Draft
-                              </T.P>
+                              <T.P className="text-xs text-blue-500">Draft</T.P>
                             </div>
                           ) : (
                             <div className="flex items-center space-x-2">
                               <Timer size={16} />
                               <T.P className="text-xs text-blue-500 capitalize">
-                                {String(project.project_status).replace('_', ' ')}
+                                {String(project.project_status).replace(
+                                  '_',
+                                  ' '
+                                )}
                               </T.P>
                             </div>
                           )}
@@ -105,7 +112,6 @@ export const ProjectsTable = ({ projects }: { projects: Table<'projects'>[] }) =
                 </tbody>
               </table>
             </div>
-
           </div>
         </div>
       </div>

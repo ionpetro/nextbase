@@ -18,18 +18,18 @@ const fetchData = async (supabaseClient: AppSupabaseClient) => {
   return { initialOrganizationsList, pendingInvitations };
 };
 
-
 export default async function DashboardPage() {
   const supabase = createClient();
 
   const { initialOrganizationsList, pendingInvitations } = await fetchData(
     supabase
-  ); return (
+  );
+  return (
     <div className="max-w-7xl py-8 px-8 space-y-8">
       <PendingInvitationsList
         initialPendingInvitationsList={pendingInvitations}
       />
       <OrganizationList initialOrganizationsList={initialOrganizationsList} />
     </div>
-  )
+  );
 }

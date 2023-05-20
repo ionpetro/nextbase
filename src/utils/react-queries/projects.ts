@@ -1,10 +1,26 @@
-import { Enum, Table } from "@/types";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getApprovedProjectsByTeamId, getCompletedProjectsByTeamId, getDraftProjectsByTeamId, getPendingApprovalProjectsByTeamId, createProject, deleteProject, updateProjectName, updateProjectStatus, getProjectById, addProjectComment, getProjectComments, submitProjectForApproval, approveProject, completeProject, rejectProject } from "../supabase/projects";
+import { Enum, Table } from '@/types';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  getApprovedProjectsByTeamId,
+  getCompletedProjectsByTeamId,
+  getDraftProjectsByTeamId,
+  getPendingApprovalProjectsByTeamId,
+  createProject,
+  deleteProject,
+  updateProjectName,
+  updateProjectStatus,
+  getProjectById,
+  addProjectComment,
+  getProjectComments,
+  submitProjectForApproval,
+  approveProject,
+  completeProject,
+  rejectProject,
+} from '../supabase/projects';
 import supabaseClient from '@/utils/supabase-browser';
-import { useRef } from "react";
-import { toast } from "react-hot-toast";
-import { useLoggedInUser } from "@/hooks/useLoggedInUser";
+import { useRef } from 'react';
+import { toast } from 'react-hot-toast';
+import { useLoggedInUser } from '@/hooks/useLoggedInUser';
 
 export const useGetProjectById = (
   projectId: string,
@@ -35,7 +51,6 @@ export const useGetDraftProjectsByTeam = (
     }
   );
 };
-
 
 export const useGetPendingApprovalProjectsByTeam = (
   teamId: number,
@@ -82,9 +97,9 @@ export const useGetCompletedProjectsByTeam = (
   );
 };
 
-
-
-export const useCreateProject = (onSuccess?: (project: Table<'projects'>) => void) => {
+export const useCreateProject = (
+  onSuccess?: (project: Table<'projects'>) => void
+) => {
   const toastRef = useRef<string | null>(null);
   const queryClient = useQueryClient();
   return useMutation(
@@ -100,7 +115,7 @@ export const useCreateProject = (onSuccess?: (project: Table<'projects'>) => voi
       return await createProject(supabaseClient, organizationId, teamId, name);
     },
     {
-      onMutate: async ({ name },) => {
+      onMutate: async ({ name }) => {
         toastRef.current = toast.loading(`Creating project ${name}...`);
       },
       onSuccess: (data) => {
@@ -109,34 +124,42 @@ export const useCreateProject = (onSuccess?: (project: Table<'projects'>) => voi
         });
         onSuccess && onSuccess(data);
         if (data.project_status === 'draft') {
-          queryClient.invalidateQueries(['getDraftProjectsByTeam', data.team_id]);
+          queryClient.invalidateQueries([
+            'getDraftProjectsByTeam',
+            data.team_id,
+          ]);
         } else if (data.project_status === 'approved') {
-          queryClient.invalidateQueries(['getApprovedProjectsByTeam', data.team_id]);
+          queryClient.invalidateQueries([
+            'getApprovedProjectsByTeam',
+            data.team_id,
+          ]);
         } else if (data.project_status === 'completed') {
-          queryClient.invalidateQueries(['getCompletedProjectsByTeam', data.team_id]);
+          queryClient.invalidateQueries([
+            'getCompletedProjectsByTeam',
+            data.team_id,
+          ]);
         } else {
-          queryClient.invalidateQueries(['getPendingApprovalProjectsByTeam', data.team_id]);
+          queryClient.invalidateQueries([
+            'getPendingApprovalProjectsByTeam',
+            data.team_id,
+          ]);
         }
       },
       onError: (error) => {
         toast.error(String(error), {
           id: toastRef.current ?? undefined,
         });
-      }
+      },
     }
   );
-}
+};
 
-export const useUpdateProjectName = (onSuccess?: (project: Table<'projects'>) => void) => {
+export const useUpdateProjectName = (
+  onSuccess?: (project: Table<'projects'>) => void
+) => {
   const toastRef = useRef<string | null>(null);
   return useMutation(
-    async ({
-      projectId,
-      name,
-    }: {
-      projectId: string;
-      name: string;
-    }) => {
+    async ({ projectId, name }: { projectId: string; name: string }) => {
       return await updateProjectName(supabaseClient, projectId, name);
     },
     {
@@ -153,12 +176,14 @@ export const useUpdateProjectName = (onSuccess?: (project: Table<'projects'>) =>
         toast.error(String(error), {
           id: toastRef.current ?? undefined,
         });
-      }
+      },
     }
   );
-}
+};
 
-export const useUpdateProjectStatus = (onSuccess?: (project: Table<'projects'>) => void) => {
+export const useUpdateProjectStatus = (
+  onSuccess?: (project: Table<'projects'>) => void
+) => {
   const toastRef = useRef<string | null>(null);
   return useMutation(
     async ({
@@ -172,7 +197,9 @@ export const useUpdateProjectStatus = (onSuccess?: (project: Table<'projects'>) 
     },
     {
       onMutate: async ({ status }) => {
-        toastRef.current = toast.loading(`Updating project status to ${status}...`);
+        toastRef.current = toast.loading(
+          `Updating project status to ${status}...`
+        );
       },
       onSuccess: (data) => {
         toast.success(`Updated project status to ${data.project_status}`, {
@@ -184,19 +211,15 @@ export const useUpdateProjectStatus = (onSuccess?: (project: Table<'projects'>) 
         toast.error(String(error), {
           id: toastRef.current ?? undefined,
         });
-      }
+      },
     }
   );
-}
+};
 
 export const useDeleteProject = (onSuccess?: () => void) => {
   const toastRef = useRef<string | null>(null);
   return useMutation(
-    async ({
-      projectId,
-    }: {
-      projectId: string;
-    }) => {
+    async ({ projectId }: { projectId: string }) => {
       return await deleteProject(supabaseClient, projectId);
     },
     {
@@ -213,21 +236,17 @@ export const useDeleteProject = (onSuccess?: () => void) => {
         toast.error(String(error), {
           id: toastRef.current ?? undefined,
         });
-      }
-    }
-  );
-}
-
-// React Query Wrapper for getProjectComments
-export const useGetProjectComments = (projectId: string) => {
-  return useQuery(
-    ['projectComments', projectId],
-    async () => {
-      return await getProjectComments(supabaseClient, projectId);
+      },
     }
   );
 };
 
+// React Query Wrapper for getProjectComments
+export const useGetProjectComments = (projectId: string) => {
+  return useQuery(['projectComments', projectId], async () => {
+    return await getProjectComments(supabaseClient, projectId);
+  });
+};
 
 export const useAddProjectComment = (projectId: string) => {
   const toastRef = useRef<string | null>(null);
@@ -251,7 +270,7 @@ export const useAddProjectComment = (projectId: string) => {
         toast.error(String(error), {
           id: toastRef.current ?? undefined,
         });
-      }
+      },
     }
   );
 };
@@ -273,14 +292,17 @@ export const useSubmitProjectForApproval = () => {
           id: toastRef.current ?? undefined,
         });
         queryClient.invalidateQueries(['getDraftProjectsByTeam', projectId]);
-        queryClient.invalidateQueries(['getPendingApprovalProjectsByTeam', projectId]);
+        queryClient.invalidateQueries([
+          'getPendingApprovalProjectsByTeam',
+          projectId,
+        ]);
         queryClient.invalidateQueries(['getProjectById', projectId]);
       },
       onError: (error) => {
         toast.error(String(error), {
           id: toastRef.current ?? undefined,
         });
-      }
+      },
     }
   );
 };
@@ -302,14 +324,17 @@ export const useCompleteProject = () => {
           id: toastRef.current ?? undefined,
         });
         queryClient.invalidateQueries(['getApprovedProjectsByTeam', projectId]);
-        queryClient.invalidateQueries(['getCompletedProjectsByTeam', projectId]);
+        queryClient.invalidateQueries([
+          'getCompletedProjectsByTeam',
+          projectId,
+        ]);
         queryClient.invalidateQueries(['getProjectById', projectId]);
       },
       onError: (error) => {
         toast.error(String(error), {
           id: toastRef.current ?? undefined,
         });
-      }
+      },
     }
   );
 };
@@ -330,7 +355,10 @@ export const useApproveProject = () => {
         toast.success(`Project approved successfully!`, {
           id: toastRef.current ?? undefined,
         });
-        queryClient.invalidateQueries(['getPendingApprovalProjectsByTeam', projectId]);
+        queryClient.invalidateQueries([
+          'getPendingApprovalProjectsByTeam',
+          projectId,
+        ]);
         queryClient.invalidateQueries(['getApprovedProjectsByTeam', projectId]);
         queryClient.invalidateQueries(['getProjectById', projectId]);
       },
@@ -338,11 +366,10 @@ export const useApproveProject = () => {
         toast.error(String(error), {
           id: toastRef.current ?? undefined,
         });
-      }
+      },
     }
   );
 };
-
 
 export const useRejectProject = () => {
   const toastRef = useRef<string | null>(null);
@@ -359,7 +386,10 @@ export const useRejectProject = () => {
         toast.success(`Project rejected successfully!`, {
           id: toastRef.current ?? undefined,
         });
-        queryClient.invalidateQueries(['getPendingApprovalProjectsByTeam', projectId]);
+        queryClient.invalidateQueries([
+          'getPendingApprovalProjectsByTeam',
+          projectId,
+        ]);
         queryClient.invalidateQueries(['getDraftProjectsByTeam', projectId]);
         queryClient.invalidateQueries(['getProjectById', projectId]);
       },
@@ -367,7 +397,7 @@ export const useRejectProject = () => {
         toast.error(String(error), {
           id: toastRef.current ?? undefined,
         });
-      }
+      },
     }
   );
 };

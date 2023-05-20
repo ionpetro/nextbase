@@ -22,8 +22,8 @@ import { getIsAppAdmin } from '@/utils/supabase-queries';
 export function createServiceRoleServerSupabaseClient<
   Database = AppDatabase,
   SchemaName extends string & keyof Database = 'public' extends keyof Database
-  ? 'public'
-  : string & keyof Database
+    ? 'public'
+    : string & keyof Database
 >(
   context:
     | GetServerSidePropsContext

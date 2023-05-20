@@ -17,7 +17,10 @@ type Props = {
   isLoading: boolean;
 };
 
-export const InviteOrganizationMemberDialog = ({ onInvite, isLoading }: Props) => {
+export const InviteOrganizationMemberDialog = ({
+  onInvite,
+  isLoading,
+}: Props) => {
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState('');
   const [role, setRole] = useState<Enum<'organization_member_role'>>('member');
@@ -25,7 +28,7 @@ export const InviteOrganizationMemberDialog = ({ onInvite, isLoading }: Props) =
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button >Invite user </Button>
+        <Button>Invite user </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -41,7 +44,7 @@ export const InviteOrganizationMemberDialog = ({ onInvite, isLoading }: Props) =
         >
           <div className="space-y-2">
             <DialogDescription>
-              Invite a user  to your organization.
+              Invite a user to your organization.
             </DialogDescription>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -59,12 +62,8 @@ export const InviteOrganizationMemberDialog = ({ onInvite, isLoading }: Props) =
             />
           </div>
           <DialogFooter>
-            <Button
-              type="submit"
-              variant="success"
-              disabled={isLoading}
-            >
-              {isLoading ? "Inviting User" : "Invite"}
+            <Button type="submit" variant="success" disabled={isLoading}>
+              {isLoading ? 'Inviting User' : 'Invite'}
             </Button>
             <Button
               type="button"

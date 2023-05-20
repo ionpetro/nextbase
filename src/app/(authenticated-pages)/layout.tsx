@@ -7,11 +7,9 @@ import { errors } from '@/utils/errors';
 import { ReactNode } from 'react';
 import { redirect } from 'next/navigation';
 
-
 // do not cache this layout
 export const dynamic = 'force-dynamic';
 export const fetchCache = 'only-no-store';
-
 
 async function fetchData(supabaseClient: AppSupabaseClient, authUser: User) {
   const [isUserAppAdmin, userProfile] = await Promise.all([
@@ -22,11 +20,7 @@ async function fetchData(supabaseClient: AppSupabaseClient, authUser: User) {
   return { isUserAppAdmin, userProfile };
 }
 
-export default async function Layout({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export default async function Layout({ children }: { children: ReactNode }) {
   const supabase = createClient();
   const { data, error } = await supabase.auth.getUser();
 
@@ -37,7 +31,6 @@ export default async function Layout({
   } else if (error) {
     return <p>Error: An error occurred.</p>;
   }
-
 
   try {
     const { isUserAppAdmin, userProfile } = await fetchData(

@@ -1,4 +1,4 @@
-import { Children } from "react";
+import { Children } from 'react';
 
 type PageHeadingWithActionsProps = {
   heading: string;

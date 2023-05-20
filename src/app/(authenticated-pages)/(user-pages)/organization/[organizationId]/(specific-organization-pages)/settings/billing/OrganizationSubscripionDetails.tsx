@@ -21,10 +21,10 @@ import { T } from '@/components/ui/Typography';
 import { useGetNormalizedSubscription } from '@/utils/react-queries/subscriptions';
 import { formatNormalizedSubscription } from '@/utils/formatNormalizedSubscription';
 
-
 function ChoosePricingTable() {
   const { organizationId, organizationRole } = useOrganizationContext();
-  const isOrganizationAdmin = organizationRole === 'admin' || organizationRole === 'owner';
+  const isOrganizationAdmin =
+    organizationRole === 'admin' || organizationRole === 'owner';
   const [pricingMode, setPricingMode] = useState<'month' | 'year'>('month');
   const {
     data: activeProducts,
@@ -66,7 +66,9 @@ function ChoosePricingTable() {
     });
 
     return products
-      .sort((a, b) => (a?.price?.unit_amount ?? 0) - (b?.price?.unit_amount ?? 0))
+      .sort(
+        (a, b) => (a?.price?.unit_amount ?? 0) - (b?.price?.unit_amount ?? 0)
+      )
       .filter(Boolean);
   }, [activeProducts, pricingMode]);
 
@@ -89,7 +91,13 @@ function ChoosePricingTable() {
             if (!product.price) {
               return null;
             }
-            if (product.price.id === null || product.price.id === undefined || product.price.id === undefined || product.price.unit_amount === null || product.price.unit_amount === undefined) {
+            if (
+              product.price.id === null ||
+              product.price.id === undefined ||
+              product.price.id === undefined ||
+              product.price.unit_amount === null ||
+              product.price.unit_amount === undefined
+            ) {
               return null;
             }
             const priceId = product.price.id;
@@ -106,10 +114,7 @@ function ChoosePricingTable() {
                         {product.name}
                       </span>
                       <span>
-                        <span
-                          key={priceId}
-                          className="text-2xl font-bold"
-                        >
+                        <span key={priceId} className="text-2xl font-bold">
                           {' '}
                           {product.priceString}/{product.price.interval}{' '}
                         </span>
@@ -180,39 +185,51 @@ function ChoosePricingTable() {
 }
 
 export function OrganizationSubscripionDetails() {
-  const { organizationId, normalizedSubscription, organizationRole } = useOrganizationContext();
-  const isOrganizationAdmin = organizationRole === 'admin' || organizationRole === 'owner';
-
+  const { organizationId, normalizedSubscription, organizationRole } =
+    useOrganizationContext();
+  const isOrganizationAdmin =
+    organizationRole === 'admin' || organizationRole === 'owner';
 
   const { mutate, isLoading: isLoadingCustomerPortalLink } =
     useCreateOrganizationCustomerPortalMutation({
       onSuccess: (url) => {
         window.location.assign(url);
-      }
+      },
     });
 
-  const subscriptionDetails = formatNormalizedSubscription(normalizedSubscription);
+  const subscriptionDetails = formatNormalizedSubscription(
+    normalizedSubscription
+  );
 
-  if (!subscriptionDetails.title || normalizedSubscription.type === 'no-subscription') {
-    return <>
-      <div className="space-y-1">
-        <H3>Subscription</H3>
-        <p className="text-gray-500 text-sm">
-          This organization doesn't have any plan at the moment.
-        </p>
-      </div>
-      <ChoosePricingTable />
-    </>
+  if (
+    !subscriptionDetails.title ||
+    normalizedSubscription.type === 'no-subscription'
+  ) {
+    return (
+      <>
+        <div className="space-y-1">
+          <H3>Subscription</H3>
+          <p className="text-gray-500 text-sm">
+            This organization doesn't have any plan at the moment.
+          </p>
+        </div>
+        <ChoosePricingTable />
+      </>
+    );
   }
-
-
 
   return (
     <div className="space-y-4">
       <div className="space-y-1">
         <H3>Subscription</H3>
-        <T.P>You are currently on the{' '}
-          <span className="text-blue-500">{subscriptionDetails.title} <span>{subscriptionDetails.sidenote}</span></span>. </T.P>
+        <T.P>
+          You are currently on the{' '}
+          <span className="text-blue-500">
+            {subscriptionDetails.title}{' '}
+            <span>{subscriptionDetails.sidenote}</span>
+          </span>
+          .{' '}
+        </T.P>
         <T.Subtle>{subscriptionDetails.description}</T.Subtle>
       </div>
       {isOrganizationAdmin ? (

@@ -29,8 +29,8 @@ const tabs = [
     label: 'Application Settings',
     href: `/app_admin/settings`,
     icon: <FiSettings />,
-  }
-]
+  },
+];
 
 async function fetchData(supabaseClient: AppSupabaseClient, authUser: User) {
   const [isUserAppAdmin] = await Promise.all([
@@ -58,30 +58,29 @@ export default async function Layout({
   }
 
   try {
-    const { isUserAppAdmin } = await fetchData(
-      supabase,
-      data.user
-    );
+    const { isUserAppAdmin } = await fetchData(supabase, data.user);
 
     if (!isUserAppAdmin) {
       return redirect('/dashboard');
     }
-    return <div className="flex-1 h-autooverflow-auto">
-      <div className="px-12 py-8 space-y-6">
-        <div className="space-y-2">
-          <BasicPageHeading
-            heading="Admin Panel"
-            subheading=" You are currently in the Application Admin Dashboard area. All
+    return (
+      <div className="flex-1 h-autooverflow-auto">
+        <div className="px-12 py-8 space-y-6">
+          <div className="space-y-2">
+            <BasicPageHeading
+              heading="Admin Panel"
+              subheading=" You are currently in the Application Admin Dashboard area. All
       sections of this area are protected and only application admins
       can access this."
-          />
+            />
+          </div>
+          <div className="space-y-6">
+            <TabsNavigation tabs={tabs} />
+          </div>
+          {children}
         </div>
-        <div className="space-y-6">
-          <TabsNavigation tabs={tabs} />
-        </div>
-        {children}
       </div>
-    </div>
+    );
   } catch (fetchDataError) {
     errors.add(fetchDataError);
     return <p>Error: An error occurred.</p>;

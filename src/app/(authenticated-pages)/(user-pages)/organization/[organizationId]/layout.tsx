@@ -12,8 +12,6 @@ const paramsSchema = z.object({
   organizationId: z.string(),
 });
 
-
-
 async function fetchData(supabase: AppSupabaseClient, organizationId: string) {
   const { data: sessionResponse, error: userError } =
     await supabase.auth.getSession();
@@ -24,24 +22,21 @@ async function fetchData(supabase: AppSupabaseClient, organizationId: string) {
     throw userError;
   }
 
-  const [
-    organizationByIdData,
-    organizationRole,
-    normalizedSubscription
-  ] = await Promise.all([
-    getOrganizationById(supabase, organizationId),
-    getUserOrganizationRole(
-      supabase,
-      sessionResponse.session.user.id,
-      organizationId
-    ),
-    getNormalizedSubscription(supabase, organizationId)
-  ]);
+  const [organizationByIdData, organizationRole, normalizedSubscription] =
+    await Promise.all([
+      getOrganizationById(supabase, organizationId),
+      getUserOrganizationRole(
+        supabase,
+        sessionResponse.session.user.id,
+        organizationId
+      ),
+      getNormalizedSubscription(supabase, organizationId),
+    ]);
 
   return {
     organizationByIdData,
     organizationRole,
-    normalizedSubscription
+    normalizedSubscription,
   };
 }
 
@@ -55,14 +50,8 @@ export default async function Layout({
   try {
     const { organizationId } = paramsSchema.parse(params);
     const supabase = createClient();
-    const {
-      organizationByIdData,
-      organizationRole,
-      normalizedSubscription
-    } = await fetchData(
-      supabase,
-      organizationId
-    );
+    const { organizationByIdData, organizationRole, normalizedSubscription } =
+      await fetchData(supabase, organizationId);
     return (
       <OrganizationContextProvider
         normalizedSubscription={normalizedSubscription}
@@ -77,5 +66,4 @@ export default async function Layout({
     console.log(error);
     return notFound();
   }
-
 }

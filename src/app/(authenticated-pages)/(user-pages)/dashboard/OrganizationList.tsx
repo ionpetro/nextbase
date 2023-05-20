@@ -19,16 +19,18 @@ export function OrganizationList({
 }: {
   initialOrganizationsList: InitialOrganizationListType;
 }) {
-  const { data: organizations, isLoading: isLoadingOrganizations } = useOrganizationsList(initialOrganizationsList);
+  const { data: organizations, isLoading: isLoadingOrganizations } =
+    useOrganizationsList(initialOrganizationsList);
   const router = useRouter();
-  const { mutate, isLoading: isCreatingOrganization } = useCreateOrganizationMutation({
-    onSuccess: (organization) => {
-      router.push(`/organization/${organization.id}`);
-    },
-    onError: (error) => {
-      toast.error(error.message);
-    },
-  });
+  const { mutate, isLoading: isCreatingOrganization } =
+    useCreateOrganizationMutation({
+      onSuccess: (organization) => {
+        router.push(`/organization/${organization.id}`);
+      },
+      onError: (error) => {
+        toast.error(error.message);
+      },
+    });
   const onConfirm = (organizationTitle: string) => {
     mutate(organizationTitle);
   };
@@ -48,53 +50,34 @@ export function OrganizationList({
           title="Organizations"
         />
         <p className="text-base font-[500] text-slate-600 w-[480px]">
-          Organizations are the central unit of work. Each has a team and a unique Stripe plan. Customize the database models and add spaces with members to an organization.
+          Organizations are the central unit of work. Each has a team and a
+          unique Stripe plan. Customize the database models and add spaces with
+          members to an organization.
         </p>
       </div>
       <table className="w-full shadow rounded-lg overflow-hidden">
         <thead className="bg-gray-50">
           <tr>
-            <th
-              scope="col"
-              className="p-0"
-            >
+            <th scope="col" className="p-0">
               <TableHeader>#</TableHeader>
             </th>
-            <th
-              scope="col"
-              className="p-0"
-            >
+            <th scope="col" className="p-0">
               <TableHeader>Title</TableHeader>
             </th>
-            <th
-              scope="col"
-              className="p-0"
-            >
+            <th scope="col" className="p-0">
               <TableHeader>Members</TableHeader>
-
             </th>
-            <th
-              scope="col"
-              className="p-0"
-            >
+            <th scope="col" className="p-0">
               <TableHeader>Created At</TableHeader>
-
             </th>
-            <th
-              scope="col"
-              className="p-0"
-            >
+            <th scope="col" className="p-0">
               <TableHeader> Owner</TableHeader>
-
             </th>
-
           </tr>
         </thead>
         <tbody className="bg-white ">
           {organizations?.map((organization, index) => {
-            const teamMembers = Array.isArray(
-              organization.organization_members
-            )
+            const teamMembers = Array.isArray(organization.organization_members)
               ? organization.organization_members
               : [];
             const teamMembersCount = teamMembers.length;
@@ -113,7 +96,9 @@ export function OrganizationList({
 
             return (
               <tr key={organization.id} className="text-sm">
-                <td className="p-0"><TableCell classname='px-6 py-4'>{index + 1}</TableCell></td>
+                <td className="p-0">
+                  <TableCell classname="px-6 py-4">{index + 1}</TableCell>
+                </td>
                 <td className="p-0">
                   <Anchor
                     className=" "
@@ -126,17 +111,17 @@ export function OrganizationList({
                   </Anchor>
                 </td>
                 <td className="p-0">
-                  <TableCell classname='px-6 py-4'>
+                  <TableCell classname="px-6 py-4">
                     {teamMembersCount} members
                   </TableCell>
                 </td>
                 <td className="p-0">
-                  <TableCell classname='px-6 py-4'>
+                  <TableCell classname="px-6 py-4">
                     {moment(organization.created_at).fromNow()}
                   </TableCell>
                 </td>
                 <td className="p-0">
-                  <TableCell classname='px-6 py-4'>
+                  <TableCell classname="px-6 py-4">
                     {ownerUserProfile.full_name}
                   </TableCell>
                 </td>
@@ -147,6 +132,6 @@ export function OrganizationList({
       </table>
 
       <OrganizationGraphs />
-    </div >
+    </div>
   );
 }

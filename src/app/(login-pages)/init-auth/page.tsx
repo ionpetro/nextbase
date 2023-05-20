@@ -21,7 +21,7 @@ export default function HomePage() {
       router.push('/dashboard');
     } else {
       setLoadingState('logged-out');
-      router.push('/login')
+      router.push('/login');
     }
   });
 

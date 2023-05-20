@@ -28,7 +28,7 @@ export function UserSidebarMenu() {
                   'flex px-3 gap-2 items-center py-2 text-sm'
                 )}
               >
-                <MdManageAccounts className='text-lg' /> Account settings
+                <MdManageAccounts className="text-lg" /> Account settings
               </Anchor>
             )}
           </Menu.Item>
@@ -41,7 +41,7 @@ export function UserSidebarMenu() {
                   'flex px-3 gap-2 items-center py-2 text-sm'
                 )}
               >
-                <GrShieldSecurity className='text-lg' /> Security Settings
+                <GrShieldSecurity className="text-lg" /> Security Settings
               </Anchor>
             )}
           </Menu.Item>
@@ -55,7 +55,8 @@ export function UserSidebarMenu() {
                   'flex px-3 gap-2 items-center py-2 text-sm'
                 )}
               >
-                <HiLogout className='text-lg' />Sign out
+                <HiLogout className="text-lg" />
+                Sign out
               </Anchor>
             )}
           </Menu.Item>

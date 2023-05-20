@@ -1,92 +1,92 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/Button";
-import { AiOutlineFilter } from "react-icons/ai";
-import TableCell from "@/components/ui/Table/TableCell";
-import TableHeader from "@/components/ui/Table/TableHeader";
-import { useState } from "react";
-import { Badge } from "@/components/ui/Badge";
+import { Button } from '@/components/ui/Button';
+import { AiOutlineFilter } from 'react-icons/ai';
+import TableCell from '@/components/ui/Table/TableCell';
+import TableHeader from '@/components/ui/Table/TableHeader';
+import { useState } from 'react';
+import { Badge } from '@/components/ui/Badge';
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-} from "@/components/ui/DropdownMenu";
-import { Anchor } from "@/components/Anchor";
+} from '@/components/ui/DropdownMenu';
+import { Anchor } from '@/components/Anchor';
 
 const mapStatusToVariant = (status: string) => {
   switch (status) {
-    case "Closed":
-      return "success";
-    case "Open":
-      return "warning";
-    case "In progress":
-      return "information";
+    case 'Closed':
+      return 'success';
+    case 'Open':
+      return 'warning';
+    case 'In progress':
+      return 'information';
     default:
-      return "default";
+      return 'default';
   }
 };
 
 const feedbacks = [
   {
     id: 1,
-    full_name: "user_1",
-    feedback: "Great product, highly recommend",
-    email_id: "user_1@gmail.com",
-    type: "Feature request",
-    priority: "High priority",
-    created_at: "2021-08-01",
-    status: "Open",
+    full_name: 'user_1',
+    feedback: 'Great product, highly recommend',
+    email_id: 'user_1@gmail.com',
+    type: 'Feature request',
+    priority: 'High priority',
+    created_at: '2021-08-01',
+    status: 'Open',
   },
   {
     id: 2,
-    full_name: "user_2",
-    feedback: "Poor user experience, needs improvement",
-    email_id: "user_2@gmail.com",
-    type: "Bug report",
-    priority: "Low priority",
-    created_at: "2021-08-02",
-    status: "In progress",
+    full_name: 'user_2',
+    feedback: 'Poor user experience, needs improvement',
+    email_id: 'user_2@gmail.com',
+    type: 'Bug report',
+    priority: 'Low priority',
+    created_at: '2021-08-02',
+    status: 'In progress',
   },
   {
     id: 3,
-    full_name: "user_3",
-    feedback: "Confusing interface, hard to navigate",
-    email_id: "user_3@gmail.com",
-    type: "Usability issue",
-    priority: "Medium priority",
-    created_at: "2021-08-03",
-    status: "Closed",
+    full_name: 'user_3',
+    feedback: 'Confusing interface, hard to navigate',
+    email_id: 'user_3@gmail.com',
+    type: 'Usability issue',
+    priority: 'Medium priority',
+    created_at: '2021-08-03',
+    status: 'Closed',
   },
   {
     id: 4,
-    full_name: "user_4",
-    feedback: "Missing important feature, please add",
-    email_id: "user_4@gmail.com",
-    type: "Feature request",
-    priority: "High priority",
-    created_at: "2021-08-04",
-    status: "Open",
+    full_name: 'user_4',
+    feedback: 'Missing important feature, please add',
+    email_id: 'user_4@gmail.com',
+    type: 'Feature request',
+    priority: 'High priority',
+    created_at: '2021-08-04',
+    status: 'Open',
   },
   {
     id: 5,
-    full_name: "user_5",
-    feedback: "Crashes frequently, unusable",
-    email_id: "user_5@gmail.com",
-    type: "Bug report",
-    priority: "High priority",
-    created_at: "2021-08-05",
-    status: "In progress",
+    full_name: 'user_5',
+    feedback: 'Crashes frequently, unusable',
+    email_id: 'user_5@gmail.com',
+    type: 'Bug report',
+    priority: 'High priority',
+    created_at: '2021-08-05',
+    status: 'In progress',
   },
   {
     id: 6,
-    full_name: "user_6",
-    feedback: "Great job, keep up the good work",
-    email_id: "user_6@gmail.com",
-    type: "General feedback",
-    priority: "Low priority",
-    created_at: "2021-08-06",
-    status: "Closed",
+    full_name: 'user_6',
+    feedback: 'Great job, keep up the good work',
+    email_id: 'user_6@gmail.com',
+    type: 'General feedback',
+    priority: 'Low priority',
+    created_at: '2021-08-06',
+    status: 'Closed',
   },
 ];
 
@@ -96,12 +96,12 @@ export default function Page() {
   }>({});
 
   const [filters, setFilters] = useState({
-    status: "",
-    type: "",
-    priority: "",
-    statusText: "Status",
-    typeText: "Type",
-    priorityText: "Priority",
+    status: '',
+    type: '',
+    priority: '',
+    statusText: 'Status',
+    typeText: 'Type',
+    priorityText: 'Priority',
   });
 
   // Handle filter change event and update state accordingly (for dropdown menu)
@@ -126,9 +126,9 @@ export default function Page() {
 
   const filteredFeedbacks = feedbacks.filter(
     (feedback) =>
-      (filters.status === "" || feedback.status === filters.status) &&
-      (filters.type === "" || feedback.type === filters.type) &&
-      (filters.priority === "" || feedback.priority === filters.priority)
+      (filters.status === '' || feedback.status === filters.status) &&
+      (filters.type === '' || feedback.type === filters.type) &&
+      (filters.priority === '' || feedback.priority === filters.priority)
   );
 
   return (
@@ -143,7 +143,7 @@ export default function Page() {
               <DropdownMenuTrigger>
                 <Button variant="outline">
                   <AiOutlineFilter className="text-xl mr-2" />
-                  {filters.statusText}{" "}
+                  {filters.statusText}{' '}
                   {selectedBadges.status && (
                     <Badge
                       className="ml-1"
@@ -162,7 +162,7 @@ export default function Page() {
                   <DropdownMenuItem
                     onClick={() =>
                       handleFilterChange(
-                        "status",
+                        'status',
                         uniqueStatus,
                         `Status:`,
                         uniqueStatus
@@ -193,7 +193,7 @@ export default function Page() {
                   <DropdownMenuItem
                     onClick={() =>
                       handleFilterChange(
-                        "type",
+                        'type',
                         uniqueType,
                         `Type: ${uniqueType}`
                       )
@@ -223,7 +223,7 @@ export default function Page() {
                   <DropdownMenuItem
                     onClick={() =>
                       handleFilterChange(
-                        "priority",
+                        'priority',
                         uniquePriority,
                         `Priority: ${uniquePriority}`
                       )
@@ -240,7 +240,7 @@ export default function Page() {
         {/* Search */}
         <div className="flex space-x-3">
           <div className="max-w-sm flex-1  items-center">
-            <div >
+            <div>
               <input
                 type="email"
                 name="email"
@@ -292,7 +292,6 @@ export default function Page() {
                   </TableCell>
                 </td>
                 <td className="p-0 ">
-
                   <Anchor
                     className=" "
                     key={feedback.id}
@@ -302,7 +301,6 @@ export default function Page() {
                       {feedback.feedback}
                     </TableCell>
                   </Anchor>
-
                 </td>
                 <td className="p-0 ">
                   <TableCell classname="px-6 py-4 truncate">

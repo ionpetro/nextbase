@@ -1,4 +1,3 @@
-
 import { ReactNode } from 'react';
 import createClient from '@/utils/supabase-server';
 import { z } from 'zod';
@@ -32,7 +31,11 @@ export default async function Layout({
   ]);
 
   return (
-    <TeamContextProvider teamByIdData={teamByIdData} teamId={teamId} teamRole={teamRole}>
+    <TeamContextProvider
+      teamByIdData={teamByIdData}
+      teamId={teamId}
+      teamRole={teamRole}
+    >
       {children}
     </TeamContextProvider>
   );

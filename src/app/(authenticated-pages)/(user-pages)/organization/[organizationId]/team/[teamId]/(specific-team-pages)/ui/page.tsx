@@ -1,20 +1,20 @@
-"use client";
+'use client';
 
-import React from "react";
-import { Button } from "@/components/ui/Button";
-import { BiChevronLeft } from "react-icons/bi";
-import { BiChevronRight } from "react-icons/bi";
-import PageHeadingWithActions from "@/components/ui/Headings/PageHeadingWithActions";
-import TableCell from "@/components/ui/Table/TableCell";
-import TableHeader from "@/components/ui/Table/TableHeader";
-import HelpCard from "@/components/ui/Card/HelpCard";
-import organisationshelp from "public/assets/help-assets/organisations-teams.png";
-import teamsprojects from "public/assets/help-assets/teams-projects.png";
-import { BsPlusLg } from "react-icons/bs";
-import { IoMdSettings } from "react-icons/io";
-import Link from "next/link";
-import { Badge } from "@/components/ui/Badge";
-import { TeamGraphs } from "../../../TeamGraphs";
+import React from 'react';
+import { Button } from '@/components/ui/Button';
+import { BiChevronLeft } from 'react-icons/bi';
+import { BiChevronRight } from 'react-icons/bi';
+import PageHeadingWithActions from '@/components/ui/Headings/PageHeadingWithActions';
+import TableCell from '@/components/ui/Table/TableCell';
+import TableHeader from '@/components/ui/Table/TableHeader';
+import HelpCard from '@/components/ui/Card/HelpCard';
+import organisationshelp from 'public/assets/help-assets/organisations-teams.png';
+import teamsprojects from 'public/assets/help-assets/teams-projects.png';
+import { BsPlusLg } from 'react-icons/bs';
+import { IoMdSettings } from 'react-icons/io';
+import Link from 'next/link';
+import { Badge } from '@/components/ui/Badge';
+import { TeamGraphs } from '../../../TeamGraphs';
 
 type Project = {
   id: number;
@@ -46,58 +46,58 @@ type InitialOrganisationsListType = Organisation[];
 const initialOrganisationsList: InitialOrganisationsListType = [
   {
     id: 1,
-    organisationName: "Organisation 1",
-    owner: "owner_1",
-    members: "members_1",
-    plan: "plan_1",
-    credits: "credits_1",
-    createdAt: "createdAt_1",
+    organisationName: 'Organisation 1',
+    owner: 'owner_1',
+    members: 'members_1',
+    plan: 'plan_1',
+    credits: 'credits_1',
+    createdAt: 'createdAt_1',
     teams: [
       {
         id: 1,
-        teamName: "team_1",
+        teamName: 'team_1',
         projects: [
           {
             id: 1,
-            projectName: "team_1_project_1",
-            objective: "Develop the user interface design ",
-            projectCreatedAt: "project_createdAt_1",
-            priority: "Low Priority",
+            projectName: 'team_1_project_1',
+            objective: 'Develop the user interface design ',
+            projectCreatedAt: 'project_createdAt_1',
+            priority: 'Low Priority',
           },
           {
             id: 2,
-            projectName: "team_1_project_2",
-            objective: "Develop the front-end functionality",
-            projectCreatedAt: "project_createdAt_2",
-            priority: "Medium Priority",
+            projectName: 'team_1_project_2',
+            objective: 'Develop the front-end functionality',
+            projectCreatedAt: 'project_createdAt_2',
+            priority: 'Medium Priority',
           },
           {
             id: 3,
-            projectName: "team_1_project_3",
-            objective: " Develop the back-end functionality",
-            projectCreatedAt: "project_createdAt_3",
-            priority: "High Priority",
+            projectName: 'team_1_project_3',
+            objective: ' Develop the back-end functionality',
+            projectCreatedAt: 'project_createdAt_3',
+            priority: 'High Priority',
           },
           {
             id: 4,
-            projectName: "team_1_project_4",
-            objective: "Conduct thorough testing",
-            projectCreatedAt: "project_createdAt_4",
-            priority: "Low Priority",
+            projectName: 'team_1_project_4',
+            objective: 'Conduct thorough testing',
+            projectCreatedAt: 'project_createdAt_4',
+            priority: 'Low Priority',
           },
           {
             id: 5,
-            projectName: "team_1_project_5",
-            objective: "Implement a robust data management system",
-            projectCreatedAt: "project_createdAt_5",
-            priority: "Medium Priority",
+            projectName: 'team_1_project_5',
+            objective: 'Implement a robust data management system',
+            projectCreatedAt: 'project_createdAt_5',
+            priority: 'Medium Priority',
           },
           {
             id: 6,
-            projectName: "team_1_project_6",
-            objective: "Ensure the security of the FreshBite app",
-            projectCreatedAt: "project_createdAt_6",
-            priority: "Medium Priority",
+            projectName: 'team_1_project_6',
+            objective: 'Ensure the security of the FreshBite app',
+            projectCreatedAt: 'project_createdAt_6',
+            priority: 'Medium Priority',
           },
         ],
       },
@@ -107,14 +107,14 @@ const initialOrganisationsList: InitialOrganisationsListType = [
 
 const mapPriorityToVariant = (priority: string) => {
   switch (priority) {
-    case "High Priority":
-      return "danger";
-    case "Medium Priority":
-      return "warning";
-    case "Low Priority":
-      return "information";
+    case 'High Priority':
+      return 'danger';
+    case 'Medium Priority':
+      return 'warning';
+    case 'Low Priority':
+      return 'information';
     default:
-      return "default";
+      return 'default';
   }
 };
 
@@ -145,7 +145,7 @@ export default function Page() {
               <BsPlusLg className="text-white mr-2" />
               Create Project
             </Button>
-            <Button variant={"outline"}>
+            <Button variant={'outline'}>
               <IoMdSettings className="text-slate-600 mr-2" />
               View Team Settings
             </Button>

@@ -104,7 +104,11 @@ const copyBillingDetailsToCustomer = async (
 ) => {
   //Todo: check this assertion
   const customer = payment_method.customer as string;
-  const { name: _name, phone: _phone, address: _address } = payment_method.billing_details;
+  const {
+    name: _name,
+    phone: _phone,
+    address: _address,
+  } = payment_method.billing_details;
   const name = _name ?? undefined;
   const phone = _phone ?? undefined;
   const address = _address ?? undefined;
@@ -116,8 +120,12 @@ const copyBillingDetailsToCustomer = async (
     postal_code: address?.postal_code ?? undefined,
     state: address?.state ?? undefined,
     city: address?.city ?? undefined,
-  }
-  await stripe.customers.update(customer, { name, phone, address: addressParam });
+  };
+  await stripe.customers.update(customer, {
+    name,
+    phone,
+    address: addressParam,
+  });
   const { error } = await supabaseAdmin
     .from('organizations_private_info')
     .update({
@@ -149,38 +157,38 @@ const manageSubscriptionStatusChange = async (
   // Upsert the latest status of the subscription object.
   /* eslint-disable prettier/prettier */
   const subscriptionData: Database['public']['Tables']['subscriptions']['Insert'] =
-  {
-    id: subscription.id,
-    organization_id: organizationId,
-    metadata: subscription.metadata,
-    status: subscription.status,
-    price_id: subscription.items.data[0].price.id,
-    //TODO check quantity on subscription
-    quantity: subscription.items.data[0].quantity,
-    cancel_at_period_end: subscription.cancel_at_period_end,
-    cancel_at: subscription.cancel_at
-      ? toDateTime(subscription.cancel_at).toISOString()
-      : null,
-    canceled_at: subscription.canceled_at
-      ? toDateTime(subscription.canceled_at).toISOString()
-      : null,
-    current_period_start: toDateTime(
-      subscription.current_period_start
-    ).toISOString(),
-    current_period_end: toDateTime(
-      subscription.current_period_end
-    ).toISOString(),
-    created: toDateTime(subscription.created).toISOString(),
-    ended_at: subscription.ended_at
-      ? toDateTime(subscription.ended_at).toISOString()
-      : null,
-    trial_start: subscription.trial_start
-      ? toDateTime(subscription.trial_start).toISOString()
-      : null,
-    trial_end: subscription.trial_end
-      ? toDateTime(subscription.trial_end).toISOString()
-      : null,
-  };
+    {
+      id: subscription.id,
+      organization_id: organizationId,
+      metadata: subscription.metadata,
+      status: subscription.status,
+      price_id: subscription.items.data[0].price.id,
+      //TODO check quantity on subscription
+      quantity: subscription.items.data[0].quantity,
+      cancel_at_period_end: subscription.cancel_at_period_end,
+      cancel_at: subscription.cancel_at
+        ? toDateTime(subscription.cancel_at).toISOString()
+        : null,
+      canceled_at: subscription.canceled_at
+        ? toDateTime(subscription.canceled_at).toISOString()
+        : null,
+      current_period_start: toDateTime(
+        subscription.current_period_start
+      ).toISOString(),
+      current_period_end: toDateTime(
+        subscription.current_period_end
+      ).toISOString(),
+      created: toDateTime(subscription.created).toISOString(),
+      ended_at: subscription.ended_at
+        ? toDateTime(subscription.ended_at).toISOString()
+        : null,
+      trial_start: subscription.trial_start
+        ? toDateTime(subscription.trial_start).toISOString()
+        : null,
+      trial_end: subscription.trial_end
+        ? toDateTime(subscription.trial_end).toISOString()
+        : null,
+    };
   /* eslint-enable prettier/prettier */
 
   const { error } = await supabaseAdmin
@@ -204,7 +212,6 @@ export const updatePaymentMethod = async (
   paymentMethodId: string,
   customerId: string
 ) => {
-
   const { data: customerData, error: noCustomerError } = await supabaseAdmin
     .from('customers')
     .select('*')
@@ -218,9 +225,9 @@ export const updatePaymentMethod = async (
   const paymentMethod = await stripe.paymentMethods.retrieve(paymentMethodId);
   const billingAddress = paymentMethod.billing_details;
   const { name: _name, phone: _phone, address: _address } = billingAddress;
-  const address = _address ?? undefined
-  const name = _name ?? undefined
-  const phone = _phone ?? undefined
+  const address = _address ?? undefined;
+  const name = _name ?? undefined;
+  const phone = _phone ?? undefined;
   const addressParam: Stripe.AddressParam = {
     country: address?.country ?? undefined,
     line1: address?.line1 ?? undefined,
@@ -228,9 +235,17 @@ export const updatePaymentMethod = async (
     postal_code: address?.postal_code ?? undefined,
     state: address?.state ?? undefined,
     city: address?.city ?? undefined,
-  }
-  await stripe.customers.update(customerId, { name, phone, address: addressParam });
-  await stripe.customers.update(customerId, { name, phone, address: addressParam });
+  };
+  await stripe.customers.update(customerId, {
+    name,
+    phone,
+    address: addressParam,
+  });
+  await stripe.customers.update(customerId, {
+    name,
+    phone,
+    address: addressParam,
+  });
 
   const { error } = await supabaseAdmin
     .from('organizations_private_info')
@@ -242,8 +257,7 @@ export const updatePaymentMethod = async (
     })
     .eq('id', organizationId);
   if (error) throw error;
-}
-
+};
 
 export const getUsersPaginated = async (
   pageNumber = 0,

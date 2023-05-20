@@ -34,7 +34,7 @@ export function CreateProjectDialog({
 
   return (
     <>
-      <Dialog open={open} onOpenChange={setOpen} >
+      <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button>
             <BsPlusLg className="text-white mr-2" />
@@ -65,11 +65,7 @@ export function CreateProjectDialog({
             </div>
 
             <DialogFooter>
-              <Button
-                variant="success"
-                type="submit"
-                disabled={isLoading}
-              >
+              <Button variant="success" type="submit" disabled={isLoading}>
                 Create Project
               </Button>
               <Button

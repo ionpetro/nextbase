@@ -12,7 +12,7 @@ import { handleError } from '@/utils/api-routes/handle-error';
 const requestPayloadSchema = z.object({
   priceId: z.string(),
   isTrial: z.boolean().optional().default(false),
-})
+});
 
 const TRIAL_DAYS = 14;
 const TRIAL_DURATION = TRIAL_DAYS * 24 * 60 * 60; // 14 days in seconds
@@ -28,10 +28,7 @@ async function createCheckoutSession(
 ) {
   if (req.method === 'POST') {
     const { organizationId } = req.query;
-    const {
-      priceId,
-      isTrial
-    } = requestPayloadSchema.parse(req.body);
+    const { priceId, isTrial } = requestPayloadSchema.parse(req.body);
     if (typeof organizationId !== 'string') {
       return res.status(400).json({
         error: { statusCode: 400, message: 'Invalid organization id' },
@@ -68,7 +65,6 @@ async function createCheckoutSession(
       });
       if (!customer) throw Error('Could not get customer');
       if (isTrial) {
-
         const stripeSession = await stripe.checkout.sessions.create({
           payment_method_types: ['card'],
           billing_address_collection: 'required',
@@ -86,7 +82,7 @@ async function createCheckoutSession(
             trial_settings: {
               end_behavior: {
                 missing_payment_method: 'cancel',
-              }
+              },
             },
             metadata: {},
           },
@@ -96,7 +92,6 @@ async function createCheckoutSession(
 
         return res.status(200).json({ sessionId: stripeSession.id });
       } else {
-
         const stripeSession = await stripe.checkout.sessions.create({
           payment_method_types: ['card'],
           billing_address_collection: 'required',

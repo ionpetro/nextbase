@@ -11,7 +11,10 @@ export const OrganizationTeams = ({
   initialTeams: Table<'teams'>[];
 }) => {
   const { organizationId } = useOrganizationContext();
-  const { data: teams } = useGetTeamsInOrganization(organizationId, initialTeams);
+  const { data: teams } = useGetTeamsInOrganization(
+    organizationId,
+    initialTeams
+  );
   if (!teams) {
     return null;
   }

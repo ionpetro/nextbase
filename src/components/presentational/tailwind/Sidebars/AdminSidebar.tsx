@@ -15,19 +15,19 @@ import { Home } from 'lucide-react';
 type LinksProps = {
   isExpanded: boolean;
   toggleIsExpanded: (isExpanded: boolean) => void;
-}
+};
 
 function Links({ isExpanded, toggleIsExpanded }: LinksProps) {
   const user = useUser();
 
   const chevronClassName = cn(
     `absolute flex text-white justify-center bg-slate-900 hover:bg-slate-700 p-2 px-1 rounded-lg text-4xl cursor-pointer items-center top-1/2`,
-    isExpanded ? "left-60" : "left-10"
+    isExpanded ? 'left-60' : 'left-10'
   );
 
   const sidebarContainerClassName = cn(
     `grid grid-rows-[auto,1fr,auto]  bg-slate-900 h-full overflow-auto`,
-    isExpanded ? " px-4 w-[264px]" : "px-2 w-[64px]"
+    isExpanded ? ' px-4 w-[264px]' : 'px-2 w-[64px]'
   );
 
   return (
@@ -93,9 +93,8 @@ function Links({ isExpanded, toggleIsExpanded }: LinksProps) {
         >
           Login
         </Anchor>
-      )
-      }
-    </div >
+      )}
+    </div>
   );
 }
 
@@ -117,24 +116,34 @@ function SidebarLink({
       href={href}
       className={classNames(
         `flex w-full gap-2.5 items-center group py-3 h-[48px] mb-1 rounded-lg transition hover:cursor-pointer hover:shadow-lg hover:bg-slate-800 `,
-        isActive ? ' bg-slate-800 text-slate-200 hover:bg-slate-800' : ' bg-transparent',
-        isExpanded ? "text-slate-200 pl-5 pr-2 justify-start" : "text-slate-200 justify-center"
+        isActive
+          ? ' bg-slate-800 text-slate-200 hover:bg-slate-800'
+          : ' bg-transparent',
+        isExpanded
+          ? 'text-slate-200 pl-5 pr-2 justify-start'
+          : 'text-slate-200 justify-center'
       )}
     >
       <span className="text-xl group-hover:text-white">{icon}</span>
-      {isExpanded ? (<span className="transition text-base  font-[400] group-hover:font-[600] group-hover:text-white">
-        {label}
-      </span>) : null}
+      {isExpanded ? (
+        <span className="transition text-base  font-[400] group-hover:font-[600] group-hover:text-white">
+          {label}
+        </span>
+      ) : null}
     </Anchor>
   );
 }
 
-export function AdminSidebar({ isExpanded, toggleIsExpanded }: { isExpanded: boolean, toggleIsExpanded: (isExpanded: boolean) => void; }) {
+export function AdminSidebar({
+  isExpanded,
+  toggleIsExpanded,
+}: {
+  isExpanded: boolean;
+  toggleIsExpanded: (isExpanded: boolean) => void;
+}) {
   return (
     <nav className="flex w-full">
-      <Links
-        isExpanded={isExpanded}
-        toggleIsExpanded={toggleIsExpanded} />
+      <Links isExpanded={isExpanded} toggleIsExpanded={toggleIsExpanded} />
       <div className="flex-grow"></div>
     </nav>
   );

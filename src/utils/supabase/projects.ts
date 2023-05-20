@@ -1,4 +1,4 @@
-import { AppSupabaseClient, CommentWithUser, Enum, Table } from "@/types";
+import { AppSupabaseClient, CommentWithUser, Enum, Table } from '@/types';
 
 export const getProjectsByTeamId = async (
   supabase: AppSupabaseClient,
@@ -10,7 +10,6 @@ export const getProjectsByTeamId = async (
     .eq('team_id', teamId)
     .order('created_at', { ascending: false });
   if (error) {
-
     throw error;
   }
 
@@ -21,10 +20,7 @@ export const getProjectById = async (
   supabase: AppSupabaseClient,
   projectId: string
 ) => {
-  const {
-    data: project,
-    error: projectError
-  } = await supabase
+  const { data: project, error: projectError } = await supabase
     .from('projects')
     .select('*')
     .eq('id', projectId)
@@ -34,7 +30,7 @@ export const getProjectById = async (
     throw projectError;
   }
   return project;
-}
+};
 
 export const getDraftProjectsByTeamId = async (
   supabase: AppSupabaseClient,
@@ -64,7 +60,6 @@ export const getPendingApprovalProjectsByTeamId = async (
     .eq('project_status', 'pending_approval')
     .order('created_at', { ascending: false });
   if (error) {
-
     throw error;
   }
 
@@ -82,7 +77,6 @@ export const getApprovedProjectsByTeamId = async (
     .eq('project_status', 'approved')
     .order('created_at', { ascending: false });
   if (error) {
-
     throw error;
   }
 
@@ -100,7 +94,6 @@ export const getCompletedProjectsByTeamId = async (
     .eq('project_status', 'completed')
     .order('created_at', { ascending: false });
   if (error) {
-
     throw error;
   }
 
@@ -118,20 +111,17 @@ export const getProjectsUnAssignedToTeam = async (
     .is('team_id', null);
 
   if (error) {
-
     throw error;
   }
 
   return data;
 };
 
-
-
 export const createProject = async (
   supabase: AppSupabaseClient,
   organizationId: string,
   teamId: number,
-  name: string,
+  name: string
 ) => {
   const { data, error } = await supabase
     .from('projects')
@@ -148,11 +138,11 @@ export const createProject = async (
   }
 
   return data;
-}
+};
 
 export const deleteProject = async (
   supabase: AppSupabaseClient,
-  projectId: string,
+  projectId: string
 ) => {
   const { data, error } = await supabase
     .from('projects')
@@ -164,12 +154,12 @@ export const deleteProject = async (
   }
 
   return data;
-}
+};
 
 export const updateProjectName = async (
   supabase: AppSupabaseClient,
   projectId: string,
-  name: string,
+  name: string
 ) => {
   const { data, error } = await supabase
     .from('projects')
@@ -183,7 +173,7 @@ export const updateProjectName = async (
   }
 
   return data;
-}
+};
 
 export const updateProjectStatus = async (
   supabase: AppSupabaseClient,
@@ -202,8 +192,7 @@ export const updateProjectStatus = async (
   }
 
   return data;
-}
-
+};
 
 export const addProjectComment = async (
   supabase: AppSupabaseClient,
@@ -217,7 +206,6 @@ export const addProjectComment = async (
     .select('*')
     .single();
   if (error) {
-
     throw error;
   }
 
@@ -227,9 +215,9 @@ export const addProjectComment = async (
 function normalizeComment(
   comments: Table<'project_comments'> & {
     user_profiles:
-    | Table<'user_profiles'>
-    | Array<Table<'user_profiles'>>
-    | null;
+      | Table<'user_profiles'>
+      | Array<Table<'user_profiles'>>
+      | null;
   }
 ): CommentWithUser {
   const user_profiles = Array.isArray(comments.user_profiles)
@@ -255,7 +243,6 @@ export const getProjectComments = async (
     .eq('project_id', projectId)
     .order('created_at', { ascending: false });
   if (error) {
-
     throw error;
   }
 
@@ -274,14 +261,11 @@ export const submitProjectForApproval = async (
     .single();
 
   if (error) {
-
     throw error;
   }
 
   return data;
 };
-
-
 
 export const approveProject = async (
   supabase: AppSupabaseClient,
@@ -295,7 +279,6 @@ export const approveProject = async (
     .single();
 
   if (error) {
-
     throw error;
   }
 
@@ -314,7 +297,6 @@ export const rejectProject = async (
     .single();
 
   if (error) {
-
     throw error;
   }
 
@@ -333,10 +315,8 @@ export const completeProject = async (
     .single();
 
   if (error) {
-
     throw error;
   }
 
   return data;
 };
-

@@ -1,5 +1,5 @@
-import { VariantProps, cva } from "class-variance-authority";
-import { cn } from "@/utils/cn";
+import { VariantProps, cva } from 'class-variance-authority';
+import { cn } from '@/utils/cn';
 
 type TableCellProps = {
   children: React.ReactNode;

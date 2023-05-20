@@ -33,12 +33,14 @@ export function CreateTeamDialog({
 
   return (
     <>
-
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="default" type="button" size="default" >
-            <div className='flex space-x-2 items-center'>
-              <span><IoAddOutline className='text-lg' /></span><span>Create Team</span>
+          <Button variant="default" type="button" size="default">
+            <div className="flex space-x-2 items-center">
+              <span>
+                <IoAddOutline className="text-lg" />
+              </span>
+              <span>Create Team</span>
             </div>
           </Button>
         </DialogTrigger>
@@ -66,11 +68,7 @@ export function CreateTeamDialog({
             </div>
 
             <DialogFooter>
-              <Button
-                type="submit"
-                variant="success"
-                disabled={isLoading}
-              >
+              <Button type="submit" variant="success" disabled={isLoading}>
                 Create Team
               </Button>
               <Button

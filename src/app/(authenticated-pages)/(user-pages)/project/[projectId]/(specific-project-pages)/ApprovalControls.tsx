@@ -7,30 +7,29 @@ import { T } from '@/components/ui/Typography';
 import { useOrganizationContext } from '@/contexts/OrganizationContext';
 import { useProjectContext } from '@/contexts/ProjectContext';
 import { useTeamContext } from '@/contexts/TeamContext';
-import { useApproveProject, useCompleteProject, useRejectProject, useSubmitProjectForApproval } from '@/utils/react-queries/projects';
-
+import {
+  useApproveProject,
+  useCompleteProject,
+  useRejectProject,
+  useSubmitProjectForApproval,
+} from '@/utils/react-queries/projects';
 
 export function ApprovalControls() {
-  const {
-    projectByIdData,
-    projectId
-  } = useProjectContext();
-  const {
-    teamRole
-  } = useTeamContext();
+  const { projectByIdData, projectId } = useProjectContext();
+  const { teamRole } = useTeamContext();
 
-  const {
-    organizationRole
-  } = useOrganizationContext();
-
+  const { organizationRole } = useOrganizationContext();
 
   const { mutate: submitProjectForApproval } = useSubmitProjectForApproval();
   const { mutate: markProjectAsCompleted } = useCompleteProject();
   const { mutate: approveProject } = useApproveProject();
   const { mutate: rejectProject } = useRejectProject();
 
-  const canManageTeam = teamRole === 'admin' || organizationRole === 'admin' || organizationRole === 'owner';
-  const canOnlyEdit = teamRole === 'member'
+  const canManageTeam =
+    teamRole === 'admin' ||
+    organizationRole === 'admin' ||
+    organizationRole === 'owner';
+  const canOnlyEdit = teamRole === 'member';
 
   return (
     <>
@@ -51,23 +50,25 @@ export function ApprovalControls() {
           </>
         ) : null
       ) : null}
-      {!canManageTeam && projectByIdData.project_status === 'pending_approval' ? (
+      {!canManageTeam &&
+      projectByIdData.project_status === 'pending_approval' ? (
         <T.P className="text-green-600 italic text-xs">Awaiting approval</T.P>
       ) : null}
-      {canManageTeam && projectByIdData.project_status === 'pending_approval' && (
-        <>
-          <ConfirmApproveProjectDialog
-            onConfirm={() => {
-              approveProject(projectId);
-            }}
-          />
-          <ConfirmRejectProjectDialog
-            onConfirm={() => {
-              rejectProject(projectId);
-            }}
-          />
-        </>
-      )}
+      {canManageTeam &&
+        projectByIdData.project_status === 'pending_approval' && (
+          <>
+            <ConfirmApproveProjectDialog
+              onConfirm={() => {
+                approveProject(projectId);
+              }}
+            />
+            <ConfirmRejectProjectDialog
+              onConfirm={() => {
+                rejectProject(projectId);
+              }}
+            />
+          </>
+        )}
       {projectByIdData.project_status === 'approved' && canManageTeam ? (
         <ConfirmMarkProjectAsCompleteDialog
           onConfirm={() => {

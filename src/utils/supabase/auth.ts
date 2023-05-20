@@ -1,5 +1,5 @@
-import { AppSupabaseClient, AuthProvider } from "@/types";
-import { toSiteURL } from "../helpers";
+import { AppSupabaseClient, AuthProvider } from '@/types';
+import { toSiteURL } from '../helpers';
 
 export const signInWithMagicLink = async (
   supabase: AppSupabaseClient,

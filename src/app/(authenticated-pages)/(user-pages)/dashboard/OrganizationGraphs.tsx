@@ -9,13 +9,12 @@ import {
   Tooltip,
   Area,
   AreaChart,
-} from "recharts";
-import { ContentType } from "recharts/types/component/Tooltip";
+} from 'recharts';
+import { ContentType } from 'recharts/types/component/Tooltip';
 import {
   NameType,
   ValueType,
-} from "recharts/types/component/DefaultTooltipContent";
-
+} from 'recharts/types/component/DefaultTooltipContent';
 
 const graphData = [
   {
@@ -120,7 +119,7 @@ export function OrganizationGraphs() {
                   <Bar
                     dataKey="pv"
                     fill="#0D9387"
-                    background={{ fill: "#E4E6EA" }}
+                    background={{ fill: '#E4E6EA' }}
                   />
                 </BarChart>
               </ResponsiveContainer>
@@ -154,7 +153,12 @@ export function OrganizationGraphs() {
                   <XAxis dataKey="name" />
                   <YAxis />
                   <Tooltip content={CustomTooltip} />
-                  <Area type="monotone" dataKey="uv" stroke="#3B81F5" fill="url(#colorGradient)" />
+                  <Area
+                    type="monotone"
+                    dataKey="uv"
+                    stroke="#3B81F5"
+                    fill="url(#colorGradient)"
+                  />
                   <defs>
                     <linearGradient
                       id="colorGradient"
@@ -172,8 +176,7 @@ export function OrganizationGraphs() {
             </div>
           </div>
         </div>
-
       </div>
     </div>
-  )
+  );
 }

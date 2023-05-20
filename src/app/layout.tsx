@@ -6,12 +6,12 @@ import AppProviders from './AppProviders';
 import { errors } from '@/utils/errors';
 import { AppSupabaseClient } from '@/types';
 import { getIsAppInMaintenanceMode } from '@/utils/supabase-queries';
-import localFont from "next/font/local";
+import localFont from 'next/font/local';
 
 const satoshiFont = localFont({
-  src: "../fonts/satoshi/Satoshi-Variable.woff2",
-  display: "swap",
-  variable: "--font-satoshi",
+  src: '../fonts/satoshi/Satoshi-Variable.woff2',
+  display: 'swap',
+  variable: '--font-satoshi',
 });
 
 async function fetchSession(supabaseClient: AppSupabaseClient) {

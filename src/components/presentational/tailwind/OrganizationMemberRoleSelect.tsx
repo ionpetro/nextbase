@@ -28,7 +28,9 @@ type TeamMemberRoleSelectProps = {
 } & OtherProps;
 
 // typeguard to narrow string to Enum<'organization_member_role'>
-function isTeamMemberRole(value: string): value is Enum<'organization_member_role'> {
+function isTeamMemberRole(
+  value: string
+): value is Enum<'organization_member_role'> {
   return ['admin', 'member', 'readonly'].includes(value);
 }
 

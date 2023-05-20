@@ -1,15 +1,14 @@
-import { getUserProfile } from "../supabase/user"
+import { getUserProfile } from '../supabase/user';
 import supabaseClient from '@/utils/supabase-browser';
-import { useQuery } from "@tanstack/react-query";
-import { useLoggedInUser } from "@/hooks/useLoggedInUser";
-import { Table } from "@/types";
+import { useQuery } from '@tanstack/react-query';
+import { useLoggedInUser } from '@/hooks/useLoggedInUser';
+import { Table } from '@/types';
 
 export const useGetUserPublicProfile = (userId: string) => {
-  return useQuery(
-    ['user', userId],
-    () => getUserProfile(supabaseClient, userId),
-  )
-}
+  return useQuery(['user', userId], () =>
+    getUserProfile(supabaseClient, userId)
+  );
+};
 
 export const useUserProfile = (initialData?: Table<'user_profiles'>) => {
   const user = useLoggedInUser();

@@ -1,5 +1,5 @@
-import { AppSupabaseClient, Enum, Table } from "@/types";
-import { User } from "@supabase/supabase-js";
+import { AppSupabaseClient, Enum, Table } from '@/types';
+import { User } from '@supabase/supabase-js';
 
 export const updateUserName = async (
   supabase: AppSupabaseClient,
@@ -39,7 +39,7 @@ export const getAllOrganizationsForUser = async (
     )
     .order('created_at', {
       ascending: false,
-    });;
+    });
   if (error) {
     throw error;
   }
@@ -142,7 +142,6 @@ export const getPendingTeamInvitationsInOrganization = async (
   return data || [];
 };
 
-
 export const getOrganizationSubscription = async (
   supabase: AppSupabaseClient,
   organizationId: string
@@ -179,5 +178,5 @@ export const getUserOrganizationRole = async (
     throw new Error('User is not a member of this organization');
   }
 
-  return data.member_role
+  return data.member_role;
 };

@@ -41,13 +41,12 @@ function InviteUser() {
 
   return (
     <>
-
       <InviteOrganizationMemberDialog
         onInvite={(email, role) => {
           mutate({
             email,
             organizationId: organizationId,
-            role
+            role,
           });
         }}
         isLoading={isLoading}
@@ -75,7 +74,7 @@ function TeamMembers() {
         : member.user_profiles;
       if (!userProfile) {
         throw new Error('User profile not found');
-      };
+      }
       return {
         index: index + 1,
         id: userProfile.id,

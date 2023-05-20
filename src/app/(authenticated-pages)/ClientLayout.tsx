@@ -27,12 +27,12 @@ export function ClientLayout({
   const userProfile = data ?? initialUserProfile;
   const segments = useSelectedLayoutSegments();
   const isAppAdminLayout = segments[0] === 'app_admin';
-  const { innerHeight: _innerHeight, innerWidth: _innerWidth } = useWindowSize();
+  const { innerHeight: _innerHeight, innerWidth: _innerWidth } =
+    useWindowSize();
   const innerHeight = _innerHeight ?? 0;
   const innerWidth = _innerWidth ?? 0;
 
   const [showConfetti, setShowConfetti] = useState<boolean>(false);
-
 
   if (!userProfile.full_name) {
     return (
@@ -51,11 +51,19 @@ export function ClientLayout({
         initialIsAppInMaintenanceMode={initialIsAppInMaintenanceMode}
       />
       <div className="flex h-full">
-        {isUserAppAdmin && isAppAdminLayout ? <AppAdminSidebar isUserAppAdmin={isUserAppAdmin} userProfile={userProfile} /> : <UserSidebar isUserAppAdmin={isUserAppAdmin} userProfile={userProfile} />}
+        {isUserAppAdmin && isAppAdminLayout ? (
+          <AppAdminSidebar
+            isUserAppAdmin={isUserAppAdmin}
+            userProfile={userProfile}
+          />
+        ) : (
+          <UserSidebar
+            isUserAppAdmin={isUserAppAdmin}
+            userProfile={userProfile}
+          />
+        )}
         <div className=" flex-1 h-auto overflow-auto">
-          <div className=" px-12 py-8 space-y-10">
-            {children}
-          </div>
+          <div className=" px-12 py-8 space-y-10">{children}</div>
         </div>
         <ReactNoSSR>
           {showConfetti ? (

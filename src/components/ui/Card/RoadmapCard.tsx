@@ -1,7 +1,7 @@
-import { cn } from "@/utils/cn";
-import { VariantProps, cva } from "class-variance-authority";
+import { cn } from '@/utils/cn';
+import { VariantProps, cva } from 'class-variance-authority';
 
-import { Badge, BadgeProps } from "../Badge";
+import { Badge, BadgeProps } from '../Badge';
 
 type RoadmapCardProps = {
   title: string;
@@ -11,31 +11,31 @@ type RoadmapCardProps = {
   priority: string;
 };
 
-const getPriorityVariant = (priority: string): BadgeProps["variant"] => {
+const getPriorityVariant = (priority: string): BadgeProps['variant'] => {
   switch (priority) {
-    case "High Priority":
-      return "solidDanger";
-    case "Medium Priority":
-      return "solidDiscussion";
-    case "Low Priority":
-      return "solidInformation";
+    case 'High Priority':
+      return 'solidDanger';
+    case 'Medium Priority':
+      return 'solidDiscussion';
+    case 'Low Priority':
+      return 'solidInformation';
     default:
-      return "default";
+      return 'default';
   }
 };
 
-const getTagVariant = (tag: string): BadgeProps["variant"] => {
+const getTagVariant = (tag: string): BadgeProps['variant'] => {
   switch (tag) {
-    case "Bug":
-      return "danger";
-    case "Usability Issue":
-      return "warning";
-    case "General Feedback":
-      return "information";
-    case "Feature Request":
-      return "discussion";
+    case 'Bug':
+      return 'danger';
+    case 'Usability Issue':
+      return 'warning';
+    case 'General Feedback':
+      return 'information';
+    case 'Feature Request':
+      return 'discussion';
     default:
-      return "default";
+      return 'default';
   }
 };
 

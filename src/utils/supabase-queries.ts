@@ -59,7 +59,7 @@ export const getAllOrganizationsForUser = async (
     )
     .order('created_at', {
       ascending: false,
-    });;
+    });
   if (error) {
     errors.add(error.message);
     throw error;

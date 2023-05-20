@@ -25,21 +25,33 @@ function RenderUser({
   const { mutate: sendLoginLink, isLoading: isSendingLoginLink } =
     useSendLoginLinkMutation();
   return (
-    <tr key={user.id} >
+    <tr key={user.id}>
       <td className="p-0">
-        <TableCell classname="px-6 py-4 truncate"> {user.full_name ?? '-'} </TableCell>
+        <TableCell classname="px-6 py-4 truncate">
+          {' '}
+          {user.full_name ?? '-'}{' '}
+        </TableCell>
       </td>
       <td className="p-0">
         <TableCell classname="px-6 py-4 truncate">{user.email}</TableCell>
       </td>
       <td className="p-0">
-        <TableCell classname="px-6 py-4 truncate"> {user.is_app_admin ? '✅' : '❌'}</TableCell>
+        <TableCell classname="px-6 py-4 truncate">
+          {' '}
+          {user.is_app_admin ? '✅' : '❌'}
+        </TableCell>
       </td>
       <td className="p-0">
-        <TableCell classname="px-6 py-4 truncate"> {moment(user.created_at).format('DD MMM YYYY')}</TableCell>
+        <TableCell classname="px-6 py-4 truncate">
+          {' '}
+          {moment(user.created_at).format('DD MMM YYYY')}
+        </TableCell>
       </td>
       <td className="p-0">
-        <TableCell classname="px-6 py-4 truncate"> {user.is_confirmed ? '✅' : '❌'}</TableCell>
+        <TableCell classname="px-6 py-4 truncate">
+          {' '}
+          {user.is_confirmed ? '✅' : '❌'}
+        </TableCell>
       </td>
       <td className="p-0">
         <TableCell classname="px-6 py-4 truncate">
@@ -151,62 +163,38 @@ export function RenderUsers({
         />
       </div>
       <div className="space-y-2" style={{ overflowX: 'auto' }}>
-        <table className="min-w-full shadow rounded-lg overflow-hidden" >
+        <table className="min-w-full shadow rounded-lg overflow-hidden">
           <thead className="bg-gray-50">
             <tr>
-              <th
-                scope="col"
-                className="p-0"
-              >
+              <th scope="col" className="p-0">
                 <TableHeader>Full Name</TableHeader>
               </th>
-              <th
-                scope="col"
-                className="p-0"
-              >
+              <th scope="col" className="p-0">
                 <TableHeader>Email</TableHeader>
               </th>
-              <th
-                scope="col"
-                className="p-0"
-              >
+              <th scope="col" className="p-0">
                 <TableHeader>Admin</TableHeader>
               </th>
-              <th
-                scope="col"
-                className="p-0"
-              >
+              <th scope="col" className="p-0">
                 <TableHeader>Created At</TableHeader>
               </th>
-              <th
-                scope="col"
-                className="p-0"
-              >
+              <th scope="col" className="p-0">
                 <TableHeader>Confirmed</TableHeader>
               </th>
-              <th
-                scope="col"
-                className="p-0"
-              >
+              <th scope="col" className="p-0">
                 <TableHeader>Contact User</TableHeader>
               </th>
 
-              <th
-                scope="col"
-                className="p-0"
-              >
+              <th scope="col" className="p-0">
                 <TableHeader>Send Login Link</TableHeader>
               </th>
 
-              <th
-                scope="col"
-                className="p-0"
-              >
+              <th scope="col" className="p-0">
                 <TableHeader>Debug</TableHeader>
               </th>
             </tr>
           </thead>
-          <tbody >
+          <tbody>
             {users.map((user) => (
               <RenderUser key={user.id} user={user} />
             ))}

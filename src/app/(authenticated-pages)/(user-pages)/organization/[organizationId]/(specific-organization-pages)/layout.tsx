@@ -1,12 +1,10 @@
-import { ReactNode } from "react";
-import { SpecificOrganizationClientLayout } from "./SpecificOrganizationClientLayout";
+import { ReactNode } from 'react';
+import { SpecificOrganizationClientLayout } from './SpecificOrganizationClientLayout';
 
-export default function Layout({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <SpecificOrganizationClientLayout>{children}</SpecificOrganizationClientLayout>
+    <SpecificOrganizationClientLayout>
+      {children}
+    </SpecificOrganizationClientLayout>
   );
 }

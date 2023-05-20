@@ -35,8 +35,7 @@ export function CreateOrganizationDialog({
 
   return (
     <>
-
-      <Dialog open={open} onOpenChange={setOpen} >
+      <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button>
             <BsPlusLg className="text-white mr-2" />
@@ -67,11 +66,7 @@ export function CreateOrganizationDialog({
             </div>
 
             <DialogFooter>
-              <Button
-                variant="success"
-                type="submit"
-                disabled={isLoading}
-              >
+              <Button variant="success" type="submit" disabled={isLoading}>
                 Create Organization
               </Button>
               <Button
