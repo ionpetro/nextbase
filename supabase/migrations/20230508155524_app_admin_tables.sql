@@ -1,7 +1,7 @@
 CREATE TYPE internal_blog_post_status AS ENUM ('draft', 'published');
 
 CREATE TABLE internal_blog_posts (
-  id UUID PRIMARY KEY,
+  id UUID DEFAULT gen_random_uuid()  PRIMARY KEY,
   slug VARCHAR(255) UNIQUE NOT NULL,
   title VARCHAR(255) NOT NULL,
   summary TEXT NOT NULL,
@@ -46,7 +46,7 @@ ALTER TABLE internal_blog_author_profiles enable ROW LEVEL SECURITY;
 ALTER TABLE internal_blog_author_posts enable ROW LEVEL SECURITY;
 
 CREATE TABLE internal_changelog (
-  id UUID PRIMARY KEY,
+  id UUID DEFAULT gen_random_uuid()  PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
   changes TEXT NOT NULL,
   user_id UUID REFERENCES user_profiles(id) ON DELETE CASCADE,
@@ -72,7 +72,7 @@ CREATE TYPE internal_feedback_thread_status AS ENUM (
 );
 
 CREATE TABLE internal_feedback_threads (
-  id UUID PRIMARY KEY,
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
   content TEXT NOT NULL,
   user_id UUID REFERENCES user_profiles(id) ON DELETE CASCADE,
@@ -86,7 +86,7 @@ CREATE TABLE internal_feedback_threads (
 );
 
 CREATE TABLE internal_feedback_comments (
-  id UUID PRIMARY KEY,
+  id UUID DEFAULT gen_random_uuid()  PRIMARY KEY,
   user_id UUID REFERENCES user_profiles(id) ON DELETE CASCADE,
   thread_id UUID REFERENCES internal_feedback_threads(id) ON DELETE CASCADE,
   content TEXT NOT NULL,

@@ -138,7 +138,7 @@ export interface Database {
           content: string
           cover_image?: string | null
           created_at?: string | null
-          id: string
+          id?: string
           is_featured?: boolean | null
           seo_data?: Json | null
           slug: string
@@ -177,7 +177,7 @@ export interface Database {
         Insert: {
           changes: string
           created_at?: string | null
-          id: string
+          id?: string
           title: string
           updated_at?: string | null
           user_id?: string | null
@@ -203,7 +203,7 @@ export interface Database {
         Insert: {
           content: string
           created_at?: string | null
-          id: string
+          id?: string
           thread_id?: string | null
           updated_at?: string | null
           user_id?: string | null
@@ -241,7 +241,7 @@ export interface Database {
           added_to_roadmap?: boolean | null
           content: string
           created_at?: string | null
-          id: string
+          id?: string
           open_for_public_discussion?: boolean | null
           priority?:
             | Database["public"]["Enums"]["internal_feedback_thread_priority"]
@@ -646,6 +646,7 @@ export interface Database {
           id: string | null
           is_app_admin: boolean | null
           is_confirmed: boolean | null
+          last_sign_in_at: string | null
           updated_at: string | null
         }
       }
@@ -683,6 +684,7 @@ export interface Database {
           is_app_admin: boolean
           confirmed_at: string
           is_confirmed: boolean
+          last_sign_in_at: string
         }[]
       }
       app_admin_get_organizations_created_per_month: {
