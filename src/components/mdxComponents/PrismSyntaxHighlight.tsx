@@ -21,7 +21,6 @@ export const PrismSyntaxHighlight = ({ children, className, ...rest }) => {
               className,
               'block px-3 py-2 rounded-md text-sm font-mono overflow-x-auto my-6'
             )}
-            style={style}
           >
             {tokens.slice(0, -1).map((line, i) => {
               const { key: divKey, ...rest } = getLineProps({ line, key: i });
