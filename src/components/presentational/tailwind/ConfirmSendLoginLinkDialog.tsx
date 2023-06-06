@@ -20,7 +20,7 @@ export const ConfirmSendLoginLinkDialog = ({ onConfirm }: Props) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="secondaryLink">Send login link</Button>
+        <Button variant="primaryLink">Send login link</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
