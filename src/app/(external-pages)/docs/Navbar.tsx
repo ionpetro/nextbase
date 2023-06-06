@@ -2,6 +2,7 @@
 import { cn } from "@/utils/cn"
 import Link from "next/link"
 import { useEffect, useState } from "react"
+import { MobileNavigation } from "./MobileNavigation"
 
 function GitHubIcon(props: React.SVGProps<SVGSVGElement>) {
     return (
@@ -10,8 +11,6 @@ function GitHubIcon(props: React.SVGProps<SVGSVGElement>) {
         </svg>
     )
 }
-
-
 
 
 export function Header() {
@@ -37,14 +36,28 @@ export function Header() {
                     : 'dark:bg-transparent'
             )}
         >
-            {/* <div className="mr-6 flex lg:hidden">
-          <MobileNavigation navigation={navigation} />
-        </div> */}
+            <div className="mr-6 flex lg:hidden space-x-2">
+                <MobileNavigation />
+                <div className={cn(
+                    "block lg:hidden",
+                    "relative ")}>
+                    <Link href="/" className="block" aria-label="Home page">
+                        <img
+                            src="https://usenextbase.com/logos/nextbase/Logo%2006.png"
+                            className="h-9 block sm:h-9"
+                            alt="Nextbase Logo"
+                        />
+
+                    </Link>
+                </div>
+            </div>
+
             <div className={
                 cn(' mx-auto h-full w-full max-w-8xl justify-center sm:px-2 lg:px-8 xl:px-12',
                 )
             }>
                 <div className={cn(
+                    "hidden lg:block",
                     "relative ")}>
                     <Link href="/" className="block" aria-label="Home page">
                         <img
