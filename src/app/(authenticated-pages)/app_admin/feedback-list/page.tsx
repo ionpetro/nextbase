@@ -96,8 +96,7 @@ export default function Page() {
     status?: string;
   }>({});
 
-  let [isPending, startTransition] = useTransition();
-
+  const [isPending, startTransition] = useTransition();
 
   const [filters, setFilters] = useState({
     status: '',
@@ -255,11 +254,15 @@ export default function Page() {
             </div>
           </div>
 
-          <Button onClick={() => {
-            startTransition(() => {
-              myAction()
-            });
-          }}>Search</Button>
+          <Button
+            onClick={() => {
+              startTransition(() => {
+                myAction();
+              });
+            }}
+          >
+            Search
+          </Button>
         </div>
       </div>
 

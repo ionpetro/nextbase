@@ -9,7 +9,6 @@ import { useWhyDidYouUpdate } from 'rooks';
 const externalPagesSegment = '(external-pages)';
 const authenticatedPagesSegment = '(authenticated-pages)';
 
-
 /**
  * This component listens for changes to the user's session and refreshes the page when it changes.
  * This is used to update the UI when the user logs in or out for security reasons.
@@ -30,7 +29,7 @@ export function SupabaseListener({ accessToken }: { accessToken?: string }) {
         router.push('/login');
       } else if (event === 'SIGNED_IN') {
         // the SIGNED_IN event gets fired even when the user is already signed in if the window gets focused after losing focus.
-        // so we only want to redirect user to check-auth page if they are not within authenticated-pages segment        
+        // so we only want to redirect user to check-auth page if they are not within authenticated-pages segment
         if (segments.includes(externalPagesSegment)) {
           // we are not interested in auth events when the user is on an external page
           return;

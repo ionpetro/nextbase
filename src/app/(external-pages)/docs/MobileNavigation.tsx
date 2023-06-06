@@ -1,9 +1,9 @@
 'use client';
-import { ComponentProps, useEffect, useState } from 'react'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { Dialog } from '@headlessui/react'
-import { Navigation } from './Navigation'
+import { ComponentProps, useEffect, useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { Dialog } from '@headlessui/react';
+import { Navigation } from './Navigation';
 
 function MenuIcon(props: ComponentProps<'svg'>) {
   return (
@@ -17,7 +17,7 @@ function MenuIcon(props: ComponentProps<'svg'>) {
     >
       <path d="M4 7h16M4 12h16M4 17h16" />
     </svg>
-  )
+  );
 }
 
 function CloseIcon(props: ComponentProps<'svg'>) {
@@ -32,12 +32,12 @@ function CloseIcon(props: ComponentProps<'svg'>) {
     >
       <path d="M5 5l14 14M19 5l-14 14" />
     </svg>
-  )
+  );
 }
 
 export function MobileNavigation() {
-  let router = useRouter()
-  let [isOpen, setIsOpen] = useState(false)
+  const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
 
   // useEffect(() => {
   //   if (!isOpen) return
@@ -86,12 +86,11 @@ export function MobileNavigation() {
                 className="h-9 block sm:h-9"
                 alt="Nextbase Logo"
               />
-
             </Link>
           </div>
           <Navigation className="mt-5 px-1" />
         </Dialog.Panel>
       </Dialog>
     </>
-  )
+  );
 }
