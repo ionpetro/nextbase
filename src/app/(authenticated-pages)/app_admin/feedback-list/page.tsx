@@ -256,7 +256,9 @@ export default function Page() {
           </div>
 
           <Button onClick={() => {
-            startTransition(() => myAction());
+            startTransition(() => {
+              myAction()
+            });
           }}>Search</Button>
         </div>
       </div>
