@@ -65,7 +65,7 @@ export const GiveFeedbackDialog = ({ isExpanded }: { isExpanded: boolean }) => {
       }}
     >
       <DialogTrigger>
-        <Button variant="link">
+        <Button variant="secondaryLink">
           {isExpanded ? 'Give Feedback' : <MessageSquareDashed />}
         </Button>
       </DialogTrigger>

@@ -65,7 +65,7 @@ export default function InternalRoadmapCard({
           <p className="text-sm font-[600]">{date}</p>
         </div>
       </div>
-      <Button variant="link" size="link" className="text-blue-600">
+      <Button variant="secondaryLink" size="link" className="text-blue-600">
         Edit
       </Button>
     </div>
