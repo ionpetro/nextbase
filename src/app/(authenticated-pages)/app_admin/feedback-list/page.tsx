@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/Button';
 import { AiOutlineFilter } from 'react-icons/ai';
 import TableCell from '@/components/ui/Table/TableCell';
 import TableHeader from '@/components/ui/Table/TableHeader';
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
 import { Badge } from '@/components/ui/Badge';
 import {
   DropdownMenu,
@@ -13,6 +13,7 @@ import {
   DropdownMenuItem,
 } from '@/components/ui/DropdownMenu';
 import { Anchor } from '@/components/Anchor';
+import { myAction } from './actions';
 
 const mapStatusToVariant = (status: string) => {
   switch (status) {
@@ -94,6 +95,9 @@ export default function Page() {
   const [selectedBadges, setSelectedBadges] = useState<{
     status?: string;
   }>({});
+
+  let [isPending, startTransition] = useTransition();
+
 
   const [filters, setFilters] = useState({
     status: '',
@@ -251,7 +255,9 @@ export default function Page() {
             </div>
           </div>
 
-          <Button>Search</Button>
+          <Button onClick={() => {
+            startTransition(() => myAction());
+          }}>Search</Button>
         </div>
       </div>
 
