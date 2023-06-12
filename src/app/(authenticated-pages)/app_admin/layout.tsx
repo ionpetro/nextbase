@@ -1,36 +1,10 @@
-import { TabsNavigation } from '@/components/presentational/tailwind/TabsNavigation';
-import BasicPageHeading from '@/components/ui/Headings/BasicPageHeading';
 import { AppSupabaseClient } from '@/types';
 import { errors } from '@/utils/errors';
 import { getIsAppAdmin } from '@/utils/supabase-queries';
 import createClient from '@/utils/supabase-server';
 import { User } from '@supabase/supabase-js';
-import { FileLineChart } from 'lucide-react';
 import { redirect } from 'next/navigation';
-import { FiBriefcase, FiSettings, FiUsers } from 'react-icons/fi';
-
-const tabs = [
-  {
-    label: 'Admin Dashboard',
-    href: `/app_admin`,
-    icon: <FileLineChart />,
-  },
-  {
-    label: 'Users',
-    href: `/app_admin/users`,
-    icon: <FiUsers />,
-  },
-  {
-    label: 'Organizations',
-    href: `/app_admin/organizations`,
-    icon: <FiBriefcase />,
-  },
-  {
-    label: 'Application Settings',
-    href: `/app_admin/settings`,
-    icon: <FiSettings />,
-  },
-];
+import { AppAdminNavigation } from './AppAdminNavigation';
 
 async function fetchData(supabaseClient: AppSupabaseClient, authUser: User) {
   const [isUserAppAdmin] = await Promise.all([
@@ -66,17 +40,7 @@ export default async function Layout({
     return (
       <div className="flex-1 h-autooverflow-auto">
         <div className="px-12 py-8 space-y-6">
-          <div className="space-y-2">
-            <BasicPageHeading
-              heading="Admin Panel"
-              subheading=" You are currently in the Application Admin Dashboard area. All
-      sections of this area are protected and only application admins
-      can access this."
-            />
-          </div>
-          <div className="space-y-6">
-            <TabsNavigation tabs={tabs} />
-          </div>
+          <AppAdminNavigation />
           {children}
         </div>
       </div>

@@ -188,15 +188,19 @@ export async function updateInternalFeedbackPriority(
 
 export async function createInternalFeedback(
   supabaseClient: AppSupabaseClient,
-  title: string,
-  content: string,
-  userId: string
+  userId: string,
+  payload: {
+    title: string;
+    content: string;
+    type: Enum<'internal_feedback_thread_type'>;
+  }
 ) {
   const { data, error } = await supabaseClient
     .from('internal_feedback_threads')
     .insert({
-      title,
-      content,
+      title: payload.title,
+      content: payload.content,
+      type: payload.type,
       user_id: userId,
     })
     .select('*');

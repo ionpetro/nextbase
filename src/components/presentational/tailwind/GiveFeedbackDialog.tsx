@@ -22,6 +22,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Enum } from '@/types';
 import { useState } from 'react';
 import { MessageSquareDashed, Voicemail } from 'lucide-react';
+import { useCreateInternalFeedback } from '@/utils/react-queries/internalFeedback';
 
 type FeedbackType = Enum<'internal_feedback_thread_type'>;
 
@@ -43,18 +44,29 @@ type FeedbackFormType = z.infer<typeof feedbackSchema>;
 
 export const GiveFeedbackDialog = ({ isExpanded }: { isExpanded: boolean }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { control, handleSubmit, formState } = useForm<FeedbackFormType>({
+
+  const { control, handleSubmit, formState, reset } = useForm<FeedbackFormType>({
     resolver: zodResolver(feedbackSchema),
     defaultValues: {
       type: 'bug',
     },
   });
 
+  const {
+    mutate: createInternalFeedback,
+    isLoading: isCreatingInternalFeedback,
+  } = useCreateInternalFeedback({
+    onSuccess: () => {
+      setIsOpen(false);
+      reset();
+    }
+  });
+
   const { isValid, isLoading } = formState;
 
   const onSubmit = (data: FeedbackFormType) => {
     // handle form submission logic
-    console.log(data);
+    createInternalFeedback(data);
   };
 
   return (
@@ -116,8 +128,8 @@ export const GiveFeedbackDialog = ({ isExpanded }: { isExpanded: boolean }) => {
               )}
             />
           </div>
-          <Button disabled={!isValid} type="submit">
-            {isLoading ? 'Submitting...' : 'Submit Feedback'}
+          <Button disabled={!isValid || isCreatingInternalFeedback} type="submit">
+            {(isLoading || isCreatingInternalFeedback) ? 'Submitting...' : 'Submit Feedback'}
           </Button>
         </form>
       </DialogContent>

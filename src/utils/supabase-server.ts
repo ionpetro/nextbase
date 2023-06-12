@@ -1,14 +1,18 @@
+// only available for server components
 import { headers, cookies } from 'next/headers';
-import { createServerComponentSupabaseClient } from '@supabase/auth-helpers-nextjs';
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Database } from '@/lib/database.types';
 
 export default () =>
-  createServerComponentSupabaseClient<Database>({
-    headers,
-    cookies,
-    options: {
-      global: {
-        fetch,
-      },
+  createServerComponentClient<Database>(
+    {
+      cookies,
     },
-  });
+    {
+      options: {
+        global: {
+          fetch,
+        },
+      },
+    }
+  );

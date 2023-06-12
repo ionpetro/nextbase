@@ -6,10 +6,10 @@ CREATE TABLE internal_blog_posts (
   title VARCHAR(255) NOT NULL,
   summary TEXT NOT NULL,
   content TEXT NOT NULL,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-  is_featured BOOLEAN DEFAULT FALSE,
-  STATUS internal_blog_post_status DEFAULT 'draft',
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  is_featured BOOLEAN DEFAULT FALSE NOT NULL,
+  STATUS internal_blog_post_status DEFAULT 'draft' NOT NULL,
   cover_image VARCHAR(255),
   seo_data JSONB
 );
@@ -24,8 +24,8 @@ CREATE TABLE internal_blog_author_profiles (
   facebook_handle VARCHAR(255),
   linkedin_handle VARCHAR(255),
   instagram_handle VARCHAR(255),
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 
@@ -75,23 +75,23 @@ CREATE TABLE internal_feedback_threads (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
   content TEXT NOT NULL,
-  user_id UUID REFERENCES user_profiles(id) ON DELETE CASCADE,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-  priority internal_feedback_thread_priority DEFAULT 'low',
-  TYPE internal_feedback_thread_type DEFAULT 'general',
-  STATUS internal_feedback_thread_status DEFAULT 'open',
-  added_to_roadmap BOOLEAN DEFAULT FALSE,
-  open_for_public_discussion BOOLEAN DEFAULT FALSE
+  user_id UUID  REFERENCES user_profiles(id) ON DELETE CASCADE NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  priority internal_feedback_thread_priority  DEFAULT 'low' NOT NULL,
+  TYPE internal_feedback_thread_type  DEFAULT 'general' NOT NULL,
+  STATUS internal_feedback_thread_status DEFAULT 'open' NOT NULL,
+  added_to_roadmap BOOLEAN DEFAULT FALSE NOT NULL,
+  open_for_public_discussion BOOLEAN DEFAULT FALSE NOT NULL 
 );
 
 CREATE TABLE internal_feedback_comments (
   id UUID DEFAULT gen_random_uuid()  PRIMARY KEY,
-  user_id UUID REFERENCES user_profiles(id) ON DELETE CASCADE,
-  thread_id UUID REFERENCES internal_feedback_threads(id) ON DELETE CASCADE,
+  user_id UUID REFERENCES user_profiles(id) ON DELETE CASCADE NOT NULL,
+  thread_id UUID REFERENCES internal_feedback_threads(id) ON DELETE CASCADE NOT NULL,
   content TEXT NOT NULL,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 

@@ -81,39 +81,39 @@ export interface Database {
         Row: {
           avatar_url: string
           bio: string
-          created_at: string | null
+          created_at: string
           display_name: string
           facebook_handle: string | null
           instagram_handle: string | null
           linkedin_handle: string | null
           twitter_handle: string | null
-          updated_at: string | null
+          updated_at: string
           user_id: string
           website_url: string | null
         }
         Insert: {
           avatar_url: string
           bio: string
-          created_at?: string | null
+          created_at?: string
           display_name: string
           facebook_handle?: string | null
           instagram_handle?: string | null
           linkedin_handle?: string | null
           twitter_handle?: string | null
-          updated_at?: string | null
+          updated_at?: string
           user_id: string
           website_url?: string | null
         }
         Update: {
           avatar_url?: string
           bio?: string
-          created_at?: string | null
+          created_at?: string
           display_name?: string
           facebook_handle?: string | null
           instagram_handle?: string | null
           linkedin_handle?: string | null
           twitter_handle?: string | null
-          updated_at?: string | null
+          updated_at?: string
           user_id?: string
           website_url?: string | null
         }
@@ -122,47 +122,41 @@ export interface Database {
         Row: {
           content: string
           cover_image: string | null
-          created_at: string | null
+          created_at: string
           id: string
-          is_featured: boolean | null
+          is_featured: boolean
           seo_data: Json | null
           slug: string
-          status:
-            | Database["public"]["Enums"]["internal_blog_post_status"]
-            | null
+          status: Database["public"]["Enums"]["internal_blog_post_status"]
           summary: string
           title: string
-          updated_at: string | null
+          updated_at: string
         }
         Insert: {
           content: string
           cover_image?: string | null
-          created_at?: string | null
+          created_at?: string
           id?: string
-          is_featured?: boolean | null
+          is_featured?: boolean
           seo_data?: Json | null
           slug: string
-          status?:
-            | Database["public"]["Enums"]["internal_blog_post_status"]
-            | null
+          status?: Database["public"]["Enums"]["internal_blog_post_status"]
           summary: string
           title: string
-          updated_at?: string | null
+          updated_at?: string
         }
         Update: {
           content?: string
           cover_image?: string | null
-          created_at?: string | null
+          created_at?: string
           id?: string
-          is_featured?: boolean | null
+          is_featured?: boolean
           seo_data?: Json | null
           slug?: string
-          status?:
-            | Database["public"]["Enums"]["internal_blog_post_status"]
-            | null
+          status?: Database["public"]["Enums"]["internal_blog_post_status"]
           summary?: string
           title?: string
-          updated_at?: string | null
+          updated_at?: string
         }
       }
       internal_changelog: {
@@ -194,86 +188,68 @@ export interface Database {
       internal_feedback_comments: {
         Row: {
           content: string
-          created_at: string | null
+          created_at: string
           id: string
-          thread_id: string | null
-          updated_at: string | null
-          user_id: string | null
+          thread_id: string
+          updated_at: string
+          user_id: string
         }
         Insert: {
           content: string
-          created_at?: string | null
+          created_at?: string
           id?: string
-          thread_id?: string | null
-          updated_at?: string | null
-          user_id?: string | null
+          thread_id: string
+          updated_at?: string
+          user_id: string
         }
         Update: {
           content?: string
-          created_at?: string | null
+          created_at?: string
           id?: string
-          thread_id?: string | null
-          updated_at?: string | null
-          user_id?: string | null
+          thread_id?: string
+          updated_at?: string
+          user_id?: string
         }
       }
       internal_feedback_threads: {
         Row: {
-          added_to_roadmap: boolean | null
+          added_to_roadmap: boolean
           content: string
-          created_at: string | null
+          created_at: string
           id: string
-          open_for_public_discussion: boolean | null
-          priority:
-            | Database["public"]["Enums"]["internal_feedback_thread_priority"]
-            | null
-          status:
-            | Database["public"]["Enums"]["internal_feedback_thread_status"]
-            | null
+          open_for_public_discussion: boolean
+          priority: Database["public"]["Enums"]["internal_feedback_thread_priority"]
+          status: Database["public"]["Enums"]["internal_feedback_thread_status"]
           title: string
-          type:
-            | Database["public"]["Enums"]["internal_feedback_thread_type"]
-            | null
-          updated_at: string | null
-          user_id: string | null
+          type: Database["public"]["Enums"]["internal_feedback_thread_type"]
+          updated_at: string
+          user_id: string
         }
         Insert: {
-          added_to_roadmap?: boolean | null
+          added_to_roadmap?: boolean
           content: string
-          created_at?: string | null
+          created_at?: string
           id?: string
-          open_for_public_discussion?: boolean | null
-          priority?:
-            | Database["public"]["Enums"]["internal_feedback_thread_priority"]
-            | null
-          status?:
-            | Database["public"]["Enums"]["internal_feedback_thread_status"]
-            | null
+          open_for_public_discussion?: boolean
+          priority?: Database["public"]["Enums"]["internal_feedback_thread_priority"]
+          status?: Database["public"]["Enums"]["internal_feedback_thread_status"]
           title: string
-          type?:
-            | Database["public"]["Enums"]["internal_feedback_thread_type"]
-            | null
-          updated_at?: string | null
-          user_id?: string | null
+          type?: Database["public"]["Enums"]["internal_feedback_thread_type"]
+          updated_at?: string
+          user_id: string
         }
         Update: {
-          added_to_roadmap?: boolean | null
+          added_to_roadmap?: boolean
           content?: string
-          created_at?: string | null
+          created_at?: string
           id?: string
-          open_for_public_discussion?: boolean | null
-          priority?:
-            | Database["public"]["Enums"]["internal_feedback_thread_priority"]
-            | null
-          status?:
-            | Database["public"]["Enums"]["internal_feedback_thread_status"]
-            | null
+          open_for_public_discussion?: boolean
+          priority?: Database["public"]["Enums"]["internal_feedback_thread_priority"]
+          status?: Database["public"]["Enums"]["internal_feedback_thread_status"]
           title?: string
-          type?:
-            | Database["public"]["Enums"]["internal_feedback_thread_type"]
-            | null
-          updated_at?: string | null
-          user_id?: string | null
+          type?: Database["public"]["Enums"]["internal_feedback_thread_type"]
+          updated_at?: string
+          user_id?: string
         }
       }
       organization_credits: {
