@@ -1,42 +1,57 @@
+import { supabaseAdminServerComponentClient } from '@/utils/supabase-admin-server-component-client';
 import { z } from 'zod';
 import {
-    addCommentToInternalFeedbackThread,
-    getInternalFeedbackById,
-    getInternalFeedbackComments,
-    updateInternalFeedbackIsAddedToRoadmap,
-    updateInternalFeedbackIsOpenForDiscussion,
-    updateInternalFeedbackPriority,
-    updateInternalFeedbackStatus,
-    updateInternalFeedbackType,
-} from './actions'
+  addCommentToInternalFeedbackThread,
+  getInternalFeedbackById,
+  getInternalFeedbackComments,
+  updateInternalFeedbackIsAddedToRoadmap,
+  updateInternalFeedbackIsOpenForDiscussion,
+  updateInternalFeedbackPriority,
+  updateInternalFeedbackStatus,
+  updateInternalFeedbackType,
+} from './actions';
 import ClientAdminFeedbackItemPage from './ClientFeedbackItemPage';
 
+const getInternalFeedbackByIdSC = async (feedbackId: string) => {
+  const { data, error } = await supabaseAdminServerComponentClient
+    .from('internal_feedback_threads')
+    .select('*')
+    .eq('id', feedbackId)
+    .single();
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};
+
 const feedbackItemPageParams = z.object({
-    feedbackId: z.string(),
+  feedbackId: z.string(),
 });
 
-type FeedbackItemPageParams = z.infer<typeof feedbackItemPageParams>;
-
 export default async function AppAdminFeedbackItemPage({
-    params
+  params,
 }: {
-    params: any
+  params: unknown;
 }) {
-    const {
-        feedbackId
-    } = feedbackItemPageParams.parse(params);
+  const { feedbackId } = feedbackItemPageParams.parse(params);
 
-    const feedbackThread = await getInternalFeedbackById(feedbackId);
-    console.log(feedbackThread);
-    return <ClientAdminFeedbackItemPage
-        addCommentToInternalFeedbackThread={addCommentToInternalFeedbackThread}
-        getInternalFeedbackById={getInternalFeedbackById}
-        getInternalFeedbackComments={getInternalFeedbackComments}
-        updateInternalFeedbackIsAddedToRoadmap={updateInternalFeedbackIsAddedToRoadmap}
-        updateInternalFeedbackIsOpenForDiscussion={updateInternalFeedbackIsOpenForDiscussion}
-        updateInternalFeedbackPriority={updateInternalFeedbackPriority}
-        updateInternalFeedbackStatus={updateInternalFeedbackStatus}
-        updateInternalFeedbackType={updateInternalFeedbackType}
-        feedbackThread={feedbackThread}
+  const feedbackThread = await getInternalFeedbackByIdSC(feedbackId);
+  return (
+    <ClientAdminFeedbackItemPage
+      addCommentToInternalFeedbackThread={addCommentToInternalFeedbackThread}
+      getInternalFeedbackById={getInternalFeedbackById}
+      getInternalFeedbackComments={getInternalFeedbackComments}
+      updateInternalFeedbackIsAddedToRoadmap={
+        updateInternalFeedbackIsAddedToRoadmap
+      }
+      updateInternalFeedbackIsOpenForDiscussion={
+        updateInternalFeedbackIsOpenForDiscussion
+      }
+      updateInternalFeedbackPriority={updateInternalFeedbackPriority}
+      updateInternalFeedbackStatus={updateInternalFeedbackStatus}
+      updateInternalFeedbackType={updateInternalFeedbackType}
+      feedbackThread={feedbackThread}
     />
+  );
 }

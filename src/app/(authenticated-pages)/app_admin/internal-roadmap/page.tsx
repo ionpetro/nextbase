@@ -3,160 +3,40 @@ import HelpCard from '@/components/ui/Card/HelpCard';
 import organisationshelp from 'public/assets/help-assets/organisations-teams.png';
 import teamsprojects from 'public/assets/help-assets/teams-projects.png';
 import InternalRoadmapCard from '@/components/ui/Card/InternalRoadmapCard';
+import { supabaseAdminServerComponentClient } from '@/utils/supabase-admin-server-component-client';
+import moment from 'moment';
 
-export default function Page() {
-  const roadmapArray = [
-    {
-      id: '1',
-      title: 'Roadmap 1',
-      description: 'This is the description for Roadmap 1.',
-      status: 'Planned',
-      priority: 'High Priority',
-      tag: 'Bug',
-      date: '2022-06-15',
-    },
-    {
-      id: '2',
-      title: 'Roadmap 2',
-      description: 'This is the description for Roadmap 2.',
-      status: 'In Review',
-      priority: 'Medium Priority',
-      tag: 'Usability Issue',
-      date: '2023-02-23',
-    },
-    {
-      id: '3',
-      title: 'Roadmap 3',
-      description: 'This is the description for Roadmap 3.',
-      status: 'Completed',
-      priority: 'Low Priority',
-      tag: 'Usability Issue',
-      date: '2021-10-19',
-    },
-    {
-      id: '4',
-      title: 'Roadmap 4',
-      description: 'This is the description for Roadmap 4.',
-      status: 'Planned',
-      priority: 'High Priority',
-      tag: 'Bug',
-      date: '2023-01-22',
-    },
-    {
-      id: '5',
-      title: 'Roadmap 5',
-      description: 'This is the description for Roadmap 5.',
-      status: 'Completed',
-      priority: 'Low Priority',
-      tag: 'Feature Request',
-      date: '2021-09-30',
-    },
-    {
-      id: '6',
-      title: 'Roadmap 6',
-      description: 'This is the description for Roadmap 6.',
-      status: 'In Review',
-      priority: 'Medium Priority',
-      tag: 'Usability Issue',
-      date: '2023-03-16',
-    },
-    {
-      id: '7',
-      title: 'Roadmap 7',
-      description: 'This is the description for Roadmap 7.',
-      status: 'Completed',
-      priority: 'Low Priority',
-      tag: 'Feature Request',
-      date: '2022-12-28',
-    },
-    {
-      id: '8',
-      title: 'Roadmap 8',
-      description: 'This is the description for Roadmap 8.',
-      status: 'Completed',
-      priority: 'High Priority',
-      tag: 'General Feedback',
-      date: '2022-08-08',
-    },
-    {
-      id: '9',
-      title: 'Roadmap 9',
-      description: 'This is the description for Roadmap 9.',
-      status: 'Completed',
-      priority: 'Low Priority',
-      tag: 'Usability Issue',
-      date: '2021-11-12',
-    },
-    {
-      id: '10',
-      title: 'Roadmap 10',
-      description: 'This is the description for Roadmap 10.',
-      status: 'Planned',
-      priority: 'Medium Priority',
-      tag: 'General Feedback',
-      date: '2023-04-29',
-    },
-    {
-      id: '11',
-      title: 'Roadmap 11',
-      description: 'This is the description for Roadmap 11.',
-      status: 'In Review',
-      priority: 'High Priority',
-      tag: 'Feature Request',
-      date: '2022-04-10',
-    },
-    {
-      id: '12',
-      title: 'Roadmap 12',
-      description: 'This is the description for Roadmap 12.',
-      status: 'Planned',
-      priority: 'Low Priority',
-      tag: 'General Feedback',
-      date: '2022-11-06',
-    },
-    {
-      id: '13',
-      title: 'Roadmap 13',
-      description: 'This is the description for Roadmap 13.',
-      status: 'Completed',
-      priority: 'Medium Priority',
-      tag: 'Bug',
-      date: '2023-03-01',
-    },
-    {
-      id: '14',
-      title: 'Roadmap 14',
-      description: 'This is the description for Roadmap 14.',
-      status: 'In Review',
-      priority: 'High Priority',
-      tag: 'Feature Request',
-      date: '2021-12-30',
-    },
-    {
-      id: '15',
-      title: 'Roadmap 15',
-      description: 'This is the description for Roadmap 15.',
-      status: 'Completed',
-      priority: 'Low Priority',
-      tag: 'General Feedback',
-      date: '2022-09-18',
-    },
-    {
-      id: '16',
-      title: 'Roadmap 16',
-      description: 'This is the description for Roadmap 16.',
-      status: 'Planned',
-      priority: 'Medium Priority',
-      tag: 'Usability Issue',
-      date: '2023-01-05',
-    },
-  ];
-  const plannedCards = roadmapArray.filter((item) => item.status === 'Planned');
-  const inReviewCards = roadmapArray.filter(
-    (item) => item.status === 'In Review'
+export default async function Page() {
+  const roadmapItemsResponse = await supabaseAdminServerComponentClient
+    .from('internal_feedback_threads')
+    .select('*')
+    .eq('added_to_roadmap', true);
+  if (roadmapItemsResponse.error) {
+    throw roadmapItemsResponse.error;
+  }
+  if (!roadmapItemsResponse.data) {
+    throw new Error('No data found');
+  }
+
+  const roadmapItems = roadmapItemsResponse.data;
+
+  const roadmapArray = roadmapItems.map((item) => {
+    return {
+      id: item.id,
+      title: item.title,
+      description: item.content,
+      status: item.status,
+      priority: item.priority,
+      tag: item.type,
+      date: moment(item.created_at).format('LL'),
+    };
+  });
+  const plannedCards = roadmapArray.filter((item) => item.status === 'planned');
+  const inProgress = roadmapArray.filter(
+    (item) => item.status === 'in_progress'
   );
   const completedCards = roadmapArray.filter(
-    (item) => item.status === 'Completed'
+    (item) => item.status === 'completed'
   );
 
   return (
@@ -186,6 +66,7 @@ export default function Page() {
                   description={card.description}
                   tag={card.tag}
                   date={card.date}
+                  feedbackItemId={card.id}
                   priority={card.priority}
                 />
               ))}
@@ -195,21 +76,22 @@ export default function Page() {
           {/* In Review */}
           <div className="space-y-4 bg-gray-100 p-4 px-6 rounded-lg border border-gray-100">
             <div>
-              <p className="text-lg font-[600]">In Review</p>
+              <p className="text-lg font-[600]">In Progress</p>
               <p className="text-base font-[500] text-gray-600">
                 {' '}
-                These are in review
+                These are in progress
               </p>
             </div>
 
             <div className="space-y-3">
-              {inReviewCards.map((card) => (
+              {inProgress.map((card) => (
                 <InternalRoadmapCard
                   key={card.id}
                   title={card.title}
                   description={card.description}
                   tag={card.tag}
                   date={card.date}
+                  feedbackItemId={card.id}
                   priority={card.priority}
                 />
               ))}
@@ -230,6 +112,7 @@ export default function Page() {
               {completedCards.map((card) => (
                 <InternalRoadmapCard
                   key={card.id}
+                  feedbackItemId={card.id}
                   title={card.title}
                   description={card.description}
                   tag={card.tag}

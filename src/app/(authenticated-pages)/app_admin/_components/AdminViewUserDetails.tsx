@@ -3,22 +3,19 @@ import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { AdminGetUserData } from "../types";
 import { getPublicUserAvatarUrl } from '@/utils/helpers';
+import { adminGetUser } from "../actions";
+import { useAdminViewUserDetails } from "../_hooks/useAdminViewUserDetails";
 
 export function AdminViewUserDetails({
-    adminGetUser,
     userId,
 }: {
-    adminGetUser: (userId: string) => Promise<AdminGetUserData>;
     userId: string;
 }) {
     const {
         data: userData,
         isLoading,
         error
-    } = useQuery(['adminGetUser', userId], () => {
-        return adminGetUser(userId);
-    });
-
+    } = useAdminViewUserDetails(userId);
     if (isLoading) {
         return <T.P>Loading...</T.P>;
     } else if (error) {

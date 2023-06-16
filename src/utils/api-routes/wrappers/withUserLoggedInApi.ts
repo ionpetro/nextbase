@@ -1,6 +1,7 @@
 import { Database } from '@/lib/database.types';
+import { AppSupabaseClient } from '@/types';
 import {
-  createServerSupabaseClient,
+  createPagesServerClient,
   Session,
   User,
 } from '@supabase/auth-helpers-nextjs';
@@ -15,13 +16,13 @@ export const withUserLoggedInApi = (
   cb: (
     req: NextApiRequest,
     res: NextApiResponse,
-    supabaseClient: ReturnType<typeof createServerSupabaseClient<Database>>,
+    supabaseClient: AppSupabaseClient,
     session: Session,
     user: User
   ) => void
 ) => {
   return async (req: NextApiRequest, res: NextApiResponse) => {
-    const supabaseClient = createServerSupabaseClient<Database>({
+    const supabaseClient = createPagesServerClient<Database>({
       req,
       res,
     });

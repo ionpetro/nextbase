@@ -1,5 +1,6 @@
-import { cn } from '@/utils/cn';
-import { VariantProps, cva } from 'class-variance-authority';
+import { Anchor } from '@/components/Anchor';
+import { Enum } from '@/types';
+import { formatFieldValue } from '@/utils/feedback';
 
 import { Badge, BadgeProps } from '../Badge';
 import { Button } from '../Button/ButtonShadcn';
@@ -7,33 +8,36 @@ import { Button } from '../Button/ButtonShadcn';
 type InternalRoadmapCardProps = {
   title: string;
   description: string;
-  tag: string;
+  tag: Enum<'internal_feedback_thread_type'>;
   date: string;
-  priority: string;
+  priority: Enum<'internal_feedback_thread_priority'>;
+  feedbackItemId: string;
 };
 
-const getPriorityVariant = (priority: string): BadgeProps['variant'] => {
+const getPriorityVariant = (
+  priority: Enum<'internal_feedback_thread_priority'>
+): BadgeProps['variant'] => {
   switch (priority) {
-    case 'High Priority':
+    case 'high':
       return 'solidDanger';
-    case 'Medium Priority':
+    case 'medium':
       return 'solidDiscussion';
-    case 'Low Priority':
+    case 'low':
       return 'solidInformation';
     default:
       return 'default';
   }
 };
 
-const getTagVariant = (tag: string): BadgeProps['variant'] => {
-  switch (tag) {
-    case 'Bug':
+const getTagVariant = (
+  type: Enum<'internal_feedback_thread_type'>
+): BadgeProps['variant'] => {
+  switch (type) {
+    case 'bug':
       return 'danger';
-    case 'Usability Issue':
-      return 'warning';
-    case 'General Feedback':
+    case 'general':
       return 'information';
-    case 'Feature Request':
+    case 'feature_request':
       return 'discussion';
     default:
       return 'default';
@@ -46,6 +50,7 @@ export default function InternalRoadmapCard({
   tag,
   date,
   priority,
+  feedbackItemId,
 }: InternalRoadmapCardProps) {
   return (
     <div className="grid grid-cols-[1fr,auto] gap-1 items-start rounded-lg bg-white p-4 ">
@@ -58,16 +63,20 @@ export default function InternalRoadmapCard({
 
         <div className="mt-3 -mb-0.5">
           <div className="flex space-x-2 mb-3">
-            <Badge variant={getTagVariant(tag)}>{tag}</Badge>
-            <Badge variant={getPriorityVariant(priority)}>{priority}</Badge>
+            <Badge variant={getTagVariant(tag)}>{formatFieldValue(tag)}</Badge>
+            <Badge variant={getPriorityVariant(priority)}>
+              {formatFieldValue(priority)}
+            </Badge>
           </div>
 
           <p className="text-sm font-[600]">{date}</p>
         </div>
       </div>
-      <Button variant="secondaryLink" size="link" className="text-blue-600">
-        Edit
-      </Button>
+      <Anchor href={`/app_admin/feedback-list/${feedbackItemId}`}>
+        <Button variant="secondaryLink" size="link" className="text-blue-600">
+          Edit
+        </Button>
+      </Anchor>
     </div>
   );
 }

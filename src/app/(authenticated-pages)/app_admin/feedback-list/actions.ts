@@ -1,5 +1,4 @@
-'use server';
-import { supabaseAdmin } from '@/utils/supabase-admin';
+import { supabaseAdminServerActionClient } from '@/utils/supabase-admin-server-action';
 import { AdminGetAllInternalFeedack } from '../types';
 
 export async function myAction() {
@@ -13,7 +12,8 @@ export const getAllInternalFeedback: AdminGetAllInternalFeedack = async ({
   statuses,
   priorities,
 }) => {
-  let supabaseQuery = supabaseAdmin
+  'use server';
+  let supabaseQuery = supabaseAdminServerActionClient
     .from('internal_feedback_threads')
     .select('*');
 

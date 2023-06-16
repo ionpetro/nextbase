@@ -1,9 +1,7 @@
 'use client';
 import { Anchor } from '@/components/Anchor';
-import { classNames } from '@/utils/classNames';
 import { cn } from '@/utils/cn';
 import { useUser } from '@supabase/auth-helpers-react';
-import { usePathname } from 'next/navigation';
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
 import { FiArrowLeft, FiBriefcase, FiSettings, FiUsers } from 'react-icons/fi';
 import { RxActivityLog } from 'react-icons/rx';
@@ -11,6 +9,7 @@ import { RiRoadMapLine } from 'react-icons/ri';
 import { MdOutlineFeedback } from 'react-icons/md';
 import { SelectSeparator } from '@/components/ui/Select';
 import { Home } from 'lucide-react';
+import { AdminSidebarLink } from './AdminSidebarLink';
 
 type LinksProps = {
   isExpanded: boolean;
@@ -34,44 +33,44 @@ function Links({ isExpanded, toggleIsExpanded }: LinksProps) {
     <div className={sidebarContainerClassName}>
       {user ? (
         <>
-          <SidebarLink
+          <AdminSidebarLink
             href="/dashboard"
             icon={<Home />}
             label="Back to Dashboard"
             isExpanded={isExpanded}
           />
-          <SidebarLink
+          <AdminSidebarLink
             href="/app_admin"
             icon={<FiSettings />}
             label="Application Settings"
             isExpanded={isExpanded}
           />
-          <SidebarLink
+          <AdminSidebarLink
             href="/app_admin/users"
             icon={<FiUsers />}
             label="Users"
             isExpanded={isExpanded}
           />
-          <SidebarLink
+          <AdminSidebarLink
             href="/app_admin/organizations"
             icon={<FiBriefcase />}
             label="Organizations"
             isExpanded={isExpanded}
           />
           <SelectSeparator></SelectSeparator>
-          <SidebarLink
+          <AdminSidebarLink
             href="/app_admin/feedback-list"
             icon={<MdOutlineFeedback />}
             label="Feedback List"
             isExpanded={isExpanded}
           />
-          <SidebarLink
+          <AdminSidebarLink
             href="/app_admin/changelog-list"
             icon={<RxActivityLog />}
             label="Changelog List"
             isExpanded={isExpanded}
           />
-          <SidebarLink
+          <AdminSidebarLink
             href="/app_admin/internal-roadmap"
             icon={<RiRoadMapLine />}
             label="Roadmap"
@@ -95,42 +94,6 @@ function Links({ isExpanded, toggleIsExpanded }: LinksProps) {
         </Anchor>
       )}
     </div>
-  );
-}
-
-function SidebarLink({
-  href,
-  icon,
-  label,
-  isExpanded,
-}: {
-  href: string;
-  icon: React.ReactNode;
-  label?: string;
-  isExpanded: boolean;
-}) {
-  const pathname = usePathname();
-  const isActive = pathname === href;
-  return (
-    <Anchor
-      href={href}
-      className={classNames(
-        `flex w-full gap-2.5 items-center group py-3 h-[48px] mb-1 rounded-lg transition hover:cursor-pointer hover:shadow-lg hover:bg-slate-800 `,
-        isActive
-          ? ' bg-slate-800 text-slate-200 hover:bg-slate-800'
-          : ' bg-transparent',
-        isExpanded
-          ? 'text-slate-200 pl-5 pr-2 justify-start'
-          : 'text-slate-200 justify-center'
-      )}
-    >
-      <span className="text-xl group-hover:text-white">{icon}</span>
-      {isExpanded ? (
-        <span className="transition text-base  font-[400] group-hover:font-[600] group-hover:text-white">
-          {label}
-        </span>
-      ) : null}
-    </Anchor>
   );
 }
 

@@ -11,6 +11,8 @@ import { useUserProfile } from '@/utils/react-queries/user';
 import { getUserAvatarUrl } from '@/utils/helpers';
 import { useLoggedInUserEmail } from '@/hooks/useLoggedInUserEmail';
 import { GiveFeedbackDialog } from '@/components/presentational/tailwind/GiveFeedbackDialog';
+import { Mail } from 'lucide-react';
+import { UserSidebarLink } from '@/components/presentational/tailwind/Sidebars/UserSidebarLink';
 
 export function UserSidebar({
   isUserAppAdmin,
@@ -54,7 +56,14 @@ export function UserSidebar({
       />
       <div />
       <div className="space-y-2">
-        <GiveFeedbackDialog isExpanded={isExpanded} />
+
+        <UserSidebarLink
+          href="/give-feedback"
+          icon={<Mail size={20} />}
+          isExpanded={isExpanded}
+          label=" Feedback"
+        />
+
         <SidebarBottom
           avatarUrl={avatarUrl}
           userFullname={userProfile.full_name ?? 'User'}

@@ -7,6 +7,7 @@ export type AdminGetUserData = {
   authUser: {
     user: User;
   };
+  isAppAdmin: boolean;
 };
 
 export type AdminGetAllInternalFeedack = (args: {

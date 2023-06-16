@@ -1,3 +1,4 @@
+'use client';
 import { Button } from '@/components/ui/Button';
 import {
   Dialog,
@@ -21,8 +22,10 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Enum } from '@/types';
 import { useState } from 'react';
-import { MessageSquareDashed, Voicemail } from 'lucide-react';
+import { Mail, MessageSquareDashed, Voicemail } from 'lucide-react';
 import { useCreateInternalFeedback } from '@/utils/react-queries/internalFeedback';
+import { Anchor } from '@/components/Anchor';
+import { T } from '@/components/ui/Typography';
 
 type FeedbackType = Enum<'internal_feedback_thread_type'>;
 
@@ -77,8 +80,8 @@ export const GiveFeedbackDialog = ({ isExpanded }: { isExpanded: boolean }) => {
       }}
     >
       <DialogTrigger>
-        <Button variant="secondaryLink">
-          {isExpanded ? 'Give Feedback' : <MessageSquareDashed />}
+        <Button variant="outline">
+          Give Feedback
         </Button>
       </DialogTrigger>
 
@@ -128,6 +131,10 @@ export const GiveFeedbackDialog = ({ isExpanded }: { isExpanded: boolean }) => {
               )}
             />
           </div>
+          <Anchor href="/my-feedback" className="flex underline items-center space-x-1">
+            <Mail className="w-6 h-6" />
+            <T.Small className="ml-2">View all your feedback conversations</T.Small>
+          </Anchor>
           <Button disabled={!isValid || isCreatingInternalFeedback} type="submit">
             {(isLoading || isCreatingInternalFeedback) ? 'Submitting...' : 'Submit Feedback'}
           </Button>
