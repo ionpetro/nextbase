@@ -14,9 +14,7 @@ import {
 } from '@/components/ui/DropdownMenu';
 import { Anchor } from '@/components/Anchor';
 import { Enum } from '@/types';
-import { useQuery } from '@tanstack/react-query';
 import moment from 'moment';
-import { AdminGetAllInternalFeedack, AdminGetUserData } from '../types';
 import { AdminViewUserDetails } from '../_components/AdminViewUserDetails';
 import { useDebouncedValue } from 'rooks';
 import {
@@ -28,14 +26,9 @@ import {
   mapTypeToVariant,
   mapPriorityToVariant,
 } from '@/utils/feedback';
+import { useGetAllInternalFeedback } from '@/utils/react-query-hooks-app-admin';
 
-export function ClientAdminFeedbackListPage({
-  getAllInternalFeedback,
-  adminGetUser,
-}: {
-  getAllInternalFeedback: AdminGetAllInternalFeedack;
-  adminGetUser: (userId: string) => Promise<AdminGetUserData>;
-}) {
+export function ClientAdminFeedbackListPage() {
   const [searchText, setSearchText] = useState<string>('');
 
   const [debouncedSearchText] = useDebouncedValue(searchText, 500);
@@ -50,16 +43,10 @@ export function ClientAdminFeedbackListPage({
     statuses: [],
   });
 
-  const { data: feedbackList, isLoading } = useQuery(
-    ['appAdminGetAllInternalFeedback', debouncedSearchText, filters],
-    () => {
-      return getAllInternalFeedback({
-        query: debouncedSearchText,
-        ...filters,
-      });
-    }
-  );
-
+  const { data: feedbackList, isLoading } = useGetAllInternalFeedback({
+    query: debouncedSearchText,
+    filters,
+  });
   return (
     <div className="space-y-4">
       {/* Filter and Search */}
@@ -236,17 +223,14 @@ export function ClientAdminFeedbackListPage({
                 <tr className="p-0" key={feedback.id}>
                   <td className="p-0 ">
                     <TableCell classname="px-6 py-4 truncate">
-                      <AdminViewUserDetails
-                        userId={feedback.user_id}
-                        adminGetUser={adminGetUser}
-                      />
+                      <AdminViewUserDetails userId={feedback.user_id} />
                     </TableCell>
                   </td>
                   <td className="p-0 ">
                     <Anchor
                       className=" "
                       key={feedback.id}
-                      href={`/app_admin/feedback-list/${feedback.id}`}
+                      href={`/app_admin/feedback/${feedback.id}`}
                     >
                       <TableCell classname="text-blue-500 px-6 py-4 truncate font-[500] hover:underline">
                         {feedback.title}

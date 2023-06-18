@@ -9,7 +9,7 @@ export const adminGetUser = async (
     userProfileResponse,
     userPrivateInfoResponse,
     authUserResponse,
-    isAppAdmin,
+    isAppAdminResponse,
   ] = await Promise.all([
     supabaseAdminServerActionClient
       .from('user_profiles')
@@ -34,6 +34,8 @@ export const adminGetUser = async (
 
   const { data: authUser, error: authUserError } = authUserResponse;
 
+  const { data: isAppAdmin, error: isAppAdminError } = isAppAdminResponse;
+
   if (userProfileError) {
     throw userProfileError;
   }
@@ -46,8 +48,8 @@ export const adminGetUser = async (
     throw authUserError;
   }
 
-  if (!userProfile || !authUser || !userPrivateInfo) {
-    throw new Error('User not found');
+  if (isAppAdminError) {
+    throw isAppAdminError;
   }
 
   return {

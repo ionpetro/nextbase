@@ -72,7 +72,7 @@ export default function InternalRoadmapCard({
           <p className="text-sm font-[600]">{date}</p>
         </div>
       </div>
-      <Anchor href={`/app_admin/feedback-list/${feedbackItemId}`}>
+      <Anchor href={`/app_admin/feedback/${feedbackItemId}`}>
         <Button variant="secondaryLink" size="link" className="text-blue-600">
           Edit
         </Button>

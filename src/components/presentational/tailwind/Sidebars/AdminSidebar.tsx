@@ -59,13 +59,13 @@ function Links({ isExpanded, toggleIsExpanded }: LinksProps) {
           />
           <SelectSeparator></SelectSeparator>
           <AdminSidebarLink
-            href="/app_admin/feedback-list"
+            href="/app_admin/feedback"
             icon={<MdOutlineFeedback />}
             label="Feedback List"
             isExpanded={isExpanded}
           />
           <AdminSidebarLink
-            href="/app_admin/changelog-list"
+            href="/app_admin/changelog"
             icon={<RxActivityLog />}
             label="Changelog List"
             isExpanded={isExpanded}

@@ -109,30 +109,39 @@ export async function getAllInternalFeedbackForUser(
 export async function getAllInternalFeedback(
   supabaseClient: AppSupabaseClient,
   {
-    status,
-    priority,
-    type,
+    query,
+    types,
+    statuses,
+    priorities,
   }: {
-    status?: Enum<'internal_feedback_thread_status'>;
-    priority?: Enum<'internal_feedback_thread_priority'>;
-    type?: Enum<'internal_feedback_thread_type'>;
+    query: string;
+    types: Array<Enum<'internal_feedback_thread_type'>>;
+    statuses: Array<Enum<'internal_feedback_thread_status'>>;
+    priorities: Array<Enum<'internal_feedback_thread_priority'>>;
   }
 ) {
-  let query = supabaseClient.from('internal_feedback_threads').select('*');
+  let supabaseQuery = supabaseClient
+    .from('internal_feedback_threads')
+    .select('*');
 
-  if (status) {
-    query = query.eq('status', status);
+  if (query) {
+    supabaseQuery = supabaseQuery.ilike('title', `%${query}%`);
   }
 
-  if (priority) {
-    query = query.eq('priority', priority);
+  if (types.length > 0) {
+    supabaseQuery = supabaseQuery.in('type', types);
   }
 
-  if (type) {
-    query = query.eq('type', type);
+  if (statuses.length > 0) {
+    supabaseQuery = supabaseQuery.in('status', statuses);
   }
 
-  const { data, error } = await query;
+  if (priorities.length > 0) {
+    supabaseQuery = supabaseQuery.in('priority', priorities);
+  }
+
+  const { data, error } = await supabaseQuery;
+
   if (error) {
     throw error;
   }
@@ -185,6 +194,23 @@ export async function updateInternalFeedbackPriority(
     throw error;
   }
 }
+
+export const updateInternalFeedbackType = async (
+  supabaseClient: AppSupabaseClient,
+  feedbackId: string,
+  type: Enum<'internal_feedback_thread_type'>
+) => {
+  const { data, error } = await supabaseClient
+    .from('internal_feedback_threads')
+    .update({ type })
+    .eq('id', feedbackId);
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};
 
 export async function createInternalFeedback(
   supabaseClient: AppSupabaseClient,
@@ -339,3 +365,73 @@ export async function deleteChangelog(
 
   return data;
 }
+
+export const getInternalFeedbackComments = async (
+  supabaseClient: AppSupabaseClient,
+  feedbackId: string
+) => {
+  const { data, error } = await supabaseClient
+    .from('internal_feedback_comments')
+    .select('*')
+    .eq('thread_id', feedbackId);
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};
+
+export const updateInternalFeedbackIsOpenForDiscussion = async (
+  supabaseClient: AppSupabaseClient,
+  feedbackId: string,
+  isOpen: boolean
+) => {
+  const { data, error } = await supabaseClient
+    .from('internal_feedback_threads')
+    .update({ open_for_public_discussion: isOpen })
+    .eq('id', feedbackId)
+    .select('*');
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};
+
+export const updateInternalFeedbackIsAddedToRoadmap = async (
+  supabaseClient: AppSupabaseClient,
+  feedbackId: string,
+  isAdded: boolean
+) => {
+  const { data, error } = await supabaseClient
+    .from('internal_feedback_threads')
+    .update({ added_to_roadmap: isAdded })
+    .eq('id', feedbackId)
+    .select('*');
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};
+
+export const addCommentToInternalFeedbackThread = async (
+  supabaseClient: AppSupabaseClient,
+  feedbackId: string,
+  userId: string,
+  content: string
+) => {
+  const { data, error } = await supabaseClient
+    .from('internal_feedback_comments')
+    .insert({ thread_id: feedbackId, user_id: userId, content })
+    .select('*');
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};
