@@ -1,13 +1,15 @@
+import { ReactNode } from 'react';
+import { T } from '../Typography';
 type ChangeLogListCardProps = {
   date: string;
   title: string;
-  description: string;
+  children: ReactNode;
 };
 
 export default function ChangeLogListCard({
   date,
   title,
-  description,
+  children,
 }: ChangeLogListCardProps) {
   return (
     <div
@@ -16,8 +18,8 @@ export default function ChangeLogListCard({
     >
       <p>{date}</p>
       <div>
-        <p className="text-lg font-[600] text-blue-500">{title}</p>
-        <p className="text-base font-[500] text-black">{description}</p>
+        <T.H2 className=" border-none text-blue-500">{title}</T.H2>
+        {children}
       </div>
     </div>
   );

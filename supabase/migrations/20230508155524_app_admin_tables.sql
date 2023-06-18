@@ -1,7 +1,7 @@
 CREATE TYPE internal_blog_post_status AS ENUM ('draft', 'published');
 
 CREATE TABLE internal_blog_posts (
-  id UUID DEFAULT gen_random_uuid()  PRIMARY KEY,
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   slug VARCHAR(255) UNIQUE NOT NULL,
   title VARCHAR(255) NOT NULL,
   summary TEXT NOT NULL,
@@ -46,7 +46,7 @@ ALTER TABLE internal_blog_author_profiles enable ROW LEVEL SECURITY;
 ALTER TABLE internal_blog_author_posts enable ROW LEVEL SECURITY;
 
 CREATE TABLE internal_changelog (
-  id UUID DEFAULT gen_random_uuid()  PRIMARY KEY,
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
   changes TEXT NOT NULL,
   user_id UUID REFERENCES user_profiles(id) ON DELETE CASCADE,
@@ -75,18 +75,18 @@ CREATE TABLE internal_feedback_threads (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
   content TEXT NOT NULL,
-  user_id UUID  REFERENCES user_profiles(id) ON DELETE CASCADE NOT NULL,
+  user_id UUID REFERENCES user_profiles(id) ON DELETE CASCADE NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
-  priority internal_feedback_thread_priority  DEFAULT 'low' NOT NULL,
-  TYPE internal_feedback_thread_type  DEFAULT 'general' NOT NULL,
+  priority internal_feedback_thread_priority DEFAULT 'low' NOT NULL,
+  TYPE internal_feedback_thread_type DEFAULT 'general' NOT NULL,
   STATUS internal_feedback_thread_status DEFAULT 'open' NOT NULL,
   added_to_roadmap BOOLEAN DEFAULT FALSE NOT NULL,
-  open_for_public_discussion BOOLEAN DEFAULT FALSE NOT NULL 
+  open_for_public_discussion BOOLEAN DEFAULT FALSE NOT NULL
 );
 
 CREATE TABLE internal_feedback_comments (
-  id UUID DEFAULT gen_random_uuid()  PRIMARY KEY,
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   user_id UUID REFERENCES user_profiles(id) ON DELETE CASCADE NOT NULL,
   thread_id UUID REFERENCES internal_feedback_threads(id) ON DELETE CASCADE NOT NULL,
   content TEXT NOT NULL,
@@ -132,3 +132,6 @@ SELECT TO authenticated USING (TRUE);
 ALTER TABLE internal_feedback_threads enable ROW LEVEL SECURITY;
 ALTER TABLE internal_feedback_comments enable ROW LEVEL SECURITY;
 ALTER TABLE internal_changelog enable ROW LEVEL SECURITY;
+
+CREATE POLICY "Changelog is visible to everyone" ON internal_changelog FOR
+SELECT USING (TRUE);

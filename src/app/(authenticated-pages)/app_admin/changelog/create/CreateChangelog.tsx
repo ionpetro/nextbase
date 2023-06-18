@@ -38,7 +38,7 @@ export const CreateChangelog = () => {
       />
 
       <div className="flex space-x-2 justify-end">
-        <Button variant="outline" type="submit">
+        <Button variant="outline" type="reset">
           Cancel
         </Button>
         <Button variant="default" type="submit">
