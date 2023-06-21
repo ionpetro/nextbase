@@ -1,38 +1,40 @@
-import { cn } from '@/utils/cn';
-import { VariantProps, cva } from 'class-variance-authority';
+import { Enum } from '@/types';
+import { formatFieldValue } from '@/utils/feedback';
 
 import { Badge, BadgeProps } from '../Badge';
 
 type RoadmapCardProps = {
   title: string;
   description: string;
-  tag: string;
+  tag: Enum<'internal_feedback_thread_type'>;
   date: string;
-  priority: string;
+  priority: Enum<'internal_feedback_thread_priority'>;
 };
 
-const getPriorityVariant = (priority: string): BadgeProps['variant'] => {
+const getPriorityVariant = (
+  priority: Enum<'internal_feedback_thread_priority'>
+): BadgeProps['variant'] => {
   switch (priority) {
-    case 'High Priority':
+    case 'high':
       return 'solidDanger';
-    case 'Medium Priority':
+    case 'medium':
       return 'solidDiscussion';
-    case 'Low Priority':
+    case 'low':
       return 'solidInformation';
     default:
       return 'default';
   }
 };
 
-const getTagVariant = (tag: string): BadgeProps['variant'] => {
+const getTagVariant = (
+  tag: Enum<'internal_feedback_thread_type'>
+): BadgeProps['variant'] => {
   switch (tag) {
-    case 'Bug':
+    case 'bug':
       return 'danger';
-    case 'Usability Issue':
-      return 'warning';
-    case 'General Feedback':
+    case 'general':
       return 'information';
-    case 'Feature Request':
+    case 'feature_request':
       return 'discussion';
     default:
       return 'default';
@@ -55,8 +57,10 @@ export default function RoadmapCard({
 
       <div className="mt-3">
         <div className="flex space-x-2 mb-3">
-          <Badge variant={getTagVariant(tag)}>{tag}</Badge>
-          <Badge variant={getPriorityVariant(priority)}>{priority}</Badge>
+          <Badge variant={getTagVariant(tag)}>{formatFieldValue(tag)}</Badge>
+          <Badge variant={getPriorityVariant(priority)}>
+            {formatFieldValue(priority)}
+          </Badge>
         </div>
 
         <p className="text-sm font-[600]">{date}</p>

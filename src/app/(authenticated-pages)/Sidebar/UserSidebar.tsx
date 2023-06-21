@@ -56,9 +56,8 @@ export function UserSidebar({
       />
       <div />
       <div className="space-y-2">
-
         <UserSidebarLink
-          href="/give-feedback"
+          href="/my-feedback"
           icon={<Mail size={20} />}
           isExpanded={isExpanded}
           label=" Feedback"
