@@ -1,10 +1,11 @@
 import { NextResponse } from 'next/server';
 
-function work() {
-  throw new Error('API Test 2');
-}
+// uncomment this to test async errors
+// function work() {
+//   throw new Error('API Test 2');
+// }
 
-work();
+// work();
 
 export function GET() {
   return NextResponse.json({ name: 'John Doe' });
