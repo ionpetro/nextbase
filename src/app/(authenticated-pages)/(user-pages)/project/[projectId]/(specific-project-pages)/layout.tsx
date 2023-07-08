@@ -8,21 +8,20 @@ import { getProjectById } from '@/utils/supabase/projects';
 import { getTeamById, getUserTeamRole } from '@/utils/supabase/teams';
 import { ReactNode } from 'react';
 import { z } from 'zod';
-import createClient from '@/utils/supabase-server';
 import { TeamContextProvider } from '@/contexts/TeamContext';
 import { ProjectContextProvider } from '@/contexts/ProjectContext';
 import { Anchor } from '@/components/Anchor';
 import { SpecificProjectClientLayout } from './SpecificProjectClientLayout';
 import { getNormalizedSubscription } from '@/utils/supabase/subscriptions';
+import { supabaseUserServerComponentClient } from '@/supabase-clients/user/supabaseUserServerComponentClient';
 
 const paramsSchema = z.object({
   projectId: z.string(),
 });
 
 async function fetchdata(projectId: string) {
-  const supabase = createClient();
   const { data: sessionResponse, error: userError } =
-    await supabase.auth.getSession();
+    await supabaseUserServerComponentClient.auth.getSession();
   if (!sessionResponse || !sessionResponse.session?.user) {
     throw new Error('User not found');
   }
@@ -30,7 +29,10 @@ async function fetchdata(projectId: string) {
     throw userError;
   }
 
-  const projectByIdData = await getProjectById(supabase, projectId);
+  const projectByIdData = await getProjectById(
+    supabaseUserServerComponentClient,
+    projectId
+  );
   const [
     organizationByIdData,
     organizationRole,
@@ -38,19 +40,25 @@ async function fetchdata(projectId: string) {
     teamRole,
     normalizedSubscription,
   ] = await Promise.all([
-    getOrganizationById(supabase, projectByIdData.organization_id),
+    getOrganizationById(
+      supabaseUserServerComponentClient,
+      projectByIdData.organization_id
+    ),
     getUserOrganizationRole(
-      supabase,
+      supabaseUserServerComponentClient,
       sessionResponse.session.user.id,
       projectByIdData.organization_id
     ),
-    getTeamById(supabase, projectByIdData.team_id),
+    getTeamById(supabaseUserServerComponentClient, projectByIdData.team_id),
     getUserTeamRole(
-      supabase,
+      supabaseUserServerComponentClient,
       sessionResponse.session.user.id,
       projectByIdData.team_id
     ),
-    getNormalizedSubscription(supabase, projectByIdData.organization_id),
+    getNormalizedSubscription(
+      supabaseUserServerComponentClient,
+      projectByIdData.organization_id
+    ),
   ]);
 
   return {

@@ -17,10 +17,10 @@ import {
   completeProject,
   rejectProject,
 } from '../supabase/projects';
-import supabaseClient from '@/utils/supabase-browser';
 import { useRef } from 'react';
 import { toast } from 'react-hot-toast';
 import { useLoggedInUser } from '@/hooks/useLoggedInUser';
+import { supabaseUserClientComponentClient } from '@/supabase-clients/user/supabaseUserClientComponentClient';
 
 export const useGetProjectById = (
   projectId: string,
@@ -29,7 +29,7 @@ export const useGetProjectById = (
   return useQuery(
     ['getProjectById', projectId],
     async () => {
-      return await getProjectById(supabaseClient, projectId);
+      return await getProjectById(supabaseUserClientComponentClient, projectId);
     },
     {
       initialData,
@@ -44,7 +44,10 @@ export const useGetDraftProjectsByTeam = (
   return useQuery(
     ['getDraftProjectsByTeam', teamId],
     async () => {
-      return await getDraftProjectsByTeamId(supabaseClient, teamId);
+      return await getDraftProjectsByTeamId(
+        supabaseUserClientComponentClient,
+        teamId
+      );
     },
     {
       initialData,
@@ -59,7 +62,10 @@ export const useGetPendingApprovalProjectsByTeam = (
   return useQuery(
     ['getPendingApprovalProjectsByTeam', teamId],
     async () => {
-      return await getPendingApprovalProjectsByTeamId(supabaseClient, teamId);
+      return await getPendingApprovalProjectsByTeamId(
+        supabaseUserClientComponentClient,
+        teamId
+      );
     },
     {
       initialData,
@@ -74,7 +80,10 @@ export const useGetApprovedProjectsByTeam = (
   return useQuery(
     ['getApprovedProjectsByTeam', teamId],
     async () => {
-      return await getApprovedProjectsByTeamId(supabaseClient, teamId);
+      return await getApprovedProjectsByTeamId(
+        supabaseUserClientComponentClient,
+        teamId
+      );
     },
     {
       initialData,
@@ -89,7 +98,10 @@ export const useGetCompletedProjectsByTeam = (
   return useQuery(
     ['getCompletedProjectsByTeam', teamId],
     async () => {
-      return await getCompletedProjectsByTeamId(supabaseClient, teamId);
+      return await getCompletedProjectsByTeamId(
+        supabaseUserClientComponentClient,
+        teamId
+      );
     },
     {
       initialData,
@@ -112,7 +124,12 @@ export const useCreateProject = (
       teamId: number;
       name: string;
     }) => {
-      return await createProject(supabaseClient, organizationId, teamId, name);
+      return await createProject(
+        supabaseUserClientComponentClient,
+        organizationId,
+        teamId,
+        name
+      );
     },
     {
       onMutate: async ({ name }) => {
@@ -160,7 +177,11 @@ export const useUpdateProjectName = (
   const toastRef = useRef<string | null>(null);
   return useMutation(
     async ({ projectId, name }: { projectId: string; name: string }) => {
-      return await updateProjectName(supabaseClient, projectId, name);
+      return await updateProjectName(
+        supabaseUserClientComponentClient,
+        projectId,
+        name
+      );
     },
     {
       onMutate: async ({ name }) => {
@@ -193,7 +214,11 @@ export const useUpdateProjectStatus = (
       projectId: string;
       status: Enum<'project_status'>;
     }) => {
-      return await updateProjectStatus(supabaseClient, projectId, status);
+      return await updateProjectStatus(
+        supabaseUserClientComponentClient,
+        projectId,
+        status
+      );
     },
     {
       onMutate: async ({ status }) => {
@@ -220,7 +245,7 @@ export const useDeleteProject = (onSuccess?: () => void) => {
   const toastRef = useRef<string | null>(null);
   return useMutation(
     async ({ projectId }: { projectId: string }) => {
-      return await deleteProject(supabaseClient, projectId);
+      return await deleteProject(supabaseUserClientComponentClient, projectId);
     },
     {
       onMutate: async () => {
@@ -244,7 +269,10 @@ export const useDeleteProject = (onSuccess?: () => void) => {
 // React Query Wrapper for getProjectComments
 export const useGetProjectComments = (projectId: string) => {
   return useQuery(['projectComments', projectId], async () => {
-    return await getProjectComments(supabaseClient, projectId);
+    return await getProjectComments(
+      supabaseUserClientComponentClient,
+      projectId
+    );
   });
 };
 
@@ -254,7 +282,12 @@ export const useAddProjectComment = (projectId: string) => {
   const user = useLoggedInUser();
   return useMutation(
     async ({ text }: { text: string }) => {
-      return await addProjectComment(supabaseClient, projectId, text, user.id);
+      return await addProjectComment(
+        supabaseUserClientComponentClient,
+        projectId,
+        text,
+        user.id
+      );
     },
     {
       onMutate: async () => {
@@ -281,7 +314,10 @@ export const useSubmitProjectForApproval = () => {
   const queryClient = useQueryClient();
   return useMutation(
     async (projectId: string) => {
-      return await submitProjectForApproval(supabaseClient, projectId);
+      return await submitProjectForApproval(
+        supabaseUserClientComponentClient,
+        projectId
+      );
     },
     {
       onMutate: async () => {
@@ -313,7 +349,10 @@ export const useCompleteProject = () => {
   const queryClient = useQueryClient();
   return useMutation(
     async (projectId: string) => {
-      return await completeProject(supabaseClient, projectId);
+      return await completeProject(
+        supabaseUserClientComponentClient,
+        projectId
+      );
     },
     {
       onMutate: async () => {
@@ -345,7 +384,7 @@ export const useApproveProject = () => {
   const queryClient = useQueryClient();
   return useMutation(
     async (projectId: string) => {
-      return await approveProject(supabaseClient, projectId);
+      return await approveProject(supabaseUserClientComponentClient, projectId);
     },
     {
       onMutate: async () => {
@@ -376,7 +415,7 @@ export const useRejectProject = () => {
   const queryClient = useQueryClient();
   return useMutation(
     async (projectId: string) => {
-      return await rejectProject(supabaseClient, projectId);
+      return await rejectProject(supabaseUserClientComponentClient, projectId);
     },
     {
       onMutate: async () => {

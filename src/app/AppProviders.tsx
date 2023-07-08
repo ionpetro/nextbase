@@ -14,12 +14,12 @@ import {
   SessionContextProvider,
   SessionContextProviderProps,
 } from '@supabase/auth-helpers-react';
-import supabaseClient from '@/utils/supabase-browser';
 import { SupabaseListener } from '@/components/SupabaseListener';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
 import ReactNoSSR from 'react-no-ssr';
 import { MaintenanceModeContextProvider } from '@/contexts/MaintenanceModeContext';
+import { supabaseUserClientComponentClient } from '@/supabase-clients/user/supabaseUserClientComponentClient';
 
 /**
  ** Inspiration from here
@@ -77,7 +77,7 @@ export default function AppProviders({
   return (
     <QueryClientProvider client={queryClient}>
       <SessionContextProvider
-        supabaseClient={supabaseClient}
+        supabaseClient={supabaseUserClientComponentClient}
         initialSession={initialSession}
       >
         <RouterEventWrapper>

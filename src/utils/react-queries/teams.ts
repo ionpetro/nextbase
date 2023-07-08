@@ -10,9 +10,9 @@ import {
   removeUserFromTeam,
   updateUserRoleInProjectTeam,
 } from '../supabase/teams';
-import supabaseClient from '@/utils/supabase-browser';
 import { useRef } from 'react';
 import { toast } from 'react-hot-toast';
+import { supabaseUserClientComponentClient } from '@/supabase-clients/user/supabaseUserClientComponentClient';
 
 export const useGetUserTeamRole = (
   teamId: number,
@@ -26,7 +26,11 @@ export const useGetUserTeamRole = (
   return useQuery(
     ['getUserTeamRole', user.id],
     async () => {
-      return getUserTeamRole(supabaseClient, user.id, teamId);
+      return getUserTeamRole(
+        supabaseUserClientComponentClient,
+        user.id,
+        teamId
+      );
     },
     {
       initialData: initialUserTeamRole,
@@ -41,7 +45,10 @@ export const useGetTeamsInOrganization = (
   return useQuery(
     ['getTeamsInOrganization', organizationId],
     async () => {
-      return getTeamsInOrganization(supabaseClient, organizationId);
+      return getTeamsInOrganization(
+        supabaseUserClientComponentClient,
+        organizationId
+      );
     },
     {
       initialData,
@@ -56,7 +63,7 @@ export const useGetTeamById = (
   return useQuery(
     ['getTeamById', teamId],
     async () => {
-      return getTeamById(supabaseClient, teamId);
+      return getTeamById(supabaseUserClientComponentClient, teamId);
     },
     {
       initialData,
@@ -77,7 +84,12 @@ export const useAddUserToProjectTeam = () => {
       teamId: number;
       role: Enum<'project_team_member_role'>;
     }) => {
-      return addUserToTeam(supabaseClient, userId, teamId, role);
+      return addUserToTeam(
+        supabaseUserClientComponentClient,
+        userId,
+        teamId,
+        role
+      );
     },
     {
       onMutate: () => {
@@ -112,7 +124,7 @@ export const useUpdateUserRoleInTeam = () => {
       newRole: Enum<'project_team_member_role'>;
     }) => {
       return updateUserRoleInProjectTeam(
-        supabaseClient,
+        supabaseUserClientComponentClient,
         userId,
         teamId,
         newRole
@@ -144,7 +156,11 @@ export const useRemoveUserFromTeam = () => {
 
   return useMutation(
     async ({ userId, teamId }: { userId: string; teamId: number }) => {
-      return removeUserFromTeam(supabaseClient, userId, teamId);
+      return removeUserFromTeam(
+        supabaseUserClientComponentClient,
+        userId,
+        teamId
+      );
     },
     {
       onMutate: () => {
@@ -173,7 +189,7 @@ export const useGetTeamMembers = (
   return useQuery(
     ['getTeamMembers', teamId],
     async () => {
-      return getTeamMembersByTeamId(supabaseClient, teamId);
+      return getTeamMembersByTeamId(supabaseUserClientComponentClient, teamId);
     },
     {
       initialData,

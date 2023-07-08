@@ -1,4 +1,4 @@
-import { supabaseAdmin } from '@/utils/supabase-admin';
+import { supabaseAdminServerComponentClient } from '@/supabase-clients/admin/supabaseAdminServerComponentClient';
 import { getInternalFeedbackById } from '@/utils/supabase/internalFeedback';
 import { z } from 'zod';
 
@@ -16,7 +16,7 @@ export default async function AppAdminFeedbackItemPage({
   const { feedbackId } = feedbackItemPageParams.parse(params);
 
   const feedbackThread = await getInternalFeedbackById(
-    supabaseAdmin,
+    supabaseAdminServerComponentClient,
     feedbackId
   );
 

@@ -5,19 +5,19 @@ import LargeSectionHeading from '@/components/ui/Headings/LargeSectionHeading';
 
 import InternalRoadmapCard from '@/components/ui/Card/InternalRoadmapCard';
 import moment from 'moment';
-import { supabaseAdmin } from '@/utils/supabase-admin';
 import { CreateChangelog } from './CreateChangelog';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { customMDXComponents } from '@/components/mdxComponents';
 import { cn } from '@/utils/cn';
+import { supabaseAdminServerComponentClient } from '@/supabase-clients/admin/supabaseAdminServerComponentClient';
 
 export default async function Page() {
-  const completedTasksListResponse = await supabaseAdmin
+  const completedTasksListResponse = await supabaseAdminServerComponentClient
     .from('internal_feedback_threads')
     .select('*')
     .eq('status', 'completed');
 
-  const changelogItemsResponse = await supabaseAdmin
+  const changelogItemsResponse = await supabaseAdminServerComponentClient
     .from('internal_changelog')
     .select('*');
 

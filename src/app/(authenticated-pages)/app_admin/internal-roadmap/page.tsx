@@ -3,8 +3,8 @@ import HelpCard from '@/components/ui/Card/HelpCard';
 import organisationshelp from 'public/assets/help-assets/organisations-teams.png';
 import teamsprojects from 'public/assets/help-assets/teams-projects.png';
 import InternalRoadmapCard from '@/components/ui/Card/InternalRoadmapCard';
-import { supabaseAdminServerComponentClient } from '@/utils/supabase-admin-server-component-client';
 import moment from 'moment';
+import { supabaseAdminServerComponentClient } from '@/supabase-clients/admin/supabaseAdminServerComponentClient';
 
 export default async function Page() {
   const roadmapItemsResponse = await supabaseAdminServerComponentClient

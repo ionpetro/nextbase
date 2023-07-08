@@ -1,8 +1,8 @@
 import { ReactNode } from 'react';
-import createClient from '@/utils/supabase-server';
 import { z } from 'zod';
 import { TeamContextProvider } from '@/contexts/TeamContext';
 import { getTeamById, getUserTeamRole } from '@/utils/supabase/teams';
+import { supabaseUserServerComponentClient } from '@/supabase-clients/user/supabaseUserServerComponentClient';
 
 const paramsSchema = z.object({
   teamId: z.coerce.number(),
@@ -19,15 +19,18 @@ export default async function Layout({
 }) {
   const parsedParams = paramsSchema.parse(params);
   const { teamId, organizationId } = parsedParams;
-  const supabase = createClient();
-  const { data } = await supabase.auth.getSession();
+  const { data } = await supabaseUserServerComponentClient.auth.getSession();
   if (!data?.session?.user.id) {
     return <p>Not logged in</p>;
   }
 
   const [teamByIdData, teamRole] = await Promise.all([
-    getTeamById(supabase, teamId),
-    getUserTeamRole(supabase, data.session.user.id, teamId),
+    getTeamById(supabaseUserServerComponentClient, teamId),
+    getUserTeamRole(
+      supabaseUserServerComponentClient,
+      data.session.user.id,
+      teamId
+    ),
   ]);
 
   return (

@@ -1,6 +1,5 @@
 import { T } from '@/components/ui/Typography';
 import { stripe } from '@/utils/stripe';
-import createClient from '@/utils/supabase-server';
 
 async function getCurrentMRR() {
   const startOfMonth = new Date();

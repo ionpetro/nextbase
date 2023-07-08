@@ -1,12 +1,13 @@
-import createClient from '@/utils/supabase-server';
+import { supabaseUserServerComponentClient } from '@/supabase-clients/user/supabaseUserServerComponentClient';
 import { getTeamsInOrganization } from '@/utils/supabase/teams';
 import { z } from 'zod';
 import { OrganizationTeams } from './OrganizationTeams';
 
 async function fetchTeams(organizationId: string) {
-  const supabase = createClient();
-
-  return await getTeamsInOrganization(supabase, organizationId);
+  return await getTeamsInOrganization(
+    supabaseUserServerComponentClient,
+    organizationId
+  );
 }
 
 const paramsSchema = z.object({

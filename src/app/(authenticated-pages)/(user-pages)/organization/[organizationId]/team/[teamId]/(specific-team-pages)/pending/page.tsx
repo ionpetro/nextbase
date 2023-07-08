@@ -1,8 +1,8 @@
 import { AppSupabaseClient } from '@/types';
 import { z } from 'zod';
-import createClient from '@/utils/supabase-server';
 import { PendingApprovalTeamProjectsList } from './PendingApprovalTeamProjectsList';
 import { getPendingApprovalProjectsByTeamId } from '@/utils/supabase/projects';
+import { supabaseUserServerComponentClient } from '@/supabase-clients/user/supabaseUserServerComponentClient';
 
 const paramsSchema = z.object({
   teamId: z.coerce.number(),
@@ -20,10 +20,12 @@ export default async function TeamPage({
     teamId: string;
   };
 }) {
-  const supabase = createClient();
   const parsedParams = paramsSchema.parse(params);
   const { teamId } = parsedParams;
-  const projects = await fetchProjects(supabase, teamId);
+  const projects = await fetchProjects(
+    supabaseUserServerComponentClient,
+    teamId
+  );
   return (
     <div className="space-y-4">
       <PendingApprovalTeamProjectsList initialProjects={projects} />

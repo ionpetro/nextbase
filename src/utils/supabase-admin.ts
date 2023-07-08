@@ -1,4 +1,3 @@
-import { createClient } from '@supabase/supabase-js';
 import { stripe } from './stripe';
 import { toDateTime } from './helpers';
 import Stripe from 'stripe';
@@ -9,23 +8,10 @@ import {
   ADMIN_USER_LIST_VIEW_PAGE_SIZE,
 } from '@/constants';
 import { errors } from './errors';
-
-/**
- * IMPORTANT!! supabaseAdmin uses the SERVICE_ROLE_KEY which you must only use in a secure server-side context
- * as it has admin privileges and overwrites RLS policies!
- */
-export const supabaseAdmin = createClient<Database>(
-  process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-  process.env.SUPABASE_SERVICE_ROLE_KEY || '',
-  {
-    global: {
-      fetch,
-    },
-  }
-);
+import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 
 const upsertProductRecord = async (product: Stripe.Product) => {
-  const { error } = await supabaseAdmin.from('products').upsert([
+  const { error } = await supabaseAdminClient.from('products').upsert([
     {
       id: product.id,
       active: product.active,
@@ -40,7 +26,7 @@ const upsertProductRecord = async (product: Stripe.Product) => {
 };
 
 const upsertPriceRecord = async (price: Stripe.Price) => {
-  const { error } = await supabaseAdmin.from('prices').upsert([
+  const { error } = await supabaseAdminClient.from('prices').upsert([
     {
       id: price.id,
       product_id: typeof price.product === 'string' ? price.product : '',
@@ -68,7 +54,7 @@ const createOrRetrieveCustomer = async ({
   organizationId: string;
   organizationTitle?: string;
 }) => {
-  const { data, error } = await supabaseAdmin
+  const { data, error } = await supabaseAdminClient
     .from('customers')
     .select('stripe_customer_id')
     .eq('organization_id', organizationId)
@@ -88,7 +74,7 @@ const createOrRetrieveCustomer = async ({
     if (organizationTitle) customerData.description = organizationTitle;
     const customer = await stripe.customers.create(customerData);
     // Now insert the customer ID into our Supabase mapping table.
-    const { error: supabaseError } = await supabaseAdmin
+    const { error: supabaseError } = await supabaseAdminClient
       .from('customers')
       .insert([
         { organization_id: organizationId, stripe_customer_id: customer.id },
@@ -131,7 +117,7 @@ const copyBillingDetailsToCustomer = async (
     phone,
     address: addressParam,
   });
-  const { error } = await supabaseAdmin
+  const { error } = await supabaseAdminClient
     .from('organizations_private_info')
     .update({
       billing_address: { ...address },
@@ -147,11 +133,12 @@ const manageSubscriptionStatusChange = async (
   createAction = false
 ) => {
   // Get organizations's UUID from mapping table.
-  const { data: customerData, error: noCustomerError } = await supabaseAdmin
-    .from('customers')
-    .select('*')
-    .eq('stripe_customer_id', customerId)
-    .single();
+  const { data: customerData, error: noCustomerError } =
+    await supabaseAdminClient
+      .from('customers')
+      .select('*')
+      .eq('stripe_customer_id', customerId)
+      .single();
   if (noCustomerError) throw noCustomerError;
 
   const { organization_id: organizationId } = customerData!;
@@ -196,7 +183,7 @@ const manageSubscriptionStatusChange = async (
   };
   /* eslint-enable prettier/prettier */
 
-  const { error } = await supabaseAdmin
+  const { error } = await supabaseAdminClient
     .from('subscriptions')
     .upsert([subscriptionData]);
   if (error) throw error;
@@ -217,11 +204,12 @@ export const updatePaymentMethod = async (
   paymentMethodId: string,
   customerId: string
 ) => {
-  const { data: customerData, error: noCustomerError } = await supabaseAdmin
-    .from('customers')
-    .select('*')
-    .eq('stripe_customer_id', customerId)
-    .single();
+  const { data: customerData, error: noCustomerError } =
+    await supabaseAdminClient
+      .from('customers')
+      .select('*')
+      .eq('stripe_customer_id', customerId)
+      .single();
 
   if (noCustomerError) throw noCustomerError;
 
@@ -252,7 +240,7 @@ export const updatePaymentMethod = async (
     address: addressParam,
   });
 
-  const { error } = await supabaseAdmin
+  const { error } = await supabaseAdminClient
     .from('organizations_private_info')
     .update({
       billing_address: { ...address },
@@ -270,11 +258,14 @@ export const getUsersPaginated = async (
 ): Promise<[number, DBFunction<'app_admin_get_all_users'>]> => {
   // RPCs are 0-indexed, but our pagination is 1-indexed.
   const effectivePageNumber = pageNumber + 1;
-  const { data, error } = await supabaseAdmin.rpc('app_admin_get_all_users', {
-    page: effectivePageNumber,
-    search_query: search,
-    page_size: ADMIN_USER_LIST_VIEW_PAGE_SIZE,
-  });
+  const { data, error } = await supabaseAdminClient.rpc(
+    'app_admin_get_all_users',
+    {
+      page: effectivePageNumber,
+      search_query: search,
+      page_size: ADMIN_USER_LIST_VIEW_PAGE_SIZE,
+    }
+  );
   if (error) throw error;
   if (!data) {
     return [pageNumber, []];
@@ -288,7 +279,7 @@ export const getOrganizationsPaginated = async (
 ): Promise<[number, DBFunction<'app_admin_get_all_organizations'>]> => {
   // RPCs are 0-indexed, but our pagination is 1-indexed.
   const effectivePageNumber = pageNumber + 1;
-  const { data, error } = await supabaseAdmin.rpc(
+  const { data, error } = await supabaseAdminClient.rpc(
     'app_admin_get_all_organizations',
     {
       page: effectivePageNumber,
@@ -304,7 +295,7 @@ export const getOrganizationsPaginated = async (
 };
 
 export const enableMaintenanceMode = async () => {
-  const { data, error } = await supabaseAdmin
+  const { data, error } = await supabaseAdminClient
     .rpc('enable_maintenance_mode')
     .single();
 
@@ -317,7 +308,7 @@ export const enableMaintenanceMode = async () => {
 };
 
 export const disableMaintenanceMode = async () => {
-  const { data, error } = await supabaseAdmin
+  const { data, error } = await supabaseAdminClient
     .rpc('disable_maintenance_mode')
     .single();
 

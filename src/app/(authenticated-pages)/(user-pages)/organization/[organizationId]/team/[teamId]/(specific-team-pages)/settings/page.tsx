@@ -1,6 +1,6 @@
+import { supabaseUserServerComponentClient } from '@/supabase-clients/user/supabaseUserServerComponentClient';
 import { getTeamMembersByTeamId } from '@/utils/supabase/teams';
 import { z } from 'zod';
-import createClient from '@/utils/supabase-server';
 import { ProjectTeamMembersTable } from './ProjectTeamMembersTable';
 
 const paramsSchema = z.object({
@@ -16,8 +16,10 @@ export default async function TeamSettingsPage({
 }) {
   const parsedParams = paramsSchema.parse(params);
   const { teamId } = parsedParams;
-  const supabase = createClient();
-  const teamMembers = await getTeamMembersByTeamId(supabase, teamId);
+  const teamMembers = await getTeamMembersByTeamId(
+    supabaseUserServerComponentClient,
+    teamId
+  );
   return (
     <div className="space-y-2">
       <ProjectTeamMembersTable teamId={teamId} teamMembers={teamMembers} />

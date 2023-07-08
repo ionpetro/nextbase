@@ -3,13 +3,13 @@ import ChangeLogListCard from '@/components/ui/ChangeLog/ChangeLogListCard';
 import moment from 'moment';
 import { Anchor } from '@/components/Anchor';
 import { Button } from '@/components/ui/Button';
-import { supabaseAdmin } from '@/utils/supabase-admin';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { customMDXComponents } from '@/components/mdxComponents';
 import { cn } from '@/utils/cn';
+import { supabaseAdminServerComponentClient } from '@/supabase-clients/admin/supabaseAdminServerComponentClient';
 
 export default async function Page() {
-  const changelogItemsResponse = await supabaseAdmin
+  const changelogItemsResponse = await supabaseAdminServerComponentClient
     .from('internal_changelog')
     .select('*');
 

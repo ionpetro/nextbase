@@ -1,7 +1,7 @@
+import { supabaseUserServerComponentClient } from '@/supabase-clients/user/supabaseUserServerComponentClient';
 import { AppSupabaseClient } from '@/types';
 import { getCompletedProjectsByTeamId } from '@/utils/supabase/projects';
 import { z } from 'zod';
-import createClient from '@/utils/supabase-server';
 import { CompletedTeamProjectsList } from './CompletedTeamProjectsList';
 
 const paramsSchema = z.object({
@@ -20,10 +20,12 @@ export default async function TeamPage({
     teamId: string;
   };
 }) {
-  const supabase = createClient();
   const parsedParams = paramsSchema.parse(params);
   const { teamId } = parsedParams;
-  const projects = await fetchProjects(supabase, teamId);
+  const projects = await fetchProjects(
+    supabaseUserServerComponentClient,
+    teamId
+  );
   return (
     <div className="space-y-4">
       <CompletedTeamProjectsList initialProjects={projects} />

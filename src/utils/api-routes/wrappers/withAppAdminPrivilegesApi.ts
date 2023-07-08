@@ -1,9 +1,10 @@
-import { Database as AppDatabase } from '@/lib/database.types';
+import { Database } from '@/lib/database.types';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { enableCors } from '../enable-cors';
 import { getIsAppAdmin } from '@/utils/supabase-queries';
-import { createPagesServerClient } from '@supabase/auth-helpers-nextjs';
 import { AppSupabaseClient } from '@/types';
+import { createSupabaseUserServerPagesClient } from '@/supabase-clients/user/createSupabaseUserServerPagesClient';
+import { createSupabaseAdminServerPagesClient } from '@/supabase-clients/admin/createSupabaseAdminServerPagesClient';
 
 /**
  * @description Ensures that the user is an Application Admin.
@@ -18,21 +19,7 @@ export const withAppAdminPrivilegesApi = (
   ) => void
 ) => {
   return async (req: NextApiRequest, res: NextApiResponse) => {
-    const supabaseClient = createPagesServerClient<AppDatabase>(
-      {
-        req,
-        res,
-      },
-      {
-        supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL,
-        supabaseKey: process.env.SUPABASE_SERVICE_ROLE_KEY,
-        options: {
-          global: {
-            fetch,
-          },
-        },
-      }
-    );
+    const supabaseClient = createSupabaseUserServerPagesClient({ req, res });
     enableCors(req, res);
 
     // return ok if options request
@@ -61,6 +48,6 @@ export const withAppAdminPrivilegesApi = (
       });
     }
 
-    return cb(req, res, supabaseClient);
+    return cb(req, res, createSupabaseAdminServerPagesClient({ req, res }));
   };
 };

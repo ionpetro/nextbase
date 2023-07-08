@@ -1,12 +1,12 @@
 import 'server-only';
 import './globals.css';
 import 'react-tooltip/dist/react-tooltip.css';
-import createClient from '@/utils/supabase-server';
 import AppProviders from './AppProviders';
 import { errors } from '@/utils/errors';
 import { AppSupabaseClient } from '@/types';
 import { getIsAppInMaintenanceMode } from '@/utils/supabase-queries';
 import localFont from 'next/font/local';
+import { supabaseUserServerComponentClient } from '@/supabase-clients/user/supabaseUserServerComponentClient';
 
 const satoshiFont = localFont({
   src: '../fonts/satoshi/Satoshi-Variable.woff2',
@@ -50,10 +50,9 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const supabase = createClient();
   const [session, isAppInMaintenanceMode] = await Promise.all([
-    fetchSession(supabase),
-    fetchIsAppInMaintenanceMode(supabase),
+    fetchSession(supabaseUserServerComponentClient),
+    fetchIsAppInMaintenanceMode(supabaseUserServerComponentClient),
   ]);
   return (
     <html lang="en" className={satoshiFont.variable}>

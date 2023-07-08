@@ -1,7 +1,6 @@
 import { T } from '@/components/ui/Typography';
+import { supabaseAdminServerComponentClient } from '@/supabase-clients/admin/supabaseAdminServerComponentClient';
 import { stripe } from '@/utils/stripe';
-import { supabaseAdmin } from '@/utils/supabase-admin';
-import createClient from '@/utils/supabase-server';
 import { SaaSMetricsGraphs } from './SaasMetrics';
 
 async function getCurrentMRR() {
@@ -138,24 +137,28 @@ async function getChurnRate() {
 }
 
 async function getTotalUserCount() {
-  const { data } = await supabaseAdmin.rpc('app_admin_get_total_user_count');
+  const { data } = await supabaseAdminServerComponentClient.rpc(
+    'app_admin_get_total_user_count'
+  );
   return data ?? 0;
 }
 
 async function getTotalOrganizationsCount() {
-  const { data } = await supabaseAdmin.rpc(
+  const { data } = await supabaseAdminServerComponentClient.rpc(
     'app_admin_get_total_organization_count'
   );
   return data ?? 0;
 }
 
 async function getTotalProjectsCount() {
-  const { data } = await supabaseAdmin.rpc('app_admin_get_total_project_count');
+  const { data } = await supabaseAdminServerComponentClient.rpc(
+    'app_admin_get_total_project_count'
+  );
   return data ?? 0;
 }
 
 async function getOrganizationCountByMonth() {
-  const { data } = await supabaseAdmin.rpc(
+  const { data } = await supabaseAdminServerComponentClient.rpc(
     'app_admin_get_organizations_created_per_month'
   );
   if (!data) {
@@ -172,7 +175,7 @@ async function getOrganizationCountByMonth() {
 }
 
 async function getProjectCountByMonth() {
-  const { data } = await supabaseAdmin.rpc(
+  const { data } = await supabaseAdminServerComponentClient.rpc(
     'app_admin_get_projects_created_per_month'
   );
   if (!data) {
@@ -189,7 +192,7 @@ async function getProjectCountByMonth() {
 }
 
 async function getUserCountByMonth() {
-  const { data } = await supabaseAdmin.rpc(
+  const { data } = await supabaseAdminServerComponentClient.rpc(
     'app_admin_get_users_created_per_month'
   );
   if (!data) {
@@ -206,7 +209,7 @@ async function getUserCountByMonth() {
 }
 
 async function getActiveUsers() {
-  const { data } = await supabaseAdmin.rpc(
+  const { data } = await supabaseAdminServerComponentClient.rpc(
     'app_admin_get_recent_30_day_signin_count'
   );
   return data ?? [];

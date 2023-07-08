@@ -11,7 +11,7 @@
 //         teamId: number;
 //         role: Enum<'project_team_member_role'>;
 //       }) => {
-//         return addUserToTeam(supabaseClient, userId, teamId, role);
+//         return addUserToTeam(supabaseUserClientComponentClient, userId, teamId, role);
 //       },
 //       {
 //         onMutate: () => {
@@ -35,10 +35,10 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRef } from 'react';
 import { createInternalFeedback } from '@/utils/supabase/internalFeedback';
-import supabaseClient from '@/utils/supabase-browser';
 import { toast } from 'react-hot-toast';
 import { useLoggedInUser } from '@/hooks/useLoggedInUser';
 import { Enum } from '@/types';
+import { supabaseUserClientComponentClient } from '@/supabase-clients/user/supabaseUserClientComponentClient';
 
 export const useCreateInternalFeedback = (
   options: {
@@ -54,7 +54,11 @@ export const useCreateInternalFeedback = (
       content: string;
       type: Enum<'internal_feedback_thread_type'>;
     }) => {
-      return createInternalFeedback(supabaseClient, user.id, data);
+      return createInternalFeedback(
+        supabaseUserClientComponentClient,
+        user.id,
+        data
+      );
     },
     {
       onMutate: () => {

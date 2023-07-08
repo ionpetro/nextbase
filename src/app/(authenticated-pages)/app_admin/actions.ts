@@ -1,5 +1,5 @@
 'use server';
-import { supabaseAdminServerActionClient } from '@/utils/supabase-admin-server-action';
+import { supabaseAdminServerActionClient } from '@/supabase-clients/admin/supabaseAdminServerActionClient';
 import { AdminGetUserData } from './types';
 
 export const adminGetUser = async (

@@ -1,8 +1,8 @@
 'use client';
 
+import { supabaseUserClientComponentClient } from '@/supabase-clients/user/supabaseUserClientComponentClient';
 import { useRouter, useSelectedLayoutSegments } from 'next/navigation';
 import { useEffect } from 'react';
-import supabase from '@/utils/supabase-browser';
 import { useWhyDidYouUpdate } from 'rooks';
 
 // These route segments don't need to be checked for authentication
@@ -23,29 +23,30 @@ export function SupabaseListener({ accessToken }: { accessToken?: string }) {
     segments,
   });
   useEffect(() => {
-    const { data: authListener } = supabase.auth.onAuthStateChange((event) => {
-      console.log(event);
-      if (event === 'SIGNED_OUT') {
-        router.push('/login');
-      } else if (event === 'SIGNED_IN') {
-        // the SIGNED_IN event gets fired even when the user is already signed in if the window gets focused after losing focus.
-        // so we only want to redirect user to check-auth page if they are not within authenticated-pages segment
-        if (segments.includes(externalPagesSegment)) {
-          // we are not interested in auth events when the user is on an external page
-          return;
+    const { data: authListener } =
+      supabaseUserClientComponentClient.auth.onAuthStateChange((event) => {
+        console.log(event);
+        if (event === 'SIGNED_OUT') {
+          router.push('/login');
+        } else if (event === 'SIGNED_IN') {
+          // the SIGNED_IN event gets fired even when the user is already signed in if the window gets focused after losing focus.
+          // so we only want to redirect user to check-auth page if they are not within authenticated-pages segment
+          if (segments.includes(externalPagesSegment)) {
+            // we are not interested in auth events when the user is on an external page
+            return;
+          }
+          if (segments.includes(authenticatedPagesSegment)) {
+            // User is already signed in and is on an authenticated page
+            // so we don't need to redirect them to check-auth page
+            return null;
+          }
+          router.push('/check-auth');
+        } else if (event === 'TOKEN_REFRESHED') {
+          // router.refresh();
+        } else if (event === 'PASSWORD_RECOVERY') {
+          router.push('/update-password');
         }
-        if (segments.includes(authenticatedPagesSegment)) {
-          // User is already signed in and is on an authenticated page
-          // so we don't need to redirect them to check-auth page
-          return null;
-        }
-        router.push('/check-auth');
-      } else if (event === 'TOKEN_REFRESHED') {
-        // router.refresh();
-      } else if (event === 'PASSWORD_RECOVERY') {
-        router.push('/update-password');
-      }
-    });
+      });
 
     return () => {
       authListener.subscription.unsubscribe();
