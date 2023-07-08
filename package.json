@@ -36,6 +36,7 @@
     "@react-email/text": "0.0.5",
     "@react-icons/all-files": "^4.1.0",
     "@sendgrid/mail": "^7.7.0",
+    "@sentry/nextjs": "^7.57.0",
     "@stripe/stripe-js": "^1.46.0",
     "@supabase/auth-helpers-nextjs": "^0.7.2",
     "@supabase/auth-helpers-react": "^0.3.1",
@@ -90,7 +91,7 @@
     "zod": "^3.21.4"
   },
   "scripts": {
-    "dev": "next dev -p 4000",
+    "dev": "next dev",
     "email:dev": "email dev",
     "start": "next start",
     "generate:types:local": "export $(cat .env.local | xargs) &&  supabase gen types typescript --project-id ${SUPABASE_PROJECT_REF} --schema public > src/lib/database.types.ts",
