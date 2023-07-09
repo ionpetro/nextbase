@@ -8,11 +8,15 @@ import {
   useSignInWithProvider,
 } from '@/utils/react-query-hooks';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export function Login() {
   const [isSuccessful, setIsSuccessful] = useState(false);
+  const router = useRouter();
+
   function redirectToDashboard() {
-    setIsSuccessful(true);
+    router.refresh();
+    router.push('/auth/callback');
   }
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const magicLinkMutation = useSignInWithMagicLink({
