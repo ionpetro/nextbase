@@ -3,12 +3,18 @@ import { Anchor } from '@/components/Anchor';
 import { cn } from '@/utils/cn';
 import { useUser } from '@supabase/auth-helpers-react';
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
-import { FiArrowLeft, FiBriefcase, FiSettings, FiUsers } from 'react-icons/fi';
+import {
+  FiArrowLeft,
+  FiBriefcase,
+  FiPenTool,
+  FiSettings,
+  FiUsers,
+} from 'react-icons/fi';
 import { RxActivityLog } from 'react-icons/rx';
 import { RiRoadMapLine } from 'react-icons/ri';
 import { MdOutlineFeedback } from 'react-icons/md';
 import { SelectSeparator } from '@/components/ui/Select';
-import { Home } from 'lucide-react';
+import { Home, PenTool } from 'lucide-react';
 import { AdminSidebarLink } from './AdminSidebarLink';
 
 type LinksProps = {
@@ -58,6 +64,14 @@ function Links({ isExpanded, toggleIsExpanded }: LinksProps) {
             isExpanded={isExpanded}
           />
           <SelectSeparator></SelectSeparator>
+          <AdminSidebarLink
+            href="/app_admin/blog"
+            icon={<FiPenTool />}
+            label="Blog"
+            isExpanded={isExpanded}
+          />
+          <SelectSeparator></SelectSeparator>
+
           <AdminSidebarLink
             href="/app_admin/feedback"
             icon={<MdOutlineFeedback />}

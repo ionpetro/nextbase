@@ -3,7 +3,7 @@ import { TabsNavigation } from '@/components/presentational/tailwind/TabsNavigat
 import BasicPageHeading from '@/components/ui/Headings/BasicPageHeading';
 import { FileLineChart } from 'lucide-react';
 import { usePathname } from 'next/navigation';
-import { FiBriefcase, FiSettings, FiUsers } from 'react-icons/fi';
+import { FiBriefcase, FiPenTool, FiSettings, FiUsers } from 'react-icons/fi';
 import { match } from 'path-to-regexp';
 import { MdOutlineFeedback } from 'react-icons/md';
 import { RxActivityLog } from 'react-icons/rx';
@@ -31,6 +31,11 @@ const tabs = [
     label: 'Application Settings',
     href: `/app_admin/settings`,
     icon: <FiSettings />,
+  },
+  {
+    label: 'Blog',
+    href: `/app_admin/blog`,
+    icon: <FiPenTool />,
   },
   {
     label: 'Feedback List',
