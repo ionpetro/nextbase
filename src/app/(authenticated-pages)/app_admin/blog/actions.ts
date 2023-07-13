@@ -1,28 +1,27 @@
-import {
-  AppSupabaseClient,
-  TableInsertPayload,
-  TableUpdatePayload,
-} from '@/types';
+'use server';
+import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
+import { Table, TableInsertPayload, TableUpdatePayload } from '@/types';
+import { revalidatePath } from 'next/cache';
 
 export const createAuthorProfile = async (
-  supabaseClient: AppSupabaseClient,
   payload: TableInsertPayload<'internal_blog_author_profiles'>
 ) => {
-  const { error } = await supabaseClient
+  const { error } = await supabaseAdminClient
     .from('internal_blog_author_profiles')
     .insert(payload);
 
   if (error) {
     throw error;
   }
+
+  revalidatePath('/');
 };
 
 export const createBlogPost = async (
-  supabaseClient: AppSupabaseClient,
   authorId: string,
   payload: TableInsertPayload<'internal_blog_posts'>
 ) => {
-  const { data, error } = await supabaseClient
+  const { data, error } = await supabaseAdminClient
     .from('internal_blog_posts')
     .insert(payload)
     .select('*')
@@ -33,19 +32,16 @@ export const createBlogPost = async (
   }
 
   // assign to author
-  await supabaseClient.from('internal_blog_author_posts').insert({
+  await supabaseAdminClient.from('internal_blog_author_posts').insert({
     author_id: authorId,
     post_id: data.id,
   });
 
-  return data;
+  revalidatePath('/');
 };
 
-export const getBlogPostById = async (
-  supabaseClient: AppSupabaseClient,
-  postId: string
-) => {
-  const { data, error } = await supabaseClient
+export const getBlogPostById = async (postId: string) => {
+  const { data, error } = await supabaseAdminClient
     .from('internal_blog_posts')
     .select(
       '*, internal_blog_author_posts(*, internal_blog_author_profiles(*))'
@@ -60,11 +56,8 @@ export const getBlogPostById = async (
   return data;
 };
 
-export const getBlogPostBySlug = async (
-  supabaseClient: AppSupabaseClient,
-  slug: string
-) => {
-  const { data, error } = await supabaseClient
+export const getBlogPostBySlug = async (slug: string) => {
+  const { data, error } = await supabaseAdminClient
     .from('internal_blog_posts')
     .select(
       '*, internal_blog_author_posts(*, internal_blog_author_profiles(*))'
@@ -79,31 +72,8 @@ export const getBlogPostBySlug = async (
   return data;
 };
 
-export const getPublishedBlogPostBySlug = async (
-  supabaseClient: AppSupabaseClient,
-  slug: string
-) => {
-  const { data, error } = await supabaseClient
-    .from('internal_blog_posts')
-    .select(
-      '*, internal_blog_author_posts(*, internal_blog_author_profiles(*))'
-    )
-    .eq('slug', slug)
-    .eq('status', 'published')
-    .single();
-
-  if (error) {
-    throw error;
-  }
-
-  return data;
-};
-
-export const getBlogPostsByAuthorId = async (
-  supabaseClient: AppSupabaseClient,
-  authorId: string
-) => {
-  const { data, error } = await supabaseClient
+export const getBlogPostsByAuthorId = async (authorId: string) => {
+  const { data, error } = await supabaseAdminClient
     .from('internal_blog_author_posts')
     .select('*, internal_blog_posts(*)')
     .eq('author_id', authorId);
@@ -116,12 +86,10 @@ export const getBlogPostsByAuthorId = async (
 };
 
 export const updateAuthorProfile = async (
-  supabaseClient: AppSupabaseClient,
-
   userId: string,
   payload: Partial<TableUpdatePayload<'internal_blog_author_profiles'>>
 ) => {
-  const { data, error } = await supabaseClient
+  const { data, error } = await supabaseAdminClient
     .from('internal_blog_author_profiles')
     .update(payload)
     .eq('user_id', userId)
@@ -132,17 +100,17 @@ export const updateAuthorProfile = async (
     throw error;
   }
 
+  revalidatePath('/app_admin/blog');
+  revalidatePath('/blog');
   return data;
 };
 
 export const updateBlogPost = async (
-  supabaseClient: AppSupabaseClient,
-
-  postId: string,
   authorId: string,
+  postId: string,
   payload: Partial<TableUpdatePayload<'internal_blog_posts'>>
 ) => {
-  const { data, error } = await supabaseClient
+  const { data, error } = await supabaseAdminClient
     .from('internal_blog_posts')
     .update(payload)
     .eq('id', postId)
@@ -153,7 +121,7 @@ export const updateBlogPost = async (
     throw error;
   }
 
-  const { data: oldAuthors, error: oldAuthorsError } = await supabaseClient
+  const { data: oldAuthors, error: oldAuthorsError } = await supabaseAdminClient
     .from('internal_blog_author_posts')
     .select('*')
     .eq('post_id', postId);
@@ -162,7 +130,7 @@ export const updateBlogPost = async (
   }
 
   for (const oldAuthor of oldAuthors) {
-    const { error: deleteError } = await supabaseClient
+    const { error: deleteError } = await supabaseAdminClient
       .from('internal_blog_author_posts')
       .delete()
       .eq('author_id', oldAuthor.author_id)
@@ -173,18 +141,15 @@ export const updateBlogPost = async (
   }
 
   // assign new author to the post
-  await assignBlogPostToAuthor(supabaseClient, authorId, postId);
-
-  return data;
+  await assignBlogPostToAuthor(authorId, postId);
+  revalidatePath('/');
 };
 
 export const assignBlogPostToAuthor = async (
-  supabaseClient: AppSupabaseClient,
-
   authorId: string,
   postId: string
 ) => {
-  const { data, error } = await supabaseClient
+  const { data, error } = await supabaseAdminClient
     .from('internal_blog_author_posts')
     .insert({
       author_id: authorId,
@@ -200,8 +165,8 @@ export const assignBlogPostToAuthor = async (
   return data;
 };
 
-export const getAllBlogPosts = async (supabaseClient: AppSupabaseClient) => {
-  const { data, error } = await supabaseClient
+export const getAllBlogPosts = async () => {
+  const { data, error } = await supabaseAdminClient
     .from('internal_blog_posts')
     .select('*');
 
@@ -212,8 +177,8 @@ export const getAllBlogPosts = async (supabaseClient: AppSupabaseClient) => {
   return data;
 };
 
-export const getAllAuthors = async (supabaseClient: AppSupabaseClient) => {
-  const { data, error } = await supabaseClient
+export const getAllAuthors = async () => {
+  const { data, error } = await supabaseAdminClient
     .from('internal_blog_author_profiles')
     .select('*');
 
@@ -224,8 +189,8 @@ export const getAllAuthors = async (supabaseClient: AppSupabaseClient) => {
   return data;
 };
 
-export const getAllAppAdmins = async (supabaseClient: AppSupabaseClient) => {
-  const { data: userIds, error } = await supabaseClient.rpc(
+export const getAllAppAdmins = async () => {
+  const { data: userIds, error } = await supabaseAdminClient.rpc(
     'get_all_app_admins'
   );
 
@@ -234,7 +199,7 @@ export const getAllAppAdmins = async (supabaseClient: AppSupabaseClient) => {
   }
 
   // get user profiles from user ids
-  const { data: userProfiles, error: error2 } = await supabaseClient
+  const { data: userProfiles, error: error2 } = await supabaseAdminClient
     .from('user_profiles')
     .select('*')
     .in(
@@ -247,39 +212,4 @@ export const getAllAppAdmins = async (supabaseClient: AppSupabaseClient) => {
   }
 
   return userProfiles;
-};
-
-export const deleteBlogPost = async (
-  supabaseClient: AppSupabaseClient,
-  postId: string
-) => {
-  const { error } = await supabaseClient
-    .from('internal_blog_posts')
-    .delete()
-    .eq('id', postId);
-
-  // We don't need to manually remove the author from the post, because of the foreign key constraint
-  // cascade delete will remove the author from the post automatically
-
-  if (error) {
-    throw error;
-  }
-
-  return;
-};
-
-export const deleteAuthorProfile = async (
-  supabaseClient: AppSupabaseClient,
-  userId: string
-) => {
-  const { error } = await supabaseClient
-    .from('internal_blog_author_profiles')
-    .delete()
-    .eq('user_id', userId);
-
-  if (error) {
-    throw error;
-  }
-
-  return;
 };

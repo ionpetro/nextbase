@@ -19,6 +19,10 @@ import { useRef } from 'react';
 import toast from 'react-hot-toast';
 import { getOrganizationsPaginated, getUsersPaginated } from './supabase-admin';
 import qs from 'qs';
+import {
+  InternalBlogPostSchema,
+  internalBlogPostSchema,
+} from '@/utils/zod-schemas/internalBlog';
 
 export const useGetUsersInfiniteQuery = (
   initialData: UnwrapPromise<ReturnType<typeof getUsersPaginated>>,
@@ -813,6 +817,117 @@ export const useCreateChangelog = ({
           message += `: ${error}`;
         }
 
+        toast.error(message, {
+          id: toastRef.current ?? undefined,
+        });
+        toastRef.current = null;
+      },
+    }
+  );
+};
+
+export const useGetAllBlogPosts = () => {
+  return useQuery(['appAdminGetAllBlogPosts'], async () => {
+    const path = `/api/app_admin/blog_post/getAllBlogPosts`;
+    const response = await axios.get(path, {
+      withCredentials: true,
+    });
+    return response.data;
+  });
+};
+
+export const useCreateBlogPost = ({
+  onSuccess,
+  onError,
+}: {
+  onSuccess?: () => void;
+  onError?: (error: unknown) => void;
+} = {}) => {
+  const toastRef = useRef<string | null>(null);
+  const queryClient = useQueryClient();
+  return useMutation(
+    async (data: { authorId: string; payload: InternalBlogPostSchema }) => {
+      const path = `/api/app_admin/internal_blog/createBlogPost`;
+      const response = await axios.post(path, data, {
+        withCredentials: true,
+      });
+      return response.data;
+    },
+    {
+      onMutate: () => {
+        const toastId = toast.loading('Creating blog post...');
+        toastRef.current = toastId;
+      },
+      onSuccess: () => {
+        onSuccess?.();
+        toast.success('Blog post created', {
+          id: toastRef.current ?? undefined,
+        });
+        toastRef.current = null;
+        queryClient.invalidateQueries(['blog_post_list']);
+      },
+      onError: (error) => {
+        onError?.(error);
+        let message = `Failed to create blog post`;
+        if (error instanceof AxiosError) {
+          message += `: ${error.response?.data.error}`;
+        } else if (error instanceof Error) {
+          message += `: ${error.message}`;
+        } else if (typeof error === 'string') {
+          message += `: ${error}`;
+        }
+
+        toast.error(message, {
+          id: toastRef.current ?? undefined,
+        });
+        toastRef.current = null;
+      },
+    }
+  );
+};
+
+export const useUpdateBlogPost = ({
+  onSuccess,
+  onError,
+  postId,
+}: {
+  onSuccess?: () => void;
+  onError?: (error: unknown) => void;
+  postId: string;
+}) => {
+  const toastRef = useRef<string | null>(null);
+  const queryClient = useQueryClient();
+  return useMutation(
+    async (data: { payload: InternalBlogPostSchema }) => {
+      const path = `/api/app_admin/internal_blog/${postId}/updateBlogPost`;
+      const response = await axios.patch(path, data, {
+        withCredentials: true,
+      });
+      return response.data;
+    },
+    {
+      onMutate: () => {
+        const toastId = toast.loading('Updating blog post...');
+        toastRef.current = toastId;
+      },
+      onSuccess: () => {
+        onSuccess?.();
+        toast.success('Blog post updated', {
+          id: toastRef.current ?? undefined,
+        });
+        toastRef.current = null;
+        queryClient.invalidateQueries(['blog_post_list']);
+      },
+      onError: (error) => {
+        onError?.(error);
+        let message = `Failed to update blog post`;
+        if (error instanceof AxiosError) {
+          message += `: ${error.response?.data.error}`;
+        } else if (error instanceof Error) {
+          message += `: ${error.message}`;
+        } else if (typeof error === 'string') {
+          message += `: ${error}`;
+        }
         toast.error(message, {
           id: toastRef.current ?? undefined,
         });

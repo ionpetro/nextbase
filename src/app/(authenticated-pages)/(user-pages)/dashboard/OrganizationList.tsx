@@ -97,7 +97,7 @@ export function OrganizationList({
             return (
               <tr key={organization.id} className="text-sm">
                 <td className="p-0">
-                  <TableCell classname="px-6 py-4">{index + 1}</TableCell>
+                  <TableCell className="px-6 py-4">{index + 1}</TableCell>
                 </td>
                 <td className="p-0">
                   <Anchor
@@ -105,23 +105,23 @@ export function OrganizationList({
                     key={organization.id}
                     href={`/organization/${organization.id}`}
                   >
-                    <TableCell classname="text-blue-500 px-6 py-4 truncate font-[500] hover:underline">
+                    <TableCell className="text-blue-500 px-6 py-4 truncate font-[500] hover:underline">
                       {organization.title}
                     </TableCell>
                   </Anchor>
                 </td>
                 <td className="p-0">
-                  <TableCell classname="px-6 py-4">
+                  <TableCell className="px-6 py-4">
                     {teamMembersCount} members
                   </TableCell>
                 </td>
                 <td className="p-0">
-                  <TableCell classname="px-6 py-4">
+                  <TableCell className="px-6 py-4">
                     {moment(organization.created_at).fromNow()}
                   </TableCell>
                 </td>
                 <td className="p-0">
-                  <TableCell classname="px-6 py-4">
+                  <TableCell className="px-6 py-4">
                     {ownerUserProfile.full_name}
                   </TableCell>
                 </td>

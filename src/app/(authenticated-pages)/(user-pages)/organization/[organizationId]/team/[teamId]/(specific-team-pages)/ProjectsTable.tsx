@@ -46,17 +46,17 @@ export const ProjectsTable = ({
                   {projects.map((project) => (
                     <tr className="p-0" key={project.id}>
                       <td className="p-0 ">
-                        <TableCell classname="px-6 py-4">
+                        <TableCell className="px-6 py-4">
                           {project.name}
                         </TableCell>
                       </td>
                       <td className="p-0 ">
-                        <TableCell classname="px-6 py-4">
+                        <TableCell className="px-6 py-4">
                           {moment(project.created_at).format('LLL')}
                         </TableCell>
                       </td>
                       <td className="p-0 ">
-                        <TableCell classname="px-6 py-4">
+                        <TableCell className="px-6 py-4">
                           {/* Add your project status rendering logic here */}
                           {project.project_status === 'completed' ? (
                             <div className="flex items-center space-x-2">
@@ -98,7 +98,7 @@ export const ProjectsTable = ({
                         </TableCell>
                       </td>
                       <td className="p-0 ">
-                        <TableCell classname="px-6 py-4">
+                        <TableCell className="px-6 py-4">
                           <Anchor
                             className="bg-blue-500 text-white px-2 py-1 rounded-lg text-xs"
                             href={`/project/${project.id}`}

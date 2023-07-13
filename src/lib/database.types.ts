@@ -3,7 +3,7 @@ export type Json =
   | number
   | boolean
   | null
-  | { [key: string]: Json }
+  | { [key: string]: Json | undefined }
   | Json[]
 
 export interface Database {
@@ -22,6 +22,7 @@ export interface Database {
           role?: Database["public"]["Enums"]["app_admin_role"] | null
           user_id?: string
         }
+        Relationships: []
       }
       app_settings: {
         Row: {
@@ -48,6 +49,7 @@ export interface Database {
             | null
           scheduled_maintenance_ends_at?: string | null
         }
+        Relationships: []
       }
       customers: {
         Row: {
@@ -62,6 +64,14 @@ export interface Database {
           organization_id?: string
           stripe_customer_id?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "customers_organization_id_fkey"
+            columns: ["organization_id"]
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       internal_blog_author_posts: {
         Row: {
@@ -76,6 +86,20 @@ export interface Database {
           author_id?: string
           post_id?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "internal_blog_author_posts_author_id_fkey"
+            columns: ["author_id"]
+            referencedRelation: "internal_blog_author_profiles"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "internal_blog_author_posts_post_id_fkey"
+            columns: ["post_id"]
+            referencedRelation: "internal_blog_posts"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       internal_blog_author_profiles: {
         Row: {
@@ -117,6 +141,14 @@ export interface Database {
           user_id?: string
           website_url?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: "internal_blog_author_profiles_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       internal_blog_posts: {
         Row: {
@@ -158,6 +190,7 @@ export interface Database {
           title?: string
           updated_at?: string
         }
+        Relationships: []
       }
       internal_changelog: {
         Row: {
@@ -184,6 +217,14 @@ export interface Database {
           updated_at?: string | null
           user_id?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: "internal_changelog_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       internal_feedback_comments: {
         Row: {
@@ -210,6 +251,20 @@ export interface Database {
           updated_at?: string
           user_id?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "internal_feedback_comments_thread_id_fkey"
+            columns: ["thread_id"]
+            referencedRelation: "internal_feedback_threads"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "internal_feedback_comments_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       internal_feedback_threads: {
         Row: {
@@ -251,6 +306,14 @@ export interface Database {
           updated_at?: string
           user_id?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "internal_feedback_threads_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       organization_credits: {
         Row: {
@@ -265,6 +328,7 @@ export interface Database {
           credits?: number
           organization_id?: string
         }
+        Relationships: []
       }
       organization_join_invitations: {
         Row: {
@@ -297,6 +361,26 @@ export interface Database {
           organization_id?: string
           status?: Database["public"]["Enums"]["organization_join_invitation_link_status"]
         }
+        Relationships: [
+          {
+            foreignKeyName: "organization_join_invitations_invitee_user_id_fkey"
+            columns: ["invitee_user_id"]
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "organization_join_invitations_inviter_user_id_fkey"
+            columns: ["inviter_user_id"]
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "organization_join_invitations_organization_id_fkey"
+            columns: ["organization_id"]
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       organization_members: {
         Row: {
@@ -320,6 +404,20 @@ export interface Database {
           member_role?: Database["public"]["Enums"]["organization_member_role"]
           organization_id?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "organization_members_member_id_fkey"
+            columns: ["member_id"]
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "organization_members_organization_id_fkey"
+            columns: ["organization_id"]
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       organizations: {
         Row: {
@@ -340,6 +438,14 @@ export interface Database {
           id?: string
           title?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "organizations_created_by_fkey"
+            columns: ["created_by"]
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       organizations_private_info: {
         Row: {
@@ -357,6 +463,14 @@ export interface Database {
           id?: string
           payment_method?: Json | null
         }
+        Relationships: [
+          {
+            foreignKeyName: "organizations_private_info_id_fkey"
+            columns: ["id"]
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       prices: {
         Row: {
@@ -398,6 +512,14 @@ export interface Database {
           type?: Database["public"]["Enums"]["pricing_type"] | null
           unit_amount?: number | null
         }
+        Relationships: [
+          {
+            foreignKeyName: "prices_product_id_fkey"
+            columns: ["product_id"]
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       products: {
         Row: {
@@ -424,6 +546,7 @@ export interface Database {
           metadata?: Json | null
           name?: string | null
         }
+        Relationships: []
       }
       project_comments: {
         Row: {
@@ -450,6 +573,14 @@ export interface Database {
           text?: string
           user_id?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "project_comments_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       projects: {
         Row: {
@@ -479,6 +610,7 @@ export interface Database {
           team_id?: number
           updated_at?: string
         }
+        Relationships: []
       }
       subscriptions: {
         Row: {
@@ -532,6 +664,20 @@ export interface Database {
           trial_end?: string | null
           trial_start?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: "subscriptions_organization_id_fkey"
+            columns: ["organization_id"]
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "subscriptions_price_id_fkey"
+            columns: ["price_id"]
+            referencedRelation: "prices"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       team_members: {
         Row: {
@@ -555,6 +701,14 @@ export interface Database {
           team_id?: number
           user_id?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "team_members_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       teams: {
         Row: {
@@ -575,6 +729,7 @@ export interface Database {
           name?: string
           organization_id?: string
         }
+        Relationships: []
       }
       user_private_info: {
         Row: {
@@ -589,6 +744,20 @@ export interface Database {
           created_at?: string | null
           id?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "user_private_info_id_fkey"
+            columns: ["id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_private_info_id_fkey"
+            columns: ["id"]
+            referencedRelation: "app_admin_all_users"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       user_profiles: {
         Row: {
@@ -609,6 +778,20 @@ export interface Database {
           full_name?: string | null
           id?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "user_profiles_id_fkey"
+            columns: ["id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_profiles_id_fkey"
+            columns: ["id"]
+            referencedRelation: "app_admin_all_users"
+            referencedColumns: ["id"]
+          }
+        ]
       }
     }
     Views: {
@@ -625,6 +808,7 @@ export interface Database {
           last_sign_in_at: string | null
           updated_at: string | null
         }
+        Relationships: []
       }
     }
     Functions: {
@@ -726,6 +910,12 @@ export interface Database {
       enable_maintenance_mode: {
         Args: Record<PropertyKey, never>
         Returns: undefined
+      }
+      get_all_app_admins: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          user_id: string
+        }[]
       }
       get_app_admin_organizations_created_per_month: {
         Args: Record<PropertyKey, never>

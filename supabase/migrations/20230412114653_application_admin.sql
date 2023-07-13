@@ -24,6 +24,14 @@ END;
 $function$;
 
 
+CREATE OR REPLACE FUNCTION get_all_app_admins() RETURNS TABLE (user_id uuid) AS $$ BEGIN RETURN QUERY
+SELECT auth.users.id
+FROM auth.users
+WHERE auth.users.is_super_admin = TRUE;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+
 CREATE OR REPLACE FUNCTION public.app_admin_get_all_organizations(
     search_query character varying DEFAULT ''::character varying,
     PAGE integer DEFAULT 1,

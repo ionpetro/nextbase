@@ -44,7 +44,7 @@ const sendLoginLink = async (
       if (process.env.NEXT_PUBLIC_SITE_URL !== undefined) {
         // change the origin of the link to the site url
         const checkAuthUrl = new URL(process.env.NEXT_PUBLIC_SITE_URL);
-        checkAuthUrl.pathname = '/check-auth';
+        checkAuthUrl.pathname = '/auth/callback';
         const url = new URL(action_link);
         url.searchParams.set('redirect_to', checkAuthUrl.toString());
 

@@ -27,34 +27,34 @@ function RenderUser({
   return (
     <tr key={user.id}>
       <td className="p-0">
-        <TableCell classname="px-6 py-4 truncate">
+        <TableCell className="px-6 py-4 truncate">
           {' '}
           {user.full_name ?? '-'}{' '}
         </TableCell>
       </td>
       <td className="p-0">
-        <TableCell classname="px-6 py-4 truncate">{user.email}</TableCell>
+        <TableCell className="px-6 py-4 truncate">{user.email}</TableCell>
       </td>
       <td className="p-0">
-        <TableCell classname="px-6 py-4 truncate">
+        <TableCell className="px-6 py-4 truncate">
           {' '}
           {user.is_app_admin ? '✅' : '❌'}
         </TableCell>
       </td>
       <td className="p-0">
-        <TableCell classname="px-6 py-4 truncate">
+        <TableCell className="px-6 py-4 truncate">
           {' '}
           {moment(user.created_at).format('DD MMM YYYY')}
         </TableCell>
       </td>
       <td className="p-0">
-        <TableCell classname="px-6 py-4 truncate">
+        <TableCell className="px-6 py-4 truncate">
           {' '}
           {user.is_confirmed ? '✅' : '❌'}
         </TableCell>
       </td>
       <td className="p-0">
-        <TableCell classname="px-6 py-4 truncate">
+        <TableCell className="px-6 py-4 truncate">
           <span className="flex items-center space-x-4">
             <a
               title="Contact User by email"
@@ -69,7 +69,7 @@ function RenderUser({
       </td>
 
       <td className="p-0">
-        <TableCell classname="px-6 py-2 truncate">
+        <TableCell className="px-6 py-2 truncate">
           <ConfirmSendLoginLinkDialog
             onConfirm={() => {
               if (!user.email) {
@@ -83,7 +83,7 @@ function RenderUser({
         </TableCell>
       </td>
       <td className="p-0">
-        <TableCell classname="px-6 py-4 group truncate">
+        <TableCell className="px-6 py-4 group truncate">
           <button
             title="Impersonate User"
             className="inline-flex text-base font-[600] items-center space-x-2 rounded group-hover:underline text-blue-500

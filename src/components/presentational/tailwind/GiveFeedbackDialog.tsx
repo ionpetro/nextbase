@@ -48,12 +48,14 @@ type FeedbackFormType = z.infer<typeof feedbackSchema>;
 export const GiveFeedbackDialog = ({ isExpanded }: { isExpanded: boolean }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { control, handleSubmit, formState, reset } = useForm<FeedbackFormType>({
-    resolver: zodResolver(feedbackSchema),
-    defaultValues: {
-      type: 'bug',
-    },
-  });
+  const { control, handleSubmit, formState, reset } = useForm<FeedbackFormType>(
+    {
+      resolver: zodResolver(feedbackSchema),
+      defaultValues: {
+        type: 'bug',
+      },
+    }
+  );
 
   const {
     mutate: createInternalFeedback,
@@ -62,7 +64,7 @@ export const GiveFeedbackDialog = ({ isExpanded }: { isExpanded: boolean }) => {
     onSuccess: () => {
       setIsOpen(false);
       reset();
-    }
+    },
   });
 
   const { isValid, isLoading } = formState;
@@ -80,9 +82,7 @@ export const GiveFeedbackDialog = ({ isExpanded }: { isExpanded: boolean }) => {
       }}
     >
       <DialogTrigger>
-        <Button variant="outline">
-          Give Feedback
-        </Button>
+        <Button variant="outline">Give Feedback</Button>
       </DialogTrigger>
 
       <DialogContent>
@@ -131,12 +131,22 @@ export const GiveFeedbackDialog = ({ isExpanded }: { isExpanded: boolean }) => {
               )}
             />
           </div>
-          <Anchor href="/my-feedback" className="flex underline items-center space-x-1">
+          <Anchor
+            href="/my-feedback"
+            className="flex underline items-center space-x-1"
+          >
             <Mail className="w-6 h-6" />
-            <T.Small className="ml-2">View all your feedback conversations</T.Small>
+            <T.Small className="ml-2">
+              View all your feedback conversations
+            </T.Small>
           </Anchor>
-          <Button disabled={!isValid || isCreatingInternalFeedback} type="submit">
-            {(isLoading || isCreatingInternalFeedback) ? 'Submitting...' : 'Submit Feedback'}
+          <Button
+            disabled={!isValid || isCreatingInternalFeedback}
+            type="submit"
+          >
+            {isLoading || isCreatingInternalFeedback
+              ? 'Submitting...'
+              : 'Submit Feedback'}
           </Button>
         </form>
       </DialogContent>

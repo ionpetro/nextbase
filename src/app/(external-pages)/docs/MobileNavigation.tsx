@@ -1,5 +1,5 @@
 'use client';
-import { ComponentProps, useEffect, useState } from 'react';
+import { ComponentProps, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Dialog } from '@headlessui/react';

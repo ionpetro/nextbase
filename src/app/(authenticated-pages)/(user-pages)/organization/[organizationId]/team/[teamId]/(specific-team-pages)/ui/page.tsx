@@ -186,25 +186,25 @@ export default function Page() {
                 .map((project) => (
                   <tr className="p-0" key={project.id}>
                     <td className="p-0 ">
-                      <TableCell classname="px-6 py-4">{project.id}</TableCell>
+                      <TableCell className="px-6 py-4">{project.id}</TableCell>
                     </td>
                     <td className="p-0 ">
-                      <TableCell classname="px-6 py-4">
+                      <TableCell className="px-6 py-4">
                         {project.projectName}
                       </TableCell>
                     </td>
                     <td className="p-0 ">
-                      <TableCell classname="px-6 py-4">
+                      <TableCell className="px-6 py-4">
                         {project.objective}
                       </TableCell>
                     </td>
                     <td className="p-0 ">
-                      <TableCell classname="px-6 py-4">
+                      <TableCell className="px-6 py-4">
                         {project.projectCreatedAt}
                       </TableCell>
                     </td>
                     <td className="p-0 ">
-                      <TableCell classname="px-6 py-4">
+                      <TableCell className="px-6 py-4">
                         <Badge
                           className=" whitespace-nowrap "
                           variant={mapPriorityToVariant(project.priority)}
@@ -214,7 +214,7 @@ export default function Page() {
                       </TableCell>
                     </td>
                     <td className="p-0 ">
-                      <TableCell classname="px-6 py-4">
+                      <TableCell className="px-6 py-4">
                         <IoMdSettings className="text-2xl text-slate-600" />
                       </TableCell>
                     </td>

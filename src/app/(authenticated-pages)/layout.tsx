@@ -10,6 +10,7 @@ import { supabaseUserServerComponentClient } from '@/supabase-clients/user/supab
 // do not cache this layout
 export const dynamic = 'force-dynamic';
 export const fetchCache = 'only-no-store';
+export const revalidate = 0;
 
 async function fetchData(supabaseClient: AppSupabaseClient, authUser: User) {
   const [isUserAppAdmin, userProfile] = await Promise.all([
@@ -27,7 +28,7 @@ export default async function Layout({ children }: { children: ReactNode }) {
   if (!data.user) {
     // This is unreachable because the user is authenticated
     // But we need to check for it anyway for TypeScript.
-    return redirect('/check-auth');
+    return redirect('/login');
   } else if (error) {
     return <p>Error: An error occurred.</p>;
   }

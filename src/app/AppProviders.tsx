@@ -14,7 +14,6 @@ import {
   SessionContextProvider,
   SessionContextProviderProps,
 } from '@supabase/auth-helpers-react';
-import { SupabaseListener } from '@/components/SupabaseListener';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
 import ReactNoSSR from 'react-no-ssr';
@@ -82,7 +81,6 @@ export default function AppProviders({
       >
         <RouterEventWrapper>
           <NavigationProgressBar />
-          <SupabaseListener accessToken={initialSession?.access_token} />
           <MaintenanceModeContextProvider
             initialIsAppInMaintenanceMode={initialIsAppInMaintenanceMode}
           >

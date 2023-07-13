@@ -222,7 +222,7 @@ export function ClientAdminFeedbackListPage() {
               ? feedbackList.map((feedback) => (
                 <tr className="p-0" key={feedback.id}>
                   <td className="p-0 ">
-                    <TableCell classname="px-6 py-4 truncate">
+                    <TableCell className="px-6 py-4 truncate">
                       <AdminViewUserDetails userId={feedback.user_id} />
                     </TableCell>
                   </td>
@@ -232,29 +232,29 @@ export function ClientAdminFeedbackListPage() {
                       key={feedback.id}
                       href={`/app_admin/feedback/${feedback.id}`}
                     >
-                      <TableCell classname="text-blue-500 px-6 py-4 truncate font-[500] hover:underline">
+                      <TableCell className="text-blue-500 px-6 py-4 truncate font-[500] hover:underline">
                         {feedback.title}
                       </TableCell>
                     </Anchor>
                   </td>
 
                   <td className="p-0 ">
-                    <TableCell classname="px-6 py-4 truncate">
+                    <TableCell className="px-6 py-4 truncate">
                       {formatFieldValue(feedback.type)}
                     </TableCell>
                   </td>
                   <td className="p-0">
-                    <TableCell classname="px-6 py-4 truncate">
+                    <TableCell className="px-6 py-4 truncate">
                       {formatFieldValue(feedback.priority)}
                     </TableCell>
                   </td>
                   <td className="p-0">
-                    <TableCell classname="px-6 py-4 truncate">
+                    <TableCell className="px-6 py-4 truncate">
                       {moment(feedback.created_at).format('LL')}
                     </TableCell>
                   </td>
                   <td className="p-0">
-                    <TableCell classname="flex items-center h-[58px] justify-center">
+                    <TableCell className="flex items-center h-[58px] justify-center">
                       <Badge
                         className=" whitespace-nowrap "
                         variant={mapStatusToVariant(feedback.status)}

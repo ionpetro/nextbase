@@ -8,7 +8,7 @@ export const signInWithMagicLink = async (
   const { error } = await supabase.auth.signInWithOtp({
     email,
     options: {
-      emailRedirectTo: toSiteURL('/check-auth'),
+      emailRedirectTo: toSiteURL('/auth/callback'),
     },
   });
 
@@ -65,7 +65,7 @@ export const signInWithProvider = async (
   const { error } = await supabase.auth.signInWithOAuth({
     provider,
     options: {
-      redirectTo: toSiteURL('/check-auth'),
+      redirectTo: toSiteURL('/auth/callback'),
     },
   });
 

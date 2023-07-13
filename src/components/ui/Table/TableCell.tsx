@@ -3,13 +3,16 @@ import { cn } from '@/utils/cn';
 
 type TableCellProps = {
   children: React.ReactNode;
-  classname: string;
+  className: string;
 };
 
-export default function TableCell({ children, classname }: TableCellProps) {
+export default function TableCell({ children, className }: TableCellProps) {
   return (
     <div
-      className={`flex hover:bg-slate-50 border border-r-1 border-b-1 group h-[59px] border-slate-200 text-black ${classname}`}
+      className={cn(
+        `flex hover:bg-slate-50 border border-r-1 border-b-1 group h-[59px] border-slate-200 text-black`,
+        className
+      )}
     >
       {children}
     </div>
