@@ -1,4 +1,3 @@
-'use client';
 import {
   Dialog,
   DialogContent,
@@ -13,9 +12,12 @@ import { Button } from '@/components/ui/Button';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
 import { Textarea } from '@/components/ui/Textarea';
 import { Table } from '@/types';
+import { useMutation } from '@tanstack/react-query';
+import { toast } from 'react-hot-toast';
+import { authorProfileSchema } from '@/utils/zod-schemas/internalBlog';
+import { useEffect, useState } from 'react';
 import {
   Select,
   SelectContent,
@@ -23,48 +25,62 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/Select';
-import { useMutation } from '@tanstack/react-query';
-import { toast } from 'react-hot-toast';
-import { authorProfileSchema } from '@/utils/zod-schemas/internalBlog';
 import { useRouter } from 'next/navigation';
+import { useDidMount } from 'rooks';
+import { Pen } from 'lucide-react';
 
 type AuthorProfileFormType = z.infer<typeof authorProfileSchema>;
-type CreateAuthorPayload = Omit<
+type UpdateAuthorPayload = Omit<
   Table<'internal_blog_author_profiles'>,
   'created_at' | 'updated_at'
 >;
-export const AddAuthorProfileDialog = ({
+
+export const EditAuthorProfileDialog = ({
+  profile,
+  updateAuthorProfile,
   appAdmins,
-  createAuthorProfile,
-  authorProfiles,
 }: {
+  profile: UpdateAuthorPayload;
   appAdmins: Array<Table<'user_profiles'>>;
-  authorProfiles: Array<Table<'internal_blog_author_profiles'>>;
-  createAuthorProfile: (data: CreateAuthorPayload) => Promise<void>;
+  updateAuthorProfile: (
+    userId: string,
+    data: UpdateAuthorPayload
+  ) => Promise<void>;
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
-  const { control, handleSubmit, formState, reset } =
-    useForm<AuthorProfileFormType>({
-      resolver: zodResolver(authorProfileSchema),
-    });
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const { control, handleSubmit, formState } = useForm<AuthorProfileFormType>({
+    resolver: zodResolver(authorProfileSchema),
+    defaultValues: {
+      user_id: profile.user_id,
+      display_name: profile.display_name,
+      bio: profile.bio,
+      avatar_url: profile.avatar_url,
+      website_url: profile.website_url ?? undefined,
+      twitter_handle: profile.twitter_handle ?? undefined,
+      facebook_handle: profile.facebook_handle ?? undefined,
+      linkedin_handle: profile.linkedin_handle ?? undefined,
+      instagram_handle: profile.instagram_handle ?? undefined,
+    },
+  });
 
   const {
-    mutate: createAuthorProfileMutation,
-    isLoading: isCreatingAuthorProfile,
-  } = useMutation<void, unknown, CreateAuthorPayload>(
+    mutate: updateAuthorProfileMutation,
+    isLoading: isUpdatingAuthorProfile,
+  } = useMutation<void, unknown, UpdateAuthorPayload>(
     async (payload) => {
-      return createAuthorProfile(payload);
+      return updateAuthorProfile(profile.user_id, payload);
     },
     {
       onSuccess: () => {
-        router.refresh();
-        toast.success('Successfully created author profile');
+        toast.success('Successfully updated author profile');
         setIsOpen(false);
-        reset();
+        router.refresh();
       },
       onError: () => {
-        toast.error('Failed to create author profile');
+        toast.error('Failed to update author profile');
       },
     }
   );
@@ -72,33 +88,28 @@ export const AddAuthorProfileDialog = ({
   const { isValid, isLoading } = formState;
 
   const onSubmit = (data: AuthorProfileFormType) => {
-    void createAuthorProfileMutation({
-      user_id: data.user_id,
-      display_name: data.display_name,
-      bio: data.bio,
-      avatar_url: data.avatar_url,
-      website_url: data.website_url ?? null,
-      twitter_handle: data.twitter_handle ?? null,
-      facebook_handle: data.facebook_handle ?? null,
-      linkedin_handle: data.linkedin_handle ?? null,
-      instagram_handle: data.instagram_handle ?? null,
+    void updateAuthorProfileMutation({
+      ...profile,
+      ...data,
     });
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={(newIsOpen) => setIsOpen(newIsOpen)}>
       <DialogTrigger asChild>
-        <Button variant="outline">Add author profile</Button>
+        <Button variant="ghost">
+          <Pen />
+        </Button>
       </DialogTrigger>
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add Author Profile</DialogTitle>
+          <DialogTitle>Edit Author Profile</DialogTitle>
           <DialogDescription>
-            Fill in the details for the new author profile.
+            Update the details for this author profile.
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 ">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="fields space-y-4 max-h-96 px-1 overflow-auto">
             <div className="space-y-2">
               <Label>User ID</Label>
@@ -106,21 +117,20 @@ export const AddAuthorProfileDialog = ({
                 control={control}
                 name="user_id"
                 render={({ field }) => (
-                  <Select value={field.value} onValueChange={field.onChange}>
+                  <Select
+                    disabled
+                    value={field.value}
+                    onValueChange={field.onChange}
+                  >
                     <SelectTrigger>
                       <SelectValue placeholder="Select user" />
                     </SelectTrigger>
                     <SelectContent>
-                      {appAdmins.map((admin) => {
-                        const disabled = authorProfiles.some(
-                          (profile) => profile.user_id === admin.id
-                        );
-                        return (
-                          <SelectItem key={admin.id} value={admin.id}>
-                            {admin.full_name || `User ${admin.id}`}
-                          </SelectItem>
-                        );
-                      })}
+                      {appAdmins.map((admin) => (
+                        <SelectItem key={admin.id} value={admin.id}>
+                          {admin.full_name || `User ${admin.id}`}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 )}
@@ -207,10 +217,10 @@ export const AddAuthorProfileDialog = ({
               />
             </div>
           </div>
-          <Button disabled={!isValid || isCreatingAuthorProfile} type="submit">
-            {isLoading || isCreatingAuthorProfile
+          <Button disabled={!isValid || isUpdatingAuthorProfile} type="submit">
+            {isLoading || isUpdatingAuthorProfile
               ? 'Submitting...'
-              : 'Submit Profile'}
+              : 'Update Profile'}
           </Button>
         </form>
       </DialogContent>

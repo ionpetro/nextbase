@@ -100,9 +100,7 @@ export const updateAuthorProfile = async (
     throw error;
   }
 
-  revalidatePath('/app_admin/blog');
-  revalidatePath('/blog');
-  return data;
+  revalidatePath('/');
 };
 
 export const updateBlogPost = async (
@@ -212,4 +210,30 @@ export const getAllAppAdmins = async () => {
   }
 
   return userProfiles;
+};
+
+export const deleteAuthorProfile = async (userId: string) => {
+  const { error } = await supabaseAdminClient
+    .from('internal_blog_author_profiles')
+    .delete()
+    .eq('user_id', userId);
+
+  if (error) {
+    throw error;
+  }
+
+  revalidatePath('/');
+};
+
+export const deleteBlogPost = async (postId: string) => {
+  const { error } = await supabaseAdminClient
+    .from('internal_blog_posts')
+    .delete()
+    .eq('id', postId);
+
+  if (error) {
+    throw error;
+  }
+
+  revalidatePath('/');
 };

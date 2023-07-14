@@ -6,11 +6,13 @@ import {
   getAllAppAdmins,
   getAllAuthors,
   getAllBlogPosts,
+  deleteAuthorProfile,
+  updateAuthorProfile,
+  deleteBlogPost,
 } from '../actions';
 
-import { AddAuthorProfileDialog } from './AddAuthorProfileDialog';
-import AuthorsList from './AuthorList';
 import BlogList from './BlogList';
+import { ManageAuthorsDialog } from './ManageAuthorsDialog';
 
 export default async function BlogListPage() {
   const [authors, allBlogPosts, appAdmins] = await Promise.all([
@@ -20,16 +22,6 @@ export default async function BlogListPage() {
   ]);
   return (
     <div className="space-y-4">
-      <div className="author-list">
-        {authors.length ? (
-          <AuthorsList authors={authors} />
-        ) : (
-          <T.Subtle>
-            No authors yet. Please create author profiles before you write blog
-            posts
-          </T.Subtle>
-        )}
-      </div>
       <div className="flex justify-between items-center">
         <div>
           <T.H2> Blog posts</T.H2>
@@ -44,14 +36,17 @@ export default async function BlogListPage() {
             </T.Subtle>
           )}
           {allBlogPosts.length ? (
-            <BlogList blogs={allBlogPosts} />
+            <BlogList deleteBlogPost={deleteBlogPost} blogs={allBlogPosts} />
           ) : (
             <T.Subtle>No blog posts yet.</T.Subtle>
           )}
         </div>
-        <AddAuthorProfileDialog
-          createAuthorProfile={createAuthorProfile}
+        <ManageAuthorsDialog
           appAdmins={appAdmins}
+          authorProfiles={authors}
+          updateAuthorProfile={updateAuthorProfile}
+          deleteAuthorProfile={deleteAuthorProfile}
+          createAuthorProfile={createAuthorProfile}
         />
       </div>
     </div>

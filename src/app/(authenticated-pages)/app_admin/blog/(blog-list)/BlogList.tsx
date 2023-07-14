@@ -1,9 +1,33 @@
+'use client';
 import React from 'react';
 import moment from 'moment';
 import { Table } from '@/types';
 import { Anchor } from '@/components/Anchor';
+import { Button } from '@/components/ui/Button';
+import { useMutation } from '@tanstack/react-query';
+import { toast } from 'react-hot-toast';
 
-function BlogList({ blogs }: { blogs: Table<'internal_blog_posts'>[] }) {
+function BlogList({
+  blogs,
+  deleteBlogPost,
+}: {
+  blogs: Table<'internal_blog_posts'>[];
+  deleteBlogPost: (id: string) => Promise<void>;
+}) {
+  const { mutate: deleteBlogPostMutation, isLoading: isDeletingBlogPost } =
+    useMutation<void, unknown, string>(
+      async (id) => {
+        return deleteBlogPost(id);
+      },
+      {
+        onSuccess: () => {
+          toast.success('Successfully deleted blog post');
+        },
+        onError: () => {
+          toast.error('Failed to delete blog post');
+        },
+      }
+    );
   return (
     <div className="space-y-4">
       {blogs.map((blog) => (
@@ -21,6 +45,15 @@ function BlogList({ blogs }: { blogs: Table<'internal_blog_posts'>[] }) {
               Edit post
             </Anchor>
             <Anchor href={`/blog/${blog.slug}`}>View post</Anchor>
+            <Button
+              variant="destructive"
+              disabled={isDeletingBlogPost}
+              onClick={() => {
+                deleteBlogPostMutation(blog.id);
+              }}
+            >
+              Delete post
+            </Button>
           </div>
         </div>
       ))}

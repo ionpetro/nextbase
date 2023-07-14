@@ -3,7 +3,6 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
 import { Controller, useForm } from 'react-hook-form';
-import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Textarea } from '@/components/ui/Textarea';
 import {
@@ -14,7 +13,7 @@ import {
   SelectValue,
 } from '@/components/ui/Select';
 import { Table, TableInsertPayload, TableUpdatePayload } from '@/types';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import { useEffect, useRef } from 'react';
 import slugify from 'slugify';
@@ -28,7 +27,8 @@ import {
   internalBlogPostSchema,
   InternalBlogPostSchema,
 } from '@/utils/zod-schemas/internalBlog';
-import { createBlogPost } from './actions';
+import { UploadBlogImage } from './post/UploadBlogImage';
+import Image from 'next/image';
 
 const MDEditor = dynamic(
   () => import('@uiw/react-md-editor').then((mod) => mod.default),
@@ -134,7 +134,53 @@ export const BlogForm = ({
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 max-w-2xl">
+      <div className="space-y-2">
+        <Label>Cover Image URL</Label>
+        {/* <Controller
+          control={control}
+          name="cover_image"
+          render={({ field }) => (
+            <Input {...field} placeholder="Cover Image URL" />
+          )}
+        />
+         */}
+        <Controller
+          control={control}
+          name="cover_image"
+          render={({ field }) => {
+            console.log(field);
+            return (
+              <>
+                {field.value ? (
+                  <div>
+                    <div className="relative h-72">
+                      <Image
+                        src={field.value}
+                        fill
+                        alt="Cover Image"
+                        style={{
+                          objectFit: 'contain',
+                        }}
+                      />
+                    </div>
+
+                    <button
+                      onClick={() => {
+                        field.onChange(null);
+                      }}
+                    >
+                      Remove Image
+                    </button>
+                  </div>
+                ) : (
+                  <UploadBlogImage onUpload={(path) => field.onChange(path)} />
+                )}
+              </>
+            );
+          }}
+        />
+      </div>
       <div className="space-y-2">
         <Label>Title</Label>
         <Controller
@@ -145,24 +191,7 @@ export const BlogForm = ({
           }}
         />
       </div>
-      <div className="space-y-2">
-        <Label>Slug</Label>
-        <Controller
-          control={control}
-          name="slug"
-          render={({ field }) => (
-            <Input disabled {...field} placeholder="Slug" />
-          )}
-        />
-      </div>
-      <div className="space-y-2">
-        <Label>Summary</Label>
-        <Controller
-          control={control}
-          name="summary"
-          render={({ field }) => <Textarea {...field} placeholder="Summary" />}
-        />
-      </div>
+
       <div className="space-y-2">
         <Label>Content</Label>
         <Controller
@@ -174,13 +203,11 @@ export const BlogForm = ({
         />
       </div>
       <div className="space-y-2">
-        <Label>Cover Image URL</Label>
+        <Label>Summary</Label>
         <Controller
           control={control}
-          name="cover_image"
-          render={({ field }) => (
-            <Input {...field} placeholder="Cover Image URL" />
-          )}
+          name="summary"
+          render={({ field }) => <Textarea {...field} placeholder="Summary" />}
         />
       </div>
       <div className="space-y-2">
@@ -236,6 +263,16 @@ export const BlogForm = ({
                 ))}
               </SelectContent>
             </Select>
+          )}
+        />
+      </div>
+      <div className="space-y-2">
+        <Label>Slug</Label>
+        <Controller
+          control={control}
+          name="slug"
+          render={({ field }) => (
+            <Input disabled {...field} placeholder="Slug" />
           )}
         />
       </div>
