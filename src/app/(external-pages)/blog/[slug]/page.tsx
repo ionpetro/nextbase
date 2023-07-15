@@ -1,9 +1,7 @@
 import { supabaseUserServerComponentClient } from '@/supabase-clients/user/supabaseUserServerComponentClient';
 import { getPublishedBlogPostBySlug } from '@/utils/supabase/internalBlog';
-import { MDXRemote } from 'next-mdx-remote/rsc';
 import { notFound } from 'next/navigation';
 import { z } from 'zod';
-import turndown from 'turndown';
 
 const paramsSchema = z.object({
   slug: z.string(),
