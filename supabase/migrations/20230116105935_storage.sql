@@ -11,6 +11,10 @@ VALUES ('public-user-assets', 'public-user-assets', TRUE) ON CONFLICT DO NOTHING
 INSERT INTO STORAGE.buckets (id, name, public)
 VALUES ('public-assets', 'public-assets', TRUE) ON CONFLICT DO NOTHING;
 
+-- admin blog bucket
+INSERT INTO STORAGE.buckets (id, name, public)
+VALUES ('admin-blog', 'admin-blog', TRUE) ON CONFLICT DO NOTHING;
+
 --  Create policies
 DROP policy IF EXISTS "Give users access to own folder 10fq7k5_0" ON "storage"."objects";
 CREATE policy "Give users access to own folder 10fq7k5_0" ON "storage"."objects" AS permissive FOR
@@ -105,6 +109,11 @@ CREATE policy "anything 1plzjhd_2" ON "storage"."objects" AS permissive FOR DELE
 DROP policy IF EXISTS "Public Access for public-assets 1plzjha_3" ON "storage"."objects";
 CREATE policy "Public Access for public-assets 1plzjha_3" ON STORAGE.objects FOR
 SELECT USING (bucket_id = 'public-assets');
+
+-- anyone can view assets in admin-blog
+DROP policy IF EXISTS "Public Access for admin-blog" ON "storage"."objects";
+CREATE policy "Public Access for admin-blog " ON STORAGE.objects FOR
+SELECT USING (bucket_id = 'admin-blog');
 
 INSERT INTO app_settings (id)
 VALUES (1) ON CONFLICT DO NOTHING;

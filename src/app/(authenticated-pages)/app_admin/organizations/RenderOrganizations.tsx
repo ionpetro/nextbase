@@ -17,28 +17,28 @@ function RenderOrganization({
   return (
     <tr key={organization.id}>
       <td className="p-0">
-        <TableCell classname="px-6 py-4 truncate">
+        <TableCell className="px-6 py-4 truncate">
           {organization.title ?? '-'}
         </TableCell>
       </td>
       <td className="p-0">
-        <TableCell classname="px-6 py-4 truncate">
+        <TableCell className="px-6 py-4 truncate">
           {moment(organization.created_at).format('DD MMM YYYY')}
         </TableCell>
       </td>
       <td className="p-0">
-        <TableCell classname="px-6 py-4 truncate">
+        <TableCell className="px-6 py-4 truncate">
           {organization.team_members_count ?? '-'}
         </TableCell>
       </td>
       <td className="p-0">
-        <TableCell classname="px-6 py-4 truncate">
+        <TableCell className="px-6 py-4 truncate">
           {organization.owner_full_name}
         </TableCell>
       </td>
 
       <td className="p-0">
-        <TableCell classname="px-6 py-4 truncate group ">
+        <TableCell className="px-6 py-4 truncate group ">
           <span className="flex items-center space-x-2">
             <a
               title="Send email"

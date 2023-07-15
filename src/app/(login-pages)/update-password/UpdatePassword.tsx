@@ -7,7 +7,7 @@ export function UpdatePassword() {
   const router = useRouter();
   const updatePasswordMutation = useUpdatePassword({
     onSuccess: () => {
-      router.push('/check-auth');
+      router.push('/auth/callback');
     },
   });
 

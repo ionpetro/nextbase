@@ -19,6 +19,10 @@ import { useRef } from 'react';
 import toast from 'react-hot-toast';
 import { getOrganizationsPaginated, getUsersPaginated } from './supabase-admin';
 import qs from 'qs';
+import {
+  InternalBlogPostSchema,
+  internalBlogPostSchema,
+} from '@/utils/zod-schemas/internalBlog';
 
 export const useGetUsersInfiniteQuery = (
   initialData: UnwrapPromise<ReturnType<typeof getUsersPaginated>>,

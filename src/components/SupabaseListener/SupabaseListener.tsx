@@ -40,7 +40,7 @@ export function SupabaseListener({ accessToken }: { accessToken?: string }) {
             // so we don't need to redirect them to check-auth page
             return null;
           }
-          router.push('/check-auth');
+          router.push('/auth/callback');
         } else if (event === 'TOKEN_REFRESHED') {
           // router.refresh();
         } else if (event === 'PASSWORD_RECOVERY') {
