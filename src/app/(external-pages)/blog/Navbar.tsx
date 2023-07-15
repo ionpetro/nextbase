@@ -55,7 +55,7 @@ export function Header() {
           ' mx-auto w-full max-w-8xl flex justify-center sm:px-2 lg:px-8 xl:px-12'
         )}
       >
-        <div className={cn('hidden lg:flex items-center gap-4', 'relative ')}>
+        <div className={cn('hidden lg:flex items-center gap-8', 'relative ')}>
           <Anchor href="/" aria-label="Home page">
             <img
               src="https://usenextbase.com/logos/nextbase/Logo%2006.png"
