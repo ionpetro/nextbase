@@ -33,7 +33,7 @@ const baseDefaultValues: Partial<InternalBlogPostSchema> = {
   status: 'draft',
   is_featured: false,
   title: '',
-  content: '## Hello world',
+  content: '<p>Hello world</p>',
 };
 
 type BlogFormProps = {
