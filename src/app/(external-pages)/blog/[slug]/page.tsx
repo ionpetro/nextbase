@@ -1,5 +1,8 @@
-import { supabaseUserServerComponentClient } from '@/supabase-clients/user/supabaseUserServerComponentClient';
-import { getPublishedBlogPostBySlug } from '@/utils/supabase/internalBlog';
+import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
+import {
+  getPublishedBlogPostBySlug,
+  getPublishedBlogPosts,
+} from '@/utils/supabase/internalBlog';
 import { notFound } from 'next/navigation';
 import { z } from 'zod';
 
@@ -7,14 +10,19 @@ const paramsSchema = z.object({
   slug: z.string(),
 });
 
+// Return a list of `params` to populate the [slug] dynamic segment
+export async function generateStaticParams() {
+  const posts = await getPublishedBlogPosts(supabaseAdminClient);
+
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
+}
+
 export default async function BlogPostPage({ params }: { params: unknown }) {
   try {
     const { slug } = paramsSchema.parse(params);
-    const post = await getPublishedBlogPostBySlug(
-      supabaseUserServerComponentClient,
-      slug
-    );
-    console.log(post.content);
+    const post = await getPublishedBlogPostBySlug(supabaseAdminClient, slug);
     return (
       <div className="relative w-full space-y-8 max-w-4xl mx-auto">
         {post.cover_image ? (

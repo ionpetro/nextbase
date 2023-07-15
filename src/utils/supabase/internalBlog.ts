@@ -58,6 +58,23 @@ export const getPublishedBlogPostBySlug = async (
   return data;
 };
 
+export const getPublishedBlogPosts = async (
+  supabaseClient: AppSupabaseClient
+) => {
+  const { data, error } = await supabaseClient
+    .from('internal_blog_posts')
+    .select(
+      '*, internal_blog_author_posts(*, internal_blog_author_profiles(*))'
+    )
+    .eq('status', 'published');
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};
+
 export const getBlogPostsByAuthorId = async (
   supabaseClient: AppSupabaseClient,
   authorId: string

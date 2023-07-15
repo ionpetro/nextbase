@@ -1,22 +1,10 @@
 import { T } from '@/components/ui/Typography';
-import { supabaseUserServerComponentClient } from '@/supabase-clients/user/supabaseUserServerComponentClient';
+import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
+import { getPublishedBlogPosts } from '@/utils/supabase/internalBlog';
 import moment from 'moment';
 
-const getAllBlogPosts = async () => {
-  const { data, error } = await supabaseUserServerComponentClient
-    .from('internal_blog_posts')
-    .select('*')
-    .eq('status', 'published');
-
-  if (error) {
-    throw error;
-  }
-
-  return data;
-};
-
 export default async function BlogListPage() {
-  const blogPosts = await getAllBlogPosts();
+  const blogPosts = await getPublishedBlogPosts(supabaseAdminClient);
 
   return (
     <div className="space-y-8 w-full">
