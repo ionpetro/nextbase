@@ -88,7 +88,7 @@ export default function AppProviders({
             {children}
           </MaintenanceModeContextProvider>
           <ReactNoSSR>
-            <SonnerToaster theme={'light'} />;
+            <SonnerToaster theme={'light'} />
             <HotToaster />
           </ReactNoSSR>
         </RouterEventWrapper>
