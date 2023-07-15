@@ -1,5 +1,6 @@
 import 'server-only';
-import './globals.css';
+import '@/styles/globals.css';
+import '@/styles/prosemirror.css';
 import 'react-tooltip/dist/react-tooltip.css';
 import AppProviders from './AppProviders';
 import { errors } from '@/utils/errors';

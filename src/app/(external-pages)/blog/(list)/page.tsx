@@ -2,6 +2,7 @@ import { Anchor } from '@/components/Anchor';
 import { T } from '@/components/ui/Typography';
 import { supabaseUserServerComponentClient } from '@/supabase-clients/user/supabaseUserServerComponentClient';
 import moment from 'moment';
+import { MDXRemote } from 'next-mdx-remote/rsc';
 
 const getAllBlogPosts = async () => {
   const { data, error } = await supabaseUserServerComponentClient
@@ -22,6 +23,8 @@ export default async function BlogListPage() {
   return (
     <div className="space-y-4">
       <T.H1>Blog</T.H1>
+      {/* @ts-expect-error Async Server Component */}
+      <MDXRemote source={`<h1>hellow world</h1>`} />
       {blogPosts.length ? (
         <div className="space-y-4">
           {blogPosts.map((blog) => (
@@ -34,6 +37,7 @@ export default async function BlogListPage() {
               <p className="text-gray-400 text-sm">
                 Published: {moment(blog.created_at).format('MMMM Do, YYYY')}
               </p>
+
               <div className="flex items-center justify-between">
                 <Anchor href={`/blog/${blog.slug}`}>Read more</Anchor>
               </div>

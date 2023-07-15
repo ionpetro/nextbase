@@ -72,7 +72,7 @@ const UploadBlogImage = ({
 
   return (
     <div
-      className="border-dashed border-blue-300 border h-40 flex items-center justify-center"
+      className="border-dashed border-blue-300 border h-40 max-h-full flex items-center justify-center"
       {...getRootProps()}
     >
       <input {...getInputProps()} />

@@ -15,16 +15,12 @@ export const config = {
 const uploadImage = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
     const form = new IncomingForm();
-    const [fields, files] = await form.parse(req);
-    console.log({
-      fields,
-      files,
-    });
+    const [_fields, files] = await form.parse(req);
+
     const persistentFile = Array.isArray(files.file)
       ? files.file[0]
       : files.file;
     // get file from persistent file
-    console.log(persistentFile);
 
     const fileName = slugify(
       (persistentFile.originalFilename ?? persistentFile.newFilename).split(

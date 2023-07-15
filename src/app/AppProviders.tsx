@@ -15,10 +15,11 @@ import {
   SessionContextProviderProps,
 } from '@supabase/auth-helpers-react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Toaster } from 'react-hot-toast';
+import { Toaster as HotToaster } from 'react-hot-toast';
 import ReactNoSSR from 'react-no-ssr';
 import { MaintenanceModeContextProvider } from '@/contexts/MaintenanceModeContext';
 import { supabaseUserClientComponentClient } from '@/supabase-clients/user/supabaseUserClientComponentClient';
+import { Toaster as SonnerToaster } from 'sonner';
 
 /**
  ** Inspiration from here
@@ -87,7 +88,8 @@ export default function AppProviders({
             {children}
           </MaintenanceModeContextProvider>
           <ReactNoSSR>
-            <Toaster />
+            <SonnerToaster theme={'light'} />;
+            <HotToaster />
           </ReactNoSSR>
         </RouterEventWrapper>
       </SessionContextProvider>

@@ -18,10 +18,7 @@ import { toast } from 'react-hot-toast';
 import { useEffect, useRef } from 'react';
 import slugify from 'slugify';
 import { Switch } from '@/components/ui/Switch';
-import dynamic from 'next/dynamic';
 
-import '@uiw/react-md-editor/markdown-editor.css';
-import '@uiw/react-markdown-preview/markdown.css';
 import { useRouter } from 'next/navigation';
 import {
   internalBlogPostSchema,
@@ -29,11 +26,8 @@ import {
 } from '@/utils/zod-schemas/internalBlog';
 import { UploadBlogImage } from './post/UploadBlogImage';
 import Image from 'next/image';
-
-const MDEditor = dynamic(
-  () => import('@uiw/react-md-editor').then((mod) => mod.default),
-  { ssr: false }
-);
+import { Trash } from 'lucide-react';
+import { TipTapEditor } from '@/components/TipTapEditor';
 
 const baseDefaultValues: Partial<InternalBlogPostSchema> = {
   status: 'draft',
@@ -102,19 +96,30 @@ export const BlogForm = ({
       },
       {
         onMutate: () => {
-          const toastId = toast.loading('Creating blog post...');
-          toastRef.current = toastId;
+          if (rest.mode === 'update') {
+            const toastId = toast.loading('Updating blog post...');
+            toastRef.current = toastId;
+          } else {
+            const toastId = toast.loading('Creating blog post...');
+            toastRef.current = toastId;
+          }
         },
         onSuccess: () => {
           router.refresh();
-          toast.success('Blog post created', {
-            id: toastRef.current ?? undefined,
-          });
+          if (rest.mode === 'update') {
+            toast.success('Blog post updated successfully', {
+              id: toastRef.current ?? undefined,
+            });
+          } else {
+            toast.success('Blog post created', {
+              id: toastRef.current ?? undefined,
+            });
+            router.push('/app_admin/blog');
+          }
           toastRef.current = null;
-          router.push('/app_admin/blog');
         },
         onError: (error) => {
-          let message = `Failed to create blog post`;
+          let message = `Failed`;
           if (error instanceof Error) {
             message += `: ${error.message}`;
           } else if (typeof error === 'string') {
@@ -136,7 +141,7 @@ export const BlogForm = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 max-w-2xl">
       <div className="space-y-2">
-        <Label>Cover Image URL</Label>
+        <Label>Cover Image </Label>
         {/* <Controller
           control={control}
           name="cover_image"
@@ -149,12 +154,11 @@ export const BlogForm = ({
           control={control}
           name="cover_image"
           render={({ field }) => {
-            console.log(field);
             return (
               <>
                 {field.value ? (
-                  <div>
-                    <div className="relative h-72">
+                  <div className="relative">
+                    <div className="relative h-72 bg-gray-900">
                       <Image
                         src={field.value}
                         fill
@@ -165,13 +169,15 @@ export const BlogForm = ({
                       />
                     </div>
 
-                    <button
+                    <Button
+                      variant="destructive"
+                      className="absolute top-1 right-1 "
                       onClick={() => {
                         field.onChange(null);
                       }}
                     >
-                      Remove Image
-                    </button>
+                      <Trash></Trash>
+                    </Button>
                   </div>
                 ) : (
                   <UploadBlogImage onUpload={(path) => field.onChange(path)} />
@@ -198,7 +204,7 @@ export const BlogForm = ({
           control={control}
           name="content"
           render={({ field }) => {
-            return <MDEditor {...field} />;
+            return <TipTapEditor {...field} />;
           }}
         />
       </div>
