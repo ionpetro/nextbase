@@ -53,7 +53,7 @@ const UploadImagesPlugin = () =>
 
 export default UploadImagesPlugin;
 
-function findPlaceholder(state: EditorState, id: {}) {
+function findPlaceholder(state: EditorState, id: Record<string, never>) {
   const decos = uploadKey.getState(state);
   const found = decos.find(null, null, (spec) => spec.id == id);
   return found.length ? found[0].from : null;

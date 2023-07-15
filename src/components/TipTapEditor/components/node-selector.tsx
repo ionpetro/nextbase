@@ -114,10 +114,10 @@ export const NodeSelector: FC<NodeSelectorProps> = ({
           {items.map((item, index) => (
             <button
               key={index}
+              type="button"
               onClick={() => {
                 item.command();
                 setIsOpen(false);
-                type = 'button';
               }}
               className="flex items-center justify-between rounded-sm px-2 py-1 text-sm text-stone-600 hover:bg-stone-100"
             >
