@@ -72,6 +72,12 @@ export function Header() {
           <Anchor href="/demos" aria-label="Demos">
             Demos
           </Anchor>
+          <Anchor href="/changelog" aria-label="Demos">
+            Changelog
+          </Anchor>
+          <Anchor href="/roadmap" aria-label="Demos">
+            Roadmap
+          </Anchor>
         </div>
         <div className="-my-5 mr-6 sm:mr-8 md:mr-0"></div>
         <div className="relative flex basis-0 justify-end gap-6 sm:gap-8 md:flex-grow"></div>
