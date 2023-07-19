@@ -12,7 +12,7 @@ import {
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
-import { BsPlusLg } from 'react-icons/bs';
+import PlusIcon from 'lucide-react/dist/esm/icons/plus';
 
 type CreateProjectDialogProps = {
   onConfirm: (projectTitle: string) => void;
@@ -37,7 +37,7 @@ export function CreateProjectDialog({
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button>
-            <BsPlusLg className="text-white mr-2" />
+            <PlusIcon className="text-white mr-2" />
             Create Project
           </Button>
         </DialogTrigger>

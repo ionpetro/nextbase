@@ -2,16 +2,14 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/Button';
-import { BiChevronLeft } from 'react-icons/bi';
-import { BiChevronRight } from 'react-icons/bi';
 import PageHeadingWithActions from '@/components/ui/Headings/PageHeadingWithActions';
 import TableCell from '@/components/ui/Table/TableCell';
 import TableHeader from '@/components/ui/Table/TableHeader';
 import HelpCard from '@/components/ui/Card/HelpCard';
 import organisationshelp from 'public/assets/help-assets/organisations-teams.png';
 import teamsprojects from 'public/assets/help-assets/teams-projects.png';
-import { BsPlusLg } from 'react-icons/bs';
-import { IoMdSettings } from 'react-icons/io';
+import PlusIcon from 'lucide-react/dist/esm/icons/plus';
+import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/Badge';
 import { TeamGraphs } from '../../../TeamGraphs';
@@ -142,11 +140,11 @@ export default function Page() {
         >
           <div className="mt-3 text-gray-400 text-3xl space-x-2">
             <Button>
-              <BsPlusLg className="text-white mr-2" />
+              <PlusIcon className="text-white mr-2" />
               Create Project
             </Button>
             <Button variant={'outline'}>
-              <IoMdSettings className="text-slate-600 mr-2" />
+              <SettingsIcon className="text-slate-600 mr-2" />
               View Team Settings
             </Button>
           </div>
@@ -215,7 +213,7 @@ export default function Page() {
                     </td>
                     <td className="p-0 ">
                       <TableCell className="px-6 py-4">
-                        <IoMdSettings className="text-2xl text-slate-600" />
+                        <SettingsIcon className="text-2xl text-slate-600" />
                       </TableCell>
                     </td>
                   </tr>

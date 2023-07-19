@@ -6,7 +6,7 @@ import { useGetOrganizationsInfiniteQuery } from '@/utils/react-query-hooks-app-
 
 import moment from 'moment';
 import { useState } from 'react';
-import { FiMail } from 'react-icons/fi';
+import MailIcon from 'lucide-react/dist/esm/icons/mail';
 import { useDebouncedValue } from 'rooks';
 
 function RenderOrganization({
@@ -46,7 +46,7 @@ function RenderOrganization({
               href={`mailto:${organization.owner_email}`}
               target="_blank"
             >
-              <FiMail />
+              <MailIcon />
             </a>
           </span>
         </TableCell>

@@ -17,7 +17,7 @@ import { Table } from '@/types';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import { authorProfileSchema } from '@/utils/zod-schemas/internalBlog';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   Select,
   SelectContent,
@@ -26,8 +26,7 @@ import {
   SelectValue,
 } from '@/components/ui/Select';
 import { useRouter } from 'next/navigation';
-import { useDidMount } from 'rooks';
-import { Pen } from 'lucide-react';
+import Pen from 'lucide-react/dist/esm/icons/pen-tool';
 
 type AuthorProfileFormType = z.infer<typeof authorProfileSchema>;
 type UpdateAuthorPayload = Omit<

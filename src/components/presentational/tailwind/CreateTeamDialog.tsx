@@ -11,7 +11,7 @@ import {
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
-import { IoAddOutline } from 'react-icons/io5';
+import PlusIcon from 'lucide-react/dist/esm/icons/plus-circle';
 
 type CreateTeamDialogProps = {
   onConfirm: (teamTitle: string) => void;
@@ -38,7 +38,7 @@ export function CreateTeamDialog({
           <Button variant="default" type="button" size="default">
             <div className="flex space-x-2 items-center">
               <span>
-                <IoAddOutline className="text-lg" />
+                <PlusIcon className="text-lg" />
               </span>
               <span>Create Team</span>
             </div>

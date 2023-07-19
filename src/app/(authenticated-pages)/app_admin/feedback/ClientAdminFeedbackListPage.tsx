@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/Button';
-import { AiOutlineFilter } from 'react-icons/ai';
+import FilterIcon from 'lucide-react/dist/esm/icons/filter';
 import TableCell from '@/components/ui/Table/TableCell';
 import TableHeader from '@/components/ui/Table/TableHeader';
 import { useState } from 'react';
@@ -73,7 +73,7 @@ export function ClientAdminFeedbackListPage() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline">
-                  <AiOutlineFilter className="text-xl mr-2" />
+                  <FilterIcon className="text-xl mr-2" />
                   Status {filters.statuses.length ? ':' : ''}
                   {filters.statuses.map((status) => (
                     <Badge
@@ -113,7 +113,7 @@ export function ClientAdminFeedbackListPage() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline">
-                  <AiOutlineFilter className="text-xl mr-2" />
+                  <FilterIcon className="text-xl mr-2" />
                   Type {filters.types.length ? ':' : ''}
                   <span className="flex space-x-1">
                     {filters.types.map((type) => (
@@ -150,7 +150,7 @@ export function ClientAdminFeedbackListPage() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline">
-                  <AiOutlineFilter className="text-xl mr-2" />
+                  <FilterIcon className="text-xl mr-2" />
                   Priority
                   {filters.priorities.length ? ':' : ''}
                   <span className="flex space-x-1">

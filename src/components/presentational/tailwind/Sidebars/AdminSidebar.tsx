@@ -2,20 +2,18 @@
 import { Anchor } from '@/components/Anchor';
 import { cn } from '@/utils/cn';
 import { useUser } from '@supabase/auth-helpers-react';
-import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
-import {
-  FiArrowLeft,
-  FiBriefcase,
-  FiPenTool,
-  FiSettings,
-  FiUsers,
-} from 'react-icons/fi';
-import { RxActivityLog } from 'react-icons/rx';
-import { RiRoadMapLine } from 'react-icons/ri';
-import { MdOutlineFeedback } from 'react-icons/md';
 import { SelectSeparator } from '@/components/ui/Select';
-import { Home, PenTool } from 'lucide-react';
+import Home from 'lucide-react/dist/esm/icons/home';
 import { AdminSidebarLink } from './AdminSidebarLink';
+import ChevronRightIcon from 'lucide-react/dist/esm/icons/chevron-right';
+import ChevronLeftIcon from 'lucide-react/dist/esm/icons/chevron-left';
+import BriefcaseIcon from 'lucide-react/dist/esm/icons/briefcase';
+import PenToolIcon from 'lucide-react/dist/esm/icons/pen-tool';
+import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
+import UsersIcon from 'lucide-react/dist/esm/icons/users';
+import FeedbackIcon from 'lucide-react/dist/esm/icons/help-circle';
+import BookIcon from 'lucide-react/dist/esm/icons/book';
+import RoadMapIcon from 'lucide-react/dist/esm/icons/map';
 
 type LinksProps = {
   isExpanded: boolean;
@@ -47,26 +45,26 @@ function Links({ isExpanded, toggleIsExpanded }: LinksProps) {
           />
           <AdminSidebarLink
             href="/app_admin"
-            icon={<FiSettings />}
+            icon={<SettingsIcon />}
             label="Application Settings"
             isExpanded={isExpanded}
           />
           <AdminSidebarLink
             href="/app_admin/users"
-            icon={<FiUsers />}
+            icon={<UsersIcon />}
             label="Users"
             isExpanded={isExpanded}
           />
           <AdminSidebarLink
             href="/app_admin/organizations"
-            icon={<FiBriefcase />}
+            icon={<BriefcaseIcon />}
             label="Organizations"
             isExpanded={isExpanded}
           />
           <SelectSeparator></SelectSeparator>
           <AdminSidebarLink
             href="/app_admin/blog"
-            icon={<FiPenTool />}
+            icon={<PenToolIcon />}
             label="Blog"
             isExpanded={isExpanded}
           />
@@ -74,19 +72,19 @@ function Links({ isExpanded, toggleIsExpanded }: LinksProps) {
 
           <AdminSidebarLink
             href="/app_admin/feedback"
-            icon={<MdOutlineFeedback />}
+            icon={<FeedbackIcon />}
             label="Feedback List"
             isExpanded={isExpanded}
           />
           <AdminSidebarLink
             href="/app_admin/changelog"
-            icon={<RxActivityLog />}
+            icon={<BookIcon />}
             label="Changelog List"
             isExpanded={isExpanded}
           />
           <AdminSidebarLink
             href="/app_admin/internal-roadmap"
-            icon={<RiRoadMapLine />}
+            icon={<RoadMapIcon />}
             label="Roadmap"
             isExpanded={isExpanded}
           />
@@ -96,7 +94,7 @@ function Links({ isExpanded, toggleIsExpanded }: LinksProps) {
             className={chevronClassName}
             onClick={() => toggleIsExpanded(!isExpanded)}
           >
-            {isExpanded ? <BiChevronLeft /> : <BiChevronRight />}
+            {isExpanded ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </div>
         </>
       ) : (

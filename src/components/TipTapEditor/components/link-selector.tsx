@@ -1,6 +1,7 @@
 import { cn } from '@/utils/cn';
 import { Editor } from '@tiptap/core';
-import { Check, Trash } from 'lucide-react';
+import Check from 'lucide-react/dist/esm/icons/check';
+import Trash from 'lucide-react/dist/esm/icons/trash';
 import { Dispatch, FC, SetStateAction, useEffect, useRef } from 'react';
 
 interface LinkSelectorProps {

@@ -5,6 +5,12 @@ import rehypeToc from 'rehype-toc';
 import rehypeSlug from 'rehype-slug';
 import { h } from 'hastscript';
 import { withSentryConfig } from '@sentry/nextjs';
+import createWithBundleAnalyzer from '@next/bundle-analyzer';
+
+const withBundleAnalyzer = createWithBundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+  openAnalyzer: process.env.ANALYZE === 'true',
+});
 
 function rehypeWrapMainContent() {
   return (tree) => {
@@ -101,4 +107,4 @@ const nextConfig = {
   },
 };
 
-export default withSentryConfig(withMDX(nextConfig));
+export default withBundleAnalyzer(withSentryConfig(withMDX(nextConfig)));

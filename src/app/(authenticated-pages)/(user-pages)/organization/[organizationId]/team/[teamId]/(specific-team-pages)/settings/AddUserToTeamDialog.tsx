@@ -10,8 +10,9 @@ import {
 } from '@/components/ui/Dialog';
 import { T } from '@/components/ui/Typography';
 import { useAddUserToProjectTeam } from '@/utils/react-queries/teams';
-
-import { Plus } from 'lucide-react';
+// convert the imports above into modularized imports
+// import Check from 'lucide-react/dist/esm/icons/check';
+import Plus from 'lucide-react/dist/esm/icons/plus';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -49,17 +50,17 @@ export const AddUserToTeamDialog = () => {
     isOrganizationTeamMembersDataLoading || !organizationTeamMembers
       ? []
       : organizationTeamMembers.map((member) => {
-          const userProfile = Array.isArray(member.user_profiles)
-            ? member.user_profiles[0]
-            : member.user_profiles;
-          if (!userProfile) {
-            throw new Error('User profile not found');
-          }
-          return {
-            value: userProfile.id,
-            label: userProfile.full_name ?? userProfile.id,
-          };
-        });
+        const userProfile = Array.isArray(member.user_profiles)
+          ? member.user_profiles[0]
+          : member.user_profiles;
+        if (!userProfile) {
+          throw new Error('User profile not found');
+        }
+        return {
+          value: userProfile.id,
+          label: userProfile.full_name ?? userProfile.id,
+        };
+      });
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

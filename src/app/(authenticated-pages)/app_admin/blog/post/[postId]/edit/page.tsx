@@ -1,7 +1,7 @@
 import { Anchor } from '@/components/Anchor';
 import { Button } from '@/components/ui/Button';
 import { T } from '@/components/ui/Typography';
-import { BiLeftArrowAlt } from 'react-icons/bi';
+import LeftArrowIcon from 'lucide-react/dist/esm/icons/arrow-left';
 import { BlogForm } from '../../../BlogForm';
 import {
   createBlogPost,
@@ -53,7 +53,7 @@ export default async function CreateBlogPostPage({
             variant="infoLink"
             className="flex items-center justify-center"
           >
-            <BiLeftArrowAlt /> <span>Back to blog</span>
+            <LeftArrowIcon /> <span>Back to blog</span>
           </Button>
         </Link>
         <T.H3>Edit Blog Post</T.H3>

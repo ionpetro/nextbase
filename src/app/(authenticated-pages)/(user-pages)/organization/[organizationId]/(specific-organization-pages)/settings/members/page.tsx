@@ -7,7 +7,6 @@ import { TeamMembersTable } from '@/components/presentational/tailwind/TeamMembe
 import { TeamMembersTableProps } from '@/components/presentational/tailwind/TeamMembersTable/types';
 import { TeamInvitationsTable } from '@/components/presentational/tailwind/TeamInvitationsTable';
 import { TeamInvitationsTableProps } from '@/components/presentational/tailwind/TeamInvitationsTable/types';
-import { FiPlus } from 'react-icons/fi';
 import { toast } from 'react-hot-toast';
 import {
   useGetIsOrganizationAdmin,
@@ -15,8 +14,6 @@ import {
   useGetTeamMembersInOrganization,
   useInviteUserMutation,
 } from '@/utils/react-query-hooks';
-import { Button } from '@/components/presentational/tailwind/Button';
-import { classNames } from '@/utils/classNames';
 import { InviteOrganizationMemberDialog } from '@/components/presentational/tailwind/InviteOrganizationMemberDialog';
 import { useOrganizationContext } from '@/contexts/OrganizationContext';
 

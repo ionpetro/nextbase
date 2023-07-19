@@ -3,19 +3,16 @@
 import { useOrganizationContext } from '@/contexts/OrganizationContext';
 import { useTeamContext } from '@/contexts/TeamContext';
 import { TabsNavigation } from '@/components/presentational/tailwind/TabsNavigation';
-import {
-  Check,
-  GlassesIcon,
-  Hammer,
-  Play,
-  ThumbsUp,
-  Timer,
-  User,
-} from 'lucide-react';
+
+// convert the imports above into modularized imports
+import Check from 'lucide-react/dist/esm/icons/check';
+import Hammer from 'lucide-react/dist/esm/icons/hammer';
+import ThumbsUp from 'lucide-react/dist/esm/icons/thumbs-up';
+import Timer from 'lucide-react/dist/esm/icons/timer';
 import PageHeadingWithActions from '@/components/ui/Headings/PageHeadingWithActions';
 import { CreateProjectDialog } from '@/components/presentational/tailwind/CreateProjectDialog';
 import { Button } from '@/components/ui/Button';
-import { IoMdSettings } from 'react-icons/io';
+import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
 import { Anchor } from '@/components/Anchor';
 import { useMemo } from 'react';
 import { useCreateProject } from '@/utils/react-queries/projects';
@@ -90,7 +87,7 @@ export const SpecificTeamClientLayout = ({
               href={`/organization/${organizationId}/team//${teamId}/settings`}
             >
               <Button variant={'outline'}>
-                <IoMdSettings className="text-slate-600 mr-2" />
+                <SettingsIcon className="text-slate-600 mr-2" />
                 View Team Settings
               </Button>
             </Anchor>

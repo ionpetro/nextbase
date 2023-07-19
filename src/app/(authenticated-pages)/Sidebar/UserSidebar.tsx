@@ -11,7 +11,7 @@ import { useUserProfile } from '@/utils/react-queries/user';
 import { getUserAvatarUrl } from '@/utils/helpers';
 import { useLoggedInUserEmail } from '@/hooks/useLoggedInUserEmail';
 import { GiveFeedbackDialog } from '@/components/presentational/tailwind/GiveFeedbackDialog';
-import { Mail } from 'lucide-react';
+import Mail from 'lucide-react/dist/esm/icons/mail';
 import { UserSidebarLink } from '@/components/presentational/tailwind/Sidebars/UserSidebarLink';
 
 export function UserSidebar({
