@@ -2,6 +2,6 @@
 node_modules
 .next
 tsconfig.tsbuildinfo
-supabase/.temp/project-ref
-supabase/.DS_Store
-analyze
+./supabase/.temp/project-ref
+./supabase/.DS_Store
+./analyze
