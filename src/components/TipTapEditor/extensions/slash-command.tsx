@@ -10,18 +10,17 @@ import { Editor, Range, Extension } from '@tiptap/core';
 import Suggestion from '@tiptap/suggestion';
 import { ReactRenderer } from '@tiptap/react';
 import tippy from 'tippy.js';
-import {
-  Heading1,
-  Heading2,
-  Heading3,
-  List,
-  ListOrdered,
-  Text,
-  QuoteIcon,
-  Image as ImageIcon,
-  Code,
-  CheckSquare,
-} from 'lucide-react';
+import Heading1 from 'lucide-react/dist/esm/icons/heading-1';
+import Heading2 from 'lucide-react/dist/esm/icons/heading-2';
+import Heading3 from 'lucide-react/dist/esm/icons/heading-3';
+import List from 'lucide-react/dist/esm/icons/list';
+import ListOrdered from 'lucide-react/dist/esm/icons/list-ordered';
+import Text from 'lucide-react/dist/esm/icons/text';
+import QuoteIcon from 'lucide-react/dist/esm/icons/quote';
+import ImageIcon from 'lucide-react/dist/esm/icons/image';
+import Code from 'lucide-react/dist/esm/icons/code';
+import CheckSquare from 'lucide-react/dist/esm/icons/check-square';
+
 import va from '@vercel/analytics';
 import { startImageUpload } from '@/components/TipTapEditor/plugins/upload-images';
 

@@ -1,11 +1,11 @@
 'use client';
 import { Anchor } from '@/components/Anchor';
 import { useUser } from '@supabase/auth-helpers-react';
-import { match } from 'path-to-regexp';
-import { FiHome, FiServer } from 'react-icons/fi';
-import { AiFillHome } from 'react-icons/ai';
+import HomeIcon from 'lucide-react/dist/esm/icons/home';
+import ServerIcon from 'lucide-react/dist/esm/icons/server';
 import { cn } from '@/utils/cn';
-import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
+import ChevronLeftIcon from 'lucide-react/dist/esm/icons/chevron-left';
+import ChevronRightIcon from 'lucide-react/dist/esm/icons/chevron-right';
 import { UserSidebarLink } from './UserSidebarLink';
 
 type LinksProps = {
@@ -31,14 +31,14 @@ function Links({ isUserAppAdmin, isExpanded, toggleIsExpanded }: LinksProps) {
         <>
           <UserSidebarLink
             href="/dashboard"
-            icon={<FiHome />}
+            icon={<HomeIcon />}
             label="Dashboard"
             isExpanded={isExpanded}
           />
           {isUserAppAdmin && (
             <UserSidebarLink
               href="/app_admin"
-              icon={<FiServer />}
+              icon={<ServerIcon />}
               label="Admin Panel"
               isExpanded={isExpanded}
             />
@@ -49,7 +49,7 @@ function Links({ isUserAppAdmin, isExpanded, toggleIsExpanded }: LinksProps) {
             className={chevronClassName}
             onClick={() => toggleIsExpanded(!isExpanded)}
           >
-            {isExpanded ? <BiChevronLeft /> : <BiChevronRight />}
+            {isExpanded ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </div>
         </>
       ) : (

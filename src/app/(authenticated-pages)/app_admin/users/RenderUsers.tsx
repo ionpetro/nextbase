@@ -12,7 +12,8 @@ import TableCell from '@/components/ui/Table/TableCell';
 import TableHeader from '@/components/ui/Table/TableHeader';
 import moment from 'moment';
 import { useState } from 'react';
-import { FiLogIn, FiMail } from 'react-icons/fi';
+import LoginIcon from 'lucide-react/dist/esm/icons/log-in';
+import MailIcon from 'lucide-react/dist/esm/icons/mail';
 import { useDebouncedValue } from 'rooks';
 
 function RenderUser({
@@ -62,7 +63,7 @@ function RenderUser({
               href={`mailto:${user.email}`}
               target="_blank"
             >
-              <FiMail /> <span>Contact User by email</span>
+              <MailIcon /> <span>Contact User by email</span>
             </a>
           </span>
         </TableCell>
@@ -96,7 +97,7 @@ function RenderUser({
             }}
             disabled={isImpersonating}
           >
-            <FiLogIn /> <span>Login as User </span>
+            <LoginIcon /> <span>Login as User </span>
           </button>
         </TableCell>
       </td>

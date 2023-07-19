@@ -15,7 +15,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { AddAuthorProfileDialog } from './AddAuthorProfileDialog';
 import { EditAuthorProfileDialog } from './EditAuthorProfileDialog';
-import { Trash } from 'lucide-react';
+import Trash from 'lucide-react/dist/esm/icons/trash';
 
 type AuthorProfile = Table<'internal_blog_author_profiles'>;
 

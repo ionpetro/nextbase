@@ -26,7 +26,8 @@ import {
 } from '@/utils/zod-schemas/internalBlog';
 import { UploadBlogImage } from './post/UploadBlogImage';
 import Image from 'next/image';
-import { Trash } from 'lucide-react';
+import Trash from 'lucide-react/dist/esm/icons/trash';
+
 import { TipTapEditor } from '@/components/TipTapEditor';
 
 const baseDefaultValues: Partial<InternalBlogPostSchema> = {

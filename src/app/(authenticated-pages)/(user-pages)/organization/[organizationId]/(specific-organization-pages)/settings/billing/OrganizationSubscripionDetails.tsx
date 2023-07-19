@@ -1,24 +1,21 @@
 import { LoadingSpinner } from '@/components/presentational/tailwind/LoadingSpinner';
 import { PricingModeToggle } from '@/components/presentational/tailwind/PricingModeToggle';
 import H3 from '@/components/presentational/tailwind/Text/H3';
-import { Table, UnwrapPromise } from '@/types';
 import { classNames } from '@/utils/classNames';
 import {
   useCreateOrganizationCheckoutSessionMutation,
   useCreateOrganizationCustomerPortalMutation,
   useGetAllActiveProducts,
-  useGetIsOrganizationAdmin,
-  useGetOrganizationSubscription,
 } from '@/utils/react-query-hooks';
 import { getStripe } from '@/utils/stripe-client';
-import { getActiveProductsWithPrices } from '@/utils/supabase-queries';
 import { useMemo, useState } from 'react';
 import { toast } from 'react-hot-toast';
-import { FiCheck, FiExternalLink, FiX } from 'react-icons/fi';
+import CheckIcon from 'lucide-react/dist/esm/icons/check';
+import ExternalLinkIcon from 'lucide-react/dist/esm/icons/external-link';
+import XIcon from 'lucide-react/dist/esm/icons/x';
 import { useOrganizationContext } from '@/contexts/OrganizationContext';
 import { Button } from '@/components/ui/Button';
 import { T } from '@/components/ui/Typography';
-import { useGetNormalizedSubscription } from '@/utils/react-queries/subscriptions';
 import { formatNormalizedSubscription } from '@/utils/formatNormalizedSubscription';
 
 function ChoosePricingTable() {
@@ -123,22 +120,22 @@ function ChoosePricingTable() {
                   </div>
                   <ul className="mb-7 font-medium text-gray-500">
                     <li className="flex text-md items-center mb-2">
-                      <FiCheck className="text-green-500" />
+                      <CheckIcon className="text-green-500" />
                       <span className="ml-3">{product.description}</span>
                     </li>
                     <li className="flex text-md items-center mb-2">
-                      <FiCheck className="text-green-500" />
+                      <CheckIcon className="text-green-500" />
                       <span className="ml-3">A nice feature</span>
                     </li>
                     <li className="flex text-md items-center mb-2">
-                      <FiCheck className="text-green-500" />
+                      <CheckIcon className="text-green-500" />
                       <span className="ml-3">Another nice feature</span>
                     </li>
                     <li className="flex text-md items-center mb-2">
                       {product.price.unit_amount > 0 ? (
-                        <FiCheck className="text-green-500" />
+                        <CheckIcon className="text-green-500" />
                       ) : (
-                        <FiX className="text-red-500" />
+                        <XIcon className="text-red-500" />
                       )}
                       <span className="ml-3">A premium feature</span>
                     </li>
@@ -250,7 +247,7 @@ export function OrganizationSubscripionDetails() {
                 ? 'Loading...'
                 : 'Manage Subscription'}{' '}
             </span>
-            <FiExternalLink aria-hidden="true" />{' '}
+            <ExternalLinkIcon aria-hidden="true" />{' '}
           </button>
           <p className="text-gray-500 text-xs">
             Manage your subscription. You can modify, upgrade or cancel your

@@ -3,7 +3,7 @@
 import * as React from 'react';
 import * as SheetPrimitive from '@radix-ui/react-dialog';
 import { VariantProps, cva } from 'class-variance-authority';
-import { X } from 'lucide-react';
+import X from 'lucide-react/dist/esm/icons/x';
 import { cn } from '@/utils/cn';
 
 const Sheet = SheetPrimitive.Root;
@@ -24,7 +24,7 @@ const portalVariants = cva('fixed inset-0 z-50 flex', {
 
 interface SheetPortalProps
   extends SheetPrimitive.DialogPortalProps,
-    VariantProps<typeof portalVariants> {}
+  VariantProps<typeof portalVariants> { }
 
 const SheetPortal = ({
   position,
@@ -143,7 +143,7 @@ const sheetVariants = cva(
 
 export interface DialogContentProps
   extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Content>,
-    VariantProps<typeof sheetVariants> {}
+  VariantProps<typeof sheetVariants> { }
 
 const SheetContent = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Content>,

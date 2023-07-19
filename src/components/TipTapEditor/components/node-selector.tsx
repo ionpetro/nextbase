@@ -1,16 +1,14 @@
 import { Editor } from '@tiptap/core';
-import {
-  Check,
-  ChevronDown,
-  Heading1,
-  Heading2,
-  Heading3,
-  QuoteIcon,
-  ListOrdered,
-  TextIcon,
-  Code,
-  CheckSquare,
-} from 'lucide-react';
+import Check from 'lucide-react/dist/esm/icons/check';
+import ChevronDown from 'lucide-react/dist/esm/icons/chevron-down';
+import Heading1 from 'lucide-react/dist/esm/icons/heading-1';
+import Heading2 from 'lucide-react/dist/esm/icons/heading-2';
+import Heading3 from 'lucide-react/dist/esm/icons/heading-3';
+import QuoteIcon from 'lucide-react/dist/esm/icons/quote';
+import ListOrdered from 'lucide-react/dist/esm/icons/list-ordered';
+import TextIcon from 'lucide-react/dist/esm/icons/text';
+import Code from 'lucide-react/dist/esm/icons/code';
+import CheckSquare from 'lucide-react/dist/esm/icons/check-square';
 import { Dispatch, FC, SetStateAction } from 'react';
 
 import { BubbleMenuItem } from './EditorBubbleMenu';

@@ -1,13 +1,10 @@
 import { BubbleMenu, BubbleMenuProps } from '@tiptap/react';
 import { FC, useState } from 'react';
-import {
-  BoldIcon,
-  ItalicIcon,
-  UnderlineIcon,
-  StrikethroughIcon,
-  CodeIcon,
-} from 'lucide-react';
-
+import BoldIcon from 'lucide-react/dist/esm/icons/bold';
+import ItalicIcon from 'lucide-react/dist/esm/icons/italic';
+import UnderlineIcon from 'lucide-react/dist/esm/icons/underline';
+import StrikethroughIcon from 'lucide-react/dist/esm/icons/strikethrough';
+import CodeIcon from 'lucide-react/dist/esm/icons/code';
 import { NodeSelector } from './node-selector';
 import { ColorSelector } from './color-selector';
 import { LinkSelector } from './link-selector';

@@ -69,6 +69,12 @@ module.exports = {
       files: '*.mjs',
       rules: ruleOverrides,
     },
+    // make nextconfig.mjs node environment
+    {
+      extends: ['eslint:recommended', 'prettier', 'node'],
+      files: 'next.config.mjs',
+      rules: ruleOverrides,
+    },
     {
       extends: ['prettier'],
       files: '*.js',

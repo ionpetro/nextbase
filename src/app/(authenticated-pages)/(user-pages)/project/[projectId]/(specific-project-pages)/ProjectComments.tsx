@@ -10,10 +10,15 @@ import {
   useGetProjectComments,
 } from '@/utils/react-queries/projects';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Edit, Play, PlayCircle } from 'lucide-react';
+// convert the imports above into modularized imports
+// import Check from 'lucide-react/dist/esm/icons/check';
+import Edit from 'lucide-react/dist/esm/icons/edit';
+import Play from 'lucide-react/dist/esm/icons/play';
+import PlayCircle from 'lucide-react/dist/esm/icons/play-circle';
+
 import moment from 'moment';
 import { useForm } from 'react-hook-form';
-import { BiConversation } from 'react-icons/bi';
+import ConversationIcon from 'lucide-react/dist/esm/icons/message-square';
 import { z } from 'zod';
 
 const addCommentSchema = z.object({
@@ -77,7 +82,7 @@ const CommentsList = () => {
   return (
     <div className="space-y-4">
       <div className="flex space-x-2 items-center">
-        <BiConversation /> <T.Subtle>All Comments </T.Subtle>
+        <ConversationIcon /> <T.Subtle>All Comments </T.Subtle>
       </div>
       {comments.map((comment) => (
         <div

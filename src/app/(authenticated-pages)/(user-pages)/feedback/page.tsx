@@ -11,7 +11,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from '@radix-ui/react-dropdown-menu';
-import { AiOutlineFilter } from 'react-icons/ai';
+import OutlineFilter from 'lucide-react/dist/esm/icons/filter-x';
 import { Badge } from '@/components/ui/Badge';
 import { useState } from 'react';
 import userImage from 'public/assets/user-image.png';
@@ -154,7 +154,7 @@ export default function Page() {
               <DropdownMenu>
                 <DropdownMenuTrigger>
                   <Button variant="outline">
-                    <AiOutlineFilter className="text-xl mr-2" />
+                    <OutlineFilter className="text-xl mr-2" />
                     {filters.statusText}{' '}
                     {selectedBadges.status && (
                       <Badge
@@ -192,7 +192,7 @@ export default function Page() {
               <DropdownMenu>
                 <DropdownMenuTrigger>
                   <Button variant="outline">
-                    <AiOutlineFilter className="text-xl mr-2" />
+                    <OutlineFilter className="text-xl mr-2" />
                     {filters.priorityText}
                   </Button>
                 </DropdownMenuTrigger>
