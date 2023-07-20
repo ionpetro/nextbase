@@ -3,6 +3,7 @@ import { cn } from '@/utils/cn';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { MobileNavigation } from './MobileNavigation';
+import { LucideTwitter } from 'lucide-react';
 
 function GitHubIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -29,7 +30,7 @@ export function Header() {
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 flex flex-wrap items-center justify-between bg-white px-4 py-5 shadow-md shadow-slate-900/5 transition duration-500 dark:shadow-none sm:px-6 lg:px-8',
+        'sticky top-0 z-50 flex flex-wrap border-b border-gray-200 items-center justify-between bg-white py-4 h-[57px] transition duration-500 dark:shadow-none sm:px-4 lg:px-8',
         isScrolled
           ? 'dark:bg-slate-900/95 dark:backdrop-blur dark:[@supports(backdrop-filter:blur(0))]:bg-slate-900/75'
           : 'dark:bg-transparent'
@@ -37,10 +38,10 @@ export function Header() {
     >
       <div className="mr-6 flex lg:hidden space-x-2">
         <MobileNavigation />
-        <div className={cn('block lg:hidden', 'relative ')}>
+        <div className={cn('block lg:hidden ', 'relative ')}>
           <Link href="/" className="block" aria-label="Home page">
             <img
-              src="https://usenextbase.com/logos/nextbase/Logo%2006.png"
+              src="/logos/nextbase_navlogo_small.svg"
               className="h-9 block sm:h-9"
               alt="Nextbase Logo"
             />
@@ -50,30 +51,46 @@ export function Header() {
 
       <div
         className={cn(
-          ' mx-auto h-full w-full max-w-8xl justify-center sm:px-2 lg:px-8 xl:px-12'
+          'h-full flex mx-auto  max-w-8xl w-full justify-center items-center sm:px-2 lg:px-8 xl:px-12'
         )}
       >
         <div className={cn('hidden lg:block', 'relative ')}>
           <Link href="/" className="block" aria-label="Home page">
             <img
-              src="https://usenextbase.com/logos/nextbase/Logo%2006.png"
-              className="h-9 block sm:h-9"
+              src="/logos/nextbase_navlogo.svg"
+              className="h-5 block sm:h-5"
               alt="Nextbase Logo"
             />
           </Link>
         </div>
-        <div className="-my-5 mr-6 sm:mr-8 md:mr-0"></div>
-        <div className="relative flex basis-0 justify-end gap-6 sm:gap-8 md:flex-grow">
+        <div className="relative flex basis-0 items-center justify-end gap-3 sm:gap-3 md:flex-grow">
+          <div className='flex space-x-1'>
+            <Link
+              href="/docs"
+              className="inline-flex px-4 py-1.5 text-zinc-900 hover:text-zinc-700 text-[13px] font-[600] leading-tight"
+              aria-label="Docs"
+            >
+              Docs
+            </Link>
+            <Link
+              href="/blog"
+              className="inline-flex px-4 py-1.5 text-zinc-500 hover:text-zinc-900 text-[13px] font-[500] leading-tight"
+              aria-label="Blog"
+            >
+              Blog
+            </Link>
+          </div>
+          <div className="w-px h-5 mx-4 bg-zinc-300" />
           <Link
-            href="https://github.com"
+            href="https://twitter.com/@usenextbase"
             target="_blank"
-            className="group"
-            aria-label="GitHub"
+            className="group p-[5px] bg-gradient-to-b from-white to-zinc-50 hover:bg-gradient-to-b hover:from-zinc-100 hover:to-zinc-100 transition rounded-[8px] border border-zinc-900 border-opacity-20 "
+            aria-label="Twitter"
           >
-            <GitHubIcon className="h-6 w-6 fill-slate-400 group-hover:fill-slate-500 dark:group-hover:fill-slate-300" />
+            <LucideTwitter className="h-5 w-5" />
           </Link>
         </div>
       </div>
-    </header>
+    </header >
   );
 }
