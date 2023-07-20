@@ -46,6 +46,14 @@ async function fetchIsAppInMaintenanceMode(supabaseClient: AppSupabaseClient) {
   return false;
 }
 
+export const metadata = {
+  icons: {
+    icon: '/images/logo-black-main.ico',
+  },
+  title:'Nextbase Ultimate',
+  description:'Nextbase Ultimate',
+}
+
 export default async function RootLayout({
   children,
 }: {
