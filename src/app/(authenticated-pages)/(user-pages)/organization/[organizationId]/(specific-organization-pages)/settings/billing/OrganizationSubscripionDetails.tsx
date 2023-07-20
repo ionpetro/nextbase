@@ -17,12 +17,12 @@ import { useOrganizationContext } from '@/contexts/OrganizationContext';
 import { Button } from '@/components/ui/Button';
 import { T } from '@/components/ui/Typography';
 import { formatNormalizedSubscription } from '@/utils/formatNormalizedSubscription';
+import { H2 } from '@/components/ui/Typography/H2';
 
 function ChoosePricingTable() {
   const { organizationId, organizationRole } = useOrganizationContext();
   const isOrganizationAdmin =
     organizationRole === 'admin' || organizationRole === 'owner';
-  const [pricingMode, setPricingMode] = useState<'month' | 'year'>('month');
   const {
     data: activeProducts,
     isLoading: isLoadingProducts,
@@ -46,28 +46,28 @@ function ChoosePricingTable() {
       const prices = Array.isArray(product.prices)
         ? product.prices
         : [product.prices];
-      const priceInSelectedInterval = prices.find((price) => {
-        return price?.interval === pricingMode;
-      });
 
-      const priceString = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: priceInSelectedInterval?.currency ?? undefined,
-        minimumFractionDigits: 0,
-      }).format((priceInSelectedInterval?.unit_amount || 0) / 100);
-      return {
-        ...product,
-        price: priceInSelectedInterval,
-        priceString,
-      };
-    });
+      const pricesForProduct = prices.map(price => {
+        const priceString = new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: price?.currency ?? undefined,
+          minimumFractionDigits: 0,
+        }).format((price?.unit_amount || 0) / 100);
+        return {
+          ...product,
+          price,
+          priceString,
+        };
+      });
+      return pricesForProduct;
+    }).flat();
 
     return products
       .sort(
         (a, b) => (a?.price?.unit_amount ?? 0) - (b?.price?.unit_amount ?? 0)
       )
       .filter(Boolean);
-  }, [activeProducts, pricingMode]);
+  }, [activeProducts]);
 
   if (isLoadingProducts)
     return (
@@ -78,12 +78,12 @@ function ChoosePricingTable() {
 
   if (error) return <div>Error</div>;
   return (
-    <div className="max-w-2xl space-y-4">
+    <div className="max-w-7xl space-y-4">
       {/* <Overline>Pricing table</Overline> */}
-      <H3>Pricing table</H3>
+      {/* <H3 className='border-none mt-3 mb-0'>Pricing table</H3> */}
       <div className="space-y-2">
-        <PricingModeToggle mode={pricingMode} onChange={setPricingMode} />
-        <div className="flex space-x-6">
+        {/* <PricingModeToggle mode={pricingMode} onChange={setPricingMode} /> */}
+        <div className="flex space-x-5 w-full">
           {productsSortedByPrice.map((product) => {
             if (!product.price) {
               return null;
@@ -101,49 +101,54 @@ function ChoosePricingTable() {
             return (
               <>
                 <div
-                  key={product.id + pricingMode}
-                  className="w-full flex-1 mt-4 p-8 order-2 bg-white shadow-lg rounded-lg sm:w-96 lg:w-full lg:order-1 border"
+                  key={product.id + priceId}
+                  className="w-full flex-1 mt-4 order-2 bg-white shadow-none rounded-xl hover:shadow-xl transition sm:w-96 lg:w-full lg:order-1 border border-gray-300 hover:border-gray-400 "
                 >
-                  <div className="mb-7 pb-7 flex items-center border-b border-gray-200">
-                    <div className="ml-5">
-                      <span className="block text-lg text-gray-600 font-medium">
+                  <div className="mb-6 p-7 pt-6 flex items-center border-b border-gray-300">
+                    <div>
+                      <span className="block text-xl mb-3 text-gray-700 font-medium">
                         {' '}
                         {product.name}
                       </span>
                       <span>
-                        <span key={priceId} className="text-2xl font-bold">
+                        <span key={priceId} className="text-4xl font-bold">
                           {' '}
-                          {product.priceString}/{product.price.interval}{' '}
+                          {product.priceString}<span className='text-base text-gray-700 font-medium'>  per {product.price.interval}</span>
                         </span>
                       </span>
                     </div>
                   </div>
-                  <ul className="mb-7 font-medium text-gray-500">
-                    <li className="flex text-md items-center mb-2">
-                      <CheckIcon className="text-green-500" />
-                      <span className="ml-3">{product.description}</span>
-                    </li>
-                    <li className="flex text-md items-center mb-2">
-                      <CheckIcon className="text-green-500" />
-                      <span className="ml-3">A nice feature</span>
-                    </li>
-                    <li className="flex text-md items-center mb-2">
-                      <CheckIcon className="text-green-500" />
-                      <span className="ml-3">Another nice feature</span>
-                    </li>
-                    <li className="flex text-md items-center mb-2">
-                      {product.price.unit_amount > 0 ? (
-                        <CheckIcon className="text-green-500" />
-                      ) : (
-                        <XIcon className="text-red-500" />
-                      )}
-                      <span className="ml-3">A premium feature</span>
-                    </li>
-                  </ul>
-                  <div className="rounded-xl py-1 text-center text-white text-xl space-y-2">
+
+                  <div className='px-5 pl-6 pt-0 mb-8'>
+                    <ul className="font-medium text-gray-600">
+                      <li className="grid grid-cols-[24px,1fr] gap-0 text-md items-start mb-2">
+                        <CheckIcon className="text-green-600 w-6 h-6" />
+                        <span className="ml-3">{product.description}</span>
+                      </li>
+                      <li className="grid grid-cols-[24px,1fr] gap-0 text-md items-start mb-2">
+                        <CheckIcon className="text-green-600 w-6 h-6" />
+                        <span className="ml-3">A nice feature</span>
+                      </li>
+                      <li className="grid grid-cols-[24px,1fr] gap-0 text-md items-start mb-2">
+                        <CheckIcon className="text-green-600 w-6 h-6" />
+                        <span className="ml-3">Another nice feature</span>
+                      </li>
+                      <li className="grid grid-cols-[24px,1fr] gap-0 text-md items-start mb-2">
+                        {product.price.unit_amount > 0 ? (
+                          <CheckIcon className="text-green-600 w-6 h-6" />
+                        ) : (
+                          <XIcon className="text-red-500" />
+                        )}
+                        <span className="ml-3">A premium feature</span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="rounded-xl py-1 mb-5 mx-5 mt-4 text-center text-white text-xl space-y-2">
                     {isOrganizationAdmin ? (
                       <>
                         <Button
+                          className='w-full'
                           onClick={() => {
                             mutate({
                               organizationId: organizationId,
@@ -155,6 +160,8 @@ function ChoosePricingTable() {
                           Start free trial
                         </Button>
                         <Button
+                          variant='outline'
+                          className='w-full'
                           onClick={() => {
                             mutate({
                               organizationId: organizationId,
