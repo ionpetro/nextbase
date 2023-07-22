@@ -16,7 +16,7 @@ export const TocNav: React.FC<TocNavProps> = ({ children, ...props }) => {
     >
       <h2
         id="on-this-page-title"
-        className="font-display text-sm font-medium text-slate-900 dark:text-white"
+        className="text-sm font-bold text-slate-900 dark:text-white"
       >
         On this page
       </h2>
