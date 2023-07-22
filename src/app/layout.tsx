@@ -9,8 +9,6 @@ import { getIsAppInMaintenanceMode } from '@/utils/supabase-queries';
 import localFont from 'next/font/local';
 import { supabaseUserServerComponentClient } from '@/supabase-clients/user/supabaseUserServerComponentClient';
 
-export const runtime = 'edge'
-
 const satoshiFont = localFont({
   src: '../fonts/satoshi/Satoshi-Variable.woff2',
   display: 'swap',
@@ -52,8 +50,8 @@ export const metadata = {
   icons: {
     icon: '/images/logo-black-main.ico',
   },
-  title: 'Nextbase Ultimate',
-  description: 'Nextbase Ultimate',
+  title:'Nextbase Ultimate',
+  description:'Nextbase Ultimate',
 }
 
 export default async function RootLayout({
