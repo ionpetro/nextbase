@@ -4,10 +4,10 @@ import organisationshelp from 'public/assets/help-assets/organisations-teams.png
 import teamsprojects from 'public/assets/help-assets/teams-projects.png';
 import InternalRoadmapCard from '@/components/ui/Card/InternalRoadmapCard';
 import moment from 'moment';
-import { supabaseAdminServerComponentClient } from '@/supabase-clients/admin/supabaseAdminServerComponentClient';
+import { createSupabaseAdminServerComponentClient } from '@/supabase-clients/admin/createSupabaseAdminServerComponentClient';
 
 export default async function Page() {
-  const roadmapItemsResponse = await supabaseAdminServerComponentClient
+  const roadmapItemsResponse = await createSupabaseAdminServerComponentClient()
     .from('internal_feedback_threads')
     .select('*')
     .eq('added_to_roadmap', true);

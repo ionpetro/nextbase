@@ -1,5 +1,6 @@
 import { T } from '@/components/ui/Typography';
-import { supabaseAdminServerComponentClient } from '@/supabase-clients/admin/supabaseAdminServerComponentClient';
+import { createSupabaseAdminServerComponentClient } from '@/supabase-clients/admin/createSupabaseAdminServerComponentClient';
+import { AppSupabaseClient } from '@/types';
 import { stripe } from '@/utils/stripe';
 import { SaaSMetricsGraphs } from './SaasMetrics';
 
@@ -136,29 +137,29 @@ async function getChurnRate() {
   return monthlyChurnRates;
 }
 
-async function getTotalUserCount() {
-  const { data } = await supabaseAdminServerComponentClient.rpc(
+async function getTotalUserCount(supabaseClient: AppSupabaseClient) {
+  const { data } = await supabaseClient.rpc(
     'app_admin_get_total_user_count'
   );
   return data ?? 0;
 }
 
-async function getTotalOrganizationsCount() {
-  const { data } = await supabaseAdminServerComponentClient.rpc(
+async function getTotalOrganizationsCount(supabaseClient: AppSupabaseClient) {
+  const { data } = await supabaseClient.rpc(
     'app_admin_get_total_organization_count'
   );
   return data ?? 0;
 }
 
-async function getTotalProjectsCount() {
-  const { data } = await supabaseAdminServerComponentClient.rpc(
+async function getTotalProjectsCount(supabaseClient: AppSupabaseClient) {
+  const { data } = await supabaseClient.rpc(
     'app_admin_get_total_project_count'
   );
   return data ?? 0;
 }
 
-async function getOrganizationCountByMonth() {
-  const { data } = await supabaseAdminServerComponentClient.rpc(
+async function getOrganizationCountByMonth(supabaseClient: AppSupabaseClient) {
+  const { data } = await supabaseClient.rpc(
     'app_admin_get_organizations_created_per_month'
   );
   if (!data) {
@@ -174,8 +175,8 @@ async function getOrganizationCountByMonth() {
   return formattedData;
 }
 
-async function getProjectCountByMonth() {
-  const { data } = await supabaseAdminServerComponentClient.rpc(
+async function getProjectCountByMonth(supabaseClient: AppSupabaseClient) {
+  const { data } = await supabaseClient.rpc(
     'app_admin_get_projects_created_per_month'
   );
   if (!data) {
@@ -191,8 +192,8 @@ async function getProjectCountByMonth() {
   return formattedData;
 }
 
-async function getUserCountByMonth() {
-  const { data } = await supabaseAdminServerComponentClient.rpc(
+async function getUserCountByMonth(supabaseClient: AppSupabaseClient) {
+  const { data } = await supabaseClient.rpc(
     'app_admin_get_users_created_per_month'
   );
   if (!data) {
@@ -208,14 +209,15 @@ async function getUserCountByMonth() {
   return formattedData;
 }
 
-async function getActiveUsers() {
-  const { data } = await supabaseAdminServerComponentClient.rpc(
+async function getActiveUsers(supabaseClient: AppSupabaseClient) {
+  const { data } = await supabaseClient.rpc(
     'app_admin_get_recent_30_day_signin_count'
   );
   return data ?? [];
 }
 
 export default async function AdminPanel() {
+  const supabaseClient = createSupabaseAdminServerComponentClient();
   const [
     currentMRR,
     mrr,
@@ -231,16 +233,15 @@ export default async function AdminPanel() {
     getCurrentMRR(),
     getMRR(),
     getChurnRate(),
-    getTotalUserCount(),
-    getTotalOrganizationsCount(),
-    getTotalProjectsCount(),
-    getOrganizationCountByMonth(),
-    getProjectCountByMonth(),
-    getUserCountByMonth(),
-    getActiveUsers(),
+    getTotalUserCount(supabaseClient),
+    getTotalOrganizationsCount(supabaseClient),
+    getTotalProjectsCount(supabaseClient),
+    getOrganizationCountByMonth(supabaseClient),
+    getProjectCountByMonth(supabaseClient),
+    getUserCountByMonth(supabaseClient),
+    getActiveUsers(supabaseClient),
   ]);
 
-  console.log(churnRate);
   return (
     <div className="space-y-4">
       <SaaSMetricsGraphs

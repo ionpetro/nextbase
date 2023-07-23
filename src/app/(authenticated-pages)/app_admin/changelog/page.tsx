@@ -6,10 +6,10 @@ import { Button } from '@/components/ui/Button';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { customMDXComponents } from '@/components/mdxComponents';
 import { cn } from '@/utils/cn';
-import { supabaseAdminServerComponentClient } from '@/supabase-clients/admin/supabaseAdminServerComponentClient';
+import { createSupabaseAdminServerComponentClient } from '@/supabase-clients/admin/createSupabaseAdminServerComponentClient';
 
 export default async function Page() {
-  const changelogItemsResponse = await supabaseAdminServerComponentClient
+  const changelogItemsResponse = await createSupabaseAdminServerComponentClient()
     .from('internal_changelog')
     .select('*');
 
