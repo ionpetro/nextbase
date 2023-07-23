@@ -3,11 +3,12 @@ import { AccountSettings } from './AccountSettings';
 import { errors } from '@/utils/errors';
 
 import { getUserProfile } from '@/utils/supabase-queries';
-import { supabaseUserServerComponentClient } from '@/supabase-clients/user/supabaseUserServerComponentClient';
+import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
 
 export default async function AccountSettingsPage() {
+  const supabaseClient = createSupabaseUserServerComponentClient();
   const { data, error } =
-    await supabaseUserServerComponentClient.auth.getUser();
+    await supabaseClient.auth.getUser();
   if (error) {
     errors.add(error);
     return <p>Error: An error occurred.</p>;
@@ -18,7 +19,7 @@ export default async function AccountSettingsPage() {
     return <p>No user</p>;
   }
   const userProfile = await getUserProfile(
-    supabaseUserServerComponentClient,
+    supabaseClient,
     data.user.id
   );
 

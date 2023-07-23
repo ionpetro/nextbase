@@ -10,18 +10,18 @@ import { ReactNode } from 'react';
 import { z } from 'zod';
 import { TeamContextProvider } from '@/contexts/TeamContext';
 import { ProjectContextProvider } from '@/contexts/ProjectContext';
-import { Anchor } from '@/components/Anchor';
 import { SpecificProjectClientLayout } from './SpecificProjectClientLayout';
 import { getNormalizedSubscription } from '@/utils/supabase/subscriptions';
-import { supabaseUserServerComponentClient } from '@/supabase-clients/user/supabaseUserServerComponentClient';
+import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
 
 const paramsSchema = z.object({
   projectId: z.string(),
 });
 
 async function fetchdata(projectId: string) {
+  const supabaseClient = createSupabaseUserServerComponentClient();
   const { data: sessionResponse, error: userError } =
-    await supabaseUserServerComponentClient.auth.getSession();
+    await supabaseClient.auth.getSession();
   if (!sessionResponse || !sessionResponse.session?.user) {
     throw new Error('User not found');
   }
@@ -30,7 +30,7 @@ async function fetchdata(projectId: string) {
   }
 
   const projectByIdData = await getProjectById(
-    supabaseUserServerComponentClient,
+    supabaseClient,
     projectId
   );
   const [
@@ -41,22 +41,22 @@ async function fetchdata(projectId: string) {
     normalizedSubscription,
   ] = await Promise.all([
     getOrganizationById(
-      supabaseUserServerComponentClient,
+      supabaseClient,
       projectByIdData.organization_id
     ),
     getUserOrganizationRole(
-      supabaseUserServerComponentClient,
+      supabaseClient,
       sessionResponse.session.user.id,
       projectByIdData.organization_id
     ),
-    getTeamById(supabaseUserServerComponentClient, projectByIdData.team_id),
+    getTeamById(supabaseClient, projectByIdData.team_id),
     getUserTeamRole(
-      supabaseUserServerComponentClient,
+      supabaseClient,
       sessionResponse.session.user.id,
       projectByIdData.team_id
     ),
     getNormalizedSubscription(
-      supabaseUserServerComponentClient,
+      supabaseClient,
       projectByIdData.organization_id
     ),
   ]);

@@ -1,11 +1,11 @@
-import { supabaseUserServerComponentClient } from '@/supabase-clients/user/supabaseUserServerComponentClient';
+import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
 import { getTeamsInOrganization } from '@/utils/supabase/teams';
 import { z } from 'zod';
 import { OrganizationTeams } from './OrganizationTeams';
 
 async function fetchTeams(organizationId: string) {
   return await getTeamsInOrganization(
-    supabaseUserServerComponentClient,
+    createSupabaseUserServerComponentClient(),
     organizationId
   );
 }

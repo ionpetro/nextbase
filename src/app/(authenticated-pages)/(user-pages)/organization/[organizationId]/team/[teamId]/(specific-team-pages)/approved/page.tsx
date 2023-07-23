@@ -1,4 +1,4 @@
-import { supabaseUserServerComponentClient } from '@/supabase-clients/user/supabaseUserServerComponentClient';
+import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
 import { AppSupabaseClient } from '@/types';
 import { getApprovedProjectsByTeamId } from '@/utils/supabase/projects';
 import { z } from 'zod';
@@ -23,7 +23,7 @@ export default async function TeamPage({
   const parsedParams = paramsSchema.parse(params);
   const { teamId } = parsedParams;
   const projects = await fetchProjects(
-    supabaseUserServerComponentClient,
+    createSupabaseUserServerComponentClient(),
     teamId
   );
   return (

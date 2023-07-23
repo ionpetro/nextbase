@@ -7,7 +7,7 @@ import { errors } from '@/utils/errors';
 import { AppSupabaseClient } from '@/types';
 import { getIsAppInMaintenanceMode } from '@/utils/supabase-queries';
 import localFont from 'next/font/local';
-import { supabaseUserServerComponentClient } from '@/supabase-clients/user/supabaseUserServerComponentClient';
+import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
 
 const satoshiFont = localFont({
   src: '../fonts/satoshi/Satoshi-Variable.woff2',
@@ -50,8 +50,8 @@ export const metadata = {
   icons: {
     icon: '/images/logo-black-main.ico',
   },
-  title:'Nextbase Ultimate',
-  description:'Nextbase Ultimate',
+  title: 'Nextbase Ultimate',
+  description: 'Nextbase Ultimate',
 }
 
 export default async function RootLayout({
@@ -59,9 +59,10 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const supabaseClient = createSupabaseUserServerComponentClient();
   const [session, isAppInMaintenanceMode] = await Promise.all([
-    fetchSession(supabaseUserServerComponentClient),
-    fetchIsAppInMaintenanceMode(supabaseUserServerComponentClient),
+    fetchSession(supabaseClient),
+    fetchIsAppInMaintenanceMode(supabaseClient),
   ]);
   return (
     <html lang="en" className={satoshiFont.variable}>

@@ -1,4 +1,4 @@
-import { supabaseUserServerComponentClient } from '@/supabase-clients/user/supabaseUserServerComponentClient';
+import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
 import { AppSupabaseClient } from '@/types';
 import { errors } from '@/utils/errors';
 import { getIsAppAdmin } from '@/utils/supabase-queries';
@@ -19,8 +19,9 @@ export default async function Layout({
 }: {
   children: React.ReactNode;
 }) {
+  const supabaseClient = createSupabaseUserServerComponentClient();
   const { data, error } =
-    await supabaseUserServerComponentClient.auth.getUser();
+    await supabaseClient.auth.getUser();
   if (error) {
     errors.add(error);
     return <p>Error: An error occurred.</p>;
@@ -33,7 +34,7 @@ export default async function Layout({
 
   try {
     const { isUserAppAdmin } = await fetchData(
-      supabaseUserServerComponentClient,
+      supabaseClient,
       data.user
     );
 

@@ -1,4 +1,4 @@
-import { supabaseUserServerComponentClient } from '@/supabase-clients/user/supabaseUserServerComponentClient';
+import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
 import { AppSupabaseClient } from '@/types';
 import { getOrganizationById } from '@/utils/supabase-queries';
 import { EditOrganizationForm } from './EditOrganizationForm';
@@ -19,7 +19,7 @@ export default async function EditOrganizationPage({
 }) {
   const { organizationId } = params;
   const organization = await fetchData(
-    supabaseUserServerComponentClient,
+    createSupabaseUserServerComponentClient(),
     organizationId
   );
   return <EditOrganizationForm initialTitle={organization.title} />;

@@ -2,7 +2,7 @@ import { AppSupabaseClient } from '@/types';
 import { z } from 'zod';
 import { PendingApprovalTeamProjectsList } from './PendingApprovalTeamProjectsList';
 import { getPendingApprovalProjectsByTeamId } from '@/utils/supabase/projects';
-import { supabaseUserServerComponentClient } from '@/supabase-clients/user/supabaseUserServerComponentClient';
+import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
 
 const paramsSchema = z.object({
   teamId: z.coerce.number(),
@@ -23,7 +23,7 @@ export default async function TeamPage({
   const parsedParams = paramsSchema.parse(params);
   const { teamId } = parsedParams;
   const projects = await fetchProjects(
-    supabaseUserServerComponentClient,
+    createSupabaseUserServerComponentClient(),
     teamId
   );
   return (
