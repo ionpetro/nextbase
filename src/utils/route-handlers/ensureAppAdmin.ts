@@ -1,10 +1,11 @@
-import { supabaseUserRouteHandlerClient } from '@/supabase-clients/user/supabaseUserRouteHandlerClient';
+import { createSupabaseUserRouteHandlerClient } from '@/supabase-clients/user/createSupabaseUserRouteHandlerClient';
 import { getIsAppAdmin } from '../supabase-queries';
 
 export const ensureAppAdmin = async () => {
+  const supabaseClient = createSupabaseUserRouteHandlerClient();
   const {
     data: { session },
-  } = await supabaseUserRouteHandlerClient.auth.getSession();
+  } = await supabaseClient.auth.getSession();
 
   if (!session || !session.user) {
     throw new Error(
@@ -13,7 +14,7 @@ export const ensureAppAdmin = async () => {
   }
 
   const isAppAdmin = await getIsAppAdmin(
-    supabaseUserRouteHandlerClient,
+    supabaseClient,
     session.user
   );
 

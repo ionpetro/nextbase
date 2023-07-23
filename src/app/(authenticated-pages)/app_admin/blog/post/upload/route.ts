@@ -1,9 +1,5 @@
-import { NextResponse, NextRequest } from 'next/server';
-import { supabaseAdminRouteHandlerClient } from '@/supabase-clients/admin/supabaseAdminRouteHandlerClient';
+import { NextRequest } from 'next/server';
 import { ensureAppAdmin } from '@/utils/route-handlers/ensureAppAdmin';
-import slugify from 'slugify';
-import { v4 } from 'uuid';
-import { withErrorHandler } from '@/utils/route-handlers/withErrorHandler';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 
 export async function POST(request: NextRequest) {

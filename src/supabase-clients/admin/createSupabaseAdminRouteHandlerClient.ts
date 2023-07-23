@@ -3,7 +3,7 @@ import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 // Outstanding bug
 //https://github.com/vercel/next.js/issues/45371
-export const supabaseAdminRouteHandlerClient =
+export const createSupabaseAdminRouteHandlerClient = () =>
   createRouteHandlerClient<Database>(
     {
       cookies,

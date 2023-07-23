@@ -1,28 +1,29 @@
 'use server';
-import { supabaseAdminServerActionClient } from '@/supabase-clients/admin/supabaseAdminServerActionClient';
+import { createSupabaseAdminServerActionClient } from '@/supabase-clients/admin/createSupabaseAdminServerActionClient';
 import { AdminGetUserData } from './types';
 
 export const adminGetUser = async (
   userId: string
 ): Promise<AdminGetUserData> => {
+  const supabaseClient = createSupabaseAdminServerActionClient();
   const [
     userProfileResponse,
     userPrivateInfoResponse,
     authUserResponse,
     isAppAdminResponse,
   ] = await Promise.all([
-    supabaseAdminServerActionClient
+    supabaseClient
       .from('user_profiles')
       .select('*')
       .eq('id', userId)
       .single(),
-    supabaseAdminServerActionClient
+    supabaseClient
       .from('user_private_info')
       .select('*')
       .eq('id', userId)
       .single(),
-    supabaseAdminServerActionClient.auth.admin.getUserById(userId),
-    supabaseAdminServerActionClient.rpc('check_if_user_is_app_admin', {
+    supabaseClient.auth.admin.getUserById(userId),
+    supabaseClient.rpc('check_if_user_is_app_admin', {
       user_id: userId,
     }),
   ]);
