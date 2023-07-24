@@ -150,6 +150,55 @@ export interface Database {
           }
         ]
       }
+      internal_blog_post_tags: {
+        Row: {
+          description: string | null
+          id: number
+          name: string
+          slug: string
+        }
+        Insert: {
+          description?: string | null
+          id?: never
+          name: string
+          slug: string
+        }
+        Update: {
+          description?: string | null
+          id?: never
+          name?: string
+          slug?: string
+        }
+        Relationships: []
+      }
+      internal_blog_post_tags_relationship: {
+        Row: {
+          blog_post_id: string
+          tag_id: number
+        }
+        Insert: {
+          blog_post_id: string
+          tag_id: number
+        }
+        Update: {
+          blog_post_id?: string
+          tag_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "internal_blog_post_tags_relationship_blog_post_id_fkey"
+            columns: ["blog_post_id"]
+            referencedRelation: "internal_blog_posts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "internal_blog_post_tags_relationship_tag_id_fkey"
+            columns: ["tag_id"]
+            referencedRelation: "internal_blog_post_tags"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       internal_blog_posts: {
         Row: {
           content: string

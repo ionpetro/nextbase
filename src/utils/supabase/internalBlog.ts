@@ -75,6 +75,53 @@ export const getPublishedBlogPosts = async (
   return data;
 };
 
+export const getPublishedBlogPostsByTagSlug = async (
+  supabaseClient: AppSupabaseClient,
+  tagSlug: string
+) => {
+
+  const { data: tag, error: tagError } = await supabaseClient
+    .from('internal_blog_post_tags')
+    .select('*')
+    .eq('slug', tagSlug)
+    .single();
+
+  if (tagError) {
+    throw tagError;
+  }
+
+
+  const {
+    data: blogPostTagRelationships,
+    error: blogPostTagRelationshipsError,
+  } = await supabaseClient
+    .from('internal_blog_post_tags_relationship')
+    .select('*')
+    .eq('tag_id', tag.id);
+
+  if (blogPostTagRelationshipsError) {
+    throw blogPostTagRelationshipsError;
+  }
+
+  const postIds = blogPostTagRelationships.map(
+    (relationship) => relationship.blog_post_id
+  );
+
+  const { data, error } = await supabaseClient
+    .from('internal_blog_posts')
+    .select(
+      '*, internal_blog_author_posts(*, internal_blog_author_profiles(*))'
+    )
+    .in('id', postIds)
+    .eq('status', 'published');
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};
+
 export const getBlogPostsByAuthorId = async (
   supabaseClient: AppSupabaseClient,
   authorId: string
@@ -128,6 +175,34 @@ export const getAllBlogPosts = async (supabaseClient: AppSupabaseClient) => {
 export const getAllAuthors = async (supabaseClient: AppSupabaseClient) => {
   const { data, error } = await supabaseClient
     .from('internal_blog_author_profiles')
+    .select('*');
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};
+
+export const getTagBySlug = async (
+  supabaseClient: AppSupabaseClient,
+  slug: string
+) => {
+  const { data, error } = await supabaseClient
+    .from('internal_blog_post_tags')
+    .select('*')
+    .eq('slug', slug)
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+}
+export const getAllBlogTags = async (supabaseClient: AppSupabaseClient) => {
+  const { data, error } = await supabaseClient
+    .from('internal_blog_post_tags')
     .select('*');
 
   if (error) {

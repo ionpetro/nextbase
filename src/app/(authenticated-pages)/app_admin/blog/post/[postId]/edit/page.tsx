@@ -2,12 +2,14 @@ import { Anchor } from '@/components/Anchor';
 import { Button } from '@/components/ui/Button';
 import { T } from '@/components/ui/Typography';
 import LeftArrowIcon from 'lucide-react/dist/esm/icons/arrow-left';
-import { BlogForm } from '../../../BlogForm';
+import { BlogForm, EditBlogFormProps } from '../../../BlogForm';
 import {
   createBlogPost,
   getAllAuthors,
+  getAllBlogTags,
   getBlogPostById,
   getBlogPostBySlug,
+  getBlogTagRelationships,
   updateBlogPost,
 } from '../../../actions';
 import { z } from 'zod';
@@ -27,7 +29,7 @@ export default async function CreateBlogPostPage({
   try {
     const { postId } = paramsSchema.parse(params);
     const post = await getBlogPostById(postId);
-    const [authors] = await Promise.all([getAllAuthors()]);
+    const [authors, tags, blogTagRelationships] = await Promise.all([getAllAuthors(), getAllBlogTags(), getBlogTagRelationships(postId)]);
     const authorBlogPosts = Array.isArray(post.internal_blog_author_posts)
       ? post.internal_blog_author_posts[0]
       : post.internal_blog_author_posts;
@@ -35,7 +37,7 @@ export default async function CreateBlogPostPage({
       throw new Error('Linked author not found');
     }
     const postAuthorId = authorBlogPosts?.author_id;
-    const initialBlogPost: ComponentProps<typeof BlogForm>['initialBlogPost'] =
+    const initialBlogPost: EditBlogFormProps['initialBlogPost'] =
     {
       author_id: postAuthorId,
       content: post.content,
@@ -45,6 +47,7 @@ export default async function CreateBlogPostPage({
       summary: post.summary,
       title: post.title,
       status: post.status,
+      tag_ids: blogTagRelationships.map((relationship) => relationship.tag_id),
     };
     return (
       <div className="space-y-4">
@@ -58,6 +61,7 @@ export default async function CreateBlogPostPage({
         </Link>
         <T.H3>Edit Blog Post</T.H3>
         <BlogForm
+          tags={tags}
           authors={authors}
           mode="update"
           initialBlogPost={initialBlogPost}

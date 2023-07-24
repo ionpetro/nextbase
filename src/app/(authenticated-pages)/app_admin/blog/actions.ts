@@ -19,7 +19,8 @@ export const createAuthorProfile = async (
 
 export const createBlogPost = async (
   authorId: string,
-  payload: TableInsertPayload<'internal_blog_posts'>
+  payload: TableInsertPayload<'internal_blog_posts'>,
+  tagIds: number[]
 ) => {
   const { data, error } = await supabaseAdminClient
     .from('internal_blog_posts')
@@ -36,6 +37,8 @@ export const createBlogPost = async (
     author_id: authorId,
     post_id: data.id,
   });
+
+  await updateBlogTagRelationships(data.id, tagIds);
 
   revalidatePath('/');
 };
@@ -106,7 +109,8 @@ export const updateAuthorProfile = async (
 export const updateBlogPost = async (
   authorId: string,
   postId: string,
-  payload: Partial<TableUpdatePayload<'internal_blog_posts'>>
+  payload: Partial<TableUpdatePayload<'internal_blog_posts'>>,
+  tagIds: number[]
 ) => {
   const { data, error } = await supabaseAdminClient
     .from('internal_blog_posts')
@@ -140,6 +144,8 @@ export const updateBlogPost = async (
 
   // assign new author to the post
   await assignBlogPostToAuthor(authorId, postId);
+  await updateBlogTagRelationships(data.id, tagIds);
+
   revalidatePath('/');
 };
 
@@ -237,3 +243,104 @@ export const deleteBlogPost = async (postId: string) => {
 
   revalidatePath('/');
 };
+
+
+export const createBlogTag = async (
+  payload: TableInsertPayload<'internal_blog_post_tags'>
+) => {
+  const { error } = await supabaseAdminClient
+    .from('internal_blog_post_tags')
+    .insert(payload);
+
+  if (error) {
+    throw error;
+  }
+
+  revalidatePath('/');
+};
+
+export const updateBlogTag = async (
+  id: number,
+  payload: Partial<TableUpdatePayload<'internal_blog_post_tags'>>
+) => {
+  const { data, error } = await supabaseAdminClient
+    .from('internal_blog_post_tags')
+    .update(payload)
+    .eq('id', id)
+    .select('*')
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  revalidatePath('/');
+};
+
+export const deleteBlogTag = async (id: number) => {
+  const { error } = await supabaseAdminClient
+    .from('internal_blog_post_tags')
+    .delete()
+    .eq('id', id);
+
+  if (error) {
+    throw error;
+  }
+
+  revalidatePath('/');
+};
+
+export const getAllBlogTags = async () => {
+  const { data, error } = await supabaseAdminClient
+    .from('internal_blog_post_tags')
+    .select('*');
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};
+
+
+export const getBlogTagRelationships = async (blogPostId: string) => {
+  const { data, error } = await supabaseAdminClient
+    .from('internal_blog_post_tags_relationship')
+    .select('*')
+    .eq('blog_post_id', blogPostId);
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+}
+
+export const updateBlogTagRelationships = async (
+  blogPostId: string,
+  tagIds: number[]
+) => {
+  const { data, error } = await supabaseAdminClient
+    .from('internal_blog_post_tags_relationship')
+    .delete()
+    .eq('blog_post_id', blogPostId);
+
+  if (error) {
+    throw error;
+  }
+
+  for (const tagId of tagIds) {
+    const { error: error2 } = await supabaseAdminClient
+      .from('internal_blog_post_tags_relationship')
+      .insert({
+        blog_post_id: blogPostId,
+        tag_id: tagId,
+      });
+
+    if (error2) {
+      throw error2;
+    }
+  }
+
+  revalidatePath('/');
+}

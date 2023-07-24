@@ -21,6 +21,7 @@ export const internalBlogPostSchema = z.object({
   status: z.enum(['draft', 'published']),
   cover_image: z.string().optional(),
   author_id: z.string(),
+  tag_ids: z.array(z.number()),
 });
 
 export type InternalBlogPostSchema = z.infer<typeof internalBlogPostSchema>;

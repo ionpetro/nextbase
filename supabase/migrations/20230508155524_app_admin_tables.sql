@@ -35,6 +35,21 @@ CREATE TABLE internal_blog_author_posts (
   PRIMARY KEY (author_id, post_id)
 );
 
+CREATE TABLE internal_blog_post_tags (
+  id integer PRIMARY KEY generated always AS identity,
+  slug text NOT NULL,
+  name text NOT NULL,
+  description text
+);
+
+-- Create a table to handle the blog post and tag relationship
+CREATE TABLE internal_blog_post_tags_relationship (
+  blog_post_id uuid NOT NULL REFERENCES internal_blog_posts (id),
+  tag_id integer NOT NULL REFERENCES internal_blog_post_tags (id),
+  PRIMARY KEY (blog_post_id, tag_id)
+);
+
+
 
 
 -- Enable RLS on table internal_blog_posts
@@ -42,6 +57,11 @@ CREATE TABLE internal_blog_author_posts (
 ALTER TABLE internal_blog_posts enable ROW LEVEL SECURITY;
 ALTER TABLE internal_blog_author_profiles enable ROW LEVEL SECURITY;
 ALTER TABLE internal_blog_author_posts enable ROW LEVEL SECURITY;
+-- Enable RLS on table internal_blog_posts
+-- Enable RLS on table internal_blog_posts
+ALTER TABLE internal_blog_post_tags enable ROW LEVEL SECURITY;
+ALTER TABLE internal_blog_post_tags_relationship enable ROW LEVEL SECURITY;
+
 
 -- Policy: Anyone should be able to read internal_blog_posts
 CREATE POLICY "Allow anyone to read admin blog posts" ON internal_blog_posts FOR
@@ -54,6 +74,16 @@ SELECT USING (TRUE);
 -- Policy: Allow only authenticated users to create internal_blog_author_posts
 CREATE POLICY "Allow  any to read admin blog author posts" ON internal_blog_author_posts FOR
 SELECT USING (TRUE);
+
+
+-- Policy: Anyone should be able to read internal_blog_posts
+CREATE POLICY "Allow anyone to read admin blog post tags" ON internal_blog_post_tags FOR
+SELECT USING (TRUE);
+
+-- Policy Anyone should be able to read internal_blog_author_profiles
+CREATE POLICY "Allow anyone to read admin blog tag relationships" ON internal_blog_post_tags_relationship FOR
+SELECT USING (TRUE);
+
 
 CREATE TABLE internal_changelog (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,

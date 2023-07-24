@@ -18,6 +18,7 @@ import { toast } from 'react-hot-toast';
 import { useEffect, useRef } from 'react';
 import slugify from 'slugify';
 import { Switch } from '@/components/ui/Switch';
+import ReactSelect from 'react-select';
 
 import { useRouter } from 'next/navigation';
 import {
@@ -35,36 +36,44 @@ const baseDefaultValues: Partial<InternalBlogPostSchema> = {
   is_featured: false,
   title: '',
   content: '<p>Hello world</p>',
+  tag_ids: [],
 };
+
+type CreateBlogFormProps = {
+  mode: 'create';
+  onSubmit: (
+    authorId: string,
+    data: TableInsertPayload<'internal_blog_posts'>,
+    tagIds: number[]
+  ) => Promise<void>;
+}
+
+export type EditBlogFormProps = {
+  mode: 'update';
+  onSubmit: (
+    authorId: string,
+    postId: string,
+    data: TableUpdatePayload<'internal_blog_posts'>,
+    tagIds: number[]
+  ) => Promise<void>;
+  initialBlogPost: InternalBlogPostSchema;
+  postId: string;
+}
 
 type BlogFormProps = {
   authors: Table<'internal_blog_author_profiles'>[];
-  initialBlogPost?: InternalBlogPostSchema;
+  tags: Table<'internal_blog_post_tags'>[];
 } & (
-    | {
-      mode: 'create';
-      onSubmit: (
-        authorId: string,
-        data: TableInsertPayload<'internal_blog_posts'>
-      ) => Promise<void>;
-    }
-    | {
-      mode: 'update';
-      onSubmit: (
-        authorId: string,
-        postId: string,
-        data: TableUpdatePayload<'internal_blog_posts'>
-      ) => Promise<void>;
-      initialBlogPost: InternalBlogPostSchema;
-      postId: string;
-    }
+    | CreateBlogFormProps
+    | EditBlogFormProps
   );
 
 export const BlogForm = ({
   authors,
-  initialBlogPost,
+  tags,
   ...rest
 }: BlogFormProps) => {
+  const initialBlogPost = 'initialBlogPost' in rest ? rest.initialBlogPost : {};
   const defaultValues = Object.assign({}, baseDefaultValues, initialBlogPost);
   const router = useRouter();
   const { control, handleSubmit, formState, watch, setValue } =
@@ -88,11 +97,11 @@ export const BlogForm = ({
   const { mutate: submitPostMutation, isLoading: isSubmittingPost } =
     useMutation(
       async (data: InternalBlogPostSchema) => {
-        const { author_id, ...restPayload } = data;
+        const { author_id, tag_ids, ...restPayload } = data;
         if (rest.mode === 'create') {
-          return rest.onSubmit(author_id, restPayload);
+          return rest.onSubmit(author_id, restPayload, tag_ids,);
         } else {
-          return rest.onSubmit(author_id, rest.postId, restPayload);
+          return rest.onSubmit(author_id, rest.postId, restPayload, tag_ids);
         }
       },
       {
@@ -270,6 +279,44 @@ export const BlogForm = ({
                 ))}
               </SelectContent>
             </Select>
+          )}
+        />
+      </div>
+      <div className="space-y-2">
+        <Label>Tags</Label>
+        <Controller
+          control={control}
+          name="tag_ids"
+          render={({ field }) => (
+            // <Select value={field.value} onValueChange={field.onChange}>
+            //   <SelectTrigger>
+            //     <SelectValue placeholder="Select author" />
+            //   </SelectTrigger>
+            //   <SelectContent>
+            //     {authors.map((admin) => (
+            //       <SelectItem key={admin.user_id} value={admin.user_id}>
+            //         {admin.display_name || `User ${admin.user_id}`}
+            //       </SelectItem>
+            //     ))}
+            //   </SelectContent>
+            // </Select>
+            <ReactSelect
+              closeMenuOnSelect={false}
+              value={field.value.map((tagId) => ({
+                label: tags.find((tag) => tag.id === tagId)?.name ?? '',
+                value: tagId,
+              }))}
+              isMulti
+              name={field.name}
+              onBlur={field.onBlur}
+              onChange={(values) => {
+                field.onChange(values.map((value) => value.value));
+              }}
+              options={tags.map((tag) => ({
+                label: tag.name,
+                value: tag.id,
+              }))}
+            />
           )}
         />
       </div>

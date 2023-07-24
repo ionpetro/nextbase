@@ -2,11 +2,11 @@ import { Button } from '@/components/ui/Button';
 import { T } from '@/components/ui/Typography';
 import Link from 'next/link';
 import LeftArrowIcon from 'lucide-react/dist/esm/icons/arrow-left';
-import { createBlogPost, getAllAuthors } from '../../actions';
+import { createBlogPost, getAllAuthors, getAllBlogTags } from '../../actions';
 import { BlogForm } from '../../BlogForm';
 
 export default async function CreateBlogPostPage() {
-  const [authors] = await Promise.all([getAllAuthors()]);
+  const [authors, tags] = await Promise.all([getAllAuthors(), getAllBlogTags()]);
   return (
     <div className="space-y-4">
       <Link href="/app_admin/blog">
@@ -15,7 +15,7 @@ export default async function CreateBlogPostPage() {
         </Button>
       </Link>
       <T.H3>Create Blog Post</T.H3>
-      <BlogForm authors={authors} mode="create" onSubmit={createBlogPost} />
+      <BlogForm tags={tags} authors={authors} mode="create" onSubmit={createBlogPost} />
     </div>
   );
 }

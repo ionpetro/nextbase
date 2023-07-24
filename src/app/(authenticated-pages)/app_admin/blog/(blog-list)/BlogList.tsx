@@ -42,11 +42,13 @@ function BlogList({
           </p>
           <div className="flex items-center justify-between">
             <Anchor href={`/app_admin/blog/post/${blog.id}/edit`}>
-              Edit post
+              <Button type="button" variant="infoLink">
+                Edit post
+              </Button>
             </Anchor>
             <Anchor href={`/blog/${blog.slug}`}>View post</Anchor>
             <Button
-              variant="destructive"
+              variant="destructiveLink"
               disabled={isDeletingBlogPost}
               onClick={() => {
                 deleteBlogPostMutation(blog.id);

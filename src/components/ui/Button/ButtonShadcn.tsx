@@ -33,6 +33,8 @@ const buttonVariants = cva(
           'underline-offset-4 text-base rounded-lg shadow-none group-hover:underline text-secondary',
         infoLink:
           'underline-offset-4 text-base rounded-lg shadow-none group-hover:underline text-blue-500',
+        destructiveLink:
+          'underline-offset-4 text-base rounded-lg shadow-none group-hover:underline text-destructive',
       },
       size: {
         default: 'h-10 py-2 px-4',
