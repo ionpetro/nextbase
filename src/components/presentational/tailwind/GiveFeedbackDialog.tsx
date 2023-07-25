@@ -131,15 +131,6 @@ export const GiveFeedbackDialog = ({ isExpanded }: { isExpanded: boolean }) => {
               )}
             />
           </div>
-          <Anchor
-            href="/my-feedback"
-            className="flex underline items-center space-x-1"
-          >
-            <Mail className="w-6 h-6" />
-            <T.Small className="ml-2">
-              View all your feedback conversations
-            </T.Small>
-          </Anchor>
           <Button
             disabled={!isValid || isCreatingInternalFeedback}
             type="submit"

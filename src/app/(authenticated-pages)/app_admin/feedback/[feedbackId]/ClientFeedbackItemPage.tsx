@@ -6,11 +6,11 @@ import { Switch } from '@/components/ui/Switch';
 import { Label } from '@/components/ui/Label';
 import { useState } from 'react';
 import { Enum, Table } from '@/types';
-import { UpdateInternalFeedbackStatusDialog } from './UpdateInternalFeedbackStatusDialog';
-import { UpdateInternalFeedbackPriorityDialog } from './UpdateInternalFeedbackPriorityDialog';
+import { UpdateInternalFeedbackStatusDialog } from '@/components/presentational/tailwind/UpdateInternalFeedbackStatusDialog';
+import { UpdateInternalFeedbackPriorityDialog } from '@/components/presentational/tailwind/UpdateInternalFeedbackPriorityDialog';
 import { getPublicUserAvatarUrl } from '@/utils/helpers';
 
-import { UpdateInternalFeedbackTypeDialog } from './UpdateInternalFeedbackTypeDialog';
+import { UpdateInternalFeedbackTypeDialog } from '@/components/presentational/tailwind/UpdateInternalFeedbackTypeDialog';
 import { Anchor } from '@/components/Anchor';
 import { T } from '@/components/ui/Typography';
 import Image from 'next/image';
@@ -41,6 +41,7 @@ function UpdateType({
       currentType={currentType}
       isLoading={isLoading}
       onUpdate={mutate}
+      feedbackId={feedbackId}
     />
   );
 }

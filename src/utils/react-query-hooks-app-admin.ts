@@ -493,7 +493,10 @@ export const useUpdateInternalFeedbackThreadType = (
   const toastRef = useRef<string | null>(null);
   const queryClient = useQueryClient();
   return useMutation(
-    async (type: Enum<'internal_feedback_thread_type'>) => {
+    async ({ type }: {
+      feedbackId: string,
+      type: Enum<'internal_feedback_thread_type'>
+    }) => {
       const path = `/api/app_admin/internal_feedback/${feedbackId}/updateInternalFeedbackType`;
       const response = await axios.patch(
         path,

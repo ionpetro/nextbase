@@ -22,3 +22,9 @@ export const useUserProfile = (initialData?: Table<'user_profiles'>) => {
     }
   );
 };
+
+export const useGetUserProfileById = (userId: string) => {
+  return useQuery(['user-profile', userId], () =>
+    getUserProfile(supabaseUserClientComponentClient, userId)
+  );
+}

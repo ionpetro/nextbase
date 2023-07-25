@@ -14,7 +14,6 @@ export default async function BlogListPage() {
     getAllBlogTags(supabaseClient)
   ]);
 
-  console.log(tags);
   return (
 
     <div className="space-y-8 w-full">

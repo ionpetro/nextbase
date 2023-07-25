@@ -1,3 +1,4 @@
+'use client';
 import { useState } from 'react';
 import {
   Dialog,
@@ -10,54 +11,54 @@ import {
 } from '@/components/ui/Dialog';
 import { Button } from '@/components/ui/Button';
 import { Enum } from '@/types';
-import { FeedbackThreadStatusSelect } from './FeedbackThreadStatusSelect';
+import { FeedbackThreadPrioritySelect } from '@/components/presentational/tailwind/FeedbackThreadPrioritySelect';
 import { formatFieldValue } from '@/utils/feedback';
 
 type Props = {
-  onUpdate: (status: Enum<'internal_feedback_thread_status'>) => void;
-  currentStatus: Enum<'internal_feedback_thread_status'>;
+  onUpdate: (priority: Enum<'internal_feedback_thread_priority'>) => void;
+  currentPriority: Enum<'internal_feedback_thread_priority'>;
   isLoading: boolean;
 };
 
-export const UpdateInternalFeedbackStatusDialog = ({
+export const UpdateInternalFeedbackPriorityDialog = ({
   onUpdate,
-  currentStatus,
+  currentPriority,
   isLoading,
 }: Props) => {
   const [open, setOpen] = useState(false);
-  const [status, setStatus] =
-    useState<Enum<'internal_feedback_thread_status'>>(currentStatus);
+  const [priority, setPriority] =
+    useState<Enum<'internal_feedback_thread_priority'>>(currentPriority);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="outline">
-          Status: {formatFieldValue(currentStatus)}{' '}
+          Priority: {formatFieldValue(currentPriority)}
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Update Feedback Status</DialogTitle>
+          <DialogTitle>Update Feedback Priority</DialogTitle>
         </DialogHeader>
         <form
           onSubmit={(event) => {
             event.preventDefault();
-            onUpdate(status);
+            onUpdate(priority);
             setOpen(false);
           }}
         >
           <div className="space-y-2">
             <DialogDescription>
-              Update the status of this feedback thread.
+              Update the priority of this feedback thread.
             </DialogDescription>
-            <FeedbackThreadStatusSelect
-              value={status}
-              onChange={(newStatus) => setStatus(newStatus)}
+            <FeedbackThreadPrioritySelect
+              value={priority}
+              onChange={(newPriority) => setPriority(newPriority)}
             />
           </div>
           <DialogFooter>
             <Button type="submit" variant="success" disabled={isLoading}>
-              {isLoading ? 'Updating Status...' : 'Update'}
+              {isLoading ? 'Updating Priority...' : 'Update'}
             </Button>
             <Button
               type="button"
