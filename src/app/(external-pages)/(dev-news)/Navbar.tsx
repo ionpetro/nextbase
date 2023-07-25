@@ -85,13 +85,10 @@ export function Navbar() {
           <NavLink href="/docs" aria-label="Docs">
             Docs
           </NavLink>
-          <NavLink href="/demos" aria-label="Demos">
-            Demos
-          </NavLink>
-          <NavLink href="/changelog" aria-label="Demos">
+          <NavLink href="/changelog" aria-label="Changelog">
             Changelog
           </NavLink>
-          <NavLink href="/roadmap" aria-label="Demos">
+          <NavLink href="/roadmap" aria-label="Roadmap">
             Roadmap
           </NavLink>
         </div>
