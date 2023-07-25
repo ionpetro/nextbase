@@ -1,3 +1,3 @@
 export default function TermsPage() {
-  return <p>Your terms</p>;
+  return <p>Static page for your terms. [Work-in-progress]</p>;
 }

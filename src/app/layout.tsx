@@ -66,10 +66,6 @@ export default async function RootLayout({
   ]);
   return (
     <html lang="en" className={satoshiFont.variable}>
-      {/*
-        <head /> will contain the components returned by the nearest parent
-        head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
-      */}
       <head></head>
       <body>
         <AppProviders

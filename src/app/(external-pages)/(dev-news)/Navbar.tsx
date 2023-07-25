@@ -7,6 +7,8 @@ import { usePathname } from 'next/navigation';
 import { ComponentProps, useEffect, useState } from 'react';
 import { MobileNavigation } from './MobileNavigation';
 
+
+
 function NavLink({
   href,
   ...props
