@@ -19,7 +19,7 @@ export function FeedbackComponent({
     <div className="flex items-start space-x-4">
       <span className="flex space-x-2 items-center">
         <Image
-          className="rounded-full border border-slate-500"
+          className="rounded-full border border-slate-500 h-[24px] w-[24px]"
           alt={
             userData.full_name ??
             'user'
