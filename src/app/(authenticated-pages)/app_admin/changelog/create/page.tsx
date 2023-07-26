@@ -2,7 +2,6 @@
 import BasicPageHeading from '@/components/ui/Headings/BasicPageHeading';
 import ChangeLogListCard from '@/components/ui/ChangeLog/ChangeLogListCard';
 import LargeSectionHeading from '@/components/ui/Headings/LargeSectionHeading';
-
 import InternalRoadmapCard from '@/components/ui/Card/InternalRoadmapCard';
 import moment from 'moment';
 import { CreateChangelog } from './CreateChangelog';
@@ -10,6 +9,7 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 import { customMDXComponents } from '@/components/mdxComponents';
 import { cn } from '@/utils/cn';
 import { createSupabaseAdminServerComponentClient } from '@/supabase-clients/admin/createSupabaseAdminServerComponentClient';
+import { createChangelogAction } from './actions';
 
 export default async function Page() {
   const supabaseClient = createSupabaseAdminServerComponentClient();
@@ -20,7 +20,8 @@ export default async function Page() {
 
   const changelogItemsResponse = await supabaseClient
     .from('internal_changelog')
-    .select('*');
+    .select('*')
+    .order('created_at', { ascending: false });
 
   if (changelogItemsResponse.error) {
     throw changelogItemsResponse.error;
@@ -54,7 +55,9 @@ export default async function Page() {
       >
         <div>
           {/* Create Changelog Card */}
-          <CreateChangelog />
+          <CreateChangelog
+            createChangelogAction={createChangelogAction}
+          />
 
           {/* Previous Changelogs*/}
           <div className="space-y-8 mt-10">
