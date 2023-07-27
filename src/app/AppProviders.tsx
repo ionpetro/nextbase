@@ -65,14 +65,14 @@ export default function AppProviders({
   // This will be populated with nested layouts or pages
   children,
   initialSession,
-  initialIsAppInMaintenanceMode,
+  isAppInMaintenanceMode,
 }: {
   children: React.ReactNode;
   initialSession: Pick<
     SessionContextProviderProps,
     'initialSession'
   >['initialSession'];
-  initialIsAppInMaintenanceMode: boolean;
+  isAppInMaintenanceMode: boolean;
 }) {
   return (
     <QueryClientProvider client={queryClient}>
@@ -83,7 +83,7 @@ export default function AppProviders({
         <RouterEventWrapper>
           <NavigationProgressBar />
           <MaintenanceModeContextProvider
-            initialIsAppInMaintenanceMode={initialIsAppInMaintenanceMode}
+            isAppInMaintenanceMode={isAppInMaintenanceMode}
           >
             {children}
           </MaintenanceModeContextProvider>

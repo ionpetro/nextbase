@@ -1,7 +1,6 @@
 'use client';
 
 import { MaintenanceModeBanner } from '@/components/presentational/tailwind/MaintenanceModeBanner';
-import { useMaintenanceMode } from '@/contexts/MaintenanceModeContext';
 import { ReactNode, useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -14,7 +13,6 @@ export const dynamic = 'force-dynamic';
 export const fetchCache = 'only-no-store';
 
 export default function ClientLayout({ children }: { children: ReactNode }) {
-  const initialIsAppInMaintenanceMode = useMaintenanceMode();
   const router = useRouter();
   useEffect(() => {
     router.prefetch('/dashboard');
@@ -27,9 +25,7 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
       }}
     >
       <div className="row-auto">
-        <MaintenanceModeBanner
-          initialIsAppInMaintenanceMode={initialIsAppInMaintenanceMode}
-        />
+        <MaintenanceModeBanner />
       </div>
       <div
         className="grid"

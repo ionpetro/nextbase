@@ -1,14 +1,11 @@
 'use client';
-import { useGetIsAppInMaintenanceMode } from '@/utils/react-query-hooks';
+import { MaintenanceModeContext } from '@/contexts/MaintenanceModeContext';
 import WrenchIcon from 'lucide-react/dist/esm/icons/wrench';
-export function MaintenanceModeBanner({
-  initialIsAppInMaintenanceMode,
-}: {
-  initialIsAppInMaintenanceMode: boolean;
-}) {
-  const { data: isAppInMaintenanceMode } = useGetIsAppInMaintenanceMode(
-    initialIsAppInMaintenanceMode
-  );
+import { useContext } from 'react';
+export function MaintenanceModeBanner() {
+  const isAppInMaintenanceMode = useContext(
+    MaintenanceModeContext
+  );;
 
   if (!isAppInMaintenanceMode) {
     return null;

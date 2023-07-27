@@ -2,13 +2,10 @@
 import { AppAdminCreateUserDialog } from '@/components/presentational/tailwind/AppAdminCreateUserDialog';
 import { ConfirmSendLoginLinkDialog } from '@/components/presentational/tailwind/ConfirmSendLoginLinkDialog';
 import { DBFunction, UnwrapPromise, View } from '@/types';
-import {
-  useFetchUserImpersonationUrl,
-} from '@/utils/react-query-hooks-app-admin';
 import TableCell from '@/components/ui/Table/TableCell';
 import TableHeader from '@/components/ui/Table/TableHeader';
 import moment from 'moment';
-import { use, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import LoginIcon from 'lucide-react/dist/esm/icons/log-in';
 import MailIcon from 'lucide-react/dist/esm/icons/mail';
 import { useDebouncedValue } from 'rooks';
@@ -20,14 +17,43 @@ import { useRouter } from 'next/navigation';
 
 function RenderUser({
   user,
-  sendLoginLinkAction
+  sendLoginLinkAction,
+  getUserImpersonationUrlAction
 }: {
   user: DBFunction<'app_admin_get_all_users'>[number];
   sendLoginLinkAction: (email: string) => Promise<void>;
+  getUserImpersonationUrlAction: (userId: string) => Promise<URL>;
 }) {
   const sendLoginLinkToastRef = useRef<string | null>(null);
-  const { mutate: getImpersonationLink, isLoading: isImpersonating } =
-    useFetchUserImpersonationUrl();
+  const userImpersonationToastRef = useRef<string | null>(null);
+  const { mutate: getImpersonationLink, isLoading: isImpersonating } = useMutation(async () => {
+    return getUserImpersonationUrlAction(user.id);
+  }, {
+    // don't cache
+    cacheTime: 0,
+    onMutate: () => {
+      const toastId = toast.loading('Fetching login url...');
+      userImpersonationToastRef.current = toastId;
+    },
+    onSuccess: (url) => {
+      // You can optionally use a toast
+      window.navigator.clipboard.writeText(url.toString()).then(() => {
+        toast.success('Copied login url to clipboard', {
+          id: userImpersonationToastRef.current ?? undefined,
+        });
+        userImpersonationToastRef.current = null;
+      });
+    },
+    onError: (error) => {
+      const errorMessage =
+        error instanceof Error ? error.message : 'Failed to fetch login url';
+      toast.error('Failed to fetch login url ' + errorMessage, {
+        id: userImpersonationToastRef.current ?? undefined,
+      });
+      userImpersonationToastRef.current = null;
+    },
+  })
+
   const { mutate: sendLoginLink, isLoading: isSendingLoginLink } = useMutation(async (email: string) => {
     return await sendLoginLinkAction(email);
   }, {
@@ -122,7 +148,7 @@ function RenderUser({
               if (!user.id) {
                 throw new Error('user.id is undefined');
               }
-              getImpersonationLink(user.id);
+              getImpersonationLink();
             }}
             disabled={isImpersonating}
           >
@@ -138,7 +164,8 @@ export function RenderUsers({
   userData,
   sendLoginLinkAction,
   getUsersPaginatedAction,
-  createUserAction
+  createUserAction,
+  getUserImpersonationUrlAction
 }: {
   createUserAction: (email: string) => Promise<User>;
   userData: [number, DBFunction<'app_admin_get_all_users'>];
@@ -150,6 +177,7 @@ export function RenderUsers({
     number,
     DBFunction<'app_admin_get_all_users'>
   ]>;
+  getUserImpersonationUrlAction: (userId: string) => Promise<URL>;
 }) {
   const queryClient = useQueryClient();
 
@@ -292,6 +320,7 @@ export function RenderUsers({
           <tbody>
             {users.map((user) => (
               <RenderUser
+                getUserImpersonationUrlAction={getUserImpersonationUrlAction}
                 sendLoginLinkAction={sendLoginLinkAction}
                 key={user.id} user={user} />
             ))}

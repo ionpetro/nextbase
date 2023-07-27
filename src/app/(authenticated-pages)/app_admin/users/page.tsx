@@ -1,4 +1,4 @@
-import { createUserAction, sendLoginLinkAction } from './actions';
+import { createUserAction, getUserImpersonationUrlAction, sendLoginLinkAction } from './actions';
 import { RenderUsers } from './RenderUsers';
 import { getUsersPaginatedAction } from './actions';
 
@@ -14,6 +14,7 @@ export default async function AdminPanel() {
   return (
     <div>
       <RenderUsers
+        getUserImpersonationUrlAction={getUserImpersonationUrlAction}
         createUserAction={createUserAction}
         getUsersPaginatedAction={getUsersPaginatedAction}
         sendLoginLinkAction={sendLoginLinkAction} userData={data} />

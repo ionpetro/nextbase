@@ -1,4 +1,3 @@
-import { useGetIsAppInMaintenanceMode } from '@/utils/react-query-hooks';
 import { createContext, useContext } from 'react';
 
 export const MaintenanceModeContext = createContext<boolean>(false);
@@ -9,20 +8,14 @@ export function useMaintenanceMode() {
 
 export function MaintenanceModeContextProvider({
   children,
-  initialIsAppInMaintenanceMode,
+  isAppInMaintenanceMode,
 }: {
   children: React.ReactNode;
-  initialIsAppInMaintenanceMode: boolean;
+  isAppInMaintenanceMode: boolean;
 }) {
-  const { data: _isInMaintenanceMode } = useGetIsAppInMaintenanceMode(
-    initialIsAppInMaintenanceMode
-  );
-  // THIS is a hack to bypass the ts error as
-  // the _isInMaintenanceMode is never null since there is an initial value
-  const isInMaintenanceMode =
-    _isInMaintenanceMode ?? initialIsAppInMaintenanceMode;
+
   return (
-    <MaintenanceModeContext.Provider value={isInMaintenanceMode}>
+    <MaintenanceModeContext.Provider value={isAppInMaintenanceMode}>
       {children}
     </MaintenanceModeContext.Provider>
   );

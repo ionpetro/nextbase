@@ -2,7 +2,7 @@
 import { createSupabaseAdminServerActionClient } from '@/supabase-clients/admin/createSupabaseAdminServerActionClient';
 import { AdminGetUserData } from './types';
 
-export const adminGetUser = async (
+export const adminGetUserAction = async (
   userId: string
 ): Promise<AdminGetUserData> => {
   const supabaseClient = createSupabaseAdminServerActionClient();
@@ -60,3 +60,5 @@ export const adminGetUser = async (
     isAppAdmin,
   };
 };
+
+

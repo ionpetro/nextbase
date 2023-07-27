@@ -494,18 +494,6 @@ export function useUpdateUserEmailMutation() {
   );
 }
 
-export const useGetIsAppInMaintenanceMode = (initialData?: boolean) => {
-  return useQuery<boolean>(
-    ['getIsAppInMaintenanceMode'],
-    async () => {
-      return getIsAppInMaintenanceMode(supabaseUserClientComponentClient);
-    },
-    {
-      initialData,
-      refetchOnWindowFocus: false,
-    }
-  );
-};
 
 /* ==================== */
 /* AUTH */

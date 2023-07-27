@@ -70,7 +70,7 @@ export default async function RootLayout({
       <body>
         <AppProviders
           initialSession={session}
-          initialIsAppInMaintenanceMode={isAppInMaintenanceMode}
+          isAppInMaintenanceMode={isAppInMaintenanceMode}
         >
           {children}
         </AppProviders>

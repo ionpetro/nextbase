@@ -111,3 +111,48 @@ export async function getUsersPaginatedAction(
   return [pageNumber, data];
 
 }
+
+
+export async function getUserImpersonationUrlAction(userId: string): Promise<URL> {
+  const response = await supabaseAdminClient.auth.admin.getUserById(userId);
+
+  const { data: user, error: userError } = response;
+
+  if (userError) {
+    throw new Error(userError.message)
+  }
+
+  if (!user?.user) {
+    throw new Error('user does not exist')
+  }
+
+  if (!user.user.email) {
+    throw new Error('user does not have an email')
+  }
+
+  const generateLinkResponse = await supabaseAdminClient.auth.admin.generateLink({
+    email: user.user.email,
+    type: 'magiclink',
+  });
+
+  const { data: generateLinkData, error: generateLinkError } =
+    generateLinkResponse;
+
+  if (generateLinkError) {
+    throw new Error(generateLinkError.message)
+  }
+  const {
+    properties: { action_link },
+  } = generateLinkData;
+
+  if (process.env.NEXT_PUBLIC_SITE_URL !== undefined) {
+    // change the origin of the link to the site url
+    const checkAuthUrl = new URL(process.env.NEXT_PUBLIC_SITE_URL);
+    checkAuthUrl.pathname = '/auth/callback';
+    const url = new URL(action_link);
+    url.searchParams.set('redirect_to', checkAuthUrl.toString());
+    return url;
+  }
+
+  throw new Error('site url is undefined');
+}

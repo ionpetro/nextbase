@@ -22,7 +22,6 @@ export function ClientLayout({
   isUserAppAdmin: boolean;
   userProfile: Table<'user_profiles'>;
 }) {
-  const initialIsAppInMaintenanceMode = useMaintenanceMode();
   const { data } = useUserProfile(initialUserProfile);
   const userProfile = data ?? initialUserProfile;
   const segments = useSelectedLayoutSegments();
@@ -47,9 +46,7 @@ export function ClientLayout({
 
   return (
     <div className="flex flex-col h-full w-full">
-      <MaintenanceModeBanner
-        initialIsAppInMaintenanceMode={initialIsAppInMaintenanceMode}
-      />
+      <MaintenanceModeBanner />
       <div className="flex h-full">
         {isUserAppAdmin && isAppAdminLayout ? (
           <AppAdminSidebar
