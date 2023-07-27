@@ -24,36 +24,7 @@ import {
   internalBlogPostSchema,
 } from '@/utils/zod-schemas/internalBlog';
 
-export const useGetUsersInfiniteQuery = (
-  initialData: UnwrapPromise<ReturnType<typeof getUsersPaginated>>,
-  search?: string | undefined
-) => {
-  return useInfiniteQuery<UnwrapPromise<ReturnType<typeof getUsersPaginated>>>(
-    ['getAdminUsersPaginated', search],
-    async ({ pageParam }) => {
-      const path = `/api/app_admin/get-users-paginated/${pageParam}`;
-      const pathWithQuery = search ? `${path}?search=${search}` : path;
-      const response = await axios.get(pathWithQuery, {
-        withCredentials: true,
-      });
-      if (response.status !== 200) throw new Error(response.statusText);
-      return response.data;
-    },
-    {
-      getNextPageParam: (lastPage, _pages) => {
-        const pageNumber = lastPage[0];
-        const rows = lastPage[1];
 
-        if (rows.length < ADMIN_USER_LIST_VIEW_PAGE_SIZE) return undefined;
-        return pageNumber + 1;
-      },
-      initialData: {
-        pageParams: [0],
-        pages: [initialData],
-      },
-    }
-  );
-};
 
 export const useGetOrganizationsInfiniteQuery = (
   initialData: UnwrapPromise<ReturnType<typeof getOrganizationsPaginated>>,
