@@ -1,7 +1,20 @@
 import { T } from '@/components/ui/Typography';
 import Image from 'next/image';
 import { getPublicUserAvatarUrl } from '@/utils/helpers';
-import { useAdminGetUser } from '@/utils/react-query-hooks-app-admin';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+
+const useAdminGetUser = (userId: string) => {
+  return useQuery(['appAdminGetUser', userId], async () => {
+    const path = `/api/app_admin/get_user/${userId}`;
+    const response = await axios.get(path, {
+      withCredentials: true,
+    });
+    return response.data;
+  });
+};
+
+
 
 export function AdminViewUserDetails({ userId }: { userId: string }) {
   const { data: userData } = useAdminGetUser(userId);

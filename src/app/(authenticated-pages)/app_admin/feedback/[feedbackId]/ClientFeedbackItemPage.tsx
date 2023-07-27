@@ -14,10 +14,6 @@ import { UpdateInternalFeedbackTypeDialog } from '@/components/presentational/ta
 import { Anchor } from '@/components/Anchor';
 import { T } from '@/components/ui/Typography';
 import Image from 'next/image';
-
-import {
-  useAdminGetUser,
-} from '@/utils/react-query-hooks-app-admin';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
