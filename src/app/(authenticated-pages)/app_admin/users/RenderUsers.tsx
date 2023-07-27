@@ -1,30 +1,61 @@
 'use client';
 import { AppAdminCreateUserDialog } from '@/components/presentational/tailwind/AppAdminCreateUserDialog';
 import { ConfirmSendLoginLinkDialog } from '@/components/presentational/tailwind/ConfirmSendLoginLinkDialog';
-import { DBFunction, View } from '@/types';
+import { DBFunction, UnwrapPromise, View } from '@/types';
 import {
   useCreateUserMutation,
   useFetchUserImpersonationUrl,
-  useGetUsersInfiniteQuery,
-  useSendLoginLinkMutation,
 } from '@/utils/react-query-hooks-app-admin';
 import TableCell from '@/components/ui/Table/TableCell';
 import TableHeader from '@/components/ui/Table/TableHeader';
 import moment from 'moment';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import LoginIcon from 'lucide-react/dist/esm/icons/log-in';
 import MailIcon from 'lucide-react/dist/esm/icons/mail';
 import { useDebouncedValue } from 'rooks';
+import { useInfiniteQuery, useMutation } from '@tanstack/react-query';
+import { toast } from 'react-hot-toast';
+import { getUsersPaginatedAction } from './actions';
+import { ADMIN_USER_LIST_VIEW_PAGE_SIZE } from '@/constants';
 
 function RenderUser({
   user,
+  sendLoginLinkAction
 }: {
   user: DBFunction<'app_admin_get_all_users'>[number];
+  sendLoginLinkAction: (email: string) => Promise<void>;
 }) {
+  const toastRef = useRef<string | null>(null);
   const { mutate: getImpersonationLink, isLoading: isImpersonating } =
     useFetchUserImpersonationUrl();
-  const { mutate: sendLoginLink, isLoading: isSendingLoginLink } =
-    useSendLoginLinkMutation();
+  const { mutate: sendLoginLink, isLoading: isSendingLoginLink } = useMutation(async (email: string) => {
+    return await sendLoginLinkAction(email);
+  }, {
+    onMutate: () => {
+      const toastId = toast.loading('Sending login link...');
+      toastRef.current = toastId;
+    },
+    onSuccess: () => {
+      toast.success('Login link sent', {
+        id: toastRef.current ?? undefined,
+      });
+      toastRef.current = null;
+    },
+    onError: (error) => {
+      let message = `Failed to invite user`;
+      if (error instanceof Error) {
+        message += `: ${error.message}`;
+      } else if (typeof error === 'string') {
+        message += `: ${error}`;
+      }
+
+      toast.error(message, {
+        id: toastRef.current ?? undefined,
+      });
+      toastRef.current = null;
+    }
+  });
+
   return (
     <tr key={user.id}>
       <td className="p-0">
@@ -76,9 +107,7 @@ function RenderUser({
               if (!user.email) {
                 throw new Error('user.email is undefined');
               }
-              sendLoginLink({
-                email: user.email,
-              });
+              sendLoginLink(user.email);
             }}
           />
         </TableCell>
@@ -107,8 +136,10 @@ function RenderUser({
 
 export function RenderUsers({
   userData,
+  sendLoginLinkAction
 }: {
   userData: [number, DBFunction<'app_admin_get_all_users'>];
+  sendLoginLinkAction: (email: string) => Promise<void>;
 }) {
   const [searchText, setSearchText] = useState<string>('');
   const [debouncedSearchText] = useDebouncedValue(searchText, 500);
@@ -121,7 +152,28 @@ export function RenderUsers({
     isLoading: isLoadingNextPage,
     fetchNextPage,
     hasNextPage,
-  } = useGetUsersInfiniteQuery(userData, search);
+  } = useInfiniteQuery(
+    ['getAdminUsersPaginated', search],
+    async ({ pageParam }) => {
+      return getUsersPaginatedAction({
+        pageNumber: pageParam ?? 0,
+        search,
+      })
+    },
+    {
+      getNextPageParam: (lastPage, _pages) => {
+        const pageNumber = lastPage[0];
+        const rows = lastPage[1];
+
+        if (rows.length < ADMIN_USER_LIST_VIEW_PAGE_SIZE) return undefined;
+        return pageNumber + 1;
+      },
+      initialData: {
+        pageParams: [0],
+        pages: [userData],
+      },
+    },
+  );
 
   const { mutate: createUser, isLoading: isCreatingUser } =
     useCreateUserMutation({});
@@ -197,7 +249,9 @@ export function RenderUsers({
           </thead>
           <tbody>
             {users.map((user) => (
-              <RenderUser key={user.id} user={user} />
+              <RenderUser
+                sendLoginLinkAction={sendLoginLinkAction}
+                key={user.id} user={user} />
             ))}
           </tbody>
         </table>

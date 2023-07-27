@@ -282,50 +282,6 @@ export const useCreateUserMutation = ({
   );
 };
 
-export const useSendLoginLinkMutation = () => {
-  const toastRef = useRef<string | null>(null);
-
-  return useMutation(
-    async ({ email }: { email: string }) => {
-      const path = `/api/app_admin/send_login_link/${email}`;
-      const response = await axios.post(
-        path,
-        {},
-        {
-          withCredentials: true,
-        }
-      );
-      return response.data;
-    },
-    {
-      onMutate: () => {
-        const toastId = toast.loading('Sending login link...');
-        toastRef.current = toastId;
-      },
-      onSuccess: () => {
-        toast.success('Login link sent', {
-          id: toastRef.current ?? undefined,
-        });
-        toastRef.current = null;
-      },
-      onError: (error) => {
-        let message = `Failed to invite user`;
-        if (error instanceof AxiosError) {
-          message += `: ${error.response?.data.error}`;
-        } else if (error instanceof Error) {
-          message += `: ${error.message}`;
-        } else if (typeof error === 'string') {
-          message += `: ${error}`;
-        }
-
-        toast.error(message, {
-          id: toastRef.current ?? undefined,
-        });
-        toastRef.current = null;
-      },
-    }
-  );
-};
 
 
 
