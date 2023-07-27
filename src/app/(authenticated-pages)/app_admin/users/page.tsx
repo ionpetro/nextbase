@@ -1,16 +1,21 @@
-import { getUsersPaginated } from '@/utils/supabase-admin';
 import { sendLoginLinkAction } from './actions';
 import { RenderUsers } from './RenderUsers';
+import { getUsersPaginatedAction } from './actions';
 
 export const metadata = {
   title: 'User List | Admin Panel | Nextbase',
 }
 
 export default async function AdminPanel() {
-  const data = await getUsersPaginated(0, undefined);
+  const data = await getUsersPaginatedAction({
+    pageNumber: 0,
+    search: undefined,
+  });
   return (
     <div>
-      <RenderUsers sendLoginLinkAction={sendLoginLinkAction} userData={data} />
+      <RenderUsers
+        getUsersPaginatedAction={getUsersPaginatedAction}
+        sendLoginLinkAction={sendLoginLinkAction} userData={data} />
     </div>
   );
 }

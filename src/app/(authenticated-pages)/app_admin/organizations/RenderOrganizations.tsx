@@ -2,12 +2,12 @@
 import TableCell from '@/components/ui/Table/TableCell';
 import TableHeader from '@/components/ui/Table/TableHeader';
 import { DBFunction } from '@/types';
-import { useGetOrganizationsInfiniteQuery } from '@/utils/react-query-hooks-app-admin';
-
 import moment from 'moment';
 import { useState } from 'react';
 import MailIcon from 'lucide-react/dist/esm/icons/mail';
 import { useDebouncedValue } from 'rooks';
+import { ADMIN_ORGANIZATION_LIST_VIEW_PAGE_SIZE, ADMIN_USER_LIST_VIEW_PAGE_SIZE } from '@/constants';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
 function RenderOrganization({
   organization,
@@ -57,17 +57,56 @@ function RenderOrganization({
 
 export function RenderOrganizations({
   organizationsData,
+  getOrganizationsPaginatedAction
 }: {
   organizationsData: [number, DBFunction<'app_admin_get_all_organizations'>];
+  getOrganizationsPaginatedAction: ({
+    pageNumber,
+    search,
+  }: {
+    pageNumber: number;
+    search: string | undefined;
+  }) => Promise<[
+    number,
+    DBFunction<'app_admin_get_all_organizations'>
+  ]>;
 }) {
   const [searchText, setSearchText] = useState<string>('');
   const [debouncedSearchText] = useDebouncedValue(searchText, 500);
   const search =
     debouncedSearchText.length > 0 ? debouncedSearchText : undefined;
   // TODO: add pagination support here
-  const { data, isFetchingNextPage, isLoading, fetchNextPage, hasNextPage } =
-    useGetOrganizationsInfiniteQuery(organizationsData, search);
-  if (isLoading || !data) {
+  const {
+    data,
+    isFetchingNextPage,
+    isLoading: isLoadingNextPage,
+    fetchNextPage,
+    hasNextPage,
+  } = useInfiniteQuery(
+    ['getAdminOrganizationsPaginated', search],
+    async ({ pageParam }) => {
+      return getOrganizationsPaginatedAction({
+        pageNumber: pageParam ?? 0,
+        search,
+      })
+    },
+    {
+      getNextPageParam: (lastPage, _pages) => {
+        const pageNumber = lastPage[0];
+        const rows = lastPage[1];
+
+        if (rows.length < ADMIN_ORGANIZATION_LIST_VIEW_PAGE_SIZE) return undefined;
+        return pageNumber + 1;
+      },
+      initialData: {
+        pageParams: [0],
+        pages: [organizationsData],
+      },
+    },
+  );
+
+
+  if (isLoadingNextPage || !data) {
     return <div>Loading...</div>;
   }
   const { pages } = data;
@@ -134,7 +173,7 @@ export function RenderOrganizations({
             onClick={() => {
               fetchNextPage();
             }}
-            disabled={isLoading || isFetchingNextPage}
+            disabled={isLoadingNextPage || isFetchingNextPage}
           >
             Load More
           </button>

@@ -15,7 +15,6 @@ import MailIcon from 'lucide-react/dist/esm/icons/mail';
 import { useDebouncedValue } from 'rooks';
 import { useInfiniteQuery, useMutation } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
-import { getUsersPaginatedAction } from './actions';
 import { ADMIN_USER_LIST_VIEW_PAGE_SIZE } from '@/constants';
 
 function RenderUser({
@@ -136,10 +135,18 @@ function RenderUser({
 
 export function RenderUsers({
   userData,
-  sendLoginLinkAction
+  sendLoginLinkAction,
+  getUsersPaginatedAction
 }: {
   userData: [number, DBFunction<'app_admin_get_all_users'>];
   sendLoginLinkAction: (email: string) => Promise<void>;
+  getUsersPaginatedAction: (params: {
+    pageNumber: number;
+    search: string | undefined;
+  }) => Promise<[
+    number,
+    DBFunction<'app_admin_get_all_users'>
+  ]>;
 }) {
   const [searchText, setSearchText] = useState<string>('');
   const [debouncedSearchText] = useDebouncedValue(searchText, 500);

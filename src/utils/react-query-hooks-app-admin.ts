@@ -24,42 +24,6 @@ import {
   internalBlogPostSchema,
 } from '@/utils/zod-schemas/internalBlog';
 
-
-
-export const useGetOrganizationsInfiniteQuery = (
-  initialData: UnwrapPromise<ReturnType<typeof getOrganizationsPaginated>>,
-  search?: string | undefined
-) => {
-  return useInfiniteQuery<
-    UnwrapPromise<ReturnType<typeof getOrganizationsPaginated>>
-  >(
-    ['getAdminOrganizationsPaginated', search],
-    async ({ pageParam }) => {
-      const path = `/api/app_admin/get-organizations-paginated/${pageParam}`;
-      const pathWithQuery = search ? `${path}?search=${search}` : path;
-      const response = await axios.get(pathWithQuery, {
-        withCredentials: true,
-      });
-      if (response.status !== 200) throw new Error(response.statusText);
-      return response.data;
-    },
-    {
-      getNextPageParam: (lastPage, _pages) => {
-        const pageNumber = lastPage[0];
-        const rows = lastPage[1];
-
-        if (rows.length < ADMIN_ORGANIZATION_LIST_VIEW_PAGE_SIZE)
-          return undefined;
-        return pageNumber + 1;
-      },
-      initialData: {
-        pageParams: [0],
-        pages: [initialData],
-      },
-    }
-  );
-};
-
 const getUserImpersonationUrl = async (userId: string) => {
   const fetchPath = `/api/app_admin/impersonate_user/${userId}`;
   const response = await axios.get<{
