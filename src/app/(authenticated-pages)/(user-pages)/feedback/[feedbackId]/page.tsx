@@ -1,4 +1,4 @@
-import { getLoggedInUser } from "@/app/(authenticated-pages)/getLoggedInUser";
+import { getLoggedInUserAction } from "@/app/_server-actions/user";
 import { Anchor } from "@/components/Anchor";
 import { UpdateInternalFeedbackTypeDialog } from "@/components/presentational/tailwind/UpdateInternalFeedbackTypeDialog";
 import { Button } from "@/components/ui/Button";
@@ -130,7 +130,7 @@ export default async function FeedbackItemPage(
     feedbackThread,
     feedbackComments
   ] = await Promise.all([
-    getLoggedInUser(supabaseClient),
+    getLoggedInUserAction(supabaseClient),
     getInternalFeedbackById(supabaseClient, feedbackId),
     getInternalFeedbackComments(supabaseClient, feedbackId),
   ]);

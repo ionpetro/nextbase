@@ -13,7 +13,7 @@ import {
   DropdownMenuItem,
 } from '@/components/ui/DropdownMenu';
 import { Anchor } from '@/components/Anchor';
-import { Enum } from '@/types';
+import { Enum, Table } from '@/types';
 import moment from 'moment';
 import { AdminViewUserDetails } from '../_components/AdminViewUserDetails';
 import { useDebouncedValue } from 'rooks';
@@ -26,13 +26,28 @@ import {
   mapTypeToVariant,
   mapPriorityToVariant,
 } from '@/utils/feedback';
-import { useGetAllInternalFeedback } from '@/utils/react-query-hooks-app-admin';
+import { useQuery } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 
-export function ClientAdminFeedbackListPage() {
+export function ClientAdminFeedbackListPage({
+  getAllInternalFeedbackAction
+}: {
+  getAllInternalFeedbackAction: ({
+    query,
+    types,
+    statuses,
+    priorities
+  }: {
+    query: string,
+    types: Array<Enum<'internal_feedback_thread_type'>>,
+    statuses: Array<Enum<'internal_feedback_thread_status'>>,
+    priorities: Array<Enum<'internal_feedback_thread_priority'>>,
+  }) => Promise<Array<Table<'internal_feedback_threads'>>>
+}) {
   const [searchText, setSearchText] = useState<string>('');
 
   const [debouncedSearchText] = useDebouncedValue(searchText, 500);
-
+  const router = useRouter();
   const [filters, setFilters] = useState<{
     types: Array<Enum<'internal_feedback_thread_type'>>;
     priorities: Array<Enum<'internal_feedback_thread_priority'>>;
@@ -42,11 +57,18 @@ export function ClientAdminFeedbackListPage() {
     priorities: [],
     statuses: [],
   });
-
-  const { data: feedbackList, isLoading } = useGetAllInternalFeedback({
-    query: debouncedSearchText,
-    filters,
-  });
+  const { data: feedbackList, isLoading } = useQuery(['app-admin-feedback-list', debouncedSearchText, filters], async () => {
+    return getAllInternalFeedbackAction({
+      query: debouncedSearchText,
+      types: filters.types,
+      statuses: filters.statuses,
+      priorities: filters.priorities,
+    });
+  }, {
+    onSuccess: () => {
+      router.refresh();
+    }
+  })
   return (
     <div className="space-y-4">
       {/* Filter and Search */}
@@ -193,7 +215,7 @@ export function ClientAdminFeedbackListPage() {
       </div>
 
       {/* Feedback list table */}
-      <div className="flex rounded-lg bg-clip-border border border-gray-200 max-w-[1296px] overflow-hidden">
+      {!feedbackList || isLoading ? <p>Loading...</p> : <div className="flex rounded-lg bg-clip-border border border-gray-200 max-w-[1296px] overflow-hidden">
         <table className="w-full bg-clip-content border-slate-200">
           <thead className="w-full bg-clip-border">
             <tr className="p-0 ">
@@ -218,57 +240,55 @@ export function ClientAdminFeedbackListPage() {
             </tr>
           </thead>
           <tbody>
-            {feedbackList
-              ? feedbackList.map((feedback) => (
-                <tr className="p-0" key={feedback.id}>
-                  <td className="p-0 ">
-                    <TableCell className="px-6 py-4 truncate">
-                      <AdminViewUserDetails userId={feedback.user_id} />
+            {feedbackList.map((feedback) => (
+              <tr className="p-0" key={feedback.id}>
+                <td className="p-0 ">
+                  <TableCell className="px-6 py-4 truncate">
+                    <AdminViewUserDetails userId={feedback.user_id} />
+                  </TableCell>
+                </td>
+                <td className="p-0 ">
+                  <Anchor
+                    className=" "
+                    key={feedback.id}
+                    href={`/app_admin/feedback/${feedback.id}`}
+                  >
+                    <TableCell className="text-blue-500 px-6 py-4 truncate font-[500] hover:underline">
+                      {feedback.title}
                     </TableCell>
-                  </td>
-                  <td className="p-0 ">
-                    <Anchor
-                      className=" "
-                      key={feedback.id}
-                      href={`/app_admin/feedback/${feedback.id}`}
-                    >
-                      <TableCell className="text-blue-500 px-6 py-4 truncate font-[500] hover:underline">
-                        {feedback.title}
-                      </TableCell>
-                    </Anchor>
-                  </td>
+                  </Anchor>
+                </td>
 
-                  <td className="p-0 ">
-                    <TableCell className="px-6 py-4 truncate">
-                      {formatFieldValue(feedback.type)}
-                    </TableCell>
-                  </td>
-                  <td className="p-0">
-                    <TableCell className="px-6 py-4 truncate">
-                      {formatFieldValue(feedback.priority)}
-                    </TableCell>
-                  </td>
-                  <td className="p-0">
-                    <TableCell className="px-6 py-4 truncate">
-                      {moment(feedback.created_at).format('LL')}
-                    </TableCell>
-                  </td>
-                  <td className="p-0">
-                    <TableCell className="flex items-center h-[58px] justify-center">
-                      <Badge
-                        className=" whitespace-nowrap "
-                        variant={mapStatusToVariant(feedback.status)}
-                      >
-                        {formatFieldValue(feedback.status)}
-                      </Badge>
-                    </TableCell>
-                  </td>
-                </tr>
-              ))
-              : null}
+                <td className="p-0 ">
+                  <TableCell className="px-6 py-4 truncate">
+                    {formatFieldValue(feedback.type)}
+                  </TableCell>
+                </td>
+                <td className="p-0">
+                  <TableCell className="px-6 py-4 truncate">
+                    {formatFieldValue(feedback.priority)}
+                  </TableCell>
+                </td>
+                <td className="p-0">
+                  <TableCell className="px-6 py-4 truncate">
+                    {moment(feedback.created_at).format('LL')}
+                  </TableCell>
+                </td>
+                <td className="p-0">
+                  <TableCell className="flex items-center h-[58px] justify-center">
+                    <Badge
+                      className=" whitespace-nowrap "
+                      variant={mapStatusToVariant(feedback.status)}
+                    >
+                      {formatFieldValue(feedback.status)}
+                    </Badge>
+                  </TableCell>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
-      </div>
+      </div>}
     </div>
   );
 }

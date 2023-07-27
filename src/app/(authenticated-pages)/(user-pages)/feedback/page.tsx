@@ -2,17 +2,17 @@ import { GiveFeedbackDialog } from "@/components/presentational/tailwind/GiveFee
 import { T } from "@/components/ui/Typography";
 import { createSupabaseUserServerComponentClient } from "@/supabase-clients/user/createSupabaseUserServerComponentClient";
 import { getAllInternalFeedbackForUser } from "@/utils/supabase/internalFeedback";
-import { getLoggedInUser } from "@/app/(authenticated-pages)/getLoggedInUser";
 import TableHeader from "@/components/ui/Table/TableHeader";
 import TableCell from "@/components/ui/Table/TableCell";
 import { Anchor } from "@/components/Anchor";
 import { formatFieldValue, mapStatusToVariant } from "@/utils/feedback";
 import moment from "moment";
 import { Badge } from "@/components/ui/Badge";
+import { getLoggedInUserAction } from "@/app/_server-actions/user";
 
 export default async function MyFeedback() {
   const supabaseClient = createSupabaseUserServerComponentClient();
-  const user = await getLoggedInUser(supabaseClient);
+  const user = await getLoggedInUserAction(supabaseClient);
   const feedbackList = await getAllInternalFeedbackForUser(supabaseClient, user.id);
   return <div className="space-y-4">
     <div className="space-y-2">

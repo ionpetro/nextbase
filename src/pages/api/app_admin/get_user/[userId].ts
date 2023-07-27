@@ -15,7 +15,7 @@ const adminGetUserApi = async (
   supabaseAdminServerClient: AppSupabaseClient
 ) => {
   const { userId } = querySchema.parse(req.query);
-
+  console.log({ userId });
   try {
     const data = await adminGetUser(supabaseAdminServerClient, userId);
     res.status(200).json(data);
