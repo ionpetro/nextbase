@@ -69,7 +69,7 @@ export async function createUserAction(email: string) {
     throw response.error;
   }
 
-  const user = response.data;
+  const { user } = response.data;
 
   if (user) {
     revalidatePath('/');

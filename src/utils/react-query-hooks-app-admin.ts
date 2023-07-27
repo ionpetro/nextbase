@@ -160,62 +160,6 @@ export const useDisableMaintenanceModeMutation = ({
   );
 };
 
-export const useCreateUserMutation = ({
-  onSuccess,
-  onError,
-}: {
-  onSuccess?: () => void;
-  onError?: (error: unknown) => void;
-}) => {
-  const queryClient = useQueryClient();
-  const toastRef = useRef<string | null>(null);
-
-  return useMutation(
-    async ({ email }: { email: string }) => {
-      const path = `/api/app_admin/create_account/${email}`;
-      const response = await axios.post(
-        path,
-        {},
-        {
-          withCredentials: true,
-        }
-      );
-      return response.data;
-    },
-    {
-      onMutate: () => {
-        const toastId = toast.loading('Creating user...');
-        toastRef.current = toastId;
-      },
-      onSuccess: () => {
-        onSuccess?.();
-        toast.success('User created', {
-          id: toastRef.current ?? undefined,
-        });
-        toastRef.current = null;
-        queryClient.invalidateQueries({
-          queryKey: ['getAdminUsersPaginated'],
-        });
-      },
-      onError: (error) => {
-        onError?.(error);
-        let message = `Failed to create user`;
-        if (error instanceof AxiosError) {
-          message += `: ${error.response?.data.error}`;
-        } else if (error instanceof Error) {
-          message += `: ${error.message}`;
-        } else if (typeof error === 'string') {
-          message += `: ${error}`;
-        }
-
-        toast.error(message, {
-          id: toastRef.current ?? undefined,
-        });
-        toastRef.current = null;
-      },
-    }
-  );
-};
 
 
 

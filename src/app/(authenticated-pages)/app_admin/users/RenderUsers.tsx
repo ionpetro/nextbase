@@ -3,19 +3,20 @@ import { AppAdminCreateUserDialog } from '@/components/presentational/tailwind/A
 import { ConfirmSendLoginLinkDialog } from '@/components/presentational/tailwind/ConfirmSendLoginLinkDialog';
 import { DBFunction, UnwrapPromise, View } from '@/types';
 import {
-  useCreateUserMutation,
   useFetchUserImpersonationUrl,
 } from '@/utils/react-query-hooks-app-admin';
 import TableCell from '@/components/ui/Table/TableCell';
 import TableHeader from '@/components/ui/Table/TableHeader';
 import moment from 'moment';
-import { useRef, useState } from 'react';
+import { use, useRef, useState } from 'react';
 import LoginIcon from 'lucide-react/dist/esm/icons/log-in';
 import MailIcon from 'lucide-react/dist/esm/icons/mail';
 import { useDebouncedValue } from 'rooks';
-import { useInfiniteQuery, useMutation } from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import { ADMIN_USER_LIST_VIEW_PAGE_SIZE } from '@/constants';
+import { User } from '@supabase/supabase-js';
+import { useRouter } from 'next/navigation';
 
 function RenderUser({
   user,
@@ -24,7 +25,7 @@ function RenderUser({
   user: DBFunction<'app_admin_get_all_users'>[number];
   sendLoginLinkAction: (email: string) => Promise<void>;
 }) {
-  const toastRef = useRef<string | null>(null);
+  const sendLoginLinkToastRef = useRef<string | null>(null);
   const { mutate: getImpersonationLink, isLoading: isImpersonating } =
     useFetchUserImpersonationUrl();
   const { mutate: sendLoginLink, isLoading: isSendingLoginLink } = useMutation(async (email: string) => {
@@ -32,13 +33,13 @@ function RenderUser({
   }, {
     onMutate: () => {
       const toastId = toast.loading('Sending login link...');
-      toastRef.current = toastId;
+      sendLoginLinkToastRef.current = toastId;
     },
     onSuccess: () => {
       toast.success('Login link sent', {
-        id: toastRef.current ?? undefined,
+        id: sendLoginLinkToastRef.current ?? undefined,
       });
-      toastRef.current = null;
+      sendLoginLinkToastRef.current = null;
     },
     onError: (error) => {
       let message = `Failed to invite user`;
@@ -49,9 +50,9 @@ function RenderUser({
       }
 
       toast.error(message, {
-        id: toastRef.current ?? undefined,
+        id: sendLoginLinkToastRef.current ?? undefined,
       });
-      toastRef.current = null;
+      sendLoginLinkToastRef.current = null;
     }
   });
 
@@ -136,8 +137,10 @@ function RenderUser({
 export function RenderUsers({
   userData,
   sendLoginLinkAction,
-  getUsersPaginatedAction
+  getUsersPaginatedAction,
+  createUserAction
 }: {
+  createUserAction: (email: string) => Promise<User>;
   userData: [number, DBFunction<'app_admin_get_all_users'>];
   sendLoginLinkAction: (email: string) => Promise<void>;
   getUsersPaginatedAction: (params: {
@@ -148,6 +151,8 @@ export function RenderUsers({
     DBFunction<'app_admin_get_all_users'>
   ]>;
 }) {
+  const queryClient = useQueryClient();
+
   const [searchText, setSearchText] = useState<string>('');
   const [debouncedSearchText] = useDebouncedValue(searchText, 500);
   const search =
@@ -181,9 +186,41 @@ export function RenderUsers({
       },
     },
   );
-
+  const router = useRouter();
+  const createUserToastRef = useRef<string | null>(null);
   const { mutate: createUser, isLoading: isCreatingUser } =
-    useCreateUserMutation({});
+    useMutation(async (email: string) => {
+      return createUserAction(email);
+    }, {
+      onMutate: () => {
+        const toastId = toast.loading('Creating user...');
+        createUserToastRef.current = toastId;
+      },
+      onSuccess: () => {
+        toast.success('User created', {
+          id: createUserToastRef.current ?? undefined,
+        });
+        createUserToastRef.current = null;
+        queryClient.invalidateQueries([
+          'getAdminUsersPaginated',
+          search,
+        ])
+        router.refresh();
+      },
+      onError: (error) => {
+        let message = `Failed to create user`;
+        if (error instanceof Error) {
+          message += `: ${error.message}`;
+        } else if (typeof error === 'string') {
+          message += `: ${error}`;
+        }
+
+        toast.error(message, {
+          id: createUserToastRef.current ?? undefined,
+        });
+        createUserToastRef.current = null;
+      },
+    });
 
   if (isLoadingNextPage || !data) {
     return <div>Loading...</div>;
@@ -216,9 +253,7 @@ export function RenderUsers({
           </div>
         </div>
         <AppAdminCreateUserDialog
-          onSubmit={(email) => {
-            createUser({ email });
-          }}
+          onSubmit={createUser}
           isLoading={isCreatingUser}
         />
       </div>
