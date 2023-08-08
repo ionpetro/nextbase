@@ -1,3 +1,17 @@
+-- Grant usage on the schema
+GRANT USAGE ON SCHEMA auth TO service_role;
+
+-- Grant select on all tables in the auth schema
+DO $$
+DECLARE tt text;
+BEGIN FOR tt IN (
+  SELECT table_name
+  FROM information_schema.tables
+  WHERE table_schema = 'auth'
+) LOOP EXECUTE 'GRANT SELECT ON auth.' || tt || ' TO service_role';
+END LOOP;
+END $$;
+
 DO $$
 DECLARE r RECORD;
 BEGIN FOR r IN (
