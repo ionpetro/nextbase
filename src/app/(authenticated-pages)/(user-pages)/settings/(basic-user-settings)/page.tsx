@@ -7,8 +7,7 @@ import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user
 
 export default async function AccountSettingsPage() {
   const supabaseClient = createSupabaseUserServerComponentClient();
-  const { data, error } =
-    await supabaseClient.auth.getUser();
+  const { data, error } = await supabaseClient.auth.getUser();
   if (error) {
     errors.add(error);
     return <p>Error: An error occurred.</p>;
@@ -18,10 +17,7 @@ export default async function AccountSettingsPage() {
     // But we need to check for it anyway for TypeScript.
     return <p>No user</p>;
   }
-  const userProfile = await getUserProfile(
-    supabaseClient,
-    data.user.id
-  );
+  const userProfile = await getUserProfile(supabaseClient, data.user.id);
 
   return <AccountSettings userProfile={userProfile} />;
 }

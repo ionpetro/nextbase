@@ -7,8 +7,6 @@ import { usePathname } from 'next/navigation';
 import { ComponentProps, useEffect, useState } from 'react';
 import { MobileNavigation } from './MobileNavigation';
 
-
-
 function NavLink({
   href,
   ...props
@@ -21,14 +19,10 @@ function NavLink({
     <Anchor
       {...props}
       href={href}
-      className={cn(
-        isActive ? 'font-bold text-blue-600' : 'font-medium',
-      )}
-    >
-    </Anchor>
+      className={cn(isActive ? 'font-bold text-blue-600' : 'font-medium')}
+    ></Anchor>
   );
 }
-
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);

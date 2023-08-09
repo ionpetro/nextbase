@@ -57,11 +57,15 @@ function SubscriptionDetails() {
             className="flex mr-2 p-2"
             href={`/organization/${organizationId}/settings/billing`}
           >
-            <T.P className='font-medium text-blue-600 hover:text-blue-500 underline underline-offset-4'>{sidenote}</T.P>
+            <T.P className="font-medium text-blue-600 hover:text-blue-500 underline underline-offset-4">
+              {sidenote}
+            </T.P>
           </Anchor>
         </HoverCardTrigger>
         <HoverCardContent className="w-60">
-          <T.P className="text-gray-700 leading-6 font-[550]">{description}</T.P>
+          <T.P className="text-gray-700 leading-6 font-[550]">
+            {description}
+          </T.P>
         </HoverCardContent>
       </HoverCard>
     );

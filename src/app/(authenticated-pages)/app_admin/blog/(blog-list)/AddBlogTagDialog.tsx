@@ -1,5 +1,12 @@
 import { useState } from 'react';
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/Dialog';
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from '@/components/ui/Dialog';
 import { Label } from '@/components/ui/Label';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -21,14 +28,18 @@ const blogTagSchema = z.object({
 
 type BlogTagFormType = z.infer<typeof blogTagSchema>;
 
-export const AddBlogTagDialog = ({ createBlogTag }: { createBlogTag: (data: BlogTagFormType) => Promise<void> }) => {
+export const AddBlogTagDialog = ({
+  createBlogTag,
+}: {
+  createBlogTag: (data: BlogTagFormType) => Promise<void>;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
-  const { control, handleSubmit, watch, setValue, formState } = useForm<BlogTagFormType>({ resolver: zodResolver(blogTagSchema) });
+  const { control, handleSubmit, watch, setValue, formState } =
+    useForm<BlogTagFormType>({ resolver: zodResolver(blogTagSchema) });
 
-  const { mutate: createBlogTagMutation, isLoading: isCreatingBlogTag } = useMutation(
-    async (payload: BlogTagFormType) => createBlogTag(payload),
-    {
+  const { mutate: createBlogTagMutation, isLoading: isCreatingBlogTag } =
+    useMutation(async (payload: BlogTagFormType) => createBlogTag(payload), {
       onSuccess: () => {
         router.refresh();
         toast.success('Successfully created blog tag');
@@ -37,8 +48,7 @@ export const AddBlogTagDialog = ({ createBlogTag }: { createBlogTag: (data: Blog
       onError: () => {
         toast.error('Failed to create blog tag');
       },
-    }
-  );
+    });
 
   const { isValid } = formState;
   const nameValue = watch('name');
@@ -52,7 +62,6 @@ export const AddBlogTagDialog = ({ createBlogTag }: { createBlogTag: (data: Blog
       });
       setValue('slug', slug);
     }
-
   }, [nameValue]);
 
   const onSubmit = (data: BlogTagFormType) => {
@@ -74,11 +83,27 @@ export const AddBlogTagDialog = ({ createBlogTag }: { createBlogTag: (data: Blog
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <Label>Name</Label>
-          <Controller control={control} name="name" render={({ field }) => <Input {...field} placeholder="Name" />} />
+          <Controller
+            control={control}
+            name="name"
+            render={({ field }) => <Input {...field} placeholder="Name" />}
+          />
           <Label>Description</Label>
-          <Controller control={control} name="description" render={({ field }) => <Textarea {...field} placeholder="Description" />} />
+          <Controller
+            control={control}
+            name="description"
+            render={({ field }) => (
+              <Textarea {...field} placeholder="Description" />
+            )}
+          />
           <Label>Slug</Label>
-          <Controller control={control} name="slug" render={({ field }) => <Input disabled {...field} placeholder="Slug" />} />
+          <Controller
+            control={control}
+            name="slug"
+            render={({ field }) => (
+              <Input disabled {...field} placeholder="Slug" />
+            )}
+          />
           <Button disabled={!isValid || isCreatingBlogTag} type="submit">
             {isCreatingBlogTag ? 'Submitting...' : 'Submit Tag'}
           </Button>

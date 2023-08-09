@@ -19,14 +19,10 @@ function NavLink({
     <Anchor
       {...props}
       href={href}
-      className={cn(
-        isActive ? 'font-bold text-blue-600' : 'font-medium',
-      )}
-    >
-    </Anchor>
+      className={cn(isActive ? 'font-bold text-blue-600' : 'font-medium')}
+    ></Anchor>
   );
 }
-
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);

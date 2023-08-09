@@ -79,7 +79,6 @@ export const getPublishedBlogPostsByTagSlug = async (
   supabaseClient: AppSupabaseClient,
   tagSlug: string
 ) => {
-
   const { data: tag, error: tagError } = await supabaseClient
     .from('internal_blog_post_tags')
     .select('*')
@@ -89,7 +88,6 @@ export const getPublishedBlogPostsByTagSlug = async (
   if (tagError) {
     throw tagError;
   }
-
 
   const {
     data: blogPostTagRelationships,
@@ -199,7 +197,7 @@ export const getTagBySlug = async (
   }
 
   return data;
-}
+};
 export const getAllBlogTags = async (supabaseClient: AppSupabaseClient) => {
   const { data, error } = await supabaseClient
     .from('internal_blog_post_tags')

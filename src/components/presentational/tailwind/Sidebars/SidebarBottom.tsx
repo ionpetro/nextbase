@@ -2,7 +2,11 @@ import Image from 'next/image';
 import { UserSidebarMenu } from '../UserSidebarMenu';
 import ChevronRight from 'lucide-react/dist/esm/icons/chevron-right';
 import { cn } from '@/utils/cn';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/Popover';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/Popover';
 
 export const SidebarBottom = ({
   avatarUrl,
@@ -37,7 +41,9 @@ export const SidebarBottom = ({
               {isExpanded ? (
                 <div className="flex flex-col w-full">
                   <div className="flex justify-between w-full items-center">
-                    <p className="text-sm text-white font-[500]">{userFullname}</p>
+                    <p className="text-sm text-white font-[500]">
+                      {userFullname}
+                    </p>
                     <ChevronRight className="text-2xl text-white opacity-0 group-hover:opacity-100" />
                   </div>
                   <p className="text-sm text-slate-400">{userEmail}</p>

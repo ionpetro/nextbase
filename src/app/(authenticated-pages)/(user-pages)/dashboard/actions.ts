@@ -1,8 +1,8 @@
-'use server'
+'use server';
 
-import { getLoggedInUserAction } from "@/app/_server-actions/user";
-import { createSupabaseUserServerActionClient } from "@/supabase-clients/user/createSupabaseUserServerActionClient";
-import { createOrganization } from "@/utils/supabase-queries";
+import { getLoggedInUserAction } from '@/app/_server-actions/user';
+import { createSupabaseUserServerActionClient } from '@/supabase-clients/user/createSupabaseUserServerActionClient';
+import { createOrganization } from '@/utils/supabase-queries';
 
 export async function createOrganizationAction(name: string) {
   const supabaseClient = createSupabaseUserServerActionClient();

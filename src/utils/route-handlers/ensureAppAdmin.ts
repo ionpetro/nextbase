@@ -13,10 +13,7 @@ export const ensureAppAdmin = async () => {
     );
   }
 
-  const isAppAdmin = await getIsAppAdmin(
-    supabaseClient,
-    session.user
-  );
+  const isAppAdmin = await getIsAppAdmin(supabaseClient, session.user);
 
   if (!isAppAdmin) {
     throw new Error('The user is not allowed to perform this action');

@@ -10,66 +10,68 @@ import { toast } from 'react-hot-toast';
 
 export function MaintenanceModeToggle({
   enableMaintenanceModeAction,
-  disableMaintenanceModeAction, isAppInMaintenanceMode
+  disableMaintenanceModeAction,
+  isAppInMaintenanceMode,
 }: {
-  isAppInMaintenanceMode: boolean
-  enableMaintenanceModeAction: () => Promise<void>
-  disableMaintenanceModeAction: () => Promise<void>
+  isAppInMaintenanceMode: boolean;
+  enableMaintenanceModeAction: () => Promise<void>;
+  disableMaintenanceModeAction: () => Promise<void>;
 }) {
   const enableToastRef = useRef<string | null>(null);
   const disableToastRef = useRef<string | null>(null);
   const router = useRouter();
-  const { mutate: enableMaintenanceModeMutation, isLoading: isEnabling } = useMutation(
-    async () => {
-      enableMaintenanceModeAction();
-    },
-    {
-      onMutate: () => {
-        const toastId = toast.loading('Enabling maintenance mode...');
-        enableToastRef.current = toastId;
+  const { mutate: enableMaintenanceModeMutation, isLoading: isEnabling } =
+    useMutation(
+      async () => {
+        enableMaintenanceModeAction();
       },
-      onSuccess: () => {
-
-        toast.success('App is now in maintenance mode', {
-          id: enableToastRef.current ?? undefined,
-        });
-        enableToastRef.current = null;
-        router.refresh()
+      {
+        onMutate: () => {
+          const toastId = toast.loading('Enabling maintenance mode...');
+          enableToastRef.current = toastId;
+        },
+        onSuccess: () => {
+          toast.success('App is now in maintenance mode', {
+            id: enableToastRef.current ?? undefined,
+          });
+          enableToastRef.current = null;
+          router.refresh();
+        },
+        onError: (error) => {
+          toast.error('Failed to set app maintenance mode', {
+            id: enableToastRef.current ?? undefined,
+          });
+          enableToastRef.current = null;
+        },
+        cacheTime: 0,
+      }
+    );
+  const { mutate: disableMaintenanceModeMutation, isLoading: isDisabling } =
+    useMutation(
+      async () => {
+        disableMaintenanceModeAction();
       },
-      onError: (error) => {
-        toast.error('Failed to set app maintenance mode', {
-          id: enableToastRef.current ?? undefined,
-        });
-        enableToastRef.current = null;
-      },
-      cacheTime: 0,
-    }
-  );
-  const { mutate: disableMaintenanceModeMutation, isLoading: isDisabling } = useMutation(
-    async () => {
-      disableMaintenanceModeAction();
-    },
-    {
-      onMutate: () => {
-        const toastId = toast.loading('Disabling maintenance mode...');
-        disableToastRef.current = toastId;
-      },
-      onSuccess: () => {
-        toast.success('App is no longer in maintenance mode', {
-          id: disableToastRef.current ?? undefined,
-        });
-        disableToastRef.current = null;
-        router.refresh()
-      },
-      onError: (error) => {
-        toast.error('Failed to set app maintenance mode', {
-          id: disableToastRef.current ?? undefined,
-        });
-        disableToastRef.current = null;
-      },
-      cacheTime: 0,
-    }
-  );
+      {
+        onMutate: () => {
+          const toastId = toast.loading('Disabling maintenance mode...');
+          disableToastRef.current = toastId;
+        },
+        onSuccess: () => {
+          toast.success('App is no longer in maintenance mode', {
+            id: disableToastRef.current ?? undefined,
+          });
+          disableToastRef.current = null;
+          router.refresh();
+        },
+        onError: (error) => {
+          toast.error('Failed to set app maintenance mode', {
+            id: disableToastRef.current ?? undefined,
+          });
+          disableToastRef.current = null;
+        },
+        cacheTime: 0,
+      }
+    );
 
   const toggleMaintenanceMode = async (checked: boolean) => {
     if (checked) {

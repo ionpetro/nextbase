@@ -9,7 +9,11 @@ import { useRef, useState } from 'react';
 import LoginIcon from 'lucide-react/dist/esm/icons/log-in';
 import MailIcon from 'lucide-react/dist/esm/icons/mail';
 import { useDebouncedValue } from 'rooks';
-import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import { ADMIN_USER_LIST_VIEW_PAGE_SIZE } from '@/constants';
 import { User } from '@supabase/supabase-js';
@@ -18,7 +22,7 @@ import { useRouter } from 'next/navigation';
 function RenderUser({
   user,
   sendLoginLinkAction,
-  getUserImpersonationUrlAction
+  getUserImpersonationUrlAction,
 }: {
   user: DBFunction<'app_admin_get_all_users'>[number];
   sendLoginLinkAction: (email: string) => Promise<void>;
@@ -26,61 +30,70 @@ function RenderUser({
 }) {
   const sendLoginLinkToastRef = useRef<string | null>(null);
   const userImpersonationToastRef = useRef<string | null>(null);
-  const { mutate: getImpersonationLink, isLoading: isImpersonating } = useMutation(async () => {
-    return getUserImpersonationUrlAction(user.id);
-  }, {
-    // don't cache
-    cacheTime: 0,
-    onMutate: () => {
-      const toastId = toast.loading('Fetching login url...');
-      userImpersonationToastRef.current = toastId;
-    },
-    onSuccess: (url) => {
-      // You can optionally use a toast
-      window.navigator.clipboard.writeText(url.toString()).then(() => {
-        toast.success('Copied login url to clipboard', {
-          id: userImpersonationToastRef.current ?? undefined,
-        });
-        userImpersonationToastRef.current = null;
-      });
-    },
-    onError: (error) => {
-      const errorMessage =
-        error instanceof Error ? error.message : 'Failed to fetch login url';
-      toast.error('Failed to fetch login url ' + errorMessage, {
-        id: userImpersonationToastRef.current ?? undefined,
-      });
-      userImpersonationToastRef.current = null;
-    },
-  })
-
-  const { mutate: sendLoginLink, isLoading: isSendingLoginLink } = useMutation(async (email: string) => {
-    return await sendLoginLinkAction(email);
-  }, {
-    onMutate: () => {
-      const toastId = toast.loading('Sending login link...');
-      sendLoginLinkToastRef.current = toastId;
-    },
-    onSuccess: () => {
-      toast.success('Login link sent', {
-        id: sendLoginLinkToastRef.current ?? undefined,
-      });
-      sendLoginLinkToastRef.current = null;
-    },
-    onError: (error) => {
-      let message = `Failed to invite user`;
-      if (error instanceof Error) {
-        message += `: ${error.message}`;
-      } else if (typeof error === 'string') {
-        message += `: ${error}`;
+  const { mutate: getImpersonationLink, isLoading: isImpersonating } =
+    useMutation(
+      async () => {
+        return getUserImpersonationUrlAction(user.id);
+      },
+      {
+        // don't cache
+        cacheTime: 0,
+        onMutate: () => {
+          const toastId = toast.loading('Fetching login url...');
+          userImpersonationToastRef.current = toastId;
+        },
+        onSuccess: (url) => {
+          // You can optionally use a toast
+          window.navigator.clipboard.writeText(url.toString()).then(() => {
+            toast.success('Copied login url to clipboard', {
+              id: userImpersonationToastRef.current ?? undefined,
+            });
+            userImpersonationToastRef.current = null;
+          });
+        },
+        onError: (error) => {
+          const errorMessage =
+            error instanceof Error
+              ? error.message
+              : 'Failed to fetch login url';
+          toast.error('Failed to fetch login url ' + errorMessage, {
+            id: userImpersonationToastRef.current ?? undefined,
+          });
+          userImpersonationToastRef.current = null;
+        },
       }
+    );
 
-      toast.error(message, {
-        id: sendLoginLinkToastRef.current ?? undefined,
-      });
-      sendLoginLinkToastRef.current = null;
+  const { mutate: sendLoginLink, isLoading: isSendingLoginLink } = useMutation(
+    async (email: string) => {
+      return await sendLoginLinkAction(email);
+    },
+    {
+      onMutate: () => {
+        const toastId = toast.loading('Sending login link...');
+        sendLoginLinkToastRef.current = toastId;
+      },
+      onSuccess: () => {
+        toast.success('Login link sent', {
+          id: sendLoginLinkToastRef.current ?? undefined,
+        });
+        sendLoginLinkToastRef.current = null;
+      },
+      onError: (error) => {
+        let message = `Failed to invite user`;
+        if (error instanceof Error) {
+          message += `: ${error.message}`;
+        } else if (typeof error === 'string') {
+          message += `: ${error}`;
+        }
+
+        toast.error(message, {
+          id: sendLoginLinkToastRef.current ?? undefined,
+        });
+        sendLoginLinkToastRef.current = null;
+      },
     }
-  });
+  );
 
   return (
     <tr key={user.id}>
@@ -165,7 +178,7 @@ export function RenderUsers({
   sendLoginLinkAction,
   getUsersPaginatedAction,
   createUserAction,
-  getUserImpersonationUrlAction
+  getUserImpersonationUrlAction,
 }: {
   createUserAction: (email: string) => Promise<User>;
   userData: [number, DBFunction<'app_admin_get_all_users'>];
@@ -173,10 +186,7 @@ export function RenderUsers({
   getUsersPaginatedAction: (params: {
     pageNumber: number;
     search: string | undefined;
-  }) => Promise<[
-    number,
-    DBFunction<'app_admin_get_all_users'>
-  ]>;
+  }) => Promise<[number, DBFunction<'app_admin_get_all_users'>]>;
   getUserImpersonationUrlAction: (userId: string) => Promise<URL>;
 }) {
   const queryClient = useQueryClient();
@@ -198,7 +208,7 @@ export function RenderUsers({
       return getUsersPaginatedAction({
         pageNumber: pageParam ?? 0,
         search,
-      })
+      });
     },
     {
       getNextPageParam: (lastPage, _pages) => {
@@ -212,14 +222,15 @@ export function RenderUsers({
         pageParams: [0],
         pages: [userData],
       },
-    },
+    }
   );
   const router = useRouter();
   const createUserToastRef = useRef<string | null>(null);
-  const { mutate: createUser, isLoading: isCreatingUser } =
-    useMutation(async (email: string) => {
+  const { mutate: createUser, isLoading: isCreatingUser } = useMutation(
+    async (email: string) => {
       return createUserAction(email);
-    }, {
+    },
+    {
       onMutate: () => {
         const toastId = toast.loading('Creating user...');
         createUserToastRef.current = toastId;
@@ -229,10 +240,7 @@ export function RenderUsers({
           id: createUserToastRef.current ?? undefined,
         });
         createUserToastRef.current = null;
-        queryClient.invalidateQueries([
-          'getAdminUsersPaginated',
-          search,
-        ])
+        queryClient.invalidateQueries(['getAdminUsersPaginated', search]);
         router.refresh();
       },
       onError: (error) => {
@@ -248,7 +256,8 @@ export function RenderUsers({
         });
         createUserToastRef.current = null;
       },
-    });
+    }
+  );
 
   if (isLoadingNextPage || !data) {
     return <div>Loading...</div>;
@@ -322,7 +331,9 @@ export function RenderUsers({
               <RenderUser
                 getUserImpersonationUrlAction={getUserImpersonationUrlAction}
                 sendLoginLinkAction={sendLoginLinkAction}
-                key={user.id} user={user} />
+                key={user.id}
+                user={user}
+              />
             ))}
           </tbody>
         </table>

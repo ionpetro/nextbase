@@ -1,16 +1,15 @@
-'use server'
+'use server';
 
-import { supabaseAdminClient } from "@/supabase-clients/admin/supabaseAdminClient";
+import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 import { render as renderEmail } from '@react-email/render';
 import { sendEmail } from '@/utils/api-routes/utils';
-import SignInEmail from "emails/SignInEmail";
-import { revalidatePath } from "next/cache";
-import { getUsersPaginated } from "@/utils/supabase-admin";
-import { ADMIN_USER_LIST_VIEW_PAGE_SIZE } from "@/constants";
-import { DBFunction } from "@/types";
+import SignInEmail from 'emails/SignInEmail';
+import { revalidatePath } from 'next/cache';
+import { getUsersPaginated } from '@/utils/supabase-admin';
+import { ADMIN_USER_LIST_VIEW_PAGE_SIZE } from '@/constants';
+import { DBFunction } from '@/types';
 
 export async function sendLoginLinkAction(email: string) {
-
   const response = await supabaseAdminClient.auth.admin.generateLink({
     email,
     type: 'magiclink',
@@ -59,7 +58,6 @@ export async function sendLoginLinkAction(email: string) {
   }
 }
 
-
 export async function createUserAction(email: string) {
   const response = await supabaseAdminClient.auth.admin.createUser({
     email,
@@ -77,23 +75,15 @@ export async function createUserAction(email: string) {
   }
 
   throw new Error('Failed to create user');
-
 }
 
-export async function getUsersPaginatedAction(
-  {
-    pageNumber,
-    search,
-  }
-    : {
-      pageNumber: number,
-      search: string | undefined,
-    }
-): Promise<[
-  number,
-  DBFunction<'app_admin_get_all_users'>
-]> {
-
+export async function getUsersPaginatedAction({
+  pageNumber,
+  search,
+}: {
+  pageNumber: number;
+  search: string | undefined;
+}): Promise<[number, DBFunction<'app_admin_get_all_users'>]> {
   const effectivePageNumber = pageNumber + 1;
   const { data, error } = await supabaseAdminClient.rpc(
     'app_admin_get_all_users',
@@ -109,37 +99,38 @@ export async function getUsersPaginatedAction(
   }
   revalidatePath('/');
   return [pageNumber, data];
-
 }
 
-
-export async function getUserImpersonationUrlAction(userId: string): Promise<URL> {
+export async function getUserImpersonationUrlAction(
+  userId: string
+): Promise<URL> {
   const response = await supabaseAdminClient.auth.admin.getUserById(userId);
 
   const { data: user, error: userError } = response;
 
   if (userError) {
-    throw new Error(userError.message)
+    throw new Error(userError.message);
   }
 
   if (!user?.user) {
-    throw new Error('user does not exist')
+    throw new Error('user does not exist');
   }
 
   if (!user.user.email) {
-    throw new Error('user does not have an email')
+    throw new Error('user does not have an email');
   }
 
-  const generateLinkResponse = await supabaseAdminClient.auth.admin.generateLink({
-    email: user.user.email,
-    type: 'magiclink',
-  });
+  const generateLinkResponse =
+    await supabaseAdminClient.auth.admin.generateLink({
+      email: user.user.email,
+      type: 'magiclink',
+    });
 
   const { data: generateLinkData, error: generateLinkError } =
     generateLinkResponse;
 
   if (generateLinkError) {
-    throw new Error(generateLinkError.message)
+    throw new Error(generateLinkError.message);
   }
   const {
     properties: { action_link },

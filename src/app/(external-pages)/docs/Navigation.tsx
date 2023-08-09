@@ -16,10 +16,7 @@ export function Navigation({ className }: { className?: string }) {
             <h2 className="font-bold text-gray-800 mb-0 leading-4 dark:text-white">
               {section.title}
             </h2>
-            <ul
-              role="list"
-              className="mt-2 ml-1  "
-            >
+            <ul role="list" className="mt-2 ml-1  ">
               {section.links.map((link) => (
                 <li key={link.href} className="relative flex items-center ">
                   <Link

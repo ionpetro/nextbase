@@ -24,7 +24,7 @@ export default async function BlogListPage() {
     getAllAuthors(),
     getAllBlogPosts(),
     getAllAppAdmins(),
-    getAllBlogTags()
+    getAllBlogTags(),
   ]);
   return (
     <div className="space-y-4">
@@ -40,8 +40,7 @@ export default async function BlogListPage() {
                   <Anchor href="/app_admin/blog/post/create">
                     <Button variant="default"> Create blog post</Button>
                   </Anchor>
-                ) : null
-                }
+                ) : null}
                 <ManageAuthorsDialog
                   appAdmins={appAdmins}
                   authorProfiles={authors}
@@ -58,9 +57,7 @@ export default async function BlogListPage() {
               </div>
             </div>
 
-            {authors.length ? (
-              null
-            ) : (
+            {authors.length ? null : (
               <T.Subtle>
                 You need to create an author profile before you can write a blog
                 post
@@ -75,7 +72,6 @@ export default async function BlogListPage() {
             )}
           </div>
         </div>
-
       </div>
     </div>
   );

@@ -9,9 +9,10 @@ import { cn } from '@/utils/cn';
 import { createSupabaseAdminServerComponentClient } from '@/supabase-clients/admin/createSupabaseAdminServerComponentClient';
 
 export default async function Page() {
-  const changelogItemsResponse = await createSupabaseAdminServerComponentClient()
-    .from('internal_changelog')
-    .select('*');
+  const changelogItemsResponse =
+    await createSupabaseAdminServerComponentClient()
+      .from('internal_changelog')
+      .select('*');
 
   if (changelogItemsResponse.error) {
     throw changelogItemsResponse.error;

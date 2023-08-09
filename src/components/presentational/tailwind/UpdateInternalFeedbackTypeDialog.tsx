@@ -16,20 +16,21 @@ import { FeedbackThreadTypeSelect } from '@/components/presentational/tailwind/F
 import { useRouter } from 'next/navigation';
 
 type Props = {
-  onUpdate: (({
-    feedbackId,
-    type
-  }: {
-    feedbackId: string;
-    type: Enum<'internal_feedback_thread_type'>
-  }) => void)
-  | (({
-    feedbackId,
-    type
-  }: {
-    feedbackId: string;
-    type: Enum<'internal_feedback_thread_type'>
-  }) => Promise<void>);
+  onUpdate:
+    | (({
+        feedbackId,
+        type,
+      }: {
+        feedbackId: string;
+        type: Enum<'internal_feedback_thread_type'>;
+      }) => void)
+    | (({
+        feedbackId,
+        type,
+      }: {
+        feedbackId: string;
+        type: Enum<'internal_feedback_thread_type'>;
+      }) => Promise<void>);
   currentType: Enum<'internal_feedback_thread_type'>;
   isLoading: boolean;
   feedbackId: string;
@@ -39,11 +40,12 @@ export const UpdateInternalFeedbackTypeDialog = ({
   onUpdate,
   currentType,
   isLoading,
-  feedbackId
+  feedbackId,
 }: Props) => {
   const router = useRouter();
   const [open, setOpen] = useState(false);
-  const [type, setType] = useState<Enum<'internal_feedback_thread_type'>>(currentType);
+  const [type, setType] =
+    useState<Enum<'internal_feedback_thread_type'>>(currentType);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -59,7 +61,7 @@ export const UpdateInternalFeedbackTypeDialog = ({
             event.preventDefault();
             onUpdate({
               type,
-              feedbackId
+              feedbackId,
             });
             setOpen(false);
             router.refresh();

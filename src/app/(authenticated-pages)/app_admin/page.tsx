@@ -138,9 +138,7 @@ async function getChurnRate() {
 }
 
 async function getTotalUserCount(supabaseClient: AppSupabaseClient) {
-  const { data } = await supabaseClient.rpc(
-    'app_admin_get_total_user_count'
-  );
+  const { data } = await supabaseClient.rpc('app_admin_get_total_user_count');
   return data ?? 0;
 }
 

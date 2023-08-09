@@ -29,7 +29,11 @@ export default async function CreateBlogPostPage({
   try {
     const { postId } = paramsSchema.parse(params);
     const post = await getBlogPostById(postId);
-    const [authors, tags, blogTagRelationships] = await Promise.all([getAllAuthors(), getAllBlogTags(), getBlogTagRelationships(postId)]);
+    const [authors, tags, blogTagRelationships] = await Promise.all([
+      getAllAuthors(),
+      getAllBlogTags(),
+      getBlogTagRelationships(postId),
+    ]);
     const authorBlogPosts = Array.isArray(post.internal_blog_author_posts)
       ? post.internal_blog_author_posts[0]
       : post.internal_blog_author_posts;
@@ -37,8 +41,7 @@ export default async function CreateBlogPostPage({
       throw new Error('Linked author not found');
     }
     const postAuthorId = authorBlogPosts?.author_id;
-    const initialBlogPost: EditBlogFormProps['initialBlogPost'] =
-    {
+    const initialBlogPost: EditBlogFormProps['initialBlogPost'] = {
       author_id: postAuthorId,
       content: post.content,
       cover_image: post.cover_image ?? undefined,

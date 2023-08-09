@@ -8,7 +8,7 @@ import {
   forwardRef,
   useContext,
   RefObject,
-  Ref
+  Ref,
 } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -61,5 +61,7 @@ export const Anchor = forwardRef<
         {...otherProps}
       ></Link>
     );
-  return <a ref={ref} href={href.toString()} onClick={onClick} {...otherProps}></a>;
+  return (
+    <a ref={ref} href={href.toString()} onClick={onClick} {...otherProps}></a>
+  );
 });

@@ -27,11 +27,7 @@ export default async function Layout({
 
   const [teamByIdData, teamRole] = await Promise.all([
     getTeamById(supabaseClient, teamId),
-    getUserTeamRole(
-      supabaseClient,
-      data.session.user.id,
-      teamId
-    ),
+    getUserTeamRole(supabaseClient, data.session.user.id, teamId),
   ]);
 
   return (

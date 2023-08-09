@@ -12,11 +12,7 @@ export const adminGetUserAction = async (
     authUserResponse,
     isAppAdminResponse,
   ] = await Promise.all([
-    supabaseClient
-      .from('user_profiles')
-      .select('*')
-      .eq('id', userId)
-      .single(),
+    supabaseClient.from('user_profiles').select('*').eq('id', userId).single(),
     supabaseClient
       .from('user_private_info')
       .select('*')
@@ -60,5 +56,3 @@ export const adminGetUserAction = async (
     isAppAdmin,
   };
 };
-
-

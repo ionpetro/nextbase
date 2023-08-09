@@ -18,7 +18,7 @@ const createChangelogFormSchema = z.object({
 type CreateChangelogFormSchema = z.infer<typeof createChangelogFormSchema>;
 
 export const CreateChangelog = ({
-  createChangelogAction
+  createChangelogAction,
 }: {
   createChangelogAction: ({
     title,
@@ -26,7 +26,7 @@ export const CreateChangelog = ({
   }: {
     title: string;
     changes: string;
-  }) => Promise<void>
+  }) => Promise<void>;
 }) => {
   const toastRef = useRef<string | null>(null);
   const router = useRouter();

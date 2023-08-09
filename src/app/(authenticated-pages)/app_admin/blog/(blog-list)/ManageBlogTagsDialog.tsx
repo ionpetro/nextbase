@@ -1,6 +1,13 @@
 'use client';
 import { useState } from 'react';
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/Dialog';
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from '@/components/ui/Dialog';
 import { Button } from '@/components/ui/Button';
 import { Table, TableInsertPayload, TableUpdatePayload } from '@/types';
 import { useMutation } from '@tanstack/react-query';
@@ -22,28 +29,28 @@ export const ManageBlogTagsDialog = ({
     data: Partial<TableUpdatePayload<'internal_blog_post_tags'>>
   ) => Promise<void>;
   deleteBlogTag: (id: number) => Promise<void>;
-  createBlogTag: (data: Partial<TableInsertPayload<'internal_blog_post_tags'>>) => Promise<void>;
+  createBlogTag: (
+    data: Partial<TableInsertPayload<'internal_blog_post_tags'>>
+  ) => Promise<void>;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
-  const {
-    mutate: deleteBlogTagMutation,
-    isLoading: isDeletingBlogTag,
-  } = useMutation<void, unknown, number>(
-    async (slug) => {
-      return deleteBlogTag(slug);
-    },
-    {
-      onSuccess: () => {
-        toast.success('Successfully deleted blog tag');
-        router.refresh();
+  const { mutate: deleteBlogTagMutation, isLoading: isDeletingBlogTag } =
+    useMutation<void, unknown, number>(
+      async (slug) => {
+        return deleteBlogTag(slug);
       },
-      onError: () => {
-        toast.error('Failed to delete blog tag');
-      },
-    }
-  );
+      {
+        onSuccess: () => {
+          toast.success('Successfully deleted blog tag');
+          router.refresh();
+        },
+        onError: () => {
+          toast.error('Failed to delete blog tag');
+        },
+      }
+    );
 
   return (
     <Dialog open={isOpen} onOpenChange={(newIsOpen) => setIsOpen(newIsOpen)}>
@@ -67,10 +74,7 @@ export const ManageBlogTagsDialog = ({
               >
                 <p>{tag.name}</p>
                 <div className="flex items-center gap-1">
-                  <EditBlogTagDialog
-                    tag={tag}
-                    updateBlogTag={updateBlogTag}
-                  />
+                  <EditBlogTagDialog tag={tag} updateBlogTag={updateBlogTag} />
                   <Button
                     variant="ghost"
                     onClick={() => {
@@ -84,9 +88,7 @@ export const ManageBlogTagsDialog = ({
               </div>
             ))}
           </div>
-          <AddBlogTagDialog
-            createBlogTag={createBlogTag}
-          />
+          <AddBlogTagDialog createBlogTag={createBlogTag} />
         </div>
       </DialogContent>
     </Dialog>

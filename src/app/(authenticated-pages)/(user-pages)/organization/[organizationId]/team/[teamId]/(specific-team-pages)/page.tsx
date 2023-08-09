@@ -22,7 +22,10 @@ export default async function TeamPage({
 }) {
   const parsedParams = paramsSchema.parse(params);
   const { teamId } = parsedParams;
-  const runs = await fetchRuns(createSupabaseUserServerComponentClient(), teamId);
+  const runs = await fetchRuns(
+    createSupabaseUserServerComponentClient(),
+    teamId
+  );
   return (
     <div className="space-y-4">
       <DraftTeamProjectsList initialRuns={runs} />

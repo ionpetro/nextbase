@@ -52,7 +52,7 @@ export const metadata = {
   },
   title: 'Nextbase Ultimate',
   description: 'Nextbase Ultimate',
-}
+};
 
 export default async function RootLayout({
   children,

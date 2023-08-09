@@ -23,8 +23,7 @@ async function fetchData(supabaseClient: AppSupabaseClient, authUser: User) {
 
 export default async function Layout({ children }: { children: ReactNode }) {
   const supabaseClient = createSupabaseUserServerComponentClient();
-  const { data, error } =
-    await supabaseClient.auth.getUser();
+  const { data, error } = await supabaseClient.auth.getUser();
 
   if (!data.user) {
     // This is unreachable because the user is authenticated

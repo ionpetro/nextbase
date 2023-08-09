@@ -46,7 +46,7 @@ type CreateBlogFormProps = {
     data: TableInsertPayload<'internal_blog_posts'>,
     tagIds: number[]
   ) => Promise<void>;
-}
+};
 
 export type EditBlogFormProps = {
   mode: 'update';
@@ -58,21 +58,14 @@ export type EditBlogFormProps = {
   ) => Promise<void>;
   initialBlogPost: InternalBlogPostSchema;
   postId: string;
-}
+};
 
 type BlogFormProps = {
   authors: Table<'internal_blog_author_profiles'>[];
   tags: Table<'internal_blog_post_tags'>[];
-} & (
-    | CreateBlogFormProps
-    | EditBlogFormProps
-  );
+} & (CreateBlogFormProps | EditBlogFormProps);
 
-export const BlogForm = ({
-  authors,
-  tags,
-  ...rest
-}: BlogFormProps) => {
+export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
   const initialBlogPost = 'initialBlogPost' in rest ? rest.initialBlogPost : {};
   const defaultValues = Object.assign({}, baseDefaultValues, initialBlogPost);
   const router = useRouter();
@@ -99,7 +92,7 @@ export const BlogForm = ({
       async (data: InternalBlogPostSchema) => {
         const { author_id, tag_ids, ...restPayload } = data;
         if (rest.mode === 'create') {
-          return rest.onSubmit(author_id, restPayload, tag_ids,);
+          return rest.onSubmit(author_id, restPayload, tag_ids);
         } else {
           return rest.onSubmit(author_id, rest.postId, restPayload, tag_ids);
         }

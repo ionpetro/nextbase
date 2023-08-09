@@ -42,25 +42,27 @@ function ChoosePricingTable() {
   // supabase cannot sort by foreign table, so we do it here
   const productsSortedByPrice = useMemo(() => {
     if (!activeProducts) return [];
-    const products = activeProducts.map((product) => {
-      const prices = Array.isArray(product.prices)
-        ? product.prices
-        : [product.prices];
+    const products = activeProducts
+      .map((product) => {
+        const prices = Array.isArray(product.prices)
+          ? product.prices
+          : [product.prices];
 
-      const pricesForProduct = prices.map(price => {
-        const priceString = new Intl.NumberFormat('en-US', {
-          style: 'currency',
-          currency: price?.currency ?? undefined,
-          minimumFractionDigits: 0,
-        }).format((price?.unit_amount || 0) / 100);
-        return {
-          ...product,
-          price,
-          priceString,
-        };
-      });
-      return pricesForProduct;
-    }).flat();
+        const pricesForProduct = prices.map((price) => {
+          const priceString = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: price?.currency ?? undefined,
+            minimumFractionDigits: 0,
+          }).format((price?.unit_amount || 0) / 100);
+          return {
+            ...product,
+            price,
+            priceString,
+          };
+        });
+        return pricesForProduct;
+      })
+      .flat();
 
     return products
       .sort(
@@ -113,13 +115,17 @@ function ChoosePricingTable() {
                       <span>
                         <span key={priceId} className="text-4xl font-bold">
                           {' '}
-                          {product.priceString}<span className='text-base text-gray-700 font-medium'>  per {product.price.interval}</span>
+                          {product.priceString}
+                          <span className="text-base text-gray-700 font-medium">
+                            {' '}
+                            per {product.price.interval}
+                          </span>
                         </span>
                       </span>
                     </div>
                   </div>
 
-                  <div className='px-5 pl-6 pt-0 mb-8'>
+                  <div className="px-5 pl-6 pt-0 mb-8">
                     <ul className="font-medium text-gray-600">
                       <li className="grid grid-cols-[24px,1fr] gap-0 text-md items-start mb-2">
                         <CheckIcon className="text-green-600 w-6 h-6" />
@@ -148,7 +154,7 @@ function ChoosePricingTable() {
                     {isOrganizationAdmin ? (
                       <>
                         <Button
-                          className='w-full'
+                          className="w-full"
                           onClick={() => {
                             mutate({
                               organizationId: organizationId,
@@ -160,8 +166,8 @@ function ChoosePricingTable() {
                           Start free trial
                         </Button>
                         <Button
-                          variant='outline'
-                          className='w-full'
+                          variant="outline"
+                          className="w-full"
                           onClick={() => {
                             mutate({
                               organizationId: organizationId,

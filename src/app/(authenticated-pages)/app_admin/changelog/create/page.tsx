@@ -55,9 +55,7 @@ export default async function Page() {
       >
         <div>
           {/* Create Changelog Card */}
-          <CreateChangelog
-            createChangelogAction={createChangelogAction}
-          />
+          <CreateChangelog createChangelogAction={createChangelogAction} />
 
           {/* Previous Changelogs*/}
           <div className="space-y-8 mt-10">

@@ -13,7 +13,6 @@ export function MaintenanceModeContextProvider({
   children: React.ReactNode;
   isAppInMaintenanceMode: boolean;
 }) {
-
   return (
     <MaintenanceModeContext.Provider value={isAppInMaintenanceMode}>
       {children}

@@ -1,6 +1,6 @@
-'use server'
-import { supabaseAdminClient } from "@/supabase-clients/admin/supabaseAdminClient";
-import { revalidatePath } from "next/cache";
+'use server';
+import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
+import { revalidatePath } from 'next/cache';
 
 export const enableMaintenanceModeAction = async () => {
   const { error } = await supabaseAdminClient
@@ -11,7 +11,7 @@ export const enableMaintenanceModeAction = async () => {
     throw error;
   }
   revalidatePath('/');
-}
+};
 
 export const disableMaintenanceModeAction = async () => {
   const { error } = await supabaseAdminClient
@@ -22,7 +22,7 @@ export const disableMaintenanceModeAction = async () => {
     throw error;
   }
   revalidatePath('/');
-}
+};
 
 export const getIsAppInMaintenanceModeAction = async () => {
   const { data, error } = await supabaseAdminClient.rpc(
@@ -34,4 +34,4 @@ export const getIsAppInMaintenanceModeAction = async () => {
   }
 
   return data;
-}
+};

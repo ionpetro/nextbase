@@ -29,10 +29,7 @@ async function fetchdata(projectId: string) {
     throw userError;
   }
 
-  const projectByIdData = await getProjectById(
-    supabaseClient,
-    projectId
-  );
+  const projectByIdData = await getProjectById(supabaseClient, projectId);
   const [
     organizationByIdData,
     organizationRole,
@@ -40,10 +37,7 @@ async function fetchdata(projectId: string) {
     teamRole,
     normalizedSubscription,
   ] = await Promise.all([
-    getOrganizationById(
-      supabaseClient,
-      projectByIdData.organization_id
-    ),
+    getOrganizationById(supabaseClient, projectByIdData.organization_id),
     getUserOrganizationRole(
       supabaseClient,
       sessionResponse.session.user.id,
@@ -55,10 +49,7 @@ async function fetchdata(projectId: string) {
       sessionResponse.session.user.id,
       projectByIdData.team_id
     ),
-    getNormalizedSubscription(
-      supabaseClient,
-      projectByIdData.organization_id
-    ),
+    getNormalizedSubscription(supabaseClient, projectByIdData.organization_id),
   ]);
 
   return {

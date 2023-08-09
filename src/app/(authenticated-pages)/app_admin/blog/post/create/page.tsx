@@ -6,7 +6,10 @@ import { createBlogPost, getAllAuthors, getAllBlogTags } from '../../actions';
 import { BlogForm } from '../../BlogForm';
 
 export default async function CreateBlogPostPage() {
-  const [authors, tags] = await Promise.all([getAllAuthors(), getAllBlogTags()]);
+  const [authors, tags] = await Promise.all([
+    getAllAuthors(),
+    getAllBlogTags(),
+  ]);
   return (
     <div className="space-y-4">
       <Link href="/app_admin/blog">
@@ -15,7 +18,12 @@ export default async function CreateBlogPostPage() {
         </Button>
       </Link>
       <T.H3>Create Blog Post</T.H3>
-      <BlogForm tags={tags} authors={authors} mode="create" onSubmit={createBlogPost} />
+      <BlogForm
+        tags={tags}
+        authors={authors}
+        mode="create"
+        onSubmit={createBlogPost}
+      />
     </div>
   );
 }

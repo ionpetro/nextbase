@@ -20,8 +20,7 @@ export default async function Layout({
   children: React.ReactNode;
 }) {
   const supabaseClient = createSupabaseUserServerComponentClient();
-  const { data, error } =
-    await supabaseClient.auth.getUser();
+  const { data, error } = await supabaseClient.auth.getUser();
   if (error) {
     errors.add(error);
     return <p>Error: An error occurred.</p>;
@@ -33,10 +32,7 @@ export default async function Layout({
   }
 
   try {
-    const { isUserAppAdmin } = await fetchData(
-      supabaseClient,
-      data.user
-    );
+    const { isUserAppAdmin } = await fetchData(supabaseClient, data.user);
 
     if (!isUserAppAdmin) {
       return redirect('/dashboard');

@@ -6,7 +6,6 @@ import { cn } from '@/utils/cn';
 
 export function UserSidebarMenu() {
   return (
-
     <div>
       <Anchor
         href="/settings"
@@ -39,6 +38,5 @@ export function UserSidebarMenu() {
         Sign out
       </Anchor>
     </div>
-
   );
 }

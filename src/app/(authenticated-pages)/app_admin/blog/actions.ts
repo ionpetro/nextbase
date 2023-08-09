@@ -244,7 +244,6 @@ export const deleteBlogPost = async (postId: string) => {
   revalidatePath('/');
 };
 
-
 export const createBlogTag = async (
   payload: TableInsertPayload<'internal_blog_post_tags'>
 ) => {
@@ -302,7 +301,6 @@ export const getAllBlogTags = async () => {
   return data;
 };
 
-
 export const getBlogTagRelationships = async (blogPostId: string) => {
   const { data, error } = await supabaseAdminClient
     .from('internal_blog_post_tags_relationship')
@@ -314,7 +312,7 @@ export const getBlogTagRelationships = async (blogPostId: string) => {
   }
 
   return data;
-}
+};
 
 export const updateBlogTagRelationships = async (
   blogPostId: string,
@@ -343,4 +341,4 @@ export const updateBlogTagRelationships = async (
   }
 
   revalidatePath('/');
-}
+};

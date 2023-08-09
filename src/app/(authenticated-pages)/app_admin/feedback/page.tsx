@@ -7,17 +7,16 @@ import { ClientAdminFeedbackListPage } from './ClientAdminFeedbackListPage';
 // and passed as a prop to the client component
 
 export default function FeedbackList() {
-
   async function getAllInternalFeedbackAction({
     query,
     types,
     statuses,
-    priorities
+    priorities,
   }: {
-    query: string,
-    types: Array<Enum<'internal_feedback_thread_type'>>,
-    statuses: Array<Enum<'internal_feedback_thread_status'>>,
-    priorities: Array<Enum<'internal_feedback_thread_priority'>>,
+    query: string;
+    types: Array<Enum<'internal_feedback_thread_type'>>;
+    statuses: Array<Enum<'internal_feedback_thread_status'>>;
+    priorities: Array<Enum<'internal_feedback_thread_priority'>>;
   }) {
     'use server';
     const data = await getAllInternalFeedback(supabaseAdminClient, {
@@ -26,9 +25,13 @@ export default function FeedbackList() {
       statuses: statuses || [],
       priorities: priorities || [],
     });
-    revalidatePath('/')
+    revalidatePath('/');
     return data;
   }
 
-  return <ClientAdminFeedbackListPage getAllInternalFeedbackAction={getAllInternalFeedbackAction} />;
+  return (
+    <ClientAdminFeedbackListPage
+      getAllInternalFeedbackAction={getAllInternalFeedbackAction}
+    />
+  );
 }

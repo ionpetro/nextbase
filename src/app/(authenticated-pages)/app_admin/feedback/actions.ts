@@ -1,18 +1,25 @@
-'use server'
+'use server';
 
-import { supabaseAdminClient } from "@/supabase-clients/admin/supabaseAdminClient";
-import { createSupabaseUserServerActionClient } from "@/supabase-clients/user/createSupabaseUserServerActionClient";
-import { addCommentToInternalFeedbackThread, updateInternalFeedbackIsAddedToRoadmap, updateInternalFeedbackIsOpenForDiscussion, updateInternalFeedbackPriority, updateInternalFeedbackStatus, updateInternalFeedbackType } from "@/utils/supabase/internalFeedback";
-import { revalidatePath } from "next/cache";
-import { Enum } from "@/types";
-import { getLoggedInUserAction } from "@/app/_server-actions/user";
+import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
+import { createSupabaseUserServerActionClient } from '@/supabase-clients/user/createSupabaseUserServerActionClient';
+import {
+  addCommentToInternalFeedbackThread,
+  updateInternalFeedbackIsAddedToRoadmap,
+  updateInternalFeedbackIsOpenForDiscussion,
+  updateInternalFeedbackPriority,
+  updateInternalFeedbackStatus,
+  updateInternalFeedbackType,
+} from '@/utils/supabase/internalFeedback';
+import { revalidatePath } from 'next/cache';
+import { Enum } from '@/types';
+import { getLoggedInUserAction } from '@/app/_server-actions/user';
 
 export const addCommentAction = async ({
   feedbackId,
-  comment
+  comment,
 }: {
-  feedbackId: string,
-  comment: string
+  feedbackId: string;
+  comment: string;
 }) => {
   const supabaseClient = createSupabaseUserServerActionClient();
   const user = await getLoggedInUserAction(supabaseClient);
@@ -23,16 +30,15 @@ export const addCommentAction = async ({
     comment
   );
   revalidatePath('/');
-}
+};
 
 export const updateInternalFeedbackIsAddedToRoadmapAction = async ({
   feedbackId,
-  isAddedToRoadmap
+  isAddedToRoadmap,
 }: {
-  feedbackId: string,
-  isAddedToRoadmap: boolean
+  feedbackId: string;
+  isAddedToRoadmap: boolean;
 }) => {
-
   await updateInternalFeedbackIsAddedToRoadmap(
     supabaseAdminClient,
     feedbackId,
@@ -40,16 +46,15 @@ export const updateInternalFeedbackIsAddedToRoadmapAction = async ({
   );
 
   revalidatePath('/');
-}
+};
 
 export const updateInternalFeedbackIsOpenToDiscussionAction = async ({
   feedbackId,
-  isOpenToDiscussion
+  isOpenToDiscussion,
 }: {
-  feedbackId: string,
-  isOpenToDiscussion: boolean
+  feedbackId: string;
+  isOpenToDiscussion: boolean;
 }) => {
-
   await updateInternalFeedbackIsOpenForDiscussion(
     supabaseAdminClient,
     feedbackId,
@@ -57,18 +62,15 @@ export const updateInternalFeedbackIsOpenToDiscussionAction = async ({
   );
 
   revalidatePath('/');
-}
-
+};
 
 export const updateInternalFeedbackPriorityAction = async ({
   feedbackId,
-  priority
+  priority,
 }: {
-  feedbackId: string,
-  priority: Enum<'internal_feedback_thread_priority'>
-
+  feedbackId: string;
+  priority: Enum<'internal_feedback_thread_priority'>;
 }) => {
-
   await updateInternalFeedbackPriority(
     supabaseAdminClient,
     feedbackId,
@@ -76,40 +78,28 @@ export const updateInternalFeedbackPriorityAction = async ({
   );
 
   revalidatePath('/');
-}
+};
 
 export const updateInternalFeedbackStatusAction = async ({
   feedbackId,
-  status
+  status,
 }: {
-  feedbackId: string,
-  status: Enum<'internal_feedback_thread_status'>
-
+  feedbackId: string;
+  status: Enum<'internal_feedback_thread_status'>;
 }) => {
-
-  await updateInternalFeedbackStatus(
-    supabaseAdminClient,
-    feedbackId,
-    status
-  );
+  await updateInternalFeedbackStatus(supabaseAdminClient, feedbackId, status);
 
   revalidatePath('/');
-}
+};
 
 export const updateInternalFeedbackTypeAction = async ({
   feedbackId,
-  type
+  type,
 }: {
-  feedbackId: string,
-  type: Enum<'internal_feedback_thread_type'>
-
+  feedbackId: string;
+  type: Enum<'internal_feedback_thread_type'>;
 }) => {
-
-  await updateInternalFeedbackType(
-    supabaseAdminClient,
-    feedbackId,
-    type
-  );
+  await updateInternalFeedbackType(supabaseAdminClient, feedbackId, type);
 
   revalidatePath('/');
-}
+};

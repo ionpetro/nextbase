@@ -6,7 +6,10 @@ import moment from 'moment';
 import { useState } from 'react';
 import MailIcon from 'lucide-react/dist/esm/icons/mail';
 import { useDebouncedValue } from 'rooks';
-import { ADMIN_ORGANIZATION_LIST_VIEW_PAGE_SIZE, ADMIN_USER_LIST_VIEW_PAGE_SIZE } from '@/constants';
+import {
+  ADMIN_ORGANIZATION_LIST_VIEW_PAGE_SIZE,
+  ADMIN_USER_LIST_VIEW_PAGE_SIZE,
+} from '@/constants';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 function RenderOrganization({
@@ -57,7 +60,7 @@ function RenderOrganization({
 
 export function RenderOrganizations({
   organizationsData,
-  getOrganizationsPaginatedAction
+  getOrganizationsPaginatedAction,
 }: {
   organizationsData: [number, DBFunction<'app_admin_get_all_organizations'>];
   getOrganizationsPaginatedAction: ({
@@ -66,10 +69,7 @@ export function RenderOrganizations({
   }: {
     pageNumber: number;
     search: string | undefined;
-  }) => Promise<[
-    number,
-    DBFunction<'app_admin_get_all_organizations'>
-  ]>;
+  }) => Promise<[number, DBFunction<'app_admin_get_all_organizations'>]>;
 }) {
   const [searchText, setSearchText] = useState<string>('');
   const [debouncedSearchText] = useDebouncedValue(searchText, 500);
@@ -88,23 +88,23 @@ export function RenderOrganizations({
       return getOrganizationsPaginatedAction({
         pageNumber: pageParam ?? 0,
         search,
-      })
+      });
     },
     {
       getNextPageParam: (lastPage, _pages) => {
         const pageNumber = lastPage[0];
         const rows = lastPage[1];
 
-        if (rows.length < ADMIN_ORGANIZATION_LIST_VIEW_PAGE_SIZE) return undefined;
+        if (rows.length < ADMIN_ORGANIZATION_LIST_VIEW_PAGE_SIZE)
+          return undefined;
         return pageNumber + 1;
       },
       initialData: {
         pageParams: [0],
         pages: [organizationsData],
       },
-    },
+    }
   );
-
 
   if (isLoadingNextPage || !data) {
     return <div>Loading...</div>;

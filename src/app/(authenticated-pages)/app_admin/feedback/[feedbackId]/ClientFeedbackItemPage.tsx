@@ -18,13 +18,10 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 
-
-
-
 function UpdateType({
   feedbackId,
   currentType,
-  updateInternalFeedbackTypeAction
+  updateInternalFeedbackTypeAction,
 }: {
   feedbackId: string;
   currentType: Enum<'internal_feedback_thread_type'>;
@@ -35,14 +32,15 @@ function UpdateType({
     type: Enum<'internal_feedback_thread_type'>;
     feedbackId: string;
   }) => Promise<void>;
-
 }) {
   const toastRef = useRef<string | null>(null);
   const router = useRouter();
   const { mutate, isLoading } = useMutation(
-    async ({ type }: {
-      feedbackId: string,
-      type: Enum<'internal_feedback_thread_type'>
+    async ({
+      type,
+    }: {
+      feedbackId: string;
+      type: Enum<'internal_feedback_thread_type'>;
     }) => {
       await updateInternalFeedbackTypeAction({ type, feedbackId });
     },
@@ -87,7 +85,7 @@ function UpdateType({
 function UpdatePriority({
   feedbackId,
   currentPriority,
-  updateInternalFeedbackPriorityAction
+  updateInternalFeedbackPriorityAction,
 }: {
   feedbackId: string;
   currentPriority: Enum<'internal_feedback_thread_priority'>;
@@ -133,8 +131,6 @@ function UpdatePriority({
     }
   );
 
-
-
   return (
     <UpdateInternalFeedbackPriorityDialog
       currentPriority={currentPriority}
@@ -146,7 +142,7 @@ function UpdatePriority({
 function UpdateStatus({
   feedbackId,
   currentStatus,
-  updateInternalFeedbackStatusAction
+  updateInternalFeedbackStatusAction,
 }: {
   feedbackId: string;
   currentStatus: Enum<'internal_feedback_thread_status'>;
@@ -154,8 +150,8 @@ function UpdateStatus({
     status,
     feedbackId,
   }: {
-    status: Enum<'internal_feedback_thread_status'>
-    feedbackId: string
+    status: Enum<'internal_feedback_thread_status'>;
+    feedbackId: string;
   }) => Promise<void>;
 }) {
   const toastRef = useRef<string | null>(null);
@@ -202,11 +198,11 @@ function UpdateStatus({
   );
 }
 
-function AddComment({ feedbackId,
-  addCommentAction
-
+function AddComment({
+  feedbackId,
+  addCommentAction,
 }: {
-  feedbackId: string,
+  feedbackId: string;
   addCommentAction: ({
     comment,
     feedbackId,
@@ -214,7 +210,6 @@ function AddComment({ feedbackId,
     comment: string;
     feedbackId: string;
   }) => Promise<void>;
-
 }) {
   const toastRef = useRef<string | null>(null);
   const router = useRouter();
@@ -288,7 +283,7 @@ function AddComment({ feedbackId,
 function UpdateVisibility({
   feedbackId,
   currentVisibility,
-  updateInternalFeedbackIsOpenToDiscussionAction
+  updateInternalFeedbackIsOpenToDiscussionAction,
 }: {
   feedbackId: string;
   currentVisibility: boolean;
@@ -304,7 +299,10 @@ function UpdateVisibility({
   const toastRef = useRef<string | null>(null);
   const { mutate, isLoading } = useMutation(
     async (isOpenToDiscussion: boolean) => {
-      await updateInternalFeedbackIsOpenToDiscussionAction({ isOpenToDiscussion, feedbackId });
+      await updateInternalFeedbackIsOpenToDiscussionAction({
+        isOpenToDiscussion,
+        feedbackId,
+      });
     },
     {
       onMutate: () => {
@@ -336,7 +334,6 @@ function UpdateVisibility({
     }
   );
 
-
   return (
     <div className="flex items-center space-x-2 ">
       <Switch
@@ -352,7 +349,7 @@ function UpdateVisibility({
 function UpdateIsAddedToRoadmap({
   feedbackId,
   currentIsAddedToRoadmap,
-  updateInternalFeedbackIsAddedToRoadmapAction
+  updateInternalFeedbackIsAddedToRoadmapAction,
 }: {
   feedbackId: string;
   currentIsAddedToRoadmap: boolean;
@@ -368,7 +365,10 @@ function UpdateIsAddedToRoadmap({
   const router = useRouter();
   const { mutate, isLoading } = useMutation(
     async (isAddedToRoadmap: boolean) => {
-      await updateInternalFeedbackIsAddedToRoadmapAction({ isAddedToRoadmap, feedbackId });
+      await updateInternalFeedbackIsAddedToRoadmapAction({
+        isAddedToRoadmap,
+        feedbackId,
+      });
     },
     {
       onMutate: () => {
@@ -413,27 +413,28 @@ function UpdateIsAddedToRoadmap({
 function FeedbackComponent({
   userId,
   comment,
-  getUserProfileAction
+  getUserProfileAction,
 }: {
   userId: string;
   comment: string;
-  getUserProfileAction: (userId: string) => Promise<Table<'user_profiles'>>
+  getUserProfileAction: (userId: string) => Promise<Table<'user_profiles'>>;
 }) {
-  const { data: userData, isLoading } = useQuery(['feedback-get-user-profile', userId], async () => {
-    return await getUserProfileAction(userId);
-  });
+  const { data: userData, isLoading } = useQuery(
+    ['feedback-get-user-profile', userId],
+    async () => {
+      return await getUserProfileAction(userId);
+    }
+  );
   if (!userData || isLoading) {
     return null;
   }
-  const userFullName = userData.full_name ?? `User ${userData.id}`
+  const userFullName = userData.full_name ?? `User ${userData.id}`;
   return (
     <div className="flex items-start space-x-4">
       <span className="flex space-x-2 items-center">
         <Image
           className="rounded-full border border-slate-500 h-[24px] w-[24px]"
-          alt={
-            userFullName
-          }
+          alt={userFullName}
           src={getPublicUserAvatarUrl(userData.avatar_url)}
           height={24}
           width={24}
@@ -441,9 +442,7 @@ function FeedbackComponent({
       </span>
       <div className="w-[560px] space-y-2">
         <div>
-          <p className="text-base font-[600]">
-            {userFullName}
-          </p>
+          <p className="text-base font-[600]">{userFullName}</p>
           <p className="text-base font-[500] text-slate-600">{comment}</p>
         </div>
       </div>
@@ -451,14 +450,15 @@ function FeedbackComponent({
   );
 }
 
-function CommentList({ feedbackId, comments,
-  getUserProfileAction
+function CommentList({
+  feedbackId,
+  comments,
+  getUserProfileAction,
 }: {
-  feedbackId: string,
+  feedbackId: string;
   comments: Table<'internal_feedback_comments'>[];
-  getUserProfileAction: (userId: string) => Promise<Table<'user_profiles'>>
+  getUserProfileAction: (userId: string) => Promise<Table<'user_profiles'>>;
 }) {
-
   return (
     <div className="space-y-6">
       <p className="text-base font-[600] text-black ">
@@ -487,21 +487,29 @@ export default function ClientAdminFeedbackItemPage({
   updateInternalFeedbackIsAddedToRoadmapAction,
   addCommentAction,
   comments,
-  getUserProfileAction
+  getUserProfileAction,
 }: {
   feedbackThread: Table<'internal_feedback_threads'>;
   comments: Table<'internal_feedback_comments'>[];
-  getUserProfileAction: (userId: string) => Promise<Table<'user_profiles'>>
-} &
-  Pick<ComponentProps<typeof UpdateStatus>, 'updateInternalFeedbackStatusAction'> &
-  Pick<ComponentProps<typeof UpdatePriority>, 'updateInternalFeedbackPriorityAction'> &
+  getUserProfileAction: (userId: string) => Promise<Table<'user_profiles'>>;
+} & Pick<
+  ComponentProps<typeof UpdateStatus>,
+  'updateInternalFeedbackStatusAction'
+> &
+  Pick<
+    ComponentProps<typeof UpdatePriority>,
+    'updateInternalFeedbackPriorityAction'
+  > &
   Pick<ComponentProps<typeof UpdateType>, 'updateInternalFeedbackTypeAction'> &
-  Pick<ComponentProps<typeof UpdateVisibility>, 'updateInternalFeedbackIsOpenToDiscussionAction'> &
-  Pick<ComponentProps<typeof UpdateIsAddedToRoadmap>, 'updateInternalFeedbackIsAddedToRoadmapAction'> &
-  Pick<ComponentProps<typeof AddComment>, 'addCommentAction'>
-) {
-
-
+  Pick<
+    ComponentProps<typeof UpdateVisibility>,
+    'updateInternalFeedbackIsOpenToDiscussionAction'
+  > &
+  Pick<
+    ComponentProps<typeof UpdateIsAddedToRoadmap>,
+    'updateInternalFeedbackIsAddedToRoadmapAction'
+  > &
+  Pick<ComponentProps<typeof AddComment>, 'addCommentAction'>) {
   return (
     <>
       <div className="space-x-6">
@@ -532,7 +540,9 @@ export default function ClientAdminFeedbackItemPage({
             {/* Filter : Status*/}
             <div className="flex justify-start">
               <UpdateStatus
-                updateInternalFeedbackStatusAction={updateInternalFeedbackStatusAction}
+                updateInternalFeedbackStatusAction={
+                  updateInternalFeedbackStatusAction
+                }
                 feedbackId={feedbackThread.id}
                 currentStatus={feedbackThread.status}
               />
@@ -540,7 +550,9 @@ export default function ClientAdminFeedbackItemPage({
             {/* Filter : Priority*/}
             <div className="flex justify-start">
               <UpdatePriority
-                updateInternalFeedbackPriorityAction={updateInternalFeedbackPriorityAction}
+                updateInternalFeedbackPriorityAction={
+                  updateInternalFeedbackPriorityAction
+                }
                 feedbackId={feedbackThread.id}
                 currentPriority={feedbackThread.priority}
               />
@@ -548,7 +560,9 @@ export default function ClientAdminFeedbackItemPage({
 
             <div className="flex justify-start">
               <UpdateType
-                updateInternalFeedbackTypeAction={updateInternalFeedbackTypeAction}
+                updateInternalFeedbackTypeAction={
+                  updateInternalFeedbackTypeAction
+                }
                 feedbackId={feedbackThread.id}
                 currentType={feedbackThread.type}
               />
@@ -557,13 +571,17 @@ export default function ClientAdminFeedbackItemPage({
 
           <div className="flex space-x-6">
             <UpdateVisibility
-              updateInternalFeedbackIsOpenToDiscussionAction={updateInternalFeedbackIsOpenToDiscussionAction}
+              updateInternalFeedbackIsOpenToDiscussionAction={
+                updateInternalFeedbackIsOpenToDiscussionAction
+              }
               feedbackId={feedbackThread.id}
               currentVisibility={feedbackThread.open_for_public_discussion}
             />
 
             <UpdateIsAddedToRoadmap
-              updateInternalFeedbackIsAddedToRoadmapAction={updateInternalFeedbackIsAddedToRoadmapAction}
+              updateInternalFeedbackIsAddedToRoadmapAction={
+                updateInternalFeedbackIsAddedToRoadmapAction
+              }
               feedbackId={feedbackThread.id}
               currentIsAddedToRoadmap={feedbackThread.added_to_roadmap}
             />
@@ -573,18 +591,21 @@ export default function ClientAdminFeedbackItemPage({
           {/* Feedback Conversation */}
           <CommentList
             getUserProfileAction={getUserProfileAction}
-            comments={comments} feedbackId={feedbackThread.id} />
+            comments={comments}
+            feedbackId={feedbackThread.id}
+          />
           {/* Feedback Text Area for Admin */}
 
           {feedbackThread.status === 'closed' ||
-            feedbackThread.status === 'completed' ? (
+          feedbackThread.status === 'completed' ? (
             <T.Large className="my-6">
               This thread is now closed for discussion.
             </T.Large>
           ) : (
             <AddComment
               addCommentAction={addCommentAction}
-              feedbackId={feedbackThread.id} />
+              feedbackId={feedbackThread.id}
+            />
           )}
         </div>
       </div>

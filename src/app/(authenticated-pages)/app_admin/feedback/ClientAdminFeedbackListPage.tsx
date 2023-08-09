@@ -30,19 +30,19 @@ import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
 export function ClientAdminFeedbackListPage({
-  getAllInternalFeedbackAction
+  getAllInternalFeedbackAction,
 }: {
   getAllInternalFeedbackAction: ({
     query,
     types,
     statuses,
-    priorities
+    priorities,
   }: {
-    query: string,
-    types: Array<Enum<'internal_feedback_thread_type'>>,
-    statuses: Array<Enum<'internal_feedback_thread_status'>>,
-    priorities: Array<Enum<'internal_feedback_thread_priority'>>,
-  }) => Promise<Array<Table<'internal_feedback_threads'>>>
+    query: string;
+    types: Array<Enum<'internal_feedback_thread_type'>>;
+    statuses: Array<Enum<'internal_feedback_thread_status'>>;
+    priorities: Array<Enum<'internal_feedback_thread_priority'>>;
+  }) => Promise<Array<Table<'internal_feedback_threads'>>>;
 }) {
   const [searchText, setSearchText] = useState<string>('');
 
@@ -57,18 +57,22 @@ export function ClientAdminFeedbackListPage({
     priorities: [],
     statuses: [],
   });
-  const { data: feedbackList, isLoading } = useQuery(['app-admin-feedback-list', debouncedSearchText, filters], async () => {
-    return getAllInternalFeedbackAction({
-      query: debouncedSearchText,
-      types: filters.types,
-      statuses: filters.statuses,
-      priorities: filters.priorities,
-    });
-  }, {
-    onSuccess: () => {
-      router.refresh();
+  const { data: feedbackList, isLoading } = useQuery(
+    ['app-admin-feedback-list', debouncedSearchText, filters],
+    async () => {
+      return getAllInternalFeedbackAction({
+        query: debouncedSearchText,
+        types: filters.types,
+        statuses: filters.statuses,
+        priorities: filters.priorities,
+      });
+    },
+    {
+      onSuccess: () => {
+        router.refresh();
+      },
     }
-  })
+  );
   return (
     <div className="space-y-4">
       {/* Filter and Search */}
@@ -117,8 +121,8 @@ export function ClientAdminFeedbackListPage({
                         ...filters,
                         statuses: filters.statuses?.includes(statusOption)
                           ? filters.statuses.filter(
-                            (status) => status !== statusOption
-                          )
+                              (status) => status !== statusOption
+                            )
                           : [...(filters.statuses || []), statusOption],
                       })
                     }
@@ -197,8 +201,8 @@ export function ClientAdminFeedbackListPage({
                         ...filters,
                         priorities: filters.priorities.includes(priorityOption)
                           ? filters.priorities.filter(
-                            (priority) => priority !== priorityOption
-                          )
+                              (priority) => priority !== priorityOption
+                            )
                           : [...(filters.priorities || []), priorityOption],
                       })
                     }
@@ -215,80 +219,84 @@ export function ClientAdminFeedbackListPage({
       </div>
 
       {/* Feedback list table */}
-      {!feedbackList || isLoading ? <p>Loading...</p> : <div className="flex rounded-lg bg-clip-border border border-gray-200 max-w-[1296px] overflow-hidden">
-        <table className="w-full bg-clip-content border-slate-200">
-          <thead className="w-full bg-clip-border">
-            <tr className="p-0 ">
-              <th className="p-0 ">
-                <TableHeader>Name</TableHeader>
-              </th>
-              <th className="p-0 ">
-                <TableHeader>Feedback</TableHeader>
-              </th>
-              <th className="p-0 ">
-                <TableHeader>Type</TableHeader>
-              </th>
-              <th className="p-0 ">
-                <TableHeader>Priority</TableHeader>
-              </th>
-              <th className="p-0 ">
-                <TableHeader>Created At</TableHeader>
-              </th>
-              <th className="p-0 ">
-                <TableHeader>Status</TableHeader>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {feedbackList.map((feedback) => (
-              <tr className="p-0" key={feedback.id}>
-                <td className="p-0 ">
-                  <TableCell className="px-6 py-4 truncate">
-                    <AdminViewUserDetails userId={feedback.user_id} />
-                  </TableCell>
-                </td>
-                <td className="p-0 ">
-                  <Anchor
-                    className=" "
-                    key={feedback.id}
-                    href={`/app_admin/feedback/${feedback.id}`}
-                  >
-                    <TableCell className="text-blue-500 px-6 py-4 truncate font-[500] hover:underline">
-                      {feedback.title}
-                    </TableCell>
-                  </Anchor>
-                </td>
-
-                <td className="p-0 ">
-                  <TableCell className="px-6 py-4 truncate">
-                    {formatFieldValue(feedback.type)}
-                  </TableCell>
-                </td>
-                <td className="p-0">
-                  <TableCell className="px-6 py-4 truncate">
-                    {formatFieldValue(feedback.priority)}
-                  </TableCell>
-                </td>
-                <td className="p-0">
-                  <TableCell className="px-6 py-4 truncate">
-                    {moment(feedback.created_at).format('LL')}
-                  </TableCell>
-                </td>
-                <td className="p-0">
-                  <TableCell className="flex items-center h-[58px] justify-center">
-                    <Badge
-                      className=" whitespace-nowrap "
-                      variant={mapStatusToVariant(feedback.status)}
-                    >
-                      {formatFieldValue(feedback.status)}
-                    </Badge>
-                  </TableCell>
-                </td>
+      {!feedbackList || isLoading ? (
+        <p>Loading...</p>
+      ) : (
+        <div className="flex rounded-lg bg-clip-border border border-gray-200 max-w-[1296px] overflow-hidden">
+          <table className="w-full bg-clip-content border-slate-200">
+            <thead className="w-full bg-clip-border">
+              <tr className="p-0 ">
+                <th className="p-0 ">
+                  <TableHeader>Name</TableHeader>
+                </th>
+                <th className="p-0 ">
+                  <TableHeader>Feedback</TableHeader>
+                </th>
+                <th className="p-0 ">
+                  <TableHeader>Type</TableHeader>
+                </th>
+                <th className="p-0 ">
+                  <TableHeader>Priority</TableHeader>
+                </th>
+                <th className="p-0 ">
+                  <TableHeader>Created At</TableHeader>
+                </th>
+                <th className="p-0 ">
+                  <TableHeader>Status</TableHeader>
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>}
+            </thead>
+            <tbody>
+              {feedbackList.map((feedback) => (
+                <tr className="p-0" key={feedback.id}>
+                  <td className="p-0 ">
+                    <TableCell className="px-6 py-4 truncate">
+                      <AdminViewUserDetails userId={feedback.user_id} />
+                    </TableCell>
+                  </td>
+                  <td className="p-0 ">
+                    <Anchor
+                      className=" "
+                      key={feedback.id}
+                      href={`/app_admin/feedback/${feedback.id}`}
+                    >
+                      <TableCell className="text-blue-500 px-6 py-4 truncate font-[500] hover:underline">
+                        {feedback.title}
+                      </TableCell>
+                    </Anchor>
+                  </td>
+
+                  <td className="p-0 ">
+                    <TableCell className="px-6 py-4 truncate">
+                      {formatFieldValue(feedback.type)}
+                    </TableCell>
+                  </td>
+                  <td className="p-0">
+                    <TableCell className="px-6 py-4 truncate">
+                      {formatFieldValue(feedback.priority)}
+                    </TableCell>
+                  </td>
+                  <td className="p-0">
+                    <TableCell className="px-6 py-4 truncate">
+                      {moment(feedback.created_at).format('LL')}
+                    </TableCell>
+                  </td>
+                  <td className="p-0">
+                    <TableCell className="flex items-center h-[58px] justify-center">
+                      <Badge
+                        className=" whitespace-nowrap "
+                        variant={mapStatusToVariant(feedback.status)}
+                      >
+                        {formatFieldValue(feedback.status)}
+                      </Badge>
+                    </TableCell>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }

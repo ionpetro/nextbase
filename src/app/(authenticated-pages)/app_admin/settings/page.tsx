@@ -1,4 +1,8 @@
-import { disableMaintenanceModeAction, enableMaintenanceModeAction, getIsAppInMaintenanceModeAction } from './actions';
+import {
+  disableMaintenanceModeAction,
+  enableMaintenanceModeAction,
+  getIsAppInMaintenanceModeAction,
+} from './actions';
 import { MaintenanceModeToggle } from './MaintenanceModeToggle';
 
 export default async function AdminPanel() {

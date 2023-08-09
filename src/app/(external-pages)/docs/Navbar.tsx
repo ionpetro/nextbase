@@ -64,7 +64,7 @@ export function Header() {
           </Link>
         </div>
         <div className="relative flex basis-0 items-center justify-end gap-3 sm:gap-3 md:flex-grow">
-          <div className='flex space-x-1'>
+          <div className="flex space-x-1">
             <Link
               href="/docs"
               className="inline-flex px-4 py-1.5 text-zinc-900 hover:text-zinc-700 text-[13px] font-[600] leading-tight"
@@ -91,6 +91,6 @@ export function Header() {
           </Link>
         </div>
       </div>
-    </header >
+    </header>
   );
 }

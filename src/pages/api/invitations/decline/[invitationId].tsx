@@ -5,25 +5,22 @@ import { createSupabaseUserServerPagesClient } from '@/supabase-clients/user/cre
 
 async function DeclineInvitationHandler(
   req: NextApiRequest,
-  res: NextApiResponse,
+  res: NextApiResponse
 ) {
   const supabaseClient = createSupabaseUserServerPagesClient({
     req,
-    res
+    res,
   });
   const { data, error } = await supabaseClient.auth.getSession();
   if (error) {
     return res.status(500).json({ error: error.message });
   }
-  const user = data?.session?.user
+  const user = data?.session?.user;
 
   if (!user) {
     res.status(401).send('Please login to manage organization invitation.');
     return;
   }
-
-
-
 
   const { invitationId } = req.query;
 
@@ -50,4 +47,4 @@ async function DeclineInvitationHandler(
   }
 }
 
-export default DeclineInvitationHandler
+export default DeclineInvitationHandler;

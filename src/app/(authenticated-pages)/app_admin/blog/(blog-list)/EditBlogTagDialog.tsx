@@ -1,5 +1,12 @@
 import { useState } from 'react';
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/Dialog';
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from '@/components/ui/Dialog';
 import { Label } from '@/components/ui/Label';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -23,33 +30,41 @@ const blogTagSchema = z.object({
 
 type BlogTagFormType = z.infer<typeof blogTagSchema>;
 
-export const EditBlogTagDialog = ({ tag, updateBlogTag }: { tag: Table<'internal_blog_post_tags'>; updateBlogTag: (id: number, data: BlogTagFormType) => Promise<void>; }) => {
+export const EditBlogTagDialog = ({
+  tag,
+  updateBlogTag,
+}: {
+  tag: Table<'internal_blog_post_tags'>;
+  updateBlogTag: (id: number, data: BlogTagFormType) => Promise<void>;
+}) => {
   const router = useRouter();
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const { control, handleSubmit, watch, setValue, formState } = useForm<BlogTagFormType>({
-    resolver: zodResolver(blogTagSchema),
-    defaultValues: {
-      name: tag.name,
-      description: tag.description ?? '',
-      slug: tag.slug,
-    },
-  });
+  const { control, handleSubmit, watch, setValue, formState } =
+    useForm<BlogTagFormType>({
+      resolver: zodResolver(blogTagSchema),
+      defaultValues: {
+        name: tag.name,
+        description: tag.description ?? '',
+        slug: tag.slug,
+      },
+    });
 
-  const { mutate: updateBlogTagMutation, isLoading: isUpdatingBlogTag } = useMutation(
-    async (payload: BlogTagFormType) => updateBlogTag(tag.id, payload),
-    {
-      onSuccess: () => {
-        router.refresh();
-        toast.success('Successfully updated blog tag');
-        setIsOpen(false);
-      },
-      onError: () => {
-        toast.error('Failed to update blog tag');
-      },
-    }
-  );
+  const { mutate: updateBlogTagMutation, isLoading: isUpdatingBlogTag } =
+    useMutation(
+      async (payload: BlogTagFormType) => updateBlogTag(tag.id, payload),
+      {
+        onSuccess: () => {
+          router.refresh();
+          toast.success('Successfully updated blog tag');
+          setIsOpen(false);
+        },
+        onError: () => {
+          toast.error('Failed to update blog tag');
+        },
+      }
+    );
 
   const { isValid } = formState;
   const nameValue = watch('name');
@@ -84,11 +99,27 @@ export const EditBlogTagDialog = ({ tag, updateBlogTag }: { tag: Table<'internal
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <Label>Name</Label>
-          <Controller control={control} name="name" render={({ field }) => <Input {...field} placeholder="Name" />} />
+          <Controller
+            control={control}
+            name="name"
+            render={({ field }) => <Input {...field} placeholder="Name" />}
+          />
           <Label>Description</Label>
-          <Controller control={control} name="description" render={({ field }) => <Textarea {...field} placeholder="Description" />} />
+          <Controller
+            control={control}
+            name="description"
+            render={({ field }) => (
+              <Textarea {...field} placeholder="Description" />
+            )}
+          />
           <Label>Slug</Label>
-          <Controller control={control} name="slug" render={({ field }) => <Input disabled {...field} placeholder="Slug" />} />
+          <Controller
+            control={control}
+            name="slug"
+            render={({ field }) => (
+              <Input disabled {...field} placeholder="Slug" />
+            )}
+          />
           <Button disabled={!isValid || isUpdatingBlogTag} type="submit">
             {isUpdatingBlogTag ? 'Updating...' : 'Update Tag'}
           </Button>

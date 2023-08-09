@@ -494,7 +494,6 @@ export function useUpdateUserEmailMutation() {
   );
 }
 
-
 /* ==================== */
 /* AUTH */
 /* ==================== */
