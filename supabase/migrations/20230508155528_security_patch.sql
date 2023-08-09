@@ -63,7 +63,7 @@ EXECUTE format(
   r.rolname
 );
 EXECUTE format(
-  'REVOKE EXECUTE ON FUNCTION get_app_admin_organizations_created_per_month FROM %I',
+  'REVOKE EXECUTE ON FUNCTION app_admin_get_organizations_created_per_month FROM %I',
   r.rolname
 );
 END LOOP;

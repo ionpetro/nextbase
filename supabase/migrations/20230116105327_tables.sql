@@ -24,7 +24,8 @@ ALTER TABLE "public"."organizations" OWNER TO "postgres";
 CREATE TABLE "public"."user_profiles" (
   "id" "uuid" NOT NULL,
   "full_name" character varying,
-  "avatar_url" character varying "created_at" timestamp WITH time zone DEFAULT "now"() NOT NULL,
+  "avatar_url" character varying,
+  "created_at" timestamp WITH time zone DEFAULT "now"() NOT NULL
 );
 ALTER TABLE "public"."user_profiles" OWNER TO "postgres";
 CREATE TABLE "public"."app_settings" (
