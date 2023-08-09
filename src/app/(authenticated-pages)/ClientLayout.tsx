@@ -12,6 +12,7 @@ import { Table } from '@/types';
 import { AppAdminSidebar } from './Sidebar/AppAdminSidebar';
 import { UserSidebar } from './Sidebar/UserSidebar';
 import { useSelectedLayoutSegments } from 'next/navigation';
+import PostHogProvider from '@/contexts/PostHogProvider';
 
 export function ClientLayout({
   children,
@@ -45,45 +46,47 @@ export function ClientLayout({
   }
 
   return (
-    <div className="flex flex-col h-full w-full">
-      <MaintenanceModeBanner />
-      <div className="flex h-full">
-        {isUserAppAdmin && isAppAdminLayout ? (
-          <AppAdminSidebar
-            isUserAppAdmin={isUserAppAdmin}
-            userProfile={userProfile}
-          />
-        ) : (
-          <UserSidebar
-            isUserAppAdmin={isUserAppAdmin}
-            userProfile={userProfile}
-          />
-        )}
-        <div className=" flex-1 h-auto overflow-auto">
-          <div className=" px-12 py-8 space-y-10">{children}</div>
-        </div>
-        <ReactNoSSR>
-          {showConfetti ? (
-            <Confetti
-              confettiSource={{
-                x: innerWidth / 2,
-                y: innerHeight / 3,
-                w: 0,
-                h: 0,
-              }}
-              numberOfPieces={150}
-              gravity={0.1}
-              initialVelocityY={20}
-              initialVelocityX={20}
-              recycle={false}
-              tweenDuration={1000}
-              run={true}
-              width={innerWidth}
-              height={innerHeight}
+    <PostHogProvider>
+      <div className="flex flex-col h-full w-full">
+        <MaintenanceModeBanner />
+        <div className="flex h-full">
+          {isUserAppAdmin && isAppAdminLayout ? (
+            <AppAdminSidebar
+              isUserAppAdmin={isUserAppAdmin}
+              userProfile={userProfile}
             />
-          ) : null}{' '}
-        </ReactNoSSR>
-      </div>
-    </div>
+          ) : (
+            <UserSidebar
+              isUserAppAdmin={isUserAppAdmin}
+              userProfile={userProfile}
+            />
+          )}
+          <div className=" flex-1 h-auto overflow-auto">
+            <div className=" px-12 py-8 space-y-10">{children}</div>
+          </div>
+          <ReactNoSSR>
+            {showConfetti ? (
+              <Confetti
+                confettiSource={{
+                  x: innerWidth / 2,
+                  y: innerHeight / 3,
+                  w: 0,
+                  h: 0,
+                }}
+                numberOfPieces={150}
+                gravity={0.1}
+                initialVelocityY={20}
+                initialVelocityX={20}
+                recycle={false}
+                tweenDuration={1000}
+                run={true}
+                width={innerWidth}
+                height={innerHeight}
+              />
+            ) : null}{' '}
+          </ReactNoSSR>
+        </div>
+      </div >
+    </PostHogProvider>
   );
 }

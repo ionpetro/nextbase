@@ -18,9 +18,12 @@ declare global {
       STRIPE_WEBHOOK_SECRET_LIVE: string | undefined | null;
       ADMIN_EMAIL: string;
       NEXT_PUBLIC_SENTRY_DSN: string;
+      NEXT_PUBLIC_POSTHOG_API_KEY: string;
+      NEXT_PUBLIC_POSTHOG_APP_ID: string;
+      NEXT_PUBLIC_POSTHOG_HOST: string;
     }
   }
 }
 
 // eslint-disable-next-line prettier/prettier
-export { };
+export {};
