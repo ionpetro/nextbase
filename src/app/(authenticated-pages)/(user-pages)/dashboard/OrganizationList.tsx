@@ -12,7 +12,14 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
 import TableCell from '@/components/ui/Table/TableCell';
 import TableHeader from '@/components/ui/Table/TableHeader';
-import { OrganizationGraphs } from './OrganizationGraphs';
+// convert the above organizationgraphs import to next dynamic
+import dynamic from 'next/dynamic';
+const OrganizationGraphs = dynamic(
+  () => import('./OrganizationGraphs').then((mod) => mod.OrganizationGraphs),
+  {
+    ssr: false,
+  }
+);
 
 export function OrganizationList({
   initialOrganizationsList,

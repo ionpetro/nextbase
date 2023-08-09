@@ -12,7 +12,13 @@ import PlusIcon from 'lucide-react/dist/esm/icons/plus';
 import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/Badge';
-import { TeamGraphs } from '../../../TeamGraphs';
+import dynamic from 'next/dynamic';
+const TeamGraphs = dynamic(
+  () => import('../../../TeamGraphs').then((mod) => mod.TeamGraphs),
+  {
+    ssr: false,
+  }
+);
 
 type Project = {
   id: number;

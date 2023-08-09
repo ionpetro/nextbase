@@ -2,7 +2,7 @@ import { T } from '@/components/ui/Typography';
 import { createSupabaseAdminServerComponentClient } from '@/supabase-clients/admin/createSupabaseAdminServerComponentClient';
 import { AppSupabaseClient } from '@/types';
 import { stripe } from '@/utils/stripe';
-import { SaaSMetricsGraphs } from './SaasMetrics';
+import { SaaSMetrics } from './SaasMetrics';
 
 async function getCurrentMRR() {
   const startOfMonth = new Date();
@@ -242,7 +242,7 @@ export default async function AdminPanel() {
 
   return (
     <div className="space-y-4">
-      <SaaSMetricsGraphs
+      <SaaSMetrics
         mrrData={mrr}
         churnRateData={churnRate}
         organizationCountByMonth={organizationCountByMonth}
