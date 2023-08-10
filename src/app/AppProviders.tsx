@@ -20,6 +20,7 @@ import ReactNoSSR from 'react-no-ssr';
 import { MaintenanceModeContextProvider } from '@/contexts/MaintenanceModeContext';
 import { supabaseUserClientComponentClient } from '@/supabase-clients/user/supabaseUserClientComponentClient';
 import { Toaster as SonnerToaster } from 'sonner';
+import { useMyReportWebVitals } from './reportWebVitals';
 
 /**
  ** Inspiration from here
@@ -74,25 +75,28 @@ export default function AppProviders({
   >['initialSession'];
   isAppInMaintenanceMode: boolean;
 }) {
+  useMyReportWebVitals();
   return (
-    <QueryClientProvider client={queryClient}>
-      <SessionContextProvider
-        supabaseClient={supabaseUserClientComponentClient}
-        initialSession={initialSession}
-      >
-        <RouterEventWrapper>
-          <NavigationProgressBar />
-          <MaintenanceModeContextProvider
-            isAppInMaintenanceMode={isAppInMaintenanceMode}
-          >
-            {children}
-          </MaintenanceModeContextProvider>
-          <ReactNoSSR>
-            <SonnerToaster theme={'light'} />
-            <HotToaster />
-          </ReactNoSSR>
-        </RouterEventWrapper>
-      </SessionContextProvider>
-    </QueryClientProvider>
+    <>
+      <QueryClientProvider client={queryClient}>
+        <SessionContextProvider
+          supabaseClient={supabaseUserClientComponentClient}
+          initialSession={initialSession}
+        >
+          <RouterEventWrapper>
+            <NavigationProgressBar />
+            <MaintenanceModeContextProvider
+              isAppInMaintenanceMode={isAppInMaintenanceMode}
+            >
+              {children}
+            </MaintenanceModeContextProvider>
+            <ReactNoSSR>
+              <SonnerToaster theme={'light'} />
+              <HotToaster />
+            </ReactNoSSR>
+          </RouterEventWrapper>
+        </SessionContextProvider>
+      </QueryClientProvider>
+    </>
   );
 }
