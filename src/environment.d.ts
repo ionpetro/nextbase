@@ -22,7 +22,6 @@ declare global {
       NEXT_PUBLIC_POSTHOG_APP_ID: string;
       NEXT_PUBLIC_POSTHOG_HOST: string;
       NEXT_PUBLIC_GA_ID: string;
-
     }
   }
 }

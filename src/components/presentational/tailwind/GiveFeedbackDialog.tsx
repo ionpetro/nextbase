@@ -22,10 +22,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Enum } from '@/types';
 import { useState } from 'react';
-import { Mail, MessageSquareDashed, Voicemail } from 'lucide-react';
 import { useCreateInternalFeedback } from '@/utils/react-queries/internalFeedback';
-import { Anchor } from '@/components/Anchor';
-import { T } from '@/components/ui/Typography';
 
 type FeedbackType = Enum<'internal_feedback_thread_type'>;
 

@@ -3,7 +3,7 @@ import { cn } from '@/utils/cn';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { MobileNavigation } from './MobileNavigation';
-import { LucideTwitter } from 'lucide-react';
+import LucideTwitter from 'lucide-react/dist/esm/icons/twitter';
 
 function GitHubIcon(props: React.SVGProps<SVGSVGElement>) {
   return (

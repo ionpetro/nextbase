@@ -4,7 +4,11 @@ import TableCell from '@/components/ui/Table/TableCell';
 import TableHeader from '@/components/ui/Table/TableHeader';
 import { T } from '@/components/ui/Typography';
 import { Table } from '@/types';
-import { Check, ExternalLink, Pen, ThumbsUp, Timer } from 'lucide-react';
+import Check from 'lucide-react/dist/esm/icons/check';
+import ExternalLink from 'lucide-react/dist/esm/icons/external-link';
+import Pen from 'lucide-react/dist/esm/icons/pen-tool';
+import ThumbsUp from 'lucide-react/dist/esm/icons/thumbs-up';
+import Timer from 'lucide-react/dist/esm/icons/timer';
 import moment from 'moment';
 
 export const ProjectsTable = ({

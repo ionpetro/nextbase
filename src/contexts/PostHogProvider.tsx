@@ -1,6 +1,6 @@
 import { useUser } from '@supabase/auth-helpers-react';
 import posthog from 'posthog-js';
-import { PostHogProvider } from 'posthog-js/react'
+import { PostHogProvider } from 'posthog-js/react';
 import { ReactNode, useEffect, useState } from 'react';
 import { useGetIsMounted } from 'rooks';
 

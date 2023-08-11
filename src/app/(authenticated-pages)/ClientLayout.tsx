@@ -86,7 +86,7 @@ export function ClientLayout({
             ) : null}{' '}
           </ReactNoSSR>
         </div>
-      </div >
+      </div>
     </PostHogProvider>
   );
 }
