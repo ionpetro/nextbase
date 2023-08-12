@@ -26,7 +26,7 @@ export default async function DashboardPage() {
     supabaseClient
   );
   return (
-    <div className="max-w-7xl py-8 px-8 space-y-8">
+    <div className=" space-y-8">
       {pendingInvitations.length > 0 ? (
         <Anchor href="/invitations" className="cursor-pointer">
           <Alert variant="info">

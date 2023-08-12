@@ -71,9 +71,8 @@ export function AppAdminNavigation() {
       <div className="space-y-2">
         <BasicPageHeading
           heading="Admin Panel"
-          subheading=" You are currently in the Application Admin Dashboard area. All
-      sections of this area are protected and only application admins
-      can access this."
+          subheading=" All
+      sections of this area are protected and only accessible by Application Admins"
         />
       </div>
       <div className="space-y-6">

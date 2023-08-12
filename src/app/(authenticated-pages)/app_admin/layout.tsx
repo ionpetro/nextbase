@@ -5,6 +5,7 @@ import { getIsAppAdmin } from '@/utils/supabase-queries';
 import { User } from '@supabase/supabase-js';
 import { redirect } from 'next/navigation';
 import { AppAdminNavigation } from './AppAdminNavigation';
+import InternalNavbar from '@/components/ui/NavigationMenu/InternalNavbar';
 
 async function fetchData(supabaseClient: AppSupabaseClient, authUser: User) {
   const [isUserAppAdmin] = await Promise.all([
@@ -38,8 +39,9 @@ export default async function Layout({
       return redirect('/dashboard');
     }
     return (
-      <div className="flex-1 h-auto max-h-screen overflow-auto">
-        <div className="px-12 py-8 space-y-6">
+      <div className="flex-1 h-auto max-h-screen w-full overflow-auto">
+        <InternalNavbar />
+        <div className="px-12 space-y-6">
           <AppAdminNavigation />
           {children}
         </div>

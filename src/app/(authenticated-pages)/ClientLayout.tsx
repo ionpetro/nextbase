@@ -61,8 +61,8 @@ export function ClientLayout({
               userProfile={userProfile}
             />
           )}
-          <div className=" flex-1 h-auto overflow-auto">
-            <div className=" px-12 py-8 space-y-10">{children}</div>
+          <div className="flex-1 h-auto overflow-auto">
+            <div className="space-y-10">{children}</div>
           </div>
           <ReactNoSSR>
             {showConfetti ? (

@@ -10,7 +10,6 @@ import { Table } from '@/types';
 import { useUserProfile } from '@/utils/react-queries/user';
 import { getUserAvatarUrl } from '@/utils/helpers';
 import { useLoggedInUserEmail } from '@/hooks/useLoggedInUserEmail';
-import { GiveFeedbackDialog } from '@/components/presentational/tailwind/GiveFeedbackDialog';
 import Mail from 'lucide-react/dist/esm/icons/mail';
 import { UserSidebarLink } from '@/components/presentational/tailwind/Sidebars/UserSidebarLink';
 
@@ -56,12 +55,14 @@ export function UserSidebar({
       />
       <div />
       <div className="space-y-2">
-        <UserSidebarLink
-          href="/feedback"
-          icon={<Mail size={20} />}
-          isExpanded={isExpanded}
-          label=" Feedback"
-        />
+        <div className="mx-4">
+          <UserSidebarLink
+            href="/feedback"
+            icon={<Mail size={24} />}
+            isExpanded={isExpanded}
+            label=" Feedback"
+          />
+        </div>
 
         <SidebarBottom
           avatarUrl={avatarUrl}
