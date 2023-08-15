@@ -3,8 +3,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/Button';
 import PageHeadingWithActions from '@/components/ui/Headings/PageHeadingWithActions';
-import TableCell from '@/components/ui/Table/TableCell';
-import TableHeader from '@/components/ui/Table/TableHeader';
 import HelpCard from '@/components/ui/Card/HelpCard';
 import organisationshelp from 'public/assets/help-assets/organisations-teams.png';
 import teamsprojects from 'public/assets/help-assets/teams-projects.png';
@@ -13,6 +11,15 @@ import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/Badge';
 import dynamic from 'next/dynamic';
+import {
+  ShadcnTable,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/Table/ShadcnTable';
+
 const TeamGraphs = dynamic(
   () => import('../../../TeamGraphs').then((mod) => mod.TeamGraphs),
   {
@@ -158,74 +165,44 @@ export default function Page() {
 
         {/* Team Table */}
         <div className="flex rounded-lg bg-clip-border border border-gray-200  max-w-[1296px] overflow-hidden">
-          <table className="w-full bg-clip-content border-slate-200">
-            <thead className="w-full bg-clip-border">
-              <tr className="p-0 ">
-                <th className="p-0">
-                  <TableHeader>Serial No.</TableHeader>
-                </th>
-                <th className="p-0">
-                  <TableHeader>Team Name</TableHeader>
-                </th>
-                <th className="p-0">
-                  <TableHeader>Projects</TableHeader>
-                </th>
-                <th className="p-0">
-                  <TableHeader>Created At</TableHeader>
-                </th>
-                <th className="p-0">
-                  <TableHeader>Priority</TableHeader>
-                </th>
-                <th className="p-0">
-                  <TableHeader>Settings</TableHeader>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
+          <ShadcnTable className="w-full bg-clip-content border-slate-200">
+            <TableHeader>
+              <TableRow>
+                <TableHead>Serial No.</TableHead>
+                <TableHead>Team Name</TableHead>
+                <TableHead>Projects</TableHead>
+                <TableHead>Created At</TableHead>
+                <TableHead>Priority</TableHead>
+                <TableHead>Settings</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
               {initialOrganisationsList
                 .filter((org) => org.id === 1)
                 .flatMap((org) => org.teams)
                 .filter((team) => team.id === 1)
                 .flatMap((team) => team.projects)
                 .map((project) => (
-                  <tr className="p-0" key={project.id}>
-                    <td className="p-0 ">
-                      <TableCell className="px-6 py-4">{project.id}</TableCell>
-                    </td>
-                    <td className="p-0 ">
-                      <TableCell className="px-6 py-4">
-                        {project.projectName}
-                      </TableCell>
-                    </td>
-                    <td className="p-0 ">
-                      <TableCell className="px-6 py-4">
-                        {project.objective}
-                      </TableCell>
-                    </td>
-                    <td className="p-0 ">
-                      <TableCell className="px-6 py-4">
-                        {project.projectCreatedAt}
-                      </TableCell>
-                    </td>
-                    <td className="p-0 ">
-                      <TableCell className="px-6 py-4">
-                        <Badge
-                          className=" whitespace-nowrap "
-                          variant={mapPriorityToVariant(project.priority)}
-                        >
-                          {project.priority}
-                        </Badge>
-                      </TableCell>
-                    </td>
-                    <td className="p-0 ">
-                      <TableCell className="px-6 py-4">
-                        <SettingsIcon className="text-2xl text-slate-600" />
-                      </TableCell>
-                    </td>
-                  </tr>
+                  <TableRow key={project.id}>
+                    <TableCell>{project.id}</TableCell>
+                    <TableCell>{project.projectName}</TableCell>
+                    <TableCell>{project.objective}</TableCell>
+                    <TableCell>{project.projectCreatedAt}</TableCell>
+                    <TableCell>
+                      <Badge
+                        className=" whitespace-nowrap "
+                        variant={mapPriorityToVariant(project.priority)}
+                      >
+                        {project.priority}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <SettingsIcon className="text-2xl text-slate-600" />
+                    </TableCell>
+                  </TableRow>
                 ))}
-            </tbody>
-          </table>
+            </TableBody>
+          </ShadcnTable>
         </div>
         <TeamGraphs />
         {/* Help Cards */}

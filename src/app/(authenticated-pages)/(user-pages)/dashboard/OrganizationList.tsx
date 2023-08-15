@@ -10,8 +10,14 @@ import {
 import { CreateOrganizationDialog } from '@/components/presentational/tailwind/CreateOrganizationDialog';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
-import TableCell from '@/components/ui/Table/TableCell';
-import TableHeader from '@/components/ui/Table/TableHeader';
+import {
+  ShadcnTable,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/Table/ShadcnTable';
 // convert the above organizationgraphs import to next dynamic
 import dynamic from 'next/dynamic';
 const OrganizationGraphs = dynamic(
@@ -62,82 +68,61 @@ export function OrganizationList({
           members to an organization.
         </p>
       </div>
-      <table className="w-full shadow rounded-lg overflow-hidden">
-        <thead className="bg-gray-50">
-          <tr>
-            <th scope="col" className="p-0">
-              <TableHeader>#</TableHeader>
-            </th>
-            <th scope="col" className="p-0">
-              <TableHeader>Title</TableHeader>
-            </th>
-            <th scope="col" className="p-0">
-              <TableHeader>Members</TableHeader>
-            </th>
-            <th scope="col" className="p-0">
-              <TableHeader>Created At</TableHeader>
-            </th>
-            <th scope="col" className="p-0">
-              <TableHeader> Owner</TableHeader>
-            </th>
-          </tr>
-        </thead>
-        <tbody className="bg-white ">
-          {organizations?.map((organization, index) => {
-            const teamMembers = Array.isArray(organization.organization_members)
-              ? organization.organization_members
-              : [];
-            const teamMembersCount = teamMembers.length;
-            const owner = teamMembers.find(
-              (member) => member.member_role === 'owner'
-            );
-            const ownerUserProfile = Array.isArray(owner?.user_profiles)
-              ? owner?.user_profiles[0]
-              : owner?.user_profiles;
+      <div className="border rounded-lg overflow-hidden">
+        <ShadcnTable>
+          <TableHeader>
+            <TableRow>
+              <TableHead>#</TableHead>
+              <TableHead>Title</TableHead>
+              <TableHead>Members</TableHead>
+              <TableHead>Created At</TableHead>
+              <TableHead>Owner</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {organizations?.map((organization, index) => {
+              const teamMembers = Array.isArray(
+                organization.organization_members
+              )
+                ? organization.organization_members
+                : [];
+              const teamMembersCount = teamMembers.length;
+              const owner = teamMembers.find(
+                (member) => member.member_role === 'owner'
+              );
+              const ownerUserProfile = Array.isArray(owner?.user_profiles)
+                ? owner?.user_profiles[0]
+                : owner?.user_profiles;
 
-            if (!ownerUserProfile) {
-              // THIS IS A HACK
-              // User profile will always be there
-              throw new Error('Owner user profile not found');
-            }
+              if (!ownerUserProfile) {
+                // THIS IS A HACK
+                // User profile will always be there
+                throw new Error('Owner user profile not found');
+              }
 
-            return (
-              <tr key={organization.id} className="text-sm">
-                <td className="p-0">
-                  <TableCell className="px-6 py-4">{index + 1}</TableCell>
-                </td>
-                <td className="p-0">
-                  <Anchor
-                    className=" "
-                    key={organization.id}
-                    href={`/organization/${organization.id}`}
-                  >
-                    <TableCell className="text-blue-500 px-6 py-4 truncate font-[500] hover:underline">
+              return (
+                <TableRow key={organization.id}>
+                  <TableCell>{index + 1}</TableCell>
+                  <TableCell>
+                    <Anchor
+                      className=" text-blue-600 font-medium underline underline-offset-2"
+                      key={organization.id}
+                      href={`/organization/${organization.id}`}
+                    >
                       {organization.title}
-                    </TableCell>
-                  </Anchor>
-                </td>
-                <td className="p-0">
-                  <TableCell className="px-6 py-4">
-                    {teamMembersCount} members
+                    </Anchor>
                   </TableCell>
-                </td>
-                <td className="p-0">
-                  <TableCell className="px-6 py-4">
+                  <TableCell>{teamMembersCount} members</TableCell>
+                  <TableCell>
                     {moment(organization.created_at).fromNow()}
                   </TableCell>
-                </td>
-                <td className="p-0">
-                  <TableCell className="px-6 py-4">
-                    {ownerUserProfile.full_name}
-                  </TableCell>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-
+                  <TableCell>{ownerUserProfile.full_name}</TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </ShadcnTable>
+      </div>
       <OrganizationGraphs />
     </div>
   );

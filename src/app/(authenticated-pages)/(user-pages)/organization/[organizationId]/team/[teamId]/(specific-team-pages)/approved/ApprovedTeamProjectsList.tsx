@@ -7,12 +7,14 @@ import { useGetApprovedProjectsByTeam } from '@/utils/react-queries/projects';
 
 function TableContainer({ projects }: { projects: Table<'projects'>[] }) {
   return (
-    <div className="bg-gray-100 py-10">
-      <div className="px-4  sm:px-6 lg:px-8">
+    <div className="border border-neutral-200 bg-white rounded-xl ">
+      <div className="py-8 pb-6 sm:px-8 lg:px-8">
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
-            <T.H2>Approved Projects</T.H2>
-            <p className="mt-2 text-sm text-gray-700">
+            <h3 className="font-semibold border-0 leading-1 tracking-tight text-2xl">
+              Approved Projects
+            </h3>
+            <p className="text-base text-gray-700">
               A list of all approved projects for this team. Approved projects
               which will be moved to completed automatically in 1 week and will
               be scheduled to archive to save storage. (Work in Progress)

@@ -1,6 +1,5 @@
 'use client';
-import TableCell from '@/components/ui/Table/TableCell';
-import TableHeader from '@/components/ui/Table/TableHeader';
+
 import { DBFunction } from '@/types';
 import moment from 'moment';
 import { useState } from 'react';
@@ -11,6 +10,14 @@ import {
   ADMIN_USER_LIST_VIEW_PAGE_SIZE,
 } from '@/constants';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import {
+  ShadcnTable,
+  TableBody,
+  TableCell,
+  TableHeader,
+  TableHead,
+  TableRow,
+} from '@/components/ui/Table/ShadcnTable';
 
 function RenderOrganization({
   organization,
@@ -18,43 +25,27 @@ function RenderOrganization({
   organization: DBFunction<'app_admin_get_all_organizations'>[number];
 }) {
   return (
-    <tr key={organization.id}>
-      <td className="p-0">
-        <TableCell className="px-6 py-4 truncate">
-          {organization.title ?? '-'}
-        </TableCell>
-      </td>
-      <td className="p-0">
-        <TableCell className="px-6 py-4 truncate">
-          {moment(organization.created_at).format('DD MMM YYYY')}
-        </TableCell>
-      </td>
-      <td className="p-0">
-        <TableCell className="px-6 py-4 truncate">
-          {organization.team_members_count ?? '-'}
-        </TableCell>
-      </td>
-      <td className="p-0">
-        <TableCell className="px-6 py-4 truncate">
-          {organization.owner_full_name}
-        </TableCell>
-      </td>
+    <TableRow key={organization.id}>
+      <TableCell>{organization.title ?? '-'}</TableCell>
+      <TableCell>
+        {moment(organization.created_at).format('DD MMM YYYY')}
+      </TableCell>
+      <TableCell>{organization.team_members_count ?? '-'}</TableCell>
+      <TableCell>{organization.owner_full_name}</TableCell>
 
-      <td className="p-0">
-        <TableCell className="px-6 py-4 truncate group ">
-          <span className="flex items-center space-x-2">
-            <a
-              title="Send email"
-              className="text-blue-500 text-sm group-hover:text-blue-700"
-              href={`mailto:${organization.owner_email}`}
-              target="_blank"
-            >
-              <MailIcon />
-            </a>
-          </span>
-        </TableCell>
-      </td>
-    </tr>
+      <TableCell>
+        <span className="flex items-center space-x-2">
+          <a
+            title="Send email"
+            className="text-blue-500 text-sm group-hover:text-blue-700"
+            href={`mailto:${organization.owner_email}`}
+            target="_blank"
+          >
+            <MailIcon />
+          </a>
+        </span>
+      </TableCell>
+    </TableRow>
   );
 }
 
@@ -135,38 +126,28 @@ export function RenderOrganizations({
           />
         </div>
       </div>
-      <div className="space-y-4">
-        <table className="min-w-full divide-y divide-gray-300 shadow rounded-sm">
-          <thead className="bg-gray-50">
-            <tr>
-              <th scope="col" className="p-0">
-                <TableHeader>Title</TableHeader>
-              </th>
-              <th scope="col" className="p-0">
-                <TableHeader>Created At</TableHeader>
-              </th>
-              <th scope="col" className="p-0">
-                <TableHeader>Team Member Count</TableHeader>
-              </th>
+      <div className="rounded-lg overflow-hidden border">
+        <ShadcnTable>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Title</TableHead>
+              <TableHead>Created At</TableHead>
+              <TableHead>Team Member Count</TableHead>
 
-              <th scope="col" className="p-0">
-                <TableHeader>Owner Name</TableHeader>
-              </th>
+              <TableHead>Owner Name</TableHead>
 
-              <th scope="col" className="p-0">
-                <TableHeader>Actions</TableHeader>
-              </th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-200 bg-white">
+              <TableHead>Actions</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
             {organizations.map((organization) => (
               <RenderOrganization
                 key={organization.id}
                 organization={organization}
               />
             ))}
-          </tbody>
-        </table>
+          </TableBody>
+        </ShadcnTable>
         {hasNextPage ? (
           <button
             className="underline text-blue-500 text-sm"

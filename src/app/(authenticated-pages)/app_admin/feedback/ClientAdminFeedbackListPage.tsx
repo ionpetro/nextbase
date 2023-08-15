@@ -1,9 +1,7 @@
 'use client';
 
-import { Button } from '@/components/ui/Button';
 import FilterIcon from 'lucide-react/dist/esm/icons/filter';
-import TableCell from '@/components/ui/Table/TableCell';
-import TableHeader from '@/components/ui/Table/TableHeader';
+
 import { useState } from 'react';
 import { Badge } from '@/components/ui/Badge';
 import {
@@ -28,6 +26,15 @@ import {
 } from '@/utils/feedback';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import {
+  ShadcnTable,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/Table/ShadcnTable';
+import { Button } from '@/components/ui/Button/ButtonShadcn';
 
 export function ClientAdminFeedbackListPage({
   getAllInternalFeedbackAction,
@@ -121,8 +128,8 @@ export function ClientAdminFeedbackListPage({
                         ...filters,
                         statuses: filters.statuses?.includes(statusOption)
                           ? filters.statuses.filter(
-                              (status) => status !== statusOption
-                            )
+                            (status) => status !== statusOption
+                          )
                           : [...(filters.statuses || []), statusOption],
                       })
                     }
@@ -201,8 +208,8 @@ export function ClientAdminFeedbackListPage({
                         ...filters,
                         priorities: filters.priorities.includes(priorityOption)
                           ? filters.priorities.filter(
-                              (priority) => priority !== priorityOption
-                            )
+                            (priority) => priority !== priorityOption
+                          )
                           : [...(filters.priorities || []), priorityOption],
                       })
                     }
@@ -223,78 +230,50 @@ export function ClientAdminFeedbackListPage({
         <p>Loading...</p>
       ) : (
         <div className="flex rounded-lg bg-clip-border border border-gray-200 max-w-[1296px] overflow-hidden">
-          <table className="w-full bg-clip-content border-slate-200">
-            <thead className="w-full bg-clip-border">
-              <tr className="p-0 ">
-                <th className="p-0 ">
-                  <TableHeader>Name</TableHeader>
-                </th>
-                <th className="p-0 ">
-                  <TableHeader>Feedback</TableHeader>
-                </th>
-                <th className="p-0 ">
-                  <TableHeader>Type</TableHeader>
-                </th>
-                <th className="p-0 ">
-                  <TableHeader>Priority</TableHeader>
-                </th>
-                <th className="p-0 ">
-                  <TableHeader>Created At</TableHeader>
-                </th>
-                <th className="p-0 ">
-                  <TableHeader>Status</TableHeader>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
+          <ShadcnTable>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Name</TableHead>
+                <TableHead>Feedback</TableHead>
+                <TableHead>Type</TableHead>
+                <TableHead>Priority</TableHead>
+                <TableHead>Created At</TableHead>
+                <TableHead>Status</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
               {feedbackList.map((feedback) => (
-                <tr className="p-0" key={feedback.id}>
-                  <td className="p-0 ">
-                    <TableCell className="px-6 py-4 truncate">
-                      <AdminViewUserDetails userId={feedback.user_id} />
-                    </TableCell>
-                  </td>
-                  <td className="p-0 ">
+                <TableRow key={feedback.id}>
+                  <TableCell>
+                    <AdminViewUserDetails userId={feedback.user_id} />
+                  </TableCell>
+                  <TableCell>
                     <Anchor
-                      className=" "
+                      className=" text-blue-600 font-medium underline underline-offset-2"
                       key={feedback.id}
                       href={`/app_admin/feedback/${feedback.id}`}
                     >
-                      <TableCell className="text-blue-500 px-6 py-4 truncate font-[500] hover:underline">
-                        {feedback.title}
-                      </TableCell>
+                      {feedback.title}
                     </Anchor>
-                  </td>
+                  </TableCell>
 
-                  <td className="p-0 ">
-                    <TableCell className="px-6 py-4 truncate">
-                      {formatFieldValue(feedback.type)}
-                    </TableCell>
-                  </td>
-                  <td className="p-0">
-                    <TableCell className="px-6 py-4 truncate">
-                      {formatFieldValue(feedback.priority)}
-                    </TableCell>
-                  </td>
-                  <td className="p-0">
-                    <TableCell className="px-6 py-4 truncate">
-                      {moment(feedback.created_at).format('LL')}
-                    </TableCell>
-                  </td>
-                  <td className="p-0">
-                    <TableCell className="flex items-center h-[58px] justify-center">
-                      <Badge
-                        className=" whitespace-nowrap "
-                        variant={mapStatusToVariant(feedback.status)}
-                      >
-                        {formatFieldValue(feedback.status)}
-                      </Badge>
-                    </TableCell>
-                  </td>
-                </tr>
+                  <TableCell>{formatFieldValue(feedback.type)}</TableCell>
+                  <TableCell>{formatFieldValue(feedback.priority)}</TableCell>
+                  <TableCell>
+                    {moment(feedback.created_at).format('LL')}
+                  </TableCell>
+                  <TableCell>
+                    <Badge
+                      className=" whitespace-nowrap "
+                      variant={mapStatusToVariant(feedback.status)}
+                    >
+                      {formatFieldValue(feedback.status)}
+                    </Badge>
+                  </TableCell>
+                </TableRow>
               ))}
-            </tbody>
-          </table>
+            </TableBody>
+          </ShadcnTable>
         </div>
       )}
     </div>

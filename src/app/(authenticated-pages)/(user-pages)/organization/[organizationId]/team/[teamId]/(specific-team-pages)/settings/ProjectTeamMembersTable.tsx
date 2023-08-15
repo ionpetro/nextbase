@@ -11,6 +11,15 @@ import { AddUserToTeamDialog } from './AddUserToTeamDialog';
 import { ConfirmRemoveUserFromTeamDialog } from './ConfirmRemoveUserFromTeamDialog';
 import { ProjectTeamMemberRoleSelect } from './ProjectTeamMemberRoleSelect';
 import { useTeamContext } from '@/contexts/TeamContext';
+import {
+  ShadcnTable,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/Table/ShadcnTable';
 
 export function ProjectTeamMembersTable({
   teamMembers: teamMembersInitial,
@@ -27,15 +36,17 @@ export function ProjectTeamMembersTable({
     return null;
   }
   return (
-    <div className="bg-gray-100 py-10">
-      <div className="px-4 sm:px-6 lg:px-8">
+    <div className="border border-neutral-200 bg-white rounded-xl ">
+      <div className="py-8 pb-6 sm:px-8 lg:px-8">
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
-            <div className="flex gap-2">
-              <T.H2>Team Members</T.H2>
+            <div className="flex gap-2 justify-between">
+              <h3 className="font-semibold border-0 leading-0 tracking-tight text-2xl text-gray-700">
+                Team Members
+              </h3>
               {canUserManageTeam ? <AddUserToTeamDialog /> : null}
             </div>
-            <p className="mt-2 text-sm text-gray-700">
+            <p className="text-base -mt-1 text-gray-700">
               A list of all users in the team and their roles.
             </p>
           </div>
@@ -44,36 +55,18 @@ export function ProjectTeamMembersTable({
           <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
               <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
-                <table className="min-w-full divide-y divide-gray-300">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th
-                        scope="col"
-                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                      >
-                        User
-                      </th>{' '}
-                      <th
-                        scope="col"
-                        className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
-                      >
-                        Name
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                      >
-                        Role
-                      </th>
-                      <th
-                        scope="col"
-                        className="relative py-3.5 pl-3 pr-4 sm:pr-6"
-                      >
+                <ShadcnTable>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead scope="col">User</TableHead>{' '}
+                      <TableHead scope="col">Name</TableHead>
+                      <TableHead scope="col">Role</TableHead>
+                      <TableHead scope="col">
                         <span className="sr-only">Change Role</span>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-200 bg-white">
+                      </TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
                     {teamMembers.map((member, index) => {
                       const userProfile = Array.isArray(member.user_profiles)
                         ? member.user_profiles[0]
@@ -82,17 +75,11 @@ export function ProjectTeamMembersTable({
                         throw new Error('userProfile is undefined');
                       }
                       return (
-                        <tr key={member.id}>
-                          <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                            {index + 1}
-                          </td>{' '}
-                          <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                            {userProfile.full_name}
-                          </td>
-                          <td className="whitespace-nowrap uppercase px-3 py-4 text-sm text-gray-500">
-                            {member.role}
-                          </td>
-                          <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                        <TableRow key={member.id}>
+                          <TableCell>{index + 1}</TableCell>{' '}
+                          <TableCell>{userProfile.full_name}</TableCell>
+                          <TableCell>{member.role}</TableCell>
+                          <TableCell>
                             {canUserManageTeam ? (
                               <div className="flex gap-1 items-center">
                                 <ProjectTeamMemberRoleSelect
@@ -116,12 +103,12 @@ export function ProjectTeamMembersTable({
                                 />
                               </div>
                             ) : null}
-                          </td>
-                        </tr>
+                          </TableCell>
+                        </TableRow>
                       );
                     })}
-                  </tbody>
-                </table>
+                  </TableBody>
+                </ShadcnTable>
               </div>
             </div>
           </div>

@@ -4,6 +4,14 @@ import { T } from '@/components/ui/Typography';
 import { Table } from '@/types';
 import { useOrganizationContext } from '@/contexts/OrganizationContext';
 import { useGetTeamsInOrganization } from '@/utils/react-queries/teams';
+import {
+  ShadcnTable,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/Table/ShadcnTable';
 
 export const OrganizationTeams = ({
   initialTeams,
@@ -19,11 +27,13 @@ export const OrganizationTeams = ({
     return null;
   }
   return (
-    <div className="bg-gray-100 py-10">
-      <div className="px-4 sm:px-6 lg:px-8">
+    <div className="border border-neutral-200 bg-white rounded-xl ">
+      <div className="py-8 pb-6 sm:px-8 lg:px-8">
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
-            <T.H2>Teams</T.H2>
+            <h3 className="font-semibold border-0 leading-0 tracking-tight text-2xl text-gray-700">
+              Teams
+            </h3>
             <p className="mt-2 text-sm text-gray-700">A list of all teams.</p>
           </div>
         </div>
@@ -31,40 +41,29 @@ export const OrganizationTeams = ({
           <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
               <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
-                <table className="min-w-full divide-y divide-gray-300">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th
-                        scope="col"
-                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                      >
-                        Row
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                      >
-                        Team Name
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-200 bg-white">
+                <ShadcnTable>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Row</TableHead>
+                      <TableHead>Team Name</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
                     {teams.map((team, index) => (
-                      <tr key={team.id}>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {index + 1}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm font-medium text-blue-500">
+                      <TableRow key={team.id}>
+                        <TableCell>{index + 1}</TableCell>
+                        <TableCell>
                           <Anchor
+                            className=" text-blue-600 font-medium underline underline-offset-2"
                             href={`/organization/${organizationId}/team/${team.id}`}
                           >
                             {team.name}
                           </Anchor>
-                        </td>
-                      </tr>
+                        </TableCell>
+                      </TableRow>
                     ))}
-                  </tbody>
-                </table>
+                  </TableBody>
+                </ShadcnTable>
               </div>
             </div>
           </div>

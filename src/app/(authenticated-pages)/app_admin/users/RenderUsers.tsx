@@ -2,8 +2,6 @@
 import { AppAdminCreateUserDialog } from '@/components/presentational/tailwind/AppAdminCreateUserDialog';
 import { ConfirmSendLoginLinkDialog } from '@/components/presentational/tailwind/ConfirmSendLoginLinkDialog';
 import { DBFunction, UnwrapPromise, View } from '@/types';
-import TableCell from '@/components/ui/Table/TableCell';
-import TableHeader from '@/components/ui/Table/TableHeader';
 import moment from 'moment';
 import { useRef, useState } from 'react';
 import LoginIcon from 'lucide-react/dist/esm/icons/log-in';
@@ -18,6 +16,13 @@ import { toast } from 'react-hot-toast';
 import { ADMIN_USER_LIST_VIEW_PAGE_SIZE } from '@/constants';
 import { User } from '@supabase/supabase-js';
 import { useRouter } from 'next/navigation';
+import {
+  ShadcnTable,
+  TableBody,
+  TableCell,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/Table/ShadcnTable';
 
 function RenderUser({
   user,
@@ -96,80 +101,52 @@ function RenderUser({
   );
 
   return (
-    <tr key={user.id}>
-      <td className="p-0">
-        <TableCell className="px-6 py-4 truncate">
-          {' '}
-          {user.full_name ?? '-'}{' '}
-        </TableCell>
-      </td>
-      <td className="p-0">
-        <TableCell className="px-6 py-4 truncate">{user.email}</TableCell>
-      </td>
-      <td className="p-0">
-        <TableCell className="px-6 py-4 truncate">
-          {' '}
-          {user.is_app_admin ? '✅' : '❌'}
-        </TableCell>
-      </td>
-      <td className="p-0">
-        <TableCell className="px-6 py-4 truncate">
-          {' '}
-          {moment(user.created_at).format('DD MMM YYYY')}
-        </TableCell>
-      </td>
-      <td className="p-0">
-        <TableCell className="px-6 py-4 truncate">
-          {' '}
-          {user.is_confirmed ? '✅' : '❌'}
-        </TableCell>
-      </td>
-      <td className="p-0">
-        <TableCell className="px-6 py-4 truncate">
-          <span className="flex items-center space-x-4">
-            <a
-              title="Contact User by email"
-              className=" text-base flex items-center space-x-1 "
-              href={`mailto:${user.email}`}
-              target="_blank"
-            >
-              <MailIcon /> <span>Contact User by email</span>
-            </a>
-          </span>
-        </TableCell>
-      </td>
-
-      <td className="p-0">
-        <TableCell className="px-6 py-2 truncate">
-          <ConfirmSendLoginLinkDialog
-            onConfirm={() => {
-              if (!user.email) {
-                throw new Error('user.email is undefined');
-              }
-              sendLoginLink(user.email);
-            }}
-          />
-        </TableCell>
-      </td>
-      <td className="p-0">
-        <TableCell className="px-6 py-4 group truncate">
-          <button
-            title="Impersonate User"
-            className="inline-flex text-base font-[600] items-center space-x-2 rounded group-hover:underline text-blue-500
-            hover:text-blue-700"
-            onClick={() => {
-              if (!user.id) {
-                throw new Error('user.id is undefined');
-              }
-              getImpersonationLink();
-            }}
-            disabled={isImpersonating}
+    <TableRow key={user.id}>
+      <TableCell> {user.full_name ?? '-'} </TableCell>
+      <TableCell>{user.email}</TableCell>
+      <TableCell> {user.is_app_admin ? '✅' : '❌'}</TableCell>
+      <TableCell> {moment(user.created_at).format('DD MMM YYYY')}</TableCell>
+      <TableCell> {user.is_confirmed ? '✅' : '❌'}</TableCell>
+      <TableCell>
+        <span className="flex items-center space-x-4">
+          <a
+            title="Contact User by email"
+            className=" text-base flex items-center space-x-1 "
+            href={`mailto:${user.email}`}
+            target="_blank"
           >
-            <LoginIcon /> <span>Login as User </span>
-          </button>
-        </TableCell>
-      </td>
-    </tr>
+            <MailIcon /> <span>Contact User by email</span>
+          </a>
+        </span>
+      </TableCell>
+
+      <TableCell>
+        <ConfirmSendLoginLinkDialog
+          onConfirm={() => {
+            if (!user.email) {
+              throw new Error('user.email is undefined');
+            }
+            sendLoginLink(user.email);
+          }}
+        />
+      </TableCell>
+      <TableCell>
+        <button
+          title="Impersonate User"
+          className="inline-flex text-base font-[600] items-center space-x-2 rounded group-hover:underline text-blue-500
+            hover:text-blue-700"
+          onClick={() => {
+            if (!user.id) {
+              throw new Error('user.id is undefined');
+            }
+            getImpersonationLink();
+          }}
+          disabled={isImpersonating}
+        >
+          <LoginIcon /> <span>Login as User </span>
+        </button>
+      </TableCell>
+    </TableRow>
   );
 }
 
@@ -294,39 +271,24 @@ export function RenderUsers({
           isLoading={isCreatingUser}
         />
       </div>
-      <div className="space-y-2" style={{ overflowX: 'auto' }}>
-        <table className="min-w-full shadow rounded-lg overflow-hidden">
-          <thead className="bg-gray-50">
-            <tr>
-              <th scope="col" className="p-0">
-                <TableHeader>Full Name</TableHeader>
-              </th>
-              <th scope="col" className="p-0">
-                <TableHeader>Email</TableHeader>
-              </th>
-              <th scope="col" className="p-0">
-                <TableHeader>Admin</TableHeader>
-              </th>
-              <th scope="col" className="p-0">
-                <TableHeader>Created At</TableHeader>
-              </th>
-              <th scope="col" className="p-0">
-                <TableHeader>Confirmed</TableHeader>
-              </th>
-              <th scope="col" className="p-0">
-                <TableHeader>Contact User</TableHeader>
-              </th>
-
-              <th scope="col" className="p-0">
-                <TableHeader>Send Login Link</TableHeader>
-              </th>
-
-              <th scope="col" className="p-0">
-                <TableHeader>Debug</TableHeader>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
+      <div
+        className="space-y-2 rounded-lg border"
+        style={{ overflowX: 'auto' }}
+      >
+        <ShadcnTable>
+          <TableHeader>
+            <TableRow>
+              <TableCell>Full Name</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Admin</TableCell>
+              <TableCell>Created At</TableCell>
+              <TableCell>Confirmed</TableCell>
+              <TableCell>Contact User</TableCell>
+              <TableCell>Send Login Link</TableCell>
+              <TableCell>Debug</TableCell>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
             {users.map((user) => (
               <RenderUser
                 getUserImpersonationUrlAction={getUserImpersonationUrlAction}
@@ -335,8 +297,8 @@ export function RenderUsers({
                 user={user}
               />
             ))}
-          </tbody>
-        </table>
+          </TableBody>
+        </ShadcnTable>
         {hasNextPage ? (
           <button
             className="underline text-blue-500 text-sm"

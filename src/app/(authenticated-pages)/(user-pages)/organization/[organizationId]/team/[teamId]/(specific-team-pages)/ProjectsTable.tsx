@@ -1,7 +1,5 @@
 'use client';
 import { Anchor } from '@/components/Anchor';
-import TableCell from '@/components/ui/Table/TableCell';
-import TableHeader from '@/components/ui/Table/TableHeader';
 import { T } from '@/components/ui/Typography';
 import { Table } from '@/types';
 import Check from 'lucide-react/dist/esm/icons/check';
@@ -10,6 +8,14 @@ import Pen from 'lucide-react/dist/esm/icons/pen-tool';
 import ThumbsUp from 'lucide-react/dist/esm/icons/thumbs-up';
 import Timer from 'lucide-react/dist/esm/icons/timer';
 import moment from 'moment';
+import {
+  ShadcnTable,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/Table/ShadcnTable';
 
 export const ProjectsTable = ({
   projects,
@@ -24,98 +30,77 @@ export const ProjectsTable = ({
     );
   }
   return (
-    <div className="mt-8 flow-root">
+    <div className="mt-6 flow-root">
       <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-          <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
-            <div className="flex rounded-lg bg-clip-border border border-gray-200  max-w-[1296px] overflow-hidden">
-              <table className="w-full bg-clip-content border-slate-200">
-                <thead className="w-full bg-clip-border">
-                  <tr className="p-0 ">
-                    <th className="p-0">
-                      <TableHeader>Name</TableHeader>
-                    </th>
-                    <th className="p-0">
-                      <TableHeader>Date</TableHeader>
-                    </th>
-                    <th className="p-0">
-                      <TableHeader>Project Status</TableHeader>
-                    </th>
-                    <th className="p-0">
-                      <TableHeader>View</TableHeader>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {projects.map((project) => (
-                    <tr className="p-0" key={project.id}>
-                      <td className="p-0 ">
-                        <TableCell className="px-6 py-4">
-                          {project.name}
-                        </TableCell>
-                      </td>
-                      <td className="p-0 ">
-                        <TableCell className="px-6 py-4">
-                          {moment(project.created_at).format('LLL')}
-                        </TableCell>
-                      </td>
-                      <td className="p-0 ">
-                        <TableCell className="px-6 py-4">
-                          {/* Add your project status rendering logic here */}
-                          {project.project_status === 'completed' ? (
-                            <div className="flex items-center space-x-2">
-                              <Check size={16} />
-                              <T.P className="text-xs text-green-500">
-                                Completed
-                              </T.P>
-                            </div>
-                          ) : project.project_status === 'pending_approval' ? (
-                            <div className="flex items-center space-x-2">
-                              <Pen size={16} />
-                              <T.P className="text-xs text-yellow-500">
-                                Pending Approval
-                              </T.P>
-                            </div>
-                          ) : project.project_status === 'approved' ? (
-                            <div className="flex items-center space-x-2">
-                              <ThumbsUp size={16} />
-                              <T.P className="text-xs text-green-500">
-                                Approved
-                              </T.P>
-                            </div>
-                          ) : project.project_status === 'draft' ? (
-                            <div className="flex items-center space-x-2">
-                              <Timer size={16} />
-                              <T.P className="text-xs text-blue-500">Draft</T.P>
-                            </div>
-                          ) : (
-                            <div className="flex items-center space-x-2">
-                              <Timer size={16} />
-                              <T.P className="text-xs text-blue-500 capitalize">
-                                {String(project.project_status).replace(
-                                  '_',
-                                  ' '
-                                )}
-                              </T.P>
-                            </div>
-                          )}
-                        </TableCell>
-                      </td>
-                      <td className="p-0 ">
-                        <TableCell className="px-6 py-4">
-                          <Anchor
-                            className="bg-blue-500 text-white px-2 py-1 rounded-lg text-xs"
-                            href={`/project/${project.id}`}
-                          >
-                            <ExternalLink size={12} />
-                          </Anchor>
-                        </TableCell>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+          {/* <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg"></div> */}
+          {/* <div className="flex rounded-lg bg-clip-border border border-gray-200  max-w-[1296px] overflow-hidden"> */}
+          <div className="border border-neutral-200 rounded-lg shadow-sm overflow-hidden">
+            <ShadcnTable>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Date</TableHead>
+                  <TableHead>Project Status</TableHead>
+                  <TableHead>View</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {projects.map((project) => (
+                  <TableRow key={project.id}>
+                    <TableCell className="font-semibold">
+                      {project.name}
+                    </TableCell>
+                    <TableCell>
+                      {moment(project.created_at).format('LLL')}
+                    </TableCell>
+                    <TableCell>
+                      {/* Add your project status rendering logic here */}
+                      {project.project_status === 'completed' ? (
+                        <div className="inline-flex items-center space-x-1 border border-green-300 bg-green-50  rounded-lg font-medium px-2 py-0.5">
+                          <Check size={16} />
+                          <T.P className="text-sm text-green-500">
+                            Completed
+                          </T.P>
+                        </div>
+                      ) : project.project_status === 'pending_approval' ? (
+                        <div className="inline-flex items-center space-x-1 border border-yellow-300 bg-yellow-50  rounded-lg font-medium px-2 py-0.5">
+                          <Pen size={16} />
+                          <T.P className="text-sm text-yellow-500">
+                            Pending Approval
+                          </T.P>
+                        </div>
+                      ) : project.project_status === 'approved' ? (
+                        <div className="inline-flex items-center space-x-1 border border-green-300 bg-green-50  rounded-lg font-medium px-2 py-0.5">
+                          <ThumbsUp size={16} />
+                          <T.P className="text-sm text-green-500">Approved</T.P>
+                        </div>
+                      ) : project.project_status === 'draft' ? (
+                        <div className="inline-flex items-center space-x-1 border border-neutral-300 bg-neutral-50  rounded-lg font-medium px-2 py-0.5">
+                          <Timer size={16} />
+                          <T.P className="text-sm text-neutral-700">Draft</T.P>
+                        </div>
+                      ) : (
+                        <div className="inline-flex items-center space-x-1 border border-blue-300 bg-blue-50  rounded-lg font-medium px-2 py-0.5">
+                          <Timer size={16} />
+                          <T.P className="text-sm text-blue-500 capitalize">
+                            {String(project.project_status).replace('_', ' ')}
+                          </T.P>
+                        </div>
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      <Anchor href={`/project/${project.id}`}>
+                        <ExternalLink
+                          size={20}
+                          className=" text-blue-600 rounded-lg text-base"
+                        />
+                      </Anchor>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </ShadcnTable>
           </div>
         </div>
       </div>

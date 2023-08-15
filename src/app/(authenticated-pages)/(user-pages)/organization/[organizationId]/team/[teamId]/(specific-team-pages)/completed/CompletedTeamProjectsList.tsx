@@ -7,12 +7,14 @@ import { useGetCompletedProjectsByTeam } from '@/utils/react-queries/projects';
 
 function TableContainer({ projects }: { projects: Table<'projects'>[] }) {
   return (
-    <div className="bg-gray-100 py-10">
-      <div className="px-4  sm:px-6 lg:px-8">
+    <div className="border border-neutral-200 bg-white rounded-xl ">
+      <div className="py-8 pb-6 sm:px-8 lg:px-8">
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
-            <T.H2>Completed Projects</T.H2>
-            <p className="mt-2 text-sm text-gray-700">
+            <h3 className="font-semibold border-0 leading-1 tracking-tight text-2xl">
+              Completed Projects
+            </h3>
+            <p className="text-base text-gray-700">
               A list of all completed projects for this team. Projects completed
               over a month ago will be archived to save storage space. (Work in
               Progress)
