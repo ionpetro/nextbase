@@ -34,6 +34,12 @@ SELECT *
 FROM temp_result;
 END;
 $$ LANGUAGE plpgsql;
+REVOKE ALL ON FUNCTION public.app_admin_get_users_created_per_month
+FROM PUBLIC;
+REVOKE ALL ON FUNCTION public.app_admin_get_users_created_per_month
+FROM ANON;
+REVOKE ALL ON FUNCTION public.app_admin_get_users_created_per_month
+FROM AUTHENTICATED;
 
 
 CREATE OR REPLACE FUNCTION app_admin_get_total_user_count() RETURNS INTEGER AS $$
@@ -50,6 +56,12 @@ FROM public.user_profiles;
 RETURN user_count;
 END;
 $$ LANGUAGE plpgsql;
+REVOKE ALL ON FUNCTION public.app_admin_get_total_user_count
+FROM PUBLIC;
+REVOKE ALL ON FUNCTION public.app_admin_get_total_user_count
+FROM ANON;
+REVOKE ALL ON FUNCTION public.app_admin_get_total_user_count
+FROM AUTHENTICATED;
 
 
 CREATE OR REPLACE FUNCTION app_admin_get_recent_30_day_signin_count() RETURNS INTEGER AS $$
@@ -68,6 +80,12 @@ WHERE last_sign_in_at >= CURRENT_DATE - INTERVAL '30 DAYS';
     RETURN signin_count;
 END;
 $$ LANGUAGE plpgsql;
+REVOKE ALL ON FUNCTION public.app_admin_get_recent_30_day_signin_count
+FROM PUBLIC;
+REVOKE ALL ON FUNCTION public.app_admin_get_recent_30_day_signin_count
+FROM ANON;
+REVOKE ALL ON FUNCTION public.app_admin_get_recent_30_day_signin_count
+FROM AUTHENTICATED;
 
 CREATE OR REPLACE FUNCTION app_admin_get_projects_created_per_month() RETURNS TABLE(MONTH DATE, number_of_projects INTEGER) AS $$ BEGIN IF CURRENT_ROLE NOT IN (
     'service_role',
@@ -105,6 +123,12 @@ SELECT *
 FROM temp_result;
 END;
 $$ LANGUAGE plpgsql;
+REVOKE ALL ON FUNCTION public.app_admin_get_projects_created_per_month
+FROM PUBLIC;
+REVOKE ALL ON FUNCTION public.app_admin_get_projects_created_per_month
+FROM ANON;
+REVOKE ALL ON FUNCTION public.app_admin_get_projects_created_per_month
+FROM AUTHENTICATED;
 
 
 -- Function to get the total number of organizations
@@ -122,6 +146,12 @@ FROM public.organizations;
 RETURN org_count;
 END;
 $$ LANGUAGE plpgsql;
+REVOKE ALL ON FUNCTION public.app_admin_get_total_organization_count
+FROM PUBLIC;
+REVOKE ALL ON FUNCTION public.app_admin_get_total_organization_count
+FROM ANON;
+REVOKE ALL ON FUNCTION public.app_admin_get_total_organization_count
+FROM AUTHENTICATED;
 
 -- Function to get the total number of projects
 CREATE OR REPLACE FUNCTION app_admin_get_total_project_count() RETURNS INTEGER AS $$
@@ -138,6 +168,12 @@ FROM public.projects;
 RETURN proj_count;
 END;
 $$ LANGUAGE plpgsql;
+REVOKE ALL ON FUNCTION public.app_admin_get_total_project_count
+FROM PUBLIC;
+REVOKE ALL ON FUNCTION public.app_admin_get_total_project_count
+FROM ANON;
+REVOKE ALL ON FUNCTION public.app_admin_get_total_project_count
+FROM AUTHENTICATED;
 
 CREATE OR REPLACE FUNCTION app_admin_get_organizations_created_per_month() RETURNS TABLE(MONTH DATE, number_of_organizations INTEGER) AS $$ BEGIN IF CURRENT_ROLE NOT IN (
     'service_role',
@@ -175,3 +211,9 @@ SELECT *
 FROM temp_result;
 END;
 $$ LANGUAGE plpgsql;
+REVOKE ALL ON FUNCTION public.app_admin_get_organizations_created_per_month
+FROM PUBLIC;
+REVOKE ALL ON FUNCTION public.app_admin_get_organizations_created_per_month
+FROM ANON;
+REVOKE ALL ON FUNCTION public.app_admin_get_organizations_created_per_month
+FROM AUTHENTICATED;

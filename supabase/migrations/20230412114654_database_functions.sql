@@ -27,6 +27,11 @@ WHERE (
   );
 END;
 $function$;
+REVOKE ALL ON FUNCTION public.get_invited_organizations_for_user_v2
+FROM PUBLIC;
+REVOKE ALL ON FUNCTION public.get_invited_organizations_for_user_v2
+FROM ANON;
+
 -- Get organization of a team
 -- This function is used to get an organization of a team
 CREATE OR REPLACE FUNCTION public.get_organization_id_by_team_id(p_id integer) RETURNS uuid LANGUAGE plpgsql SECURITY DEFINER AS $function$
@@ -40,6 +45,11 @@ EXCEPTION
 WHEN NO_DATA_FOUND THEN RAISE EXCEPTION 'No organization found for the provided id: %',
 p_id;
 END;
+REVOKE ALL ON FUNCTION public.get_organization_id_by_team_id(p_id integer)
+FROM PUBLIC;
+REVOKE ALL ON FUNCTION public.get_organization_id_by_team_id(p_id integer)
+FROM ANON;
+
 $function$;
 CREATE OR REPLACE FUNCTION public.get_organization_id_by_team_id(p_id bigint) RETURNS uuid LANGUAGE plpgsql SECURITY DEFINER AS $function$
 DECLARE v_organization_id UUID;
@@ -53,6 +63,10 @@ WHEN NO_DATA_FOUND THEN RAISE EXCEPTION 'No organization found for the provided 
 p_id;
 END;
 $function$;
+REVOKE ALL ON FUNCTION public.get_organization_id_by_team_id(p_id bigint)
+FROM PUBLIC;
+REVOKE ALL ON FUNCTION public.get_organization_id_by_team_id(p_id bigint)
+FROM ANON;
 
 -- Get organizations for user
 -- This function is used to get all organizations that a user is a member of
@@ -63,6 +77,10 @@ FROM organizations o
 WHERE ot.member_id = user_id;
 END;
 $function$;
+REVOKE ALL ON FUNCTION public.get_organizations_for_user
+FROM PUBLIC;
+REVOKE ALL ON FUNCTION public.get_organizations_for_user
+FROM ANON;
 -- Get project admins of a team
 -- This function is used to get all admins of a team
 CREATE OR REPLACE FUNCTION public.get_team_admins_by_team_id(team_id bigint) RETURNS TABLE(user_id uuid) LANGUAGE plpgsql SECURITY DEFINER AS $function$ BEGIN RETURN QUERY
@@ -72,6 +90,10 @@ WHERE team_members.team_id = $1
   AND role = 'admin';
 END;
 $function$;
+REVOKE ALL ON FUNCTION public.get_team_admins_by_team_id
+FROM PUBLIC;
+REVOKE ALL ON FUNCTION public.get_team_admins_by_team_id
+FROM ANON;
 -- Get project members of a team
 -- This function is used to get all members of a team
 CREATE OR REPLACE FUNCTION public.get_team_members_team_id(team_id bigint) RETURNS TABLE(user_id uuid) LANGUAGE plpgsql SECURITY DEFINER AS $function$ BEGIN RETURN QUERY
@@ -80,6 +102,10 @@ FROM team_members
 WHERE team_members.team_id = $1;
 END;
 $function$;
+REVOKE ALL ON FUNCTION public.get_team_members_team_id
+FROM PUBLIC;
+REVOKE ALL ON FUNCTION public.get_team_members_team_id
+FROM ANON;
 -- Add credits to an organization on creation
 -- This function is used to add credits to an organization when it is created
 CREATE OR REPLACE FUNCTION public.handle_organization_created_add_credits() RETURNS TRIGGER LANGUAGE plpgsql SECURITY DEFINER AS $function$ BEGIN
@@ -88,6 +114,10 @@ VALUES (NEW.id);
 RETURN NEW;
 END;
 $function$;
+REVOKE ALL ON FUNCTION public.handle_organization_created_add_credits
+FROM PUBLIC;
+REVOKE ALL ON FUNCTION public.handle_organization_created_add_credits
+FROM ANON;
 -- Increment credits for an organization
 -- This function is used to increment credits for an organization
 CREATE OR REPLACE FUNCTION public.increment_credits(org_id uuid, amount integer) RETURNS void LANGUAGE plpgsql SECURITY DEFINER AS $function$ BEGIN -- Decrement the credits column by the specified amount
@@ -96,6 +126,12 @@ SET credits = credits + amount
 WHERE organization_id = org_id;
 END;
 $function$;
+REVOKE ALL ON FUNCTION public.increment_credits
+FROM PUBLIC;
+REVOKE ALL ON FUNCTION public.increment_credits
+FROM ANON;
+REVOKE ALL ON FUNCTION public.increment_credits
+FROM AUTHENTICATED;
 
 CREATE OR REPLACE FUNCTION get_organization_id_for_project_id(project_id UUID) RETURNS UUID AS $$
 DECLARE org_id UUID;
@@ -106,6 +142,11 @@ WHERE p.id = project_id;
 RETURN org_id;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
+REVOKE ALL ON FUNCTION public.get_organization_id_for_project_id
+FROM PUBLIC;
+REVOKE ALL ON FUNCTION public.get_organization_id_for_project_id
+FROM ANON;
+
 
 CREATE OR REPLACE FUNCTION get_team_id_for_project_id(project_id UUID) RETURNS INT8 AS $$
 DECLARE team_id INT8;
@@ -116,3 +157,7 @@ WHERE p.id = project_id;
 RETURN team_id;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
+REVOKE ALL ON FUNCTION public.get_team_id_for_project_id
+FROM PUBLIC;
+REVOKE ALL ON FUNCTION public.get_team_id_for_project_id
+FROM ANON;

@@ -5,3 +5,7 @@ FROM organizations o
 WHERE ot.member_id = user_id;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
+REVOKE ALL ON FUNCTION public.get_organizations_for_user
+FROM PUBLIC;
+REVOKE ALL ON FUNCTION public.get_organizations_for_user
+FROM ANON;

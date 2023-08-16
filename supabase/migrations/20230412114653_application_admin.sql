@@ -22,6 +22,11 @@ CREATE OR REPLACE FUNCTION public.check_if_user_is_app_admin (user_id uuid) -- R
 -- End the function
 END;
 $function$;
+REVOKE ALL ON FUNCTION public.check_if_user_is_app_admin
+FROM PUBLIC;
+REVOKE ALL ON FUNCTION public.check_if_user_is_app_admin
+FROM ANON;
+
 
 
 CREATE OR REPLACE FUNCTION get_all_app_admins() RETURNS TABLE (user_id uuid) AS $$ BEGIN RETURN QUERY
@@ -30,7 +35,12 @@ FROM auth.users
 WHERE auth.users.is_super_admin = TRUE;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
-
+REVOKE ALL ON FUNCTION get_all_app_admins
+FROM PUBLIC;
+REVOKE ALL ON FUNCTION public.get_all_app_admins
+FROM PUBLIC;
+REVOKE ALL ON FUNCTION public.get_all_app_admins
+FROM ANON;
 
 CREATE OR REPLACE FUNCTION public.app_admin_get_all_organizations(
     search_query character varying DEFAULT ''::character varying,
@@ -75,6 +85,13 @@ ORDER BY p."id",
 LIMIT page_size;
 END;
 $function$ LANGUAGE plpgsql;
+REVOKE ALL ON FUNCTION public.app_admin_get_all_organizations
+FROM PUBLIC;
+REVOKE ALL ON FUNCTION public.app_admin_get_all_organizations
+FROM ANON;
+REVOKE ALL ON FUNCTION public.app_admin_get_all_organizations
+FROM AUTHENTICATED;
+
 -- Get all users
 -- This function is used by the app admin to get all users
 CREATE OR REPLACE VIEW public.app_admin_all_users AS
@@ -100,6 +117,7 @@ WHERE (
     OR HAS_TABLE_PRIVILEGE(CURRENT_USER, 'auth.users', 'SELECT')
   );
 ;
+
 
 CREATE OR REPLACE FUNCTION public.app_admin_get_all_users(
     search_query character varying DEFAULT ''::character varying,
@@ -135,6 +153,13 @@ ORDER BY app_admin_all_users.created_at DESC OFFSET (PAGE - 1) * page_size
 LIMIT page_size;
 END;
 $$ LANGUAGE plpgsql;
+REVOKE ALL ON FUNCTION public.app_admin_get_all_users
+FROM PUBLIC;
+REVOKE ALL ON FUNCTION public.app_admin_get_all_users
+FROM ANON;
+REVOKE ALL ON FUNCTION public.app_admin_get_all_users
+FROM AUTHENTICATED;
+
 
 -- Decrement credits
 -- This function is used to decrement credits for an organization
@@ -144,3 +169,9 @@ SET credits = credits - amount
 WHERE organization_id = org_id;
 END;
 $function$;
+REVOKE ALL ON FUNCTION public.decrement_credits
+FROM PUBLIC;
+REVOKE ALL ON FUNCTION public.decrement_credits
+FROM ANON;
+REVOKE ALL ON FUNCTION public.decrement_credits
+FROM AUTHENTICATED;
