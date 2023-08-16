@@ -1,6 +1,11 @@
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
 import { getTeamMembersByTeamId } from '@/utils/supabase/teams';
 import { z } from 'zod';
+import {
+  addUserToTeamAction,
+  removeUserFromTeamAction,
+  updateUserRoleInTeamAction,
+} from './actions';
 import { ProjectTeamMembersTable } from './ProjectTeamMembersTable';
 
 const paramsSchema = z.object({
@@ -22,7 +27,13 @@ export default async function TeamSettingsPage({
   );
   return (
     <div className="space-y-2">
-      <ProjectTeamMembersTable teamId={teamId} teamMembers={teamMembers} />
+      <ProjectTeamMembersTable
+        updateUserRoleInTeamAction={updateUserRoleInTeamAction}
+        removeUserFromTeamAction={removeUserFromTeamAction}
+        addUserToTeamAction={addUserToTeamAction}
+        teamId={teamId}
+        teamMembers={teamMembers}
+      />
     </div>
   );
 }

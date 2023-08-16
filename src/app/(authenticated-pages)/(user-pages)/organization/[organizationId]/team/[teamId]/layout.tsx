@@ -19,7 +19,7 @@ export default async function Layout({
 }) {
   const supabaseClient = createSupabaseUserServerComponentClient();
   const parsedParams = paramsSchema.parse(params);
-  const { teamId, organizationId } = parsedParams;
+  const { teamId } = parsedParams;
   const { data } = await supabaseClient.auth.getSession();
   if (!data?.session?.user.id) {
     return <p>Not logged in</p>;

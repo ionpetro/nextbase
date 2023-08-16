@@ -39,7 +39,7 @@ CREATE TABLE "public"."projects" (
   "created_at" timestamp(3) without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
   "updated_at" timestamp(3) without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
   "organization_id" uuid NOT NULL,
-  "team_id" bigint NOT NULL,
+  "team_id" bigint,
   "project_status" project_status NOT NULL DEFAULT 'draft'::project_status
 );
 

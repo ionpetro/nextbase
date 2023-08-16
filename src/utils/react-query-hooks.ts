@@ -3,7 +3,6 @@ import {
   createOrganization,
   getActiveProductsWithPrices,
   getAllOrganizationsForUser,
-  getIsAppInMaintenanceMode,
   getPendingTeamInvitationsInOrganization,
   getOrganizationById,
   getOrganizationSubscription,
@@ -18,7 +17,6 @@ import {
   updatePassword,
   updateOrganizationTitle,
   updateUserProfileNameAndAvatar,
-  createTeam,
 } from './supabase-queries';
 import { AuthProvider, Table, Enum, UnwrapPromise } from '@/types';
 import { useQuery } from '@tanstack/react-query';
@@ -701,69 +699,6 @@ export const useSignUp = ({
         });
         toastRef.current = null;
         onError?.(error);
-      },
-    }
-  );
-};
-
-/* ==================== */
-/* Team */
-/*==================== */
-
-export const useCreateTeamMutation = ({
-  onSuccess,
-  onSettled,
-  onError,
-  organizationId,
-}: {
-  onSuccess?: (data: Table<'teams'>) => void;
-  onSettled?: () => void;
-  onError?: (error: Error) => void;
-  organizationId: string;
-}) => {
-  const userId = useLoggedInUser().id;
-  const queryClient = useQueryClient();
-  const toastRef = useRef<string>();
-  return useMutation(
-    async ({
-      name,
-      organizationId,
-    }: {
-      name: string;
-      organizationId: string;
-    }) => {
-      return createTeam(
-        supabaseUserClientComponentClient,
-        organizationId,
-        name
-      );
-    },
-    {
-      onMutate: async (name) => {
-        toastRef.current = toast.loading(`Creating name ${name}...`);
-      },
-      onSuccess: (data) => {
-        // Invalidate the team list query
-        queryClient.invalidateQueries([
-          'team-list-in-organization',
-          organizationId,
-          userId,
-        ]);
-        onSuccess?.(data);
-        toast.success(`Team ${data.name} created!`, {
-          id: toastRef.current,
-        });
-        toastRef.current = undefined;
-      },
-      onSettled,
-      onError: (error) => {
-        const customError =
-          error instanceof Error ? error : new Error(String(error));
-        onError?.(customError);
-        toast.error(`Error creating team: ${customError.message}`, {
-          id: toastRef.current,
-        });
-        toastRef.current = undefined;
       },
     }
   );

@@ -638,7 +638,7 @@ export interface Database {
           name: string
           organization_id: string
           project_status: Database["public"]["Enums"]["project_status"]
-          team_id: number
+          team_id: number | null
           updated_at: string
         }
         Insert: {
@@ -647,7 +647,7 @@ export interface Database {
           name?: string
           organization_id: string
           project_status?: Database["public"]["Enums"]["project_status"]
-          team_id: number
+          team_id?: number | null
           updated_at?: string
         }
         Update: {
@@ -656,7 +656,7 @@ export interface Database {
           name?: string
           organization_id?: string
           project_status?: Database["public"]["Enums"]["project_status"]
-          team_id?: number
+          team_id?: number | null
           updated_at?: string
         }
         Relationships: []

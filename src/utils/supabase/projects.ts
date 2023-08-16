@@ -100,6 +100,83 @@ export const getCompletedProjectsByTeamId = async (
   return data;
 };
 
+export const getTopLevelDraftProjectsByOrganizationId = async (
+  supabase: AppSupabaseClient,
+  organizationId: string
+) => {
+  const { data, error } = await supabase
+    .from('projects')
+    .select('*')
+    .eq('organization_id', organizationId)
+    // no team_id
+    .is('team_id', null)
+    .eq('project_status', 'draft')
+    .order('created_at', { ascending: false });
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};
+
+export const getTopLevelPendingApprovalProjectsByOrganizationId = async (
+  supabase: AppSupabaseClient,
+  organizationId: string
+) => {
+  const { data, error } = await supabase
+    .from('projects')
+    .select('*')
+    .eq('organization_id', organizationId)
+    // no team_id
+    .is('team_id', null)
+    .eq('project_status', 'pending_approval')
+    .order('created_at', { ascending: false });
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};
+
+export const getTopLevelApprovedProjectsByOrganizationId = async (
+  supabase: AppSupabaseClient,
+  organizationId: string
+) => {
+  const { data, error } = await supabase
+
+    .from('projects')
+    .select('*')
+    .eq('organization_id', organizationId)
+    // no team_id
+    .is('team_id', null)
+    .eq('project_status', 'approved')
+    .order('created_at', { ascending: false });
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};
+
+export const getTopLevelCompletedProjectsByOrganizationId = async (
+  supabase: AppSupabaseClient,
+  organizationId: string
+) => {
+  const { data, error } = await supabase
+    .from('projects')
+    .select('*')
+    .eq('organization_id', organizationId)
+    // no team_id
+    .is('team_id', null)
+    .eq('project_status', 'completed')
+    .order('created_at', { ascending: false });
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};
+
 export const getProjectsUnAssignedToTeam = async (
   supabase: AppSupabaseClient,
   organizationId: string
@@ -120,7 +197,7 @@ export const getProjectsUnAssignedToTeam = async (
 export const createProject = async (
   supabase: AppSupabaseClient,
   organizationId: string,
-  teamId: number,
+  teamId: number | null,
   name: string
 ) => {
   const { data, error } = await supabase
@@ -215,9 +292,9 @@ export const addProjectComment = async (
 function normalizeComment(
   comments: Table<'project_comments'> & {
     user_profiles:
-      | Table<'user_profiles'>
-      | Array<Table<'user_profiles'>>
-      | null;
+    | Table<'user_profiles'>
+    | Array<Table<'user_profiles'>>
+    | null;
   }
 ): CommentWithUser {
   const user_profiles = Array.isArray(comments.user_profiles)

@@ -7,6 +7,7 @@
   "minWordLength": 5,
   "version": "0.2",
   "words": [
-    "lucide"
+    "lucide",
+    "vitest"
   ]
 }

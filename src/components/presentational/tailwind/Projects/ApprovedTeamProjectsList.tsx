@@ -1,11 +1,12 @@
-'use client';
 import { T } from '@/components/ui/Typography';
 import { Table } from '@/types';
-import { useTeamContext } from '@/contexts/TeamContext';
-import { ProjectsTable } from '../ProjectsTable';
-import { useGetApprovedProjectsByTeam } from '@/utils/react-queries/projects';
+import { ProjectsTable } from '@/components/presentational/tailwind/Projects/ProjectsTable';
 
-function TableContainer({ projects }: { projects: Table<'projects'>[] }) {
+export const ApprovedTeamProjectsList = ({
+  projects,
+}: {
+  projects: Table<'projects'>[];
+}) => {
   return (
     <div className="border border-neutral-200 bg-white rounded-xl ">
       <div className="py-8 pb-6 sm:px-8 lg:px-8">
@@ -26,31 +27,4 @@ function TableContainer({ projects }: { projects: Table<'projects'>[] }) {
       </div>
     </div>
   );
-}
-
-export const ApprovedTeamProjectsList = ({
-  initialProjects,
-}: {
-  initialProjects: Table<'projects'>[];
-}) => {
-  const { teamId } = useTeamContext();
-  const {
-    data: projects,
-    isLoading,
-    error,
-  } = useGetApprovedProjectsByTeam(teamId, initialProjects);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {String(error)}</div>;
-  }
-
-  if (!projects) {
-    return <div>Error: No data</div>;
-  }
-
-  return <TableContainer projects={projects} />;
 };

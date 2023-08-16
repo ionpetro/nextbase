@@ -2,10 +2,6 @@
 import { createContext, useContext } from 'react';
 import { useOrganizationContext } from './OrganizationContext';
 import { Enum, Table } from '@/types';
-import {
-  useGetUserTeamRole,
-  useGetTeamById,
-} from '@/utils/react-queries/teams';
 
 type TeamContextType = {
   teamId: number;
@@ -27,8 +23,8 @@ export function useTeamContext() {
 export function TeamContextProvider({
   children,
   teamId,
-  teamRole: teamRoleProp,
-  teamByIdData: teamByIdDataProp,
+  teamRole,
+  teamByIdData,
 }: {
   children: React.ReactNode;
   teamId: number;
@@ -36,18 +32,6 @@ export function TeamContextProvider({
   teamByIdData: Table<'teams'>;
 }) {
   const { organizationRole } = useOrganizationContext();
-
-  const { data: _teamRoleData } = useGetUserTeamRole(teamId, {
-    initialUserTeamRole: teamRoleProp,
-  });
-
-  const { data: _teamByIdData } = useGetTeamById(teamId, teamByIdDataProp);
-
-  // These are just workarounds to get around typescript complaining about
-  // the data being null. It's not null, but typescript doesn't know that.
-  // This is a limitation in react-query.
-  const teamRole = _teamRoleData ?? teamRoleProp;
-  const teamByIdData = _teamByIdData ?? teamByIdDataProp;
 
   const canUserManageTeam =
     teamRole === 'admin' ||

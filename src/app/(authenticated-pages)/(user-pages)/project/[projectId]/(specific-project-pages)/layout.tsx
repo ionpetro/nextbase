@@ -1,5 +1,3 @@
-import { OrganizationContextProvider } from '@/contexts/OrganizationContext';
-import { AppSupabaseClient } from '@/types';
 import {
   getOrganizationById,
   getUserOrganizationRole,
@@ -8,7 +6,6 @@ import { getProjectById } from '@/utils/supabase/projects';
 import { getTeamById, getUserTeamRole } from '@/utils/supabase/teams';
 import { ReactNode } from 'react';
 import { z } from 'zod';
-import { TeamContextProvider } from '@/contexts/TeamContext';
 import { ProjectContextProvider } from '@/contexts/ProjectContext';
 import { SpecificProjectClientLayout } from './SpecificProjectClientLayout';
 import { getNormalizedSubscription } from '@/utils/supabase/subscriptions';
@@ -30,35 +27,36 @@ async function fetchdata(projectId: string) {
   }
 
   const projectByIdData = await getProjectById(supabaseClient, projectId);
-  const [
-    organizationByIdData,
-    organizationRole,
-    teamByIdData,
-    teamRole,
-    normalizedSubscription,
-  ] = await Promise.all([
-    getOrganizationById(supabaseClient, projectByIdData.organization_id),
-    getUserOrganizationRole(
-      supabaseClient,
-      sessionResponse.session.user.id,
-      projectByIdData.organization_id
-    ),
-    getTeamById(supabaseClient, projectByIdData.team_id),
-    getUserTeamRole(
-      supabaseClient,
-      sessionResponse.session.user.id,
+  const [organizationData, maybeTeamData, organizationRole, teamRole] =
+    await Promise.all([
+      getOrganizationById(supabaseClient, projectByIdData.organization_id),
       projectByIdData.team_id
-    ),
-    getNormalizedSubscription(supabaseClient, projectByIdData.organization_id),
-  ]);
+        ? getTeamById(supabaseClient, projectByIdData.team_id)
+        : null,
+      getUserOrganizationRole(
+        supabaseClient,
+        sessionResponse.session.user.id,
+        projectByIdData.organization_id
+      ),
+      projectByIdData.team_id
+        ? getUserTeamRole(
+          supabaseClient,
+          sessionResponse.session.user.id,
+          projectByIdData.team_id
+        )
+        : null,
+      getNormalizedSubscription(
+        supabaseClient,
+        projectByIdData.organization_id
+      ),
+    ]);
 
   return {
     projectByIdData,
-    organizationByIdData,
     organizationRole,
-    teamByIdData,
     teamRole,
-    normalizedSubscription,
+    organizationData,
+    maybeTeamData,
   };
 }
 
@@ -72,28 +70,21 @@ export default async function ProjectLayout({
   const { projectId } = paramsSchema.parse(params);
   const {
     projectByIdData,
-    organizationByIdData,
     organizationRole,
-    teamByIdData,
     teamRole,
-    normalizedSubscription,
+    organizationData,
+    maybeTeamData,
   } = await fetchdata(projectId);
   return (
-    <OrganizationContextProvider
+    <ProjectContextProvider
+      isTopLevelProject={!projectByIdData.team_id}
+      projectByIdData={projectByIdData}
       organizationRole={organizationRole}
-      organizationId={organizationByIdData.id}
-      normalizedSubscription={normalizedSubscription}
-      organizationByIdData={organizationByIdData}
+      maybeTeamRole={teamRole}
+      maybeTeamData={maybeTeamData}
+      organizationData={organizationData}
     >
-      <TeamContextProvider
-        teamByIdData={teamByIdData}
-        teamId={teamByIdData.id}
-        teamRole={teamRole}
-      >
-        <ProjectContextProvider projectByIdData={projectByIdData}>
-          <SpecificProjectClientLayout>{children}</SpecificProjectClientLayout>
-        </ProjectContextProvider>
-      </TeamContextProvider>
-    </OrganizationContextProvider>
+      <SpecificProjectClientLayout>{children}</SpecificProjectClientLayout>
+    </ProjectContextProvider>
   );
 }

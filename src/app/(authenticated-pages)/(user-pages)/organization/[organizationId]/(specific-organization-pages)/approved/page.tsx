@@ -1,30 +1,34 @@
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
 import { AppSupabaseClient } from '@/types';
-import { getApprovedProjectsByTeamId } from '@/utils/supabase/projects';
+import { getTopLevelApprovedProjectsByOrganizationId } from '@/utils/supabase/projects';
 import { z } from 'zod';
 import { ApprovedTeamProjectsList } from '@/components/presentational/tailwind/Projects/ApprovedTeamProjectsList';
 
 const paramsSchema = z.object({
-  teamId: z.coerce.number(),
+  organizationId: z.coerce.string(),
 });
 
-async function fetchProjects(supabase: AppSupabaseClient, teamId: number) {
-  const data = await getApprovedProjectsByTeamId(supabase, teamId);
+async function fetchProjects(
+  supabase: AppSupabaseClient,
+  organizationId: string
+) {
+  const data = await getTopLevelApprovedProjectsByOrganizationId(
+    supabase,
+    organizationId
+  );
   return data;
 }
 
-export default async function TeamPage({
+export default async function ApprovedOrganizationProjectsPage({
   params,
 }: {
-  params: {
-    teamId: string;
-  };
+  params: any;
 }) {
   const parsedParams = paramsSchema.parse(params);
-  const { teamId } = parsedParams;
+  const { organizationId } = parsedParams;
   const projects = await fetchProjects(
     createSupabaseUserServerComponentClient(),
-    teamId
+    organizationId
   );
   return (
     <div className="space-y-4">

@@ -1,6 +1,6 @@
 import { AppSupabaseClient } from '@/types';
 import { z } from 'zod';
-import { PendingApprovalTeamProjectsList } from './PendingApprovalTeamProjectsList';
+import { PendingApprovalTeamProjectsList } from '@/components/presentational/tailwind/Projects/PendingApprovalTeamProjectsList';
 import { getPendingApprovalProjectsByTeamId } from '@/utils/supabase/projects';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
 
@@ -28,7 +28,7 @@ export default async function TeamPage({
   );
   return (
     <div className="space-y-4">
-      <PendingApprovalTeamProjectsList initialProjects={projects} />
+      <PendingApprovalTeamProjectsList projects={projects} />
     </div>
   );
 }

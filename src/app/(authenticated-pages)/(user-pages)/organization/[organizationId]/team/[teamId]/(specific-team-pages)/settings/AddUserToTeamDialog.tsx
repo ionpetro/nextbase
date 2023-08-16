@@ -9,11 +9,10 @@ import {
   DialogTrigger,
 } from '@/components/ui/Dialog';
 import { T } from '@/components/ui/Typography';
-import { useAddUserToProjectTeam } from '@/utils/react-queries/teams';
 // convert the imports above into modularized imports
 // import Check from 'lucide-react/dist/esm/icons/check';
 import Plus from 'lucide-react/dist/esm/icons/plus';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { ProjectTeamMemberRoleSelect } from './ProjectTeamMemberRoleSelect';
@@ -22,6 +21,9 @@ import { useOrganizationContext } from '@/contexts/OrganizationContext';
 import { useTeamContext } from '@/contexts/TeamContext';
 import { useGetMembersInOrganization } from '@/utils/react-queries/organizations';
 import { OrganizationUsersSelect } from './OrganizationUsersSelect';
+import { Enum, Table } from '@/types';
+import { useMutation } from '@tanstack/react-query';
+import { toast } from 'react-hot-toast';
 
 const addUserSchema = z.object({
   userId: z.string(),
@@ -30,7 +32,19 @@ const addUserSchema = z.object({
 
 type AddUserFormType = z.infer<typeof addUserSchema>;
 
-export const AddUserToTeamDialog = () => {
+export const AddUserToTeamDialog = ({
+  addUserToTeamAction,
+}: {
+  addUserToTeamAction: ({
+    userId,
+    teamId,
+    role,
+  }: {
+    userId: string;
+    teamId: number;
+    role: Enum<'project_team_member_role'>;
+  }) => Promise<Table<'team_members'>>;
+}) => {
   const [open, setOpen] = useState(false);
   const { organizationId } = useOrganizationContext();
   const { teamId } = useTeamContext();
@@ -44,23 +58,50 @@ export const AddUserToTeamDialog = () => {
     data: organizationTeamMembers,
     isLoading: isOrganizationTeamMembersDataLoading,
   } = useGetMembersInOrganization(organizationId);
-
-  const { mutate: addUser } = useAddUserToProjectTeam();
+  const toastRef = useRef<string | undefined>(undefined);
+  const { mutate: addUser } = useMutation(
+    async ({
+      userId,
+      teamId,
+      role,
+    }: {
+      userId: string;
+      teamId: number;
+      role: Enum<'project_team_member_role'>;
+    }) => {
+      return addUserToTeamAction({ userId, teamId, role });
+    },
+    {
+      onMutate: () => {
+        toastRef.current = toast.loading('Adding user to team...');
+      },
+      onSuccess: () => {
+        toast.success('User added to team!', {
+          id: toastRef.current ?? undefined,
+        });
+      },
+      onError: (error: Error) => {
+        toast.error(String(error), {
+          id: toastRef.current ?? undefined,
+        });
+      },
+    }
+  );
   const users =
     isOrganizationTeamMembersDataLoading || !organizationTeamMembers
       ? []
       : organizationTeamMembers.map((member) => {
-          const userProfile = Array.isArray(member.user_profiles)
-            ? member.user_profiles[0]
-            : member.user_profiles;
-          if (!userProfile) {
-            throw new Error('User profile not found');
-          }
-          return {
-            value: userProfile.id,
-            label: userProfile.full_name ?? userProfile.id,
-          };
-        });
+        const userProfile = Array.isArray(member.user_profiles)
+          ? member.user_profiles[0]
+          : member.user_profiles;
+        if (!userProfile) {
+          throw new Error('User profile not found');
+        }
+        return {
+          value: userProfile.id,
+          label: userProfile.full_name ?? userProfile.id,
+        };
+      });
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

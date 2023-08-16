@@ -1,16 +1,15 @@
 'use client';
 import { T } from '@/components/ui/Typography';
-import { UnwrapPromise } from '@/types';
-import {
-  useGetTeamMembers,
-  useRemoveUserFromTeam,
-  useUpdateUserRoleInTeam,
-} from '@/utils/react-queries/teams';
+import { Enum, UnwrapPromise } from '@/types';
 import { getTeamMembersByTeamId } from '@/utils/supabase/teams';
 import { AddUserToTeamDialog } from './AddUserToTeamDialog';
 import { ConfirmRemoveUserFromTeamDialog } from './ConfirmRemoveUserFromTeamDialog';
 import { ProjectTeamMemberRoleSelect } from './ProjectTeamMemberRoleSelect';
 import { useTeamContext } from '@/contexts/TeamContext';
+import { useMutation } from '@tanstack/react-query';
+import { ComponentPropsWithoutRef, useRef } from 'react';
+import { useRouter } from 'next/navigation';
+import { toast } from 'react-hot-toast';
 import {
   ShadcnTable,
   TableBody,
@@ -22,19 +21,94 @@ import {
 } from '@/components/ui/Table/ShadcnTable';
 
 export function ProjectTeamMembersTable({
-  teamMembers: teamMembersInitial,
+  teamMembers,
   teamId,
+  updateUserRoleInTeamAction,
+  removeUserFromTeamAction,
+  addUserToTeamAction,
 }: {
   teamMembers: UnwrapPromise<ReturnType<typeof getTeamMembersByTeamId>>;
   teamId: number;
-}) {
+  updateUserRoleInTeamAction: ({
+    userId,
+    role,
+    teamId,
+  }: {
+    userId: string;
+    role: Enum<'project_team_member_role'>;
+    teamId: number;
+  }) => Promise<void>;
+  removeUserFromTeamAction: ({
+    userId,
+    teamId,
+  }: {
+    userId: string;
+    teamId: number;
+  }) => Promise<void>;
+} & ComponentPropsWithoutRef<typeof AddUserToTeamDialog>) {
   const { canUserManageTeam } = useTeamContext();
-  const { data: teamMembers } = useGetTeamMembers(teamId, teamMembersInitial);
-  const { mutate: updateRole } = useUpdateUserRoleInTeam();
-  const { mutate: removeUser } = useRemoveUserFromTeam();
-  if (!teamMembers) {
-    return null;
-  }
+  const updateRoleToastRef = useRef<string | null>(null);
+  const removeUserToastRef = useRef<string | null>(null);
+  const router = useRouter();
+  const { mutate: updateRole } = useMutation(
+    async ({
+      userId,
+      teamId,
+      role,
+    }: {
+      userId: string;
+      teamId: number;
+      role: Enum<'project_team_member_role'>;
+    }) => {
+      return updateUserRoleInTeamAction({
+        userId,
+        teamId,
+        role,
+      });
+    },
+    {
+      onMutate: () => {
+        updateRoleToastRef.current = toast.loading('Updating user role...');
+      },
+      onSuccess: () => {
+        toast.success('User role updated!', {
+          id: updateRoleToastRef.current ?? undefined,
+        });
+        router.refresh();
+      },
+      onError: (error: Error) => {
+        toast.error(String(error), {
+          id: updateRoleToastRef.current ?? undefined,
+        });
+      },
+    }
+  );
+  const { mutate: removeUser } = useMutation(
+    async ({ userId, teamId }: { userId: string; teamId: number }) => {
+      return removeUserFromTeamAction({
+        userId,
+        teamId,
+      });
+    },
+    {
+      onMutate: () => {
+        removeUserToastRef.current = toast.loading(
+          'Removing user from team...'
+        );
+      },
+      onSuccess: (_data, { teamId }) => {
+        toast.success('User removed from team!', {
+          id: removeUserToastRef.current ?? undefined,
+        });
+        router.refresh();
+      },
+      onError: (error: Error) => {
+        toast.error(String(error), {
+          id: removeUserToastRef.current ?? undefined,
+        });
+      },
+    }
+  );
   return (
     <div className="border border-neutral-200 bg-white rounded-xl ">
       <div className="py-8 pb-6 sm:px-8 lg:px-8">
@@ -44,7 +118,11 @@ export function ProjectTeamMembersTable({
               <h3 className="font-semibold border-0 leading-0 tracking-tight text-2xl text-gray-700">
                 Team Members
               </h3>
-              {canUserManageTeam ? <AddUserToTeamDialog /> : null}
+              {canUserManageTeam ? (
+                <AddUserToTeamDialog
+                  addUserToTeamAction={addUserToTeamAction}
+                />
+              ) : null}
             </div>
             <p className="text-base -mt-1 text-gray-700">
               A list of all users in the team and their roles.
@@ -84,9 +162,9 @@ export function ProjectTeamMembersTable({
                               <div className="flex gap-1 items-center">
                                 <ProjectTeamMemberRoleSelect
                                   value={member.role}
-                                  onChange={(newRole) => {
+                                  onChange={(role) => {
                                     updateRole({
-                                      newRole,
+                                      role,
                                       teamId,
                                       userId: member.user_id,
                                     });

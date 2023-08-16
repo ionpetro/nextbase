@@ -217,7 +217,6 @@ export function RenderUsers({
           id: createUserToastRef.current ?? undefined,
         });
         createUserToastRef.current = null;
-        queryClient.invalidateQueries(['getAdminUsersPaginated', search]);
         router.refresh();
       },
       onError: (error) => {

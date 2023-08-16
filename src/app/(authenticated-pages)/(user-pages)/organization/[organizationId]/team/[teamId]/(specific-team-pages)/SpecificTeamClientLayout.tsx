@@ -3,7 +3,6 @@
 import { useOrganizationContext } from '@/contexts/OrganizationContext';
 import { useTeamContext } from '@/contexts/TeamContext';
 import { TabsNavigation } from '@/components/presentational/tailwind/TabsNavigation';
-
 // convert the imports above into modularized imports
 import Check from 'lucide-react/dist/esm/icons/check';
 import Hammer from 'lucide-react/dist/esm/icons/hammer';
@@ -14,9 +13,12 @@ import { CreateProjectDialog } from '@/components/presentational/tailwind/Create
 import { Button } from '@/components/ui/Button';
 import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
 import { Anchor } from '@/components/Anchor';
-import { useMemo } from 'react';
-import { useCreateProject } from '@/utils/react-queries/projects';
+import { useMemo, useRef } from 'react';
 import dynamic from 'next/dynamic';
+import { Table } from '@/types';
+import { useMutation } from '@tanstack/react-query';
+import { toast } from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 const TeamGraphs = dynamic(
   () => import('../../TeamGraphs').then((mod) => mod.TeamGraphs),
   {
@@ -26,13 +28,53 @@ const TeamGraphs = dynamic(
 
 export const SpecificTeamClientLayout = ({
   children,
+  createProjectAction,
 }: {
   children: React.ReactNode;
+  createProjectAction: ({
+    organizationId,
+    name,
+    teamId,
+  }: {
+    organizationId: string;
+    name: string;
+    teamId: number;
+  }) => Promise<Table<'projects'>>;
 }) => {
   const { organizationByIdData, organizationId } = useOrganizationContext();
   const { teamId, teamByIdData } = useTeamContext();
-  const { mutate: createProject, isLoading: isCreatingProject } =
-    useCreateProject();
+  const createProjectToastRef = useRef<string>();
+  const router = useRouter();
+  const { mutate: createTeamProject, isLoading: isCreatingTeamProject } =
+    useMutation(
+      async ({ name }: { name: string }) => {
+        return createProjectAction({ organizationId, teamId, name });
+      },
+      {
+        onMutate: async ({ name }) => {
+          createProjectToastRef.current = toast.loading(
+            `Creating name ${name}...`
+          );
+        },
+        onSuccess: (project) => {
+          // Invalidate the team list query
+          toast.success(`Project ${project.name} created!`, {
+            id: createProjectToastRef.current,
+          });
+          createProjectToastRef.current = undefined;
+          router.refresh();
+          router.push(`/project/${project.id}`);
+        },
+        onError: (error) => {
+          const customError =
+            error instanceof Error ? error : new Error(String(error));
+          toast.error(`Error creating project: ${customError.message}`, {
+            id: createProjectToastRef.current,
+          });
+          createProjectToastRef.current = undefined;
+        },
+      }
+    );
   const tabs = useMemo(() => {
     return [
       {
@@ -83,13 +125,11 @@ export const SpecificTeamClientLayout = ({
             <div className="mt-3 text-gray-400 text-3xl space-x-2">
               <CreateProjectDialog
                 onConfirm={(name) => {
-                  createProject({
+                  createTeamProject({
                     name,
-                    teamId,
-                    organizationId,
                   });
                 }}
-                isLoading={isCreatingProject}
+                isLoading={isCreatingTeamProject}
               />
               <Anchor
                 href={`/organization/${organizationId}/team//${teamId}/settings`}

@@ -1,9 +1,6 @@
 'use client';
 import { Anchor } from '@/components/Anchor';
-import { T } from '@/components/ui/Typography';
 import { Table } from '@/types';
-import { useOrganizationContext } from '@/contexts/OrganizationContext';
-import { useGetTeamsInOrganization } from '@/utils/react-queries/teams';
 import {
   ShadcnTable,
   TableBody,
@@ -14,18 +11,12 @@ import {
 } from '@/components/ui/Table/ShadcnTable';
 
 export const OrganizationTeams = ({
-  initialTeams,
+  teams,
+  organizationId,
 }: {
-  initialTeams: Table<'teams'>[];
+  teams: Table<'teams'>[];
+  organizationId: string;
 }) => {
-  const { organizationId } = useOrganizationContext();
-  const { data: teams } = useGetTeamsInOrganization(
-    organizationId,
-    initialTeams
-  );
-  if (!teams) {
-    return null;
-  }
   return (
     <div className="border border-neutral-200 bg-white rounded-xl ">
       <div className="py-8 pb-6 sm:px-8 lg:px-8">

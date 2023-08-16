@@ -5,7 +5,6 @@ import { render as renderEmail } from '@react-email/render';
 import { sendEmail } from '@/utils/api-routes/utils';
 import SignInEmail from 'emails/SignInEmail';
 import { revalidatePath } from 'next/cache';
-import { getUsersPaginated } from '@/utils/supabase-admin';
 import { ADMIN_USER_LIST_VIEW_PAGE_SIZE } from '@/constants';
 import { DBFunction } from '@/types';
 
@@ -70,7 +69,7 @@ export async function createUserAction(email: string) {
   const { user } = response.data;
 
   if (user) {
-    revalidatePath('/');
+    revalidatePath('/app_admin');
     return user;
   }
 
@@ -97,7 +96,7 @@ export async function getUsersPaginatedAction({
   if (!data) {
     return [pageNumber, []];
   }
-  revalidatePath('/');
+  revalidatePath('/app_admin');
   return [pageNumber, data];
 }
 

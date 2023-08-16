@@ -2,11 +2,10 @@
 import { Anchor } from '@/components/Anchor';
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading/PageHeading';
 import Overline from '@/components/presentational/tailwind/Text/Overline';
-import { useCreateTeamMutation } from '@/utils/react-query-hooks';
 import moment from 'moment';
 import { usePathname } from 'next/navigation';
 import { match } from 'path-to-regexp';
-import { ReactNode } from 'react';
+import { ReactNode, useMemo, useRef } from 'react';
 import ArrowLeft from 'lucide-react/dist/esm/icons/arrow-left';
 import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
 import { Button } from '@/components/ui/Button';
@@ -21,6 +20,16 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from '@/components/ui/HoverCard';
+import { TabsNavigation } from '@/components/presentational/tailwind/TabsNavigation';
+import Check from 'lucide-react/dist/esm/icons/check';
+import Hammer from 'lucide-react/dist/esm/icons/hammer';
+import ThumbsUp from 'lucide-react/dist/esm/icons/thumbs-up';
+import Timer from 'lucide-react/dist/esm/icons/timer';
+import UsersIcon from 'lucide-react/dist/esm/icons/users';
+import { CreateProjectDialog } from '@/components/presentational/tailwind/CreateProjectDialog';
+import { useMutation } from '@tanstack/react-query';
+import { Table } from '@/types';
+
 const matchSettingsPath = match('/organization/:organizationId/settings/(.*)?');
 
 function SubscriptionDetails() {
@@ -74,25 +83,127 @@ function SubscriptionDetails() {
 
 export function SpecificOrganizationClientLayout({
   children,
+  createTeamAction,
+  createProjectAction,
 }: {
   children: ReactNode;
+  createTeamAction: ({
+    name,
+    organizationId,
+  }: {
+    name: string;
+    organizationId: string;
+  }) => Promise<Table<'teams'>>;
+  createProjectAction: ({ name, organizationId }) => Promise<Table<'projects'>>;
 }) {
   const pathname = usePathname();
   const isSettingsPath = pathname ? matchSettingsPath(pathname) : false;
   const { organizationByIdData, organizationId } = useOrganizationContext();
   const router = useRouter();
-  const { mutate, isLoading: isCreatingTeam } = useCreateTeamMutation({
-    onSuccess: (team) => {
-      router.push(`/organization/${organizationId}/team/${team.id}`);
+  const createTeamToastRef = useRef<string>();
+  const { mutate: createTeam, isLoading: isCreatingTeam } = useMutation(
+    async ({
+      name,
+      organizationId,
+    }: {
+      name: string;
+      organizationId: string;
+    }) => {
+      return createTeamAction({ organizationId, name });
     },
-    onError: (error) => {
-      toast.error(error.message);
-    },
-    organizationId: organizationId,
-  });
+    {
+      onMutate: async ({ name }) => {
+        createTeamToastRef.current = toast.loading(`Creating name ${name}...`);
+      },
+      onSuccess: (team) => {
+        // Invalidate the team list query
+        toast.success(`Team ${team.name} created!`, {
+          id: createTeamToastRef.current,
+        });
+        createTeamToastRef.current = undefined;
+        router.refresh();
+        router.push(`/organization/${organizationId}/team/${team.id}`);
+      },
+      onError: (error) => {
+        const customError =
+          error instanceof Error ? error : new Error(String(error));
+        toast.error(`Error creating team: ${customError.message}`, {
+          id: createTeamToastRef.current,
+        });
+        createTeamToastRef.current = undefined;
+      },
+    }
+  );
+  const createProjectToastRef = useRef<string>();
+
+  const { mutate: createTeamProject, isLoading: isCreatingTeamProject } =
+    useMutation(
+      async ({
+        name,
+        organizationId,
+      }: {
+        name: string;
+        organizationId: string;
+      }) => {
+        return createProjectAction({ organizationId, name });
+      },
+      {
+        onMutate: async ({ name }) => {
+          createProjectToastRef.current = toast.loading(
+            `Creating name ${name}...`
+          );
+        },
+        onSuccess: (project) => {
+          // Invalidate the team list query
+          toast.success(`Project ${project.name} created!`, {
+            id: createProjectToastRef.current,
+          });
+          createProjectToastRef.current = undefined;
+          router.refresh();
+          router.push(`/project/${project.id}`);
+        },
+        onError: (error) => {
+          const customError =
+            error instanceof Error ? error : new Error(String(error));
+          toast.error(`Error creating project: ${customError.message}`, {
+            id: createProjectToastRef.current,
+          });
+          createProjectToastRef.current = undefined;
+        },
+      }
+    );
+  const tabs = useMemo(() => {
+    return [
+      {
+        label: 'Active Projects',
+        href: `/organization/${organizationId}`,
+        icon: <Hammer />,
+      },
+      {
+        label: 'Projects Pending approval',
+        href: `/organization/${organizationId}/pending`,
+        icon: <Timer />,
+      },
+      {
+        label: 'Approved Projects',
+        href: `/organization/${organizationId}/approved`,
+        icon: <ThumbsUp />,
+      },
+      {
+        label: 'Completed Projects',
+        href: `/organization/${organizationId}/completed`,
+        icon: <Check />,
+      },
+      {
+        label: 'Teams',
+        href: `/organization/${organizationId}/teams`,
+        icon: <UsersIcon />,
+      },
+    ];
+  }, [organizationId]);
 
   const onConfirm = (teamName: string) => {
-    mutate({
+    createTeam({
       name: teamName,
       organizationId,
     });
@@ -122,6 +233,15 @@ export function SpecificOrganizationClientLayout({
           actions={
             <div className="flex items-start space-y-1 space-x-2">
               <SubscriptionDetails />
+              <CreateProjectDialog
+                onConfirm={(name) => {
+                  createTeamProject({
+                    name,
+                    organizationId,
+                  });
+                }}
+                isLoading={isCreatingTeamProject}
+              />
               <CreateTeamDialog
                 isLoading={isCreatingTeam}
                 onConfirm={onConfirm}
@@ -142,6 +262,7 @@ export function SpecificOrganizationClientLayout({
           }
         />
       </div>
+      <TabsNavigation tabs={tabs} />
       <div>{children}</div>
     </div>
   );

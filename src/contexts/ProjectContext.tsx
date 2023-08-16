@@ -1,16 +1,25 @@
 'use client';
-import { Table } from '@/types';
-import { useGetProjectById } from '@/utils/react-queries/projects';
-import { createContext, useContext } from 'react';
+import { Enum, Table } from '@/types';
+import { createContext, useContext, useMemo } from 'react';
 
 type ProjectContextType = {
   projectId: string;
   projectByIdData: Table<'projects'>;
+  isTopLevelProject: boolean;
+  organizationRole: Enum<'organization_member_role'>;
+  maybeTeamRole: Enum<'project_team_member_role'> | null;
+  maybeTeamData: Table<'teams'> | null;
+  organizationData: Table<'organizations'>;
 };
 
 export const ProjectContext = createContext<ProjectContextType>({
   projectId: '',
   projectByIdData: {} as Table<'projects'>,
+  isTopLevelProject: false,
+  organizationRole: 'member',
+  organizationData: {} as Table<'organizations'>,
+  maybeTeamRole: null,
+  maybeTeamData: null,
 });
 
 export function useProjectContext() {
@@ -18,23 +27,42 @@ export function useProjectContext() {
 }
 
 export function ProjectContextProvider({
-  projectByIdData: initialProjectByIdData,
+  projectByIdData,
   children,
+  isTopLevelProject,
+  organizationRole,
+  maybeTeamRole,
+  maybeTeamData,
+  organizationData,
 }: {
   children: React.ReactNode;
   projectByIdData: Table<'projects'>;
+  isTopLevelProject: boolean;
+  organizationRole: Enum<'organization_member_role'>;
+  maybeTeamRole: Enum<'project_team_member_role'> | null;
+  maybeTeamData: Table<'teams'> | null;
+  organizationData: Table<'organizations'>;
 }) {
-  const { data: _projectByIdData } = useGetProjectById(
-    initialProjectByIdData.id,
-    initialProjectByIdData
-  );
-  // This is a hack to bypass typescript error
-  // as _data will never be undefined since we are passing initial data
-  const projectByIdData = _projectByIdData ?? initialProjectByIdData;
+  const contextValue = useMemo<ProjectContextType>(() => {
+    return {
+      projectByIdData,
+      isTopLevelProject,
+      projectId: projectByIdData.id,
+      organizationRole,
+      maybeTeamRole,
+      maybeTeamData,
+      organizationData,
+    };
+  }, [
+    projectByIdData,
+    isTopLevelProject,
+    organizationRole,
+    maybeTeamRole,
+    maybeTeamData,
+    organizationData,
+  ]);
   return (
-    <ProjectContext.Provider
-      value={{ projectByIdData, projectId: projectByIdData.id }}
-    >
+    <ProjectContext.Provider value={contextValue}>
       {children}
     </ProjectContext.Provider>
   );

@@ -1,38 +1,4 @@
-// export const useAddUserToProjectTeam = () => {
-//     const toastRef = useRef<string | null>(null);
-//     const queryClient = useQueryClient();
-//     return useMutation(
-//       async ({
-//         userId,
-//         teamId,
-//         role,
-//       }: {
-//         userId: string;
-//         teamId: number;
-//         role: Enum<'project_team_member_role'>;
-//       }) => {
-//         return addUserToTeam(supabaseUserClientComponentClient, userId, teamId, role);
-//       },
-//       {
-//         onMutate: () => {
-//           toastRef.current = toast.loading('Adding user to team...');
-//         },
-//         onSuccess: (_data, { teamId }) => {
-//           toast.success('User added to team!', {
-//             id: toastRef.current ?? undefined,
-//           });
-//           queryClient.invalidateQueries(['getProjectTeamMembers', teamId]);
-//         },
-//         onError: (error: Error) => {
-//           toast.error(String(error), {
-//             id: toastRef.current ?? undefined,
-//           });
-//         },
-//       }
-//     );
-//   };
-
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { useRef } from 'react';
 import { createInternalFeedback } from '@/utils/supabase/internalFeedback';
 import { toast } from 'react-hot-toast';
@@ -46,7 +12,6 @@ export const useCreateInternalFeedback = (
   } = {}
 ) => {
   const toastRef = useRef<string | null>(null);
-  const queryClient = useQueryClient();
   const user = useLoggedInUser();
   return useMutation(
     (data: {
