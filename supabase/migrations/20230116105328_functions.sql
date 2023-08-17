@@ -114,6 +114,19 @@ FROM PUBLIC;
 REVOKE ALL ON FUNCTION public.handle_auth_user_created
 FROM ANON;
 
+CREATE FUNCTION "public"."handle_create_welcome_notification"() RETURNS "trigger" LANGUAGE "plpgsql" SECURITY DEFINER AS $$ BEGIN
+INSERT INTO public.user_notifications (user_id, payload)
+VALUES (NEW.id, '{ "type": "welcome" }'::JSONB);
+RETURN NEW;
+END;
+$$;
+REVOKE ALL ON FUNCTION public.handle_create_welcome_notification
+FROM PUBLIC;
+REVOKE ALL ON FUNCTION public.handle_create_welcome_notification
+FROM ANON;
+REVOKE ALL ON FUNCTION public.handle_create_welcome_notification
+FROM AUTHENTICATED;
+
 
 CREATE FUNCTION "public"."handle_create_organization_for_auth_user"() RETURNS "trigger" LANGUAGE "plpgsql" SECURITY DEFINER AS $$BEGIN
 INSERT INTO public.organizations (created_by)

@@ -101,10 +101,8 @@ export function RenderOrganizations({
     return <div>Loading...</div>;
   }
   const { pages } = data;
-
   const users2DArray = pages.map((page) => page[1]);
   const organizations = users2DArray.flat();
-
   return (
     <div className="space-y-4">
       <div className="max-w-sm">

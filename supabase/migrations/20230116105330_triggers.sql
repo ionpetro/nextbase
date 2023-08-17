@@ -34,3 +34,7 @@ INSERT ON auth.users FOR EACH ROW EXECUTE FUNCTION handle_auth_user_created();
 CREATE TRIGGER on_auth_user_created_create_team
 AFTER
 INSERT ON auth.users FOR EACH ROW EXECUTE FUNCTION handle_create_organization_for_auth_user();
+
+CREATE TRIGGER on_auth_user_created_create_welcome_notification
+AFTER
+INSERT ON auth.users FOR EACH ROW EXECUTE FUNCTION handle_create_welcome_notification();

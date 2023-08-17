@@ -780,6 +780,43 @@ export interface Database {
         }
         Relationships: []
       }
+      user_notifications: {
+        Row: {
+          created_at: string
+          id: string
+          is_read: boolean
+          is_seen: boolean
+          payload: Json
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          is_seen?: boolean
+          payload?: Json
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          is_seen?: boolean
+          payload?: Json
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_notifications_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       user_private_info: {
         Row: {
           created_at: string | null
@@ -972,6 +1009,10 @@ export interface Database {
           month: string
           number_of_organizations: number
         }[]
+      }
+      get_executing_role_name: {
+        Args: Record<PropertyKey, never>
+        Returns: string
       }
       get_invited_organizations_for_user_v2: {
         Args: {
