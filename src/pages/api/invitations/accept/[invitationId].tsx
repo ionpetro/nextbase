@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { errors } from '@/utils/errors';
 import { createSupabaseUserServerPagesClient } from '@/supabase-clients/user/createSupabaseUserServerPagesClient';
 import { createAcceptedOrgInvitationNotification } from '@/utils/supabase/notifications';
 import { getUserProfile } from '@/utils/supabase/user';
@@ -38,24 +37,18 @@ async function AcceptInvitationHandler(
       .single();
 
     if (invitationResponse.error) {
-      errors.add(invitationResponse.error);
-      res.status(400).json({ error: 'Access denied.' });
-      return;
+      throw invitationResponse.error;
     } else {
-      try {
-        const userProfile = await getUserProfile(supabaseClient, user.id);
+      const userProfile = await getUserProfile(supabaseClient, user.id);
 
-        await createAcceptedOrgInvitationNotification(
-          supabaseClient,
-          invitationResponse.data?.inviter_user_id,
-          {
-            organizationId: invitationResponse.data.organization_id,
-            inviteeFullName: userProfile.full_name ?? `User ${userProfile.id}`,
-          }
-        );
-      } catch (error) {
-        console.error(error);
-      }
+      await createAcceptedOrgInvitationNotification(
+        supabaseClient,
+        invitationResponse.data?.inviter_user_id,
+        {
+          organizationId: invitationResponse.data.organization_id,
+          inviteeFullName: userProfile.full_name ?? `User ${userProfile.id}`,
+        }
+      );
       res.redirect('/dashboard');
     }
   } else {
