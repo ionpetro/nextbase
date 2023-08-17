@@ -7,11 +7,6 @@ import { ReactNode } from 'react';
 import { redirect } from 'next/navigation';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
 
-// do not cache this layout
-export const dynamic = 'force-dynamic';
-export const fetchCache = 'only-no-store';
-export const revalidate = 0;
-
 async function fetchData(supabaseClient: AppSupabaseClient, authUser: User) {
   const [isUserAppAdmin, userProfile] = await Promise.all([
     getIsAppAdmin(supabaseClient, authUser),

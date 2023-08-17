@@ -1,9 +1,13 @@
-import 'server-only';
 import { DynamicLayoutProviders } from './DynamicLayoutProviders';
 import { errors } from '@/utils/errors';
 import { AppSupabaseClient } from '@/types';
 import { getIsAppInMaintenanceMode } from '@/utils/supabase-queries';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
+
+// do not cache this layout
+export const dynamic = 'force-dynamic';
+export const fetchCache = 'only-no-store';
+export const revalidate = 0;
 
 async function fetchSession(supabaseClient: AppSupabaseClient) {
   // This is a server-side call, so it will not trigger a revalidation
@@ -20,20 +24,11 @@ async function fetchSession(supabaseClient: AppSupabaseClient) {
 }
 
 async function fetchIsAppInMaintenanceMode(supabaseClient: AppSupabaseClient) {
-  try {
-    const isAppInMaintenanceMode = await getIsAppInMaintenanceMode(
-      supabaseClient
-    );
+  const isAppInMaintenanceMode = await getIsAppInMaintenanceMode(
+    supabaseClient
+  );
 
-    return isAppInMaintenanceMode;
-  } catch (error) {
-    if (error instanceof Error) {
-      errors.add(error);
-    } else {
-      errors.add(new Error(error));
-    }
-  }
-  return false;
+  return isAppInMaintenanceMode;
 }
 
 export const metadata = {

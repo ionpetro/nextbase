@@ -1,9 +1,6 @@
 'use client';
 import { Email } from '@/components/presentational/tailwind/Auth/Email';
-import {
-  useResetPassword,
-  useSignInWithMagicLink,
-} from '@/utils/react-query-hooks';
+import { useResetPassword } from '@/utils/react-query-hooks';
 import { useState } from 'react';
 
 export function ForgotPassword() {
