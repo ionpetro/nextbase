@@ -1,6 +1,6 @@
 'use server';
 
-import { getLoggedInUserAction } from '@/app/_server-actions/user';
+import { getLoggedInUserAction } from '@/app/(dynamic-pages)/_server-actions/user';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 import { createSupabaseUserServerActionClient } from '@/supabase-clients/user/createSupabaseUserServerActionClient';
 import { createChangelog } from '@/utils/supabase/internalChangelog';

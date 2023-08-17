@@ -12,7 +12,7 @@ import {
 } from '@/utils/supabase/internalFeedback';
 import { revalidatePath } from 'next/cache';
 import { Enum } from '@/types';
-import { getLoggedInUserAction } from '@/app/_server-actions/user';
+import { getLoggedInUserAction } from '@/app/(dynamic-pages)/_server-actions/user';
 
 export const addCommentAction = async ({
   feedbackId,

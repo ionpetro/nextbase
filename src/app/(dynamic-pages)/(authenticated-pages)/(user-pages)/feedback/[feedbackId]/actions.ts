@@ -1,5 +1,5 @@
 'use server';
-import { getLoggedInUserAction } from '@/app/_server-actions/user';
+import { getLoggedInUserAction } from '@/app/(dynamic-pages)/_server-actions/user';
 import { createSupabaseUserServerActionClient } from '@/supabase-clients/user/createSupabaseUserServerActionClient';
 import { AppSupabaseClient, Enum } from '@/types';
 import {

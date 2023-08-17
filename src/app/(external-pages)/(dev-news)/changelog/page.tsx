@@ -4,10 +4,10 @@ import moment from 'moment';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { customMDXComponents } from '@/components/mdxComponents';
 import { cn } from '@/utils/cn';
-import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
+import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 
 export default async function Page() {
-  const changelogItemsResponse = await createSupabaseUserServerComponentClient()
+  const changelogItemsResponse = await supabaseAdminClient
     .from('internal_changelog')
     .select('*');
 

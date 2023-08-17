@@ -1,4 +1,4 @@
-import { getUserProfileAction } from '@/app/_server-actions/user';
+import { getUserProfileAction } from '@/app/(dynamic-pages)/_server-actions/user';
 import { createSupabaseAdminServerComponentClient } from '@/supabase-clients/admin/createSupabaseAdminServerComponentClient';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 import {

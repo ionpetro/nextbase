@@ -1,16 +1,10 @@
-import { Anchor } from '@/components/Anchor';
-import { Button } from '@/components/ui/Button';
 import { T } from '@/components/ui/Typography';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
-import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
-import { Table } from '@/types';
 import {
   getAllBlogTags,
-  getPublishedBlogPosts,
   getPublishedBlogPostsByTagSlug,
   getTagBySlug,
 } from '@/utils/supabase/internalBlog';
-import moment from 'moment';
 import { z } from 'zod';
 import { PublicBlogList } from '../../PublicBlogList';
 import { TagsNav } from '../../TagsNav';
@@ -25,11 +19,10 @@ export default async function BlogListByTagPage({
   params: unknown;
 }) {
   const { tagSlug } = BlogListByTagPageParamsSchema.parse(params);
-  const supabaseClient = createSupabaseUserServerComponentClient();
   const [tag, blogPosts, allTags] = await Promise.all([
-    getTagBySlug(supabaseClient, tagSlug),
-    getPublishedBlogPostsByTagSlug(supabaseClient, tagSlug),
-    getAllBlogTags(supabaseClient),
+    getTagBySlug(supabaseAdminClient, tagSlug),
+    getPublishedBlogPostsByTagSlug(supabaseAdminClient, tagSlug),
+    getAllBlogTags(supabaseAdminClient),
   ]);
 
   return (

@@ -1,4 +1,4 @@
-import { getLoggedInUserAction } from '@/app/_server-actions/user';
+import { getLoggedInUserAction } from '@/app/(dynamic-pages)/_server-actions/user';
 import { Anchor } from '@/components/Anchor';
 import { UpdateInternalFeedbackTypeDialog } from '@/components/presentational/tailwind/UpdateInternalFeedbackTypeDialog';
 import { Button } from '@/components/ui/Button';
@@ -188,7 +188,7 @@ export default async function FeedbackItemPage({
           />
 
           {feedbackThread.status === 'closed' ||
-          feedbackThread.status === 'completed' ? (
+            feedbackThread.status === 'completed' ? (
             <T.Large className="my-6">
               This thread is now closed for discussion.
             </T.Large>

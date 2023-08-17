@@ -2,10 +2,10 @@ import BasicPageHeading from '@/components/ui/Headings/BasicPageHeading';
 
 import RoadmapCard from '@/components/ui/Card/RoadmapCard';
 import moment from 'moment';
-import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
+import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 
 export default async function Page() {
-  const roadmapItemsResponse = await createSupabaseUserServerComponentClient()
+  const roadmapItemsResponse = await supabaseAdminClient
     .from('internal_feedback_threads')
     .select('*')
     .eq('added_to_roadmap', true);

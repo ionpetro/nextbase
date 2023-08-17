@@ -7,7 +7,7 @@ import { Anchor } from '@/components/Anchor';
 import { formatFieldValue, mapStatusToVariant } from '@/utils/feedback';
 import moment from 'moment';
 import { Badge } from '@/components/ui/Badge';
-import { getLoggedInUserAction } from '@/app/_server-actions/user';
+import { getLoggedInUserAction } from '@/app/(dynamic-pages)/_server-actions/user';
 import {
   ShadcnTable,
   TableBody,
