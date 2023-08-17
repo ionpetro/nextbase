@@ -36,7 +36,7 @@ export const parseNotification = (notificationPayload: unknown) => {
         return {
           title: 'Accepted invitation to join organization',
           description: `${notification.userFullName} has accepted your invitation to join your organization`,
-          href: `/organization/${notification.organizationId}`,
+          href: `/organization/${notification.organizationId}/settings/members`,
           image: '/logos/logo-black.png',
           actionType: 'link',
         } as NormalizedNotification;

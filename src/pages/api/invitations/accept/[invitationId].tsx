@@ -37,18 +37,23 @@ async function AcceptInvitationHandler(
       .single();
 
     if (invitationResponse.error) {
-      throw invitationResponse.error;
+      console.log(invitationResponse.error.message);
+      return res.status(500).json({ error: invitationResponse.error.message });
     } else {
-      const userProfile = await getUserProfile(supabaseClient, user.id);
+      try {
+        const userProfile = await getUserProfile(supabaseClient, user.id);
 
-      await createAcceptedOrgInvitationNotification(
-        supabaseClient,
-        invitationResponse.data?.inviter_user_id,
-        {
-          organizationId: invitationResponse.data.organization_id,
-          inviteeFullName: userProfile.full_name ?? `User ${userProfile.id}`,
-        }
-      );
+        await createAcceptedOrgInvitationNotification(
+          supabaseClient,
+          invitationResponse.data?.inviter_user_id,
+          {
+            organizationId: invitationResponse.data.organization_id,
+            inviteeFullName: userProfile.full_name ?? `User ${userProfile.id}`,
+          }
+        );
+      } catch (error) {
+        console.log(error);
+      }
       res.redirect('/dashboard');
     }
   } else {
