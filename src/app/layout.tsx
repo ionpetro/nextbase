@@ -19,6 +19,8 @@ export const metadata = {
   description: 'Nextbase Ultimate',
 };
 
+export const runtime = 'edge';
+
 export default async function RootLayout({
   children,
 }: {

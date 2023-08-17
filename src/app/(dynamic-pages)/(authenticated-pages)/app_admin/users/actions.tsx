@@ -1,7 +1,7 @@
 'use server';
 
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
-import { render as renderEmail } from '@react-email/render';
+import { renderAsync } from '@react-email/render';
 import { sendEmail } from '@/utils/api-routes/utils';
 import SignInEmail from 'emails/SignInEmail';
 import { revalidatePath } from 'next/cache';
@@ -33,7 +33,7 @@ export async function sendLoginLinkAction(email: string) {
       url.searchParams.set('redirect_to', checkAuthUrl.toString());
 
       // send email
-      const signInEmailHTML = renderEmail(
+      const signInEmailHTML = await renderAsync(
         <SignInEmail signInUrl={url.toString()} />
       );
 
