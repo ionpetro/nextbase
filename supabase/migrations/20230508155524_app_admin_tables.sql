@@ -44,8 +44,8 @@ CREATE TABLE internal_blog_post_tags (
 
 -- Create a table to handle the blog post and tag relationship
 CREATE TABLE internal_blog_post_tags_relationship (
-  blog_post_id uuid NOT NULL REFERENCES internal_blog_posts (id),
-  tag_id integer NOT NULL REFERENCES internal_blog_post_tags (id),
+  blog_post_id uuid NOT NULL REFERENCES internal_blog_posts (id) ON DELETE CASCADE,
+  tag_id integer NOT NULL REFERENCES internal_blog_post_tags (id) ON DELETE CASCADE,
   PRIMARY KEY (blog_post_id, tag_id)
 );
 
