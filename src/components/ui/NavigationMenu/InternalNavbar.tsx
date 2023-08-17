@@ -5,7 +5,9 @@ import Link from 'next/link';
 import Home from 'lucide-react/dist/esm/icons/home';
 import { usePathname } from 'next/navigation';
 import LightIcon from 'lucide-react/dist/esm/icons/sun';
+import InfoIcon from 'lucide-react/dist/esm/icons/info';
 import { useMemo } from 'react';
+import { FeatureViewModal } from '@/components/presentational/tailwind/FeatureViewModal';
 import { Notifications } from './Notifications';
 
 export default function InternalNavbar() {
@@ -43,10 +45,12 @@ export default function InternalNavbar() {
           className="inline-flex items-center font-medium text-neutral-500 hover:text-neutral-800"
           aria-label="Home page"
         >
+
           <Home className="h-5 w-5 mr-2" /> Dashboard
         </Link>
       </div>
       <div className="relative flex basis-0 items-center justify-end gap-3 sm:gap-3 md:flex-grow">
+        <FeatureViewModal />
         <div className="group p-[5px] bg-gradient-to-b from-white to-neutral-50 hover:bg-gradient-to-b hover:from-neutral-50 hover:to-neutral-100/50 transition rounded-[8px] border cursor-pointer border-neutral-900 border-opacity-20 ">
           <LightIcon className="h-5 w-5 text-neutral-500 hover:text-neutral-700" />
         </div>
