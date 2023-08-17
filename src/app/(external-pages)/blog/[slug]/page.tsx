@@ -3,6 +3,7 @@ import {
   getPublishedBlogPostBySlug,
   getPublishedBlogPosts,
 } from '@/utils/supabase/internalBlog';
+import { Metadata, ResolvingMetadata } from 'next';
 import { notFound } from 'next/navigation';
 import { z } from 'zod';
 
@@ -17,6 +18,26 @@ export async function generateStaticParams() {
   return posts.map((post) => ({
     slug: post.slug,
   }));
+}
+
+export async function generateMetadata(
+  {
+    params,
+  }: {
+    params: unknown;
+  },
+  parent?: ResolvingMetadata
+): Promise<Metadata> {
+  // read route params
+  const { slug } = paramsSchema.parse(params);
+  const post = await getPublishedBlogPostBySlug(supabaseAdminClient, slug);
+
+  return {
+    title: `${post.title} | Blog | Nextbase Ultimate`,
+    openGraph: {
+      images: post.cover_image ? [post.cover_image] : undefined,
+    },
+  };
 }
 
 export default async function BlogPostPage({ params }: { params: unknown }) {
