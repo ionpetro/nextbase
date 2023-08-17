@@ -11,20 +11,6 @@ export default function Layout({ children }: { children: ReactNode }) {
       <SpecificTeamClientLayout createProjectAction={createProjectAction}>
         {children}
       </SpecificTeamClientLayout>
-      {/* Help Cards */}
-      <div className="grid grid-cols-2 space-x-6 w-full">
-        <HelpCard
-          heading="Teams within Organisations"
-          subheading="Without Organisations you can't make Teams"
-          image={organisationshelp}
-        />
-
-        <HelpCard
-          heading="Projects within Teams"
-          subheading="Build Projects within Teams and Organisations"
-          image={teamsprojects}
-        />
-      </div>
     </div>
   );
 }
