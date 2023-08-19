@@ -24,6 +24,7 @@ import { Table } from '@/types';
 import { parseNotification } from '@/utils/parseNotification';
 import moment from 'moment';
 import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 const NOTIFICATIONS_PAGE_SIZE = 10;
 const useUnseenNotificationIds = () => {
@@ -132,6 +133,7 @@ function Notification({
   notification: Table<'user_notifications'>;
   isSeen: boolean;
 }) {
+  const router = useRouter();
   const notificationPayload = parseNotification(notification.payload);
   const handleNotificationClick = useCallback(() => {
     if (notificationPayload.type === 'welcome') {
@@ -164,6 +166,7 @@ function Notification({
       onHover={() => {
         if (!isSeen) {
           seeNotification(supabaseUserClientComponentClient, notification.id);
+          router.refresh();
         }
       }}
     />
@@ -171,6 +174,7 @@ function Notification({
 }
 
 export const useReadAllNotifications = () => {
+  const router = useRouter();
   const user = useLoggedInUser();
   return useMutation(
     async () => {
@@ -178,6 +182,7 @@ export const useReadAllNotifications = () => {
     },
     {
       onSuccess: () => {
+        router.refresh();
         toast.success('All notifications marked as read');
       },
     }
