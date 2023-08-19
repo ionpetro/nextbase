@@ -7,6 +7,14 @@ import {
 import { PublicBlogList } from '../PublicBlogList';
 import { TagsNav } from '../TagsNav';
 
+export const metadata = {
+  title: 'Blog List | Nextbase',
+  description: 'Collection of the latest blog posts from the team at Nextbase',
+  icons: {
+    icon: '/images/logo-black-main.ico',
+  },
+};
+
 export default async function BlogListPage() {
   const [blogPosts, tags] = await Promise.all([
     getPublishedBlogPosts(supabaseAdminClient),

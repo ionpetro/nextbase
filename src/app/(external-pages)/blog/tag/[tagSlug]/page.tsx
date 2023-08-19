@@ -5,6 +5,7 @@ import {
   getPublishedBlogPostsByTagSlug,
   getTagBySlug,
 } from '@/utils/supabase/internalBlog';
+import { Metadata } from 'next';
 import { z } from 'zod';
 import { PublicBlogList } from '../../PublicBlogList';
 import { TagsNav } from '../../TagsNav';
@@ -12,6 +13,21 @@ import { TagsNav } from '../../TagsNav';
 const BlogListByTagPageParamsSchema = z.object({
   tagSlug: z.string(),
 });
+
+export async function generateMetadata({
+  params,
+}: {
+  params: unknown;
+}): Promise<Metadata> {
+  // read route params
+  const { tagSlug } = BlogListByTagPageParamsSchema.parse(params);
+  const tag = await getTagBySlug(supabaseAdminClient, tagSlug);
+
+  return {
+    title: `${tag.name} | Blog | Nextbase Ultimate`,
+    description: tag.description,
+  };
+}
 
 export default async function BlogListByTagPage({
   params,

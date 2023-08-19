@@ -45,12 +45,13 @@ EXCEPTION
 WHEN NO_DATA_FOUND THEN RAISE EXCEPTION 'No organization found for the provided id: %',
 p_id;
 END;
+$function$;
 REVOKE ALL ON FUNCTION public.get_organization_id_by_team_id(p_id integer)
 FROM PUBLIC;
 REVOKE ALL ON FUNCTION public.get_organization_id_by_team_id(p_id integer)
 FROM ANON;
 
-$function$;
+
 CREATE OR REPLACE FUNCTION public.get_organization_id_by_team_id(p_id bigint) RETURNS uuid LANGUAGE plpgsql SECURITY DEFINER AS $function$
 DECLARE v_organization_id UUID;
 BEGIN

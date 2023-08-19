@@ -1,6 +1,6 @@
 CREATE TABLE user_notifications (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  user_id UUID PRIMARY KEY REFERENCES user_profiles(id) ON DELETE CASCADE,
+  user_id UUID REFERENCES user_profiles(id) ON DELETE CASCADE,
   is_read BOOLEAN NOT NULL DEFAULT FALSE,
   is_seen BOOLEAN NOT NULL DEFAULT FALSE,
   payload JSONB NOT NULL DEFAULT '{}'::JSONB,
