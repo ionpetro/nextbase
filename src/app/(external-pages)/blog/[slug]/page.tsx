@@ -3,7 +3,7 @@ import {
   getPublishedBlogPostBySlug,
   getPublishedBlogPosts,
 } from '@/utils/supabase/internalBlog';
-import { Metadata, ResolvingMetadata } from 'next';
+import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { z } from 'zod';
 
@@ -20,14 +20,11 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata(
-  {
-    params,
-  }: {
-    params: unknown;
-  },
-  parent?: ResolvingMetadata
-): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: unknown;
+}): Promise<Metadata> {
   // read route params
   const { slug } = paramsSchema.parse(params);
   const post = await getPublishedBlogPostBySlug(supabaseAdminClient, slug);
