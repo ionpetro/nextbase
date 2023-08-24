@@ -40,10 +40,10 @@ async function fetchdata(projectId: string) {
       ),
       projectByIdData.team_id
         ? getUserTeamRole(
-          supabaseClient,
-          sessionResponse.session.user.id,
-          projectByIdData.team_id
-        )
+            supabaseClient,
+            sessionResponse.session.user.id,
+            projectByIdData.team_id
+          )
         : null,
       getNormalizedSubscription(
         supabaseClient,

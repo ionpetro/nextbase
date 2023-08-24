@@ -188,7 +188,7 @@ export default async function FeedbackItemPage({
           />
 
           {feedbackThread.status === 'closed' ||
-            feedbackThread.status === 'completed' ? (
+          feedbackThread.status === 'completed' ? (
             <T.Large className="my-6">
               This thread is now closed for discussion.
             </T.Large>

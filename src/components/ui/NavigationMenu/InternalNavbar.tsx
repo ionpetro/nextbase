@@ -45,7 +45,6 @@ export default function InternalNavbar() {
           className="inline-flex items-center font-medium text-neutral-500 hover:text-neutral-800"
           aria-label="Home page"
         >
-
           <Home className="h-5 w-5 mr-2" /> Dashboard
         </Link>
       </div>

@@ -91,17 +91,17 @@ export const AddUserToTeamDialog = ({
     isOrganizationTeamMembersDataLoading || !organizationTeamMembers
       ? []
       : organizationTeamMembers.map((member) => {
-        const userProfile = Array.isArray(member.user_profiles)
-          ? member.user_profiles[0]
-          : member.user_profiles;
-        if (!userProfile) {
-          throw new Error('User profile not found');
-        }
-        return {
-          value: userProfile.id,
-          label: userProfile.full_name ?? userProfile.id,
-        };
-      });
+          const userProfile = Array.isArray(member.user_profiles)
+            ? member.user_profiles[0]
+            : member.user_profiles;
+          if (!userProfile) {
+            throw new Error('User profile not found');
+          }
+          return {
+            value: userProfile.id,
+            label: userProfile.full_name ?? userProfile.id,
+          };
+        });
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

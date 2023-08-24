@@ -249,7 +249,10 @@ export default async function AdminPanel() {
         projectCountByMonth={projectCountByMonth}
         userCountByMonth={userCountByMonth}
       />
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div>
+        <p className="text-2xl mt-10 mb-2 font-bold">Quick Stats</p>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="bg-white rounded-lg shadow-lg p-16 border border-slate-100 flex items-center flex-col-reverse">
           <T.Subtle>Current MRR</T.Subtle>
           <T.H1>{`$${currentMRR}`}</T.H1>

@@ -18,6 +18,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/Table/ShadcnTable';
+
 // convert the above organizationgraphs import to next dynamic
 import dynamic from 'next/dynamic';
 const OrganizationGraphs = dynamic(

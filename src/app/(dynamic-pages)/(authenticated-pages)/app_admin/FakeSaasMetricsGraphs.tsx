@@ -10,6 +10,9 @@ import {
   DonutChart,
 } from '@tremor/react';
 
+const valueFormatter = (number: number) =>
+  `$ ${Intl.NumberFormat('us').format(number).toString()}`;
+
 const mrrBarListData = [
   {
     name: 'MRR',

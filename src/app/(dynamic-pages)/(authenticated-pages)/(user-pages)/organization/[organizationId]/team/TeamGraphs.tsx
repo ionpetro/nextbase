@@ -1,180 +1,192 @@
 'use client';
 import {
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  ResponsiveContainer,
-  Bar,
-  BarChart,
-  Legend,
-  Tooltip,
-  Area,
+  Card,
+  Title,
   AreaChart,
-} from 'recharts';
-import { ContentType } from 'recharts/types/component/Tooltip';
-import {
-  NameType,
-  ValueType,
-} from 'recharts/types/component/DefaultTooltipContent';
+  BarChart,
+  BarList,
+  LineChart,
+  DonutChart,
+  Subtitle,
+  Bold,
+  Flex,
+  Text,
+} from '@tremor/react';
 
-const graphData = [
+const chartdata = [
   {
-    name: 'Page A',
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
+    date: 'Jan 22',
+    SemiAnalysis: 2890,
+    'The Pragmatic Engineer': 2338,
   },
   {
-    name: 'Page B',
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
+    date: 'Feb 22',
+    SemiAnalysis: 2756,
+    'The Pragmatic Engineer': 2103,
   },
   {
-    name: 'Page C',
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
+    date: 'Mar 22',
+    SemiAnalysis: 3322,
+    'The Pragmatic Engineer': 2194,
   },
   {
-    name: 'Page D',
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
+    date: 'Apr 22',
+    SemiAnalysis: 3470,
+    'The Pragmatic Engineer': 2108,
   },
   {
-    name: 'Page E',
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
+    date: 'May 22',
+    SemiAnalysis: 3475,
+    'The Pragmatic Engineer': 1812,
   },
   {
-    name: 'Page F',
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
+    date: 'Jun 22',
+    SemiAnalysis: 3129,
+    'The Pragmatic Engineer': 1726,
   },
   {
-    name: 'Page G',
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
+    date: 'July 22',
+    SemiAnalysis: 3482,
+    'The Pragmatic Engineer': 2444,
+  },
+  {
+    date: 'Aug 22',
+    SemiAnalysis: 2412,
+    'The Pragmatic Engineer': 2122,
+  },
+  {
+    date: 'Sep 22',
+    SemiAnalysis: 2678,
+    'The Pragmatic Engineer': 1896,
   },
 ];
 
-const CustomTooltip: ContentType<ValueType, NameType> = ({
-  active,
-  payload,
-  label,
-}) => {
-  if (active && payload) {
-    return (
-      <div className="custom-tooltip px-6 py-2 bg-black border-none focus-none rounded-xl shadow-md">
-        <p className="value text-lg text-white font-bold">{`${payload[0].value}`}</p>
-        <p className="label text-sm text-slate-300 font-medium mb-1">{`${label}`}</p>
-      </div>
-    );
-  }
+const barListData = [
+  {
+    name: 'Jan 22',
+    value: 2890,
+  },
+  {
+    name: 'Feb 22',
+    value: 2756,
+  },
+  {
+    name: 'Mar 22',
+    value: 3322,
+  },
+  {
+    name: 'Apr 22',
+    value: 3470,
+  },
+  {
+    name: 'May 22',
+    value: 3475,
+  },
+  {
+    name: 'Jun 22',
+    value: 3129,
+  },
+  {
+    name: 'July 22',
+    value: 3482,
+  },
+  {
+    name: 'Aug 22',
+    value: 2412,
+  },
+  {
+    name: 'Sep 22',
+    value: 2678,
+  },
+];
 
-  return null;
+const dataFormatter = (number: number) => {
+  return '$ ' + Intl.NumberFormat('us').format(number).toString();
 };
+
+const valueFormatter = (number: number) =>
+  `$ ${Intl.NumberFormat('us').format(number).toString()}`;
 
 export function TeamGraphs() {
   return (
     <div>
       <div>
-        <div className="flex space-x-6">
-          <div className="flex rounded-xl p-6 border border-slate-300 w-full">
-            <div className="flex flex-col justify-between w-full pr-4 h-[320px]">
-              <div className="mb-8 space-y-0">
-                <h2 className="text-xl font-bold text-slate-900">
-                  Performance Analytics
-                </h2>
-                <p className="text-base text-slate-500">
-                  Performance based on User Acquisition
-                </p>
-              </div>
-
-              <ResponsiveContainer width="100%" height="200%">
-                <BarChart
-                  width={500}
-                  height={300}
-                  data={graphData}
-                  margin={{
-                    top: 5,
-                    right: 30,
-                    left: 0,
-                    bottom: 0,
-                  }}
-                  barSize={40}
-                >
-                  <XAxis
-                    dataKey="name"
-                    scale="point"
-                    padding={{ left: 40, right: 40 }}
-                  />
-                  <YAxis />
-                  <Tooltip content={CustomTooltip} />
-                  <Legend />
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <Bar
-                    dataKey="pv"
-                    fill="#0D9387"
-                    background={{ fill: '#E4E6EA' }}
-                  />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
+        <div className="flex flex-col space-y-6">
+          <div className="w-full flex space-x-4">
+            <Card className="rounded-lg">
+              <Title>Newsletter revenue over time (USD)</Title>
+              <AreaChart
+                className="h-72 mt-4"
+                data={chartdata}
+                index="date"
+                categories={['SemiAnalysis', 'The Pragmatic Engineer']}
+                colors={['cyan', 'orange']}
+                valueFormatter={dataFormatter}
+              />
+            </Card>
+            <Card className="rounded-lg">
+              <Title>Newsletter revenue over time (USD)</Title>
+              <DonutChart
+                className="mt-6"
+                data={chartdata}
+                index="date"
+                category="SemiAnalysis"
+                colors={[
+                  'slate',
+                  'violet',
+                  'indigo',
+                  'rose',
+                  'cyan',
+                  'amber',
+                  'green',
+                  'orange',
+                  'pink',
+                ]}
+                valueFormatter={valueFormatter}
+              />
+            </Card>
           </div>
-
-          <div className="flex rounded-xl p-6 border border-slate-300 w-full">
-            <div className="flex flex-col justify-between w-full pr-4 h-[320px]">
-              <div className="mb-8 space-y-0">
-                <h2 className="text-xl font-bold text-slate-900">
-                  Performance Analytics
-                </h2>
-                <p className="text-base text-slate-500">
-                  Performance based on User Acquisition
-                </p>
-              </div>
-
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart
-                  width={500}
-                  height={400}
-                  data={graphData}
-                  margin={{
-                    top: 10,
-                    right: 30,
-                    left: 0,
-                    bottom: 0,
-                  }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip content={CustomTooltip} />
-                  <Area
-                    type="monotone"
-                    dataKey="uv"
-                    stroke="#3B81F5"
-                    fill="url(#colorGradient)"
-                  />
-                  <defs>
-                    <linearGradient
-                      id="colorGradient"
-                      x1="0"
-                      y1="0"
-                      x2="0"
-                      y2="1"
-                    >
-                      <stop offset="5%" stopColor="#3B81F5" stopOpacity={0.8} />
-                      <stop offset="95%" stopColor="#3B81F5" stopOpacity={0} />
-                    </linearGradient>
-                  </defs>
-                </AreaChart>
-              </ResponsiveContainer>
-            </div>
+          <div className="w-full flex space-x-4">
+            <Card className="rounded-lg">
+              <Title>Newsletter revenue over time (USD)</Title>
+              <LineChart
+                className="h-72 mt-4"
+                data={chartdata}
+                index="date"
+                categories={['SemiAnalysis', 'The Pragmatic Engineer']}
+                colors={['cyan', 'orange']}
+              />
+            </Card>
+            <Card className="rounded-lg">
+              <Title>Number of species threatened with extinction (2021)</Title>
+              <Subtitle>
+                The IUCN Red List has assessed only a small share of the total
+                known species in the world.
+              </Subtitle>
+              <BarChart
+                className="mt-6"
+                data={chartdata}
+                index="date"
+                categories={['SemiAnalysis', 'The Pragmatic Engineer']}
+                colors={['teal', 'blue']}
+                valueFormatter={dataFormatter}
+                yAxisWidth={48}
+              />
+            </Card>
+          </div>
+          <div className="w-full flex space-x-4">
+            <Card className="rounded-lg">
+              <Title>Newsletter revenue over time (USD)</Title>
+              <Flex className="mt-4">
+                <Text>
+                  <Bold>Source</Bold>
+                </Text>
+                <Text>
+                  <Bold>Visits</Bold>
+                </Text>
+              </Flex>
+              <BarList data={barListData} className="mt-2" />
+            </Card>
           </div>
         </div>
       </div>

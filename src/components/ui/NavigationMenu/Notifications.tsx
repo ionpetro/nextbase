@@ -155,8 +155,8 @@ function Notification({
       onClick={
         notificationPayload.actionType === 'button'
           ? () => {
-            handleNotificationClick();
-          }
+              handleNotificationClick();
+            }
           : undefined
       }
       image={notificationPayload.image}

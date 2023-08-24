@@ -49,33 +49,33 @@ export default async function MyFeedback() {
           <TableBody>
             {feedbackList
               ? feedbackList.map((feedback, index) => (
-                <TableRow key={feedback.id}>
-                  <TableCell>{index + 1}</TableCell>
-                  <TableCell>
-                    <Anchor
-                      className=" text-blue-600 font-medium underline underline-offset-2"
-                      key={feedback.id}
-                      href={`/feedback/${feedback.id}`}
-                    >
-                      {feedback.title}
-                    </Anchor>
-                  </TableCell>
+                  <TableRow key={feedback.id}>
+                    <TableCell>{index + 1}</TableCell>
+                    <TableCell>
+                      <Anchor
+                        className=" text-blue-600 font-medium underline underline-offset-2"
+                        key={feedback.id}
+                        href={`/feedback/${feedback.id}`}
+                      >
+                        {feedback.title}
+                      </Anchor>
+                    </TableCell>
 
-                  <TableCell>{formatFieldValue(feedback.type)}</TableCell>
-                  <TableCell>{formatFieldValue(feedback.priority)}</TableCell>
-                  <TableCell>
-                    {moment(feedback.created_at).format('LL')}
-                  </TableCell>
-                  <TableCell>
-                    <Badge
-                      className=" whitespace-nowrap "
-                      variant={mapStatusToVariant(feedback.status)}
-                    >
-                      {formatFieldValue(feedback.status)}
-                    </Badge>
-                  </TableCell>
-                </TableRow>
-              ))
+                    <TableCell>{formatFieldValue(feedback.type)}</TableCell>
+                    <TableCell>{formatFieldValue(feedback.priority)}</TableCell>
+                    <TableCell>
+                      {moment(feedback.created_at).format('LL')}
+                    </TableCell>
+                    <TableCell>
+                      <Badge
+                        className=" whitespace-nowrap "
+                        variant={mapStatusToVariant(feedback.status)}
+                      >
+                        {formatFieldValue(feedback.status)}
+                      </Badge>
+                    </TableCell>
+                  </TableRow>
+                ))
               : null}
           </TableBody>
         </ShadcnTable>
