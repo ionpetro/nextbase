@@ -25,6 +25,7 @@ import { parseNotification } from '@/utils/parseNotification';
 import moment from 'moment';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
+import { Button } from '../Button';
 
 const NOTIFICATIONS_PAGE_SIZE = 10;
 const useUnseenNotificationIds = () => {
@@ -155,8 +156,8 @@ function Notification({
       onClick={
         notificationPayload.actionType === 'button'
           ? () => {
-              handleNotificationClick();
-            }
+            handleNotificationClick();
+          }
           : undefined
       }
       image={notificationPayload.image}
@@ -202,8 +203,8 @@ export const Notifications = () => {
   const { mutate: readAllNotifications } = useReadAllNotifications();
   return (
     <Popover>
-      <PopoverTrigger className="group p-[5px] bg-gradient-to-b from-white to-neutral-50 hover:bg-gradient-to-b hover:from-neutral-100 hover:to-neutral-100 transition rounded-[8px] border border-neutral-900 border-opacity-20 relative">
-        <NotificationIcon className="h-5 w-5 text-neutral-500 hover:text-neutral-700" />
+      <PopoverTrigger>
+        <NotificationIcon className="h-5 w-5 px-0 text-muted-foreground" />
         {unseenNotificationCount > 0 && (
           <span className="absolute -top-1 -right-1.5 bg-red-500 text-white text-xs font-bold px-1.5 rounded-full">
             {unseenNotificationCount}
@@ -213,12 +214,10 @@ export const Notifications = () => {
 
       {notifications.length ? (
         <PopoverContent className="mr-12 w-[560px] p-0 rounded-xl overflow-hidden">
-          <div className="border-b-2 border-neutral-300 dark:border-neutral-600 px-6 pb-2 shadow-lg">
+          <div className="border-b-2 px-6 pb-2 shadow-lg">
             <div className="mt-7 mb-3 flex justify-between">
-              <p className="text-2xl font-bold dark:text-white">
-                Notifications
-              </p>
-              <div className="flex text-sm mt-1.5 space-x-1 text-neutral-600 hover:text-neutral-700 cursor-pointer font-medium">
+              <T.H3 className="leading-7 mt-0 ">Notifications</T.H3>
+              <div className="flex text-sm mt-1.5 space-x-1  cursor-pointer font-medium">
                 {unseenNotificationCount ? (
                   <>
                     <CheckIcon className="h-5 w-5" />{' '}
@@ -226,7 +225,7 @@ export const Notifications = () => {
                       onClick={() => {
                         readAllNotifications();
                       }}
-                      className="underline underline-offset-4 dark:text-neutral-600"
+                      className="underline underline-offset-4 text-muted-foreground"
                     >
                       Mark as all read
                     </span>

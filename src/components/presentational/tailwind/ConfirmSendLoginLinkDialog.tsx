@@ -20,7 +20,12 @@ export const ConfirmSendLoginLinkDialog = ({ onConfirm }: Props) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="primaryLink">Send login link</Button>
+        <Button
+          variant="primaryLink"
+          className="text-sm font-medium underline underline-offset-4 "
+        >
+          Send login link
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

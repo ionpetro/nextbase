@@ -13,6 +13,7 @@ import UsersIcon from 'lucide-react/dist/esm/icons/users';
 import FeedbackIcon from 'lucide-react/dist/esm/icons/help-circle';
 import ActivityLogIcon from 'lucide-react/dist/esm/icons/book';
 import RoadMapIcon from 'lucide-react/dist/esm/icons/map';
+import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 
 const matchFeedbackItemPath = match('/app_admin/feedback/:feedbackItem/(.*)?');
 
@@ -69,10 +70,9 @@ export function AppAdminNavigation() {
   return (
     <>
       <div className="space-y-2">
-        <BasicPageHeading
-          heading="Admin Panel"
-          subheading=" All
-      sections of this area are protected and only accessible by Application Admins"
+        <PageHeading
+          title="Admin Panel"
+          subTitle=" All sections of this area are protected and only accessible by Application Admins"
         />
       </div>
       <div className="space-y-6">

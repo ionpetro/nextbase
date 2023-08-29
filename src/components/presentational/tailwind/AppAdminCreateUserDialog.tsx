@@ -30,7 +30,7 @@ export const AppAdminCreateUserDialog = ({ onSubmit, isLoading }: Props) => {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="default">
-          <Plus /> Create User
+          <Plus className="mr-2" /> Create User
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">

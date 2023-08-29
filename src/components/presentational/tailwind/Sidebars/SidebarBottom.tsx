@@ -7,6 +7,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/Popover';
+import { T } from '@/components/ui/Typography';
 
 export const SidebarBottom = ({
   avatarUrl,
@@ -20,7 +21,7 @@ export const SidebarBottom = ({
   isExpanded: boolean;
 }) => {
   const userClassName = cn(
-    `flex w-full gap-3 mb-2 items-center py-3 text-white h-[80px] border-t border-slate-600`,
+    `flex w-full gap-3 mb-2 items-center py-3 h-[80px] border-t `,
     isExpanded ? 'px-4 pl-5 justify-start' : 'px-4 justify-center',
     'group hover:cursor-pointer'
   );
@@ -41,12 +42,12 @@ export const SidebarBottom = ({
               {isExpanded ? (
                 <div className="flex flex-col w-full">
                   <div className="flex justify-between w-full items-center">
-                    <p className="text-sm text-white font-[500]">
-                      {userFullname}
-                    </p>
+                    <T.P>{userFullname}</T.P>
                     <ChevronRight className="text-2xl text-white opacity-0 group-hover:opacity-100" />
                   </div>
-                  <p className="text-sm text-slate-400">{userEmail}</p>
+                  <T.Small className=" text-muted-foreground">
+                    {userEmail}
+                  </T.Small>
                 </div>
               ) : null}
             </div>

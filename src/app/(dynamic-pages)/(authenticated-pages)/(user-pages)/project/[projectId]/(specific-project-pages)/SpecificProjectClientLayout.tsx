@@ -1,5 +1,6 @@
 'use client';
 import { Anchor } from '@/components/Anchor';
+import Overline from '@/components/presentational/tailwind/Text/Overline';
 import { useProjectContext } from '@/contexts/ProjectContext';
 
 export function SpecificProjectClientLayout({
@@ -11,33 +12,33 @@ export function SpecificProjectClientLayout({
     useProjectContext();
 
   return (
-    <div className="space-y-10">
-      <div className="space-x-6">
-        <span className="text-base py-2 font-[600] text-slate-500">
+    <div>
+      <div className="inline-flex mb-4 space-x-4">
+        <Overline className="text-gray-500 dark:text-gray-600">
           <Anchor href="/dashboard">Dashboard</Anchor>
-        </span>
-        <span className="text-base  py-2 font-[600] text-slate-500">/</span>
-        <span className="text-base py-2 font-[600] text-slate-500">
+        </Overline>
+        <Overline className="text-gray-500 dark:text-gray-600">/</Overline>
+        <Overline className="text-gray-500 dark:text-gray-600">
           <Anchor href={`/organization/${organizationData.id}`}>
             {organizationData.title}
           </Anchor>
-        </span>
+        </Overline>
         {maybeTeamData ? (
           <>
-            <span className="text-base  py-2 font-[600] text-slate-500">/</span>
-            <span className="text-base py-2 font-[600] text-slate-500">
+            <Overline className="text-gray-500 dark:text-gray-600">/</Overline>
+            <Overline className="text-gray-800 dark:text-gray-400 font-bold underline-offset-4 underline">
               <Anchor
                 href={`/organization/${organizationData.id}/team/${maybeTeamData.id}`}
               >
                 {maybeTeamData.name}
               </Anchor>
-            </span>
+            </Overline>
           </>
         ) : null}
-        <span className="text-base  py-2 font-[600] text-slate-500">/</span>
-        <span className="text-base py-2 bg-blue-50 rounded-lg px-4 font-[700] text-blue-600">
+        <Overline className="text-gray-500 dark:text-gray-600">/</Overline>
+        <Overline className="text-gray-800 dark:text-gray-400 font-bold underline-offset-4 underline">
           {projectByIdData.name}
-        </span>
+        </Overline>
       </div>
       {children}
     </div>

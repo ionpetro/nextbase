@@ -38,7 +38,7 @@ export function CreateOrganizationDialog({
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button>
-            <PlusIcon className="text-white mr-2" />
+            <PlusIcon className="mr-2" />
             Create Organisation
           </Button>
         </DialogTrigger>

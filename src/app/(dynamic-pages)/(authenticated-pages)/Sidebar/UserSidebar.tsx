@@ -3,8 +3,11 @@ import { Anchor } from '@/components/Anchor';
 import { cn } from '@/utils/cn';
 import Image from 'next/image';
 import { useState } from 'react';
-import Logo from 'public/logos/logo.png';
 import { AppSidebar } from '@/components/presentational/tailwind/Sidebars/AppSidebar';
+import darkLogo from 'public/logos/nextbase-dark-logo.png';
+import lightLogo from 'public/logos/nextbase-light-logo.png';
+import PanelLeftOpen from 'lucide-react/dist/esm/icons/panel-left-open';
+import PanelLeftClose from 'lucide-react/dist/esm/icons/panel-left-close';
 import { SidebarBottom } from '@/components/presentational/tailwind/Sidebars/SidebarBottom';
 import { Table } from '@/types';
 import { useUserProfile } from '@/utils/react-queries/user';
@@ -12,6 +15,7 @@ import { getUserAvatarUrl } from '@/utils/helpers';
 import { useLoggedInUserEmail } from '@/hooks/useLoggedInUserEmail';
 import Mail from 'lucide-react/dist/esm/icons/mail';
 import { UserSidebarLink } from '@/components/presentational/tailwind/Sidebars/UserSidebarLink';
+import { T } from '@/components/ui/Typography';
 
 export function UserSidebar({
   isUserAppAdmin,
@@ -29,22 +33,45 @@ export function UserSidebar({
   });
   const [isExpanded, toggleIsExpanded] = useState<boolean>(false);
   const nextbaseIconClassName = cn(
-    `flex w-full mt-2 gap-2 items-center py-3 mb-1 text-white h-[64px] rounded-lg`,
-    isExpanded ? 'px-6 justify-start' : 'justify-center'
+    `flex w-full gap-2 items-center py-3 mb-1 text-white h-[64px] rounded-lg`,
+    isExpanded ? 'px-9 justify-start' : 'justify-center'
+  );
+  const chevronClassName = cn(
+    `absolute flex text-gray-700 dark:text-gray-400 justify-start transition hover:bg-gray-100 dark:hover:bg-gray-900 p-2.5 rounded-lg text-4xl cursor-pointer items-start -top-[0px]`,
+    isExpanded ? 'left-56 bg-transparent' : 'left-[calc(100%-19px)] '
   );
 
   return (
     <div
-      className="bg-slate-900 space-y-2 grid grid-rows-4"
+      className="relative bg-gray-100/50 dark:bg-gray-900/60 space-y-5 px-2 grid grid-rows-4 group border-r"
       style={{
         gridTemplateRows: 'auto auto 1fr auto',
       }}
     >
       <div>
         <Anchor href="/dashboard" className={nextbaseIconClassName}>
-          <Image width={28} src={Logo} alt="Logo Login" />
+          <Image
+            width={40}
+            src={lightLogo}
+            alt="Logo Login"
+            className={cn(
+              'rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0',
+              isExpanded ? '-ml-2 ' : 'ml-0  '
+            )}
+          />
+          <Image
+            width={40}
+            src={darkLogo}
+            alt="Logo Login"
+            className={cn(
+              ' absolute rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100',
+              isExpanded ? '-ml-2 ' : '-ml-0  '
+            )}
+          />
           {isExpanded ? (
-            <span className="text-xl font-[500]">Nextbase</span>
+            <T.P className="text-lg font-[600] text-gray-800 dark:text-gray-300">
+              nextbase
+            </T.P>
           ) : null}
         </Anchor>
       </div>
@@ -55,7 +82,7 @@ export function UserSidebar({
       />
       <div />
       <div className="space-y-2">
-        <div className="mx-4">
+        <div className="mx-2">
           <UserSidebarLink
             href="/feedback"
             icon={<Mail size={24} />}
@@ -63,7 +90,17 @@ export function UserSidebar({
             label=" Feedback"
           />
         </div>
-
+        {/* Chevron Icon Action */}
+        <div
+          className={chevronClassName}
+          onClick={() => toggleIsExpanded(!isExpanded)}
+        >
+          {isExpanded ? (
+            <PanelLeftClose className="h-6 w-6" />
+          ) : (
+            <PanelLeftOpen className="h-6 w-6" />
+          )}
+        </div>
         <SidebarBottom
           avatarUrl={avatarUrl}
           userFullname={userProfile.full_name ?? 'User'}

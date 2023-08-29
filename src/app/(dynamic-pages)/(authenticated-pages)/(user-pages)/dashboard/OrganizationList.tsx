@@ -62,12 +62,10 @@ export function OrganizationList({
             </div>
           }
           title="Organizations"
-        />
-        <p className="text-base font-[500] text-slate-600 w-[480px]">
-          Organizations are the central unit of work. Each has a team and a
+          subTitle="Organizations are the central unit of work. Each has a team and a
           unique Stripe plan. Customize the database models and add spaces with
-          members to an organization.
-        </p>
+          members to an organization."
+        />
       </div>
       <div className="border rounded-lg overflow-hidden">
         <ShadcnTable>
@@ -106,7 +104,7 @@ export function OrganizationList({
                   <TableCell>{index + 1}</TableCell>
                   <TableCell>
                     <Anchor
-                      className=" text-blue-600 font-medium underline underline-offset-2"
+                      className=" font-medium underline underline-offset-4 "
                       key={organization.id}
                       href={`/organization/${organization.id}`}
                     >

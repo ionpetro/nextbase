@@ -16,6 +16,7 @@ import { useState } from 'react';
 import { AddAuthorProfileDialog } from './AddAuthorProfileDialog';
 import { EditAuthorProfileDialog } from './EditAuthorProfileDialog';
 import Trash from 'lucide-react/dist/esm/icons/trash';
+import UsersIcon from 'lucide-react/dist/esm/icons/users';
 
 type AuthorProfile = Table<'internal_blog_author_profiles'>;
 
@@ -59,7 +60,10 @@ export const ManageAuthorsDialog = ({
   return (
     <Dialog open={isOpen} onOpenChange={(newIsOpen) => setIsOpen(newIsOpen)}>
       <DialogTrigger asChild>
-        <Button variant="outline">Manage author profiles</Button>
+        <Button variant="outline" className="text-sm bg-white dark:bg-black">
+          <UsersIcon className="mr-2 w-5 h-5" />
+          Manage author profiles
+        </Button>
       </DialogTrigger>
 
       <DialogContent>

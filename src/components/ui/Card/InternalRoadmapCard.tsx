@@ -63,8 +63,10 @@ export default function InternalRoadmapCard({
 
         <div className="mt-3 -mb-0.5">
           <div className="flex space-x-2 mb-3">
-            <Badge variant={getTagVariant(tag)}>{formatFieldValue(tag)}</Badge>
-            <Badge variant={getPriorityVariant(priority)}>
+            <Badge size="xs" variant={getTagVariant(tag)}>
+              {formatFieldValue(tag)}
+            </Badge>
+            <Badge size="xs" variant={getPriorityVariant(priority)}>
               {formatFieldValue(priority)}
             </Badge>
           </div>

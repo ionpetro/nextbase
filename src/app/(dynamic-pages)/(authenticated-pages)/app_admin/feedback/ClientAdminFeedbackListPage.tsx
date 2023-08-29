@@ -35,6 +35,7 @@ import {
   TableRow,
 } from '@/components/ui/Table/ShadcnTable';
 import { Button } from '@/components/ui/Button/ButtonShadcn';
+import { T } from '@/components/ui/Typography';
 
 export function ClientAdminFeedbackListPage({
   getAllInternalFeedbackAction,
@@ -91,7 +92,7 @@ export function ClientAdminFeedbackListPage({
                 type="text"
                 name="text"
                 id="text"
-                className="block px-3 py-2 appearance-none w-full rounded-md border-gray-300 border shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                className="block px-3 py-2 appearance-none w-full rounded-md border bg-transparent h-10 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 placeholder="Search"
                 value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
@@ -110,6 +111,7 @@ export function ClientAdminFeedbackListPage({
                   Status {filters.statuses.length ? ':' : ''}
                   {filters.statuses.map((status) => (
                     <Badge
+                      size="default"
                       className="ml-1"
                       variant={mapStatusToVariant(status)}
                     >
@@ -128,8 +130,8 @@ export function ClientAdminFeedbackListPage({
                         ...filters,
                         statuses: filters.statuses?.includes(statusOption)
                           ? filters.statuses.filter(
-                              (status) => status !== statusOption
-                            )
+                            (status) => status !== statusOption
+                          )
                           : [...(filters.statuses || []), statusOption],
                       })
                     }
@@ -188,11 +190,10 @@ export function ClientAdminFeedbackListPage({
                   {filters.priorities.length ? ':' : ''}
                   <span className="flex space-x-1">
                     {filters.priorities.map((priority) => (
-                      <Badge
-                        className="ml-1"
-                        variant={mapPriorityToVariant(priority)}
-                      >
-                        {formatFieldValue(priority)}
+                      <Badge size="sm" variant={mapPriorityToVariant(priority)}>
+                        <T.P asChild>
+                          <span>{formatFieldValue(priority)}</span>
+                        </T.P>
                       </Badge>
                     ))}
                   </span>
@@ -208,8 +209,8 @@ export function ClientAdminFeedbackListPage({
                         ...filters,
                         priorities: filters.priorities.includes(priorityOption)
                           ? filters.priorities.filter(
-                              (priority) => priority !== priorityOption
-                            )
+                            (priority) => priority !== priorityOption
+                          )
                           : [...(filters.priorities || []), priorityOption],
                       })
                     }
@@ -229,7 +230,7 @@ export function ClientAdminFeedbackListPage({
       {!feedbackList || isLoading ? (
         <p>Loading...</p>
       ) : (
-        <div className="flex rounded-lg bg-clip-border border border-gray-200 max-w-[1296px] overflow-hidden">
+        <div className="flex rounded-lg bg-clip-border border max-w-[1296px] overflow-hidden">
           <ShadcnTable>
             <TableHeader>
               <TableRow>
@@ -249,7 +250,7 @@ export function ClientAdminFeedbackListPage({
                   </TableCell>
                   <TableCell>
                     <Anchor
-                      className=" text-blue-600 font-medium underline underline-offset-2"
+                      className=" font-medium underline underline-offset-4 "
                       key={feedback.id}
                       href={`/app_admin/feedback/${feedback.id}`}
                     >
@@ -262,9 +263,10 @@ export function ClientAdminFeedbackListPage({
                   <TableCell>
                     {moment(feedback.created_at).format('LL')}
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="py-2">
                     <Badge
-                      className=" whitespace-nowrap "
+                      className="whitespace-nowrap"
+                      size="sm"
                       variant={mapStatusToVariant(feedback.status)}
                     >
                       {formatFieldValue(feedback.status)}

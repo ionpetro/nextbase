@@ -5,6 +5,8 @@ import { DBFunction, UnwrapPromise, View } from '@/types';
 import moment from 'moment';
 import { useRef, useState } from 'react';
 import LoginIcon from 'lucide-react/dist/esm/icons/log-in';
+import CheckIcon from 'lucide-react/dist/esm/icons/check';
+import CloseIcon from 'lucide-react/dist/esm/icons/x';
 import MailIcon from 'lucide-react/dist/esm/icons/mail';
 import { useDebouncedValue } from 'rooks';
 import {
@@ -23,6 +25,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/Table/ShadcnTable';
+import { T } from '@/components/ui/Typography';
+import { Button } from '@/components/ui/Button';
 
 function RenderUser({
   user,
@@ -104,18 +108,35 @@ function RenderUser({
     <TableRow key={user.id}>
       <TableCell> {user.full_name ?? '-'} </TableCell>
       <TableCell>{user.email}</TableCell>
-      <TableCell> {user.is_app_admin ? '✅' : '❌'}</TableCell>
+      <TableCell>
+        {' '}
+        {user.is_app_admin ? (
+          <CheckIcon className="text-green-500 dark:text-green-400" />
+        ) : (
+          <CloseIcon className="text-red-500 dark:text-red-400" />
+        )}
+      </TableCell>
       <TableCell> {moment(user.created_at).format('DD MMM YYYY')}</TableCell>
-      <TableCell> {user.is_confirmed ? '✅' : '❌'}</TableCell>
+      <TableCell>
+        {' '}
+        {user.is_confirmed ? (
+          <CheckIcon className="text-green-500 dark:text-green-400" />
+        ) : (
+          <CloseIcon className="text-red-500 dark:text-red-400" />
+        )}
+      </TableCell>
       <TableCell>
         <span className="flex items-center space-x-4">
           <a
             title="Contact User by email"
-            className=" text-base flex items-center space-x-1 "
+            className="flex items-center "
             href={`mailto:${user.email}`}
             target="_blank"
           >
-            <MailIcon /> <span>Contact User by email</span>
+            <MailIcon className="h-5 w-5 mr-2 " />{' '}
+            <T.Small className=" font-medium underline underline-offset-4 ">
+              Contact User by email
+            </T.Small>
           </a>
         </span>
       </TableCell>
@@ -131,10 +152,11 @@ function RenderUser({
         />
       </TableCell>
       <TableCell>
-        <button
+        <Button
+          variant="ghost"
+          size="sm"
           title="Impersonate User"
-          className="inline-flex text-base font-[600] items-center space-x-2 rounded group-hover:underline text-blue-500
-            hover:text-blue-700"
+          className=" font-medium text-sm underline underline-offset-4 shadow-none "
           onClick={() => {
             if (!user.id) {
               throw new Error('user.id is undefined');
@@ -143,8 +165,8 @@ function RenderUser({
           }}
           disabled={isImpersonating}
         >
-          <LoginIcon /> <span>Login as User </span>
-        </button>
+          <LoginIcon className="h-5 w-5 mr-2" /> Login as User
+        </Button>
       </TableCell>
     </TableRow>
   );
@@ -245,11 +267,11 @@ export function RenderUsers({
 
   return (
     <div className="space-y-4">
-      <div className="space-x-2 flex items-end gap-2 ">
+      <div className="space-x-2 flex items-end gap-2 mb-4 ">
         <div className="max-w-xs flex-1">
           <label
             htmlFor="email"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-700 dark:text-gray-400"
           >
             Email
           </label>
@@ -260,7 +282,7 @@ export function RenderUsers({
               id="email"
               value={searchText}
               onChange={(event) => setSearchText(event.target.value)}
-              className="block px-3 py-2 appearance-none  w-full rounded-md border-gray-300 border shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              className="block px-3 py-2 appearance-none w-full rounded-md bg-gray-200/50 dark:bg-gray-700/50 h-10 shadow-sm text-gray-600"
               placeholder="Search users"
             />
           </div>

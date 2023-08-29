@@ -16,6 +16,7 @@ import { useRouter } from 'next/navigation';
 import Trash from 'lucide-react/dist/esm/icons/trash';
 import { AddBlogTagDialog } from './AddBlogTagDialog';
 import { EditBlogTagDialog } from './EditBlogTagDialog';
+import TagsIcon from 'lucide-react/dist/esm/icons/tag';
 
 export const ManageBlogTagsDialog = ({
   blogTags,
@@ -55,7 +56,10 @@ export const ManageBlogTagsDialog = ({
   return (
     <Dialog open={isOpen} onOpenChange={(newIsOpen) => setIsOpen(newIsOpen)}>
       <DialogTrigger asChild>
-        <Button variant="outline">Manage blog tags</Button>
+        <Button variant="outline" className="text-sm bg-white dark:bg-black">
+          <TagsIcon className="mr-2 w-5 h-5" />
+          Manage blog tags
+        </Button>
       </DialogTrigger>
 
       <DialogContent>

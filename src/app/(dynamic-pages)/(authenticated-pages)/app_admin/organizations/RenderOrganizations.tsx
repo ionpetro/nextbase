@@ -18,6 +18,7 @@ import {
   TableHead,
   TableRow,
 } from '@/components/ui/Table/ShadcnTable';
+import { Anchor } from '@/components/Anchor';
 
 function RenderOrganization({
   organization,
@@ -35,14 +36,13 @@ function RenderOrganization({
 
       <TableCell>
         <span className="flex items-center space-x-2">
-          <a
+          <Anchor
             title="Send email"
-            className="text-blue-500 text-sm group-hover:text-blue-700"
             href={`mailto:${organization.owner_email}`}
             target="_blank"
           >
-            <MailIcon />
-          </a>
+            <MailIcon className="w-5 h-5" />
+          </Anchor>
         </span>
       </TableCell>
     </TableRow>
@@ -104,11 +104,11 @@ export function RenderOrganizations({
   const users2DArray = pages.map((page) => page[1]);
   const organizations = users2DArray.flat();
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 mb-6">
       <div className="max-w-sm">
         <label
           htmlFor="title"
-          className="block text-sm font-medium text-gray-700"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-400"
         >
           Title
         </label>
@@ -119,7 +119,7 @@ export function RenderOrganizations({
             id="title"
             value={searchText}
             onChange={(event) => setSearchText(event.target.value)}
-            className="block px-3 py-2 appearance-none  w-full rounded-md border-gray-300 border shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="block px-3 py-2 appearance-none w-full rounded-md bg-gray-200/50 dark:bg-gray-700/50 h-10 shadow-sm text-gray-600"
             placeholder="Search Organizations"
           />
         </div>
@@ -146,9 +146,11 @@ export function RenderOrganizations({
             ))}
           </TableBody>
         </ShadcnTable>
+      </div>
+      <div className="flex w-full justify-center">
         {hasNextPage ? (
           <button
-            className="underline text-blue-500 text-sm"
+            className="underline underline-offset-4 text-gray-500 hover:text-gray-800 dark:text-gray-400 hover:dark:text-gray-300 font-bold text-sm"
             onClick={() => {
               fetchNextPage();
             }}

@@ -1,5 +1,6 @@
 import { getLoggedInUserAction } from '@/app/(dynamic-pages)/_server-actions/user';
 import { Anchor } from '@/components/Anchor';
+import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 import { UpdateInternalFeedbackTypeDialog } from '@/components/presentational/tailwind/UpdateInternalFeedbackTypeDialog';
 import { Button } from '@/components/ui/Button';
 import BasicPageHeading from '@/components/ui/Headings/BasicPageHeading';
@@ -134,9 +135,9 @@ export default async function FeedbackItemPage({
       </div>
 
       {/* Page Heading */}
-      <BasicPageHeading
-        heading={feedbackThread.title}
-        subheading={feedbackThread.content}
+      <PageHeading
+        title={feedbackThread.title}
+        subTitle={feedbackThread.content}
       />
 
       {/* Feedback */}

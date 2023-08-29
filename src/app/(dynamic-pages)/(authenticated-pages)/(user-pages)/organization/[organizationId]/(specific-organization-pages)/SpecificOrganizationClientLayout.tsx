@@ -63,12 +63,12 @@ function SubscriptionDetails() {
       <HoverCard>
         <HoverCardTrigger asChild>
           <Anchor
-            className="flex mr-2 p-2"
+            className="flex mr-2 mt-1 p-2"
             href={`/organization/${organizationId}/settings/billing`}
           >
-            <T.P className="font-medium text-blue-600 hover:text-blue-500 underline underline-offset-4">
+            <T.Small className="font-semibold underline underline-offset-4">
               {sidenote}
-            </T.P>
+            </T.Small>
           </Anchor>
         </HoverCardTrigger>
         <HoverCardContent className="w-60">
@@ -216,22 +216,24 @@ export function SpecificOrganizationClientLayout({
           {isSettingsPath ? (
             <Anchor
               href={`/organization/${organizationId}`}
-              className="text-blue-800 space-x-2 flex items-center"
+              className="text-blue-800 space-x-2 mb-4 flex items-center"
             >
               <ArrowLeft className="relative -top-0.5" />
-              <Overline className="text-blue-800">
+              <Overline className="text-gray-500 dark:text-gray-600">
                 Back to Organization
               </Overline>
             </Anchor>
           ) : (
-            <Overline className="text-blue-800">Organization</Overline>
+            <Overline className="text-gray-500 dark:text-gray-600 mb-4">
+              Organization
+            </Overline>
           )}
         </div>
         <PageHeading
           title={organizationByIdData.title}
           titleHref={`/organization/${organizationId}`}
           actions={
-            <div className="flex items-start space-y-1 space-x-2">
+            <div className="flex items-start space-x-2">
               <SubscriptionDetails />
               <CreateProjectDialog
                 onConfirm={(name) => {
@@ -249,14 +251,14 @@ export function SpecificOrganizationClientLayout({
 
               <div className="flex flex-col space-y-1 items-end">
                 <Anchor href={`/organization/${organizationId}/settings`}>
-                  <Button variant="outline" className="space-x-1">
-                    <SettingsIcon />
-                    <span className="text-sm">View Organization Settings</span>
+                  <Button variant="outline">
+                    <SettingsIcon className="mr-2" />
+                    View Organization Settings
                   </Button>
                 </Anchor>
-                <span className="text-xs text-gray-500">
+                <T.Subtle>
                   Created {moment(organizationByIdData.created_at).fromNow()}
-                </span>
+                </T.Subtle>
               </div>
             </div>
           }

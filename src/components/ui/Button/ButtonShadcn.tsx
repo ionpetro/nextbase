@@ -12,11 +12,11 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          'bg-gray-900   text-base  text-white rounded-lg hover:bg-gray-700',
+          'bg-gray-900 text-sm  text-white rounded-lg hover:bg-gray-700 dark:bg-white dark:text-black dark:hover:bg-gray-200',
         destructive:
           'bg-destructive  text-base  text-destructive-foreground rounded-lg hover:bg-destructive/90',
         outline:
-          'border-2 border-slate-300  text-base  text-slate-700 rounded-lg hover:bg-gray-100 hover:text-slate-900',
+          'border text-sm text-slate-700 rounded-lg hover:bg-gray-100 hover:text-slate-900 dark:hover:bg-gray-800 dark:text-gray-100 dark:hover:text-white',
         outlineColor: outlineColorClasses('{color}'),
         secondary:
           'bg-secondary text-secondary-foreground  text-base rounded-lg hover:bg-secondary/80',

@@ -16,6 +16,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/Table/ShadcnTable';
+import { Badge } from '@/components/ui/Badge';
 
 export const ProjectsTable = ({
   projects,
@@ -24,7 +25,7 @@ export const ProjectsTable = ({
 }) => {
   if (projects.length === 0) {
     return (
-      <T.P className="my-6 text-sm text-slate-900">
+      <T.P className="text-muted-foreground my-6">
         🔍 No matching projects found.
       </T.P>
     );
@@ -35,21 +36,25 @@ export const ProjectsTable = ({
         <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
           {/* <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg"></div> */}
           {/* <div className="flex rounded-lg bg-clip-border border border-gray-200  max-w-[1296px] overflow-hidden"> */}
-          <div className="border border-neutral-200 rounded-lg shadow-sm overflow-hidden">
+          <div className="border rounded-lg shadow-sm overflow-hidden dark:bg-black bg-white">
             <ShadcnTable>
               <TableHeader>
                 <TableRow>
                   <TableHead>Name</TableHead>
                   <TableHead>Date</TableHead>
                   <TableHead>Project Status</TableHead>
-                  <TableHead>View</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {projects.map((project) => (
                   <TableRow key={project.id}>
-                    <TableCell className="font-semibold">
-                      {project.name}
+                    <TableCell>
+                      <Anchor
+                        href={`/project/${project.id}`}
+                        className=" font-medium underline underline-offset-4 "
+                      >
+                        {project.name}
+                      </Anchor>
                     </TableCell>
                     <TableCell>
                       {moment(project.created_at).format('LLL')}
@@ -57,45 +62,33 @@ export const ProjectsTable = ({
                     <TableCell>
                       {/* Add your project status rendering logic here */}
                       {project.project_status === 'completed' ? (
-                        <div className="inline-flex items-center space-x-1 border border-green-300 bg-green-50  rounded-lg font-medium px-2 py-0.5">
-                          <Check size={16} />
-                          <T.P className="text-sm text-green-500">
-                            Completed
-                          </T.P>
-                        </div>
+                        <Badge size="sm" variant="success">
+                          <Check size={16} className="mr-2" />
+                          <T.P>Completed</T.P>
+                        </Badge>
                       ) : project.project_status === 'pending_approval' ? (
-                        <div className="inline-flex items-center space-x-1 border border-yellow-300 bg-yellow-50  rounded-lg font-medium px-2 py-0.5">
-                          <Pen size={16} />
-                          <T.P className="text-sm text-yellow-500">
-                            Pending Approval
-                          </T.P>
-                        </div>
+                        <Badge size="sm" variant="warning">
+                          <Pen size={16} className="mr-2" />
+                          <T.P>Pending Approval</T.P>
+                        </Badge>
                       ) : project.project_status === 'approved' ? (
-                        <div className="inline-flex items-center space-x-1 border border-green-300 bg-green-50  rounded-lg font-medium px-2 py-0.5">
-                          <ThumbsUp size={16} />
-                          <T.P className="text-sm text-green-500">Approved</T.P>
-                        </div>
+                        <Badge size="sm" variant="success">
+                          <ThumbsUp size={16} className="mr-2" />
+                          <T.P>Approved</T.P>
+                        </Badge>
                       ) : project.project_status === 'draft' ? (
-                        <div className="inline-flex items-center space-x-1 border border-neutral-300 bg-neutral-50  rounded-lg font-medium px-2 py-0.5">
-                          <Timer size={16} />
-                          <T.P className="text-sm text-neutral-700">Draft</T.P>
-                        </div>
+                        <Badge size="sm" variant="default">
+                          <Timer size={16} className="mr-2" />
+                          <T.P>Draft</T.P>
+                        </Badge>
                       ) : (
-                        <div className="inline-flex items-center space-x-1 border border-blue-300 bg-blue-50  rounded-lg font-medium px-2 py-0.5">
+                        <Badge size="sm" variant="information">
                           <Timer size={16} />
-                          <T.P className="text-sm text-blue-500 capitalize">
+                          <T.P>
                             {String(project.project_status).replace('_', ' ')}
                           </T.P>
-                        </div>
+                        </Badge>
                       )}
-                    </TableCell>
-                    <TableCell>
-                      <Anchor href={`/project/${project.id}`}>
-                        <ExternalLink
-                          size={20}
-                          className=" text-blue-600 rounded-lg text-base"
-                        />
-                      </Anchor>
                     </TableCell>
                   </TableRow>
                 ))}

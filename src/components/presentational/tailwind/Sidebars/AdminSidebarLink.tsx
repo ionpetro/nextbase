@@ -20,18 +20,14 @@ export function AdminSidebarLink({
     <Anchor
       href={href}
       className={classNames(
-        `flex w-full gap-2.5 items-center group py-3 h-[48px] mb-1 rounded-lg transition hover:cursor-pointer hover:shadow-lg hover:bg-slate-800 `,
-        isActive
-          ? ' bg-slate-800 text-slate-200 hover:bg-slate-800'
-          : ' bg-transparent',
-        isExpanded
-          ? 'text-slate-200 pl-5 pr-2 justify-start'
-          : 'text-slate-200 justify-center'
+        `flex w-full gap-2.5 items-center group py-2.5 mb-1 rounded-lg transition hover:cursor-pointer hover:shadow-lg hover:bg-gray-300/50 dark:hover:bg-gray-700/50 `,
+        isActive ? ' bg-gray-300/50  dark:bg-gray-700/80  ' : ' bg-transparent',
+        isExpanded ? ' pl-5 pr-2 justify-start' : ' justify-center'
       )}
     >
-      <span className="text-xl group-hover:text-white">{icon}</span>
+      <div className="text-gray-700 dark:text-gray-300 ">{icon}</div>
       {isExpanded ? (
-        <span className="transition text-base  font-[400] group-hover:font-[600] group-hover:text-white">
+        <span className="transition text-base font-medium group-hover:text-gray-900 dark:group-hover:text-white">
           {label}
         </span>
       ) : null}

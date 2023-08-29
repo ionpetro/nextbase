@@ -1,6 +1,6 @@
 'use client';
 import { Button } from '@/components/presentational/tailwind/Button';
-import H3 from '@/components/presentational/tailwind/Text/H3';
+import { T } from '@/components/ui/Typography';
 import { classNames } from '@/utils/classNames';
 import { useUpdateOrganizationTitleMutation } from '@/utils/react-query-hooks';
 import { useState } from 'react';
@@ -22,10 +22,10 @@ export function EditOrganizationForm({
   return (
     <div className="space-y-4">
       <div className="space-y-2">
-        <H3>Edit Organization Title</H3>
-        <p className="text-sm text-gray-500">
+        <T.H4>Edit Organization Title</T.H4>
+        <T.P className="text-muted-foreground">
           This is the title that will be displayed on the organization page.
-        </p>
+        </T.P>
       </div>
       <form
         onSubmit={(event) => {
@@ -44,7 +44,7 @@ export function EditOrganizationForm({
           onChange={(e) => {
             setOrganizationTitle(e.target.value);
           }}
-          className="flex-1 shadow text-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="block px-3 py-2 appearance-none w-full rounded-md border bg-transparent h-10 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
         />
         <div className="inline-block">
           <Button
@@ -53,8 +53,8 @@ export function EditOrganizationForm({
             type="submit"
             id="update-organization-title-button"
             className={classNames(
-              'flex w-full justify-center rounded border border-transparent py-2 px-4 text-sm font-medium  shadow-sm focus:outline-none focus:ring-2  focus:ring-offset-2',
-              'bg-blue-500 focus:ring-blue-500 hover:bg-blue-600  text-white'
+              'flex w-full justify-center rounded-lg border border-transparent py-3 px-4 text-sm font-semibold shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2',
+              'bg-gray-900 hover:bg-gray-700 dark:bg-gray-50 hover:dark:bg-gray-200 text-white dark:text-black'
             )}
           >
             {isLoading ? 'Updating...' : 'Update'}

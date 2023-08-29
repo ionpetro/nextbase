@@ -1,6 +1,7 @@
 import { Anchor } from '@/components/Anchor';
 import { Button } from '@/components/ui/Button';
 import { T } from '@/components/ui/Typography';
+import PenSquareIcon from 'lucide-react/dist/esm/icons/pen-tool';
 import {
   createAuthorProfile,
   getAllAppAdmins,
@@ -27,18 +28,21 @@ export default async function BlogListPage() {
     getAllBlogTags(),
   ]);
   return (
-    <div className="space-y-4">
+    <div className=" max-w-5xl space-y-4">
       <div className="">
-        <div className="space-y-4">
+        <div className="space-y-4 max-w-6xl bg-gray-100/50 dark:bg-gray-800/50 border  rounded-lg p-10 py-6 ">
           <div className="space-y-2">
             <div className="flex justify-between items-baseline">
-              <div className="flex-1">
-                <T.H2 className="border-none"> Blog posts</T.H2>
+              <div className="flex-1 mt-4">
+                <T.H2 className="border-none">Blog posts</T.H2>
               </div>
-              <div className="space-x-2">
+              <div className="space-x-2 mb-6">
                 {authors.length ? (
                   <Anchor href="/app_admin/blog/post/create">
-                    <Button variant="default"> Create blog post</Button>
+                    <Button variant="default" className="text-sm">
+                      <PenSquareIcon className="mr-2 w-5 h-5" /> Create blog
+                      post
+                    </Button>
                   </Anchor>
                 ) : null}
                 <ManageAuthorsDialog
@@ -64,7 +68,7 @@ export default async function BlogListPage() {
               </T.Subtle>
             )}
           </div>
-          <div className="max-w-4xl">
+          <div className="w-full">
             {allBlogPosts.length ? (
               <BlogList deleteBlogPost={deleteBlogPost} blogs={allBlogPosts} />
             ) : (

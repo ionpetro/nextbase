@@ -14,6 +14,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster as HotToaster } from 'react-hot-toast';
 import ReactNoSSR from 'react-no-ssr';
 import { Toaster as SonnerToaster } from 'sonner';
+import { ThemeProvider } from './ThemeProvider';
 import { useMyReportWebVitals } from './reportWebVitals';
 
 /**
@@ -65,16 +66,18 @@ export function AppProviders({
   useMyReportWebVitals();
   return (
     <>
-      <QueryClientProvider client={queryClient}>
-        <RouterEventWrapper>
-          <NavigationProgressBar />
-          {children}
-          <ReactNoSSR>
-            <SonnerToaster theme={'light'} />
-            <HotToaster />
-          </ReactNoSSR>
-        </RouterEventWrapper>
-      </QueryClientProvider>
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <QueryClientProvider client={queryClient}>
+          <RouterEventWrapper>
+            <NavigationProgressBar />
+            {children}
+            <ReactNoSSR>
+              <SonnerToaster theme={'light'} />
+              <HotToaster />
+            </ReactNoSSR>
+          </RouterEventWrapper>
+        </QueryClientProvider>
+      </ThemeProvider>
     </>
   );
 }
