@@ -18,6 +18,7 @@ import { Button } from '@/components/ui/Button';
 import { T } from '@/components/ui/Typography';
 import { formatNormalizedSubscription } from '@/utils/formatNormalizedSubscription';
 import { H2 } from '@/components/ui/Typography/H2';
+import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 
 function ChoosePricingTable() {
   const { organizationId, organizationRole } = useOrganizationContext();
@@ -85,7 +86,7 @@ function ChoosePricingTable() {
       {/* <H3 className='border-none mt-3 mb-0'>Pricing table</H3> */}
       <div className="space-y-2">
         {/* <PricingModeToggle mode={pricingMode} onChange={setPricingMode} /> */}
-        <div className="flex space-x-5 w-full">
+        <div className="flex space-x-6 w-full">
           {productsSortedByPrice.map((product) => {
             if (!product.price) {
               return null;
@@ -104,40 +105,41 @@ function ChoosePricingTable() {
               <>
                 <div
                   key={product.id + priceId}
-                  className="w-full flex-1 mt-4 order-2 bg-white shadow-none rounded-xl hover:shadow-xl transition sm:w-96 lg:w-full lg:order-1 border border-gray-300 hover:border-gray-400 "
+                  className="w-full flex-1 mt-3 order-2 dark:bg-gray-900/50 bg-gray-200/10 shadow-none overflow-hidden rounded-xl hover:shadow-xl transition sm:w-96 lg:w-full lg:order-1 border mb-2  hover:border-gray-400 dark:hover:border-gray-700 "
                 >
-                  <div className="mb-6 p-7 pt-6 flex items-center border-b border-gray-300">
+                  <div className="mb-6 p-7 pt-6 flex items-center border-b bg-gray-200/40 dark:bg-gray-900">
                     <div>
-                      <span className="block text-xl mb-3 text-gray-700 font-medium">
-                        {' '}
-                        {product.name}
-                      </span>
+                      <T.H4 className="mt-0 mb-4"> {product.name}</T.H4>
                       <span>
-                        <span key={priceId} className="text-4xl font-bold">
+                        <T.H1 key={priceId}>
                           {' '}
                           {product.priceString}
-                          <span className="text-base text-gray-700 font-medium">
+                          <span className="text-base tracking-normal text-muted-foreground font-medium">
                             {' '}
                             per {product.price.interval}
                           </span>
-                        </span>
+                        </T.H1>
                       </span>
                     </div>
                   </div>
 
                   <div className="px-5 pl-6 pt-0 mb-8">
-                    <ul className="font-medium text-gray-600">
+                    <ul className="font-medium text-muted-foreground">
                       <li className="grid grid-cols-[24px,1fr] gap-0 text-md items-start mb-2">
                         <CheckIcon className="text-green-600 w-6 h-6" />
-                        <span className="ml-3">{product.description}</span>
+                        <T.P className="leading-6 ml-3">
+                          {product.description}
+                        </T.P>
                       </li>
                       <li className="grid grid-cols-[24px,1fr] gap-0 text-md items-start mb-2">
                         <CheckIcon className="text-green-600 w-6 h-6" />
-                        <span className="ml-3">A nice feature</span>
+                        <T.P className="leading-6 ml-3">A nice feature</T.P>
                       </li>
                       <li className="grid grid-cols-[24px,1fr] gap-0 text-md items-start mb-2">
                         <CheckIcon className="text-green-600 w-6 h-6" />
-                        <span className="ml-3">Another nice feature</span>
+                        <T.P className="leading-6 ml-3">
+                          Another nice feature
+                        </T.P>
                       </li>
                       <li className="grid grid-cols-[24px,1fr] gap-0 text-md items-start mb-2">
                         {product.price.unit_amount > 0 ? (
@@ -145,7 +147,7 @@ function ChoosePricingTable() {
                         ) : (
                           <XIcon className="text-red-500" />
                         )}
-                        <span className="ml-3">A premium feature</span>
+                        <T.P className="leading-6 ml-3">A premium feature</T.P>
                       </li>
                     </ul>
                   </div>
@@ -217,12 +219,10 @@ export function OrganizationSubscripionDetails() {
   ) {
     return (
       <>
-        <div className="space-y-1">
-          <H3>Subscription</H3>
-          <p className="text-gray-500 text-sm">
-            This organization doesn't have any plan at the moment.
-          </p>
-        </div>
+        <PageHeading
+          title="Subscription"
+          subTitle="This organization doesn't have any plan at the moment"
+        />
         <ChoosePricingTable />
       </>
     );

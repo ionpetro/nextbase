@@ -11,7 +11,7 @@ import {
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
-import UsersIcon from 'lucide-react/dist/esm/icons/users';
+import PlusIcon from 'lucide-react/dist/esm/icons/plus';
 
 type CreateTeamDialogProps = {
   onConfirm: (teamTitle: string) => void;
@@ -36,7 +36,7 @@ export function CreateTeamDialog({
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button variant="outline" type="button" size="default">
-            <UsersIcon className="mr-2 w-5 h-5" />
+            <PlusIcon className="mr-2 w-5 h-5" />
             Create Team
           </Button>
         </DialogTrigger>

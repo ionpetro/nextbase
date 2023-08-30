@@ -6,7 +6,7 @@ import moment from 'moment';
 import { usePathname } from 'next/navigation';
 import { match } from 'path-to-regexp';
 import { ReactNode, useMemo, useRef } from 'react';
-import ArrowLeft from 'lucide-react/dist/esm/icons/arrow-left';
+import ChevronLeft from 'lucide-react/dist/esm/icons/chevron-left';
 import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
 import { Button } from '@/components/ui/Button';
 import { CreateTeamDialog } from '@/components/presentational/tailwind/CreateTeamDialog';
@@ -216,10 +216,10 @@ export function SpecificOrganizationClientLayout({
           {isSettingsPath ? (
             <Anchor
               href={`/organization/${organizationId}`}
-              className="text-blue-800 space-x-2 mb-4 flex items-center"
+              className="group space-x-1 mb-4 flex items-center"
             >
-              <ArrowLeft className="relative -top-0.5" />
-              <Overline className="text-gray-500 dark:text-gray-600">
+              <ChevronLeft className="relative text-gray-500 h-5 w-5 hover:-translate-x-10 group-hover:text-gray-800 group-hover:dark:text-gray-400 dark:text-gray-600 -top-0.5" />
+              <Overline className="text-gray-500 group-hover:text-gray-800 dark:text-gray-600 group-hover:dark:text-gray-400">
                 Back to Organization
               </Overline>
             </Anchor>
@@ -264,7 +264,11 @@ export function SpecificOrganizationClientLayout({
           }
         />
       </div>
-      <TabsNavigation tabs={tabs} />
+      {pathname!.startsWith(
+        `/organization/${organizationId}/settings`
+      ) ? null : (
+        <TabsNavigation tabs={tabs} />
+      )}
       <div>{children}</div>
     </div>
   );

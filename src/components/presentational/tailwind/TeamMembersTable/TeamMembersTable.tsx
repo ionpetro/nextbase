@@ -10,7 +10,7 @@ import {
 
 export const TeamMembersTable = ({ members }: TeamMembersTableProps) => {
   return (
-    <div className="rounded-lg border border-neutral-200 shadow-sm overflow-hidden">
+    <div className="rounded-lg border  shadow-sm overflow-hidden">
       <ShadcnTable>
         <TableHeader>
           <TableRow>

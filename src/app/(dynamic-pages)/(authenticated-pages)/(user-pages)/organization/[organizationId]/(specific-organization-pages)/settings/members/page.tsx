@@ -2,7 +2,6 @@
 import moment from 'moment';
 import { useState } from 'react';
 import { LoadingSpinner } from '@/components/presentational/tailwind/LoadingSpinner';
-import H3 from '@/components/presentational/tailwind/Text/H3';
 import { TeamMembersTable } from '@/components/presentational/tailwind/TeamMembersTable';
 import { TeamMembersTableProps } from '@/components/presentational/tailwind/TeamMembersTable/types';
 import { TeamInvitationsTable } from '@/components/presentational/tailwind/TeamInvitationsTable';
@@ -16,6 +15,7 @@ import {
 } from '@/utils/react-query-hooks';
 import { InviteOrganizationMemberDialog } from '@/components/presentational/tailwind/InviteOrganizationMemberDialog';
 import { useOrganizationContext } from '@/contexts/OrganizationContext';
+import { T } from '@/components/ui/Typography';
 
 function InviteUser() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -85,7 +85,7 @@ function TeamMembers() {
   return (
     <div className="space-y-4 max-w-4xl">
       <div className="flex justify-between items-center">
-        <H3>Team Members</H3>
+        <T.H3 className="mt-0">Team Members</T.H3>
         {isOrganizationAdmin ? <InviteUser /> : null}
       </div>
 
@@ -108,8 +108,8 @@ function TeamInvitations() {
   if (!data?.length) {
     return (
       <div className="space-y-4">
-        <H3>Team invitations</H3>
-        <p className="text-gray-500 text-sm">No pending invitations</p>
+        <T.H3 className="mt-0">Team invitations</T.H3>
+        <p className="text-muted-foreground text-sm">No pending invitations</p>
       </div>
     );
   }
@@ -128,7 +128,7 @@ function TeamInvitations() {
 
   return (
     <div className="space-y-4">
-      <H3>Invitations</H3>
+      <T.H3>Invitations</T.H3>
       <TeamInvitationsTable
         organizationId={organizationId}
         invitations={invitations}
