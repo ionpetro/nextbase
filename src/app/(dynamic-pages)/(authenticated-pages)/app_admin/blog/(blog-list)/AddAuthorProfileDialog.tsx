@@ -3,6 +3,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -27,6 +28,7 @@ import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import { authorProfileSchema } from '@/utils/zod-schemas/internalBlog';
 import { useRouter } from 'next/navigation';
+import UserIcon from 'lucide-react/dist/esm/icons/user-plus';
 
 type AuthorProfileFormType = z.infer<typeof authorProfileSchema>;
 type CreateAuthorPayload = Omit<
@@ -88,15 +90,22 @@ export const AddAuthorProfileDialog = ({
   return (
     <Dialog open={isOpen} onOpenChange={(newIsOpen) => setIsOpen(newIsOpen)}>
       <DialogTrigger asChild>
-        <Button variant="outline">Add author profile</Button>
+        <Button variant="default" className="w-full">
+          Add new author profile
+        </Button>
       </DialogTrigger>
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add Author Profile</DialogTitle>
-          <DialogDescription>
-            Fill in the details for the new author profile.
-          </DialogDescription>
+          <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 rounded-lg">
+            <UserIcon className="w-6 h-6" />
+          </div>
+          <div className="p-1 mb-4">
+            <DialogTitle className="text-lg">Add Author Profile</DialogTitle>
+            <DialogDescription className="text-base">
+              Fill in the details for the new author profile.
+            </DialogDescription>
+          </div>
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 ">
           <div className="fields space-y-4 max-h-96 px-1 overflow-auto">
@@ -126,7 +135,7 @@ export const AddAuthorProfileDialog = ({
                 )}
               />
             </div>
-            <div className="space-y-2">
+            <div className="space-y-1">
               <Label>Display Name</Label>
               <Controller
                 control={control}
@@ -136,7 +145,7 @@ export const AddAuthorProfileDialog = ({
                 )}
               />
             </div>
-            <div className="space-y-2">
+            <div className="space-y-1">
               <Label>Bio</Label>
               <Controller
                 control={control}
@@ -146,7 +155,7 @@ export const AddAuthorProfileDialog = ({
                 )}
               />
             </div>
-            <div className="space-y-2">
+            <div className="space-y-1">
               <Label>Avatar URL</Label>
               <Controller
                 control={control}
@@ -156,7 +165,7 @@ export const AddAuthorProfileDialog = ({
                 )}
               />
             </div>
-            <div className="space-y-2">
+            <div className="space-y-1">
               <Label>Website URL</Label>
               <Controller
                 control={control}
@@ -166,7 +175,7 @@ export const AddAuthorProfileDialog = ({
                 )}
               />
             </div>
-            <div className="space-y-2">
+            <div className="space-y-1">
               <Label>Twitter Handle</Label>
               <Controller
                 control={control}
@@ -176,7 +185,7 @@ export const AddAuthorProfileDialog = ({
                 )}
               />
             </div>
-            <div className="space-y-2">
+            <div className="space-y-1">
               <Label>Facebook Handle</Label>
               <Controller
                 control={control}
@@ -186,7 +195,7 @@ export const AddAuthorProfileDialog = ({
                 )}
               />
             </div>
-            <div className="space-y-2">
+            <div className="space-y-1">
               <Label>LinkedIn Handle</Label>
               <Controller
                 control={control}
@@ -196,7 +205,7 @@ export const AddAuthorProfileDialog = ({
                 )}
               />
             </div>
-            <div className="space-y-2">
+            <div className="space-y-1">
               <Label>Instagram Handle</Label>
               <Controller
                 control={control}
@@ -207,12 +216,27 @@ export const AddAuthorProfileDialog = ({
               />
             </div>
           </div>
-          <Button disabled={!isValid || isCreatingAuthorProfile} type="submit">
+        </form>
+        <DialogFooter>
+          <Button
+            variant="outline"
+            className="w-full"
+            onClick={() => {
+              setIsOpen(false);
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            disabled={!isValid || isCreatingAuthorProfile}
+            type="submit"
+            className="w-full"
+          >
             {isLoading || isCreatingAuthorProfile
               ? 'Submitting...'
               : 'Submit Profile'}
           </Button>
-        </form>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

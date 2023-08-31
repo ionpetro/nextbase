@@ -19,6 +19,7 @@ import { Table } from '@/types';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
+import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 const TeamGraphs = dynamic(
   () => import('../../TeamGraphs').then((mod) => mod.TeamGraphs),
   {
@@ -118,29 +119,30 @@ export const SpecificTeamClientLayout = ({
           </span>
         </div>
         <div className="space-y-6">
-          <PageHeadingWithActions
-            heading={teamByIdData.name}
-            subheading="Manage your team and projects here."
-          >
-            <div className="mt-3 text-gray-400 text-3xl space-x-2">
-              <CreateProjectDialog
-                onConfirm={(name) => {
-                  createTeamProject({
-                    name,
-                  });
-                }}
-                isLoading={isCreatingTeamProject}
-              />
-              <Anchor
-                href={`/organization/${organizationId}/team//${teamId}/settings`}
-              >
-                <Button variant={'outline'}>
-                  <SettingsIcon className="text-slate-600 mr-2" />
-                  View Team Settings
-                </Button>
-              </Anchor>
-            </div>
-          </PageHeadingWithActions>
+          <PageHeading
+            title={teamByIdData.name}
+            subTitle="Manage your team and projects here."
+            actions={
+              <div className="mt-3 text-gray-400 flex items-center text-3xl space-x-2">
+                <CreateProjectDialog
+                  onConfirm={(name) => {
+                    createTeamProject({
+                      name,
+                    });
+                  }}
+                  isLoading={isCreatingTeamProject}
+                />
+                <Anchor
+                  href={`/organization/${organizationId}/team//${teamId}/settings`}
+                >
+                  <Button variant={'outline'}>
+                    <SettingsIcon className="text-slate-600 mr-2" />
+                    View Team Settings
+                  </Button>
+                </Anchor>
+              </div>
+            }
+          />
           <TabsNavigation tabs={tabs} />
           <div>{children}</div>
         </div>

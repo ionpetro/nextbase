@@ -11,7 +11,7 @@ import {
 import { T } from '@/components/ui/Typography';
 // convert the imports above into modularized imports
 // import Check from 'lucide-react/dist/esm/icons/check';
-import Plus from 'lucide-react/dist/esm/icons/plus';
+import AddUserIcon from 'lucide-react/dist/esm/icons/user-plus';
 import { useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -24,6 +24,7 @@ import { OrganizationUsersSelect } from './OrganizationUsersSelect';
 import { Enum, Table } from '@/types';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
+import { Label } from '@/components/ui/Label';
 
 const addUserSchema = z.object({
   userId: z.string(),
@@ -91,23 +92,23 @@ export const AddUserToTeamDialog = ({
     isOrganizationTeamMembersDataLoading || !organizationTeamMembers
       ? []
       : organizationTeamMembers.map((member) => {
-          const userProfile = Array.isArray(member.user_profiles)
-            ? member.user_profiles[0]
-            : member.user_profiles;
-          if (!userProfile) {
-            throw new Error('User profile not found');
-          }
-          return {
-            value: userProfile.id,
-            label: userProfile.full_name ?? userProfile.id,
-          };
-        });
+        const userProfile = Array.isArray(member.user_profiles)
+          ? member.user_profiles[0]
+          : member.user_profiles;
+        if (!userProfile) {
+          throw new Error('User profile not found');
+        }
+        return {
+          value: userProfile.id,
+          label: userProfile.full_name ?? userProfile.id,
+        };
+      });
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="gap-1">
-          <Plus size="16" /> <span>Add User</span>
+        <Button size="default">
+          <AddUserIcon className="mr-2 w-5 h-5" /> Add User
         </Button>
       </DialogTrigger>
 
@@ -123,10 +124,17 @@ export const AddUserToTeamDialog = ({
           })}
         >
           <DialogHeader>
-            <DialogTitle>Add to Team</DialogTitle>
-            <DialogDescription>Add user to team</DialogDescription>
+            <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 rounded-lg">
+              <AddUserIcon className="w-6 h-6" />
+            </div>
+            <div className="p-1 mb-4">
+              <DialogTitle className="text-lg">Add to Team</DialogTitle>
+              <DialogDescription className="text-base">
+                Add user to team
+              </DialogDescription>
+            </div>
           </DialogHeader>
-          <div className="space-y-2">
+          <div className="flex flex-col gap-6 mt-4 mb-4">
             {!users.length ? (
               <T.Subtle>Loading...</T.Subtle>
             ) : (
@@ -154,34 +162,45 @@ export const AddUserToTeamDialog = ({
               name="role"
               render={({ field }) => {
                 return (
-                  <ProjectTeamMemberRoleSelect
-                    value={field.value}
-                    onChange={(newRole) => {
-                      // updateRole({
-                      //   newRole,
-                      //   teamId,
-                      //   userId: member.user_id,
-                      // });
-                      field.onChange(newRole);
-                      // Handle role change here
-                    }}
-                  />
+                  <div className="flex flex-col space-y-2 justify-start w-full mb-4">
+                    <Label className="text-muted-foreground">
+                      Select a role
+                    </Label>
+                    <ProjectTeamMemberRoleSelect
+                      value={field.value}
+                      onChange={(newRole) => {
+                        // updateRole({
+                        //   newRole,
+                        //   teamId,
+                        //   userId: member.user_id,
+                        // });
+                        field.onChange(newRole);
+                        // Handle role change here
+                      }}
+                    />
+                  </div>
                 );
               }}
             ></Controller>
           </div>
           <DialogFooter>
-            <Button type="submit" disabled={!formState.isValid}>
-              Yes, add to team
-            </Button>
             <Button
               type="button"
               variant={'outline'}
               onClick={() => {
                 setOpen(false);
               }}
+              className="w-full"
             >
               Cancel
+            </Button>
+            <Button
+              type="submit"
+              disabled={!formState.isValid}
+              variant="default"
+              className="w-full"
+            >
+              Yes, add to team
             </Button>
           </DialogFooter>
         </form>

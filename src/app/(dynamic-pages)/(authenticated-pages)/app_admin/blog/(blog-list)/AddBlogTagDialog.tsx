@@ -6,6 +6,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
+  DialogFooter,
 } from '@/components/ui/Dialog';
 import { Label } from '@/components/ui/Label';
 import { Button } from '@/components/ui/Button';
@@ -19,6 +20,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import slugify from 'slugify';
 import { Textarea } from '@/components/ui/Textarea';
+import TagsIcon from 'lucide-react/dist/esm/icons/tag';
 
 const blogTagSchema = z.object({
   name: z.string(),
@@ -71,43 +73,62 @@ export const AddBlogTagDialog = ({
   return (
     <Dialog open={isOpen} onOpenChange={(newIsOpen) => setIsOpen(newIsOpen)}>
       <DialogTrigger asChild>
-        <Button variant="outline">Add blog tag</Button>
+        <Button variant="default" className="w-full">
+          Add blog tag
+        </Button>
       </DialogTrigger>
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add Blog Tag</DialogTitle>
-          <DialogDescription>
-            Fill in the details for the new blog tag.
-          </DialogDescription>
+          <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 rounded-lg">
+            <TagsIcon className="w-6 h-6" />
+          </div>
+          <div className="p-1 mb-4">
+            <DialogTitle className="text-lg">Add blog tag</DialogTitle>
+            <DialogDescription className="text-base">
+              Fill in the details for the new blog tag.
+            </DialogDescription>
+          </div>
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <Label>Name</Label>
-          <Controller
-            control={control}
-            name="name"
-            render={({ field }) => <Input {...field} placeholder="Name" />}
-          />
-          <Label>Description</Label>
-          <Controller
-            control={control}
-            name="description"
-            render={({ field }) => (
-              <Textarea {...field} placeholder="Description" />
-            )}
-          />
-          <Label>Slug</Label>
-          <Controller
-            control={control}
-            name="slug"
-            render={({ field }) => (
-              <Input disabled {...field} placeholder="Slug" />
-            )}
-          />
-          <Button disabled={!isValid || isCreatingBlogTag} type="submit">
+          <div className="space-y-1">
+            <Label>Name</Label>
+            <Controller
+              control={control}
+              name="name"
+              render={({ field }) => <Input {...field} placeholder="Name" />}
+            />
+          </div>
+          <div className="space-y-1">
+            <Label>Description</Label>
+            <Controller
+              control={control}
+              name="description"
+              render={({ field }) => (
+                <Textarea {...field} placeholder="Description" />
+              )}
+            />
+          </div>
+          <div className="space-y-1">
+            <Label>Slug</Label>
+            <Controller
+              control={control}
+              name="slug"
+              render={({ field }) => (
+                <Input disabled {...field} placeholder="Slug" />
+              )}
+            />
+          </div>
+        </form>
+        <DialogFooter className="w-full">
+          <Button
+            disabled={!isValid || isCreatingBlogTag}
+            type="submit"
+            className="w-full"
+          >
             {isCreatingBlogTag ? 'Submitting...' : 'Submit Tag'}
           </Button>
-        </form>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

@@ -27,7 +27,7 @@ export default async function RootLayout({
   return (
     <html lang="en" className={satoshiFont.variable}>
       <head></head>
-      <body>
+      <body className="bg-white dark:bg-gray-900/20">
         <AppProviders>{children}</AppProviders>
       </body>
     </html>

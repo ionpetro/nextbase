@@ -16,6 +16,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/Table/ShadcnTable';
+import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 
 export default async function MyFeedback() {
   const supabaseClient = createSupabaseUserServerComponentClient();
@@ -25,16 +26,14 @@ export default async function MyFeedback() {
     user.id
   );
   return (
-    <div className="space-y-4">
-      <div className="space-y-2">
-        <div className="flex justify-between items-baseline">
-          <T.H1>My Feedback</T.H1>
-          <GiveFeedbackDialog isExpanded={true} />
-        </div>
-        <T.Subtle>A list of all your feedback to the Nextbase team.</T.Subtle>
-      </div>
+    <div className="max-w-7xl">
+      <PageHeading
+        title="My Feedback"
+        subTitle="A list of all your feedback to the Nextbase team"
+        actions={<GiveFeedbackDialog isExpanded={true} />}
+      />
       {/* Feedback list table */}
-      <div className="flex rounded-lg bg-clip-border border border-gray-200 max-w-[1296px] overflow-hidden">
+      <div className="flex rounded-lg bg-clip-border border mt-10  overflow-hidden">
         <ShadcnTable>
           <TableHeader>
             <TableRow>
@@ -49,33 +48,33 @@ export default async function MyFeedback() {
           <TableBody>
             {feedbackList
               ? feedbackList.map((feedback, index) => (
-                  <TableRow key={feedback.id}>
-                    <TableCell>{index + 1}</TableCell>
-                    <TableCell>
-                      <Anchor
-                        className=" text-blue-600 font-medium underline underline-offset-2"
-                        key={feedback.id}
-                        href={`/feedback/${feedback.id}`}
-                      >
-                        {feedback.title}
-                      </Anchor>
-                    </TableCell>
+                <TableRow key={feedback.id}>
+                  <TableCell>{index + 1}</TableCell>
+                  <TableCell>
+                    <Anchor
+                      className=" font-medium underline underline-offset-4"
+                      key={feedback.id}
+                      href={`/feedback/${feedback.id}`}
+                    >
+                      {feedback.title}
+                    </Anchor>
+                  </TableCell>
 
-                    <TableCell>{formatFieldValue(feedback.type)}</TableCell>
-                    <TableCell>{formatFieldValue(feedback.priority)}</TableCell>
-                    <TableCell>
-                      {moment(feedback.created_at).format('LL')}
-                    </TableCell>
-                    <TableCell>
-                      <Badge
-                        className=" whitespace-nowrap "
-                        variant={mapStatusToVariant(feedback.status)}
-                      >
-                        {formatFieldValue(feedback.status)}
-                      </Badge>
-                    </TableCell>
-                  </TableRow>
-                ))
+                  <TableCell>{formatFieldValue(feedback.type)}</TableCell>
+                  <TableCell>{formatFieldValue(feedback.priority)}</TableCell>
+                  <TableCell>
+                    {moment(feedback.created_at).format('LL')}
+                  </TableCell>
+                  <TableCell>
+                    <Badge
+                      className=" whitespace-nowrap "
+                      variant={mapStatusToVariant(feedback.status)}
+                    >
+                      {formatFieldValue(feedback.status)}
+                    </Badge>
+                  </TableCell>
+                </TableRow>
+              ))
               : null}
           </TableBody>
         </ShadcnTable>

@@ -64,10 +64,15 @@ export const ManageBlogTagsDialog = ({
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Manage Blog Tags</DialogTitle>
-          <DialogDescription>
-            View, edit, or delete blog tags.
-          </DialogDescription>
+          <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 rounded-lg">
+            <TagsIcon className="w-6 h-6" />
+          </div>
+          <div className="p-1 mb-4">
+            <DialogTitle className="text-lg">Manage blog tags</DialogTitle>
+            <DialogDescription className="text-base">
+              View, edit, or delete blog tags.
+            </DialogDescription>
+          </div>
         </DialogHeader>
         <div className="space-y-4">
           <div className="space-y-1">
@@ -81,12 +86,13 @@ export const ManageBlogTagsDialog = ({
                   <EditBlogTagDialog tag={tag} updateBlogTag={updateBlogTag} />
                   <Button
                     variant="ghost"
+                    className="text-red-600 dark:text-red-400 hover:text-red-600  shadow-none hover:bg-red-100/50 dark:hover:bg-red-900/20"
                     onClick={() => {
                       deleteBlogTagMutation(tag.id);
                       setIsOpen(false);
                     }}
                   >
-                    <Trash />
+                    <Trash className="h-5 w-5" />
                   </Button>
                 </div>
               </div>

@@ -12,6 +12,7 @@ import {
   SelectValue,
 } from '@/components/ui/Select';
 import { Enum } from '@/types';
+import { Label } from '@/components/ui/Label';
 
 type DefaultValueProp = {
   defaultValue: Enum<'organization_member_role'>;
@@ -48,10 +49,10 @@ export function OrganizationMemberRoleSelect({
         onChange(value);
       }}
     >
-      <SelectTrigger className="w-[180px]">
+      <SelectTrigger>
         <SelectValue placeholder="Select a role" />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className="w-[180px] text-muted-foreground">
         <SelectGroup>
           <SelectLabel>Organization Roles</SelectLabel>
           <SelectItem value="admin">Admin</SelectItem>

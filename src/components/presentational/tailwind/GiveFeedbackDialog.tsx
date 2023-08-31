@@ -23,6 +23,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Enum } from '@/types';
 import { useState } from 'react';
 import { useCreateInternalFeedback } from '@/utils/react-queries/internalFeedback';
+import FeedbackIcon from 'lucide-react/dist/esm/icons/message-square';
 
 type FeedbackType = Enum<'internal_feedback_thread_type'>;
 
@@ -84,13 +85,18 @@ export const GiveFeedbackDialog = ({ isExpanded }: { isExpanded: boolean }) => {
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Give Feedback</DialogTitle>
-          <DialogDescription>
-            Help us improve by sharing feedback or just drop by and say Hi!
-          </DialogDescription>
+          <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 rounded-lg">
+            <FeedbackIcon className="w-6 h-6" />
+          </div>
+          <div className="p-1 mb-4">
+            <DialogTitle className="text-lg">Give Feedback</DialogTitle>
+            <DialogDescription className="text-base">
+              Help us improve by sharing feedback or just drop by and say Hi!
+            </DialogDescription>
+          </div>
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <div className="space-y-2">
+          <div className="space-y-1">
             <Label>Title</Label>
             <Controller
               control={control}
@@ -98,7 +104,7 @@ export const GiveFeedbackDialog = ({ isExpanded }: { isExpanded: boolean }) => {
               render={({ field }) => <Input {...field} placeholder="Title" />}
             />
           </div>
-          <div className="space-y-2">
+          <div className="space-y-1">
             <Label>Content</Label>
             <Controller
               control={control}
@@ -107,7 +113,7 @@ export const GiveFeedbackDialog = ({ isExpanded }: { isExpanded: boolean }) => {
             />
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-1">
             <Label>Type</Label>
             <Controller
               control={control}
@@ -129,6 +135,7 @@ export const GiveFeedbackDialog = ({ isExpanded }: { isExpanded: boolean }) => {
             />
           </div>
           <Button
+            className="w-full mt-4"
             disabled={!isValid || isCreatingInternalFeedback}
             type="submit"
           >

@@ -3,6 +3,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -17,6 +18,7 @@ import { AddAuthorProfileDialog } from './AddAuthorProfileDialog';
 import { EditAuthorProfileDialog } from './EditAuthorProfileDialog';
 import Trash from 'lucide-react/dist/esm/icons/trash';
 import UsersIcon from 'lucide-react/dist/esm/icons/users';
+import { T } from '@/components/ui/Typography';
 
 type AuthorProfile = Table<'internal_blog_author_profiles'>;
 
@@ -68,20 +70,36 @@ export const ManageAuthorsDialog = ({
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Manage Author Profiles</DialogTitle>
-          <DialogDescription>
-            View, edit, or delete author profiles.
-          </DialogDescription>
+          <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 rounded-lg">
+            <UsersIcon className="w-6 h-6" />
+          </div>
+          <div className="p-1 mb-4">
+            <DialogTitle className="text-lg">
+              Manage author profiles
+            </DialogTitle>
+            <DialogDescription className="text-base">
+              View, edit, or delete author profiles.
+            </DialogDescription>
+          </div>
         </DialogHeader>
-        <div className="space-y-4">
-          <div className="space-y-1">
+        <div className="space-y-6">
+          <div className="space-y-2 mb-4">
             {authorProfiles.map((profile) => (
               <div
                 className="flex space-x-1 items-center justify-between"
                 key={profile.user_id}
               >
-                <p>{profile.display_name}</p>
-                <div className="flex items-center gap-1">
+                <div className="flex gap-3 items-center">
+                  <div className="h-10 w-10 rounded-full bg-gray-300/50 border dark:bg-gray-700/40 flex items-center justify-center">
+                    <T.P className="font-semibold text-gray-800 dark:text-gray-400 uppercase">
+                      {profile.display_name ? profile.display_name[0] : ''}
+                    </T.P>
+                  </div>
+
+                  <T.P>{profile.display_name}</T.P>
+                </div>
+
+                <div className="flex items-center">
                   <EditAuthorProfileDialog
                     appAdmins={appAdmins}
                     profile={profile}
@@ -89,23 +107,34 @@ export const ManageAuthorsDialog = ({
                   />
                   <Button
                     variant="ghost"
+                    className="text-red-600 dark:text-red-400 hover:text-red-600  shadow-none hover:bg-red-100/50 dark:hover:bg-red-900/20"
                     onClick={() => {
                       deleteAuthorProfileMutation(profile.user_id);
-                      setIsOpen(false);
                     }}
                   >
-                    <Trash />
+                    <Trash className="h-5 w-5" />
                   </Button>
                 </div>
               </div>
             ))}
           </div>
+        </div>
+        <DialogFooter>
+          <Button
+            variant="outline"
+            className="w-full"
+            onClick={() => {
+              setIsOpen(false);
+            }}
+          >
+            Cancel
+          </Button>
           <AddAuthorProfileDialog
             createAuthorProfile={createAuthorProfile}
             appAdmins={appAdmins}
             authorProfiles={authorProfiles}
           />
-        </div>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

@@ -233,23 +233,24 @@ export function SpecificOrganizationClientLayout({
           title={organizationByIdData.title}
           titleHref={`/organization/${organizationId}`}
           actions={
-            <div className="flex items-start space-x-2">
-              <SubscriptionDetails />
-              <CreateProjectDialog
-                onConfirm={(name) => {
-                  createTeamProject({
-                    name,
-                    organizationId,
-                  });
-                }}
-                isLoading={isCreatingTeamProject}
-              />
-              <CreateTeamDialog
-                isLoading={isCreatingTeam}
-                onConfirm={onConfirm}
-              />
-
-              <div className="flex flex-col space-y-1 items-end">
+            <div className="flex items-start  ">
+              <div className=" flex items-center space-x-2 pr-4 border-r border-muted-foreground/20 ">
+                <SubscriptionDetails />
+                <CreateProjectDialog
+                  onConfirm={(name) => {
+                    createTeamProject({
+                      name,
+                      organizationId,
+                    });
+                  }}
+                  isLoading={isCreatingTeamProject}
+                />
+                <CreateTeamDialog
+                  isLoading={isCreatingTeam}
+                  onConfirm={onConfirm}
+                />
+              </div>
+              <div className="flex flex-col space-y-1 ml-4 items-end">
                 <Anchor href={`/organization/${organizationId}/settings`}>
                   <Button variant="outline">
                     <SettingsIcon className="mr-2" />

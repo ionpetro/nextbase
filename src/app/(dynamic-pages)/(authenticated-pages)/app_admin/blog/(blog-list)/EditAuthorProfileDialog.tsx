@@ -26,7 +26,7 @@ import {
   SelectValue,
 } from '@/components/ui/Select';
 import { useRouter } from 'next/navigation';
-import Pen from 'lucide-react/dist/esm/icons/pen-tool';
+import Edit from 'lucide-react/dist/esm/icons/edit';
 
 type AuthorProfileFormType = z.infer<typeof authorProfileSchema>;
 type UpdateAuthorPayload = Omit<
@@ -96,8 +96,8 @@ export const EditAuthorProfileDialog = ({
   return (
     <Dialog open={isOpen} onOpenChange={(newIsOpen) => setIsOpen(newIsOpen)}>
       <DialogTrigger asChild>
-        <Button variant="ghost">
-          <Pen />
+        <Button variant="ghost" className="shadow-none hover:none">
+          <Edit className="h-5 w-5" />
         </Button>
       </DialogTrigger>
 
