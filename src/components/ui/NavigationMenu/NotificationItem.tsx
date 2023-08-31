@@ -4,6 +4,7 @@ import { cn } from '@/utils/cn';
 import { readNotification } from '@/utils/supabase/notifications';
 import { useEffect } from 'react';
 import { useInViewRef } from 'rooks';
+import { T } from '../Typography';
 
 type NotificationItemProps = {
   title: string;
@@ -34,10 +35,10 @@ export function NotificationItem({
     <div
       onMouseOver={onHover}
       className={cn(
-        ' flex justify-between items-center w-full text-neutral-900 dark:text-white px-6 border-b border-neutral-300/75 dark:border-neutral-700/75',
+        ' flex justify-between items-center w-full text-gray-900 dark:text-white px-6 border-b border-gray-300/75 dark:border-gray-700/75',
         isRead
-          ? 'bg-neutral-100 dark:bg-neutral-800'
-          : 'bg-white dark:bg-neutral-900'
+          ? 'bg-gray-100/50 dark:bg-gray-800/50'
+          : 'bg-white dark:bg-gray-900'
       )}
     >
       <div className="flex justify-between items-start w-full  pt-1 ">
@@ -45,23 +46,23 @@ export function NotificationItem({
           <img
             src={image}
             alt={title}
-            className="h-14 w-14 rounded-2xl border-2 mr-4 border-neutral-400 dark:border-neutral-600"
+            className="h-14 w-14 rounded-2xl border-2 mr-4"
           />
           <div className="mr-3 mt-1">
-            <p className="text-base font-bold dark:text-white mb-0.5 leading-none">
+            <T.P className=" font-bold dark:text-white mb-0.5 leading-none">
               {title}
-            </p>
-            <p className="text-sm font-medium dark:text-neutral-700 text-neutral-500">
+            </T.P>
+            <T.Small className=" font-medium text-muted-foreground">
               {description}
-            </p>
-            <p className="text-xs mt-1 text-neutral-400 dark:text-neutral-800 font-medium tracking-wide">
+            </T.Small>
+            <T.Subtle className="text-xs mt-0.5 text-gray-400 dark:text-gray-600 font-medium tracking-wide">
               {createdAt}
-            </p>
+            </T.Subtle>
           </div>
         </div>
 
         {isNew && (
-          <div className="flex items-center justify-center h-3 w-3 mt-4 rounded-full bg-red-500"></div>
+          <div className="flex items-center justify-center h-3 w-3 mt-4 rounded-full bg-red-500 dark:bg-red-500"></div>
         )}
       </div>
     </div>

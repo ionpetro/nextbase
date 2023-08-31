@@ -213,19 +213,21 @@ export const Notifications = () => {
       </PopoverTrigger>
 
       {notifications.length ? (
-        <PopoverContent className="mr-12 w-[560px] p-0 rounded-xl overflow-hidden">
+        <PopoverContent className="mr-12 w-[560px] p-0 rounded-xl overflow-hidden bg-white dark:bg-black">
           <div className="border-b-2 px-6 pb-2 shadow-lg">
             <div className="mt-7 mb-3 flex justify-between">
-              <T.H3 className="leading-7 mt-0 ">Notifications</T.H3>
-              <div className="flex text-sm mt-1.5 space-x-1  cursor-pointer font-medium">
+              <T.H3 className="leading-7 mt-0 dark:text-white ">
+                Notifications
+              </T.H3>
+              <div className="flex text-sm mt-2 space-x-1 group cursor-pointer font-medium">
                 {unseenNotificationCount ? (
                   <>
-                    <CheckIcon className="h-5 w-5" />{' '}
+                    <CheckIcon className="h-5 w-5 text-muted-foreground dark:group-hover:text-gray-400" />{' '}
                     <span
                       onClick={() => {
                         readAllNotifications();
                       }}
-                      className="underline underline-offset-4 text-muted-foreground"
+                      className="underline underline-offset-4 text-muted-foreground dark:group-hover:text-gray-400 "
                     >
                       Mark as all read
                     </span>
@@ -236,7 +238,7 @@ export const Notifications = () => {
           </div>
           <div className="flex flex-col items-center mx-auto">
             {isLoading ? (
-              <T.Subtle>Loading...</T.Subtle>
+              <T.Small className="py-4">Loading...</T.Small>
             ) : (
               notifications.map((notification) => {
                 return (
@@ -252,12 +254,12 @@ export const Notifications = () => {
             )}
             {hasNextPage ? (
               isFetchingNextPage ? (
-                <T.Subtle>Loading...</T.Subtle>
+                <T.Subtle className="py-4">Loading...</T.Subtle>
               ) : (
                 <NextPageLoader onMount={fetchNextPage} />
               )
             ) : (
-              <T.Subtle className="py-1 opacity-50">
+              <T.Subtle className="py-3 text-muted-foreground">
                 No more notifications
               </T.Subtle>
             )}
@@ -266,7 +268,7 @@ export const Notifications = () => {
       ) : (
         <PopoverContent className="mr-12 p-0 rounded-xl overflow-hidden">
           <div className="px-6 py-4 shadow-lg">
-            <T.P>No notifications yet.</T.P>
+            <T.P className="text-muted-foreground">No notifications yet.</T.P>
           </div>
         </PopoverContent>
       )}
