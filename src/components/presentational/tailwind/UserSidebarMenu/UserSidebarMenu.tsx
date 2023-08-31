@@ -1,6 +1,6 @@
 import { Anchor } from '@/components/Anchor';
-import AccountsIcon from 'lucide-react/dist/esm/icons/users';
-import SecurityIcon from 'lucide-react/dist/esm/icons/shield';
+import AccountsIcon from 'lucide-react/dist/esm/icons/user';
+import SecurityIcon from 'lucide-react/dist/esm/icons/lock';
 import LogoutIcon from 'lucide-react/dist/esm/icons/log-out';
 import { cn } from '@/utils/cn';
 

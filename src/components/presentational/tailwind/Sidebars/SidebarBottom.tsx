@@ -36,7 +36,7 @@ export const SidebarBottom = ({
                 width="32"
                 height="32"
                 src={avatarUrl}
-                className="w-8 h-8 rounded-full object-cover"
+                className="w-8 h-8 mt-1 rounded-full border dark:border-muted-foreground/40 border-muted-foreground object-cover"
                 alt="User avatar"
               />
               {isExpanded ? (

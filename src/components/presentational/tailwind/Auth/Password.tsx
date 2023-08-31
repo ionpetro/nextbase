@@ -43,7 +43,7 @@ export const Password = ({
               onChange={(event) => setPassword(event.target.value)}
               autoComplete="email"
               required
-              className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+              className="block w-full appearance-none rounded-md border bg-gray-50/10 dark:bg-gray-800/20 h-10 px-3 py-3 placeholder-muted-foreground shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
             />
           </div>
         </div>
@@ -67,7 +67,7 @@ export const Password = ({
               withMaintenanceMode={withMaintenanceMode}
               type="submit"
               className={classNames(
-                'flex w-full justify-center rounded-lg border border-transparent py-3 text-white dark:text-black px-4 text-sm font-medium  shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2',
+                'flex w-full justify-center rounded-lg border border-transparent py-2 text-white dark:text-black px-4 text-sm font-medium  shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2',
                 isLoading
                   ? 'bg-yellow-300 dark:bg-yellow-700 '
                   : 'bg-black dark:bg-white hover:bg-gray-900 dark:hover:bg-gray-100  '

@@ -1,11 +1,14 @@
 import { Anchor } from '@/components/Anchor';
 import { T } from '@/components/ui/Typography';
+import { cn } from '@/utils/cn';
 
 type PageHeadingProps = {
   title: string;
   subTitle?: string;
   actions?: React.ReactNode;
   titleHref?: string;
+  titleClassName?: string;
+  subTitleClassName?: string;
 };
 
 export function PageHeading({
@@ -13,10 +16,14 @@ export function PageHeading({
   subTitle,
   titleHref,
   actions,
+  titleClassName,
+  subTitleClassName,
 }: PageHeadingProps) {
-  const titleElement = <T.H2>{title}</T.H2>;
+  const titleElement = <T.H2 className={cn('', titleClassName)}>{title}</T.H2>;
   const subTitleElement = (
-    <T.P className="text-muted-foreground leading-6">{subTitle}</T.P>
+    <T.P className={cn('text-muted-foreground leading-6', subTitleClassName)}>
+      {subTitle}
+    </T.P>
   );
   const wrappedTitleElement = titleHref ? (
     <Anchor href={titleHref}>{titleElement}</Anchor>

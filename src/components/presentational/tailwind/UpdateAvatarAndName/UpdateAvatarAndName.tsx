@@ -9,6 +9,9 @@ import H3 from '../Text/H3';
 import { Button } from '../Button';
 import { classNames } from '@/utils/classNames';
 import { useLoggedInUserEmail } from '@/hooks/useLoggedInUserEmail';
+import { T } from '@/components/ui/Typography';
+import CameraIcon from 'lucide-react/dist/esm/icons/camera';
+import { Label } from '@/components/ui/Label';
 const MotionImage = motion(Image);
 
 export function UpdateAvatarAndNameBody({
@@ -39,14 +42,13 @@ export function UpdateAvatarAndNameBody({
     email,
   });
   return (
-    <div className="space-y-6 max-w-md">
-      <div className="space-y-2">
-        <H3>Account Settings</H3>
-        <p className="text-sm text-gray-400">
-          Your personal account settings can be changed here. Upload your avatar
-          and manage your other essential information!
-        </p>
-      </div>
+    <div className="space-y-6 max-w-sm">
+      <PageHeading
+        title="Account Settings"
+        titleClassName="text-xl"
+        subTitleClassName="text-base -mt-1"
+        subTitle="Manage your account settings here."
+      />
       <form
         onSubmit={(event) => {
           event.preventDefault();
@@ -55,10 +57,10 @@ export function UpdateAvatarAndNameBody({
       >
         <div className="space-y-4">
           <div className="space-y-2">
-            <p className="text-gray-500 text-sm">Avatar</p>
-            <div className="p-0 m-0">
-              <label
-                className="inline p-0 m-0 cursor-pointer"
+            <T.P>Avatar</T.P>
+            <div className="relative p-0 m-0 group">
+              <Label
+                className="inline p-0 m-0 cursor-pointer text-muted-foreground"
                 htmlFor="file-input"
               >
                 <MotionImage
@@ -69,10 +71,10 @@ export function UpdateAvatarAndNameBody({
                     /* eslint-disable */
                     isNewAvatarImageLoading
                       ? {
-                          duration: 1,
-                          repeat: Infinity,
-                          repeatType: 'reverse',
-                        }
+                        duration: 1,
+                        repeat: Infinity,
+                        repeatType: 'reverse',
+                      }
                       : undefined
                     /* eslint-enable */
                   }
@@ -104,15 +106,20 @@ export function UpdateAvatarAndNameBody({
                   hidden
                   accept="image/*"
                 />
-              </label>
+                <div className="bg-gray-900 group-hover:bg-gray-800  absolute -bottom-[calc(100%-64px)] right-[calc(100%-64px)]  border border-muted-foreground rounded-full p-1">
+                  <CameraIcon className="h-4 w-4 group-hover:fill-white/30 text-white" />
+                </div>
+              </Label>
             </div>
           </div>
           <div className="space-y-2">
-            <p className="text-gray-500 text-sm">Name</p>
+            <Label htmlFor="name" className="text-muted-foreground">
+              Name
+            </Label>
             <div className="flex space-x-2 ">
               <input
                 disabled={isLoading}
-                className="flex-1 shadow appearance-none border rounded w-full py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="block w-full appearance-none rounded-md border bg-gray-50/10 dark:bg-gray-800/20 h-10 px-3 py-3 placeholder-muted-foreground shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
                 id="name"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
@@ -122,14 +129,14 @@ export function UpdateAvatarAndNameBody({
               />
             </div>
           </div>
-          <div className="flex justify-start space-x-2 pt-4">
+          <div className="flex justify-start space-x-2">
             <Button
               withMaintenanceMode
               className={classNames(
-                'flex w-full justify-center rounded border border-transparent py-2 px-4 text-sm font-medium  shadow-sm focus:outline-none focus:ring-2  focus:ring-offset-2',
+                'flex w-full justify-center rounded-lg border border-transparent py-2 text-white dark:text-black px-4 text-sm font-medium  shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2',
                 isLoading
-                  ? 'bg-yellow-300  focus:ring-yellow-500 text-black'
-                  : 'bg-blue-500 focus:ring-blue-500 hover:bg-blue-600  text-white'
+                  ? 'bg-yellow-300 dark:bg-yellow-700 '
+                  : 'bg-black dark:bg-white hover:bg-gray-900 dark:hover:bg-gray-100  '
               )}
               type="submit"
               disabled={isLoading}

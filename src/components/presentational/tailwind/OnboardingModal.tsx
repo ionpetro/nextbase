@@ -51,7 +51,7 @@ export function OnboardingModal({
                 <Button
                     variant="ghost"
                     size="sm"
-                    className="h-5 w-5 px-0 text-muted-foreground"
+                    className="h-5 w-5 px-0 text-muted-foreground focus:ring-none"
                 >
                     <InfoIcon />
                 </Button>
