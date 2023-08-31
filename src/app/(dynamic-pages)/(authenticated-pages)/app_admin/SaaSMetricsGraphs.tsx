@@ -9,6 +9,7 @@ import {
   LineChart,
   DonutChart,
 } from '@tremor/react';
+import { GraphContainer } from '@/components/presentational/tailwind/GraphContainer';
 
 const mrrBarListData = [
   {
@@ -62,16 +63,13 @@ export function SaaSMetricsGraphs({
   }>;
 }) {
   return (
-    <div className="flex flex-col space-y-2 ">
+    <div className="flex flex-col space-y-2 mt-12 ">
       <p className="text-2xl font-bold mb-2">Overview</p>
-      <div className="grid grid-cols-2 grid-flow-row auto-rows-max w-full gap-6 ">
-        <Card className="rounded-xl">
-          <Title className="text-xl font-bold text-slate-900">
-            Monthly Churn Rate
-          </Title>
-          <p className="text-base text-slate-500">
-            Monthly churn rate vs Organization Count
-          </p>
+      <div className="grid grid-cols-2 grid-flow-row auto-rows-max w-full gap-10 ">
+        <GraphContainer
+          title="Monthly Churn Rate"
+          subTitle="Monthly recurring revenue"
+        >
           <AreaChart
             className="h-72 mt-4"
             data={mrrData}
@@ -79,12 +77,11 @@ export function SaaSMetricsGraphs({
             categories={['mrr']}
             colors={['blue']}
           />
-        </Card>
-        <Card className="rounded-xl">
-          <Title className="text-xl font-bold text-slate-900">
-            MRR Analytics
-          </Title>
-          <p className="text-base text-slate-500">Monthly recurring revenue</p>
+        </GraphContainer>
+        <GraphContainer
+          title="MRR Analytics"
+          subTitle="Monthly churn rate vs Organization Count"
+        >
           <DonutChart
             className="mt-6"
             data={mrrData.map((item) => {
@@ -112,19 +109,18 @@ export function SaaSMetricsGraphs({
               'pink',
             ]}
           />
-        </Card>
+        </GraphContainer>
       </div>
 
       <div>
         <p className="text-2xl mt-10 mb-2 font-bold">All Stats</p>
       </div>
 
-      <div className="grid grid-cols-3 grid-flow-row auto-rows-max gap-6">
-        <Card className="rounded-xl">
-          <Title className="text-xl font-bold text-slate-900">
-            Organizations by Month
-          </Title>
-          <p className="text-base text-slate-500">Number of organizations</p>
+      <div className="grid grid-cols-3 grid-flow-row auto-rows-max gap-10">
+        <GraphContainer
+          title="Organizations by month"
+          subTitle="Number of organizations"
+        >
           <BarChart
             className="h-72 mt-4"
             data={mrrData}
@@ -132,12 +128,8 @@ export function SaaSMetricsGraphs({
             categories={['mrr']}
             colors={['blue']}
           />
-        </Card>
-        <Card className="rounded-xl">
-          <Title className="text-xl font-bold text-slate-900">
-            Projects by Month
-          </Title>
-          <p className="text-base text-slate-500">Number of projects</p>
+        </GraphContainer>
+        <GraphContainer title="Projects by Month" subTitle="Number of projects">
           <LineChart
             className="h-72 mt-4"
             data={mrrData}
@@ -145,14 +137,10 @@ export function SaaSMetricsGraphs({
             categories={['mrr']}
             colors={['blue']}
           />
-        </Card>
-        <Card className="rounded-xl">
-          <Title className="text-xl font-bold text-slate-900">
-            Users by Month
-          </Title>
-          <p className="text-base text-slate-500">Number of users</p>
+        </GraphContainer>
+        <GraphContainer title="User by month" subTitle="Number of users">
           <BarList data={mrrBarListData} className="mt-4" />
-        </Card>
+        </GraphContainer>
       </div>
     </div>
   );

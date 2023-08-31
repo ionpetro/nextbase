@@ -5,9 +5,11 @@ import InternalNavbar from '@/components/ui/NavigationMenu/InternalNavbar';
 
 export default async function Layout({ children }: { children: ReactNode }) {
   return (
-    <div className=" flex-1 h-auto w-full overflow-auto">
+    <>
       <InternalNavbar />
-      <div className="px-12 space-y-10">{children}</div>
-    </div>
+      <div className="relative flex-1 h-auto w-full overflow-auto">
+        <div className="px-12 space-y-6">{children}</div>
+      </div>
+    </>
   );
 }

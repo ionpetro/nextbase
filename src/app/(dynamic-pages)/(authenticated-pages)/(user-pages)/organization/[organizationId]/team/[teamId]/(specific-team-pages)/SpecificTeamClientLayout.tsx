@@ -8,6 +8,7 @@ import Check from 'lucide-react/dist/esm/icons/check';
 import Hammer from 'lucide-react/dist/esm/icons/hammer';
 import ThumbsUp from 'lucide-react/dist/esm/icons/thumbs-up';
 import Timer from 'lucide-react/dist/esm/icons/timer';
+import moment from 'moment';
 import PageHeadingWithActions from '@/components/ui/Headings/PageHeadingWithActions';
 import { CreateProjectDialog } from '@/components/presentational/tailwind/CreateProjectDialog';
 import { Button } from '@/components/ui/Button';
@@ -20,6 +21,8 @@ import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
+import Overline from '@/components/presentational/tailwind/Text/Overline';
+import { T } from '@/components/ui/Typography';
 const TeamGraphs = dynamic(
   () => import('../../TeamGraphs').then((mod) => mod.TeamGraphs),
   {
@@ -101,29 +104,28 @@ export const SpecificTeamClientLayout = ({
     ];
   }, [organizationId, teamId]);
   return (
-    <>
-      <div className="space-y-10">
-        <div className="space-x-6">
-          <span className="text-base py-2 font-[600] text-slate-500">
+    <div className="space-y-8">
+      <div className="space-y-0">
+        <div className="flex mb-4 space-x-4">
+          <Overline className="text-gray-500 dark:text-gray-600">
             <Anchor href="/dashboard">Dashboard</Anchor>
-          </span>
-          <span className="text-base  py-2 font-[600] text-slate-500">/</span>
-          <span className="text-base py-2 font-[600] text-slate-500">
+          </Overline>
+          <Overline className="text-gray-500 dark:text-gray-600">/</Overline>
+          <Overline className="text-gray-500 dark:text-gray-600">
             <Anchor href={`/organization/${organizationByIdData.id}`}>
               {organizationByIdData.title}
             </Anchor>
-          </span>
-          <span className="text-base  py-2 font-[600] text-slate-500">/</span>
-          <span className="text-base py-2 bg-blue-50 rounded-lg px-4 font-[700] text-blue-600">
+          </Overline>
+          <Overline className="text-gray-500 dark:text-gray-600">/</Overline>
+          <Overline className="text-gray-800 dark:text-gray-400 font-bold underline-offset-4 underline">
             {teamByIdData.name}
-          </span>
+          </Overline>
         </div>
-        <div className="space-y-6">
+        <div className="space-y-8">
           <PageHeading
             title={teamByIdData.name}
-            subTitle="Manage your team and projects here."
             actions={
-              <div className="mt-3 text-gray-400 flex items-center text-3xl space-x-2">
+              <div className=" text-gray-400 flex items-start text-3xl space-x-2">
                 <CreateProjectDialog
                   onConfirm={(name) => {
                     createTeamProject({
@@ -132,22 +134,27 @@ export const SpecificTeamClientLayout = ({
                   }}
                   isLoading={isCreatingTeamProject}
                 />
-                <Anchor
-                  href={`/organization/${organizationId}/team//${teamId}/settings`}
-                >
-                  <Button variant={'outline'}>
-                    <SettingsIcon className="text-slate-600 mr-2" />
-                    View Team Settings
-                  </Button>
-                </Anchor>
+                <div className="flex flex-col space-y-1 ml-4 items-end">
+                  <Anchor
+                    href={`/organization/${organizationId}/team//${teamId}/settings`}
+                  >
+                    <Button variant={'outline'}>
+                      <SettingsIcon className="text-gray-600 mr-2" />
+                      View Team Settings
+                    </Button>
+                  </Anchor>
+                  <T.Subtle>
+                    Created {moment(teamByIdData.created_at).fromNow()}
+                  </T.Subtle>
+                </div>
               </div>
             }
           />
           <TabsNavigation tabs={tabs} />
           <div>{children}</div>
+          <TeamGraphs />
         </div>
       </div>
-      <TeamGraphs />
-    </>
+    </div>
   );
 };

@@ -33,26 +33,28 @@ export default function InternalNavbar() {
   }, []);
 
   return (
-    <div
-      className={cn(
-        'h-full flex mx-auto px-12 border-b dark:border-gray-700/50 py-5 w-full mb-8 justify-center items-center'
-      )}
-    >
-      <div className={cn('hidden lg:block', 'relative ')}>
-        <Link
-          href="/dashboard"
-          className="flex items-center text-lg font-medium transition-colors hover:text-foreground/60 sm:text-sm"
-          aria-label="Home page"
-        >
-          <Home className="h-5 w-5 mr-2" /> Dashboard
-        </Link>
+    <header className="sticky top-0 w-full z-10 dark:bg-[#111316]/90 bg-white/90 backdrop-blur">
+      <div
+        className={cn(
+          'h-full flex mx-auto px-12 border-b dark:border-gray-700/50 py-5 w-full mb-8 justify-center items-center'
+        )}
+      >
+        <div className={cn('hidden lg:block', 'relative ')}>
+          <Link
+            href="/dashboard"
+            className="flex items-center text-lg font-medium transition-colors hover:text-foreground/60 sm:text-sm"
+            aria-label="Home page"
+          >
+            <Home className="h-5 w-5 mr-2" /> Dashboard
+          </Link>
+        </div>
+        <div className="relative flex basis-0 items-center justify-end space-x-2 sm:gap-3 md:flex-grow">
+          <ThemeToggle />
+          <div className="w-px h-5 mx-4 bg-muted-foreground" />
+          <FeatureViewModal />
+          <Notifications />
+        </div>
       </div>
-      <div className="relative flex basis-0 items-center justify-end space-x-2 sm:gap-3 md:flex-grow">
-        <ThemeToggle />
-        <div className="w-px h-5 mx-4 bg-muted-foreground" />
-        <FeatureViewModal />
-        <Notifications />
-      </div>
-    </div>
+    </header>
   );
 }

@@ -21,6 +21,7 @@ import {
 
 // convert the above organizationgraphs import to next dynamic
 import dynamic from 'next/dynamic';
+import { T } from '@/components/ui/Typography';
 const OrganizationGraphs = dynamic(
   () => import('./OrganizationGraphs').then((mod) => mod.OrganizationGraphs),
   {

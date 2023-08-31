@@ -5,11 +5,9 @@ import { useUser } from '@supabase/auth-helpers-react';
 import { SelectSeparator } from '@/components/ui/Select';
 import Home from 'lucide-react/dist/esm/icons/home';
 import { AdminSidebarLink } from './AdminSidebarLink';
-import ChevronRightIcon from 'lucide-react/dist/esm/icons/chevron-right';
-import ChevronLeftIcon from 'lucide-react/dist/esm/icons/chevron-left';
+import FileLineChart from 'lucide-react/dist/esm/icons/file-line-chart';
 import BriefcaseIcon from 'lucide-react/dist/esm/icons/briefcase';
 import PenToolIcon from 'lucide-react/dist/esm/icons/pen-tool';
-import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
 import UsersIcon from 'lucide-react/dist/esm/icons/users';
 import FeedbackIcon from 'lucide-react/dist/esm/icons/help-circle';
 import BookIcon from 'lucide-react/dist/esm/icons/book';
@@ -45,7 +43,7 @@ function Links({ isExpanded, toggleIsExpanded }: LinksProps) {
           />
           <AdminSidebarLink
             href="/app_admin"
-            icon={<SettingsIcon />}
+            icon={<FileLineChart />}
             label="Application Settings"
             isExpanded={isExpanded}
           />

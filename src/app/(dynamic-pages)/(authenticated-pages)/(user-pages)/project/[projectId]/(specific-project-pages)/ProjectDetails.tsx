@@ -2,6 +2,15 @@
 
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 import { T } from '@/components/ui/Typography';
+import {
+  approveProjectAction,
+  rejectProjectAction,
+  submitProjectForApprovalAction,
+  markProjectAsCompletedAction,
+  addProjectCommentAction,
+  getProjectCommentsAction,
+} from './action';
+import { ApprovalControls } from './ApprovalControls';
 import { useProjectContext } from '@/contexts/ProjectContext';
 
 export function ProjectHeader() {
@@ -9,7 +18,14 @@ export function ProjectHeader() {
   return (
     <PageHeading
       title={projectByIdData.name}
-      subTitle="This is your project page. You should create components related to your business use case here."
+      actions={
+        <ApprovalControls
+          approveProjectAction={approveProjectAction}
+          rejectProjectAction={rejectProjectAction}
+          submitProjectForApprovalAction={submitProjectForApprovalAction}
+          markProjectAsCompletedAction={markProjectAsCompletedAction}
+        />
+      }
     />
   );
 }

@@ -212,19 +212,19 @@ export function SpecificOrganizationClientLayout({
   return (
     <div className="space-y-8">
       <div className="space-y-0">
-        <div>
+        <div className="mb-4">
           {isSettingsPath ? (
             <Anchor
               href={`/organization/${organizationId}`}
-              className="group space-x-1 mb-4 flex items-center"
+              className="group space-x-1 flex items-center"
             >
-              <ChevronLeft className="relative text-gray-500 h-5 w-5 hover:-translate-x-10 group-hover:text-gray-800 group-hover:dark:text-gray-400 dark:text-gray-600 -top-0.5" />
+              <ChevronLeft className="relative text-gray-500 h-4 w-4 hover:-translate-x-10 group-hover:text-gray-800 group-hover:dark:text-gray-400 dark:text-gray-600" />
               <Overline className="text-gray-500 group-hover:text-gray-800 dark:text-gray-600 group-hover:dark:text-gray-400">
                 Back to Organization
               </Overline>
             </Anchor>
           ) : (
-            <Overline className="text-gray-500 dark:text-gray-600 mb-4">
+            <Overline className="text-gray-500 dark:text-gray-600">
               Organization
             </Overline>
           )}

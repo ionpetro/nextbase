@@ -96,9 +96,9 @@ export function UserSidebar({
           onClick={() => toggleIsExpanded(!isExpanded)}
         >
           {isExpanded ? (
-            <PanelLeftClose className="h-6 w-6" />
+            <PanelLeftClose className="h-6 w-6 z-50" />
           ) : (
-            <PanelLeftOpen className="h-6 w-6" />
+            <PanelLeftOpen className="h-6 w-6 z-50" />
           )}
         </div>
         <SidebarBottom

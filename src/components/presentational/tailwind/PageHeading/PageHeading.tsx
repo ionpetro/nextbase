@@ -29,7 +29,7 @@ export function PageHeading({
   return (
     <div className="md:flex md:items-start md:justify-between">
       <div className="min-w-0 flex-1">{wrappedTitleElement}</div>
-      <div className="mt-2">{actions}</div>
+      <div>{actions}</div>
     </div>
   );
 }

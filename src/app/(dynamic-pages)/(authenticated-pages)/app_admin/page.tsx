@@ -252,25 +252,25 @@ export default async function AdminPanel() {
       <div>
         <p className="text-2xl mt-10 mb-2 font-bold">Quick Stats</p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white rounded-lg shadow-lg p-16 border border-slate-100 flex items-center flex-col-reverse">
-          <T.Subtle>Current MRR</T.Subtle>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div className="bg-gray-200/30 dark:bg-gray-800/40 rounded-xl gap-2 p-16 flex items-center flex-col-reverse">
+          <T.P>Current MRR</T.P>
           <T.H1>{`$${currentMRR}`}</T.H1>
         </div>
-        <div className="bg-white rounded-lg shadow-lg p-16 border border-slate-100 flex items-center flex-col-reverse">
-          <T.Subtle>Total Users</T.Subtle>
+        <div className="bg-gray-200/30 dark:bg-gray-800/40 rounded-xl gap-2 p-16 flex items-center flex-col-reverse">
+          <T.P>Total Users</T.P>
           <T.H1>{totalUserCount}</T.H1>
         </div>
-        <div className="bg-white rounded-lg shadow-lg p-16 border border-slate-100 flex items-center flex-col-reverse">
-          <T.Subtle>Total Organizations</T.Subtle>
+        <div className="bg-gray-200/30 dark:bg-gray-800/40 rounded-xl gap-2 p-16 flex items-center flex-col-reverse">
+          <T.P>Total Organizations</T.P>
           <T.H1>{totalOrganizationsCount}</T.H1>
         </div>
-        <div className="bg-white rounded-lg shadow-lg p-16 border border-slate-100 flex items-center flex-col-reverse">
-          <T.Subtle>Total Projects</T.Subtle>
+        <div className="bg-gray-200/30 dark:bg-gray-800/40 rounded-xl gap-2 p-16 flex items-center flex-col-reverse">
+          <T.P>Total Projects</T.P>
           <T.H1>{totalProjectsCount}</T.H1>
         </div>
-        <div className="bg-white rounded-lg shadow-lg p-16 border border-slate-100 flex items-center flex-col-reverse">
-          <T.Subtle>Active Users (30 days)</T.Subtle>
+        <div className="bg-gray-200/30 dark:bg-gray-800/40 rounded-xl gap-2 p-16 flex items-center flex-col-reverse">
+          <T.P>Active Users (30 days)</T.P>
           <T.H1>{activeUsers}</T.H1>
         </div>
       </div>

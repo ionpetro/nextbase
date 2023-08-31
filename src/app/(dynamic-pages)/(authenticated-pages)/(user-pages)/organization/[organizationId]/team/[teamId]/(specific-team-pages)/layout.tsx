@@ -7,10 +7,8 @@ import { createProjectAction } from './actions';
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <div className="space-y-8 pt-4 max-w-7xl px-8">
-      <SpecificTeamClientLayout createProjectAction={createProjectAction}>
-        {children}
-      </SpecificTeamClientLayout>
-    </div>
+    <SpecificTeamClientLayout createProjectAction={createProjectAction}>
+      {children}
+    </SpecificTeamClientLayout>
   );
 }

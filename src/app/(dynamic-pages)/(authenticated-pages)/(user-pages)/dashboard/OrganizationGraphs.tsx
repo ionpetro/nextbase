@@ -1,3 +1,5 @@
+import { GraphContainer } from '@/components/presentational/tailwind/GraphContainer';
+import { T } from '@/components/ui/Typography';
 import {
   Card,
   Title,
@@ -107,90 +109,78 @@ const valueFormatter = (number: number) =>
 
 export function OrganizationGraphs() {
   return (
-    <div className="w-full grid grid-cols-2 grid-flow-row auto-rows-max gap-6">
-      <Card className="rounded-lg">
-        <Title className="text-xl font-bold text-slate-900">
-          Monthly Churn Rate
-        </Title>
-        <p className="text-base text-slate-500">
-          Monthly churn rate vs Organization Count
-        </p>
-        <AreaChart
-          className="h-72 mt-4"
-          data={chartdata}
-          index="date"
-          categories={['SemiAnalysis', 'The Pragmatic Engineer']}
-          colors={['cyan', 'orange']}
-          valueFormatter={dataFormatter}
-        />
-      </Card>
-      <Card className="rounded-lg">
-        <Title className="text-xl font-bold text-slate-900">
-          MRR Analytics
-        </Title>
-        <p className="text-base text-slate-500">Monthly recurring revenue</p>
-        <DonutChart
-          className="mt-6"
-          data={chartdata}
-          index="date"
-          category="SemiAnalysis"
-          colors={[
-            'slate',
-            'violet',
-            'indigo',
-            'rose',
-            'cyan',
-            'amber',
-            'green',
-            'orange',
-            'pink',
-          ]}
-          valueFormatter={valueFormatter}
-        />
-      </Card>
-      <Card className="rounded-lg">
-        <Title className="text-xl font-bold text-slate-900">
-          Organizations by Month
-        </Title>
-        <p className="text-base text-slate-500">Number of organizations</p>
-        <BarChart
-          className="mt-6"
-          data={chartdata}
-          index="date"
-          categories={['SemiAnalysis', 'The Pragmatic Engineer']}
-          colors={['teal', 'blue']}
-          valueFormatter={dataFormatter}
-          yAxisWidth={48}
-        />
-      </Card>
-      <Card className="rounded-lg">
-        <Title className="text-xl font-bold text-slate-900">
-          Projects by Month
-        </Title>
-        <p className="text-base text-slate-500">Number of projects</p>
-        <LineChart
-          className="h-72 mt-4"
-          data={chartdata}
-          index="date"
-          categories={['SemiAnalysis', 'The Pragmatic Engineer']}
-          colors={['cyan', 'orange']}
-        />
-      </Card>
-      <Card className="rounded-lg col-span-full">
-        <Title className="text-xl font-bold text-slate-900">
-          Users by Month
-        </Title>
-        <p className="text-base text-slate-500">Number of users</p>
-        <Flex className="mt-4">
-          <Text>
-            <Bold>Source</Bold>
-          </Text>
-          <Text>
-            <Bold>Visits</Bold>
-          </Text>
-        </Flex>
-        <BarList data={barListData} className="mt-2" />
-      </Card>
-    </div>
+    <>
+      <div className="h-2 mt-10">
+        <T.H3 className="leading-none">Overview</T.H3>
+      </div>
+      <div className="w-full grid grid-cols-2 grid-flow-row auto-rows-max mt-10 gap-10">
+        <GraphContainer
+          title="Monthly Churn Rate"
+          subTitle="Monthly churn rate vs Organization Count"
+        >
+          <AreaChart
+            className="h-72 mt-4"
+            data={chartdata}
+            index="date"
+            categories={['SemiAnalysis', 'The Pragmatic Engineer']}
+            colors={['cyan', 'orange']}
+            valueFormatter={dataFormatter}
+          />
+        </GraphContainer>
+        <GraphContainer
+          title="Organizations by Month"
+          subTitle="Number of organizations"
+        >
+          <BarChart
+            className="mt-6"
+            data={chartdata}
+            index="date"
+            categories={['SemiAnalysis', 'The Pragmatic Engineer']}
+            colors={['teal', 'blue']}
+            valueFormatter={dataFormatter}
+            yAxisWidth={48}
+          />
+        </GraphContainer>
+        <GraphContainer
+          title="MRR Analytics"
+          subTitle="Monthly recurring revenue"
+        >
+          <DonutChart
+            className="mt-12"
+            data={chartdata}
+            index="date"
+            category="SemiAnalysis"
+            colors={[
+              'blue',
+              'violet',
+              'indigo',
+              'rose',
+              'cyan',
+              'amber',
+              'green',
+              'orange',
+              'pink',
+            ]}
+            valueFormatter={valueFormatter}
+          />
+        </GraphContainer>
+        <GraphContainer title="Projects by Month" subTitle="Number of projects">
+          <LineChart
+            className="h-72 mt-4"
+            data={chartdata}
+            index="date"
+            categories={['SemiAnalysis', 'The Pragmatic Engineer']}
+            colors={['cyan', 'orange']}
+          />
+        </GraphContainer>
+        <GraphContainer
+          title="Users by Month"
+          subTitle="Number of user"
+          classname="col-span-2"
+        >
+          <BarList data={barListData} className="mt-2" />
+        </GraphContainer>
+      </div>
+    </>
   );
 }
