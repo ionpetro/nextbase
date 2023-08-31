@@ -62,7 +62,7 @@ export function CreateProjectDialog({
                   setProjectTitle(event.target.value);
                 }}
                 required
-                className="mt-1.5 shadow appearance-none border h-11 rounded-lg w-full py-2 px-3 focus:ring-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-base"
+                className="mt-1.5 shadow appearance-none border h-11 rounded-lg w-full py-2 px-3 focus:ring-0 text-gray-700 dark:text-gray-400 leading-tight focus:outline-none focus:shadow-outline text-base"
                 id="name"
                 type="text"
                 placeholder="Project Name"

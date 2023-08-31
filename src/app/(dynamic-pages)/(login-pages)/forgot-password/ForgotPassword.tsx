@@ -1,5 +1,6 @@
 'use client';
 import { Email } from '@/components/presentational/tailwind/Auth/Email';
+import { T } from '@/components/ui/Typography';
 import { useResetPassword } from '@/utils/react-query-hooks';
 import { useState } from 'react';
 
@@ -16,10 +17,10 @@ export function ForgotPassword() {
       <div className="space-y-8 ">
         {/* <Auth providers={['twitter']} supabaseClient={supabase} /> */}
         <div className="flex flex-col items-start gap-0 w-[320px]">
-          <p className="text-xl font-[700]">Forgot Password</p>
-          <p className="text-base text-left font-[400]">
+          <T.H4>Forgot Password</T.H4>
+          <T.P className="text-muted-foreground">
             Enter your email to recieve a Magic Link to reset your password.
-          </p>
+          </T.P>
         </div>
 
         <Email

@@ -1,7 +1,9 @@
 import { Anchor } from '@/components/Anchor';
+import { classNames } from '@/utils/classNames';
 import { PropsOf } from '@headlessui/react/dist/types';
 import { useState } from 'react';
 import { Button } from '../Button';
+import { Label } from '@/components/ui/Label';
 
 export const EmailAndPassword = ({
   onSubmit,
@@ -28,12 +30,9 @@ export const EmailAndPassword = ({
     >
       <div className="space-y-4">
         <div>
-          <label
-            htmlFor="email"
-            className="block text-sm font-medium text-gray-700"
-          >
+          <Label htmlFor="email" className="text-muted-foreground">
             Email address
-          </label>
+          </Label>
           <div className="mt-1">
             <input
               id={`${view}-email`}
@@ -41,20 +40,18 @@ export const EmailAndPassword = ({
               type="email"
               disabled={isLoading}
               value={email}
+              placeholder="placeholder@email.com"
               onChange={(event) => setEmail(event.target.value)}
               autoComplete={'email'}
               required
-              className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+              className="block w-full appearance-none rounded-md border bg-gray-50/10 dark:bg-gray-800/20 h-10 px-3 py-3 placeholder-muted-foreground shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
             />
           </div>
         </div>
         <div className="space-y-1">
-          <label
-            htmlFor="password"
-            className="block text-sm font-medium text-gray-700"
-          >
+          <Label htmlFor="password" className="text-muted-foreground">
             Password
-          </label>
+          </Label>
           <div className="mt-1">
             <input
               id={`${view}-password`}
@@ -62,12 +59,13 @@ export const EmailAndPassword = ({
               type="password"
               disabled={isLoading}
               value={password}
+              placeholder="Type your password"
               onChange={(event) => setPassword(event.target.value)}
               autoComplete={
                 view === 'sign-in' ? 'current-password' : 'new-password'
               }
               required
-              className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+              className="block w-full appearance-none rounded-md border bg-gray-50/10 dark:bg-gray-800/20 h-10 px-3 py-3 placeholder-muted-foreground shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
             />
           </div>
         </div>
@@ -77,7 +75,7 @@ export const EmailAndPassword = ({
             <div className="text-sm">
               <Anchor
                 href="/sign-up"
-                className="font-medium text-blue-600 hover:text-blue-500"
+                className="font-medium text-blue-600 dark:text-blue-400 hover:text-blue-500"
               >
                 Sign up instead?
               </Anchor>
@@ -86,7 +84,7 @@ export const EmailAndPassword = ({
             <div className="text-sm">
               <Anchor
                 href="/login"
-                className="font-medium text-blue-600 hover:text-blue-500"
+                className="font-medium text-blue-600 dark:text-blue-400 hover:text-blue-500"
               >
                 Login instead?
               </Anchor>
@@ -97,7 +95,7 @@ export const EmailAndPassword = ({
             <div className="text-sm">
               <Anchor
                 href="/forgot-password"
-                className="font-medium text-gray-400 hover:text-gray-700"
+                className="font-medium text-muted-foreground dark:hover:text-gray-600"
               >
                 Forgot your password?
               </Anchor>
@@ -110,7 +108,12 @@ export const EmailAndPassword = ({
               disabled
               type="submit"
               withMaintenanceMode={withMaintenanceMode}
-              className="flex w-full justify-center rounded border border-transparent cursor-not-allowed bg-yellow-300 py-2 px-4 text-sm font-medium text-black shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2"
+              className={classNames(
+                'flex w-full justify-center rounded-lg border border-transparent py-3 text-white dark:text-black px-4 text-sm font-medium  shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2',
+                isLoading
+                  ? 'bg-yellow-300 dark:bg-yellow-700 '
+                  : 'bg-black dark:bg-white hover:bg-gray-900 dark:hover:bg-gray-100  '
+              )}
             >
               Loading...
             </Button>
@@ -118,7 +121,12 @@ export const EmailAndPassword = ({
             <Button
               type="submit"
               withMaintenanceMode={withMaintenanceMode}
-              className="flex w-full justify-center rounded border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              className={classNames(
+                'flex w-full justify-center rounded-lg border border-transparent py-2 text-white dark:text-black px-4 text-sm font-medium  shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2',
+                isLoading
+                  ? 'bg-yellow-300 dark:bg-yellow-700 '
+                  : 'bg-black dark:bg-white hover:bg-gray-900 dark:hover:bg-gray-100  '
+              )}
             >
               {view === 'sign-in' ? 'Login' : 'Sign up'}
             </Button>

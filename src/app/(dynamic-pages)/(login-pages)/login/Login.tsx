@@ -9,6 +9,7 @@ import {
 } from '@/utils/react-query-hooks';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { T } from '@/components/ui/Typography';
 
 export function Login() {
   const router = useRouter();
@@ -32,10 +33,10 @@ export function Login() {
       <div className="space-y-8 ">
         {/* <Auth providers={['twitter']} supabaseClient={supabase} /> */}
         <div className="flex flex-col items-start gap-0 w-[320px]">
-          <p className="text-xl font-[700]">Login to Nextbase</p>
-          <p className="text-base text-left font-[400]">
+          <T.H4 className="leading-7">Login to Nextbase</T.H4>
+          <T.P className="text-base text-left text-muted-foreground">
             Login with the account you used to signup.
-          </p>
+          </T.P>
         </div>
         <RenderProviders
           providers={['google', 'github', 'twitter']}
