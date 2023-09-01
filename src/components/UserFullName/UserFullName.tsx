@@ -14,6 +14,6 @@ export const UserFullName = ({ userId }: { userId: string }) => {
   return isLoading ? (
     <Skeleton className="h-[12px] w-[90px] rounded-md" />
   ) : (
-    <T.Subtle>{userFullName}</T.Subtle>
+    <T.Subtle className="text-xs">{userFullName}</T.Subtle>
   );
 };

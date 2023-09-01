@@ -86,18 +86,16 @@ export function ClientAdminFeedbackListPage({
       {/* Filter and Search */}
       <div className="flex space-x-3">
         <div className="flex space-x-3">
-          <div className="max-w-sm flex-1  items-center">
-            <div>
-              <input
-                type="text"
-                name="text"
-                id="text"
-                className="block px-3 py-2 appearance-none w-full rounded-md border bg-transparent h-10 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                placeholder="Search"
-                value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
-              />
-            </div>
+          <div className="max-w-md flex-1  items-center">
+            <input
+              type="text"
+              name="text"
+              id="text"
+              className="block px-3 py-2 appearance-none w-full rounded-md bg-gray-200/50 dark:bg-gray-700/50 h-10 shadow-sm text-gray-600"
+              placeholder="Search"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+            />
           </div>
         </div>
         {/* Fitlers only */}

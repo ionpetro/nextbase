@@ -1,6 +1,8 @@
 'use client';
 
 import { Button } from '@/components/ui/Button';
+import { Textarea } from '@/components/ui/Textarea';
+import { T } from '@/components/ui/Typography';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
@@ -55,16 +57,17 @@ export function AddComment({
 
   return (
     <div className="space-y-2 mb-12">
-      <p className="text-base font-[600] text-black ">Your Response</p>
-      <textarea
+      <T.P className="font-[600] text-muted-foreground">Your Response</T.P>
+      <Textarea
         value={content}
         onChange={(e) => setContent(e.target.value)}
         placeholder="Write your Response here"
-        className="rounded-lg w-full h-[224px] p-3 border b-slate-300"
+        className=" w-full h-[224px] b-gray-300 bg-white placeholder:text-gray-500 dark:placeholder:text-gray-400 dark:bg-gray-700/50 dark:text-muted-foreground text-gray-700 text-base p-4 rounded-lg"
       />{' '}
-      <div className="flex space-x-2 justify-end">
+      <div className="flex space-x-2 mt-10 justify-end">
         <Button
           variant="outline"
+          size="default"
           onClick={() => {
             setContent('');
           }}

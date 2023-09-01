@@ -17,6 +17,7 @@ import Image from 'next/image';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
+import { Textarea } from '@/components/ui/Textarea';
 
 function UpdateType({
   feedbackId,
@@ -249,12 +250,12 @@ function AddComment({
 
   return (
     <div className="space-y-2 mb-12">
-      <p className="text-base font-[600] text-black ">Your Response</p>
-      <textarea
+      <T.P className="text-base font-[600] ">Your Response</T.P>
+      <Textarea
         value={content}
         onChange={(e) => setContent(e.target.value)}
         placeholder="Write your Response here"
-        className="rounded-lg w-full h-[224px] p-3 border b-slate-300"
+        className="rounded-lg w-full h-[224px] p-3 border b-gray-300"
       />{' '}
       <div className="flex space-x-2 justify-end">
         <Button
@@ -433,17 +434,19 @@ function FeedbackComponent({
     <div className="flex items-start space-x-4">
       <span className="flex space-x-2 items-center">
         <Image
-          className="rounded-full border border-slate-500 h-[24px] w-[24px]"
+          className="rounded-full border border-gray-500 h-[24px] w-[24px]"
           alt={userFullName}
           src={getPublicUserAvatarUrl(userData.avatar_url)}
-          height={24}
-          width={24}
+          height={40}
+          width={40}
         />
       </span>
       <div className="w-[560px] space-y-2">
         <div>
-          <p className="text-base font-[600]">{userFullName}</p>
-          <p className="text-base font-[500] text-slate-600">{comment}</p>
+          <T.Small className="text-muted-foreground font-[600]">
+            {userFullName}
+          </T.Small>
+          <T.P className=" text-black dark:text-white">{comment}</T.P>
         </div>
       </div>
     </div>
@@ -513,14 +516,14 @@ export default function ClientAdminFeedbackItemPage({
   return (
     <>
       <div className="space-x-6">
-        <span className="text-base py-2 font-[600] text-slate-500">
+        <span className="text-base py-2 font-[600] text-gray-500">
           <Anchor href="/app_admin">Application Admin Panel</Anchor>
         </span>
-        <span className="text-base  py-2 font-[600] text-slate-500">/</span>
-        <span className="text-base py-2 font-[600] text-slate-500">
+        <span className="text-base  py-2 font-[600] text-gray-500">/</span>
+        <span className="text-base py-2 font-[600] text-gray-500">
           <Anchor href="/app_admin/feedback">All Feedback</Anchor>
         </span>
-        <span className="text-base  py-2 font-[600] text-slate-500">/</span>
+        <span className="text-base  py-2 font-[600] text-gray-500">/</span>
         <span className="text-base py-2 bg-blue-50 rounded-lg px-4 font-[700] text-blue-600">
           User's Feedback
         </span>
@@ -587,7 +590,7 @@ export default function ClientAdminFeedbackItemPage({
             />
           </div>
         </div>
-        <div className="w-full bg-slate-100  space-y-6 border px-6 p-4 pb-8 b-slate-300 overflow-hidden rounded-xl ">
+        <div className="w-full bg-gray-100  space-y-6 border px-6 p-4 pb-8 b-gray-300 overflow-hidden rounded-xl ">
           {/* Feedback Conversation */}
           <CommentList
             getUserProfileAction={getUserProfileAction}
@@ -597,7 +600,7 @@ export default function ClientAdminFeedbackItemPage({
           {/* Feedback Text Area for Admin */}
 
           {feedbackThread.status === 'closed' ||
-          feedbackThread.status === 'completed' ? (
+            feedbackThread.status === 'completed' ? (
             <T.Large className="my-6">
               This thread is now closed for discussion.
             </T.Large>

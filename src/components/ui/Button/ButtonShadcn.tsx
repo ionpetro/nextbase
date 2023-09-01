@@ -7,7 +7,7 @@ const outlineColorClasses = (color: string) => `
 `;
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center font-[600] transition-colors focus-visible:outline-none shadow-[0_10px_8px_-12px_rgba(0,0,0,0.3)] focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background',
+  'inline-flex items-center justify-center font-[600] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background',
   {
     variants: {
       variant: {
@@ -16,7 +16,7 @@ const buttonVariants = cva(
         destructive:
           'bg-destructive  text-base  text-destructive-foreground rounded-lg hover:bg-destructive/90',
         outline:
-          'border text-sm text-slate-700 rounded-lg hover:bg-gray-100 hover:text-slate-900 dark:hover:bg-gray-800 dark:text-gray-100 dark:hover:text-white',
+          'border-2 border-gray-400  dark:border-gray-700/50 text-sm text-gray-700 rounded-lg hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-gray-800 dark:text-gray-100 dark:hover:text-white',
         outlineColor: outlineColorClasses('{color}'),
         secondary:
           'bg-secondary text-secondary-foreground  text-base rounded-lg hover:bg-secondary/80',
@@ -57,7 +57,7 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, color, ...props }, ref) => {
     const baseClass = buttonVariants({ variant, size });
-    const appliedColor = color && variant === 'outlineColor' ? color : 'slate';
+    const appliedColor = color && variant === 'outlineColor' ? color : 'gray';
     const replacedColorClass = baseClass.replace(/{color}/g, appliedColor);
     return (
       <button

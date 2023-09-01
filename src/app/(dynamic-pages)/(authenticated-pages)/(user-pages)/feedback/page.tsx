@@ -26,7 +26,7 @@ export default async function MyFeedback() {
     user.id
   );
   return (
-    <div className="max-w-7xl">
+    <div>
       <PageHeading
         title="My Feedback"
         subTitle="A list of all your feedback to the Nextbase team"

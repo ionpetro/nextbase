@@ -21,6 +21,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRef } from 'react';
 import { toast } from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
+import { SelectSeparator } from '@/components/ui/Select';
 
 const addCommentSchema = z.object({
   text: z.string().min(1),
@@ -76,16 +77,18 @@ const CommentInput = ({
         setValue('text', '');
       })}
     >
-      <div className="space-y-2">
-        <Label htmlFor="text" className="space-x-2 flex items-center">
-          {' '}
-          <Edit /> <span>New comment</span>
-        </Label>
-        <Textarea id="text" placeholder="Add a comment" {...register('text')} />
-        <div className="flex justify-end">
-          <Button type="submit">
-            <PlayCircle />
+      <div className="space-y-3">
+        <Textarea
+          id="text"
+          placeholder="Share your thoughts"
+          className="bg-gray-200/50 dark:bg-gray-700/50 border-none dark:text-muted-foreground text-gray-700 p-3 h-24 rounded-lg"
+          {...register('text')}
+        />
+        <div className="flex justify-end space-x-2">
+          <Button variant="outline" type="reset">
+            Reset
           </Button>
+          <Button type="submit">Publish</Button>
         </div>
       </div>
     </form>
@@ -112,32 +115,32 @@ const CommentsList = ({
   if (isLoading || !comments)
     return (
       <div className="space-y-2">
-        <T.Subtle>Loading comments...</T.Subtle>
+        <T.Small>Loading comments...</T.Small>
       </div>
     );
 
   if (comments.length === 0)
     return (
       <div className="space-y-2">
-        <T.Subtle>No comments yet</T.Subtle>
+        <T.Small>No comments yet</T.Small>
       </div>
     );
 
   return (
-    <div className="space-y-4">
-      <div className="flex space-x-2 items-center">
-        <ConversationIcon /> <T.Subtle>All Comments </T.Subtle>
+    <div className="space-y-4 mt-4 mb-10">
+      <div className="mt-8 mb-4">
+        <SelectSeparator />
       </div>
       {comments.map((comment) => (
         <div
           key={comment.id}
-          className="grid grid-cols-[auto,1fr] items-start gap-3"
+          className="grid grid-cols-[auto,1fr] items-start gap-3 mb-10"
         >
-          <UserAvatar userId={comment.user_id} size={24} />
+          <UserAvatar userId={comment.user_id} size={32} />
           <div className="space-y-2">
             <UserFullName userId={comment.user_id} />
-            <T.Small>{comment.text}</T.Small>
-            <T.Subtle className="text-xs text-slate-400">
+            <T.Small className="m-0">{comment.text}</T.Small>
+            <T.Subtle className="text-xs text-muted-foreground">
               {moment(comment.created_at).format('LLLL')}
             </T.Subtle>
           </div>
@@ -160,9 +163,9 @@ export const ProjectComments = ({
   ) => Promise<Array<Table<'project_comments'>>>;
 }) => {
   return (
-    <div className="space-y-4 w-[380px]">
+    <div className="space-y-4 max-w-md">
       <T.H4>Comments</T.H4>
-      <div className="space-y-2">
+      <div className="space-y-2 mb-10">
         <CommentInput addProjectCommentAction={addProjectCommentAction} />
         <CommentsList getProjectCommentsAction={getProjectCommentsAction} />
       </div>

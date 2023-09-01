@@ -151,7 +151,7 @@ export function ApprovalControls({
         ) : null
       ) : null}
       {!canManageTeam &&
-      projectByIdData.project_status === 'pending_approval' ? (
+        projectByIdData.project_status === 'pending_approval' ? (
         <T.P className="text-green-600 italic text-xs">Awaiting approval</T.P>
       ) : null}
       {canManageTeam &&

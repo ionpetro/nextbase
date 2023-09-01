@@ -119,7 +119,7 @@ export function OrganizationGraphs() {
           subTitle="Monthly churn rate vs Organization Count"
         >
           <AreaChart
-            className="h-72 mt-4"
+            className="h-72 mt-8"
             data={chartdata}
             index="date"
             categories={['SemiAnalysis', 'The Pragmatic Engineer']}
@@ -127,6 +127,7 @@ export function OrganizationGraphs() {
             valueFormatter={dataFormatter}
           />
         </GraphContainer>
+
         <GraphContainer
           title="Organizations by Month"
           subTitle="Number of organizations"
@@ -173,12 +174,21 @@ export function OrganizationGraphs() {
             colors={['cyan', 'orange']}
           />
         </GraphContainer>
-        <GraphContainer
-          title="Users by Month"
-          subTitle="Number of user"
-          classname="col-span-2"
-        >
+        <GraphContainer title="Users by Month" subTitle="Number of user">
           <BarList data={barListData} className="mt-2" />
+        </GraphContainer>
+        <GraphContainer
+          title="Visitor Rate"
+          subTitle="Number of visitors vs Organization Count"
+        >
+          <AreaChart
+            className="h-72 mt-12"
+            data={chartdata}
+            index="date"
+            categories={['SemiAnalysis', 'The Pragmatic Engineer']}
+            colors={['cyan', 'orange']}
+            valueFormatter={dataFormatter}
+          />
         </GraphContainer>
       </div>
     </>

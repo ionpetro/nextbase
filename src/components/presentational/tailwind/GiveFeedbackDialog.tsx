@@ -80,7 +80,7 @@ export const GiveFeedbackDialog = ({ isExpanded }: { isExpanded: boolean }) => {
       }}
     >
       <DialogTrigger>
-        <Button variant="outline">Give Feedback</Button>
+        <Button variant="default">Give Feedback</Button>
       </DialogTrigger>
 
       <DialogContent>
