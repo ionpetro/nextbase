@@ -86,14 +86,6 @@ export const UpdateInternalFeedbackTypeDialog = ({
           </div>
           <DialogFooter className="mt-8">
             <Button
-              type="submit"
-              variant="default"
-              className="w-full"
-              disabled={isLoading}
-            >
-              {isLoading ? 'Updating Type...' : 'Update'}
-            </Button>
-            <Button
               type="button"
               className="w-full"
               variant="outline"
@@ -102,6 +94,14 @@ export const UpdateInternalFeedbackTypeDialog = ({
               }}
             >
               Cancel
+            </Button>
+            <Button
+              type="submit"
+              variant="default"
+              className="w-full"
+              disabled={isLoading}
+            >
+              {isLoading ? 'Updating Type...' : 'Update'}
             </Button>
           </DialogFooter>
         </form>

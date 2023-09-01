@@ -29,12 +29,12 @@ export default async function DashboardPage() {
     <div className=" space-y-8">
       {pendingInvitations.length > 0 ? (
         <Anchor href="/invitations" className="cursor-pointer">
-          <Alert variant="info">
+          <Alert variant="default">
             <InfoIcon className="h-4 w-4 mt-1" />
             <AlertTitle>Pending Invitations</AlertTitle>
-            <AlertDescription>
+            <AlertDescription className="text-muted-foreground">
               You have{' '}
-              <span className="font-bold text-blue-900">
+              <span className="font-bold text-muted-foreground">
                 {pendingInvitations.length}
               </span>{' '}
               pending invitation{pendingInvitations.length > 1 ? 's' : ''}.

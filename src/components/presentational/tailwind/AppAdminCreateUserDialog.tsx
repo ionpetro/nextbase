@@ -35,10 +35,15 @@ export const AppAdminCreateUserDialog = ({ onSubmit, isLoading }: Props) => {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Create User</DialogTitle>
-          <DialogDescription>
-            Create a new user by entering their email address.
-          </DialogDescription>
+          <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 rounded-lg">
+            <Plus className="w-6 h-6" />
+          </div>
+          <div className="p-1">
+            <DialogTitle className="text-lg">Create User</DialogTitle>
+            <DialogDescription className="text-base">
+              Create a new user by entering their email address.
+            </DialogDescription>
+          </div>
         </DialogHeader>
         <div className="grid gap-4">
           <Label className="space-y-2">
@@ -53,10 +58,11 @@ export const AppAdminCreateUserDialog = ({ onSubmit, isLoading }: Props) => {
             />
           </Label>
         </div>
-        <DialogFooter>
+        <DialogFooter className="mt-8">
           <Button
             disabled={isLoading}
             type="button"
+            className="w-full"
             onClick={() => {
               try {
                 const parsedEmail = emailSchema.parse(email);

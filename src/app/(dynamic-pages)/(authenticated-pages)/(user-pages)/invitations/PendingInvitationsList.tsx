@@ -13,6 +13,9 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/Table/ShadcnTable';
+import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
+import CheckIcon from 'lucide-react/dist/esm/icons/check';
+import RejectIcon from 'lucide-react/dist/esm/icons/x';
 
 const PendingInvitationsTable = ({
   pendingInvitationsList,
@@ -29,10 +32,8 @@ const PendingInvitationsTable = ({
 }) => {
   return (
     <div className="space-y-2">
-      <T.Subtle>
-        You have {pendingInvitationsList.length} pending invitations
-      </T.Subtle>
-      <div className="w-full rounded-lg border border-neutral-200 shadow-sm overflow-hidden">
+      <T.P>You have {pendingInvitationsList.length} pending invitations</T.P>
+      <div className="w-full rounded-lg border overflow-hidden">
         <ShadcnTable>
           <TableHeader>
             <TableRow>
@@ -48,41 +49,29 @@ const PendingInvitationsTable = ({
               <TableRow key={invitation.id}>
                 <TableCell>{index + 1}</TableCell>
                 <TableCell className="text-left">
-                  <div className="text-sm text-gray-900">
-                    {invitation.inviterUserFullName}
-                  </div>
+                  {invitation.inviterUserFullName}
                 </TableCell>
-                <TableCell>
-                  <div className="text-sm text-gray-900">
-                    {invitation.organizationTitle}
-                  </div>
-                </TableCell>
-                <TableCell>
-                  <div className="text-sm text-gray-900 uppercase">
-                    {invitation.role}
-                  </div>
-                </TableCell>
+                <TableCell>{invitation.organizationTitle}</TableCell>
+                <TableCell>{invitation.role}</TableCell>
                 <TableCell>
                   <div className="flex space-x-2">
                     <Button
-                      size="xs"
-                      variant="outline"
-                      className=" border-green-300 bg-green-100  rounded-md text-green-600 hover:text-green-700 hover:bg-green-100 px-2"
+                      size="default"
+                      variant="default"
                       onClick={() =>
                         (window.location.href = invitation.acceptURL)
                       }
                     >
-                      Accept
+                      <CheckIcon className="mr-2" /> Accept
                     </Button>
                     <Button
-                      size="xs"
+                      size="default"
                       variant="outline"
-                      className=" border-red-300 bg-red-100 rounded-md text-red-500 hover:text-red-600 hover:bg-red-100"
                       onClick={() =>
                         (window.location.href = invitation.declineURL)
                       }
                     >
-                      Decline
+                      <RejectIcon className="mr-2" /> Decline
                     </Button>
                   </div>
                 </TableCell>
@@ -135,8 +124,11 @@ export const PendingInvitationsList = ({
     })
     .filter(Boolean);
   return (
-    <div className="space-y-2">
-      <T.H2>Pending Invitations</T.H2>
+    <div className="space-y-8">
+      <PageHeading
+        title="Pending Invitations"
+        subTitle="Manage pending invitations here."
+      />
       <PendingInvitationsTable
         pendingInvitationsList={pendingInvitationsList}
       />

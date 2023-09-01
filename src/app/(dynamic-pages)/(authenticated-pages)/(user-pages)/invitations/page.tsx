@@ -19,7 +19,7 @@ export default async function DashboardPage() {
   const supabaseClient = createSupabaseUserServerComponentClient();
   const { pendingInvitations } = await fetchData(supabaseClient);
   return (
-    <div className="max-w-7xl space-y-8">
+    <div className="space-y-8">
       <PendingInvitationsList
         initialPendingInvitationsList={pendingInvitations}
       />

@@ -39,7 +39,7 @@ export const ConfirmMarkProjectAsCompleteDialog = ({ onConfirm }: Props) => {
             </DialogDescription>
           </div>
         </DialogHeader>
-        <DialogFooter className="mt-4<">
+        <DialogFooter className="mt-8">
           <Button
             type="button"
             variant="outline"
