@@ -22,15 +22,21 @@ export async function sendLoginLinkAction(email: string) {
 
   if (generateLinkData) {
     const {
-      properties: { action_link },
+      properties: { hashed_token },
     } = generateLinkData;
 
     if (process.env.NEXT_PUBLIC_SITE_URL !== undefined) {
       // change the origin of the link to the site url
-      const checkAuthUrl = new URL(process.env.NEXT_PUBLIC_SITE_URL);
-      checkAuthUrl.pathname = '/auth/callback';
-      const url = new URL(action_link);
-      url.searchParams.set('redirect_to', checkAuthUrl.toString());
+
+      const tokenHash = hashed_token;
+      const searchParams = new URLSearchParams({
+        token_hash: tokenHash,
+        next: '/dashboard',
+      });
+
+      const url = new URL(process.env.NEXT_PUBLIC_SITE_URL);
+      url.pathname = `/auth/confirm`;
+      url.search = searchParams.toString();
 
       // send email
       const signInEmailHTML = await renderAsync(
@@ -131,17 +137,24 @@ export async function getUserImpersonationUrlAction(
   if (generateLinkError) {
     throw new Error(generateLinkError.message);
   }
-  const {
-    properties: { action_link },
-  } = generateLinkData;
 
   if (process.env.NEXT_PUBLIC_SITE_URL !== undefined) {
     // change the origin of the link to the site url
+    const {
+      properties: { hashed_token },
+    } = generateLinkData;
+
+    const tokenHash = hashed_token;
+    const searchParams = new URLSearchParams({
+      token_hash: tokenHash,
+      next: '/dashboard',
+    });
+
     const checkAuthUrl = new URL(process.env.NEXT_PUBLIC_SITE_URL);
-    checkAuthUrl.pathname = '/auth/callback';
-    const url = new URL(action_link);
-    url.searchParams.set('redirect_to', checkAuthUrl.toString());
-    return url;
+    checkAuthUrl.pathname = `/auth/confirm`;
+    checkAuthUrl.search = searchParams.toString();
+
+    return checkAuthUrl;
   }
 
   throw new Error('site url is undefined');
