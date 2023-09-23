@@ -5,3 +5,5 @@ Nextbase Ultimate is a simple, fast, and secure way to build and deploy your nex
 ## Developing and deployment instructions
 
 Please checkout the documentation site [here](https://docs.usenextbase.com).
+
+Thanks!
