@@ -4,6 +4,7 @@ pull_request_rules:
       - '#approved-reviews-by>=1'
       - check-success=build
       - check-success=test-migrations
+      - check-success=vitest
     actions:
       queue:
         name: default
@@ -13,6 +14,7 @@ pull_request_rules:
       - label=hotfix
       - check-success=build
       - check-success=test-migrations
+      - check-success=vitest
     actions:
       queue:
         name: hotfix
@@ -22,6 +24,7 @@ pull_request_rules:
       - author=renovate[bot]
       - check-success=build
       - check-success=test-migrations
+      - check-success=vitest
     actions:
       queue:
         name: renovate
@@ -31,12 +34,15 @@ queue_rules:
     merge_conditions:
       - check-success=build
       - check-success=test-migrations
+      - check-success=vitest
       - '#approved-reviews-by>=1'
   - name: hotfix
     merge_conditions:
       - check-success=build
       - check-success=test-migrations
+      - check-success=vitest
   - name: renovate
     merge_conditions:
       - check-success=build
       - check-success=test-migrations
+      - check-success=vitest
