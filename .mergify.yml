@@ -1,0 +1,48 @@
+pull_request_rules:
+  - name: Automatic merge on approval
+    conditions:
+      - '#approved-reviews-by>=1'
+      - check-success=build
+      - check-success=test-migrations
+      - check-success=vitest
+    actions:
+      queue:
+        name: default
+        method: squash
+  - name: Automatic merge for hotfixes
+    conditions:
+      - label=hotfix
+      - check-success=build
+      - check-success=test-migrations
+      - check-success=vitest
+    actions:
+      queue:
+        name: hotfix
+        method: squash
+  - name: Automatic merge for Renovate PRs
+    conditions:
+      - author=renovate[bot]
+      - check-success=build
+      - check-success=test-migrations
+      - check-success=vitest
+    actions:
+      queue:
+        name: renovate
+        method: squash
+queue_rules:
+  - name: default
+    merge_conditions:
+      - check-success=build
+      - check-success=test-migrations
+      - check-success=vitest
+      - '#approved-reviews-by>=1'
+  - name: hotfix
+    merge_conditions:
+      - check-success=build
+      - check-success=test-migrations
+      - check-success=vitest
+  - name: renovate
+    merge_conditions:
+      - check-success=build
+      - check-success=test-migrations
+      - check-success=vitest
