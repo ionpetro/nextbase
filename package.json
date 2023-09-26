@@ -34,7 +34,7 @@
     "@react-email/link": "0.0.5",
     "@react-email/preview": "0.0.6",
     "@react-email/section": "0.0.9",
-    "@react-email/tailwind": "0.0.8",
+    "@react-email/tailwind": "0.0.9",
     "@react-email/text": "0.0.5",
     "@sentry/nextjs": "^7.59.3",
     "@stripe/stripe-js": "^1.46.0",
