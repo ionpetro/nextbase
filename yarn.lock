@@ -1790,6 +1790,14 @@
     "@radix-ui/react-slot" "1.0.0"
     react "18.2.0"
 
+"@react-email/heading@0.0.9":
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/@react-email/heading/-/heading-0.0.9.tgz#c8252d5986c6384c96b33c8e32f3352a3de0510c"
+  integrity sha512-xzkcGlm+/aFrNlJZBKzxRKkRYJ2cRx92IqmSKAuGnwuKQ/uMKomXzPsHPu3Dclmnhn3wVKj4uprkgQOoxP6uXQ==
+  dependencies:
+    "@radix-ui/react-slot" "1.0.2"
+    react "18.2.0"
+
 "@react-email/hr@0.0.5":
   version "0.0.5"
   resolved "https://registry.yarnpkg.com/@react-email/hr/-/hr-0.0.5.tgz#5f9f150ef62e8967fb49e022090375fdc25699d3"
