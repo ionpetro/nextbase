@@ -138,7 +138,7 @@
     "@playwright/test": "^1.29.1",
     "@testing-library/react": "^14.0.0",
     "@types/formidable": "^3.4.0",
-    "@types/jsonwebtoken": "^8.5.9",
+    "@types/jsonwebtoken": "^9.0.0",
     "@types/nprogress": "^0.2.0",
     "@types/react": "18.0.26",
     "@types/unist": "^2.0.6",
