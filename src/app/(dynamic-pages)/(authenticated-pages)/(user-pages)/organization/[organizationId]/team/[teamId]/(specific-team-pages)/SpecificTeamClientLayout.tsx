@@ -125,15 +125,18 @@ export const SpecificTeamClientLayout = ({
           <PageHeading
             title={teamByIdData.name}
             actions={
-              <div className=" text-gray-400 flex items-start text-3xl space-x-2">
-                <CreateProjectDialog
-                  onConfirm={(name) => {
-                    createTeamProject({
-                      name,
-                    });
-                  }}
-                  isLoading={isCreatingTeamProject}
-                />
+              <div className=" text-gray-400 flex items-start text-3xl gap-x-2 space-x-2">
+                <div className="pr-4 border-r border-muted-foreground/20">
+                  {' '}
+                  <CreateProjectDialog
+                    onConfirm={(name) => {
+                      createTeamProject({
+                        name,
+                      });
+                    }}
+                    isLoading={isCreatingTeamProject}
+                  />
+                </div>
                 <div className="flex flex-col space-y-1 ml-4 items-end">
                   <Anchor
                     href={`/organization/${organizationId}/team//${teamId}/settings`}

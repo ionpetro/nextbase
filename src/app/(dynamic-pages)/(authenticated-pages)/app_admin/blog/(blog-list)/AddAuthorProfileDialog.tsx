@@ -216,27 +216,27 @@ export const AddAuthorProfileDialog = ({
               />
             </div>
           </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              className="w-full"
+              onClick={() => {
+                setIsOpen(false);
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              disabled={!isValid || isCreatingAuthorProfile}
+              type="submit"
+              className="w-full"
+            >
+              {isLoading || isCreatingAuthorProfile
+                ? 'Submitting...'
+                : 'Submit Profile'}
+            </Button>
+          </DialogFooter>
         </form>
-        <DialogFooter>
-          <Button
-            variant="outline"
-            className="w-full"
-            onClick={() => {
-              setIsOpen(false);
-            }}
-          >
-            Cancel
-          </Button>
-          <Button
-            disabled={!isValid || isCreatingAuthorProfile}
-            type="submit"
-            className="w-full"
-          >
-            {isLoading || isCreatingAuthorProfile
-              ? 'Submitting...'
-              : 'Submit Profile'}
-          </Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

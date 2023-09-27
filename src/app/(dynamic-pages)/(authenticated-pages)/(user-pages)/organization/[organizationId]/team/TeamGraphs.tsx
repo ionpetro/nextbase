@@ -1,4 +1,5 @@
-'use client';
+import { GraphContainer } from '@/components/presentational/tailwind/GraphContainer';
+import { T } from '@/components/ui/Typography';
 import {
   Card,
   Title,
@@ -7,7 +8,6 @@ import {
   BarList,
   LineChart,
   DonutChart,
-  Subtitle,
   Bold,
   Flex,
   Text,
@@ -16,48 +16,86 @@ import {
 const chartdata = [
   {
     date: 'Jan 22',
-    SemiAnalysis: 2890,
-    'The Pragmatic Engineer': 2338,
+    churn_rate: 2890,
+    count: 2338,
   },
   {
     date: 'Feb 22',
-    SemiAnalysis: 2756,
-    'The Pragmatic Engineer': 2103,
+    churn_rate: 2756,
+    count: 2103,
   },
   {
     date: 'Mar 22',
-    SemiAnalysis: 3322,
-    'The Pragmatic Engineer': 2194,
+    churn_rate: 3322,
+    count: 2194,
   },
   {
     date: 'Apr 22',
-    SemiAnalysis: 3470,
-    'The Pragmatic Engineer': 2108,
+    churn_rate: 3470,
+    count: 2108,
   },
   {
     date: 'May 22',
-    SemiAnalysis: 3475,
-    'The Pragmatic Engineer': 1812,
+    churn_rate: 3475,
+    count: 1812,
   },
   {
     date: 'Jun 22',
-    SemiAnalysis: 3129,
-    'The Pragmatic Engineer': 1726,
+    churn_rate: 3129,
+    count: 1726,
   },
   {
     date: 'July 22',
-    SemiAnalysis: 3482,
-    'The Pragmatic Engineer': 2444,
+    churn_rate: 3482,
+    count: 2444,
   },
   {
     date: 'Aug 22',
-    SemiAnalysis: 2412,
-    'The Pragmatic Engineer': 2122,
+    churn_rate: 2412,
+    count: 2122,
   },
   {
     date: 'Sep 22',
-    SemiAnalysis: 2678,
-    'The Pragmatic Engineer': 1896,
+    churn_rate: 2678,
+    count: 1896,
+  },
+];
+const projectCount = [
+  {
+    month: 'Jan 22',
+    project_count: 2890,
+  },
+  {
+    month: 'Feb 22',
+    project_count: 2756,
+  },
+  {
+    month: 'Mar 22',
+    project_count: 3322,
+  },
+  {
+    month: 'Apr 22',
+    project_count: 3470,
+  },
+  {
+    month: 'May 22',
+    project_count: 3475,
+  },
+  {
+    month: 'Jun 22',
+    project_count: 3129,
+  },
+  {
+    month: 'July 22',
+    project_count: 3482,
+  },
+  {
+    month: 'Aug 22',
+    project_count: 2412,
+  },
+  {
+    month: 'Sep 22',
+    project_count: 2678,
   },
 ];
 
@@ -109,87 +147,76 @@ const valueFormatter = (number: number) =>
 
 export function TeamGraphs() {
   return (
-    <div>
-      <div>
-        <div className="flex flex-col space-y-6">
-          <div className="w-full flex space-x-4">
-            <Card className="rounded-lg">
-              <Title>Newsletter revenue over time (USD)</Title>
-              <AreaChart
-                className="h-72 mt-4"
-                data={chartdata}
-                index="date"
-                categories={['SemiAnalysis', 'The Pragmatic Engineer']}
-                colors={['cyan', 'orange']}
-                valueFormatter={dataFormatter}
-              />
-            </Card>
-            <Card className="rounded-lg">
-              <Title>Newsletter revenue over time (USD)</Title>
-              <DonutChart
-                className="mt-6"
-                data={chartdata}
-                index="date"
-                category="SemiAnalysis"
-                colors={[
-                  'slate',
-                  'violet',
-                  'indigo',
-                  'rose',
-                  'cyan',
-                  'amber',
-                  'green',
-                  'orange',
-                  'pink',
-                ]}
-                valueFormatter={valueFormatter}
-              />
-            </Card>
-          </div>
-          <div className="w-full flex space-x-4">
-            <Card className="rounded-lg">
-              <Title>Newsletter revenue over time (USD)</Title>
-              <LineChart
-                className="h-72 mt-4"
-                data={chartdata}
-                index="date"
-                categories={['SemiAnalysis', 'The Pragmatic Engineer']}
-                colors={['cyan', 'orange']}
-              />
-            </Card>
-            <Card className="rounded-lg">
-              <Title>Number of species threatened with extinction (2021)</Title>
-              <Subtitle>
-                The IUCN Red List has assessed only a small share of the total
-                known species in the world.
-              </Subtitle>
-              <BarChart
-                className="mt-6"
-                data={chartdata}
-                index="date"
-                categories={['SemiAnalysis', 'The Pragmatic Engineer']}
-                colors={['teal', 'blue']}
-                valueFormatter={dataFormatter}
-                yAxisWidth={48}
-              />
-            </Card>
-          </div>
-          <div className="w-full flex space-x-4">
-            <Card className="rounded-lg">
-              <Title>Newsletter revenue over time (USD)</Title>
-              <Flex className="mt-4">
-                <Text>
-                  <Bold>Source</Bold>
-                </Text>
-                <Text>
-                  <Bold>Visits</Bold>
-                </Text>
-              </Flex>
-              <BarList data={barListData} className="mt-2" />
-            </Card>
-          </div>
-        </div>
+    <>
+      <div className="h-2 mt-10 pb-4">
+        <T.H3 className="leading-none">Overview</T.H3>
       </div>
-    </div>
+      <div className="w-full grid grid-cols-2 grid-flow-row auto-rows-max mt-10 gap-10">
+        <GraphContainer
+          title="Monthly Churn Rate"
+          subTitle="Analysis of monthly churn rate"
+        >
+          <AreaChart
+            className="h-72 mt-8"
+            data={chartdata}
+            index="date"
+            categories={['churn_rate', 'count']}
+            colors={['cyan', 'orange']}
+            valueFormatter={dataFormatter}
+          />
+        </GraphContainer>
+
+        <GraphContainer title="Projects by Month" subTitle="Number of Projects">
+          <BarChart
+            className="mt-6"
+            data={projectCount}
+            index="date"
+            categories={['project_count', 'month']}
+            colors={['teal', 'blue']}
+            valueFormatter={dataFormatter}
+            yAxisWidth={48}
+          />
+        </GraphContainer>
+        <GraphContainer
+          title="MRR Analytics"
+          subTitle="Monthly recurring revenue"
+        >
+          <DonutChart
+            className="mt-12"
+            data={chartdata}
+            index="date"
+            category="churn_rate"
+            colors={[
+              'blue',
+              'violet',
+              'indigo',
+              'rose',
+              'cyan',
+              'amber',
+              'green',
+              'orange',
+              'pink',
+            ]}
+            valueFormatter={valueFormatter}
+          />
+        </GraphContainer>
+        <GraphContainer title="Users by Month" subTitle="Number of user">
+          <BarList data={barListData} className="mt-2" />
+        </GraphContainer>
+        <GraphContainer
+          title="Visitor Rate"
+          subTitle="Number of visitors vs Organization Count"
+        >
+          <AreaChart
+            className="h-72 mt-12"
+            data={chartdata}
+            index="date"
+            categories={['churn_rate', 'count']}
+            colors={['cyan', 'orange']}
+            valueFormatter={dataFormatter}
+          />
+        </GraphContainer>
+      </div>
+    </>
   );
 }

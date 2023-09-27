@@ -216,7 +216,11 @@ export const EditAuthorProfileDialog = ({
               />
             </div>
           </div>
-          <Button disabled={!isValid || isUpdatingAuthorProfile} type="submit">
+          <Button
+            disabled={!isValid || isUpdatingAuthorProfile}
+            type="submit"
+            className="w-full"
+          >
             {isLoading || isUpdatingAuthorProfile
               ? 'Submitting...'
               : 'Update Profile'}
