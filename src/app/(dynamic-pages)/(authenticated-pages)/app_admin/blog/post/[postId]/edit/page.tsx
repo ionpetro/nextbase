@@ -34,13 +34,16 @@ export default async function CreateBlogPostPage({
       getAllBlogTags(),
       getBlogTagRelationships(postId),
     ]);
+    let postAuthorId: string | undefined = undefined;
     const authorBlogPosts = Array.isArray(post.internal_blog_author_posts)
       ? post.internal_blog_author_posts[0]
       : post.internal_blog_author_posts;
     if (!authorBlogPosts) {
-      throw new Error('Linked author not found');
+      console.log('Linked author not found');
+    } else {
+      postAuthorId = authorBlogPosts?.author_id ?? undefined;
     }
-    const postAuthorId = authorBlogPosts?.author_id;
+
     const initialBlogPost: EditBlogFormProps['initialBlogPost'] = {
       author_id: postAuthorId,
       content: post.content,
@@ -74,6 +77,7 @@ export default async function CreateBlogPostPage({
       </div>
     );
   } catch (error) {
+    console.log(error);
     return notFound();
   }
 }

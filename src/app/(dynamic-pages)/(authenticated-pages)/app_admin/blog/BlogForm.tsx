@@ -56,7 +56,7 @@ export type EditBlogFormProps = {
     data: TableUpdatePayload<'internal_blog_posts'>,
     tagIds: number[]
   ) => Promise<void>;
-  initialBlogPost: InternalBlogPostSchema;
+  initialBlogPost: Partial<InternalBlogPostSchema>;
   postId: string;
 };
 

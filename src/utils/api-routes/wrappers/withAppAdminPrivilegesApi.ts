@@ -4,7 +4,7 @@ import { enableCors } from '../enable-cors';
 import { getIsAppAdmin } from '@/utils/supabase-queries';
 import { AppSupabaseClient } from '@/types';
 import { createSupabaseUserServerPagesClient } from '@/supabase-clients/user/createSupabaseUserServerPagesClient';
-import { createSupabaseAdminServerPagesClient } from '@/supabase-clients/admin/createSupabaseAdminServerPagesClient';
+import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 
 /**
  * @description Ensures that the user is an Application Admin.
@@ -48,6 +48,6 @@ export const withAppAdminPrivilegesApi = (
       });
     }
 
-    return cb(req, res, createSupabaseAdminServerPagesClient({ req, res }));
+    return cb(req, res, supabaseAdminClient);
   };
 };
