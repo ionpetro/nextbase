@@ -16,6 +16,7 @@ var srcRuleOverrides = {
     },
   ],
   'prettier/prettier': 1,
+  '@typescript-eslint/no-unused-vars': 'off',
 };
 
 module.exports = {
