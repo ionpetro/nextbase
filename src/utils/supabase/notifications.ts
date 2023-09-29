@@ -1,10 +1,11 @@
 import { AppSupabaseClient, Table } from '@/types';
 import { UserNotification } from '../zod-schemas/notifications';
+import { Json } from '@/lib/database.types';
 
 export const createNotification = async (
   supabaseClient: AppSupabaseClient,
   userId: string,
-  payload: any,
+  payload: Json,
 ) => {
   const { data: notification, error } = await supabaseClient
     .from('user_notifications')
