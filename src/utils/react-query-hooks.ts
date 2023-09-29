@@ -658,7 +658,7 @@ export const useUpdatePassword = ({
   );
 };
 
-export const useSignInWithProvider = ({ next }: { next?: string }) => {
+export const useSignInWithProvider = ({ next }: { next?: string } = {}) => {
   const toastRef = useRef<string | null>(null);
   return useMutation(
     async ({ provider }: { provider: AuthProvider }) => {
