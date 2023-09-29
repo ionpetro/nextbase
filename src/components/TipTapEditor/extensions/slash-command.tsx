@@ -229,8 +229,11 @@ const CommandList = ({
   range,
 }: {
   items: CommandItemProps[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   command: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   editor: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   range: any;
 }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -318,6 +321,8 @@ const CommandList = ({
 
 const renderItems = () => {
   let component: ReactRenderer | null = null;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let popup: any | null = null;
 
   return {
