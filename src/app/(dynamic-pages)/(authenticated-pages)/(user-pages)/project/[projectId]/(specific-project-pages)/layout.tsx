@@ -36,18 +36,18 @@ async function fetchdata(projectId: string) {
       getUserOrganizationRole(
         supabaseClient,
         sessionResponse.session.user.id,
-        projectByIdData.organization_id
+        projectByIdData.organization_id,
       ),
       projectByIdData.team_id
         ? getUserTeamRole(
-            supabaseClient,
-            sessionResponse.session.user.id,
-            projectByIdData.team_id
-          )
+          supabaseClient,
+          sessionResponse.session.user.id,
+          projectByIdData.team_id,
+        )
         : null,
       getNormalizedSubscription(
         supabaseClient,
-        projectByIdData.organization_id
+        projectByIdData.organization_id,
       ),
     ]);
 
@@ -65,7 +65,7 @@ export default async function ProjectLayout({
   children,
 }: {
   children: ReactNode;
-  params: any;
+  params: unknown;
 }) {
   const { projectId } = paramsSchema.parse(params);
   const {

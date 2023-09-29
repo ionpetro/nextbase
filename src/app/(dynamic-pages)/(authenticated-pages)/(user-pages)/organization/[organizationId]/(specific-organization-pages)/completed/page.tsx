@@ -14,11 +14,11 @@ const paramsSchema = z.object({
 
 async function fetchProjects(
   supabase: AppSupabaseClient,
-  organizationId: string
+  organizationId: string,
 ) {
   const data = await getTopLevelCompletedProjectsByOrganizationId(
     supabase,
-    organizationId
+    organizationId,
   );
   return data;
 }
@@ -26,13 +26,13 @@ async function fetchProjects(
 export default async function CompletedOrganizationProjectsPage({
   params,
 }: {
-  params: any;
+  params: unknown;
 }) {
   const parsedParams = paramsSchema.parse(params);
   const { organizationId } = parsedParams;
   const projects = await fetchProjects(
     createSupabaseUserServerComponentClient(),
-    organizationId
+    organizationId,
   );
   return (
     <div className="space-y-4">

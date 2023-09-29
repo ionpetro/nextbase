@@ -10,21 +10,21 @@ const paramsSchema = z.object({
 
 async function fetchDraftProjects(
   supabase: AppSupabaseClient,
-  organizationId: string
+  organizationId: string,
 ) {
   const data = await getTopLevelDraftProjectsByOrganizationId(
     supabase,
-    organizationId
+    organizationId,
   );
   return data;
 }
 
-export default async function TeamPage({ params }: { params: any }) {
+export default async function TeamPage({ params }: { params: unknown }) {
   const parsedParams = paramsSchema.parse(params);
   const { organizationId } = parsedParams;
   const projects = await fetchDraftProjects(
     createSupabaseUserServerComponentClient(),
-    organizationId
+    organizationId,
   );
   return (
     <div className="space-y-4">

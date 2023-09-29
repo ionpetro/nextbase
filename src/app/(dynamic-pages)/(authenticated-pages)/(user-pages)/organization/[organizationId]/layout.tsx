@@ -28,7 +28,7 @@ async function fetchData(supabase: AppSupabaseClient, organizationId: string) {
       getUserOrganizationRole(
         supabase,
         sessionResponse.session.user.id,
-        organizationId
+        organizationId,
       ),
       getNormalizedSubscription(supabase, organizationId),
     ]);
@@ -45,7 +45,7 @@ export default async function Layout({
   params,
 }: {
   children: ReactNode;
-  params: any;
+  params: unknown;
 }) {
   try {
     const supabaseClient = createSupabaseUserServerComponentClient();
