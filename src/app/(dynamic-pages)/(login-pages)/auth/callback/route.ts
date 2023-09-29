@@ -6,6 +6,7 @@ import { NextResponse } from 'next/server';
 export async function GET(request: Request) {
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get('code');
+  const next = requestUrl.searchParams.get('next');
 
   if (code) {
     const supabase = createRouteHandlerClient({ cookies });
@@ -18,12 +19,13 @@ export async function GET(request: Request) {
       // Potentially return an error response here
     }
   }
-
-  // Revalidates the path in Next.js cache
-  revalidatePath('/dashboard');
-
-  // Constructs the URL to redirect to after the sign in process completes
-  const redirectTo = new URL('/dashboard', requestUrl.origin);
-
+  revalidatePath('/');
+  let redirectTo = new URL('/dashboard', requestUrl.origin);
+  if (next) {
+    // decode next param
+    const decodedNext = decodeURIComponent(next);
+    // validate next param
+    redirectTo = new URL(decodedNext, requestUrl.origin);
+  }
   return NextResponse.redirect(redirectTo);
 }

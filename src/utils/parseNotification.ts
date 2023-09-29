@@ -9,14 +9,14 @@ type NormalizedNotification = {
   image: string;
   type: UserNotification['type'] | 'unknown';
 } & (
-  | {
+    | {
       actionType: 'link';
       href: string;
     }
-  | {
+    | {
       actionType: 'button';
     }
-);
+  );
 export const parseNotification = (notificationPayload: unknown) => {
   try {
     const notification =
@@ -27,7 +27,7 @@ export const parseNotification = (notificationPayload: unknown) => {
           title: 'Invitation to join organization',
           description: `You have been invited to join ${notification.organizationName}`,
           // 2 days ago
-          href: `/organization/${notification.organizationId}`,
+          href: `/invitations/${notification.invitationId}`,
           image: '/logos/logo-black.png',
           actionType: 'link',
           type: notification.type,

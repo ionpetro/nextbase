@@ -10,27 +10,43 @@ import {
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { T } from '@/components/ui/Typography';
+import { Alert } from '@/components/ui/Alert';
 
-export function Login() {
+export function Login({
+  next,
+  nextActionType,
+}: {
+  next?: string;
+  nextActionType?: string;
+}) {
   const router = useRouter();
 
   function redirectToDashboard() {
     router.refresh();
-    router.push('/auth/callback');
+    router.push(`/auth/callback?next=${next}`);
   }
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const magicLinkMutation = useSignInWithMagicLink({
     onSuccess: () => {
       setSuccessMessage('A magic link has been sent to your email!');
     },
+    next,
   });
   const passwordMutation = useSignInWithPassword({
     onSuccess: redirectToDashboard,
   });
-  const providerMutation = useSignInWithProvider();
+  const providerMutation = useSignInWithProvider({
+    next,
+  });
   return (
     <div className="container h-full grid items-center text-left max-w-lg mx-auto overflow-auto">
       <div className="space-y-8 ">
+        {nextActionType === 'invitationPending' ? (
+          <Alert variant="info">
+            You have been invited to join a team. Please login to accept the
+            invitation.
+          </Alert>
+        ) : null}
         {/* <Auth providers={['twitter']} supabaseClient={supabase} /> */}
         <div className="flex flex-col items-start gap-0 w-[320px]">
           <T.H4 className="leading-7">Login to Nextbase</T.H4>

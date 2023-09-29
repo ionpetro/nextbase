@@ -3,6 +3,8 @@ import { z } from 'zod';
 const invitedToOrganizationPayload = z.object({
   organizationName: z.string(),
   organizationId: z.string(),
+  inviterFullName: z.string(),
+  invitationId: z.string(),
   type: z.literal('invitedToOrganization'),
 });
 

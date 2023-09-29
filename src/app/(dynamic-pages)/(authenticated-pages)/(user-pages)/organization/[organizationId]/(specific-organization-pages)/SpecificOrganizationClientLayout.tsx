@@ -36,7 +36,7 @@ function SubscriptionDetails() {
   const { normalizedSubscription, organizationId } = useOrganizationContext();
 
   const { title, sidenote, description } = formatNormalizedSubscription(
-    normalizedSubscription
+    normalizedSubscription,
   );
 
   if (title) {
@@ -121,7 +121,7 @@ export function SpecificOrganizationClientLayout({
           id: createTeamToastRef.current,
         });
         createTeamToastRef.current = undefined;
-        router.refresh();
+        // router.refresh();
         router.push(`/organization/${organizationId}/team/${team.id}`);
       },
       onError: (error) => {
@@ -132,7 +132,7 @@ export function SpecificOrganizationClientLayout({
         });
         createTeamToastRef.current = undefined;
       },
-    }
+    },
   );
   const createProjectToastRef = useRef<string>();
 
@@ -150,7 +150,7 @@ export function SpecificOrganizationClientLayout({
       {
         onMutate: async ({ name }) => {
           createProjectToastRef.current = toast.loading(
-            `Creating name ${name}...`
+            `Creating name ${name}...`,
           );
         },
         onSuccess: (project) => {
@@ -159,7 +159,6 @@ export function SpecificOrganizationClientLayout({
             id: createProjectToastRef.current,
           });
           createProjectToastRef.current = undefined;
-          router.refresh();
           router.push(`/project/${project.id}`);
         },
         onError: (error) => {
@@ -170,7 +169,7 @@ export function SpecificOrganizationClientLayout({
           });
           createProjectToastRef.current = undefined;
         },
-      }
+      },
     );
   const tabs = useMemo(() => {
     return [
@@ -266,7 +265,7 @@ export function SpecificOrganizationClientLayout({
         />
       </div>
       {pathname!.startsWith(
-        `/organization/${organizationId}/settings`
+        `/organization/${organizationId}/settings`,
       ) ? null : (
         <TabsNavigation tabs={tabs} />
       )}

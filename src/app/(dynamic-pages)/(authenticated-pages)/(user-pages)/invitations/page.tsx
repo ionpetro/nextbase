@@ -2,6 +2,7 @@ import { AppSupabaseClient } from '@/types';
 import { getUserPendingInvitationsByEmail } from '@/utils/supabase/invitations';
 import { PendingInvitationsList } from './PendingInvitationsList';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
+import { T } from '@/components/ui/Typography';
 
 const fetchData = async (supabaseClient: AppSupabaseClient) => {
   const session = await supabaseClient.auth.getSession();
@@ -20,9 +21,13 @@ export default async function DashboardPage() {
   const { pendingInvitations } = await fetchData(supabaseClient);
   return (
     <div className="space-y-8">
-      <PendingInvitationsList
-        initialPendingInvitationsList={pendingInvitations}
-      />
+      {pendingInvitations.length > 0 ? (
+        <PendingInvitationsList
+          initialPendingInvitationsList={pendingInvitations}
+        />
+      ) : (
+        <T.Subtle>You have no pending invitations.</T.Subtle>
+      )}
     </div>
   );
 }

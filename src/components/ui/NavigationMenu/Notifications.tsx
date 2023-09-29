@@ -36,12 +36,12 @@ const useUnseenNotificationIds = () => {
     async () => {
       return getUnseenNotificationIds(
         supabaseUserClientComponentClient,
-        user.id
+        user.id,
       );
     },
     {
       initialData: [],
-    }
+    },
   );
   useEffect(() => {
     const channelId = `user-notifications:${user.id}`;
@@ -57,7 +57,7 @@ const useUnseenNotificationIds = () => {
         },
         () => {
           refetch();
-        }
+        },
       )
       .on(
         'postgres_changes',
@@ -70,7 +70,7 @@ const useUnseenNotificationIds = () => {
         (payload) => {
           console.log(payload);
           refetch();
-        }
+        },
       )
       .subscribe();
     return () => {
@@ -92,7 +92,7 @@ export const useNotifications = () => {
           supabaseUserClientComponentClient,
           user.id,
           pageParam ?? 0,
-          NOTIFICATIONS_PAGE_SIZE
+          NOTIFICATIONS_PAGE_SIZE,
         );
       },
       {
@@ -107,7 +107,7 @@ export const useNotifications = () => {
           pageParams: [0],
           pages: [[0, []]],
         },
-      }
+      },
     );
 
   const notifications = data?.pages.flatMap((page) => page[1]) ?? [];
@@ -186,7 +186,7 @@ export const useReadAllNotifications = () => {
         router.refresh();
         toast.success('All notifications marked as read');
       },
-    }
+    },
   );
 };
 
@@ -246,7 +246,7 @@ export const Notifications = () => {
                     key={notification.id}
                     notification={notification}
                     isSeen={unseenNotificationIds.every(
-                      (n) => n.id !== notification.id
+                      (n) => n.id !== notification.id,
                     )}
                   />
                 );

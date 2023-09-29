@@ -46,7 +46,7 @@ export const useUpdateOrganizationTitleMutation = ({
       return updateOrganizationTitle(
         supabaseUserClientComponentClient,
         organizationId,
-        title
+        title,
       );
     },
     {
@@ -69,7 +69,7 @@ export const useUpdateOrganizationTitleMutation = ({
         });
         toastRef.current = null;
       },
-    }
+    },
   );
 };
 
@@ -86,7 +86,7 @@ export const useUserProfile = (initialData?: Table<'user_profiles'>) => {
     },
     {
       initialData,
-    }
+    },
   );
 };
 
@@ -108,7 +108,7 @@ export const useUpdateUserFullnameAndAvatarMutation = ({
       return updateUserProfileNameAndAvatar(
         supabaseUserClientComponentClient,
         user.id,
-        data
+        data,
       );
     },
 
@@ -130,7 +130,7 @@ export const useUpdateUserFullnameAndAvatarMutation = ({
         });
         onError?.(error);
       },
-    }
+    },
   );
 };
 
@@ -152,7 +152,7 @@ export const useUploadUserAvatarMutation = ({
         file.name,
         {
           upsert: true,
-        }
+        },
       ),
     {
       onMutate: () => {
@@ -170,7 +170,7 @@ export const useUploadUserAvatarMutation = ({
           id: toastRef.current ?? undefined,
         });
       },
-    }
+    },
   );
 };
 
@@ -183,7 +183,7 @@ export type InitialOrganizationListType = UnwrapPromise<
 >;
 
 export const useOrganizationsList = (
-  initialOrganizationList: InitialOrganizationListType
+  initialOrganizationList: InitialOrganizationListType,
 ) => {
   const user = useLoggedInUser();
   return useQuery<InitialOrganizationListType>(
@@ -191,12 +191,12 @@ export const useOrganizationsList = (
     async () => {
       return getAllOrganizationsForUser(
         supabaseUserClientComponentClient,
-        user.id
+        user.id,
       );
     },
     {
       initialData: initialOrganizationList,
-    }
+    },
   );
 };
 
@@ -239,7 +239,7 @@ export const useCreateOrganizationMutation = ({
         });
         toastRef.current = undefined;
       },
-    }
+    },
   );
 };
 
@@ -253,19 +253,19 @@ export type OrganizationByIdData = UnwrapPromise<
 
 export const useGetOrganizationById = (
   organizationId: string,
-  initialOrganizationData?: OrganizationByIdData
+  initialOrganizationData?: OrganizationByIdData,
 ) => {
   return useQuery(
     ['organization', organizationId],
     async () => {
       return getOrganizationById(
         supabaseUserClientComponentClient,
-        organizationId
+        organizationId,
       );
     },
     {
       initialData: initialOrganizationData,
-    }
+    },
   );
 };
 
@@ -273,7 +273,7 @@ export const useGetTeamMembersInOrganization = (organizationId: string) => {
   return useQuery(['team-members', organizationId], async () => {
     return getTeamMembersInOrganization(
       supabaseUserClientComponentClient,
-      organizationId
+      organizationId,
     );
   });
 };
@@ -282,7 +282,7 @@ export const useGetTeamInvitationsInOrganization = (organizationId: string) => {
   return useQuery(['team-invitations', organizationId], async () => {
     return getPendingTeamInvitationsInOrganization(
       supabaseUserClientComponentClient,
-      organizationId
+      organizationId,
     );
   });
 };
@@ -297,7 +297,7 @@ export const useInviteUserMutation = (
     onSuccess?: () => void;
     onSettled?: () => void;
     onError?: (error: unknown) => void;
-  }
+  },
 ) => {
   const queryClient = useQueryClient();
   return useMutation(
@@ -319,7 +319,7 @@ export const useInviteUserMutation = (
         },
         {
           withCredentials: true,
-        }
+        },
       );
     },
     {
@@ -333,7 +333,7 @@ export const useInviteUserMutation = (
       onError: (error) => {
         onError?.(error);
       },
-    }
+    },
   );
 };
 
@@ -343,14 +343,14 @@ export const useGetOrganizationSubscription = (organizationId: string) => {
     async () => {
       return getOrganizationSubscription(
         supabaseUserClientComponentClient,
-        organizationId
+        organizationId,
       );
     },
     {
       retry: false,
       retryDelay: 0,
       refetchOnWindowFocus: false,
-    }
+    },
   );
 };
 
@@ -362,7 +362,7 @@ export const useGetAllActiveProducts = () => {
     },
     {
       refetchOnWindowFocus: false,
-    }
+    },
   );
 };
 
@@ -397,7 +397,7 @@ export const useCreateOrganizationCheckoutSessionMutation = ({
         },
         {
           withCredentials: true,
-        }
+        },
       );
     },
     {
@@ -407,7 +407,7 @@ export const useCreateOrganizationCheckoutSessionMutation = ({
       onError: (error) => {
         onError?.(error);
       },
-    }
+    },
   );
 };
 export const useCreateOrganizationCustomerPortalMutation = ({
@@ -426,7 +426,7 @@ export const useCreateOrganizationCustomerPortalMutation = ({
         {},
         {
           withCredentials: true,
-        }
+        },
       );
     },
     {
@@ -438,7 +438,7 @@ export const useCreateOrganizationCustomerPortalMutation = ({
         toast.error(`Error creating portal link: ${errorMessage}`);
         onError?.(error);
       },
-    }
+    },
   );
 };
 
@@ -448,7 +448,7 @@ export const useGetIsOrganizationAdmin = (organizationId: string) => {
     const memberInfo = await getUserOrganizationRole(
       supabaseUserClientComponentClient,
       user.id,
-      organizationId
+      organizationId,
     );
     return (
       memberInfo.member_role === 'admin' || memberInfo.member_role === 'owner'
@@ -488,7 +488,7 @@ export function useUpdateUserEmailMutation() {
         });
         toastRef.current = null;
       },
-    }
+    },
   );
 }
 
@@ -500,15 +500,21 @@ export const useSignInWithMagicLink = ({
   onSuccess,
   onMutate,
   onError,
+  next,
 }: {
   onSuccess?: () => void;
   onMutate?: () => void;
   onError?: (error: unknown) => void;
+  next?: string;
 }) => {
   const toastRef = useRef<string | null>(null);
   return useMutation(
     async ({ email }: { email: string }) => {
-      return signInWithMagicLink(supabaseUserClientComponentClient, email);
+      return signInWithMagicLink(
+        supabaseUserClientComponentClient,
+        email,
+        next,
+      );
     },
     {
       onMutate: () => {
@@ -530,7 +536,7 @@ export const useSignInWithMagicLink = ({
         toastRef.current = null;
         onError?.(error);
       },
-    }
+    },
   );
 };
 
@@ -549,7 +555,7 @@ export const useSignInWithPassword = ({
       return signInWithPassword(
         supabaseUserClientComponentClient,
         email,
-        password
+        password,
       );
     },
     {
@@ -572,7 +578,7 @@ export const useSignInWithPassword = ({
         toastRef.current = null;
         onError?.(error);
       },
-    }
+    },
   );
 };
 
@@ -610,7 +616,7 @@ export const useResetPassword = ({
         toastRef.current = null;
         onError?.(error);
       },
-    }
+    },
   );
 };
 
@@ -648,21 +654,25 @@ export const useUpdatePassword = ({
         toastRef.current = null;
         onError?.(error);
       },
-    }
+    },
   );
 };
 
-export const useSignInWithProvider = () => {
+export const useSignInWithProvider = ({ next }: { next?: string }) => {
   const toastRef = useRef<string | null>(null);
   return useMutation(
     async ({ provider }: { provider: AuthProvider }) => {
-      return signInWithProvider(supabaseUserClientComponentClient, provider);
+      return signInWithProvider(
+        supabaseUserClientComponentClient,
+        provider,
+        next,
+      );
     },
     {
       onMutate: ({ provider }) => {
         toastRef.current = toast.loading(`Signing in with ${provider}...`);
       },
-    }
+    },
   );
 };
 
@@ -700,6 +710,6 @@ export const useSignUp = ({
         toastRef.current = null;
         onError?.(error);
       },
-    }
+    },
   );
 };

@@ -963,6 +963,12 @@ export interface Database {
         Args: Record<PropertyKey, never>
         Returns: number
       }
+      app_admin_get_user_id_by_email: {
+        Args: {
+          emailarg: string
+        }
+        Returns: string
+      }
       app_admin_get_users_created_per_month: {
         Args: Record<PropertyKey, never>
         Returns: {

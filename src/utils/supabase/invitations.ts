@@ -2,12 +2,12 @@ import { AppSupabaseClient } from '@/types';
 
 export const getUserPendingInvitationsByEmail = async (
   supabase: AppSupabaseClient,
-  userEmail: string
+  userEmail: string,
 ) => {
   const { data, error } = await supabase
     .from('organization_join_invitations')
     .select(
-      '*, inviter:user_profiles!inviter_user_id(*), invitee:user_profiles!invitee_user_id(*), organization:organizations(*)'
+      '*, inviter:user_profiles!inviter_user_id(*), invitee:user_profiles!invitee_user_id(*), organization:organizations(*)',
     )
     .ilike('invitee_user_email', `%${userEmail}%`)
     .eq('status', 'active');
@@ -21,12 +21,12 @@ export const getUserPendingInvitationsByEmail = async (
 
 export const getUserPendingInvitationsById = async (
   supabase: AppSupabaseClient,
-  userId: string
+  userId: string,
 ) => {
   const { data, error } = await supabase
     .from('organization_join_invitations')
     .select(
-      '*, inviter:user_profiles!inviter_user_id(*), invitee:user_profiles!invitee_user_id(*), organization:organizations(*)'
+      '*, inviter:user_profiles!inviter_user_id(*), invitee:user_profiles!invitee_user_id(*), organization:organizations(*)',
     )
     .eq('invitee_user_id', userId)
     .eq('status', 'active');
@@ -36,4 +36,23 @@ export const getUserPendingInvitationsById = async (
   }
 
   return data || [];
+};
+
+export const getInvitationById = async (
+  supabase: AppSupabaseClient,
+  invitationId: string,
+) => {
+  const { data, error } = await supabase
+    .from('organization_join_invitations')
+    .select(
+      '*, inviter:user_profiles!inviter_user_id(*), invitee:user_profiles!invitee_user_id(*), organization:organizations(*)',
+    )
+    .eq('id', invitationId)
+    .eq('status', 'active');
+
+  if (error) {
+    throw error;
+  }
+
+  return data?.[0];
 };

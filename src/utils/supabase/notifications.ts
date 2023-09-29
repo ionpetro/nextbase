@@ -4,7 +4,7 @@ import { UserNotification } from '../zod-schemas/notifications';
 export const createNotification = async (
   supabaseClient: AppSupabaseClient,
   userId: string,
-  payload: any
+  payload: any,
 ) => {
   const { data: notification, error } = await supabaseClient
     .from('user_notifications')
@@ -18,7 +18,7 @@ export const createNotification = async (
 
 export const readNotification = async (
   supabaseClient: AppSupabaseClient,
-  notificationId: string
+  notificationId: string,
 ) => {
   const { data: notification, error } = await supabaseClient
     .from('user_notifications')
@@ -31,7 +31,7 @@ export const readNotification = async (
 
 export const readAllNotifications = async (
   supabaseClient: AppSupabaseClient,
-  userId: string
+  userId: string,
 ) => {
   const { data: notifications, error } = await supabaseClient
     .from('user_notifications')
@@ -43,7 +43,7 @@ export const readAllNotifications = async (
 
 export const seeNotification = async (
   supabaseClient: AppSupabaseClient,
-  notificationId: string
+  notificationId: string,
 ) => {
   const { data: notification, error } = await supabaseClient
     .from('user_notifications')
@@ -58,7 +58,7 @@ export const getPaginatedNotifications = async (
   supabaseClient: AppSupabaseClient,
   userId: string,
   pageNumber: number,
-  limit: number
+  limit: number,
 ): Promise<[number, Array<Table<'user_notifications'>>]> => {
   const { data: notifications, error } = await supabaseClient
     .from('user_notifications')
@@ -72,7 +72,7 @@ export const getPaginatedNotifications = async (
 
 export const getUnseenNotificationIds = async (
   supabaseClient: AppSupabaseClient,
-  userId: string
+  userId: string,
 ) => {
   const { data: notifications, error } = await supabaseClient
     .from('user_notifications')
@@ -92,7 +92,7 @@ export const createAcceptedOrgInvitationNotification = async (
   }: {
     organizationId: string;
     inviteeFullName: string;
-  }
+  },
 ) => {
   const payload: Extract<
     UserNotification,
@@ -103,6 +103,37 @@ export const createAcceptedOrgInvitationNotification = async (
     organizationId,
     type: 'acceptedOrganizationInvitation',
     userFullName: inviteeFullName,
+  };
+
+  return await createNotification(supabaseClient, userId, payload);
+};
+
+export const createInvitedToOrganizationNotification = async (
+  supabaseClient: AppSupabaseClient,
+  userId: string,
+  {
+    organizationId,
+    organizationName,
+    inviterFullName,
+    invitationId,
+  }: {
+    organizationId: string;
+    organizationName: string;
+    inviterFullName: string;
+    invitationId: string;
+  },
+) => {
+  const payload: Extract<
+    UserNotification,
+    {
+      type: 'invitedToOrganization';
+    }
+  > = {
+    organizationId,
+    organizationName,
+    inviterFullName,
+    invitationId,
+    type: 'invitedToOrganization',
   };
 
   return await createNotification(supabaseClient, userId, payload);

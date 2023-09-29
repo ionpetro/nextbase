@@ -3,7 +3,7 @@ import { toSiteURL } from '../helpers';
 
 export const signInWithMagicLink = async (
   supabase: AppSupabaseClient,
-  email: string
+  email: string,
 ) => {
   const { error } = await supabase.auth.signInWithOtp({
     email,
@@ -20,7 +20,7 @@ export const signInWithMagicLink = async (
 export const signInWithPassword = async (
   supabase: AppSupabaseClient,
   email: string,
-  password: string
+  password: string,
 ) => {
   const { error } = await supabase.auth.signInWithPassword({
     email,
@@ -34,7 +34,7 @@ export const signInWithPassword = async (
 
 export const resetPassword = async (
   supabase: AppSupabaseClient,
-  email: string
+  email: string,
 ) => {
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
     redirectTo: toSiteURL('/update-password'),
@@ -47,7 +47,7 @@ export const resetPassword = async (
 
 export const updatePassword = async (
   supabase: AppSupabaseClient,
-  password: string
+  password: string,
 ) => {
   const { error } = await supabase.auth.updateUser({
     password,
@@ -60,7 +60,7 @@ export const updatePassword = async (
 
 export const signInWithProvider = async (
   supabase: AppSupabaseClient,
-  provider: AuthProvider
+  provider: AuthProvider,
 ) => {
   const { error } = await supabase.auth.signInWithOAuth({
     provider,
@@ -77,7 +77,7 @@ export const signInWithProvider = async (
 export const signUp = async (
   supabase: AppSupabaseClient,
   email: string,
-  password: string
+  password: string,
 ) => {
   const { error } = await supabase.auth.signUp({
     email,
@@ -90,4 +90,21 @@ export const signUp = async (
   if (error) {
     throw error;
   }
+};
+
+// This function allows an application admin with service_role
+// to check if a user with a given email exists in the auth.users table
+export const appAdminGetUserIdByEmail = async (
+  supabase: AppSupabaseClient,
+  email: string,
+): Promise<string | null> => {
+  const { data, error } = await supabase.rpc('app_admin_get_user_id_by_email', {
+    emailarg: email,
+  });
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
 };

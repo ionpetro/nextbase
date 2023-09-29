@@ -14,7 +14,7 @@ export const createTeamAction = async ({
 }) => {
   const supabaseClient = createSupabaseUserServerActionClient();
   const team = await createTeam(supabaseClient, organizationId, name);
-  revalidatePath(`/`);
+  revalidatePath(`/organization/${organizationId}`);
   return team;
 };
 
@@ -30,8 +30,8 @@ export const createProjectAction = async ({
     supabaseClient,
     organizationId,
     null,
-    name
+    name,
   );
-  revalidatePath(`/`);
+  revalidatePath(`/organization/${organizationId}`);
   return project;
 };
