@@ -22,9 +22,8 @@ const fetchData = async (supabaseClient: AppSupabaseClient) => {
 
 export default async function DashboardPage() {
   const supabaseClient = createSupabaseUserServerComponentClient();
-  const { initialOrganizationsList, pendingInvitations } = await fetchData(
-    supabaseClient
-  );
+  const { initialOrganizationsList, pendingInvitations } =
+    await fetchData(supabaseClient);
   return (
     <div className=" space-y-8">
       {pendingInvitations.length > 0 ? (

@@ -121,8 +121,6 @@ export function SpecificOrganizationClientLayout({
           id: createTeamToastRef.current,
         });
         createTeamToastRef.current = undefined;
-        // router.refresh();
-        router.push(`/organization/${organizationId}/team/${team.id}`);
       },
       onError: (error) => {
         const customError =
