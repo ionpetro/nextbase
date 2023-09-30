@@ -23,7 +23,11 @@ export function Login({
 
   function redirectToDashboard() {
     router.refresh();
-    router.push(`/auth/callback?next=${next}`);
+    if (next) {
+      router.push(`/auth/callback?next=${next}`);
+    } else {
+      router.push('/auth/callback');
+    }
   }
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const magicLinkMutation = useSignInWithMagicLink({
