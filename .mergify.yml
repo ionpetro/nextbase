@@ -1,4 +1,10 @@
 pull_request_rules:
+  - name: Label renovate PRs
+    conditions:
+      - author=renovate[bot]
+    actions:
+      label:
+        add: ['dependency']
   - name: Automatic merge on approval
     conditions:
       - '#approved-reviews-by>=1'
@@ -28,8 +34,6 @@ pull_request_rules:
       - check-success=vitest
       - check-success="Vercel"
     actions:
-      label:
-        add: ['dependency']
       review:
         type: APPROVE
       queue:
