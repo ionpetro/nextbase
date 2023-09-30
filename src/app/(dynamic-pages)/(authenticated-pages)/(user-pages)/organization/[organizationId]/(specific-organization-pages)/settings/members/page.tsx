@@ -79,7 +79,7 @@ function TeamMembers() {
         role: member.member_role,
         created_at: moment(member.created_at).format('DD MMM YYYY'),
       };
-    }
+    },
   );
 
   return (
@@ -123,11 +123,11 @@ function TeamInvitations() {
         created_at: moment(invitation.created_at).format('DD MMM YYYY'),
         status: invitation.status,
       };
-    }
+    },
   );
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 max-w-4xl">
       <T.H3>Invitations</T.H3>
       <TeamInvitationsTable
         organizationId={organizationId}

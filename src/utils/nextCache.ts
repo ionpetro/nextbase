@@ -7,7 +7,7 @@ export const cacheTags = {
     return `projects_in_organization_${organizationId}`;
   },
 
-  organizationsList: (): string => {
-    return 'organizations_list';
+  organizationsByUser: (userId: string): string => {
+    return `organizations_by_user_${userId}`;
   },
 };

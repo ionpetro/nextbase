@@ -21,35 +21,57 @@ import {
 
 // convert the above organizationgraphs import to next dynamic
 import dynamic from 'next/dynamic';
-import { T } from '@/components/ui/Typography';
+import { useMutation } from '@tanstack/react-query';
+import { Table } from '@/types';
+import { useRef } from 'react';
+import { useLoggedInUser } from '@/hooks/useLoggedInUser';
 const OrganizationGraphs = dynamic(
   () => import('./OrganizationGraphs').then((mod) => mod.OrganizationGraphs),
   {
     ssr: false,
-  }
+  },
 );
 
 export function OrganizationList({
-  initialOrganizationsList,
+  organizationList,
+  createOrganization,
 }: {
-  initialOrganizationsList: InitialOrganizationListType;
+  organizationList: InitialOrganizationListType;
+  createOrganization: (organizationTitle: string) => Promise<void>;
 }) {
-  const { data: organizations, isLoading: isLoadingOrganizations } =
-    useOrganizationsList(initialOrganizationsList);
+  const toastRef = useRef<string>();
+  const user = useLoggedInUser();
+
   const router = useRouter();
-  const { mutate, isLoading: isCreatingOrganization } =
-    useCreateOrganizationMutation({
-      onSuccess: (organization) => {
-        router.push(`/organization/${organization.id}`);
+  const { mutate, isLoading: isCreatingOrganization } = useMutation(
+    async (organizationTitle: string) => {
+      return createOrganization(organizationTitle);
+    },
+    {
+      onMutate: async (name) => {
+        toastRef.current = toast.loading(`Creating organization ${name}...`);
+      },
+      onSuccess: () => {
+        // Invalidate the organization list query
+        toast.success(`Organization  created!`, {
+          id: toastRef.current,
+        });
+        toastRef.current = undefined;
+        // router.push(`/organization/${organization.id}`);
       },
       onError: (error) => {
-        toast.error(error.message);
+        const customError =
+          error instanceof Error ? error : new Error(String(error));
+        toast.error(`Error creating organization: ${customError.message}`, {
+          id: toastRef.current,
+        });
+        toastRef.current = undefined;
       },
-    });
+    },
+  );
   const onConfirm = (organizationTitle: string) => {
     mutate(organizationTitle);
   };
-  if (isLoadingOrganizations) return <div>Loading...</div>;
   return (
     <div className="space-y-10 mb-10">
       <div className="space-y-2">
@@ -80,15 +102,16 @@ export function OrganizationList({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {organizations?.map((organization, index) => {
+            {organizationList.map((organization, index) => {
+              console.log(organization);
               const teamMembers = Array.isArray(
-                organization.organization_members
+                organization.organization_members,
               )
                 ? organization.organization_members
                 : [];
               const teamMembersCount = teamMembers.length;
               const owner = teamMembers.find(
-                (member) => member.member_role === 'owner'
+                (member) => member.member_role === 'owner',
               );
               const ownerUserProfile = Array.isArray(owner?.user_profiles)
                 ? owner?.user_profiles[0]

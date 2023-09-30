@@ -24,7 +24,7 @@ export default async function OrganizationPage({
         organizationId,
       );
     },
-    undefined,
+    [cacheTags.teamsInOrganization(organizationId)],
     {
       tags: [cacheTags.teamsInOrganization(organizationId)],
     },
