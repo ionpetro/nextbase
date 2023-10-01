@@ -82,7 +82,7 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props) => {
   return (
     <BubbleMenu
       {...bubbleMenuProps}
-      className="flex w-fit divide-x divide-stone-200 rounded border border-stone-200 bg-white shadow-xl"
+      className="flex w-fit divide-x divide-stone-200 dark:divide-slate-800 rounded border dark:border-slate-700  bg-white dark:bg-slate-950 shadow-xl"
     >
       <NodeSelector
         editor={editor}
@@ -108,7 +108,7 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props) => {
             key={index}
             type="button"
             onClick={item.command}
-            className="p-2 text-stone-600 hover:bg-stone-100 active:bg-stone-200"
+            className="p-2 text-stone-600 dark:text-slate-400 hover:bg-stone-100 dark:hover:bg-slate-900 active:bg-stone-200 dark:active:bg-slate-800"
           >
             <item.icon
               className={cn('h-4 w-4', {

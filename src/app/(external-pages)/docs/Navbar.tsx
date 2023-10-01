@@ -2,8 +2,15 @@
 import { cn } from '@/utils/cn';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { MobileNavigation } from './MobileNavigation';
-import LucideTwitter from 'lucide-react/dist/esm/icons/twitter';
+import { DocsMobileNavigation } from './DocsMobileNavigation';
+import TwitterLightMode from '@public/logos/x-logo-black.png';
+import TwitterDarkMode from '@public/logos/x-logo-white.png';
+import lightLogo from '@public/logos/nextbase-light-logo.png';
+import darkLogo from '@public/logos/nextbase-dark-logo.png';
+import { usePathname } from 'next/navigation';
+import Image from 'next/image';
+import { classNames } from '@/utils/classNames';
+import { ThemeToggle } from '@/components/presentational/tailwind/ThemeToggle';
 
 function GitHubIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -15,7 +22,8 @@ function GitHubIcon(props: React.SVGProps<SVGSVGElement>) {
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
-
+  const pathname = usePathname();
+  const isDocs = pathname ? pathname.startsWith('/docs') : false;
   useEffect(() => {
     function onScroll() {
       setIsScrolled(window.scrollY > 0);
@@ -28,69 +36,85 @@ export function Header() {
   }, []);
 
   return (
-    <header
-      className={cn(
-        'sticky top-0 z-50 flex flex-wrap border-b border-gray-200 items-center justify-between bg-white py-4 h-[57px] transition duration-500 dark:shadow-none sm:px-4 lg:px-8',
-        isScrolled
-          ? 'dark:bg-slate-900/95 dark:backdrop-blur dark:[@supports(backdrop-filter:blur(0))]:bg-slate-900/75'
-          : 'dark:bg-transparent'
-      )}
-    >
-      <div className="mr-6 flex lg:hidden space-x-2">
+    <header className="inset-x-0 top-0 bg-white/80 dark:bg-slate-900 sticky z-50 border-b border-gray-200/20 dark:border-gray-700/40 md:container backdrop-blur">
+      {/* <div className="mr-6 flex lg:hidden space-x-2">
         <MobileNavigation />
         <div className={cn('block lg:hidden ', 'relative ')}>
-          <Link href="/" className="block" aria-label="Home page">
-            <img
-              src="/logos/nextbase_navlogo_small.svg"
-              className="h-9 block sm:h-9"
-              alt="Nextbase Logo"
-            />
+          <Link href={'/'} className={classNames('font-bold text-xl ')}>
+            <div className="relative flex space-x-2 items-center text-black dark:text-white dark:-ml-4">
+              <Image
+                src={lightLogo}
+                alt="logo"
+                className="dark:hidden block h-10 w-10"
+              />
+              <Image
+                src={darkLogo}
+                alt="logo"
+                className="hidden dark:block h-10 w-10"
+              />
+              <span className="hidden font-bold sm:inline-block">nextbase</span>
+            </div>
           </Link>
         </div>
-      </div>
+      </div> */}
 
-      <div
-        className={cn(
-          'h-full flex mx-auto  max-w-8xl w-full justify-center items-center sm:px-2 lg:px-8 xl:px-12'
-        )}
-      >
-        <div className={cn('hidden lg:block', 'relative ')}>
-          <Link href="/" className="block" aria-label="Home page">
-            <img
-              src="/logos/nextbase_navlogo.svg"
-              className="h-5 block sm:h-5"
-              alt="Nextbase Logo"
-            />
+      <nav className={`flex items-center h-[57px] justify-between w-full`}>
+        <div className=" flex items-center">
+          <Link href={'/'} className={classNames('font-bold text-xl ')}>
+            <div className="relative flex space-x-2 items-center text-black dark:text-white dark:-ml-4">
+              <Image
+                src={lightLogo}
+                alt="logo"
+                className="dark:hidden block h-10 w-10"
+              />
+              <Image
+                src={darkLogo}
+                alt="logo"
+                className="hidden dark:block h-10 w-10"
+              />
+              <span className="hidden font-bold sm:inline-block">nextbase</span>
+            </div>
           </Link>
         </div>
-        <div className="relative flex basis-0 items-center justify-end gap-3 sm:gap-3 md:flex-grow">
-          <div className="flex space-x-1">
+        <div className="flex space-x-1">
+          <Link
+            href="/docs"
+            className="inline-flex px-4 py-1.5 text-muted-foreground hover:text-gray-900 dark:hover:text-slate-300 text-base font-[500] leading-tight"
+            aria-label="Docs"
+          >
+            Docs
+          </Link>
+          <Link
+            href="/blog"
+            className="inline-flex px-4 py-1.5 text-muted-foreground hover:text-gray-900 dark:hover:text-slate-300 text-base font-[500] leading-tight"
+            aria-label="Blog"
+          >
+            Blog
+          </Link>
+        </div>
+        <div className=" flex items-center gap-3 sm:gap-3 md:flex-grow">
+          <div className="w-px h-5 mx-4 bg-muted-foreground" />
+          <div className="flex items-center space-x-4">
+            <ThemeToggle />
             <Link
-              href="/docs"
-              className="inline-flex px-4 py-1.5 text-zinc-900 hover:text-zinc-700 text-[13px] font-[600] leading-tight"
-              aria-label="Docs"
+              href="https://twitter.com/@usenextbase"
+              target="_blank"
+              aria-label="Twitter"
             >
-              Docs
-            </Link>
-            <Link
-              href="/blog"
-              className="inline-flex px-4 py-1.5 text-zinc-500 hover:text-zinc-900 text-[13px] font-[500] leading-tight"
-              aria-label="Blog"
-            >
-              Blog
+              <Image
+                src={TwitterLightMode}
+                alt="Twitter"
+                className="h-4 w-4 dark:hidden block text-muted-foreground"
+              />
+              <Image
+                src={TwitterDarkMode}
+                alt="Twitter"
+                className="h-4 w-4 hidden dark:block text-muted-foreground"
+              />
             </Link>
           </div>
-          <div className="w-px h-5 mx-4 bg-zinc-300" />
-          <Link
-            href="https://twitter.com/@usenextbase"
-            target="_blank"
-            className="group p-[5px] bg-gradient-to-b from-white to-zinc-50 hover:bg-gradient-to-b hover:from-zinc-100 hover:to-zinc-100 transition rounded-[8px] border border-zinc-900 border-opacity-20 "
-            aria-label="Twitter"
-          >
-            <LucideTwitter className="h-5 w-5" />
-          </Link>
         </div>
-      </div>
+      </nav>
     </header>
   );
 }

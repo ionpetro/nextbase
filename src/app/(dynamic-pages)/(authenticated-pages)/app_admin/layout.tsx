@@ -39,7 +39,7 @@ export default async function Layout({
       return redirect('/dashboard');
     }
     return (
-      <div className="flex-1 relative h-auto max-h-screen w-full overflow-auto">
+      <div className="flex-1 pb-10 relative h-auto max-h-screen w-full overflow-auto">
         <InternalNavbar />
         <div className="px-12 space-y-6">
           <AppAdminNavigation />

@@ -26,16 +26,19 @@ export const LinkSelector: FC<LinkSelectorProps> = ({
     <div className="relative">
       <button
         type="button"
-        className="flex h-full items-center space-x-2 px-3 py-1.5 text-sm font-medium text-stone-600 hover:bg-stone-100 active:bg-stone-200"
+        className="flex h-full items-center space-x-2 px-3 py-1.5 text-sm font-medium text-stone-600 dark:text-slate-400 hover:bg-stone-100 dark:hover:bg-slate-900 active:bg-stone-200 dark:active:bg-slate-800"
         onClick={() => {
           setIsOpen(!isOpen);
         }}
       >
         <p className="text-base">↗</p>
         <p
-          className={cn('underline decoration-stone-400 underline-offset-4', {
-            'text-blue-500': editor.isActive('link'),
-          })}
+          className={cn(
+            'underline decoration-stone-400 dark:decoration-slate-600 underline-offset-4',
+            {
+              'text-blue-500': editor.isActive('link'),
+            }
+          )}
         >
           Link
         </p>
@@ -48,7 +51,7 @@ export const LinkSelector: FC<LinkSelectorProps> = ({
             editor.chain().focus().setLink({ href: input.value }).run();
             setIsOpen(false);
           }}
-          className="fixed top-full z-[99999] mt-1 flex w-60 overflow-hidden rounded border border-stone-200 bg-white p-1 shadow-xl animate-in fade-in slide-in-from-top-1"
+          className="fixed top-full z-[99999] mt-1 flex w-60 overflow-hidden rounded border border-stone-200 dark:border-slate-600 bg-white dark:bg-slate-950 p-1 shadow-xl animate-in fade-in slide-in-from-top-1"
         >
           <input
             ref={inputRef}
@@ -71,7 +74,7 @@ export const LinkSelector: FC<LinkSelectorProps> = ({
           ) : (
             <button
               type="button"
-              className="flex items-center rounded-sm p-1 text-stone-600 transition-all hover:bg-stone-100"
+              className="flex items-center rounded-sm p-1 text-stone-600 dark:text-slate-400 transition-all hover:bg-stone-100 dark:hover:bg-slate-900"
             >
               <Check className="h-4 w-4" />
             </button>

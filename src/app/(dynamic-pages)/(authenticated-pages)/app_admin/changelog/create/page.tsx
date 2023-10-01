@@ -10,6 +10,7 @@ import { customMDXComponents } from '@/components/mdxComponents';
 import { cn } from '@/utils/cn';
 import { createSupabaseAdminServerComponentClient } from '@/supabase-clients/admin/createSupabaseAdminServerComponentClient';
 import { createChangelogAction } from './actions';
+import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 
 export default async function Page() {
   const supabaseClient = createSupabaseAdminServerComponentClient();
@@ -43,10 +44,12 @@ export default async function Page() {
   return (
     <div className="space-y-10">
       {/* Create Changelog Page */}
-      <BasicPageHeading
-        heading="Create Changelog"
-        subheading="This is the changelog for the application. It will be updated as new features are added and bugs are fixed."
-      />
+      <div className="space-y-6 max-w-[768px]">
+        <PageHeading
+          title="Changelog"
+          subTitle="This is the changelog for the application. It will be updated as new features are added and bugs are fixed."
+        />
+      </div>
 
       {/* Content Page */}
       <div
@@ -59,11 +62,12 @@ export default async function Page() {
 
           {/* Previous Changelogs*/}
           <div className="space-y-8 mt-10">
-            <LargeSectionHeading
-              heading="All Releases"
-              subheading="These are the list of all Previous Releases"
-            >
-              {/* <DropdownMenu>
+            <PageHeading
+              title="All Releases"
+              titleClassName="text-xl tracking-normal font-semibold"
+              subTitle="These are the list of all Previous Releases"
+            />
+            {/* <DropdownMenu>
                 <DropdownMenuTrigger>
                   <Button variant="outline">
                     <AiOutlineFilter className="text-xl mr-2" />
@@ -76,7 +80,6 @@ export default async function Page() {
                   <DropdownMenuItem>Oldest First</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu> */}
-            </LargeSectionHeading>
             <div className="space-y-4">
               {changelogItemsResponse.data.map((item, index) => (
                 <ChangeLogListCard
@@ -114,8 +117,8 @@ export default async function Page() {
           </div>
         </div>
         {/* Roadmap Card */}
-        <div className="space-y-2  px-6 py-4 rounded-lg bg-gray-100 ">
-          <p className="font-[600] mb-4">Completed Tasks</p>
+        <div className="space-y-2 border px-6 py-4 rounded-lg bg-gray-100 dark:bg-slate-950/40 ">
+          <p className="font-[600] dark:text-slate-300 mb-4">Completed Tasks</p>
           <div className="space-y-4">
             {completedTasksList.map((completedTask) => {
               return (

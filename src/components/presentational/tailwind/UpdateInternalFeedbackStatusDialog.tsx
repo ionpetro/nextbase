@@ -47,7 +47,7 @@ export const UpdateInternalFeedbackStatusDialog = ({
             setOpen(false);
           }}
         >
-          <div className="space-y-2">
+          <div className="space-y-2 mb-6">
             <DialogDescription>
               Update the status of this feedback thread.
             </DialogDescription>
@@ -57,17 +57,23 @@ export const UpdateInternalFeedbackStatusDialog = ({
             />
           </div>
           <DialogFooter>
-            <Button type="submit" variant="success" disabled={isLoading}>
-              {isLoading ? 'Updating Status...' : 'Update'}
-            </Button>
             <Button
               type="button"
               variant="outline"
+              className="w-full"
               onClick={() => {
                 setOpen(false);
               }}
             >
               Cancel
+            </Button>
+            <Button
+              type="submit"
+              variant="default"
+              className="w-full"
+              disabled={isLoading}
+            >
+              {isLoading ? 'Updating Status...' : 'Update'}
             </Button>
           </DialogFooter>
         </form>

@@ -62,7 +62,7 @@ export const ManageAuthorsDialog = ({
   return (
     <Dialog open={isOpen} onOpenChange={(newIsOpen) => setIsOpen(newIsOpen)}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="text-sm bg-white dark:bg-black">
+        <Button variant="outline">
           <UsersIcon className="mr-2 w-5 h-5" />
           Manage author profiles
         </Button>

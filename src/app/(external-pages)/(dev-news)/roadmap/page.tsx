@@ -3,6 +3,7 @@ import BasicPageHeading from '@/components/ui/Headings/BasicPageHeading';
 import RoadmapCard from '@/components/ui/Card/RoadmapCard';
 import moment from 'moment';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
+import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 
 export default async function Page() {
   const roadmapItemsResponse = await supabaseAdminClient
@@ -31,26 +32,26 @@ export default async function Page() {
   });
   const plannedCards = roadmapArray.filter((item) => item.status === 'planned');
   const inProgress = roadmapArray.filter(
-    (item) => item.status === 'in_progress'
+    (item) => item.status === 'in_progress',
   );
   const completedCards = roadmapArray.filter(
-    (item) => item.status === 'completed'
+    (item) => item.status === 'completed',
   );
 
   return (
-    <div className=" space-y-10">
-      <BasicPageHeading
-        heading="Roadmap"
-        subheading="This is where you see where the application is going"
+    <div className="w-full space-y-10 px-4 md:p-0 mb-20">
+      <PageHeading
+        title="Roadmap"
+        subTitle="This is where you see where the application is going"
       />
 
       <div className="space-y-10">
-        <div className="grid grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {/* Planned */}
-          <div className="h-screen space-y-4 bg-gray-100 p-4 px-6 rounded-lg border border-gray-100">
+          <div className="h-screen space-y-6 bg-gray-100 dark:bg-slate-950/40 px-6 py-5 rounded-xl border">
             <div>
-              <p className="text-lg font-[600]">Planned</p>
-              <p className="text-base font-[500] text-gray-600">
+              <p className="text-lg dark:text-slate-300 font-[600]">Planned</p>
+              <p className="text-base font-[500] text-muted-foreground">
                 {' '}
                 These are Planned
               </p>
@@ -71,10 +72,12 @@ export default async function Page() {
           </div>
 
           {/* In Review */}
-          <div className="space-y-4 bg-gray-100 p-4 px-6 rounded-lg border border-gray-100">
+          <div className="h-screen space-y-6 bg-gray-100 dark:bg-slate-950/40 px-6 py-5 rounded-xl border">
             <div>
-              <p className="text-lg font-[600]">In Review</p>
-              <p className="text-base font-[500] text-gray-600">
+              <p className="text-lg  dark:text-slate-300  font-[600]">
+                In Review
+              </p>
+              <p className="text-base font-[500] text-muted-foreground">
                 {' '}
                 These are in review
               </p>
@@ -95,10 +98,12 @@ export default async function Page() {
           </div>
 
           {/* Completed */}
-          <div className="space-y-4 bg-gray-100 p-4 px-6 rounded-lg border border-gray-100">
+          <div className="h-screen space-y-6 bg-gray-100 dark:bg-slate-950/40 px-6 py-5 rounded-xl border">
             <div>
-              <p className="text-lg font-[600]">Completed</p>
-              <p className="text-base font-[500] text-gray-600">
+              <p className="text-lg  dark:text-slate-300  font-[600]">
+                Completed
+              </p>
+              <p className="text-base font-[500] text-muted-foreground">
                 {' '}
                 These are Completed
               </p>

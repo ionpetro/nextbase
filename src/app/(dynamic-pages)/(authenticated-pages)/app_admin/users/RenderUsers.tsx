@@ -320,9 +320,11 @@ export function RenderUsers({
             ))}
           </TableBody>
         </ShadcnTable>
+      </div>
+      <div className="flex w-full justify-center">
         {hasNextPage ? (
           <button
-            className="underline text-blue-500 text-sm"
+            className="underline underline-offset-4 text-gray-500 hover:text-gray-800 dark:text-gray-400 hover:dark:text-gray-300 font-bold text-sm"
             onClick={() => {
               fetchNextPage();
             }}

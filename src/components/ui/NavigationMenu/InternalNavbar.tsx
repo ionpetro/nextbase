@@ -33,7 +33,7 @@ export default function InternalNavbar() {
   }, []);
 
   return (
-    <header className="sticky top-0 w-full z-10 dark:bg-[#111316]/90 bg-white/90 backdrop-blur">
+    <header className="sticky top-0 w-full z-10 dark:bg-slate-900/50 bg-white/90 backdrop-blur">
       <div
         className={cn(
           'h-full flex mx-auto px-12 border-b dark:border-gray-700/50 py-5 w-full mb-8 justify-center items-center'

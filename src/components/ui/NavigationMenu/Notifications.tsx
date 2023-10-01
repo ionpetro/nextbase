@@ -213,7 +213,7 @@ export const Notifications = () => {
       </PopoverTrigger>
 
       {notifications.length ? (
-        <PopoverContent className="mr-12 w-[560px] p-0 rounded-xl overflow-hidden bg-white dark:bg-black">
+        <PopoverContent className="mr-12 w-[560px] p-0 rounded-xl overflow-hidden bg-white dark:bg-slate-950">
           <div className="border-b-2 px-6 pb-2 shadow-lg">
             <div className="mt-7 mb-3 flex justify-between">
               <T.H3 className="leading-7 mt-0 dark:text-white ">

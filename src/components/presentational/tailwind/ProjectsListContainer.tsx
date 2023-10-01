@@ -14,8 +14,8 @@ export function ProjectsListContainer({
     actions,
 }: ProjectsListContainerProps) {
     return (
-        <div className="border rounded-xl bg-gray-200/10 dark:bg-gray-900/20">
-            <div className="py-8 pt-6 pb-6 sm:px-8 lg:px-8">
+        <div className="border rounded-xl bg-gray-200/10 dark:bg-slate-950/40">
+            <div className="pb-8 sm:px-8 lg:px-8">
                 <div className="sm:flex sm:items-center justify-between">
                     <div className="sm:flex-auto max-w-[680px]">
                         <T.H3>{title}</T.H3>

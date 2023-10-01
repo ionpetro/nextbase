@@ -42,7 +42,7 @@ export default async function BlogPostPage({ params }: { params: unknown }) {
     const { slug } = paramsSchema.parse(params);
     const post = await getPublishedBlogPostBySlug(supabaseAdminClient, slug);
     return (
-      <div className="relative w-full space-y-8 max-w-4xl mx-auto">
+      <div className="relative w-full space-y-8 px-4 md:px-0 max-w-4xl mx-auto">
         {post.cover_image ? (
           <img
             src={post.cover_image}

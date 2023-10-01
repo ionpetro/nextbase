@@ -5,6 +5,7 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 import { customMDXComponents } from '@/components/mdxComponents';
 import { cn } from '@/utils/cn';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
+import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 
 export default async function Page() {
   const changelogItemsResponse = await supabaseAdminClient
@@ -19,11 +20,11 @@ export default async function Page() {
     throw new Error('No data found');
   }
   return (
-    <div className="space-y-10">
+    <div className="space-y-10 px-4 md:px-0">
       <div className="space-y-6">
-        <BasicPageHeading
-          heading="Changelog"
-          subheading="This is the changelog for the application. It will be updated as new features are added and bugs are fixed."
+        <PageHeading
+          title="Changelog"
+          subTitle="This is the changelog for the application. It will be updated as new features are added and bugs are fixed."
         />
       </div>
 
@@ -49,7 +50,7 @@ export default async function Page() {
                   // pre
                   'prose-pre:rounded-xl prose-pre:bg-slate-900 prose-pre:shadow-lg dark:prose-pre:bg-slate-800/60 dark:prose-pre:shadow-none dark:prose-pre:ring-1 dark:prose-pre:ring-slate-300/10',
                   // hr
-                  'dark:prose-hr:border-slate-800'
+                  'dark:prose-hr:border-slate-800',
                 )}
               >
                 {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}

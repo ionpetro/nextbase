@@ -22,7 +22,7 @@ export const OrganizationTeams = ({
   return (
     <ProjectsListContainer title="Teams" subTitle="A list of all teams.">
       <div className="overflow-hidden shadow ring-1 mt-6 ring-black ring-opacity-5 border sm:rounded-lg">
-        <ShadcnTable className="bg-white dark:bg-black">
+        <ShadcnTable className="bg-white dark:bg-slate-900">
           <TableHeader>
             <TableRow>
               <TableHead>Row</TableHead>

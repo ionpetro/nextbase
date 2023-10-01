@@ -105,51 +105,55 @@ function ChoosePricingTable() {
               <>
                 <div
                   key={product.id + priceId}
-                  className="w-full flex-1 mt-3 order-2 dark:bg-gray-900/50 bg-gray-200/10 shadow-none overflow-hidden rounded-xl hover:shadow-xl transition sm:w-96 lg:w-full lg:order-1 border mb-2  hover:border-gray-400 dark:hover:border-gray-700 "
+                  className="w-full flex flex-col justify-between mt-3 order-2 dark:bg-slate-900 bg-gray-200/10 shadow-none overflow-hidden rounded-xl hover:shadow-xl transition sm:w-96 lg:w-full lg:order-1 border mb-2  hover:border-gray-400 dark:hover:border-gray-700 "
                 >
-                  <div className="mb-6 p-7 pt-6 flex items-center border-b bg-gray-200/40 dark:bg-gray-900">
-                    <div>
-                      <T.H4 className="mt-0 mb-4"> {product.name}</T.H4>
-                      <span>
-                        <T.H1 key={priceId}>
-                          {' '}
-                          {product.priceString}
-                          <span className="text-base tracking-normal text-muted-foreground font-medium">
+                  <div>
+                    <div className="mb-6 p-7 pt-6 flex items-center border-b bg-gray-200/40 dark:bg-slate-800">
+                      <div>
+                        <T.H4 className="mt-0 mb-4"> {product.name}</T.H4>
+                        <span>
+                          <T.H1 key={priceId}>
                             {' '}
-                            per {product.price.interval}
-                          </span>
-                        </T.H1>
-                      </span>
+                            {product.priceString}
+                            <span className="text-base tracking-normal text-muted-foreground font-medium">
+                              {' '}
+                              per {product.price.interval}
+                            </span>
+                          </T.H1>
+                        </span>
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="px-5 pl-6 pt-0 mb-8">
-                    <ul className="font-medium text-muted-foreground">
-                      <li className="grid grid-cols-[24px,1fr] gap-0 text-md items-start mb-2">
-                        <CheckIcon className="text-green-600 w-6 h-6" />
-                        <T.P className="leading-6 ml-3">
-                          {product.description}
-                        </T.P>
-                      </li>
-                      <li className="grid grid-cols-[24px,1fr] gap-0 text-md items-start mb-2">
-                        <CheckIcon className="text-green-600 w-6 h-6" />
-                        <T.P className="leading-6 ml-3">A nice feature</T.P>
-                      </li>
-                      <li className="grid grid-cols-[24px,1fr] gap-0 text-md items-start mb-2">
-                        <CheckIcon className="text-green-600 w-6 h-6" />
-                        <T.P className="leading-6 ml-3">
-                          Another nice feature
-                        </T.P>
-                      </li>
-                      <li className="grid grid-cols-[24px,1fr] gap-0 text-md items-start mb-2">
-                        {product.price.unit_amount > 0 ? (
+                    <div className="px-5 pl-6 pt-0 mb-8">
+                      <ul className="font-medium text-muted-foreground">
+                        <li className="grid grid-cols-[24px,1fr] gap-0 text-md items-start mb-2">
                           <CheckIcon className="text-green-600 w-6 h-6" />
-                        ) : (
-                          <XIcon className="text-red-500" />
-                        )}
-                        <T.P className="leading-6 ml-3">A premium feature</T.P>
-                      </li>
-                    </ul>
+                          <T.P className="leading-6 ml-3">
+                            {product.description}
+                          </T.P>
+                        </li>
+                        <li className="grid grid-cols-[24px,1fr] gap-0 text-md items-start mb-2">
+                          <CheckIcon className="text-green-600 w-6 h-6" />
+                          <T.P className="leading-6 ml-3">A nice feature</T.P>
+                        </li>
+                        <li className="grid grid-cols-[24px,1fr] gap-0 text-md items-start mb-2">
+                          <CheckIcon className="text-green-600 w-6 h-6" />
+                          <T.P className="leading-6 ml-3">
+                            Another nice feature
+                          </T.P>
+                        </li>
+                        <li className="grid grid-cols-[24px,1fr] gap-0 text-md items-start mb-2">
+                          {product.price.unit_amount > 0 ? (
+                            <CheckIcon className="text-green-600 w-6 h-6" />
+                          ) : (
+                            <XIcon className="text-red-500" />
+                          )}
+                          <T.P className="leading-6 ml-3">
+                            A premium feature
+                          </T.P>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
 
                   <div className="rounded-xl py-1 mb-5 mx-5 mt-4 text-center text-white text-xl space-y-2">

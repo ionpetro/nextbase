@@ -28,9 +28,9 @@ export default async function BlogListPage() {
     getAllBlogTags(),
   ]);
   return (
-    <div className=" max-w-5xl space-y-4">
+    <div className=" max-w-5xl space-y-4 ">
       <div className="">
-        <div className="space-y-4 max-w-6xl bg-gray-100/50 dark:bg-gray-800/50 border  rounded-lg p-10 py-6 ">
+        <div className="space-y-4 max-w-6xl bg-gray-100/50 dark:bg-slate-950/40 border  rounded-lg p-10 py-6 ">
           <div className="space-y-2">
             <div className="flex justify-between items-baseline">
               <div className="flex-1 mt-4">

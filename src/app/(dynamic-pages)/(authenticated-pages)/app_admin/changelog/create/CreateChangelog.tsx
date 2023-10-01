@@ -68,7 +68,7 @@ export const CreateChangelog = ({
 
   return (
     <form
-      className="space-y-2"
+      className="space-y-3"
       onSubmit={handleSubmit((data) => {
         mutate(data);
       })}
@@ -76,19 +76,19 @@ export const CreateChangelog = ({
       <input
         placeholder="Title"
         {...register('title')}
-        className="w-full px-6 py-4 rounded-lg border border-gray-200"
+        className="block px-4 py-6 w-full appearance-none rounded-md border bg-gray-50/10 dark:bg-slate-950/40 h-10  placeholder-muted-foreground shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-lg"
       />
       <textarea
         placeholder="Write your log here"
         {...register('changes')}
-        className="w-full px-6 py-4 rounded-lg border border-gray-200 h-[320px]"
+        className="block px-4 py-3 h-80 w-full appearance-none rounded-md border bg-gray-50/10 dark:bg-slate-950/40  placeholder-muted-foreground shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-lg"
       />
 
       <div className="flex space-x-2 justify-end">
-        <Button variant="outline" type="reset">
+        <Button variant="outline" type="reset" className="w-1/4">
           Cancel
         </Button>
-        <Button variant="default" type="submit">
+        <Button variant="default" type="submit" className="w-1/4">
           {' '}
           Submit
         </Button>

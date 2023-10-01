@@ -5,6 +5,7 @@ import teamsprojects from 'public/assets/help-assets/teams-projects.png';
 import InternalRoadmapCard from '@/components/ui/Card/InternalRoadmapCard';
 import moment from 'moment';
 import { createSupabaseAdminServerComponentClient } from '@/supabase-clients/admin/createSupabaseAdminServerComponentClient';
+import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 
 export default async function Page() {
   const roadmapItemsResponse = await createSupabaseAdminServerComponentClient()
@@ -41,24 +42,25 @@ export default async function Page() {
 
   return (
     <div className=" space-y-10 max-w-[1296px]">
-      <BasicPageHeading
-        heading="Roadmap"
-        subheading="This is where you see where the application is going"
+      <PageHeading
+        title="Roadmap"
+        titleClassName="text-2xl font-semibold tracking-normal"
+        subTitle="This is where you see where the application is going"
       />
 
       <div className="space-y-10">
         <div className="grid grid-cols-3 gap-10">
           {/* Planned */}
-          <div className="h-screen space-y-4 bg-gray-100 p-4 px-6 rounded-lg border border-gray-100">
+          <div className="h-screen space-y-6 bg-gray-100 dark:bg-slate-950/40 px-6 py-5 rounded-xl border">
             <div>
-              <p className="text-lg font-[600]">Planned</p>
-              <p className="text-base font-[500] text-gray-600">
+              <p className="text-lg dark:text-slate-300 font-[600]">Planned</p>
+              <p className="text-base font-[500] text-muted-foreground">
                 {' '}
                 These are Planned
               </p>
             </div>
 
-            <div className=" space-y-3">
+            <div className=" space-y-4">
               {plannedCards.map((card) => (
                 <InternalRoadmapCard
                   key={card.id}
@@ -74,16 +76,18 @@ export default async function Page() {
           </div>
 
           {/* In Review */}
-          <div className="space-y-4 bg-gray-100 p-4 px-6 rounded-lg border border-gray-100">
+          <div className="h-screen space-y-6 bg-gray-100 dark:bg-slate-950/40 px-6 py-5 rounded-xl border">
             <div>
-              <p className="text-lg font-[600]">In Progress</p>
-              <p className="text-base font-[500] text-gray-600">
+              <p className="text-lg  dark:text-slate-300  font-[600]">
+                In Progress
+              </p>
+              <p className="text-base font-[500] text-muted-foreground">
                 {' '}
                 These are in progress
               </p>
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-4">
               {inProgress.map((card) => (
                 <InternalRoadmapCard
                   key={card.id}
@@ -99,16 +103,18 @@ export default async function Page() {
           </div>
 
           {/* Completed */}
-          <div className="space-y-4 bg-gray-100 p-4 px-6 rounded-lg border border-gray-100">
+          <div className="h-screen space-y-6 bg-gray-100 dark:bg-slate-950/40 px-6 py-5 rounded-xl border">
             <div>
-              <p className="text-lg font-[600]">Completed</p>
-              <p className="text-base font-[500] text-gray-600">
+              <p className="text-lg  dark:text-slate-300  font-[600]">
+                Completed
+              </p>
+              <p className="text-base font-[500] text-muted-foreground">
                 {' '}
                 These are Completed
               </p>
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-4">
               {completedCards.map((card) => (
                 <InternalRoadmapCard
                   key={card.id}

@@ -42,7 +42,7 @@ export function AppAdminSidebar({
 
   return (
     <div
-      className="relative bg-gray-100/50 dark:bg-gray-900/60 space-y-5 px-2 grid grid-rows-4 group border-r"
+      className="relative bg-gray-100/50 dark:bg-gray-900/60 space-y-5 px-2 grid grid-rows-4 border-r"
       style={{
         gridTemplateRows: 'auto auto 1fr auto',
       }}

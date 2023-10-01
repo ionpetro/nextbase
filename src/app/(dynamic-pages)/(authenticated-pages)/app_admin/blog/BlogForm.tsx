@@ -19,6 +19,56 @@ import { useEffect, useRef } from 'react';
 import slugify from 'slugify';
 import { Switch } from '@/components/ui/Switch';
 import ReactSelect from 'react-select';
+import { useTheme } from 'next-themes';
+
+const darkThemeStyles = {
+  control: (styles) => ({
+    ...styles,
+    backgroundColor: '#1F2937', // slate-900 from Tailwind's color palette
+    borderColor: '#374151', // gray-600 from Tailwind's color palette
+    color: '#D1D5DB', // slate-200 from Tailwind's color palette
+    '&:hover': {
+      borderColor: '#4B5563', // slate-600 from Tailwind's color palette
+    },
+  }),
+  option: (styles, { isFocused, isSelected }) => ({
+    ...styles,
+    backgroundColor: isSelected
+      ? '#374151' // slate-700 from Tailwind's color palette
+      : isFocused
+        ? '#111827' // slate-950 from Tailwind's color palette
+        : '#1F2937', // slate-900 from Tailwind's color palette
+    color: '#D1D5DB', // slate-200 from Tailwind's color palette
+  }),
+  singleValue: (styles) => ({
+    ...styles,
+    color: '#D1D5DB', // slate-200 from Tailwind's color palette
+  }),
+  multiValue: (styles) => ({
+    ...styles,
+    backgroundColor: '#374151', // slate-700 from Tailwind's color palette
+  }),
+  multiValueLabel: (styles) => ({
+    ...styles,
+    color: '#D1D5DB', // slate-200 from Tailwind's color palette
+  }),
+  multiValueRemove: (styles) => ({
+    ...styles,
+    color: '#D1D5DB', // slate-200 from Tailwind's color palette
+    '&:hover': {
+      backgroundColor: '#F87171', // red-400 from Tailwind's color palette
+      color: '#D1D5DB', // slate-200 from Tailwind's color palette
+    },
+  }),
+  clearIndicator: (styles) => ({
+    ...styles,
+    color: '#D1D5DB', // slate-200 from Tailwind's color palette
+  }),
+  menu: (styles) => ({
+    ...styles,
+    backgroundColor: '#1F2937', // slate-900 from Tailwind's color palette
+  }),
+};
 
 import { useRouter } from 'next/navigation';
 import {
@@ -66,6 +116,7 @@ type BlogFormProps = {
 } & (CreateBlogFormProps | EditBlogFormProps);
 
 export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
+  const { theme } = useTheme(); // Get the current theme
   const initialBlogPost = 'initialBlogPost' in rest ? rest.initialBlogPost : {};
   const defaultValues = Object.assign({}, baseDefaultValues, initialBlogPost);
   const router = useRouter();
@@ -161,7 +212,7 @@ export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
               <>
                 {field.value ? (
                   <div className="relative">
-                    <div className="relative h-72 bg-gray-900">
+                    <div className="relative rounded-lg overflow-hidden h-72 bg-gray-900 dark:bg-slate-950">
                       <Image
                         src={field.value}
                         fill
@@ -174,7 +225,7 @@ export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
 
                     <Button
                       variant="destructive"
-                      className="absolute top-1 right-1 "
+                      className="absolute top-2 right-2 "
                       onClick={() => {
                         field.onChange(null);
                       }}
@@ -219,7 +270,7 @@ export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
           render={({ field }) => <Textarea {...field} placeholder="Summary" />}
         />
       </div>
-      <div className="space-y-2">
+      <div className="flex items-end space-x-2">
         <Label>Is Featured</Label>
         <Controller
           control={control}
@@ -309,6 +360,7 @@ export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
                 label: tag.name,
                 value: tag.id,
               }))}
+              styles={theme === 'dark' ? darkThemeStyles : {}} // Apply the dark theme styles only if the current theme is 'dark'
             />
           )}
         />

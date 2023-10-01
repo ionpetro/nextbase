@@ -120,7 +120,7 @@ export function ProjectTeamMembersTable({
         ) : null
       }
     >
-      <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg mt-8">
+      <div className="overflow-hidden shadow border sm:rounded-lg mt-8">
         <ShadcnTable>
           <TableHeader>
             <TableRow>
@@ -147,7 +147,7 @@ export function ProjectTeamMembersTable({
                   <TableCell>{member.role}</TableCell>
                   <TableCell>
                     {canUserManageTeam ? (
-                      <div className="flex gap-1 items-center">
+                      <div className="flex gap-2 items-center">
                         <ProjectTeamMemberRoleSelect
                           value={member.role}
                           onChange={(role) => {

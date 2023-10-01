@@ -8,7 +8,7 @@ export default async function Layout({ children }: { children: ReactNode }) {
     <>
       <InternalNavbar />
       <div className="relative flex-1 h-auto w-full overflow-auto">
-        <div className="px-12 space-y-6">{children}</div>
+        <div className="px-12 space-y-6 pb-10">{children}</div>
       </div>
     </>
   );

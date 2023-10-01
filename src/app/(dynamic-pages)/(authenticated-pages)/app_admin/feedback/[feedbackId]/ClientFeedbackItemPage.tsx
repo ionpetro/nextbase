@@ -9,7 +9,7 @@ import { Enum, Table } from '@/types';
 import { UpdateInternalFeedbackStatusDialog } from '@/components/presentational/tailwind/UpdateInternalFeedbackStatusDialog';
 import { UpdateInternalFeedbackPriorityDialog } from '@/components/presentational/tailwind/UpdateInternalFeedbackPriorityDialog';
 import { getPublicUserAvatarUrl } from '@/utils/helpers';
-
+import ChevronLeft from 'lucide-react/dist/esm/icons/chevron-left';
 import { UpdateInternalFeedbackTypeDialog } from '@/components/presentational/tailwind/UpdateInternalFeedbackTypeDialog';
 import { Anchor } from '@/components/Anchor';
 import { T } from '@/components/ui/Typography';
@@ -18,6 +18,8 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { Textarea } from '@/components/ui/Textarea';
+import Overline from '@/components/presentational/tailwind/Text/Overline';
+import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 
 function UpdateType({
   feedbackId,
@@ -249,7 +251,7 @@ function AddComment({
   );
 
   return (
-    <div className="space-y-2 mb-12">
+    <div className="space-y-4 mb-12">
       <T.P className="text-base font-[600] ">Your Response</T.P>
       <Textarea
         value={content}
@@ -260,6 +262,7 @@ function AddComment({
       <div className="flex space-x-2 justify-end">
         <Button
           variant="outline"
+          className="w-1/4"
           onClick={() => {
             setContent('');
           }}
@@ -268,6 +271,7 @@ function AddComment({
         </Button>
         <Button
           variant="default"
+          className="w-1/4"
           onClick={() => {
             mutate(content);
           }}
@@ -434,7 +438,7 @@ function FeedbackComponent({
     <div className="flex items-start space-x-4">
       <span className="flex space-x-2 items-center">
         <Image
-          className="rounded-full border border-gray-500 h-[24px] w-[24px]"
+          className="rounded-full border  h-[24px] w-[24px]"
           alt={userFullName}
           src={getPublicUserAvatarUrl(userData.avatar_url)}
           height={40}
@@ -464,9 +468,7 @@ function CommentList({
 }) {
   return (
     <div className="space-y-6">
-      <p className="text-base font-[600] text-black ">
-        Replies ({comments.length})
-      </p>
+      <p className="text-base font-[600] ">Replies ({comments.length})</p>
       {comments.map((comment) => {
         return (
           <FeedbackComponent
@@ -515,24 +517,29 @@ export default function ClientAdminFeedbackItemPage({
   Pick<ComponentProps<typeof AddComment>, 'addCommentAction'>) {
   return (
     <>
-      <div className="space-x-6">
-        <span className="text-base py-2 font-[600] text-gray-500">
-          <Anchor href="/app_admin">Application Admin Panel</Anchor>
-        </span>
-        <span className="text-base  py-2 font-[600] text-gray-500">/</span>
-        <span className="text-base py-2 font-[600] text-gray-500">
-          <Anchor href="/app_admin/feedback">All Feedback</Anchor>
-        </span>
-        <span className="text-base  py-2 font-[600] text-gray-500">/</span>
-        <span className="text-base py-2 bg-blue-50 rounded-lg px-4 font-[700] text-blue-600">
+      <div className="flex mb-4 space-x-4">
+        <Anchor href="/app_admin" className="group space-x-1 flex items-center">
+          <ChevronLeft className="relative text-gray-500 h-4 w-4 hover:-translate-x-10 group-hover:text-gray-800 group-hover:dark:text-gray-400 dark:text-gray-600" />
+          <Overline className="text-gray-500 group-hover:text-gray-800 dark:text-gray-600 group-hover:dark:text-gray-400">
+            Back to Admin Panel
+          </Overline>
+        </Anchor>
+        <Overline className="text-gray-500 dark:text-gray-600">/</Overline>
+        <Anchor href="/app_admin/feedback">
+          <Overline className="text-gray-500 dark:text-gray-600 hover:text-gray-900 dark:hover:text-gray-400">
+            All Feedback
+          </Overline>
+        </Anchor>
+        <Overline className="text-gray-500 dark:text-gray-600">/</Overline>
+        <Overline className="text-gray-800 dark:text-gray-400 font-bold underline-offset-4 underline">
           User's Feedback
-        </span>
+        </Overline>
       </div>
 
       {/* Page Heading */}
-      <BasicPageHeading
-        heading={feedbackThread.title}
-        subheading={feedbackThread.content}
+      <PageHeading
+        title={feedbackThread.title}
+        subTitle={feedbackThread.content}
       />
 
       {/* Feedback */}
@@ -590,7 +597,7 @@ export default function ClientAdminFeedbackItemPage({
             />
           </div>
         </div>
-        <div className="w-full bg-gray-100  space-y-6 border px-6 p-4 pb-8 b-gray-300 overflow-hidden rounded-xl ">
+        <div className="w-full bg-gray-200/30 dark:bg-slate-950/40 space-y-8 border px-6 py-5 pb-8 b-gray-300 overflow-hidden rounded-xl ">
           {/* Feedback Conversation */}
           <CommentList
             getUserProfileAction={getUserProfileAction}

@@ -9,7 +9,6 @@ import Hammer from 'lucide-react/dist/esm/icons/hammer';
 import ThumbsUp from 'lucide-react/dist/esm/icons/thumbs-up';
 import Timer from 'lucide-react/dist/esm/icons/timer';
 import moment from 'moment';
-import PageHeadingWithActions from '@/components/ui/Headings/PageHeadingWithActions';
 import { CreateProjectDialog } from '@/components/presentational/tailwind/CreateProjectDialog';
 import { Button } from '@/components/ui/Button';
 import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
@@ -111,7 +110,7 @@ export const SpecificTeamClientLayout = ({
             <Anchor href="/dashboard">Dashboard</Anchor>
           </Overline>
           <Overline className="text-gray-500 dark:text-gray-600">/</Overline>
-          <Overline className="text-gray-500 dark:text-gray-600">
+          <Overline className="text-gray-500 dark:text-gray-600 hover:text-gray-900 dark:hover:text-gray-400">
             <Anchor href={`/organization/${organizationByIdData.id}`}>
               {organizationByIdData.title}
             </Anchor>
@@ -155,7 +154,6 @@ export const SpecificTeamClientLayout = ({
           />
           <TabsNavigation tabs={tabs} />
           <div>{children}</div>
-          <TeamGraphs />
         </div>
       </div>
     </div>

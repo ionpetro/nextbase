@@ -62,12 +62,13 @@ export function AddComment({
         value={content}
         onChange={(e) => setContent(e.target.value)}
         placeholder="Write your Response here"
-        className=" w-full h-[224px] b-gray-300 bg-white placeholder:text-gray-500 dark:placeholder:text-gray-400 dark:bg-gray-700/50 dark:text-muted-foreground text-gray-700 text-base p-4 rounded-lg"
+        className="rounded-lg w-full h-[224px] p-3 mb-2 border b-gray-300"
       />{' '}
       <div className="flex space-x-2 mt-10 justify-end">
         <Button
           variant="outline"
           size="default"
+          className="w-1/4"
           onClick={() => {
             setContent('');
           }}
@@ -79,6 +80,7 @@ export function AddComment({
           onClick={() => {
             mutate(content);
           }}
+          className="w-1/4"
           disabled={isLoading || content.length === 0}
         >
           {isLoading ? 'Submitting' : 'Submit'}

@@ -67,7 +67,7 @@ export default async function MyFeedback() {
                   </TableCell>
                   <TableCell>
                     <Badge
-                      className=" whitespace-nowrap "
+                      size="sm"
                       variant={mapStatusToVariant(feedback.status)}
                     >
                       {formatFieldValue(feedback.status)}

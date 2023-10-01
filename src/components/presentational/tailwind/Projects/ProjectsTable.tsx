@@ -36,7 +36,7 @@ export const ProjectsTable = ({
         <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
           {/* <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg"></div> */}
           {/* <div className="flex rounded-lg bg-clip-border border border-gray-200  max-w-[1296px] overflow-hidden"> */}
-          <div className="border rounded-lg shadow-sm overflow-hidden dark:bg-black bg-white">
+          <div className="border rounded-lg shadow-sm overflow-hidden dark:bg-slate-900 bg-white">
             <ShadcnTable>
               <TableHeader>
                 <TableRow>

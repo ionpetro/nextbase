@@ -9,6 +9,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/Dialog';
 import { useState } from 'react';
+import TrashIcon from 'lucide-react/dist/esm/icons/trash';
 
 type Props = {
   onConfirm: () => void;
@@ -20,8 +21,8 @@ export const ConfirmRemoveUserFromTeamDialog = ({ onConfirm }: Props) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="destructive" size="xs">
-          Remove from team
+        <Button variant="destructive" size="default">
+          <TrashIcon size={16} className="stroke-2" />
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">

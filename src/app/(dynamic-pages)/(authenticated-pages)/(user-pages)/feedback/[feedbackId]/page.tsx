@@ -181,7 +181,7 @@ export default async function FeedbackItemPage({
             />
           </div>
         </div>
-        <div className="w-full bg-gray-50 dark:bg-gray-800/40 border border-gray-300 dark:border-gray-600/50 space-y-6  px-6 p-4 pb-8 b-gray-300 overflow-hidden rounded-xl ">
+        <div className="w-full bg-gray-50 dark:bg-gray-950/40 border border-gray-300 dark:border-gray-600/50 space-y-6  px-6 p-4 pb-8 b-gray-300 overflow-hidden rounded-xl ">
           <CommentList
             feedbackId={feedbackThread.id}
             feedbackComments={feedbackComments}
