@@ -24,7 +24,7 @@ export const TYPE_OPTIONS: Array<Enum<'internal_feedback_thread_type'>> = [
 ];
 
 export const mapStatusToVariant = (
-  status: Enum<'internal_feedback_thread_status'>
+  status: Enum<'internal_feedback_thread_status'>,
 ) => {
   switch (status) {
     case 'closed':
@@ -41,7 +41,7 @@ export const mapStatusToVariant = (
 };
 
 export const mapTypeToVariant = (
-  type: Enum<'internal_feedback_thread_type'>
+  type: Enum<'internal_feedback_thread_type'>,
 ) => {
   switch (type) {
     case 'bug':
@@ -56,7 +56,7 @@ export const mapTypeToVariant = (
 };
 
 export const mapPriorityToVariant = (
-  priority: Enum<'internal_feedback_thread_priority'>
+  priority: Enum<'internal_feedback_thread_priority'>,
 ) => {
   switch (priority) {
     case 'low':

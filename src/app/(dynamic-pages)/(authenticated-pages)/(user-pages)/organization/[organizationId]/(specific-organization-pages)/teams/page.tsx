@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { OrganizationTeams } from './OrganizationTeams';
 import { unstable_cache } from 'next/cache';
 import { cacheTags } from '@/utils/nextCache';
+// import setCurrentOrganizationIdAction from '@/app/(dynamic-pages)/(authenticated-pages)/actions';
 
 const paramsSchema = z.object({
   organizationId: z.string(),
@@ -16,6 +17,9 @@ export default async function OrganizationPage({
 }) {
   // Add dashed border
   const { organizationId } = paramsSchema.parse(params);
+
+  // setCurrentOrganizationIdAction(organizationId);
+
   const fetchTeams = unstable_cache(
     async () => {
       'use server';

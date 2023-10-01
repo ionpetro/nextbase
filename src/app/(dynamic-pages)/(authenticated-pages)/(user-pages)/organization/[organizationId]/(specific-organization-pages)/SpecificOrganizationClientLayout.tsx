@@ -29,6 +29,7 @@ import UsersIcon from 'lucide-react/dist/esm/icons/users';
 import { CreateProjectDialog } from '@/components/presentational/tailwind/CreateProjectDialog';
 import { useMutation } from '@tanstack/react-query';
 import { Table } from '@/types';
+import { useDidMount } from 'rooks';
 
 const matchSettingsPath = match('/organization/:organizationId/settings/(.*)?');
 
@@ -45,17 +46,19 @@ function SubscriptionDetails() {
         <HoverCardTrigger asChild>
           <Anchor
             href={`/organization/${organizationId}/settings/billing`}
-            className="underline rounded"
+            className="mr-2"
           >
-            <T.P>
-              {title}{' '}
-              {sidenote ? <span className="ml-1">{sidenote}</span> : null}
-            </T.P>
+            <div>
+              <T.P className="font-semibold -mb-2 ">{title} Pro</T.P>
+              {sidenote ? (
+                <T.Small className="  font-semibold underline text-muted-foreground underline-offset-4">
+                  {sidenote}
+                </T.Small>
+              ) : null}
+            </div>
           </Anchor>
         </HoverCardTrigger>
-        <HoverCardContent className="w-80">
-          <T.P className="text-blue-500">{description}</T.P>
-        </HoverCardContent>
+        <HoverCardContent className="w-60">{description}</HoverCardContent>
       </HoverCard>
     );
   } else {
@@ -71,11 +74,7 @@ function SubscriptionDetails() {
             </T.Small>
           </Anchor>
         </HoverCardTrigger>
-        <HoverCardContent className="w-60">
-          <T.P className="text-gray-700 leading-6 font-[550]">
-            {description}
-          </T.P>
-        </HoverCardContent>
+        <HoverCardContent className="w-60">{description}</HoverCardContent>
       </HoverCard>
     );
   }
@@ -85,6 +84,8 @@ export function SpecificOrganizationClientLayout({
   children,
   createTeamAction,
   createProjectAction,
+  currentOrganizationId,
+  setCurrentOrganizationId,
 }: {
   children: ReactNode;
   createTeamAction: ({
@@ -95,12 +96,22 @@ export function SpecificOrganizationClientLayout({
     organizationId: string;
   }) => Promise<Table<'teams'>>;
   createProjectAction: ({ name, organizationId }) => Promise<Table<'projects'>>;
+  currentOrganizationId: string | undefined;
+  setCurrentOrganizationId: (organizationId: string) => Promise<void>;
 }) {
   const pathname = usePathname();
   const isSettingsPath = pathname ? matchSettingsPath(pathname) : false;
   const { organizationByIdData, organizationId } = useOrganizationContext();
   const router = useRouter();
   const createTeamToastRef = useRef<string>();
+  useDidMount(async () => {
+    if (currentOrganizationId === organizationId) {
+      return;
+    } else {
+      void setCurrentOrganizationId(organizationId);
+      router.refresh();
+    }
+  });
   const { mutate: createTeam, isLoading: isCreatingTeam } = useMutation(
     async ({
       name,

@@ -6,6 +6,11 @@ import { errors } from '@/utils/errors';
 import { ReactNode } from 'react';
 import { redirect } from 'next/navigation';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
+import setCurrentOrganizationIdAction from './actions';
+import { cookies } from 'next/headers';
+import { getAllOrganizationsForUser } from '@/utils/supabase-queries';
+import { LayoutShell } from './LayoutShell';
+import { Sidebar } from './Sidebar/Sidebar';
 
 async function fetchData(supabaseClient: AppSupabaseClient, authUser: User) {
   const [isUserAppAdmin, userProfile] = await Promise.all([
@@ -13,7 +18,10 @@ async function fetchData(supabaseClient: AppSupabaseClient, authUser: User) {
     getUserProfile(supabaseClient, authUser.id),
   ]);
 
-  return { isUserAppAdmin, userProfile };
+  const [initialOrganizationsList] = await Promise.all([
+    getAllOrganizationsForUser(supabaseClient, authUser.id),
+  ]);
+  return { initialOrganizationsList, isUserAppAdmin, userProfile };
 }
 
 export default async function Layout({ children }: { children: ReactNode }) {
@@ -29,15 +37,31 @@ export default async function Layout({ children }: { children: ReactNode }) {
   }
 
   try {
-    const { isUserAppAdmin, userProfile } = await fetchData(
-      supabaseClient,
-      data.user
-    );
+    const { initialOrganizationsList, isUserAppAdmin, userProfile } =
+      await fetchData(supabaseClient, data.user);
+
+    const currentOrganizationId = cookies().get('current_organization_id')
+      ?.value;
 
     return (
-      <ClientLayout isUserAppAdmin={isUserAppAdmin} userProfile={userProfile}>
-        {children}
-      </ClientLayout>
+      <LayoutShell>
+        <Sidebar
+          isUserAppAdmin={isUserAppAdmin}
+          userProfile={userProfile}
+          currentOrganizationId={currentOrganizationId}
+          setCurrentOrganizationId={setCurrentOrganizationIdAction}
+          organizationList={initialOrganizationsList}
+        />
+        <ClientLayout
+          isUserAppAdmin={isUserAppAdmin}
+          userProfile={userProfile}
+          currentOrganizationId={currentOrganizationId}
+          setCurrentOrganizationId={setCurrentOrganizationIdAction}
+          organizationList={initialOrganizationsList}
+        >
+          {children}
+        </ClientLayout>
+      </LayoutShell>
     );
   } catch (fetchDataError) {
     errors.add(fetchDataError);

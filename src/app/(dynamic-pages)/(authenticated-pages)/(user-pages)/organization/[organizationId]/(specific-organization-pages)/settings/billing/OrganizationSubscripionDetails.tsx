@@ -67,7 +67,7 @@ function ChoosePricingTable() {
 
     return products
       .sort(
-        (a, b) => (a?.price?.unit_amount ?? 0) - (b?.price?.unit_amount ?? 0)
+        (a, b) => (a?.price?.unit_amount ?? 0) - (b?.price?.unit_amount ?? 0),
       )
       .filter(Boolean);
   }, [activeProducts]);
@@ -110,9 +110,12 @@ function ChoosePricingTable() {
                   <div>
                     <div className="mb-6 p-7 pt-6 flex items-center border-b bg-gray-200/40 dark:bg-slate-800">
                       <div>
-                        <T.H4 className="mt-0 mb-4"> {product.name}</T.H4>
+                        <T.H4 className="mt-0 mb-4 dark:text-slate-300">
+                          {' '}
+                          {product.name}
+                        </T.H4>
                         <span>
-                          <T.H1 key={priceId}>
+                          <T.H1 className="dark:text-slate-50" key={priceId}>
                             {' '}
                             {product.priceString}
                             <span className="text-base tracking-normal text-muted-foreground font-medium">
@@ -185,9 +188,9 @@ function ChoosePricingTable() {
                         </Button>
                       </>
                     ) : (
-                      <span className="text-sm bg-green-50 px-3 py-2 text-gray-900 rounded-lg">
+                      <T.P className=" py-2 px-4 bg-gray-100 dark:bg-slate-400/20 text-sm text-gray-900 dark:text-slate-100 rounded-lg">
                         Contact your administrator to upgrade plan
-                      </span>
+                      </T.P>
                     )}
                   </div>
                 </div>
@@ -214,7 +217,7 @@ export function OrganizationSubscripionDetails() {
     });
 
   const subscriptionDetails = formatNormalizedSubscription(
-    normalizedSubscription
+    normalizedSubscription,
   );
 
   if (
@@ -235,10 +238,10 @@ export function OrganizationSubscripionDetails() {
   return (
     <div className="space-y-4">
       <div className="space-y-1">
-        <H3>Subscription</H3>
-        <T.P>
+        <T.H3 className="text-gray-900 dark:text-slate-100 ">Subscription</T.H3>
+        <T.P className="text-muted-foreground">
           You are currently on the{' '}
-          <span className="text-blue-500">
+          <span className="text-blue-500 dark:text-blue-400">
             {subscriptionDetails.title}{' '}
             <span>{subscriptionDetails.sidenote}</span>
           </span>
@@ -248,11 +251,8 @@ export function OrganizationSubscripionDetails() {
       </div>
       {isOrganizationAdmin ? (
         <div className="space-y-2">
-          <button
-            className={classNames(
-              'inline-flex space-x-1 items-center  justify-center rounded border border-transparent py-2 px-4 text-sm font-medium  shadow-sm focus:outline-none focus:ring-2  focus:ring-offset-2',
-              'bg-blue-500 focus:ring-blue-500 hover:bg-blue-600  text-white'
-            )}
+          <Button
+            variant="default"
             onClick={() => {
               mutate({
                 organizationId: organizationId,
@@ -264,17 +264,17 @@ export function OrganizationSubscripionDetails() {
                 ? 'Loading...'
                 : 'Manage Subscription'}{' '}
             </span>
-            <ExternalLinkIcon aria-hidden="true" />{' '}
-          </button>
-          <p className="text-gray-500 text-xs">
+            <ExternalLinkIcon aria-hidden="true" className="ml-2 w-5 h-5" />{' '}
+          </Button>
+          <T.P className="text-gray-500 dark:text-slate-400 text-sm">
             Manage your subscription. You can modify, upgrade or cancel your
             membership from here.
-          </p>
+          </T.P>
         </div>
       ) : (
-        <p className="text-gray-500 text-sm">
+        <T.P className=" py-2 px-4 bg-gray-100 dark:bg-slate-400/20 text-sm text-gray-900 dark:text-slate-100 rounded-lg">
           Contact your administrator to upgrade plan.
-        </p>
+        </T.P>
       )}
     </div>
   );
