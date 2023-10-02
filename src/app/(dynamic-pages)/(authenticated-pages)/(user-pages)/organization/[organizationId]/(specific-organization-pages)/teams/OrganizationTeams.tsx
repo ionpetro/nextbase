@@ -18,7 +18,7 @@ export const OrganizationTeams = ({
   teams: Table<'teams'>[];
   organizationId: string;
 }) => {
-  console.log('org teams', teams);
+  // console.log('org teams', teams);
   return (
     <ProjectsListContainer title="Teams" subTitle="A list of all teams.">
       <div className="overflow-hidden shadow ring-1 mt-6 ring-black ring-opacity-5 border sm:rounded-lg">

@@ -24,9 +24,8 @@ async function fetchSession(supabaseClient: AppSupabaseClient) {
 }
 
 async function fetchIsAppInMaintenanceMode(supabaseClient: AppSupabaseClient) {
-  const isAppInMaintenanceMode = await getIsAppInMaintenanceMode(
-    supabaseClient
-  );
+  const isAppInMaintenanceMode =
+    await getIsAppInMaintenanceMode(supabaseClient);
 
   return isAppInMaintenanceMode;
 }

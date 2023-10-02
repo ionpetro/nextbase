@@ -23,7 +23,7 @@ import {
 import dynamic from 'next/dynamic';
 import { useMutation } from '@tanstack/react-query';
 import { Table } from '@/types';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useLoggedInUser } from '@/hooks/useLoggedInUser';
 const OrganizationGraphs = dynamic(
   () => import('./OrganizationGraphs').then((mod) => mod.OrganizationGraphs),
@@ -41,6 +41,7 @@ export function OrganizationList({
 }) {
   const toastRef = useRef<string>();
   const user = useLoggedInUser();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const router = useRouter();
   const { mutate, isLoading: isCreatingOrganization } = useMutation(
@@ -81,6 +82,8 @@ export function OrganizationList({
               <CreateOrganizationDialog
                 isLoading={isCreatingOrganization}
                 onConfirm={onConfirm}
+                isDialogOpen={isDialogOpen}
+                setIsDialogOpen={setIsDialogOpen}
               />
             </div>
           }
@@ -103,7 +106,7 @@ export function OrganizationList({
           </TableHeader>
           <TableBody>
             {organizationList.map((organization, index) => {
-              console.log(organization);
+              // console.log(organization);
               const teamMembers = Array.isArray(
                 organization.organization_members,
               )

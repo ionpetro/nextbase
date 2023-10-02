@@ -13,15 +13,22 @@ import { AppAdminSidebar } from './Sidebar/AppAdminSidebar';
 import { UserSidebar } from './Sidebar/UserSidebar';
 import { useSelectedLayoutSegments } from 'next/navigation';
 import PostHogProvider from '@/contexts/PostHogProvider';
+import { InitialOrganizationListType } from '@/utils/react-query-hooks';
 
 export function ClientLayout({
   children,
   isUserAppAdmin,
+  currentOrganizationId,
   userProfile: initialUserProfile,
+  setCurrentOrganizationId,
+  organizationList,
 }: {
   children: React.ReactNode;
   isUserAppAdmin: boolean;
+  currentOrganizationId: string | undefined;
   userProfile: Table<'user_profiles'>;
+  setCurrentOrganizationId: (organizationId: string) => Promise<void>;
+  organizationList: InitialOrganizationListType;
 }) {
   const { data } = useUserProfile(initialUserProfile);
   const userProfile = data ?? initialUserProfile;
@@ -47,20 +54,9 @@ export function ClientLayout({
 
   return (
     <PostHogProvider>
-      <div className="flex flex-col h-full w-full">
+      <div className="flex overflow-y-auto flex-col h-full w-full">
         <MaintenanceModeBanner />
         <div className="flex h-full">
-          {isUserAppAdmin && isAppAdminLayout ? (
-            <AppAdminSidebar
-              isUserAppAdmin={isUserAppAdmin}
-              userProfile={userProfile}
-            />
-          ) : (
-            <UserSidebar
-              isUserAppAdmin={isUserAppAdmin}
-              userProfile={userProfile}
-            />
-          )}
           <div className="flex-1 h-auto overflow-auto">
             <div className="space-y-10">{children}</div>
           </div>

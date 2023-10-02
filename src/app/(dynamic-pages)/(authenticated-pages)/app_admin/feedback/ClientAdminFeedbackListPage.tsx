@@ -79,7 +79,7 @@ export function ClientAdminFeedbackListPage({
       onSuccess: () => {
         router.refresh();
       },
-    }
+    },
   );
   return (
     <div className="space-y-4">
@@ -109,7 +109,7 @@ export function ClientAdminFeedbackListPage({
                   Status {filters.statuses.length ? ':' : ''}
                   {filters.statuses.map((status) => (
                     <Badge
-                      size="default"
+                      size="sm"
                       className="ml-1"
                       variant={mapStatusToVariant(status)}
                     >
@@ -128,7 +128,7 @@ export function ClientAdminFeedbackListPage({
                         ...filters,
                         statuses: filters.statuses?.includes(statusOption)
                           ? filters.statuses.filter(
-                            (status) => status !== statusOption
+                            (status) => status !== statusOption,
                           )
                           : [...(filters.statuses || []), statusOption],
                       })
@@ -150,7 +150,11 @@ export function ClientAdminFeedbackListPage({
                   Type {filters.types.length ? ':' : ''}
                   <span className="flex space-x-1">
                     {filters.types.map((type) => (
-                      <Badge className="ml-1" variant={mapTypeToVariant(type)}>
+                      <Badge
+                        className="ml-1"
+                        size="sm"
+                        variant={mapTypeToVariant(type)}
+                      >
                         {formatFieldValue(type)}
                       </Badge>
                     ))}
@@ -207,7 +211,7 @@ export function ClientAdminFeedbackListPage({
                         ...filters,
                         priorities: filters.priorities.includes(priorityOption)
                           ? filters.priorities.filter(
-                            (priority) => priority !== priorityOption
+                            (priority) => priority !== priorityOption,
                           )
                           : [...(filters.priorities || []), priorityOption],
                       })
