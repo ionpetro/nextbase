@@ -104,7 +104,7 @@ export function SpecificOrganizationClientLayout({
   const { organizationByIdData, organizationId } = useOrganizationContext();
   const router = useRouter();
   const createTeamToastRef = useRef<string>();
-  useDidMount(async () => {
+  useDidMount(() => {
     if (currentOrganizationId === organizationId) {
       return;
     } else {
