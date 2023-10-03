@@ -17,11 +17,13 @@ import LayersIcon from 'lucide-react/dist/esm/icons/layers';
 type CreateProjectDialogProps = {
   onConfirm: (projectTitle: string) => void;
   isLoading: boolean;
+  trigger?: React.ReactNode;
 };
 
 export function CreateProjectDialog({
   onConfirm,
   isLoading,
+  trigger,
 }: CreateProjectDialogProps) {
   const [projectTitle, setProjectTitle] = useState<string>('');
   const [open, setOpen] = useState(false);
@@ -36,10 +38,14 @@ export function CreateProjectDialog({
     <>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="default">
-            <LayersIcon className="mr-2 w-5 h-5" />
-            Create Project
-          </Button>
+          {trigger ? (
+            trigger
+          ) : (
+            <Button variant="default" size="default">
+              <LayersIcon className="mr-2 w-5 h-5" />
+              Create Project
+            </Button>
+          )}
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>

@@ -22,7 +22,7 @@ export function AdminSidebarLink({
       className={classNames(
         `flex w-full gap-2.5 items-center group py-2.5 mb-1 rounded-lg transition hover:cursor-pointer hover:bg-gray-300/50 dark:hover:bg-slate-700/50 `,
         isActive ? ' bg-gray-300/50  dark:bg-slate-800  ' : ' bg-transparent',
-        isExpanded ? ' pl-5 pr-2 justify-start' : ' justify-center'
+        isExpanded ? ' pl-5 pr-2 justify-start' : ' justify-center',
       )}
     >
       <span
@@ -30,7 +30,7 @@ export function AdminSidebarLink({
           'text-gray-700 dark:text-slate-300 ',
           isActive
             ? ' text-gray-900 dark:text-slate-100 '
-            : ' text-gray-700 dark:text-slate-400 group-hover:text-gray-900 dark:group-hover:text-slate-300'
+            : ' text-gray-700 dark:text-slate-400 group-hover:text-gray-900 dark:group-hover:text-slate-300',
         )}
       >
         {icon}
@@ -38,10 +38,10 @@ export function AdminSidebarLink({
       {isExpanded ? (
         <span
           className={classNames(
-            'transition text-base font-medium ',
+            'transition text-sm font-medium ',
             isActive
               ? ' text-gray-900 dark:text-slate-100 '
-              : ' text-gray-700 dark:text-slate-400 group-hover:text-gray-900 dark:group-hover:text-slate-300'
+              : ' text-gray-700 dark:text-slate-400 group-hover:text-gray-900 dark:group-hover:text-slate-300',
           )}
         >
           {label}

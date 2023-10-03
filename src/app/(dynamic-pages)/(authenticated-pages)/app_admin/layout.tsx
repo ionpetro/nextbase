@@ -1,18 +1,19 @@
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
 import { AppSupabaseClient } from '@/types';
 import { errors } from '@/utils/errors';
-import { getIsAppAdmin } from '@/utils/supabase-queries';
+import { getIsAppAdmin, getUserProfile } from '@/utils/supabase-queries';
 import { User } from '@supabase/supabase-js';
 import { redirect } from 'next/navigation';
 import { AppAdminNavigation } from './AppAdminNavigation';
-import InternalNavbar from '@/components/ui/NavigationMenu/InternalNavbar';
+import { InternalNavbar } from '@/components/ui/NavigationMenu/InternalNavbar';
 
 async function fetchData(supabaseClient: AppSupabaseClient, authUser: User) {
-  const [isUserAppAdmin] = await Promise.all([
+  const [isUserAppAdmin, userProfile] = await Promise.all([
     getIsAppAdmin(supabaseClient, authUser),
+    getUserProfile(supabaseClient, authUser.id),
   ]);
 
-  return { isUserAppAdmin };
+  return { isUserAppAdmin, userProfile };
 }
 
 export default async function Layout({
@@ -33,7 +34,10 @@ export default async function Layout({
   }
 
   try {
-    const { isUserAppAdmin } = await fetchData(supabaseClient, data.user);
+    const { isUserAppAdmin, userProfile } = await fetchData(
+      supabaseClient,
+      data.user,
+    );
 
     if (!isUserAppAdmin) {
       return redirect('/dashboard');

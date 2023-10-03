@@ -2,13 +2,13 @@
 import { Anchor } from '@/components/Anchor';
 import { cn } from '@/utils/cn';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { AppSidebar } from '@/components/presentational/tailwind/Sidebars/AppSidebar';
 import darkLogo from 'public/logos/nextbase-dark-logo.png';
 import lightLogo from 'public/logos/nextbase-light-logo.png';
 import PanelLeftOpen from 'lucide-react/dist/esm/icons/panel-left-open';
 import PanelLeftClose from 'lucide-react/dist/esm/icons/panel-left-close';
-import { SidebarBottom } from '@/components/presentational/tailwind/Sidebars/SidebarBottom';
+import { UserNavPopover } from '@/components/presentational/tailwind/Sidebars/UserNavPopover';
 import { Table } from '@/types';
 import { useUserProfile } from '@/utils/react-queries/user';
 import { getUserAvatarUrl } from '@/utils/helpers';
@@ -41,6 +41,8 @@ import CheckIcon from 'lucide-react/dist/esm/icons/check';
 import UsersIcon from 'lucide-react/dist/esm/icons/users';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
+import { useMutation } from '@tanstack/react-query';
+import { createProjectAction } from '../(user-pages)/organization/[organizationId]/(specific-organization-pages)/actions';
 
 export function UserSidebar({
   isUserAppAdmin,
@@ -48,12 +50,14 @@ export function UserSidebar({
   organizationList,
   setCurrentOrganizationId,
   currentOrganizationId,
+  teams,
 }: {
   isUserAppAdmin: boolean;
   userProfile: Table<'user_profiles'>;
   organizationList: InitialOrganizationListType;
   setCurrentOrganizationId: (organizationId: string) => Promise<void>;
   currentOrganizationId: string | undefined;
+  teams: Table<'teams'>[];
 }) {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -68,12 +72,11 @@ export function UserSidebar({
   const [isExpanded, toggleIsExpanded] = useState<boolean>(false);
   const [organizationTitle, setOrganizationTitle] = useState<string>('');
   const nextbaseIconClassName = cn(
-    `flex w-full gap-2 items-center py-3 mb-1 text-white h-[64px] rounded-lg`,
-    isExpanded ? 'px-9 justify-start' : 'justify-center',
+    `flex gap-2 items-center py-3 mb-1 text-white h-[64px] rounded-lg`,
+    isExpanded ? 'pl-6 justify-start' : 'px-3 justify-center',
   );
   const chevronClassName = cn(
-    `absolute flex text-gray-700 dark:text-gray-400 justify-start transition hover:bg-gray-100 dark:hover:bg-gray-900 p-2.5 rounded-lg text-4xl cursor-pointer items-start -top-[0px]`,
-    isExpanded ? 'left-60 bg-transparent' : 'left-[calc(100%-19px)] ',
+    `absolute flex text-gray-700 dark:text-gray-400 justify-start transition hover:bg-gray-100 dark:hover:bg-gray-900 p-2.5 rounded-lg text-4xl cursor-pointer left-[calc(100%-19px)] items-start top-[10px]`,
   );
   const currentOrganization = organizationList.find(
     (organization) => organization.id === currentOrganizationId,
@@ -91,6 +94,44 @@ export function UserSidebar({
     },
   });
 
+  const createProjectToastRef = useRef<string>();
+
+  const { mutate: createTeamProject, isLoading: isCreatingTeamProject } =
+    useMutation(
+      async ({
+        name,
+        organizationId,
+      }: {
+        name: string;
+        organizationId: string;
+      }) => {
+        return createProjectAction({ organizationId, name });
+      },
+      {
+        onMutate: async ({ name }) => {
+          createProjectToastRef.current = toast.loading(
+            `Creating name ${name}...`,
+          );
+        },
+        onSuccess: (project) => {
+          // Invalidate the team list query
+          toast.success(`Project ${project.name} created!`, {
+            id: createProjectToastRef.current,
+          });
+          createProjectToastRef.current = undefined;
+          router.push(`/project/${project.id}`);
+        },
+        onError: (error) => {
+          const customError =
+            error instanceof Error ? error : new Error(String(error));
+          toast.error(`Error creating project: ${customError.message}`, {
+            id: createProjectToastRef.current,
+          });
+          createProjectToastRef.current = undefined;
+        },
+      },
+    );
+
   const onConfirm = (organizationTitle: string) => {
     mutate(organizationTitle);
   };
@@ -103,150 +144,166 @@ export function UserSidebar({
       }}
     >
       <div>
-        {currentOrganization ? (
-          <Popover
-            open={isPopoverOpen}
-            onOpenChange={(isCurrentOpen) => {
-              setIsPopoverOpen(isCurrentOpen);
-              if (!isCurrentOpen) {
-                setIsDialogOpen(false);
-              }
-            }}
-          >
-            <PopoverTrigger asChild className="w-full">
-              <Button
-                variant="outline"
-                size="sm"
-                role="combobox"
-                className={classNames(
-                  isExpanded ? 'px-2' : 'hidden',
-                  'mx-6 mt-3 mb-5 rounded-md truncate w-[200px]',
+        <div className="flex items-center justify-between pr-2">
+          <Anchor href="/dashboard" className="flex items-center w-full">
+            <div className={nextbaseIconClassName}>
+              <Image
+                width={40}
+                height={40}
+                src={lightLogo}
+                alt="Logo Login"
+                className={cn(
+                  'w-fit rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0',
+                  isExpanded ? 'w-[64px] -ml-2 ' : 'w-[40px] ml-0 ',
                 )}
-              >
-                <span className="truncate">{currentOrganization.title}</span>
-                <ChevronUpDown className="ml-auto h-4 w-4 shrink-0 opacity-50" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-[200px] -ml-1 p-0 bg-white dark:bg-slate-900">
-              <Command>
-                <CommandList>
-                  <CommandEmpty>No Organization found.</CommandEmpty>
-                  <CommandGroup heading="Organizations">
-                    {organizationList.map((organization) => (
-                      <CommandItem
-                        key={organization.id}
-                        onSelect={() => {
-                          setIsPopoverOpen(false);
-                          if (currentOrganizationId === organization.id) {
-                            // do nothing
-                            return;
-                          }
-                          setCurrentOrganizationId(organization.id).then(() => {
-                            router.refresh();
-                            router.push(`/organization/${organization.id}`);
-                          });
-                        }}
-                        className="text-sm flex items-start"
-                      >
-                        <UsersIcon className="mr-2 h-4 w-4 mt-0.5" />
-                        {organization.title}
-                        <CheckIcon
-                          className={cn(
-                            'ml-auto h-4 w-4',
-                            organization.id === currentOrganizationId
-                              ? 'opacity-100'
-                              : 'opacity-0',
-                          )}
-                        />
-                      </CommandItem>
-                    ))}
-                  </CommandGroup>
-                </CommandList>
-
-                <CommandSeparator />
-                <CommandList>
-                  <CommandGroup>
-                    <CommandItem
-                      onSelect={() => {
-                        // setIsPopoverOpen(false);
-                        // setIsDialogOpen(true);
-                      }}
-                      className="px-1 py-0 w-full"
-                    >
-                      {/* <FiPlusCircle className="mr-2 h-5 w-5" />
-                      Create Organization */}
-                      <CreateOrganizationDialog
-                        isLoading={isLoading}
-                        onConfirm={onConfirm}
-                        variant="ghost"
-                        className="p-0 py-0 focus:ring-0 dark:focus:ring-0 hover:bg-transparent w-full"
-                        isDialogOpen={isDialogOpen}
-                        setIsDialogOpen={(isCurrentOpen) => {
-                          setIsDialogOpen(isCurrentOpen);
-                          setIsPopoverOpen(isCurrentOpen);
-                        }}
-                      />
-                    </CommandItem>
-                  </CommandGroup>
-                </CommandList>
-              </Command>
-            </PopoverContent>
-          </Popover>
-        ) : (
-          <Anchor className="w-full" href="/all-organizations">
-            <Button
-              variant="outline"
+              />
+              <Image
+                width={40}
+                src={darkLogo}
+                alt="Logo Login"
+                className={cn(
+                  ' absolute rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100',
+                  isExpanded ? '-ml-2 ' : '-ml-0',
+                )}
+              />
+            </div>
+            <span
               className={classNames(
-                isExpanded ? 'px-2' : 'hidden',
-                'mx-6 mt-3 mb-4 rounded-md truncate w-[200px]',
+                'text-base font-medium truncate w-full',
+                isExpanded ? 'block' : 'hidden',
               )}
             >
-              All Organizations
-            </Button>
+              {currentOrganization!.title}
+            </span>
           </Anchor>
-        )}
-        {!isExpanded ? (
-          <Anchor href="/dashboard" className={nextbaseIconClassName}>
-            <Image
-              width={40}
-              src={lightLogo}
-              alt="Logo Login"
-              className={cn(
-                'rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0',
-                isExpanded ? '-ml-2 ' : 'ml-0 ',
-              )}
-            />
-            <Image
-              width={40}
-              src={darkLogo}
-              alt="Logo Login"
-              className={cn(
-                ' absolute rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100',
-                isExpanded ? '-ml-2 ' : '-ml-0',
-              )}
-            />
+          {currentOrganization ? (
+            <Popover
+              open={isPopoverOpen}
+              onOpenChange={(isCurrentOpen) => {
+                setIsPopoverOpen(isCurrentOpen);
+                if (!isCurrentOpen) {
+                  setIsDialogOpen(false);
+                }
+              }}
+            >
+              <PopoverTrigger asChild className="w-fit ">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  role="combobox"
+                  className={classNames(
+                    isExpanded ? 'px-2' : 'hidden',
+                    'mx-2 rounded-md truncate w-fit',
+                  )}
+                >
+                  <ChevronUpDown className=" h-4 w-4 shrink-0 opacity-50" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent
+                side="bottom"
+                align="end"
+                className="w-[200px] -ml-1 p-0 bg-white dark:bg-slate-900"
+              >
+                <Command>
+                  <CommandList>
+                    <CommandEmpty>No Organization found.</CommandEmpty>
+                    <CommandGroup heading="Organizations">
+                      {organizationList.map((organization) => (
+                        <CommandItem
+                          key={organization.id}
+                          onSelect={() => {
+                            setIsPopoverOpen(false);
+                            if (currentOrganizationId === organization.id) {
+                              // do nothing
+                              return;
+                            }
+                            setCurrentOrganizationId(organization.id).then(
+                              () => {
+                                router.refresh();
+                                router.push(`/organization/${organization.id}`);
+                              },
+                            );
+                          }}
+                          className="text-sm flex items-start"
+                        >
+                          <UsersIcon className="mr-2 h-4 w-4 mt-0.5" />
+                          {organization.title}
+                          <CheckIcon
+                            className={cn(
+                              'ml-auto h-4 w-4',
+                              organization.id === currentOrganizationId
+                                ? 'opacity-100'
+                                : 'opacity-0',
+                            )}
+                          />
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </CommandList>
 
-            {/* <T.P className="text-lg font-[600] text-gray-800 dark:text-gray-300">
-            nextbase
-          </T.P> */}
-          </Anchor>
-        ) : null}
+                  <CommandSeparator />
+                  <CommandList>
+                    <CommandGroup>
+                      <CommandItem
+                        onSelect={() => {
+                          // setIsPopoverOpen(false);
+                          // setIsDialogOpen(true);
+                        }}
+                        className="px-1 py-0 w-full"
+                      >
+                        {/* <FiPlusCircle className="mr-2 h-5 w-5" />
+                      Create Organization */}
+                        <CreateOrganizationDialog
+                          isLoading={isLoading}
+                          onConfirm={onConfirm}
+                          variant="ghost"
+                          className="p-0 py-0 focus:ring-0 dark:focus:ring-0 hover:bg-transparent w-full"
+                          isDialogOpen={isDialogOpen}
+                          setIsDialogOpen={(isCurrentOpen) => {
+                            setIsDialogOpen(isCurrentOpen);
+                            setIsPopoverOpen(isCurrentOpen);
+                          }}
+                        />
+                      </CommandItem>
+                    </CommandGroup>
+                  </CommandList>
+                </Command>
+              </PopoverContent>
+            </Popover>
+          ) : (
+            <Anchor className="w-full" href="/all-organizations">
+              <Button
+                variant="outline"
+                className={classNames(
+                  isExpanded ? 'px-2' : 'hidden',
+                  'mx-6 mt-3 mb-4 rounded-md truncate w-[200px]',
+                )}
+              >
+                All Organizations
+              </Button>
+            </Anchor>
+          )}
+        </div>
       </div>
       <AppSidebar
         isUserAppAdmin={isUserAppAdmin}
         isExpanded={isExpanded}
         toggleIsExpanded={toggleIsExpanded}
+        teams={teams}
+        createTeamProject={createTeamProject}
+        isCreatingTeamProject={isCreatingTeamProject}
+        currentOrganizationId={currentOrganizationId}
       />
       <div />
       <div className="space-y-2">
-        <div className="mx-2">
+        {/* <div className="mx-2">
           <UserSidebarLink
             href="/feedback"
             icon={<Mail size={24} />}
             isExpanded={isExpanded}
             label=" Feedback"
           />
-        </div>
+        </div> */}
         {/* Chevron Icon Action */}
         <div
           className={chevronClassName}
@@ -258,12 +315,6 @@ export function UserSidebar({
             <PanelLeftOpen className="h-6 w-6 z-50" />
           )}
         </div>
-        <SidebarBottom
-          avatarUrl={avatarUrl}
-          userFullname={userProfile.full_name ?? 'User'}
-          isExpanded={isExpanded}
-          userEmail={userEmail}
-        />
       </div>
     </div>
   );

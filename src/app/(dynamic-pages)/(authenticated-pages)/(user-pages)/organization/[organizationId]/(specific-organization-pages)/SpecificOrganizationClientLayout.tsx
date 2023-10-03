@@ -132,6 +132,8 @@ export function SpecificOrganizationClientLayout({
           id: createTeamToastRef.current,
         });
         createTeamToastRef.current = undefined;
+        router.refresh();
+        router.push(`/organization/${team.organization_id}/team/${team.id}`);
       },
       onError: (error) => {
         const customError =
@@ -202,11 +204,11 @@ export function SpecificOrganizationClientLayout({
         href: `/organization/${organizationId}/completed`,
         icon: <Check />,
       },
-      {
-        label: 'Teams',
-        href: `/organization/${organizationId}/teams`,
-        icon: <UsersIcon />,
-      },
+      // {
+      //   label: 'Teams',
+      //   href: `/organization/${organizationId}/teams`,
+      //   icon: <UsersIcon />,
+      // },
     ];
   }, [organizationId]);
 
@@ -220,7 +222,7 @@ export function SpecificOrganizationClientLayout({
   return (
     <div className="space-y-8">
       <div className="space-y-0">
-        <div className="mb-4">
+        {/* <div className="mb-4">
           {isSettingsPath ? (
             <Anchor
               href={`/organization/${organizationId}`}
@@ -236,14 +238,14 @@ export function SpecificOrganizationClientLayout({
               Organization
             </Overline>
           )}
-        </div>
+        </div> */}
         <PageHeading
           title={organizationByIdData.title}
           titleHref={`/organization/${organizationId}`}
           actions={
             <div className="flex items-start  ">
-              <div className=" flex items-center space-x-2 pr-4 border-r border-muted-foreground/20 ">
-                <SubscriptionDetails />
+              <div className=" flex items-center space-x-2 border-muted-foreground/20 ">
+                {/* <SubscriptionDetails />
                 <CreateProjectDialog
                   onConfirm={(name) => {
                     createTeamProject({
@@ -252,13 +254,14 @@ export function SpecificOrganizationClientLayout({
                     });
                   }}
                   isLoading={isCreatingTeamProject}
-                />
-                <CreateTeamDialog
+                /> */}
+                {/* <CreateTeamDialog
+                  title="Create Team"
                   isLoading={isCreatingTeam}
                   onConfirm={onConfirm}
-                />
+                /> */}
               </div>
-              <div className="flex flex-col space-y-1 ml-4 items-end">
+              {/* <div className="flex flex-col space-y-1 ml-4 items-end">
                 <Anchor href={`/organization/${organizationId}/settings`}>
                   <Button variant="outline">
                     <SettingsIcon className="mr-2" />
@@ -268,16 +271,16 @@ export function SpecificOrganizationClientLayout({
                 <T.Subtle>
                   Created {moment(organizationByIdData.created_at).fromNow()}
                 </T.Subtle>
-              </div>
+              </div> */}
             </div>
           }
         />
       </div>
-      {pathname!.startsWith(
+      {/* {pathname!.startsWith(
         `/organization/${organizationId}/settings`,
       ) ? null : (
         <TabsNavigation tabs={tabs} />
-      )}
+      )} */}
       <div>{children}</div>
     </div>
   );

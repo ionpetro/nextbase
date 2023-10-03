@@ -26,7 +26,7 @@ const TeamGraphs = dynamic(
   () => import('../../TeamGraphs').then((mod) => mod.TeamGraphs),
   {
     ssr: false,
-  }
+  },
 );
 
 export const SpecificTeamClientLayout = ({
@@ -56,7 +56,7 @@ export const SpecificTeamClientLayout = ({
       {
         onMutate: async ({ name }) => {
           createProjectToastRef.current = toast.loading(
-            `Creating name ${name}...`
+            `Creating name ${name}...`,
           );
         },
         onSuccess: (project) => {
@@ -76,7 +76,7 @@ export const SpecificTeamClientLayout = ({
           });
           createProjectToastRef.current = undefined;
         },
-      }
+      },
     );
   const tabs = useMemo(() => {
     return [
@@ -105,7 +105,7 @@ export const SpecificTeamClientLayout = ({
   return (
     <div className="space-y-8">
       <div className="space-y-0">
-        <div className="flex mb-4 space-x-4">
+        {/* <div className="flex mb-4 space-x-4">
           <Overline className="text-gray-500 dark:text-gray-600">
             <Anchor href="/dashboard">Dashboard</Anchor>
           </Overline>
@@ -119,13 +119,13 @@ export const SpecificTeamClientLayout = ({
           <Overline className="text-gray-800 dark:text-gray-400 font-bold underline-offset-4 underline">
             {teamByIdData.name}
           </Overline>
-        </div>
+        </div> */}
         <div className="space-y-8">
           <PageHeading
             title={teamByIdData.name}
             actions={
               <div className=" text-gray-400 flex items-start text-3xl gap-x-2 space-x-2">
-                <div className="pr-4 border-r border-muted-foreground/20">
+                {/* <div className="pr-4 border-r border-muted-foreground/20">
                   {' '}
                   <CreateProjectDialog
                     onConfirm={(name) => {
@@ -135,7 +135,7 @@ export const SpecificTeamClientLayout = ({
                     }}
                     isLoading={isCreatingTeamProject}
                   />
-                </div>
+                </div> */}
                 <div className="flex flex-col space-y-1 ml-4 items-end">
                   <Anchor
                     href={`/organization/${organizationId}/team//${teamId}/settings`}

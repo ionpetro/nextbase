@@ -28,7 +28,7 @@ function Links({ isExpanded, toggleIsExpanded }: LinksProps) {
 
   const sidebarContainerClassName = cn(
     `grid grid-rows-[auto,1fr,auto] h-full overflow-auto`,
-    isExpanded ? ' px-4 w-[264px]' : 'px-2 w-[64px]'
+    isExpanded ? ' px-4 w-[264px]' : 'px-2 w-[64px]',
   );
 
   return (
@@ -37,51 +37,51 @@ function Links({ isExpanded, toggleIsExpanded }: LinksProps) {
         <>
           <AdminSidebarLink
             href="/dashboard"
-            icon={<Home />}
+            icon={<Home className="h-5 w-5" />}
             label="Back to Dashboard"
             isExpanded={isExpanded}
           />
           <AdminSidebarLink
             href="/app_admin"
-            icon={<FileLineChart />}
+            icon={<FileLineChart className="h-5 w-5" />}
             label="Application Settings"
             isExpanded={isExpanded}
           />
           <AdminSidebarLink
             href="/app_admin/users"
-            icon={<UsersIcon />}
+            icon={<UsersIcon className="h-5 w-5" />}
             label="Users"
             isExpanded={isExpanded}
           />
           <AdminSidebarLink
             href="/app_admin/organizations"
-            icon={<BriefcaseIcon />}
+            icon={<BriefcaseIcon className="h-5 w-5" />}
             label="Organizations"
             isExpanded={isExpanded}
           />
           <SelectSeparator />
           <AdminSidebarLink
             href="/app_admin/blog"
-            icon={<PenToolIcon />}
+            icon={<PenToolIcon className="h-5 w-5" />}
             label="Blog"
             isExpanded={isExpanded}
           />
           <SelectSeparator></SelectSeparator>
           <AdminSidebarLink
             href="/app_admin/feedback"
-            icon={<FeedbackIcon />}
+            icon={<FeedbackIcon className="h-5 w-5" />}
             label="Feedback List"
             isExpanded={isExpanded}
           />
           <AdminSidebarLink
             href="/app_admin/changelog"
-            icon={<BookIcon />}
+            icon={<BookIcon className="h-5 w-5" />}
             label="Changelog List"
             isExpanded={isExpanded}
           />
           <AdminSidebarLink
             href="/app_admin/internal-roadmap"
-            icon={<RoadMapIcon />}
+            icon={<RoadMapIcon className="h-5 w-5" />}
             label="Roadmap"
             isExpanded={isExpanded}
           />

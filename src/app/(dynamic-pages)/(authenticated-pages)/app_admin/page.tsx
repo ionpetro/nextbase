@@ -3,6 +3,8 @@ import { createSupabaseAdminServerComponentClient } from '@/supabase-clients/adm
 import { AppSupabaseClient } from '@/types';
 import { stripe } from '@/utils/stripe';
 import { SaaSMetrics } from './SaasMetrics';
+import { UserCount } from './_components/UserCount';
+import { OrganizationCount } from './_components/OrganizationCount';
 
 async function getCurrentMRR() {
   const startOfMonth = new Date();
@@ -12,7 +14,7 @@ async function getCurrentMRR() {
   const endOfMonth = new Date(
     startOfMonth.getFullYear(),
     startOfMonth.getMonth() + 1,
-    1
+    1,
   );
 
   const subscriptions = await stripe.subscriptions.list({
@@ -48,12 +50,12 @@ async function getMRR() {
     const startOfMonth = new Date(
       startDate.getFullYear(),
       startDate.getMonth() + i,
-      1
+      1,
     );
     const endOfMonth = new Date(
       startDate.getFullYear(),
       startDate.getMonth() + i + 1,
-      1
+      1,
     );
 
     const subscriptions = await stripe.subscriptions.list({
@@ -101,12 +103,12 @@ async function getChurnRate() {
     const startOfMonth = new Date(
       startDate.getFullYear(),
       startDate.getMonth() + i,
-      1
+      1,
     );
     const endOfMonth = new Date(
       startDate.getFullYear(),
       startDate.getMonth() + i + 1,
-      1
+      1,
     );
 
     const subscriptionsCreated = await stripe.subscriptions.list({
@@ -118,7 +120,7 @@ async function getChurnRate() {
     });
 
     const canceledSubscriptions = subscriptionsCreated.data.filter(
-      (sub) => sub.status === 'canceled'
+      (sub) => sub.status === 'canceled',
     );
 
     const churnRate =
@@ -144,21 +146,21 @@ async function getTotalUserCount(supabaseClient: AppSupabaseClient) {
 
 async function getTotalOrganizationsCount(supabaseClient: AppSupabaseClient) {
   const { data } = await supabaseClient.rpc(
-    'app_admin_get_total_organization_count'
+    'app_admin_get_total_organization_count',
   );
   return data ?? 0;
 }
 
 async function getTotalProjectsCount(supabaseClient: AppSupabaseClient) {
   const { data } = await supabaseClient.rpc(
-    'app_admin_get_total_project_count'
+    'app_admin_get_total_project_count',
   );
   return data ?? 0;
 }
 
 async function getOrganizationCountByMonth(supabaseClient: AppSupabaseClient) {
   const { data } = await supabaseClient.rpc(
-    'app_admin_get_organizations_created_per_month'
+    'app_admin_get_organizations_created_per_month',
   );
   if (!data) {
     return [];
@@ -175,7 +177,7 @@ async function getOrganizationCountByMonth(supabaseClient: AppSupabaseClient) {
 
 async function getProjectCountByMonth(supabaseClient: AppSupabaseClient) {
   const { data } = await supabaseClient.rpc(
-    'app_admin_get_projects_created_per_month'
+    'app_admin_get_projects_created_per_month',
   );
   if (!data) {
     return [];
@@ -192,7 +194,7 @@ async function getProjectCountByMonth(supabaseClient: AppSupabaseClient) {
 
 async function getUserCountByMonth(supabaseClient: AppSupabaseClient) {
   const { data } = await supabaseClient.rpc(
-    'app_admin_get_users_created_per_month'
+    'app_admin_get_users_created_per_month',
   );
   if (!data) {
     return [];
@@ -209,7 +211,7 @@ async function getUserCountByMonth(supabaseClient: AppSupabaseClient) {
 
 async function getActiveUsers(supabaseClient: AppSupabaseClient) {
   const { data } = await supabaseClient.rpc(
-    'app_admin_get_recent_30_day_signin_count'
+    'app_admin_get_recent_30_day_signin_count',
   );
   return data ?? [];
 }
@@ -259,11 +261,15 @@ export default async function AdminPanel() {
         </div>
         <div className="bg-gray-200/30 dark:bg-gray-800/40 rounded-xl gap-2 p-16 flex items-center flex-col-reverse">
           <T.P>Total Users</T.P>
-          <T.H1>{totalUserCount}</T.H1>
+          <T.H1>
+            <UserCount />
+          </T.H1>
         </div>
         <div className="bg-gray-200/30 dark:bg-gray-800/40 rounded-xl gap-2 p-16 flex items-center flex-col-reverse">
           <T.P>Total Organizations</T.P>
-          <T.H1>{totalOrganizationsCount}</T.H1>
+          <T.H1>
+            <OrganizationCount />
+          </T.H1>
         </div>
         <div className="bg-gray-200/30 dark:bg-gray-800/40 rounded-xl gap-2 p-16 flex items-center flex-col-reverse">
           <T.P>Total Projects</T.P>

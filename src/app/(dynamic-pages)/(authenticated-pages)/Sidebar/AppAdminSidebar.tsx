@@ -8,7 +8,7 @@ import lightLogo from 'public/logos/nextbase-light-logo.png';
 import { AppSidebar } from '@/components/presentational/tailwind/Sidebars/AppSidebar';
 import PanelLeftOpen from 'lucide-react/dist/esm/icons/panel-left-open';
 import PanelLeftClose from 'lucide-react/dist/esm/icons/panel-left-close';
-import { SidebarBottom } from '@/components/presentational/tailwind/Sidebars/SidebarBottom';
+import { UserNavPopover } from '@/components/presentational/tailwind/Sidebars/UserNavPopover';
 import { Table } from '@/types';
 import { useUserProfile } from '@/utils/react-queries/user';
 import { getUserAvatarUrl } from '@/utils/helpers';
@@ -49,7 +49,7 @@ export function AppAdminSidebar({
 
   return (
     <div
-      className="relative bg-gray-100/50 dark:bg-gray-900/60 space-y-5 px-2 grid grid-rows-4 border-r"
+      className="relative  dark:bg-gray-900/60 space-y-5 px-2 grid grid-rows-4 border-r"
       style={{
         gridTemplateRows: 'auto auto 1fr auto',
       }}
@@ -96,11 +96,10 @@ export function AppAdminSidebar({
         )}
       </div>
       <div></div>
-      <SidebarBottom
+      <UserNavPopover
         avatarUrl={avatarUrl}
         userFullname={userProfile.full_name ?? 'User'}
         userEmail={userEmail}
-        isExpanded={isExpanded}
       />
     </div>
   );

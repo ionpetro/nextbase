@@ -14,13 +14,17 @@ import { Label } from '@/components/ui/Label';
 import UsersIcon from 'lucide-react/dist/esm/icons/users';
 
 type CreateTeamDialogProps = {
+  title: string;
   onConfirm: (teamTitle: string) => void;
   isLoading: boolean;
+  trigger?: React.ReactNode;
 };
 
 export function CreateTeamDialog({
+  title,
   onConfirm,
   isLoading,
+  trigger,
 }: CreateTeamDialogProps) {
   const [teamTitle, setTeamTitle] = useState<string>('');
   const [open, setOpen] = useState(false);
@@ -35,10 +39,14 @@ export function CreateTeamDialog({
     <>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="outline" size="default">
-            <UsersIcon className="mr-2 w-5 h-5" />
-            Create Team
-          </Button>
+          {trigger ? (
+            trigger
+          ) : (
+            <Button variant="outline" size="default">
+              <UsersIcon className="mr-2 w-5 h-5" />
+              {title ? title : 'Create Team'}
+            </Button>
+          )}
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
