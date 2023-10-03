@@ -21,11 +21,6 @@ type LinksProps = {
 function Links({ isExpanded, toggleIsExpanded }: LinksProps) {
   const user = useUser();
 
-  // const chevronClassName = cn(
-  //   `absolute flex text-white justify-center bg-slate-900 hover:bg-slate-700 p-2 px-1 rounded-lg text-4xl cursor-pointer items-center top-1/2`,
-  //   isExpanded ? 'left-60' : 'left-10'
-  // );
-
   const sidebarContainerClassName = cn(
     `grid grid-rows-[auto,1fr,auto] h-full overflow-auto`,
     isExpanded ? ' px-4 w-[264px]' : 'px-2 w-[64px]',

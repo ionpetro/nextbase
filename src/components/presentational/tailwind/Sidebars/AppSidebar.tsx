@@ -1,15 +1,10 @@
 'use client';
 import { Anchor } from '@/components/Anchor';
 import { useUser } from '@supabase/auth-helpers-react';
-import HomeIcon from 'lucide-react/dist/esm/icons/home';
-import ServerIcon from 'lucide-react/dist/esm/icons/server';
 import { cn } from '@/utils/cn';
-import ChevronLeftIcon from 'lucide-react/dist/esm/icons/chevron-left';
 import ChevronRightIcon from 'lucide-react/dist/esm/icons/chevron-right';
-import { UserSidebarLink } from './UserSidebarLink';
 import { CurrentOrganizationTeams } from './CurrentOrganizationTeams';
 import { Table } from '@/types';
-import { SelectSeparator } from '@radix-ui/react-select';
 import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
 import PlusIcon from 'lucide-react/dist/esm/icons/plus';
 import { T } from '@/components/ui/Typography';
@@ -85,17 +80,6 @@ function Links({
               Project
             </T.Small>
           ) : null}
-          {/* {isExpanded ? (
-            <T.Small className="ml-4 font-medium mb-2 text-gray-500 dark:text-slate-400">
-              Main Menu
-            </T.Small>
-          ) : null} */}
-          {/* <UserSidebarLink
-            href="/dashboard"
-            icon={<HomeIcon className="h-5 w-5" />}
-            label="Dashboard"
-            isExpanded={isExpanded}
-          /> */}
           {isExpanded ? (
             <CreateProjectDialog
               onConfirm={(name) => {

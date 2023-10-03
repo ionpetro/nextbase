@@ -244,15 +244,7 @@ export function UserSidebar({
                   <CommandSeparator />
                   <CommandList>
                     <CommandGroup>
-                      <CommandItem
-                        onSelect={() => {
-                          // setIsPopoverOpen(false);
-                          // setIsDialogOpen(true);
-                        }}
-                        className="px-1 py-0 w-full"
-                      >
-                        {/* <FiPlusCircle className="mr-2 h-5 w-5" />
-                      Create Organization */}
+                      <CommandItem className="px-1 py-0 w-full">
                         <CreateOrganizationDialog
                           isLoading={isLoading}
                           onConfirm={onConfirm}
