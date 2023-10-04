@@ -3,7 +3,7 @@ import { Anchor } from '@/components/Anchor';
 import { useUser } from '@supabase/auth-helpers-react';
 import { cn } from '@/utils/cn';
 import ChevronRightIcon from 'lucide-react/dist/esm/icons/chevron-right';
-import { CurrentOrganizationTeams } from './CurrentOrganizationTeams';
+import { CurrentOrganizationTeams } from '../../../../app/(dynamic-pages)/(authenticated-pages)/@sidebar/organization/[...organizationId]/CurrentOrganizationTeams';
 import { Table } from '@/types';
 import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
 import PlusIcon from 'lucide-react/dist/esm/icons/plus';
@@ -65,16 +65,15 @@ function Links({
 }: LinksProps) {
   const user = useUser();
 
-  const sidebarContainerClassName = cn(
-    `grid grid-rows-[auto,1fr,auto] h-full overflow-auto`,
-    isExpanded ? ' px-2 w-[264px]' : 'px-2 w-[64px]',
-  );
-
   return (
-    <div className={sidebarContainerClassName}>
+    <div
+      className={cn(
+        `grid grid-rows-[auto,1fr,auto] h-full overflow-auto`,
+        isExpanded ? ' px-2 w-[264px]' : 'px-2 w-[64px]',
+      )}
+    >
       {user ? (
         <>
-          {' '}
           {isExpanded ? (
             <T.Small className="ml-4 text-xs font-semibold mb-1 text-gray-500 dark:text-slate-400">
               Project

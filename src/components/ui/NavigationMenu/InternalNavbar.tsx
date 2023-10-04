@@ -11,7 +11,7 @@ export async function InternalNavbar() {
           'h-full text-sm font-medium flex mx-auto px-12 border-b dark:border-gray-700/50 py-2.5 w-full mb-8 justify-center items-center',
         )}
       >
-        <div className={cn('hidden animate-pulse lg:block', 'relative ')}>
+        <div className={cn('hidden lg:block', 'relative ')}>
           Organization Name
           <Badge variant="discussion" size="xxs" className="ml-3 py-1">
             Organization

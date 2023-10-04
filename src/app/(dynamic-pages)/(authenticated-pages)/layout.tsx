@@ -3,7 +3,7 @@ import { AppSupabaseClient } from '@/types';
 import { User } from '@supabase/supabase-js';
 import { getIsAppAdmin, getUserProfile } from '@/utils/supabase-queries';
 import { errors } from '@/utils/errors';
-import { ReactNode } from 'react';
+import { ReactNode, Suspense } from 'react';
 import { redirect } from 'next/navigation';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
 import setCurrentOrganizationIdAction from './actions';
@@ -24,7 +24,13 @@ async function fetchData(supabaseClient: AppSupabaseClient, authUser: User) {
   return { initialOrganizationsList, isUserAppAdmin, userProfile };
 }
 
-export default async function Layout({ children }: { children: ReactNode }) {
+export default async function Layout({
+  children,
+  sidebar,
+}: {
+  children: ReactNode;
+  sidebar: React.ReactNode;
+}) {
   const supabaseClient = createSupabaseUserServerComponentClient();
   const { data, error } = await supabaseClient.auth.getUser();
 
@@ -45,13 +51,7 @@ export default async function Layout({ children }: { children: ReactNode }) {
 
     return (
       <LayoutShell>
-        <Sidebar
-          isUserAppAdmin={isUserAppAdmin}
-          userProfile={userProfile}
-          currentOrganizationId={currentOrganizationId}
-          setCurrentOrganizationId={setCurrentOrganizationIdAction}
-          organizationList={initialOrganizationsList}
-        />
+        {sidebar}
         <ClientLayout
           isUserAppAdmin={isUserAppAdmin}
           userProfile={userProfile}

@@ -7,22 +7,21 @@ import { classNames } from '@/utils/classNames';
 import UsersIcon from 'lucide-react/dist/esm/icons/users-2';
 import PlusIcon from 'lucide-react/dist/esm/icons/plus';
 import ChevronRightIcon from 'lucide-react/dist/esm/icons/chevron-right';
-import { CreateTeamDialog } from '../CreateTeamDialog';
 import { createTeamAction } from '@/app/(dynamic-pages)/(authenticated-pages)/(user-pages)/organization/[organizationId]/(specific-organization-pages)/actions';
 import { useRef } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
-import { Button } from '@/components/ui/Button';
 import { usePathname, useRouter } from 'next/navigation';
+import { CreateTeamDialog } from '@/components/presentational/tailwind/CreateTeamDialog';
 
 export const CurrentOrganizationTeams = ({
     teams,
     className,
-    currentOrganizationId,
+    organizationId,
 }: {
     teams: Table<'teams'>[];
     className?: string;
-    currentOrganizationId: string | undefined;
+    organizationId: string;
 }) => {
     const createTeamToastRef = useRef<string>();
     const pathname = usePathname();
@@ -63,7 +62,7 @@ export const CurrentOrganizationTeams = ({
     const onConfirmTeam = (teamName: string) => {
         createTeam({
             name: teamName,
-            organizationId: currentOrganizationId!,
+            organizationId: organizationId!,
         });
     };
 
@@ -79,8 +78,8 @@ export const CurrentOrganizationTeams = ({
                     ? teams
                         .sort(
                             (a, b) =>
-                                new Date(b.created_at!).getTime() -
-                                new Date(a.created_at!).getTime(),
+                                new Date(b.created_at ?? 0).getTime() -
+                                new Date(a.created_at ?? 0).getTime(),
                         )
                         .map((team) => (
                             <Anchor
