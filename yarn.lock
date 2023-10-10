@@ -2437,9 +2437,9 @@
   integrity sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==
 
 "@tremor/react@^3.6.5":
-  version "3.9.0"
-  resolved "https://registry.yarnpkg.com/@tremor/react/-/react-3.9.0.tgz#88b422531c2d10e6b2eaf604cdc4924ae0740ccb"
-  integrity sha512-hbQEvePm4UP/vcAPeDdK0FRb+QYNiMAKZbHxWS4gb2YdDVrrkyHfQo9cHfdzzaMGYq2iIay58X7/5bVYLqy0YA==
+  version "3.9.1"
+  resolved "https://registry.yarnpkg.com/@tremor/react/-/react-3.9.1.tgz#f40c6ccfa97b42ae67dc6fd11bbbca878aa0b5e4"
+  integrity sha512-WSo1MzXjjW+g4pIncfUsQZTISsEd+lBFwSn52SYTcH/4hH4VLqZIaUmVK7bzdvlYMN4sF7PRF4zfByYeeQ4ySg==
   dependencies:
     "@floating-ui/react" "^0.19.1"
     "@headlessui/react" "^1.7.14"
@@ -9125,9 +9125,9 @@ react-select@^5.7.3:
     use-isomorphic-layout-effect "^1.1.2"
 
 react-smooth@^2.0.2:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/react-smooth/-/react-smooth-2.0.4.tgz#95187126265970a1490e2aea5690365203ee555f"
-  integrity sha512-OkFsrrMBTvQUwEJthE1KXSOj79z57yvEWeFefeXPib+RmQEI9B1Ub1PgzlzzUyBOvl/TjXt5nF2hmD4NsgAh8A==
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/react-smooth/-/react-smooth-2.0.5.tgz#d153b7dffc7143d0c99e82db1532f8cf93f20ecd"
+  integrity sha512-BMP2Ad42tD60h0JW6BFaib+RJuV5dsXJK9Baxiv/HlNFjvRLqA9xrNKxVWnUIZPQfzUwGXIlU/dSYLU+54YGQA==
   dependencies:
     fast-equals "^5.0.0"
     react-transition-group "2.9.0"
