@@ -2087,9 +2087,9 @@
   integrity sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==
 
 "@stripe/stripe-js@^2.0.0":
-  version "2.1.8"
-  resolved "https://registry.yarnpkg.com/@stripe/stripe-js/-/stripe-js-2.1.8.tgz#22de2091729b77d0bed5bb726b168db7894ac27c"
-  integrity sha512-j0RGEaU73Wev17n/3CFn0iVsmsa+J/o0kN8bexGQguqypvYFxSJ/iYlTwwKT39ThgSJsQtWQl8vGJC43qeoy/g==
+  version "2.1.9"
+  resolved "https://registry.yarnpkg.com/@stripe/stripe-js/-/stripe-js-2.1.9.tgz#de7fd618ae31195fa0e8b16f5fc138d72f4d0b63"
+  integrity sha512-0RSvCJrzEVx52e8hbSAcZ2vv6OzoFj5fe5XC50GSrcev1Y4t2XDE6W5CIhR/Y6l3CPgO/P4luqoLWuvpUkBhig==
 
 "@supabase/auth-helpers-nextjs@^0.8.0":
   version "0.8.1"
