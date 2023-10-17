@@ -3355,9 +3355,9 @@ big-integer@^1.6.17, big-integer@^1.6.44:
   integrity sha512-GPEid2Y9QU1Exl1rpO9B2IPJGHPSupF5GnVIP0blYvNOMer2bTvSWs1jGOUg04hTmu67nmLsQ9TBo1puaotBHg==
 
 bin-links@^4.0.1:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/bin-links/-/bin-links-4.0.2.tgz#13321472ea157e9530caded2b7281496d698665b"
-  integrity sha512-jxJ0PbXR8eQyPlExCvCs3JFnikvs1Yp4gUJt6nmgathdOwvur+q22KWC3h20gvWl4T/14DXKj2IlkJwwZkZPOw==
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/bin-links/-/bin-links-4.0.3.tgz#9e4a3c5900830aee3d7f52178b65e01dcdde64a5"
+  integrity sha512-obsRaULtJurnfox/MDwgq6Yo9kzbv1CPTk/1/s7Z/61Lezc8IKkFCOXNeVLXz0456WRzBQmSsDWlai2tIhBsfA==
   dependencies:
     cmd-shim "^6.0.0"
     npm-normalize-package-bin "^3.0.0"
@@ -10148,9 +10148,9 @@ sucrase@^3.32.0:
     ts-interface-checker "^0.1.9"
 
 supabase@^1.53.0:
-  version "1.100.1"
-  resolved "https://registry.yarnpkg.com/supabase/-/supabase-1.100.1.tgz#6064521532b4eb4a4481dc320c597f46efd426af"
-  integrity sha512-Tn03fjNGiCoJ06ZeBtCmaNj3Kqf2UzM8bpptiIrP7g5wPmAHL8MTDM2ZEemkRxAWAm2E+fcb8zGOSNbh0RCQGQ==
+  version "1.106.1"
+  resolved "https://registry.yarnpkg.com/supabase/-/supabase-1.106.1.tgz#a7870099258b8118b3171054171e6e4024ef013b"
+  integrity sha512-Wc1GYraDRCRGZIkCPoN00QuSP//Cm2Q4q5B6LvEHb2dKoezO7Mx7SYZ5rhh3X0ko9Yii0ABeN2GE88ZVL9R5mg==
   dependencies:
     bin-links "^4.0.1"
     https-proxy-agent "^7.0.2"
