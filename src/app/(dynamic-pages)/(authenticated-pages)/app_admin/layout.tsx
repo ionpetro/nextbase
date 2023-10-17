@@ -6,14 +6,15 @@ import { User } from '@supabase/supabase-js';
 import { redirect } from 'next/navigation';
 import { AppAdminNavigation } from './AppAdminNavigation';
 import { InternalNavbar } from '@/components/ui/NavigationMenu/InternalNavbar';
+import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
+import { Badge } from '@/components/ui/Badge';
 
 async function fetchData(supabaseClient: AppSupabaseClient, authUser: User) {
-  const [isUserAppAdmin, userProfile] = await Promise.all([
+  const [isUserAppAdmin] = await Promise.all([
     getIsAppAdmin(supabaseClient, authUser),
-    getUserProfile(supabaseClient, authUser.id),
   ]);
 
-  return { isUserAppAdmin, userProfile };
+  return { isUserAppAdmin };
 }
 
 export default async function Layout({
@@ -22,29 +23,24 @@ export default async function Layout({
   children: React.ReactNode;
 }) {
   const supabaseClient = createSupabaseUserServerComponentClient();
-  const { data, error } = await supabaseClient.auth.getUser();
-  if (error) {
-    errors.add(error);
-    return <p>Error: An error occurred.</p>;
-  }
-  if (!data.user) {
-    // This is unreachable because the user is authenticated
-    // But we need to check for it anyway for TypeScript.
-    return <p>No user</p>;
-  }
+  const user = await serverGetLoggedInUser();
 
   try {
-    const { isUserAppAdmin, userProfile } = await fetchData(
-      supabaseClient,
-      data.user,
-    );
+    const { isUserAppAdmin } = await fetchData(supabaseClient, user);
 
     if (!isUserAppAdmin) {
       return redirect('/dashboard');
     }
     return (
       <div className="flex-1 pb-10 relative h-auto max-h-screen w-full overflow-auto">
-        <InternalNavbar />
+        <InternalNavbar
+          title="Organization Name"
+          badge={
+            <Badge variant="discussion" size="xxs" className="ml-2">
+              Beta
+            </Badge>
+          }
+        />
         <div className="px-12 space-y-6">
           <AppAdminNavigation />
           {children}

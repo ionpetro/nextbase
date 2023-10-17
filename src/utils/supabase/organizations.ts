@@ -4,7 +4,7 @@ import { User } from '@supabase/supabase-js';
 export const updateUserName = async (
   supabase: AppSupabaseClient,
   user: User,
-  name: string
+  name: string,
 ) => {
   await supabase
     .from('user_profiles')
@@ -16,13 +16,13 @@ export const updateUserName = async (
 
 export const getAllOrganizationsForUser = async (
   supabase: AppSupabaseClient,
-  userId: string
+  userId: string,
 ) => {
   const { data: organizations, error: organizationsError } = await supabase.rpc(
     'get_organizations_for_user',
     {
       user_id: userId,
-    }
+    },
   );
   if (!organizations) {
     throw new Error(organizationsError.message);
@@ -31,11 +31,41 @@ export const getAllOrganizationsForUser = async (
   const { data, error } = await supabase
     .from('organizations')
     .select(
-      '*, organization_members(id,member_id,member_role, user_profiles(*)), subscriptions(id, prices(id,products(id,name)))'
+      '*, organization_members(id,member_id,member_role, user_profiles(*)), subscriptions(id, prices(id,products(id,name)))',
     )
     .in(
       'id',
-      organizations.map((org) => org.organization_id)
+      organizations.map((org) => org.organization_id),
+    )
+    .order('created_at', {
+      ascending: false,
+    });
+  if (error) {
+    throw error;
+  }
+
+  return data || [];
+};
+
+export const getAllSlimOrganizationsForUser = async (
+  supabase: AppSupabaseClient,
+  userId: string,
+) => {
+  const { data: organizations, error: organizationsError } = await supabase
+    .from('organization_members')
+    .select('organization_id')
+    .eq('member_id', userId);
+
+  if (organizationsError) {
+    throw organizationsError;
+  }
+
+  const { data, error } = await supabase
+    .from('organizations')
+    .select('id,title')
+    .in(
+      'id',
+      organizations.map((org) => org.organization_id),
     )
     .order('created_at', {
       ascending: false,
@@ -49,7 +79,7 @@ export const getAllOrganizationsForUser = async (
 
 export const getOrganizationById = async (
   supabase: AppSupabaseClient,
-  organizationId: string
+  organizationId: string,
 ) => {
   const { data, error } = await supabase
     .from('organizations')
@@ -68,7 +98,7 @@ export const getOrganizationById = async (
 export const createOrganization = async (
   supabase: AppSupabaseClient,
   user: User,
-  name: string
+  name: string,
 ) => {
   const { data, error } = await supabase
     .from('organizations')
@@ -89,7 +119,7 @@ export const createOrganization = async (
 export const updateOrganizationTitle = async (
   supabase: AppSupabaseClient,
   organizationId: string,
-  title: string
+  title: string,
 ): Promise<Table<'organizations'>> => {
   const { data, error } = await supabase
     .from('organizations')
@@ -109,7 +139,7 @@ export const updateOrganizationTitle = async (
 
 export const getMembersInOrganization = async (
   supabase: AppSupabaseClient,
-  organizationId: string
+  organizationId: string,
 ) => {
   const { data, error } = await supabase
     .from('organization_members')
@@ -125,12 +155,12 @@ export const getMembersInOrganization = async (
 
 export const getPendingTeamInvitationsInOrganization = async (
   supabase: AppSupabaseClient,
-  organizationId: string
+  organizationId: string,
 ) => {
   const { data, error } = await supabase
     .from('organization_join_invitations')
     .select(
-      '*, inviter:user_profiles!inviter_user_id(*), invitee:user_profiles!invitee_user_id(*)'
+      '*, inviter:user_profiles!inviter_user_id(*), invitee:user_profiles!invitee_user_id(*)',
     )
     .eq('organization_id', organizationId)
     .eq('status', 'active');
@@ -144,7 +174,7 @@ export const getPendingTeamInvitationsInOrganization = async (
 
 export const getOrganizationSubscription = async (
   supabase: AppSupabaseClient,
-  organizationId: string
+  organizationId: string,
 ) => {
   const { data, error } = await supabase
     .from('subscriptions')
@@ -163,7 +193,7 @@ export const getOrganizationSubscription = async (
 export const getUserOrganizationRole = async (
   supabase: AppSupabaseClient,
   userId: string,
-  organizationId: string
+  organizationId: string,
 ): Promise<Enum<'organization_member_role'>> => {
   const { data, error } = await supabase
     .from('organization_members')

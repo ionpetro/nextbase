@@ -2,8 +2,15 @@ import { UserNav } from './UserNav';
 import { Badge } from '../Badge';
 import { cn } from '@/utils/cn';
 import { AppAdminLink } from './AppAdminLink/AppAdminLink';
+import { ReactNode } from 'react';
 
-export async function InternalNavbar() {
+export async function InternalNavbar({
+  title,
+  badge,
+}: {
+  title: ReactNode;
+  badge?: ReactNode;
+}) {
   return (
     <header className="sticky top-0 w-full z-10 dark:bg-slate-900/50 bg-white/90 backdrop-blur">
       <div
@@ -12,10 +19,8 @@ export async function InternalNavbar() {
         )}
       >
         <div className={cn('hidden lg:block', 'relative ')}>
-          Organization Name
-          <Badge variant="discussion" size="xxs" className="ml-3 py-1">
-            Organization
-          </Badge>
+          {title}
+          {badge ? badge : null}
         </div>
         <div className="relative flex basis-0 items-center justify-end space-x-2 sm:gap-3 md:flex-grow">
           <AppAdminLink />

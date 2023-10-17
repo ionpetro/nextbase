@@ -23,7 +23,7 @@ export default async function MyFeedback() {
   const user = await getLoggedInUserAction(supabaseClient);
   const feedbackList = await getAllInternalFeedbackForUser(
     supabaseClient,
-    user.id
+    user.id,
   );
   return (
     <div>

@@ -3,7 +3,6 @@ import { Anchor } from '@/components/Anchor';
 import { useUser } from '@supabase/auth-helpers-react';
 import { cn } from '@/utils/cn';
 import ChevronRightIcon from 'lucide-react/dist/esm/icons/chevron-right';
-import { CurrentOrganizationTeams } from '../../../../app/(dynamic-pages)/(authenticated-pages)/@sidebar/organization/[...organizationId]/CurrentOrganizationTeams';
 import { Table } from '@/types';
 import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
 import PlusIcon from 'lucide-react/dist/esm/icons/plus';
@@ -14,6 +13,7 @@ import { usePathname } from 'next/navigation';
 import { CreateProjectDialog } from '../CreateProjectDialog';
 import { MutateOptions } from '@tanstack/react-query';
 import Link from 'next/link';
+import { CurrentOrganizationTeams } from '@/components/Sidebars/OrganizationSidebar/CurrentOrganizationTeams';
 
 type LinksProps = {
   isUserAppAdmin: boolean;

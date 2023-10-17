@@ -17,6 +17,7 @@ var srcRuleOverrides = {
   ],
   'prettier/prettier': 1,
   '@typescript-eslint/no-unused-vars': 'off',
+  '@typescript-eslint/no-non-null-assertion': 'error',
 };
 
 module.exports = {

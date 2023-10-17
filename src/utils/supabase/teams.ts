@@ -4,7 +4,7 @@ import { getUserOrganizationRole } from './organizations';
 export const getUserTeamRole = async (
   supabase: AppSupabaseClient,
   userId: string,
-  teamId: number
+  teamId: number,
 ): Promise<Enum<'project_team_member_role'> | null> => {
   const { data, error } = await supabase
     .from('team_members')
@@ -25,7 +25,7 @@ export const addUserToTeam = async (
   supabase: AppSupabaseClient,
   userId: string,
   teamId: number,
-  role: Enum<'project_team_member_role'>
+  role: Enum<'project_team_member_role'>,
 ) => {
   const rowCount = await supabase
     .from('team_members')
@@ -58,7 +58,7 @@ export const updateUserRoleInProjectTeam = async (
   supabase: AppSupabaseClient,
   userId: string,
   projectId: number,
-  newRole: Enum<'project_team_member_role'>
+  newRole: Enum<'project_team_member_role'>,
 ) => {
   const { data, error } = await supabase
     .from('team_members')
@@ -76,7 +76,7 @@ export const updateUserRoleInProjectTeam = async (
 export const createTeamInOrganization = async (
   supabase: AppSupabaseClient,
   organizationId: string,
-  teamName: string
+  teamName: string,
 ) => {
   const { data, error } = await supabase
     .from('teams')
@@ -95,8 +95,8 @@ export const createTeamInOrganization = async (
 
 export const getTeamsInOrganization = async (
   supabase: AppSupabaseClient,
-  organizationId: string
-) => {
+  organizationId: string,
+): Promise<Table<'teams'>[]> => {
   const { data, error } = await supabase
     .from('teams')
     .select('*')
@@ -113,9 +113,29 @@ export const getTeamsInOrganization = async (
   return data;
 };
 
+export const getSlimTeamsInOrganization = async (
+  supabase: AppSupabaseClient,
+  organizationId: string,
+) => {
+  const { data, error } = await supabase
+    .from('teams')
+    .select('id, name')
+    .eq('organization_id', organizationId)
+    .order('created_at', { ascending: true });
+
+  if (error) {
+    throw error;
+  }
+
+  if (!data) {
+    throw new Error('No teams found for organization');
+  }
+  return data;
+};
+
 export const getTeamById = async (
   supabase: AppSupabaseClient,
-  teamId: number
+  teamId: number,
 ) => {
   const { data, error } = await supabase
     .from('teams')
@@ -134,7 +154,7 @@ export const getCanUserManageTeam = async (
   supabase: AppSupabaseClient,
   userId: string,
   organizationId: string,
-  teamId: number
+  teamId: number,
 ) => {
   const [teamRole, orgRole] = await Promise.all([
     getUserTeamRole(supabase, userId, teamId),
@@ -151,7 +171,7 @@ export const updateUserRoleInTeam = async (
   supabase: AppSupabaseClient,
   userId: string,
   teamId: number,
-  newRole: Enum<'project_team_member_role'>
+  newRole: Enum<'project_team_member_role'>,
 ) => {
   const { data, error } = await supabase
     .from('team_members')
@@ -168,7 +188,7 @@ export const updateUserRoleInTeam = async (
 
 export const getTeamMembersByTeamId = async (
   supabase: AppSupabaseClient,
-  teamId: number
+  teamId: number,
 ) => {
   const { data, error } = await supabase
     .from('team_members')
@@ -185,7 +205,7 @@ export const getTeamMembersByTeamId = async (
 export const removeUserFromTeam = async (
   supabase: AppSupabaseClient,
   userId: string,
-  teamId: number
+  teamId: number,
 ) => {
   const { data, error } = await supabase
     .from('team_members')

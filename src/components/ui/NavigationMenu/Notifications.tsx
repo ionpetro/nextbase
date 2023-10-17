@@ -1,6 +1,5 @@
 'use client';
 
-import { useLoggedInUser } from '@/hooks/useLoggedInUser';
 import { supabaseUserClientComponentClient } from '@/supabase-clients/user/supabaseUserClientComponentClient';
 import {
   getPaginatedNotifications,
@@ -28,15 +27,13 @@ import { useRouter } from 'next/navigation';
 import { Button } from '../Button';
 
 const NOTIFICATIONS_PAGE_SIZE = 10;
-const useUnseenNotificationIds = () => {
-  const user = useLoggedInUser();
-
+const useUnseenNotificationIds = (userId: string) => {
   const { data, refetch } = useQuery(
-    ['unseen-notification-ids', user.id],
+    ['unseen-notification-ids', userId],
     async () => {
       return getUnseenNotificationIds(
         supabaseUserClientComponentClient,
-        user.id,
+        userId,
       );
     },
     {
@@ -44,7 +41,7 @@ const useUnseenNotificationIds = () => {
     },
   );
   useEffect(() => {
-    const channelId = `user-notifications:${user.id}`;
+    const channelId = `user-notifications:${userId}`;
     const channel = supabaseUserClientComponentClient
       .channel(channelId)
       .on(
@@ -53,7 +50,7 @@ const useUnseenNotificationIds = () => {
           event: 'INSERT',
           schema: 'public',
           table: 'user_notifications',
-          filter: 'user_id=eq.' + user.id,
+          filter: 'user_id=eq.' + userId,
         },
         () => {
           refetch();
@@ -65,7 +62,7 @@ const useUnseenNotificationIds = () => {
           event: 'UPDATE',
           schema: 'public',
           table: 'user_notifications',
-          filter: 'user_id=eq.' + user.id,
+          filter: 'user_id=eq.' + userId,
         },
         (payload) => {
           console.log(payload);
@@ -81,16 +78,14 @@ const useUnseenNotificationIds = () => {
   return data ?? 0;
 };
 
-export const useNotifications = () => {
-  const user = useLoggedInUser();
-
+export const useNotifications = (userId: string) => {
   const { data, isFetchingNextPage, isLoading, fetchNextPage, hasNextPage } =
     useInfiniteQuery(
-      ['paginatedNotifications', user.id],
+      ['paginatedNotifications', userId],
       async ({ pageParam }) => {
         return getPaginatedNotifications(
           supabaseUserClientComponentClient,
-          user.id,
+          userId,
           pageParam ?? 0,
           NOTIFICATIONS_PAGE_SIZE,
         );
@@ -174,12 +169,11 @@ function Notification({
   );
 }
 
-export const useReadAllNotifications = () => {
+export const useReadAllNotifications = (userId: string) => {
   const router = useRouter();
-  const user = useLoggedInUser();
   return useMutation(
     async () => {
-      return readAllNotifications(supabaseUserClientComponentClient, user.id);
+      return readAllNotifications(supabaseUserClientComponentClient, userId);
     },
     {
       onSuccess: () => {
@@ -190,8 +184,8 @@ export const useReadAllNotifications = () => {
   );
 };
 
-export const Notifications = () => {
-  const unseenNotificationIds = useUnseenNotificationIds();
+export const Notifications = ({ userId }: { userId: string }) => {
+  const unseenNotificationIds = useUnseenNotificationIds(userId);
   const unseenNotificationCount = unseenNotificationIds.length;
   const {
     notifications,
@@ -199,8 +193,8 @@ export const Notifications = () => {
     fetchNextPage,
     isFetchingNextPage,
     isLoading,
-  } = useNotifications();
-  const { mutate: readAllNotifications } = useReadAllNotifications();
+  } = useNotifications(userId);
+  const { mutate: readAllNotifications } = useReadAllNotifications(userId);
   return (
     <Popover>
       <PopoverTrigger className="focus:ring-none">

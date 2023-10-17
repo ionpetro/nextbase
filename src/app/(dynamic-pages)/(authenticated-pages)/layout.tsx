@@ -7,10 +7,9 @@ import { ReactNode, Suspense } from 'react';
 import { redirect } from 'next/navigation';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
 import setCurrentOrganizationIdAction from './actions';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import { getAllOrganizationsForUser } from '@/utils/supabase-queries';
-import { LayoutShell } from './LayoutShell';
-import { Sidebar } from './Sidebar/Sidebar';
+import { LoggedInUserProvider } from '@/contexts/LoggedInUserContext';
 
 async function fetchData(supabaseClient: AppSupabaseClient, authUser: User) {
   const [isUserAppAdmin, userProfile] = await Promise.all([
@@ -24,17 +23,12 @@ async function fetchData(supabaseClient: AppSupabaseClient, authUser: User) {
   return { initialOrganizationsList, isUserAppAdmin, userProfile };
 }
 
-export default async function Layout({
-  children,
-  sidebar,
-}: {
-  children: ReactNode;
-  sidebar: React.ReactNode;
-}) {
+export default async function Layout({ children }: { children: ReactNode }) {
   const supabaseClient = createSupabaseUserServerComponentClient();
   const { data, error } = await supabaseClient.auth.getUser();
+  const { user } = data;
 
-  if (!data.user) {
+  if (!user) {
     // This is unreachable because the user is authenticated
     // But we need to check for it anyway for TypeScript.
     return redirect('/login');
@@ -43,25 +37,12 @@ export default async function Layout({
   }
 
   try {
-    const { initialOrganizationsList, isUserAppAdmin, userProfile } =
-      await fetchData(supabaseClient, data.user);
-
-    const currentOrganizationId = cookies().get('current_organization_id')
-      ?.value;
+    const { userProfile } = await fetchData(supabaseClient, data.user);
 
     return (
-      <LayoutShell>
-        {sidebar}
-        <ClientLayout
-          isUserAppAdmin={isUserAppAdmin}
-          userProfile={userProfile}
-          currentOrganizationId={currentOrganizationId}
-          setCurrentOrganizationId={setCurrentOrganizationIdAction}
-          organizationList={initialOrganizationsList}
-        >
-          {children}
-        </ClientLayout>
-      </LayoutShell>
+      <LoggedInUserProvider user={user}>
+        <ClientLayout userProfile={userProfile}>{children}</ClientLayout>
+      </LoggedInUserProvider>
     );
   } catch (fetchDataError) {
     errors.add(fetchDataError);
