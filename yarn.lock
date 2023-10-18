@@ -2703,29 +2703,29 @@
   integrity sha512-lqa4UEhhv/2sjjIQgjX8B+RBjj47eo0mzGasklVJ78UKGQY1r0VpB9XHDaZZO9qzEFDdy4MrXLuEaSmPrPSe/A==
 
 "@types/nprogress@^0.2.0":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@types/nprogress/-/nprogress-0.2.1.tgz#e853abbb58bd00873e047156ae86b58b6af6044c"
-  integrity sha512-TYuyVnp+nOnimgdOydDIDYIxv2kSeuJZw4tF0p/KG7hpzcMF1WkHaREwM8O4blqfT1F7rq0nht6Ko2KVUfWzBA==
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@types/nprogress/-/nprogress-0.2.2.tgz#c73bf540ac7926fb1b6d03f9d2725e07b3848d65"
+  integrity sha512-2wLrSJXLztGmr7wXwM0hA/wuIOY9DznVdd+ZFofHOiXcj9JnVt+2ZeLRJ7v5ZVlmheSkUOSg3Q3O4Ce7yji79A==
 
 "@types/object.omit@^3.0.0":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@types/object.omit/-/object.omit-3.0.1.tgz#1b9de058cf94344b9284308a41b17e3a356ed18e"
-  integrity sha512-24XD34UeRWw505TsMNBrQ4bES2s8IxiFC59mmNUFhTz9IX2hAtA7gQ8wVww1i17QmhBYILg5iqYP2y7aqA3pwQ==
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@types/object.omit/-/object.omit-3.0.2.tgz#13d23915cc16fa54b0d4cfbcb79840f4fe1474d9"
+  integrity sha512-BxWU36cMP+FKD3OLFluQaj2cBev2sx2LJaHELuphHwnleq+xnEhTmuYYYx4pOT/1U/ZoR6B+RdvxWh2FD6lGGA==
 
 "@types/object.pick@^1.3.2":
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/@types/object.pick/-/object.pick-1.3.2.tgz#9eb28118240ad8f658b9c9c6caf35359fdb37150"
-  integrity sha512-sn7L+qQ6RLPdXRoiaE7bZ/Ek+o4uICma/lBFPyJEKDTPTBP1W8u0c4baj3EiS4DiqLs+Hk+KUGvMVJtAw3ePJg==
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/@types/object.pick/-/object.pick-1.3.3.tgz#f4d4a76e9ef1161e965b963d2bb33c3f6c300125"
+  integrity sha512-qZqHmdGEALeSATMB1djT1S5szv6Wtpb7DKpHrt2XG4iyKlV7C2Xk8GmDXr1KXakOqUfX6ohw7ceruYt4NVmB1Q==
 
 "@types/parse-json@^4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@types/parse-json/-/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
-  integrity sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@types/parse-json/-/parse-json-4.0.1.tgz#27f7559836ad796cea31acb63163b203756a5b4e"
+  integrity sha512-3YmXzzPAdOTVljVMkTMBdBEvlOLg2cDQaDhnnhT3nT9uDbnJzjWhKlzb+desT12Y7tGqaN6d+AbozcKzyL36Ng==
 
 "@types/phoenix@^1.5.4":
-  version "1.6.2"
-  resolved "https://registry.yarnpkg.com/@types/phoenix/-/phoenix-1.6.2.tgz#9a3838b6f45c895b0d7d9072025abb7525933a86"
-  integrity sha512-I3mm7x5XIi+5NsIY3nfreY+H4PmQdyBwJ84SiUSOxSg1axwEPNmkKWYVm56y+emDpPPUL3cPzrLcgRWSd9gI7g==
+  version "1.6.3"
+  resolved "https://registry.yarnpkg.com/@types/phoenix/-/phoenix-1.6.3.tgz#873801490511e0a3cc192eb51c8a3bbf14e08e70"
+  integrity sha512-D8TtchWVnU2ZdPVDY6tBJuz8MUDmCNVduilZTrf0Gn/u5I/uZEXOsaL4Gs4F0j43cysHsU/4h7eqAKc+SF2boQ==
 
 "@types/prismjs@^1.26.0":
   version "1.26.1"
@@ -2733,14 +2733,14 @@
   integrity sha512-Q7jDsRbzcNHIQje15CS/piKhu6lMLb9jwjxSfEIi4KcFKXW23GoJMkwQiJ8VObyfx+VmUaDcJxXaWN+cTCjVog==
 
 "@types/prop-types@*":
-  version "15.7.7"
-  resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.7.tgz#f9361f7b87fd5d8188b2c998db0a1f47e9fb391a"
-  integrity sha512-FbtmBWCcSa2J4zL781Zf1p5YUBXQomPEcep9QZCfRfQgTxz3pJWiDFLebohZ9fFntX5ibzOkSsrJ0TEew8cAog==
+  version "15.7.8"
+  resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.8.tgz#805eae6e8f41bd19e88917d2ea200dc992f405d3"
+  integrity sha512-kMpQpfZKSCBqltAJwskgePRaYRFukDkm1oItcAbC3gNELR20XIBcN9VRgg4+m8DKsTfkWeA4m4Imp4DDuWy7FQ==
 
 "@types/react-dom@^18.0.0":
-  version "18.2.7"
-  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-18.2.7.tgz#67222a08c0a6ae0a0da33c3532348277c70abb63"
-  integrity sha512-GRaAEriuT4zp9N4p1i8BDBYmEyfo+xQ3yHjJU4eiK5NDa1RmUZG+unZABUTK4/Ox/M+GaHwb6Ow8rUITrtjszA==
+  version "18.2.13"
+  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-18.2.13.tgz#89cd7f9ec8b28c8b6f0392b9591671fb4a9e96b7"
+  integrity sha512-eJIUv7rPP+EC45uNYp/ThhSpE16k22VJUknt5OLoH9tbXoi8bMhwLf5xRuWMywamNbWzhrSmU7IBJfPup1+3fw==
   dependencies:
     "@types/react" "*"
 
