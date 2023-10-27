@@ -1814,12 +1814,10 @@
   dependencies:
     react "18.2.0"
 
-"@react-email/font@0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@react-email/font/-/font-0.0.3.tgz#1fba36eff89c79298efc96b34ced79f24f9de0c0"
-  integrity sha512-lhUDMX3bGGXOAY1uviH3OKn2aG6VR+NQf4RqmynHm+Vx+G9eXLJFUDiDeaVJSQFh0+7zCQK8eUGD/+DbEntmtw==
-  dependencies:
-    react "18.2.0"
+"@react-email/font@0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@react-email/font/-/font-0.0.4.tgz#c03bb49239098b584ff5852b2bd47a0ff7a7a713"
+  integrity sha512-rN/pFlAcDNmfYFxpufT/rFRrM5KYBJM4nTA2uylTehlVOro6fb/q6n0zUwLF6OmQ4QIuRbqdEy7DI9mmJiNHxA==
 
 "@react-email/head@0.0.5", "@react-email/head@^0.0.5":
   version "0.0.5"
