@@ -1900,6 +1900,11 @@
   dependencies:
     react "18.2.0"
 
+"@react-email/preview@0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@react-email/preview/-/preview-0.0.7.tgz#8d1c9fd27ba45f0449ef6e35484c94da5a6a0de5"
+  integrity sha512-YLfIwHdexPi8IgP1pSuVXdAmKzMQ8ctCCLEjkMttT2vkSFqT6m/e6UFWK2l30rKm2dDsLvQyEvo923mPXjnNzg==
+
 "@react-email/render@0.0.6":
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/@react-email/render/-/render-0.0.6.tgz#4e47ee6df226c86d548c38f96e34844acb944160"
