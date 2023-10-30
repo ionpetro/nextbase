@@ -2524,9 +2524,9 @@
   integrity sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==
 
 "@tremor/react@^3.6.5":
-  version "3.10.0"
-  resolved "https://registry.yarnpkg.com/@tremor/react/-/react-3.10.0.tgz#6b64a9784d7027281b86fbd5504fdaa2bc30163e"
-  integrity sha512-vGI8vz9L9SHFRBenijGyAsFatvhZzOg3Ym6NR7QmcXd51gFmlCJ565fKgHreFYnpbPkpUw5Am3JjHxwjbfjglw==
+  version "3.10.1"
+  resolved "https://registry.yarnpkg.com/@tremor/react/-/react-3.10.1.tgz#0c4a9868b6e715828b4832ad6ed76b0c7f3c1ca4"
+  integrity sha512-giz6Vf5yu03I+H/6Ri0lC59E++5jRVQSP4bnBG1AfBBRXQPTfh9a7HlcSIhXiOlMqBr5oELMNFyirfkc1+0cLw==
   dependencies:
     "@floating-ui/react" "^0.19.1"
     "@headlessui/react" "^1.7.14"
@@ -9561,9 +9561,9 @@ recharts-scale@^0.4.4:
     decimal.js-light "^2.4.1"
 
 recharts@^2.9.0:
-  version "2.9.0"
-  resolved "https://registry.yarnpkg.com/recharts/-/recharts-2.9.0.tgz#dde7531298cffe8677b1206967830d34f7972ea6"
-  integrity sha512-cVgiAU3W5UrA8nRRV/N0JrudgZzY/vjkzrlShbH+EFo1vs4nMlXgshZWLI0DfDLmn4/p4pF7Lq7F5PU+K94Ipg==
+  version "2.9.1"
+  resolved "https://registry.yarnpkg.com/recharts/-/recharts-2.9.1.tgz#8c692877b0ef158c4d72fcb5e22e3bd4845fe32f"
+  integrity sha512-GqHrQVMgDIktzNIIlhtvZnjYurr6Wy+KMSDxO1MEp3CrZZbvisUmnBojSWAZ7j8cjwhD4uRRFga2s5wcd/w9sQ==
   dependencies:
     classnames "^2.2.5"
     eventemitter3 "^4.0.1"
