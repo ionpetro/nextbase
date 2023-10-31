@@ -2171,11 +2171,11 @@
   integrity sha512-h79zhwvxAJVAvtVjtMoz++DtwI7GdcEItmTC0P2gciZoFUeAO6XX9DL+UXm9uADiEaUvTKqrExYwtBTlMYAaPA==
 
 "@supabase/auth-helpers-nextjs@^0.8.0":
-  version "0.8.3"
-  resolved "https://registry.yarnpkg.com/@supabase/auth-helpers-nextjs/-/auth-helpers-nextjs-0.8.3.tgz#646937a6b34b5bc5cc6ad4b165775de09bafa730"
-  integrity sha512-zv7Ku8a6D9SO7sd+dtfrHvreScxvzjHLIFglQVWpYywtOdGptUzBcjYePDbO6iHvksQRnG+h80IrK4yLnOd43A==
+  version "0.8.4"
+  resolved "https://registry.yarnpkg.com/@supabase/auth-helpers-nextjs/-/auth-helpers-nextjs-0.8.4.tgz#3d3570de8fce67a4c74b7b2b0f273d6fc7452cbb"
+  integrity sha512-2hCsxVwxV392d1B9qM6orY17rl8kUk40C8p0amMBt2jd4m0AuZo2yaLBqfmS2TdJOAAfo+8mI0b+4bNM16CuzA==
   dependencies:
-    "@supabase/auth-helpers-shared" "0.6.0"
+    "@supabase/auth-helpers-shared" "0.6.1"
     set-cookie-parser "^2.6.0"
 
 "@supabase/auth-helpers-react@^0.4.0":
@@ -2183,10 +2183,10 @@
   resolved "https://registry.yarnpkg.com/@supabase/auth-helpers-react/-/auth-helpers-react-0.4.2.tgz#d0c69c3f23c9e7c7176568ea6143d5aca7956c4d"
   integrity sha512-zRj1leYMKJVYQeHFvZiUzlmHM+ATWFR/V7Q9F0yXSWEnMcNHL0CKnIBqhkjtSQ2trE+YaoCvFEHjxISppxIZXQ==
 
-"@supabase/auth-helpers-shared@0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@supabase/auth-helpers-shared/-/auth-helpers-shared-0.6.0.tgz#86fc55279058e33ad2b31e59ed176fb49c1cb8fc"
-  integrity sha512-rBj8KNnzBpj2G3icClcTGE6Mrldo1zVQot5PCr8wbEMDa6/a/RIScOSwMIc9dq+eq6XwF8BVczUBwaN+RPBiTA==
+"@supabase/auth-helpers-shared@0.6.1":
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/@supabase/auth-helpers-shared/-/auth-helpers-shared-0.6.1.tgz#6201eb4effcc0ba6cc1ed8b90fae5a9d56fa19c8"
+  integrity sha512-aXNQ8KHKuR62b/GhEsKl/Id21KNm7t3tUP1sGbQj/kRSjTJisD/NnCmw7l9/oLsm8/9qf5491QaL8zD9BtcZ6A==
   dependencies:
     jose "^4.14.4"
 
