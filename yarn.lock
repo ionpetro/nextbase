@@ -2209,9 +2209,9 @@
   integrity sha512-GRyInO+VPMjjgUzVPKpDtz+5s8JKssJ99uhWBGo09yxDQBb+bhkm6PxmVa8C+qsSd30JFO1Z+pgIJ0AMmmZJKg==
 
 "@supabase/auth-helpers-nextjs@^0.8.0":
-  version "0.8.4"
-  resolved "https://registry.yarnpkg.com/@supabase/auth-helpers-nextjs/-/auth-helpers-nextjs-0.8.4.tgz#3d3570de8fce67a4c74b7b2b0f273d6fc7452cbb"
-  integrity sha512-2hCsxVwxV392d1B9qM6orY17rl8kUk40C8p0amMBt2jd4m0AuZo2yaLBqfmS2TdJOAAfo+8mI0b+4bNM16CuzA==
+  version "0.8.5"
+  resolved "https://registry.yarnpkg.com/@supabase/auth-helpers-nextjs/-/auth-helpers-nextjs-0.8.5.tgz#d13c29b96fa263741f60ce46cfd4e2c8c799528c"
+  integrity sha512-+TGa+gmOdFAyiKTO2WhTiLxyuM8TzSeoIFygvyGCmgQseEFnSOxoJkBC1Mth7Q+7GxDMMZBFsd/nMQ/OROXf5w==
   dependencies:
     "@supabase/auth-helpers-shared" "0.6.1"
     set-cookie-parser "^2.6.0"
