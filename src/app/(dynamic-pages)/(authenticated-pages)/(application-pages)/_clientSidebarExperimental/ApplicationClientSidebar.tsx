@@ -7,6 +7,7 @@ import { ComponentProps, Suspense } from 'react';
 import ReactNoSSR from 'react-no-ssr';
 import { TeamSidebar } from './TeamSidebar';
 import { z } from 'zod';
+import { ProjectSidebar } from './ProjectSidebar';
 
 const matchOrganization = match<{ organization_id: string }>(
   '/organization/:organization_id/(.*)?',
@@ -53,7 +54,7 @@ function ApplicationClientSidebarInternal({
     );
   } else if (isProjectPath) {
     const { project_id } = isProjectPath.params;
-    return <p>You're in the project path for project {project_id}</p>;
+    return <ProjectSidebar projectId={project_id} />;
   }
   return <p>You are in a generic path</p>;
 }

@@ -1,3 +1,4 @@
+'use client';
 import { T } from '@/components/ui/Typography';
 import Image from 'next/image';
 import { getPublicUserAvatarUrl } from '@/utils/helpers';

@@ -1,13 +1,14 @@
 'use server';
 
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
-import { nextCacheTags } from '@/utils/nextCacheTags';
+import { nextCacheKeys } from '@/utils/nextCacheTags';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import { getAllSlimOrganizationsForUser } from '@/utils/supabase/organizations';
 import { unstable_cache } from 'next/cache';
 import { ApplicationClientSidebar } from './ApplicationClientSidebar';
-import ReactNoSSR from 'react-no-ssr';
 import { Suspense } from 'react';
+import { AppAdminLink } from '@/components/ui/NavigationMenu/AppAdminLink/AppAdminLink';
+import { UserNav } from '@/components/ui/NavigationMenu/UserNav';
 
 async function createFetchSlimOrganizations() {
   const currentUser = await serverGetLoggedInUser();
@@ -22,9 +23,9 @@ async function createFetchSlimOrganizations() {
       );
       return organizations;
     },
-    [nextCacheTags.slimOrganizationsForUser(currentUser.id)],
+    [nextCacheKeys.slimOrganizationsForUser(currentUser.id)],
     {
-      tags: [nextCacheTags.slimOrganizationsForUser(currentUser.id)],
+      tags: [nextCacheKeys.slimOrganizationsForUser(currentUser.id)],
     },
   );
 }
@@ -32,6 +33,15 @@ async function createFetchSlimOrganizations() {
 export async function ApplicationSidebar() {
   const fetchSlimOrganizations = await createFetchSlimOrganizations();
   const slimOrganizations = await fetchSlimOrganizations();
-  console.log({ slimOrganizations });
-  return <ApplicationClientSidebar slimOrganizations={slimOrganizations} />;
+  return (
+    <div className="flex justify-between flex-col ">
+      <Suspense fallback={<p>Loading ...</p>}>
+        <ApplicationClientSidebar slimOrganizations={slimOrganizations} />
+      </Suspense>
+      <div>
+        <AppAdminLink />
+        <UserNav />
+      </div>
+    </div>
+  );
 }

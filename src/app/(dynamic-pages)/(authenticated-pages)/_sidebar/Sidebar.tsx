@@ -6,7 +6,7 @@ import { SidebarClient } from './SidebarClient';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
 import { getTeamsInOrganization } from '@/utils/supabase/teams';
 import { unstable_cache } from 'next/cache';
-import { nextCacheTags } from '@/utils/nextCacheTags';
+import { nextCacheKeys } from '@/utils/nextCacheTags';
 import { cookies } from 'next/headers';
 import { getIsAppAdmin, getUserProfile } from '@/utils/supabase/user';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
@@ -25,9 +25,9 @@ async function createFetchIsAppAdmin(): Promise<() => Promise<boolean>> {
       const isUserAppAdmin = await getIsAppAdmin(supabaseClient, currentUser);
       return isUserAppAdmin;
     },
-    [nextCacheTags.isUserAppAdmin(currentUser.id)],
+    [nextCacheKeys.isUserAppAdmin(currentUser.id)],
     {
-      tags: [nextCacheTags.isUserAppAdmin(currentUser.id)],
+      tags: [nextCacheKeys.isUserAppAdmin(currentUser.id)],
     },
   );
 }
@@ -49,9 +49,9 @@ async function createFetchTeams(): Promise<() => Promise<Table<'teams'>[]>> {
         currentOrganizationId,
       );
     },
-    [nextCacheTags.teamsInOrganization(currentOrganizationId)],
+    [nextCacheKeys.teamsInOrganization(currentOrganizationId)],
     {
-      tags: [nextCacheTags.teamsInOrganization(currentOrganizationId)],
+      tags: [nextCacheKeys.teamsInOrganization(currentOrganizationId)],
     },
   );
 }
@@ -70,9 +70,9 @@ async function createFetchUserProfile(): Promise<
       const userProfile = await getUserProfile(supabaseClient, currentUserId);
       return userProfile;
     },
-    [nextCacheTags.userProfile(currentUserId)],
+    [nextCacheKeys.userProfile(currentUserId)],
     {
-      tags: [nextCacheTags.userProfile(currentUserId)],
+      tags: [nextCacheKeys.userProfile(currentUserId)],
     },
   );
 }
@@ -90,9 +90,9 @@ async function createFetchOrganizations() {
       );
       return organizations;
     },
-    [nextCacheTags.organizationsForUser(currentUser.id)],
+    [nextCacheKeys.organizationsForUser(currentUser.id)],
     {
-      tags: [nextCacheTags.organizationsForUser(currentUser.id)],
+      tags: [nextCacheKeys.organizationsForUser(currentUser.id)],
     },
   );
 }

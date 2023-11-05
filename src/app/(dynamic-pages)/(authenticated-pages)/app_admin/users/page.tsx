@@ -6,7 +6,7 @@ import {
 import { RenderUsers } from './RenderUsers';
 import { getUsersPaginatedAction } from './actions';
 
-export const runtime = 'nodejs';
+export const runtime = 'edge';
 export const metadata = {
   title: 'User List | Admin Panel | Nextbase',
 };

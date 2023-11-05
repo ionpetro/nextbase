@@ -1,3 +1,4 @@
+'use client';
 import { Button } from '@/components/ui/Button';
 import {
   Dialog,
@@ -11,21 +12,63 @@ import {
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
 import Plus from 'lucide-react/dist/esm/icons/plus';
-import { useState } from 'react';
-import { ZodError, z } from 'zod';
-import { toast } from 'react-hot-toast';
+import { useRef, useState } from 'react';
+import { toast } from 'sonner';
+import { useFormState, useFormStatus } from 'react-dom';
+import { createUserAction } from '@/app/(dynamic-pages)/(authenticated-pages)/app_admin/users/actions';
+import { User } from '@supabase/supabase-js';
+import { ServerActionState } from '@/utils/server-actions/types';
+import { useFormSubmission } from '@/utils/server-actions/useFormSubmission';
 
 type Props = {
   onSubmit: (email: string) => void;
   isLoading: boolean;
 };
 
-const emailSchema = z.string().email({ message: 'Invalid email address' });
+function SubmitButton({
+  setOpen,
+  state,
+}: {
+  setOpen: (open: boolean) => void;
+  state: ServerActionState<User>;
+}) {
+  const toastRef = useRef<string | number | null>(null);
+  const { formStatus } = useFormSubmission<User>(state, {
+    onSuccess: (successState) => {
+      toast.success(successState.message, {
+        id: toastRef.current ?? undefined,
+      });
+      toastRef.current = null;
+      setOpen(false);
+    },
+    onLoading: () => {
+      setOpen(false);
+      toastRef.current = toast.loading('Creating user...');
+    },
+    onError: (errorState) => {
+      toast.error(errorState.message, {
+        id: toastRef.current ?? undefined,
+      });
+      toastRef.current = null;
+    },
+  });
 
-export const AppAdminCreateUserDialog = ({ onSubmit, isLoading }: Props) => {
+  return (
+    <Button aria-disabled={formStatus.pending} type="button" className="w-full">
+      {formStatus.pending ? 'Loading...' : 'Create User'}
+    </Button>
+  );
+}
+
+const initialFormState: ServerActionState<User> = {
+  status: 'idle',
+  serverActionCount: 0,
+  message: null,
+};
+
+export const AppAdminCreateUserDialog = () => {
   const [open, setOpen] = useState(false);
-  const [email, setEmail] = useState<string>('');
-
+  const [state, createUser] = useFormState(createUserAction, initialFormState);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -33,54 +76,29 @@ export const AppAdminCreateUserDialog = ({ onSubmit, isLoading }: Props) => {
           <Plus className="mr-2" /> Create User
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 rounded-lg">
-            <Plus className="w-6 h-6" />
+      <DialogContent className="sm:max-w-[425px]" asChild>
+        <form action={createUser}>
+          <DialogHeader>
+            <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 rounded-lg">
+              <Plus className="w-6 h-6" />
+            </div>
+            <div className="p-1">
+              <DialogTitle className="text-lg">Create User</DialogTitle>
+              <DialogDescription className="text-base">
+                Create a new user by entering their email address.
+              </DialogDescription>
+            </div>
+          </DialogHeader>
+          <div className="grid gap-4">
+            <Label className="space-y-2">
+              <span>Email</span>
+              <Input type="email" name="email" />
+            </Label>
           </div>
-          <div className="p-1">
-            <DialogTitle className="text-lg">Create User</DialogTitle>
-            <DialogDescription className="text-base">
-              Create a new user by entering their email address.
-            </DialogDescription>
-          </div>
-        </DialogHeader>
-        <div className="grid gap-4">
-          <Label className="space-y-2">
-            <span>Email</span>
-            <Input
-              disabled={isLoading}
-              type="email"
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-            />
-          </Label>
-        </div>
-        <DialogFooter className="mt-8">
-          <Button
-            disabled={isLoading}
-            type="button"
-            className="w-full"
-            onClick={() => {
-              try {
-                const parsedEmail = emailSchema.parse(email);
-                onSubmit(parsedEmail);
-                setOpen(false);
-              } catch (error) {
-                if (error instanceof ZodError) {
-                  toast.error(error.errors[0].message);
-                  return;
-                } else {
-                  toast.error(error.message);
-                }
-              }
-            }}
-          >
-            {isLoading ? 'Loading...' : 'Create User'}
-          </Button>
-        </DialogFooter>
+          <DialogFooter className="mt-8">
+            <SubmitButton state={state} setOpen={setOpen} />
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   );

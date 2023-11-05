@@ -8,6 +8,8 @@ import { AppAdminNavigation } from './AppAdminNavigation';
 import { InternalNavbar } from '@/components/ui/NavigationMenu/InternalNavbar';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import { Badge } from '@/components/ui/Badge';
+import { Suspense } from 'react';
+import { ApplicationAdminSidebar } from './_sidebar/ApplicationAdminSidebar';
 
 async function fetchData(supabaseClient: AppSupabaseClient, authUser: User) {
   const [isUserAppAdmin] = await Promise.all([
@@ -32,18 +34,20 @@ export default async function Layout({
       return redirect('/dashboard');
     }
     return (
-      <div className="flex-1 pb-10 relative h-auto max-h-screen w-full overflow-auto">
-        <InternalNavbar
-          title="Organization Name"
-          badge={
-            <Badge variant="discussion" size="xxs" className="ml-2">
-              Beta
-            </Badge>
-          }
-        />
-        <div className="px-12 space-y-6">
-          <AppAdminNavigation />
-          {children}
+      <div
+        className="h-screen w-full grid overflow-hidden"
+        style={{
+          gridTemplateColumns: 'auto 1fr',
+        }}
+      >
+        <Suspense fallback={<p>Loading ...</p>}>
+          <ApplicationAdminSidebar />
+        </Suspense>
+        <div className="flex-1 pb-10 relative h-auto max-h-screen w-full overflow-auto">
+          <div className="px-12 space-y-6">
+            <AppAdminNavigation />
+            {children}
+          </div>
         </div>
       </div>
     );

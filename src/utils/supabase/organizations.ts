@@ -62,7 +62,7 @@ export const getAllSlimOrganizationsForUser = async (
 
   const { data, error } = await supabase
     .from('organizations')
-    .select('id,title')
+    .select('id,title,is_default')
     .in(
       'id',
       organizations.map((org) => org.organization_id),

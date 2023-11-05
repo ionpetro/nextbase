@@ -473,18 +473,21 @@ export interface Database {
           created_at: string
           created_by: string
           id: string
+          is_default: boolean
           title: string
         }
         Insert: {
           created_at?: string
           created_by: string
           id?: string
+          is_default?: boolean
           title?: string
         }
         Update: {
           created_at?: string
           created_by?: string
           id?: string
+          is_default?: boolean
           title?: string
         }
         Relationships: [
@@ -777,6 +780,33 @@ export interface Database {
           id?: number
           name?: string
           organization_id?: string
+        }
+        Relationships: []
+      }
+      user_api_keys: {
+        Row: {
+          created_at: string
+          expires_at: string | null
+          is_revoked: boolean
+          key_id: string
+          masked_key: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          expires_at?: string | null
+          is_revoked?: boolean
+          key_id: string
+          masked_key: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          expires_at?: string | null
+          is_revoked?: boolean
+          key_id?: string
+          masked_key?: string
+          user_id?: string
         }
         Relationships: []
       }

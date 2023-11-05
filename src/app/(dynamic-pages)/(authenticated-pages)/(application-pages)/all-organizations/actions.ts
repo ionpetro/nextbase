@@ -2,7 +2,7 @@
 
 import { getLoggedInUserAction } from '@/app/(dynamic-pages)/_server-actions/user';
 import { createSupabaseUserServerActionClient } from '@/supabase-clients/user/createSupabaseUserServerActionClient';
-import { nextCacheTags } from '@/utils/nextCacheTags';
+import { nextCacheKeys } from '@/utils/nextCacheTags';
 import {
   createOrganization,
   getAllOrganizationsForUser,
@@ -14,7 +14,7 @@ export async function createOrganizationAction(name: string) {
   const supabaseClient = createSupabaseUserServerActionClient();
   const user = await getLoggedInUserAction(supabaseClient);
   const organization = await createOrganization(supabaseClient, user, name);
-  revalidateTag(nextCacheTags.organizationsByUser(user.id));
+  revalidateTag(nextCacheKeys.organizationsByUser(user.id));
   redirect(`/organization/${organization.id}`);
 }
 
@@ -25,9 +25,9 @@ export const fetchOrganizations = (userId: string) => {
       const supabaseClient = createSupabaseUserServerActionClient();
       return await getAllOrganizationsForUser(supabaseClient, userId);
     },
-    [nextCacheTags.organizationsByUser(userId)],
+    [nextCacheKeys.organizationsByUser(userId)],
     {
-      tags: [nextCacheTags.organizationsByUser(userId)],
+      tags: [nextCacheKeys.organizationsByUser(userId)],
     },
   );
 };

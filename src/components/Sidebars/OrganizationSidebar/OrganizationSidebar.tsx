@@ -6,7 +6,7 @@ import { AppSupabaseClient } from '@/types';
 import { User } from '@supabase/supabase-js';
 import { getTeamsInOrganization } from '@/utils/supabase/teams';
 import { unstable_cache } from 'next/cache';
-import { nextCacheTags } from '@/utils/nextCacheTags';
+import { nextCacheKeys } from '@/utils/nextCacheTags';
 import { cookies } from 'next/headers';
 import setCurrentOrganizationIdAction from '@/app/(dynamic-pages)/(authenticated-pages)/actions';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
@@ -34,9 +34,9 @@ export async function OrganizationSidebar({
         organizationId,
       );
     },
-    [nextCacheTags.teamsInOrganization(organizationId)],
+    [nextCacheKeys.teamsInOrganization(organizationId)],
     {
-      tags: [nextCacheTags.teamsInOrganization(organizationId)],
+      tags: [nextCacheKeys.teamsInOrganization(organizationId)],
     },
   );
 

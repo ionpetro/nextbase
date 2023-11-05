@@ -9,6 +9,8 @@ import { Anchor } from '@/components/Anchor';
 import { Button } from '@/components/ui/Button';
 import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
 import { T } from '@/components/ui/Typography';
+import { ApplicationLayoutShell } from '@/components/ApplicationLayoutShell';
+import { TeamSidebar } from '@/app/(dynamic-pages)/(authenticated-pages)/(application-pages)/_sidebar/TeamSidebar';
 
 const paramsSchema = z.object({
   teamId: z.coerce.number(),
@@ -37,30 +39,32 @@ export default async function Layout({
   ]);
 
   return (
-    <div>
-      <div className="space-y-8">
-        <PageHeading
-          title={teamByIdData.name}
-          actions={
-            <div className=" text-gray-400 flex items-start text-3xl gap-x-2 space-x-2">
-              <div className="flex flex-col space-y-1 ml-4 items-end">
-                <Anchor
-                  href={`/organization/${organizationId}/team//${teamId}/settings`}
-                >
-                  <Button variant={'outline'}>
-                    <SettingsIcon className="text-gray-600 mr-2" />
-                    View Team Settings
-                  </Button>
-                </Anchor>
-                <T.Subtle>
-                  Created {moment(teamByIdData.created_at).fromNow()}
-                </T.Subtle>
+    <ApplicationLayoutShell sidebar={<TeamSidebar teamId={teamId} />}>
+      <div>
+        <div className="space-y-8">
+          <PageHeading
+            title={teamByIdData.name}
+            actions={
+              <div className=" text-gray-400 flex items-start text-3xl gap-x-2 space-x-2">
+                <div className="flex flex-col space-y-1 ml-4 items-end">
+                  <Anchor
+                    href={`/organization/${organizationId}/team//${teamId}/settings`}
+                  >
+                    <Button variant={'outline'}>
+                      <SettingsIcon className="text-gray-600 mr-2" />
+                      View Team Settings
+                    </Button>
+                  </Anchor>
+                  <T.Subtle>
+                    Created {moment(teamByIdData.created_at).fromNow()}
+                  </T.Subtle>
+                </div>
               </div>
-            </div>
-          }
-        />
-        {children}
+            }
+          />
+          {children}
+        </div>
       </div>
-    </div>
+    </ApplicationLayoutShell>
   );
 }

@@ -27,6 +27,8 @@ import {
 } from '@/components/ui/Table/ShadcnTable';
 import { T } from '@/components/ui/Typography';
 import { Button } from '@/components/ui/Button';
+import { SearchUsersByEmail } from './SearchUsersByEmail';
+import { CreateUser } from './CreateUser';
 
 function RenderUser({
   user,
@@ -70,7 +72,7 @@ function RenderUser({
           });
           userImpersonationToastRef.current = null;
         },
-      }
+      },
     );
 
   const { mutate: sendLoginLink, isLoading: isSendingLoginLink } = useMutation(
@@ -101,7 +103,7 @@ function RenderUser({
         });
         sendLoginLinkToastRef.current = null;
       },
-    }
+    },
   );
 
   return (
@@ -221,40 +223,7 @@ export function RenderUsers({
         pageParams: [0],
         pages: [userData],
       },
-    }
-  );
-  const router = useRouter();
-  const createUserToastRef = useRef<string | null>(null);
-  const { mutate: createUser, isLoading: isCreatingUser } = useMutation(
-    async (email: string) => {
-      return createUserAction(email);
     },
-    {
-      onMutate: () => {
-        const toastId = toast.loading('Creating user...');
-        createUserToastRef.current = toastId;
-      },
-      onSuccess: () => {
-        toast.success('User created', {
-          id: createUserToastRef.current ?? undefined,
-        });
-        createUserToastRef.current = null;
-        router.refresh();
-      },
-      onError: (error) => {
-        let message = `Failed to create user`;
-        if (error instanceof Error) {
-          message += `: ${error.message}`;
-        } else if (typeof error === 'string') {
-          message += `: ${error}`;
-        }
-
-        toast.error(message, {
-          id: createUserToastRef.current ?? undefined,
-        });
-        createUserToastRef.current = null;
-      },
-    }
   );
 
   if (isLoadingNextPage || !data) {
@@ -268,29 +237,8 @@ export function RenderUsers({
   return (
     <div className="space-y-4">
       <div className="space-x-2 flex items-end gap-2 mb-4 ">
-        <div className="max-w-xs flex-1">
-          <label
-            htmlFor="email"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-400"
-          >
-            Email
-          </label>
-          <div className="mt-1">
-            <input
-              type="email"
-              name="email"
-              id="email"
-              value={searchText}
-              onChange={(event) => setSearchText(event.target.value)}
-              className="block px-3 py-2 appearance-none w-full rounded-md bg-gray-200/50 dark:bg-gray-700/50 h-10 shadow-sm text-gray-600"
-              placeholder="Search users"
-            />
-          </div>
-        </div>
-        <AppAdminCreateUserDialog
-          onSubmit={createUser}
-          isLoading={isCreatingUser}
-        />
+        <SearchUsersByEmail />
+        <CreateUser />
       </div>
       <div
         className="space-y-2 rounded-lg border"

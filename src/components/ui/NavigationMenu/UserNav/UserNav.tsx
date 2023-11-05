@@ -25,7 +25,7 @@ export async function UserNav() {
           email,
           profileAvatarUrl: userProfile.avatar_url,
         })}
-        userFullname={userProfile.full_name!}
+        userFullname={userProfile.full_name ?? `User ${email}`}
         userEmail={email}
       />
     </>

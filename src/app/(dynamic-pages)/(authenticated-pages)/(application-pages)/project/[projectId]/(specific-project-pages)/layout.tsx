@@ -10,6 +10,8 @@ import { ProjectContextProvider } from '@/contexts/ProjectContext';
 import { SpecificProjectClientLayout } from './SpecificProjectClientLayout';
 import { getNormalizedSubscription } from '@/utils/supabase/subscriptions';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
+import { ApplicationLayoutShell } from '@/components/ApplicationLayoutShell';
+import { ProjectSidebar } from '../../../_sidebar/ProjectSidebar';
 
 const paramsSchema = z.object({
   projectId: z.string(),
@@ -76,15 +78,17 @@ export default async function ProjectLayout({
     maybeTeamData,
   } = await fetchdata(projectId);
   return (
-    <ProjectContextProvider
-      isTopLevelProject={!projectByIdData.team_id}
-      projectByIdData={projectByIdData}
-      organizationRole={organizationRole}
-      maybeTeamRole={teamRole}
-      maybeTeamData={maybeTeamData}
-      organizationData={organizationData}
-    >
-      <SpecificProjectClientLayout>{children}</SpecificProjectClientLayout>
-    </ProjectContextProvider>
+    <ApplicationLayoutShell sidebar={<ProjectSidebar projectId={projectId} />}>
+      <ProjectContextProvider
+        isTopLevelProject={!projectByIdData.team_id}
+        projectByIdData={projectByIdData}
+        organizationRole={organizationRole}
+        maybeTeamRole={teamRole}
+        maybeTeamData={maybeTeamData}
+        organizationData={organizationData}
+      >
+        <SpecificProjectClientLayout>{children}</SpecificProjectClientLayout>
+      </ProjectContextProvider>
+    </ApplicationLayoutShell>
   );
 }

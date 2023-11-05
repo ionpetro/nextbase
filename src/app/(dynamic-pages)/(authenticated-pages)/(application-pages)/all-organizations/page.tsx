@@ -6,7 +6,7 @@ import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user
 import { Anchor } from '@/components/Anchor';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/Alert';
 import InfoIcon from 'lucide-react/dist/esm/icons/info';
-import { nextCacheTags } from '@/utils/nextCacheTags';
+import { nextCacheKeys } from '@/utils/nextCacheTags';
 import { User } from '@supabase/supabase-js';
 import {
   createOrganizationAction,

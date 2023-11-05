@@ -7,6 +7,9 @@ import SignInEmail from 'emails/SignInEmail';
 import { revalidatePath } from 'next/cache';
 import { ADMIN_USER_LIST_VIEW_PAGE_SIZE } from '@/constants';
 import { DBFunction } from '@/types';
+import { ServerActionState } from '@/utils/server-actions';
+import { z } from 'zod';
+import { User, isAuthError } from '@supabase/supabase-js';
 
 export async function sendLoginLinkAction(email: string) {
   const response = await supabaseAdminClient.auth.admin.generateLink({
@@ -40,7 +43,7 @@ export async function sendLoginLinkAction(email: string) {
 
       // send email
       const signInEmailHTML = await renderAsync(
-        <SignInEmail signInUrl={url.toString()} />
+        <SignInEmail signInUrl={url.toString()} />,
       );
 
       if (process.env.NODE_ENV === 'development') {
@@ -63,23 +66,51 @@ export async function sendLoginLinkAction(email: string) {
   }
 }
 
-export async function createUserAction(email: string) {
-  const response = await supabaseAdminClient.auth.admin.createUser({
-    email,
-  });
+export async function createUserAction(
+  state: ServerActionState<User>,
+  formData: FormData,
+): Promise<ServerActionState<User>> {
+  try {
+    const emailPayload = formData.get('email');
+    const email = z
+      .string()
+      .email({
+        message: 'Invalid email address',
+      })
+      .parse(emailPayload);
+    const response = await supabaseAdminClient.auth.admin.createUser({
+      email,
+    });
 
-  if (response.error) {
-    throw response.error;
+    if (response.error) {
+      throw response.error;
+    }
+
+    const { user } = response.data;
+
+    if (user) {
+      revalidatePath('/app_admin');
+      return {
+        status: 'success',
+        formKey: state.formKey + 1,
+        message: 'User created successfully',
+        payload: user,
+      };
+    } else {
+      throw new Error('User not created');
+    }
+  } catch (error) {
+    const errorMessage = isAuthError(error)
+      ? error.message
+      : 'message' in error
+        ? error.message
+        : 'Unknown error';
+    return {
+      status: 'error',
+      formKey: state.formKey + 1,
+      message: 'User creation failed:' + errorMessage,
+    };
   }
-
-  const { user } = response.data;
-
-  if (user) {
-    revalidatePath('/app_admin');
-    return user;
-  }
-
-  throw new Error('Failed to create user');
 }
 
 export async function getUsersPaginatedAction({
@@ -96,7 +127,7 @@ export async function getUsersPaginatedAction({
       page: effectivePageNumber,
       search_query: search,
       page_size: ADMIN_USER_LIST_VIEW_PAGE_SIZE,
-    }
+    },
   );
   if (error) throw error;
   if (!data) {
@@ -107,7 +138,7 @@ export async function getUsersPaginatedAction({
 }
 
 export async function getUserImpersonationUrlAction(
-  userId: string
+  userId: string,
 ): Promise<URL> {
   const response = await supabaseAdminClient.auth.admin.getUserById(userId);
 

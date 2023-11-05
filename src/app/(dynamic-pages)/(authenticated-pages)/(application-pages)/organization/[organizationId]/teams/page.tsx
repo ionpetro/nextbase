@@ -3,7 +3,7 @@ import { getTeamsInOrganization } from '@/utils/supabase/teams';
 import { z } from 'zod';
 import { OrganizationTeams } from './OrganizationTeams';
 import { unstable_cache } from 'next/cache';
-import { nextCacheTags } from '@/utils/nextCacheTags';
+import { nextCacheKeys } from '@/utils/nextCacheTags';
 // import setCurrentOrganizationIdAction from '@/app/(dynamic-pages)/(authenticated-pages)/actions';
 
 const paramsSchema = z.object({
@@ -28,9 +28,9 @@ export default async function OrganizationPage({
         organizationId,
       );
     },
-    [nextCacheTags.teamsInOrganization(organizationId)],
+    [nextCacheKeys.teamsInOrganization(organizationId)],
     {
-      tags: [nextCacheTags.teamsInOrganization(organizationId)],
+      tags: [nextCacheKeys.teamsInOrganization(organizationId)],
     },
   );
 

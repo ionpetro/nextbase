@@ -1,72 +1,43 @@
-'use client';
-
-import {
-  getSlimTeamsInOrganization,
-  getTeamById,
-  getTeamsInOrganization,
-} from '@/utils/supabase/teams';
-import { Suspense, useCallback } from 'react';
-import { supabaseUserClientComponentClient } from '@/supabase-clients/user/supabaseUserClientComponentClient';
-import { T } from '@/components/ui/Typography';
-import { notFound } from 'next/navigation';
-import { useRefetchablePromiseFactory } from '@/contexts/RefetchablePromiseFactory';
-import { cn } from '@/utils/cn';
 import { Anchor } from '@/components/Anchor';
-import { nextCacheTags } from '@/utils/nextCacheTags';
+import { OrganizationSwitcher } from './OrganizationSwitcher';
+import { createFetchSlimOrganizations, createGetSlimTeamById } from './actions';
+import { SubscriptionCardSmall } from '@/components/SubscriptionCardSmall';
+import { Suspense } from 'react';
+import { T } from '@/components/ui/Typography';
 
-function TeamDetails({
-  organizationId,
-  teamId,
-}: {
-  organizationId: string;
-  teamId: number;
-}) {
-  const fetcher = useCallback(() => {
-    return getTeamById(supabaseUserClientComponentClient, teamId);
-  }, [organizationId]);
-  const team = useRefetchablePromiseFactory(
-    fetcher,
-    nextCacheTags.teamById(teamId),
-  );
-
+export async function TeamSidebar({ teamId }: { teamId: number }) {
+  const fetchOrganizations = createFetchSlimOrganizations();
+  const [slimOrganizations, team] = await Promise.all([
+    fetchOrganizations(),
+    createGetSlimTeamById(teamId)(),
+  ]);
+  const organizationId = team.organization_id;
   return (
-    <div>
-      <T.H3>{team.name}</T.H3>
-      <Anchor href={`/organization/${organizationId}/team/${teamId}/settings`}>
-        Settings
-      </Anchor>
-    </div>
-  );
-}
+    <div className="h-full">
+      <div className="flex flex-col justify-between h-full">
+        <div className="flex flex-col ">
+          <OrganizationSwitcher
+            currentOrganizationId={organizationId}
+            slimOrganizations={slimOrganizations}
+          />
 
-export function TeamSidebar({
-  organizationId,
-  teamId,
-  slimOrganizations,
-}: {
-  organizationId: string;
-  teamId: number;
-  slimOrganizations: Array<{
-    id: string;
-    title: string;
-  }>;
-}) {
-  const organization = slimOrganizations.find(
-    (organization) => organization.id === organizationId,
-  );
+          <Anchor href={`/organization/${organizationId}`}>
+            Back To Organization
+          </Anchor>
+          <Anchor href={`/organization/${organizationId}/team/${teamId}/`}>
+            Team Home
+          </Anchor>
+          <Anchor
+            href={`/organization/${organizationId}/team/${teamId}/settings`}
+          >
+            Team Settings
+          </Anchor>
+        </div>
 
-  if (!organization) {
-    return notFound();
-  }
-  return (
-    <div>
-      <T.H3>{organization.title}</T.H3>
-      <Anchor href={`/organization/${organizationId}`}>
-        Back to organization
-      </Anchor>
-      <Suspense fallback={<p>Loading...</p>}>
-        <TeamDetails organizationId={organizationId} teamId={teamId} />
-      </Suspense>
+        <Suspense fallback={<T.P>Loading subscription details...</T.P>}>
+          <SubscriptionCardSmall organizationId={organizationId} />
+        </Suspense>
+      </div>
     </div>
   );
 }

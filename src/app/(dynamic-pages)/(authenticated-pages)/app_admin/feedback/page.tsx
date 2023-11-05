@@ -1,37 +1,82 @@
-import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
-import { Enum } from '@/types';
-import { getAllInternalFeedback } from '@/utils/supabase/internalFeedback';
-import { revalidatePath } from 'next/cache';
-import { ClientAdminFeedbackListPage } from './ClientAdminFeedbackListPage';
-// Server action must be imported from the server file
-// and passed as a prop to the client component
+import { getInternalFeedbackTotalPages } from '@/data/admin/internal-feedback';
+import Pagination from '@/components/Pagination/Pagination';
+import { Suspense } from 'react';
+import { FiltersSchema, filtersSchema } from './schema';
+import { FeedbackList } from './FeedbackList';
+import { Search } from '@/components/Search';
 
-export default function FeedbackList() {
-  async function getAllInternalFeedbackAction({
-    query,
-    types,
-    statuses,
-    priorities,
-  }: {
-    query: string;
-    types: Array<Enum<'internal_feedback_thread_type'>>;
-    statuses: Array<Enum<'internal_feedback_thread_status'>>;
-    priorities: Array<Enum<'internal_feedback_thread_priority'>>;
-  }) {
-    'use server';
-    const data = await getAllInternalFeedback(supabaseAdminClient, {
-      query: query || '',
-      types: types || [],
-      statuses: statuses || [],
-      priorities: priorities || [],
-    });
-    revalidatePath('/');
-    return data;
-  }
+import {
+  TableRow,
+  TableCell,
+  ShadcnTable,
+  TableHeader,
+  TableHead,
+  TableBody,
+} from '@/components/ui/Table/ShadcnTable';
+import { Fallback } from '@/components/AppAdminViewUserDetails/Fallback';
+import { FeedbackDropdownFilters } from './FeedbackDropdownFilters';
 
+const FeedbackListFallback: React.FC = () => {
   return (
-    <ClientAdminFeedbackListPage
-      getAllInternalFeedbackAction={getAllInternalFeedbackAction}
-    />
+    <div className="flex rounded-lg bg-clip-border border max-w-[1296px] overflow-hidden">
+      <ShadcnTable>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Name</TableHead>
+            <TableHead>Feedback</TableHead>
+            <TableHead>Type</TableHead>
+            <TableHead>Priority</TableHead>
+            <TableHead>Created At</TableHead>
+            <TableHead>Status</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {Array.from({ length: 10 }).map((_, index) => (
+            <TableRow key={index}>
+              <TableCell>
+                <Fallback />
+              </TableCell>
+              <TableCell>
+                <div className="bg-gray-200 animate-pulse h-4 w-32"></div>
+              </TableCell>
+              <TableCell>
+                <div className="bg-gray-200 animate-pulse h-4 w-32"></div>
+              </TableCell>
+              <TableCell>
+                <div className="bg-gray-200 animate-pulse h-4 w-32"></div>
+              </TableCell>
+              <TableCell>
+                <div className="bg-gray-200 animate-pulse h-4 w-32"></div>
+              </TableCell>
+              <TableCell>
+                <div className="bg-gray-200 animate-pulse h-4 w-32"></div>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </ShadcnTable>
+    </div>
+  );
+};
+
+export default async function FeedbackListPage({
+  searchParams,
+}: {
+  searchParams: unknown;
+}) {
+  const validatedSearchParams = filtersSchema.parse(searchParams);
+  const totalPages = await getInternalFeedbackTotalPages(validatedSearchParams);
+  const suspenseKey = JSON.stringify(validatedSearchParams);
+  return (
+    <div className="space-y-2">
+      <div className="flex space-x-3 max-w-[1296px] justify-between">
+        <Search placeholder="Search Feedback... " />
+        <FeedbackDropdownFilters />
+      </div>
+      <Suspense key={suspenseKey} fallback={<FeedbackListFallback />}>
+        <FeedbackList filters={validatedSearchParams} />
+      </Suspense>
+      <Pagination totalPages={totalPages} />
+    </div>
   );
 }

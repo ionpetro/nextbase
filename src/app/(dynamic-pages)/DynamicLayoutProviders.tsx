@@ -1,7 +1,6 @@
 'use client';
 import React from 'react';
 import { MaintenanceModeContextProvider } from '@/contexts/MaintenanceModeContext';
-import { RefetchablePromiseFactoryContextProvider } from '@/contexts/RefetchablePromiseFactory';
 
 /**
  * This is a wrapper for the app that provides the supabase client, the router event wrapper
@@ -19,12 +18,10 @@ export function DynamicLayoutProviders({
   isAppInMaintenanceMode: boolean;
 }) {
   return (
-    <RefetchablePromiseFactoryContextProvider>
-      <MaintenanceModeContextProvider
-        isAppInMaintenanceMode={isAppInMaintenanceMode}
-      >
-        {children}
-      </MaintenanceModeContextProvider>
-    </RefetchablePromiseFactoryContextProvider>
+    <MaintenanceModeContextProvider
+      isAppInMaintenanceMode={isAppInMaintenanceMode}
+    >
+      {children}
+    </MaintenanceModeContextProvider>
   );
 }

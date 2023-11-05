@@ -9,7 +9,7 @@ import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user
 import { formatNormalizedSubscription } from '@/utils/formatNormalizedSubscription';
 import { getNormalizedSubscription } from '@/utils/supabase/subscriptions';
 
-export async function SubscriptionDetails({
+export async function SubscriptionCardSmall({
   organizationId,
 }: {
   organizationId: string;

@@ -81,9 +81,7 @@ const nextConfig = {
       },
     ],
   },
-  experimental: {
-    serverActions: true,
-  },
+
   reactStrictMode: true,
   // webpack: (config) => {
   //   if (typeof nextRuntime === 'undefined') {
