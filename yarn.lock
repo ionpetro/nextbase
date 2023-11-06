@@ -2557,9 +2557,9 @@
   integrity sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==
 
 "@tremor/react@^3.6.5":
-  version "3.10.1"
-  resolved "https://registry.yarnpkg.com/@tremor/react/-/react-3.10.1.tgz#0c4a9868b6e715828b4832ad6ed76b0c7f3c1ca4"
-  integrity sha512-giz6Vf5yu03I+H/6Ri0lC59E++5jRVQSP4bnBG1AfBBRXQPTfh9a7HlcSIhXiOlMqBr5oELMNFyirfkc1+0cLw==
+  version "3.11.0"
+  resolved "https://registry.yarnpkg.com/@tremor/react/-/react-3.11.0.tgz#88d4a00663ef148063b79b7ea5357b1a0e944107"
+  integrity sha512-ItGx8Q3uzG3JOqTLb92Ximx6p/opIc7AIY5ALialtOAA7kGA3DSQMHeChRRhxLIRD7SYOmiwUhOgLFjjoffwnw==
   dependencies:
     "@floating-ui/react" "^0.19.1"
     "@headlessui/react" "^1.7.14"
@@ -2638,9 +2638,9 @@
   integrity sha512-VOVRLM1mBxIRxydiViqPcKn6MIxZytrbMpd6RJLIWKxUNr3zux8no0Oc7kJx0WAPIitgZ0gkrDS+btlqQpubpw==
 
 "@types/d3-array@^3.0.3":
-  version "3.0.9"
-  resolved "https://registry.yarnpkg.com/@types/d3-array/-/d3-array-3.0.9.tgz#54feabd29d1f15940d422c16008c63c1e4e3d188"
-  integrity sha512-mZowFN3p64ajCJJ4riVYlOjNlBJv3hctgAY01pjw3qTnJePD8s9DZmYDzhHKvzfCYvdjwylkU38+Vdt7Cu2FDA==
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@types/d3-array/-/d3-array-3.2.0.tgz#603b85d0072962bdecaf8391f60eea465c8dc282"
+  integrity sha512-tjU8juPSfhMnu6mJZPOCVVGba4rZoE0tjHDPb81PYwA8CzbaFscGjgkUM7juUJu6iWA1cCVWNEVwxZ5HN9Jj8Q==
 
 "@types/d3-color@*":
   version "3.1.2"
@@ -2665,9 +2665,9 @@
   integrity sha512-blRhp7ki7pVznM8k6lk5iUU9paDbVRVq+/xpf0RRgSJn5gr6SE7RcFtxooYGMBOc1RZiGyqRpVdu5AD0z0ooMA==
 
 "@types/d3-scale@^4.0.2":
-  version "4.0.6"
-  resolved "https://registry.yarnpkg.com/@types/d3-scale/-/d3-scale-4.0.6.tgz#9d221949f37b90b52696ec99f9b1e972d55fe10d"
-  integrity sha512-lo3oMLSiqsQUovv8j15X4BNEDOsnHuGjeVg7GRbAuB2PUa1prK5BNSOu6xixgNf3nqxPl4I1BqJWrPvFGlQoGQ==
+  version "4.0.7"
+  resolved "https://registry.yarnpkg.com/@types/d3-scale/-/d3-scale-4.0.7.tgz#a2caa2461def6a184b66b4cf59c1b8a8b1329de8"
+  integrity sha512-/YEbMIOtqSFSELqUT8desdT3a7iybPkSQiIx/wN4CZ/5b7wrCvmyXWELTMUYB10k0N5rzHVu4f/OkhulG1b3Lw==
   dependencies:
     "@types/d3-time" "*"
 
@@ -9618,9 +9618,9 @@ recharts-scale@^0.4.4:
     decimal.js-light "^2.4.1"
 
 recharts@^2.9.0:
-  version "2.9.1"
-  resolved "https://registry.yarnpkg.com/recharts/-/recharts-2.9.1.tgz#8c692877b0ef158c4d72fcb5e22e3bd4845fe32f"
-  integrity sha512-GqHrQVMgDIktzNIIlhtvZnjYurr6Wy+KMSDxO1MEp3CrZZbvisUmnBojSWAZ7j8cjwhD4uRRFga2s5wcd/w9sQ==
+  version "2.9.2"
+  resolved "https://registry.yarnpkg.com/recharts/-/recharts-2.9.2.tgz#a6a4e4c2887467ea57abde7e3af5c8021355a606"
+  integrity sha512-ig0zYgO5nUP/896GW16b9yy2sHIRW1AHB90x48hypFTSjjxQt/J9rPzlLJjgNupzJKEHPCwMi1VnvN/k20K45w==
   dependencies:
     classnames "^2.2.5"
     eventemitter3 "^4.0.1"
@@ -11523,9 +11523,9 @@ vfile@^6.0.0:
     vfile-message "^4.0.0"
 
 victory-vendor@^36.6.8:
-  version "36.6.11"
-  resolved "https://registry.yarnpkg.com/victory-vendor/-/victory-vendor-36.6.11.tgz#acae770717c2dae541a54929c304ecab5ab6ac2a"
-  integrity sha512-nT8kCiJp8dQh8g991J/R5w5eE2KnO8EAIP0xocWlh9l2okngMWglOPoMZzJvek8Q1KUc4XE/mJxTZnvOB1sTYg==
+  version "36.6.12"
+  resolved "https://registry.yarnpkg.com/victory-vendor/-/victory-vendor-36.6.12.tgz#17fa4d79d266a6e2bde0291c60c5002c55008164"
+  integrity sha512-pJrTkNHln+D83vDCCSUf0ZfxBvIaVrFHmrBOsnnLAbdqfudRACAj51He2zU94/IWq9464oTADcPVkmWAfNMwgA==
   dependencies:
     "@types/d3-array" "^3.0.3"
     "@types/d3-ease" "^3.0.0"
