@@ -68,8 +68,8 @@ export default async function FeedbackListPage({
   const totalPages = await getInternalFeedbackTotalPages(validatedSearchParams);
   const suspenseKey = JSON.stringify(validatedSearchParams);
   return (
-    <div className="space-y-2">
-      <div className="flex space-x-3 max-w-[1296px] justify-between">
+    <div className="space-y-2 max-w-[1296px]">
+      <div className="flex space-x-3 justify-between">
         <Search placeholder="Search Feedback... " />
         <FeedbackDropdownFilters />
       </div>

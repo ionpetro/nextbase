@@ -3,14 +3,14 @@ import { useEffect, useRef, useState } from 'react';
 import { Label } from '@/components/ui/Label';
 import { classNames } from '@/utils/classNames';
 import { Button } from '@/components/ui/Button';
-import { UpdatePasswordActionState, updatePasswordAction } from './actions';
+import { updatePasswordAction } from './actions';
 import { useFormState, useFormStatus } from 'react-dom';
 import toast from 'react-hot-toast';
+import { ServerActionState } from '@/utils/server-actions/types';
 
-const initialState: UpdatePasswordActionState = {
+const initialState: ServerActionState = {
   status: 'idle',
   message: null,
-  serverActionCount: 0,
 };
 
 function SubmitButton() {
@@ -33,10 +33,7 @@ function SubmitButton() {
 }
 
 export const UpdatePassword = () => {
-  const [state, formAction] = useFormState<UpdatePasswordActionState, FormData>(
-    updatePasswordAction,
-    initialState,
-  );
+  const [state, formAction] = useFormState(updatePasswordAction, initialState);
 
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -47,7 +44,7 @@ export const UpdatePassword = () => {
     } else if (state.status === 'error') {
       toast.error(state.message);
     }
-  }, [state.serverActionCount, state.status]);
+  }, [state.message, state.status]);
 
   return (
     <form ref={formRef} action={formAction}>

@@ -1,8 +1,5 @@
-import { Button } from '@react-email/button';
-import { Html } from '@react-email/html';
-import { Section } from '@react-email/section';
 import * as React from 'react';
-import { Text } from '@react-email/text';
+import { Button, Html, Section, Text } from '@react-email/components';
 
 type TeamInvitationEmailProps = {
   viewInvitationUrl: string;

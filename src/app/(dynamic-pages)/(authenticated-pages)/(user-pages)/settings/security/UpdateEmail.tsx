@@ -5,14 +5,14 @@ import { useEffect, useRef, useState } from 'react';
 import { Label } from '@/components/ui/Label';
 import { classNames } from '@/utils/classNames';
 import { Button } from '@/components/ui/Button';
-import { UpdateEmailActionState, updateEmailAction } from './actions';
+import { updateEmailAction } from './actions';
 import { useFormState, useFormStatus } from 'react-dom';
 import toast from 'react-hot-toast';
+import { ServerActionState } from '@/utils/server-actions/types';
 
-const initialState: UpdateEmailActionState = {
+const initialState: ServerActionState = {
   status: 'idle',
   message: null,
-  serverActionCount: 0,
 };
 
 function SubmitButton() {
@@ -39,10 +39,7 @@ export const UpdateEmail = ({
 }: {
   initialEmail?: string | undefined;
 }) => {
-  const [state, formAction] = useFormState<UpdateEmailActionState, FormData>(
-    updateEmailAction,
-    initialState,
-  );
+  const [state, formAction] = useFormState(updateEmailAction, initialState);
 
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -53,7 +50,7 @@ export const UpdateEmail = ({
     } else if (state.status === 'error') {
       toast.error(state.message);
     }
-  }, [state.serverActionCount, state.status]);
+  }, [state.message, state.status]);
 
   return (
     <form ref={formRef} action={formAction}>

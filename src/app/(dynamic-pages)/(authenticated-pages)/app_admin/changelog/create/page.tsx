@@ -1,7 +1,5 @@
 'use server';
-import BasicPageHeading from '@/components/ui/Headings/BasicPageHeading';
 import ChangeLogListCard from '@/components/ui/ChangeLog/ChangeLogListCard';
-import LargeSectionHeading from '@/components/ui/Headings/LargeSectionHeading';
 import InternalRoadmapCard from '@/components/ui/Card/InternalRoadmapCard';
 import moment from 'moment';
 import { CreateChangelog } from './CreateChangelog';
@@ -9,7 +7,6 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 import { customMDXComponents } from '@/components/mdxComponents';
 import { cn } from '@/utils/cn';
 import { createSupabaseAdminServerComponentClient } from '@/supabase-clients/admin/createSupabaseAdminServerComponentClient';
-import { createChangelogAction } from './actions';
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 
 export default async function Page() {
@@ -57,8 +54,7 @@ export default async function Page() {
         style={{ gridTemplateColumns: '768px auto' }}
       >
         <div>
-          {/* Create Changelog Card */}
-          <CreateChangelog createChangelogAction={createChangelogAction} />
+          <CreateChangelog />
 
           {/* Previous Changelogs*/}
           <div className="space-y-8 mt-10">
@@ -67,19 +63,6 @@ export default async function Page() {
               titleClassName="text-xl tracking-normal font-semibold"
               subTitle="These are the list of all Previous Releases"
             />
-            {/* <DropdownMenu>
-                <DropdownMenuTrigger>
-                  <Button variant="outline">
-                    <AiOutlineFilter className="text-xl mr-2" />
-                    Sort
-                  </Button>
-                </DropdownMenuTrigger>
-
-                <DropdownMenuContent>
-                  <DropdownMenuItem>Latest First</DropdownMenuItem>
-                  <DropdownMenuItem>Oldest First</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu> */}
             <div className="space-y-4">
               {changelogItemsResponse.data.map((item, index) => (
                 <ChangeLogListCard
@@ -101,7 +84,7 @@ export default async function Page() {
                       // pre
                       'prose-pre:rounded-xl prose-pre:bg-slate-900 prose-pre:shadow-lg dark:prose-pre:bg-slate-800/60 dark:prose-pre:shadow-none dark:prose-pre:ring-1 dark:prose-pre:ring-slate-300/10',
                       // hr
-                      'dark:prose-hr:border-slate-800'
+                      'dark:prose-hr:border-slate-800',
                     )}
                   >
                     {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
@@ -123,6 +106,7 @@ export default async function Page() {
             {completedTasksList.map((completedTask) => {
               return (
                 <InternalRoadmapCard
+                  key={completedTask.id}
                   title={completedTask.title}
                   description={completedTask.content}
                   tag={completedTask.type}

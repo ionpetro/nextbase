@@ -20,7 +20,7 @@ export function useFormSubmission<T = undefined>(
     onSuccess?: (state: SuccessServerActionState<T>) => void;
     onError?: (state: ErrorServerActionState<T>) => void;
     onLoading?: () => void;
-  }
+  },
 ) {
   const formStatus = useFormStatus();
   const onSuccessRef = useFreshCallback(onSuccess);
@@ -48,7 +48,7 @@ export function useFormSubmission<T = undefined>(
     if (state.status === 'success' || state.status === 'error') {
       handleServerActionResponse();
     }
-  }, [state.serverActionCount, state.status, handleServerActionResponse]);
+  }, [state.status, handleServerActionResponse]);
 
   return {
     formStatus,

@@ -1,3 +1,4 @@
+'use server';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
 
 export const serverGetLoggedInUser = async () => {

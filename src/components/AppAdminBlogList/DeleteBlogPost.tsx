@@ -42,7 +42,6 @@ function SubmitButton({ state }: { state: ServerActionState }) {
 const initialState: ServerActionState = {
   message: null,
   status: 'idle',
-  serverActionCount: 0,
 };
 
 export function AppAdminDeleteBlogPost({ blogPostId }: { blogPostId: string }) {
@@ -52,7 +51,7 @@ export function AppAdminDeleteBlogPost({ blogPostId }: { blogPostId: string }) {
   );
 
   return (
-    <form action={deleteBlogPostAction} key={state.serverActionCount}>
+    <form action={deleteBlogPostAction}>
       <input type="hidden" name="blog_post_id" value={blogPostId} />
       <SubmitButton state={state} />
     </form>

@@ -7,9 +7,9 @@ import SignInEmail from 'emails/SignInEmail';
 import { revalidatePath } from 'next/cache';
 import { ADMIN_USER_LIST_VIEW_PAGE_SIZE } from '@/constants';
 import { DBFunction } from '@/types';
-import { ServerActionState } from '@/utils/server-actions';
 import { z } from 'zod';
 import { User, isAuthError } from '@supabase/supabase-js';
+import { ServerActionState } from '@/utils/server-actions/types';
 
 export async function sendLoginLinkAction(email: string) {
   const response = await supabaseAdminClient.auth.admin.generateLink({
@@ -92,7 +92,6 @@ export async function createUserAction(
       revalidatePath('/app_admin');
       return {
         status: 'success',
-        formKey: state.formKey + 1,
         message: 'User created successfully',
         payload: user,
       };
@@ -107,7 +106,6 @@ export async function createUserAction(
         : 'Unknown error';
     return {
       status: 'error',
-      formKey: state.formKey + 1,
       message: 'User creation failed:' + errorMessage,
     };
   }
@@ -133,7 +131,6 @@ export async function getUsersPaginatedAction({
   if (!data) {
     return [pageNumber, []];
   }
-  revalidatePath('/app_admin');
   return [pageNumber, data];
 }
 

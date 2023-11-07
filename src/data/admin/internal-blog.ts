@@ -1,8 +1,7 @@
 'use server';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
-import { nextCacheKeys, nextCacheTags } from '@/utils/nextCacheTags';
 import { ServerActionState } from '@/utils/server-actions/types';
-import { revalidateTag, unstable_cache } from 'next/cache';
+import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 
 export const deleteBlogPost = async (
@@ -26,7 +25,8 @@ export const deleteBlogPost = async (
     };
   }
 
-  revalidateTag(nextCacheTags.internalBlogPosts);
+  revalidatePath('/blog');
+  revalidatePath(`/app_admin`);
   return {
     ...initialState,
     status: 'success',

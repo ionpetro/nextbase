@@ -2,7 +2,11 @@ import { AppSupabaseClient } from '@/types';
 
 export const createChangelog = async (
   supabaseClient: AppSupabaseClient,
-  { title, changes, userId }: { title: string; changes: string; userId: string }
+  {
+    title,
+    changes,
+    userId,
+  }: { title: string; changes: string; userId: string },
 ) => {
   console.log({
     title,
