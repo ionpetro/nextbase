@@ -8,8 +8,10 @@ import { customMDXComponents } from '@/components/mdxComponents';
 import { cn } from '@/utils/cn';
 import { createSupabaseAdminServerComponentClient } from '@/supabase-clients/admin/createSupabaseAdminServerComponentClient';
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
+import { unstable_noStore } from 'next/cache';
 
 export default async function Page() {
+  unstable_noStore();
   const supabaseClient = createSupabaseAdminServerComponentClient();
   const completedTasksListResponse = await supabaseClient
     .from('internal_feedback_threads')
@@ -20,6 +22,8 @@ export default async function Page() {
     .from('internal_changelog')
     .select('*')
     .order('created_at', { ascending: false });
+
+  console.log(changelogItemsResponse.data?.map((t) => t.title));
 
   if (changelogItemsResponse.error) {
     throw changelogItemsResponse.error;

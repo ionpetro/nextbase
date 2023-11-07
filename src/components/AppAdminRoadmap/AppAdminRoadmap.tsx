@@ -1,5 +1,5 @@
 import InternalRoadmapCard from '@/components/ui/Card/InternalRoadmapCard';
-import { getRoadmap } from './actions';
+import { getRoadmap } from '@/data/admin/internal-roadmap';
 
 export async function AppAdminRoadmap() {
   const { plannedCards, inProgress, completedCards } = await getRoadmap();

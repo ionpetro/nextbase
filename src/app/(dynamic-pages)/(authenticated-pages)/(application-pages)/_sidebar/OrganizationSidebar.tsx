@@ -1,16 +1,15 @@
 import { Suspense } from 'react';
 import { OrganizationSwitcher } from './OrganizationSwitcher';
-import { createFetchSlimOrganizations } from './actions';
 import { T } from '@/components/ui/Typography';
 import { SubscriptionCardSmall } from '@/components/SubscriptionCardSmall';
+import { fetchSlimOrganizations } from '@/data/user/organizations';
 
 export async function OrganizationSidebar({
   currentOrganizationId,
 }: {
   currentOrganizationId: string;
 }) {
-  const fetchOrganizations = createFetchSlimOrganizations();
-  const slimOrganizations = await fetchOrganizations();
+  const slimOrganizations = await fetchSlimOrganizations();
   return (
     <div className="h-full">
       <div className="flex flex-col justify-between h-full">

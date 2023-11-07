@@ -1,9 +1,9 @@
 import { cn } from '@/utils/cn';
 import moment from 'moment';
 import ChangeLogListCard from '../ui/ChangeLog/ChangeLogListCard';
-import { getChangelogList } from './actions';
 import { customMDXComponents } from '../mdxComponents';
 import { MDXRemote } from 'next-mdx-remote/rsc';
+import { getChangelogList } from '@/data/admin/internal-changelog';
 
 export async function AppAdminChangelogList() {
   const changelogList = await getChangelogList();

@@ -1,39 +1,19 @@
-'use client';
 import React from 'react';
 import moment from 'moment';
 import { Table } from '@/types';
 import { Anchor } from '@/components/Anchor';
 import CalendarIcon from 'lucide-react/dist/esm/icons/calendar';
 import PencilIcon from 'lucide-react/dist/esm/icons/pencil';
-import TrashIcon from 'lucide-react/dist/esm/icons/trash-2';
 import ArrowUpRightIcon from 'lucide-react/dist/esm/icons/arrow-up-right';
-import { useMutation } from '@tanstack/react-query';
-import { toast } from 'react-hot-toast';
 import { T } from '@/components/ui/Typography';
-import { Button } from '@/components/ui/Button';
-import { Badge } from '@/components/ui/Badge';
+import { DeleteBlogPost } from './DeleteBlogPost';
+import { getAllBlogPosts } from '@/data/admin/internal-blog';
 
-function BlogList({
-  blogs,
-  deleteBlogPost,
-}: {
-  blogs: Table<'internal_blog_posts'>[];
-  deleteBlogPost: (id: string) => Promise<void>;
-}) {
-  const { mutate: deleteBlogPostMutation, isLoading: isDeletingBlogPost } =
-    useMutation<void, unknown, string>(
-      async (id) => {
-        return deleteBlogPost(id);
-      },
-      {
-        onSuccess: () => {
-          toast.success('Successfully deleted blog post');
-        },
-        onError: () => {
-          toast.error('Failed to delete blog post');
-        },
-      }
-    );
+export async function BlogList() {
+  const blogs = await getAllBlogPosts();
+  if (!blogs.length) {
+    return <T.Subtle>No blog posts yet!</T.Subtle>;
+  }
   return (
     <div className="space-y-6 w-full ">
       {blogs.map((blog) => (
@@ -71,16 +51,7 @@ function BlogList({
               >
                 <PencilIcon className="mr-2 h-5 w-5 text-gray-500 hover:text-gray-700 dark:text-gray-600 hover:dark:text-gray-400" />
               </Anchor>
-              <Button
-                variant="infoLink"
-                disabled={isDeletingBlogPost}
-                className="text-red-500 dark:text-red-500 hover:text-red-600 hover:dark:text-red-400 p-0"
-                onClick={() => {
-                  deleteBlogPostMutation(blog.id);
-                }}
-              >
-                <TrashIcon className="mr-2 h-5 w-5" />
-              </Button>
+              <DeleteBlogPost blogPostId={blog.id} />
             </div>
           </div>
         </div>
@@ -88,5 +59,3 @@ function BlogList({
     </div>
   );
 }
-
-export default BlogList;

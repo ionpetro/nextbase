@@ -6,20 +6,16 @@ import {
   createAuthorProfile,
   getAllAppAdmins,
   getAllAuthors,
-  getAllBlogPosts,
   deleteAuthorProfile,
   updateAuthorProfile,
-  deleteBlogPost,
   getAllBlogTags,
   createBlogTag,
   deleteBlogTag,
   updateBlogTag,
 } from '../actions';
 
-import BlogList from './BlogList';
 import { ManageAuthorsDialog } from './ManageAuthorsDialog';
 import { ManageBlogTagsDialog } from './ManageBlogTagsDialog';
-import { AppAdminBlogList } from '@/components/AppAdminBlogList/AppAdminBlogList';
 import { Suspense } from 'react';
 
 async function ActionButtons() {
@@ -87,7 +83,7 @@ export default function BlogListPage() {
           </div>
           <div className="w-full">
             <Suspense fallback={<p>Loading...</p>}>
-              <AppAdminBlogList />
+              <BlogList />
             </Suspense>
           </div>
         </div>

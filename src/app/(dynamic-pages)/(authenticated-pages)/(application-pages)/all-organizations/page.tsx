@@ -1,4 +1,3 @@
-import { getAllOrganizationsForUser } from '@/utils/supabase-queries';
 import { OrganizationList } from './OrganizationList';
 import { AppSupabaseClient } from '@/types';
 import { getUserPendingInvitationsByEmail } from '@/utils/supabase/invitations';
@@ -6,12 +5,8 @@ import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user
 import { Anchor } from '@/components/Anchor';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/Alert';
 import InfoIcon from 'lucide-react/dist/esm/icons/info';
-import { nextCacheKeys } from '@/utils/nextCacheTags';
 import { User } from '@supabase/supabase-js';
-import {
-  createOrganizationAction,
-  fetchOrganizations,
-} from './actions';
+import { createOrganizationAction, fetchOrganizations } from './actions';
 
 export const metadata = {
   title: 'Dashboard | Nextbase',
@@ -19,7 +14,7 @@ export const metadata = {
 
 const fetchData = async (supabaseClient: AppSupabaseClient, user: User) => {
   const [organizationList, pendingInvitations] = await Promise.all([
-    fetchOrganizations(user.id)(),
+    fetchOrganizations(user.id),
     user.email
       ? getUserPendingInvitationsByEmail(supabaseClient, user.email)
       : getUserPendingInvitationsByEmail(supabaseClient, user.id),

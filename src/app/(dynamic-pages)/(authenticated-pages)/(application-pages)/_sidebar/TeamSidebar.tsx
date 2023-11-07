@@ -1,15 +1,15 @@
 import { Anchor } from '@/components/Anchor';
 import { OrganizationSwitcher } from './OrganizationSwitcher';
-import { createFetchSlimOrganizations, createGetSlimTeamById } from './actions';
 import { SubscriptionCardSmall } from '@/components/SubscriptionCardSmall';
 import { Suspense } from 'react';
 import { T } from '@/components/ui/Typography';
+import { fetchSlimOrganizations } from '@/data/user/organizations';
+import { getSlimTeamById } from '@/data/user/teams';
 
 export async function TeamSidebar({ teamId }: { teamId: number }) {
-  const fetchOrganizations = createFetchSlimOrganizations();
   const [slimOrganizations, team] = await Promise.all([
-    fetchOrganizations(),
-    createGetSlimTeamById(teamId)(),
+    fetchSlimOrganizations(),
+    getSlimTeamById(teamId),
   ]);
   const organizationId = team.organization_id;
   return (

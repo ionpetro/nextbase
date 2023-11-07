@@ -1,38 +1,21 @@
 'use server';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
-import { ServerActionState } from '@/utils/server-actions/types';
 import { revalidatePath } from 'next/cache';
-import { z } from 'zod';
 
-export const deleteBlogPost = async (
-  initialState: ServerActionState,
-  formData: FormData,
-): Promise<ServerActionState> => {
+export const deleteBlogPost = async (blogPostId: string) => {
   'use server';
-  const postIdPayload = formData.get('blog_post_id');
-  const postId = z.string().parse(postIdPayload);
 
   const { error } = await supabaseAdminClient
     .from('internal_blog_posts')
     .delete()
-    .eq('id', postId);
+    .eq('id', blogPostId);
 
   if (error) {
-    return {
-      ...initialState,
-      status: 'error',
-      message: error.message,
-    };
+    throw error;
   }
 
   revalidatePath('/blog');
   revalidatePath(`/app_admin`);
-  return {
-    ...initialState,
-    status: 'success',
-    message: 'Successfully deleted blog post',
-    payload: undefined,
-  };
 };
 
 export const getAllBlogPosts = async () => {

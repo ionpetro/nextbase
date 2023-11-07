@@ -1,15 +1,13 @@
 import { Anchor } from '@/components/Anchor';
 import { OrganizationSwitcher } from './OrganizationSwitcher';
-import {
-  createFetchSlimOrganizations,
-  createGetSlimProjectById,
-} from './actions';
+
+import { fetchSlimOrganizations } from '@/data/user/organizations';
+import { getSlimProjectById } from '@/data/user/projects';
 
 export async function ProjectSidebar({ projectId }: { projectId: string }) {
-  const fetchOrganizations = createFetchSlimOrganizations();
   const [slimOrganizations, project] = await Promise.all([
-    fetchOrganizations(),
-    createGetSlimProjectById(projectId)(),
+    fetchSlimOrganizations(),
+    getSlimProjectById(projectId),
   ]);
   const organizationId = project.organization_id;
 

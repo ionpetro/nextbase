@@ -7,7 +7,7 @@ import {
   createOrganization,
   getAllOrganizationsForUser,
 } from '@/utils/supabase-queries';
-import { revalidateTag, unstable_cache } from 'next/cache';
+import { revalidateTag } from 'next/cache';
 import { redirect } from 'next/navigation';
 
 export async function createOrganizationAction(name: string) {
@@ -18,16 +18,7 @@ export async function createOrganizationAction(name: string) {
   redirect(`/organization/${organization.id}`);
 }
 
-export const fetchOrganizations = (userId: string) => {
-  return unstable_cache(
-    async () => {
-      'use server';
-      const supabaseClient = createSupabaseUserServerActionClient();
-      return await getAllOrganizationsForUser(supabaseClient, userId);
-    },
-    [nextCacheKeys.organizationsByUser(userId)],
-    {
-      tags: [nextCacheKeys.organizationsByUser(userId)],
-    },
-  );
+export const fetchOrganizations = async (userId: string) => {
+  const supabaseClient = createSupabaseUserServerActionClient();
+  return await getAllOrganizationsForUser(supabaseClient, userId);
 };

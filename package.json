@@ -79,10 +79,10 @@
     "posthog-node": "^3.1.1",
     "prism-react-renderer": "^2.0.4",
     "qs": "^6.11.2",
-    "react": "^18.3.0-canary-8039e6d0b-20231026",
+    "react": "^18.2.0",
     "react-confetti": "^6.1.0",
     "react-confetti-explosion": "^2.0.0",
-    "react-dom": "^18.3.0-canary-8039e6d0b-20231026",
+    "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
     "react-email": "1.9.5",
     "react-ga4": "^2.1.0",
@@ -164,8 +164,6 @@
     "vitest": "^0.34.0"
   },
   "resolutions": {
-    "react-dom": "18.3.0-canary-67cc9ba87-20231016",
-    "react": "18.3.0-canary-67cc9ba87-20231016",
     "@react-email/render": "^0.0.9-canary.2"
   }
 }
