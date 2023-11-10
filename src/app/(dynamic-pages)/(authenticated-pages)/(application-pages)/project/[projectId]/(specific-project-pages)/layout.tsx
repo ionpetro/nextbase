@@ -1,65 +1,27 @@
-import {
-  getOrganizationById,
-  getUserOrganizationRole,
-} from '@/utils/supabase/organizations';
-import { getProjectById } from '@/utils/supabase/projects';
-import { getTeamById, getUserTeamRole } from '@/utils/supabase/teams';
-import { ReactNode } from 'react';
+import { ReactNode, Suspense } from 'react';
 import { z } from 'zod';
-import { ProjectContextProvider } from '@/contexts/ProjectContext';
-import { SpecificProjectClientLayout } from './SpecificProjectClientLayout';
-import { getNormalizedSubscription } from '@/utils/supabase/subscriptions';
-import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
 import { ApplicationLayoutShell } from '@/components/ApplicationLayoutShell';
 import { ProjectSidebar } from '../../../_sidebar/ProjectSidebar';
+import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
+import { ApprovalControls } from './ApprovalControls';
+import { getProjectTitleById } from '@/data/user/projects';
 
 const paramsSchema = z.object({
   projectId: z.string(),
 });
 
-async function fetchdata(projectId: string) {
-  const supabaseClient = createSupabaseUserServerComponentClient();
-  const { data: sessionResponse, error: userError } =
-    await supabaseClient.auth.getSession();
-  if (!sessionResponse || !sessionResponse.session?.user) {
-    throw new Error('User not found');
-  }
-  if (userError) {
-    throw userError;
-  }
-
-  const projectByIdData = await getProjectById(supabaseClient, projectId);
-  const [organizationData, maybeTeamData, organizationRole, teamRole] =
-    await Promise.all([
-      getOrganizationById(supabaseClient, projectByIdData.organization_id),
-      projectByIdData.team_id
-        ? getTeamById(supabaseClient, projectByIdData.team_id)
-        : null,
-      getUserOrganizationRole(
-        supabaseClient,
-        sessionResponse.session.user.id,
-        projectByIdData.organization_id,
-      ),
-      projectByIdData.team_id
-        ? getUserTeamRole(
-          supabaseClient,
-          sessionResponse.session.user.id,
-          projectByIdData.team_id,
-        )
-        : null,
-      getNormalizedSubscription(
-        supabaseClient,
-        projectByIdData.organization_id,
-      ),
-    ]);
-
-  return {
-    projectByIdData,
-    organizationRole,
-    teamRole,
-    organizationData,
-    maybeTeamData,
-  };
+async function ProjectPageHeading({ projectId }: { projectId: string }) {
+  const projectTitle = await getProjectTitleById(projectId);
+  return (
+    <PageHeading
+      title={projectTitle}
+      actions={
+        <Suspense>
+          <ApprovalControls projectId={projectId} />
+        </Suspense>
+      }
+    />
+  );
 }
 
 export default async function ProjectLayout({
@@ -70,25 +32,17 @@ export default async function ProjectLayout({
   params: unknown;
 }) {
   const { projectId } = paramsSchema.parse(params);
-  const {
-    projectByIdData,
-    organizationRole,
-    teamRole,
-    organizationData,
-    maybeTeamData,
-  } = await fetchdata(projectId);
+
   return (
     <ApplicationLayoutShell sidebar={<ProjectSidebar projectId={projectId} />}>
-      <ProjectContextProvider
-        isTopLevelProject={!projectByIdData.team_id}
-        projectByIdData={projectByIdData}
-        organizationRole={organizationRole}
-        maybeTeamRole={teamRole}
-        maybeTeamData={maybeTeamData}
-        organizationData={organizationData}
-      >
-        <SpecificProjectClientLayout>{children}</SpecificProjectClientLayout>
-      </ProjectContextProvider>
+      <div className="space-y-8">
+        <div className="space-y-0">
+          <Suspense>
+            <ProjectPageHeading projectId={projectId} />
+          </Suspense>
+        </div>
+        {children}
+      </div>
     </ApplicationLayoutShell>
   );
 }

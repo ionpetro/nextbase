@@ -1,13 +1,19 @@
-import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
-import { AppSupabaseClient } from '@/types';
-import { getOrganizationById } from '@/utils/supabase-queries';
+import { Suspense } from 'react';
 import { EditOrganizationForm } from './EditOrganizationForm';
+import { getOrganizationTitle } from '@/data/user/organizations';
 
-async function fetchData(
-  supabaseClient: AppSupabaseClient,
-  organizationId: string
-) {
-  return await getOrganizationById(supabaseClient, organizationId);
+async function EditOrganization({
+  organizationId,
+}: {
+  organizationId: string;
+}) {
+  const organizationTitle = await getOrganizationTitle(organizationId);
+  return (
+    <EditOrganizationForm
+      organizationId={organizationId}
+      initialTitle={organizationTitle}
+    />
+  );
 }
 
 export default async function EditOrganizationPage({
@@ -18,9 +24,9 @@ export default async function EditOrganizationPage({
   };
 }) {
   const { organizationId } = params;
-  const organization = await fetchData(
-    createSupabaseUserServerComponentClient(),
-    organizationId
+  return (
+    <Suspense fallback={<p>Loading...</p>}>
+      <EditOrganization organizationId={organizationId} />
+    </Suspense>
   );
-  return <EditOrganizationForm initialTitle={organization.title} />;
 }

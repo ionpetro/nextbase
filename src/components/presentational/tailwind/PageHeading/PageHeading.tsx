@@ -9,6 +9,7 @@ type PageHeadingProps = {
   titleHref?: string;
   titleClassName?: string;
   subTitleClassName?: string;
+  isLoading?: boolean;
 };
 
 export function PageHeading({
@@ -18,8 +19,19 @@ export function PageHeading({
   actions,
   titleClassName,
   subTitleClassName,
+  isLoading,
 }: PageHeadingProps) {
-  const titleElement = <T.H2 className={cn('', titleClassName)}>{title}</T.H2>;
+  const titleElement = (
+    <T.H2
+      className={cn(
+        '',
+        titleClassName,
+        isLoading ? '!text-slate-100 !dark:text-slate-800' : '',
+      )}
+    >
+      {title}
+    </T.H2>
+  );
   const subTitleElement = (
     <T.P className={cn('text-muted-foreground leading-6', subTitleClassName)}>
       {subTitle}
@@ -34,7 +46,12 @@ export function PageHeading({
     </div>
   );
   return (
-    <div className="md:flex md:items-start md:justify-between">
+    <div
+      className={cn(
+        'md:flex md:items-start md:justify-between',
+        isLoading ? 'animate-pulse pointer-events-none' : '',
+      )}
+    >
       <div className="min-w-0 flex-1">{wrappedTitleElement}</div>
       <div>{actions}</div>
     </div>

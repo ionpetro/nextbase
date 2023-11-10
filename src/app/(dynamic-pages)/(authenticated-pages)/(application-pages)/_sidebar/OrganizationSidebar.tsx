@@ -17,7 +17,6 @@ export async function OrganizationSidebar({
           currentOrganizationId={currentOrganizationId}
           slimOrganizations={slimOrganizations}
         />
-
         <Suspense fallback={<T.P>Loading subscription details...</T.P>}>
           <SubscriptionCardSmall organizationId={currentOrganizationId} />
         </Suspense>

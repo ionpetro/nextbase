@@ -14,7 +14,7 @@ import { Label } from '@/components/ui/Label';
 import Plus from 'lucide-react/dist/esm/icons/plus';
 import { useState } from 'react';
 import { User } from '@supabase/supabase-js';
-import { useSonnerMutation } from '@/hooks/useSonnerMutation';
+import { useToastMutation } from '@/hooks/useSonnerMutation';
 import { createUserAction } from '@/data/admin/user';
 import { useInput } from 'rooks';
 import { z } from 'zod';
@@ -31,7 +31,7 @@ export const AppAdminCreateUserDialog = () => {
   const emailInput = useInput('');
   const [open, setOpen] = useState(false);
   const router = useRouter();
-  const { mutate: createUser, isLoading } = useSonnerMutation<User, string>(
+  const { mutate: createUser, isLoading } = useToastMutation<User, string>(
     async (email) => {
       return await createUserAction(email);
     },

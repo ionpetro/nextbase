@@ -116,27 +116,6 @@ export const createOrganization = async (
   return data;
 };
 
-export const updateOrganizationTitle = async (
-  supabase: AppSupabaseClient,
-  organizationId: string,
-  title: string,
-): Promise<Table<'organizations'>> => {
-  const { data, error } = await supabase
-    .from('organizations')
-    .update({
-      title,
-    })
-    .eq('id', organizationId)
-    .select('*')
-    .single();
-
-  if (error) {
-    throw error;
-  }
-
-  return data;
-};
-
 export const getMembersInOrganization = async (
   supabase: AppSupabaseClient,
   organizationId: string,

@@ -1,10 +1,10 @@
 import { Database } from '@/lib/database.types';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { enableCors } from '../enable-cors';
-import { getIsAppAdmin } from '@/utils/supabase-queries';
 import { AppSupabaseClient } from '@/types';
 import { createSupabaseUserServerPagesClient } from '@/supabase-clients/user/createSupabaseUserServerPagesClient';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
+import { getIsAppAdmin } from '@/data/admin/security';
 
 /**
  * @description Ensures that the user is an Application Admin.
@@ -15,8 +15,8 @@ export const withAppAdminPrivilegesApi = (
   cb: (
     req: NextApiRequest,
     res: NextApiResponse,
-    supabaseClient: AppSupabaseClient
-  ) => void
+    supabaseClient: AppSupabaseClient,
+  ) => void,
 ) => {
   return async (req: NextApiRequest, res: NextApiResponse) => {
     const supabaseClient = createSupabaseUserServerPagesClient({ req, res });
@@ -39,7 +39,7 @@ export const withAppAdminPrivilegesApi = (
       });
     }
 
-    const isAppAdmin = await getIsAppAdmin(supabaseClient, session.user);
+    const isAppAdmin = await getIsAppAdmin(session.user);
 
     if (!isAppAdmin) {
       return res.status(401).json({

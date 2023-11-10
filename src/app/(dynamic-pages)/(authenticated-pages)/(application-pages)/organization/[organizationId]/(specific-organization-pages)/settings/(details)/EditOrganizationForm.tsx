@@ -1,21 +1,30 @@
 'use client';
 import { Button } from '@/components/presentational/tailwind/Button';
 import { T } from '@/components/ui/Typography';
+import { updateOrganizationTitle } from '@/data/user/organizations';
+import { useToastMutation } from '@/hooks/useSonnerMutation';
 import { classNames } from '@/utils/classNames';
-import { useUpdateOrganizationTitleMutation } from '@/utils/react-query-hooks';
-import { useState } from 'react';
-import { useOrganizationContext } from '@/contexts/OrganizationContext';
+import { useState, useTransition } from 'react';
 
 export function EditOrganizationForm({
   initialTitle,
+  organizationId,
 }: {
   initialTitle: string;
+  organizationId: string;
 }) {
-  const { organizationId } = useOrganizationContext();
-
-  const { mutate, isLoading } = useUpdateOrganizationTitleMutation({
-    organizationId,
-  });
+  const [pending, startTransition] = useTransition();
+  const { mutate, isLoading } = useToastMutation(
+    async (organizationTitle: string) => {
+      return await updateOrganizationTitle(organizationId, organizationTitle);
+    },
+    {
+      loadingMessage: 'Updating organization title...',
+      successMessage: 'Organization title updated!',
+      errorMessage: 'Failed to update organization title',
+    },
+  );
+  console.log({ pending, isLoading });
 
   const [organizationTitle, setOrganizationTitle] =
     useState<string>(initialTitle);
@@ -30,8 +39,8 @@ export function EditOrganizationForm({
       <form
         onSubmit={(event) => {
           event.preventDefault();
-          mutate({
-            title: organizationTitle,
+          startTransition(() => {
+            mutate(organizationTitle);
           });
         }}
         className="space-y-4 max-w-md"
@@ -54,7 +63,7 @@ export function EditOrganizationForm({
             id="update-organization-title-button"
             className={classNames(
               'flex w-full justify-center rounded-lg border border-transparent py-3 px-4 text-sm font-semibold shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2',
-              'bg-gray-900 hover:bg-gray-700 dark:bg-gray-50 hover:dark:bg-gray-200 text-white dark:text-black'
+              'bg-gray-900 hover:bg-gray-700 dark:bg-gray-50 hover:dark:bg-gray-200 text-white dark:text-black',
             )}
           >
             {isLoading ? 'Updating...' : 'Update'}

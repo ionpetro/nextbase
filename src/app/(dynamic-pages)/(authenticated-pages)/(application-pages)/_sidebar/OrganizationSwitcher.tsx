@@ -12,10 +12,6 @@ import {
   CommandSeparator,
 } from '@/components/ui/Command';
 import {
-  InitialOrganizationListType,
-  useCreateOrganizationMutation,
-} from '@/utils/react-query-hooks';
-import {
   Popover,
   PopoverTrigger,
   PopoverContent,
@@ -25,6 +21,8 @@ import ChevronUpDown from 'lucide-react/dist/esm/icons/chevrons-up-down';
 import CheckIcon from 'lucide-react/dist/esm/icons/check';
 import UsersIcon from 'lucide-react/dist/esm/icons/users';
 import { Button } from '@/components/ui/Button';
+import { useToastMutation } from '@/hooks/useSonnerMutation';
+import { createOrganization } from '@/data/user/organizations';
 
 export function OrganizationSwitcher({
   slimOrganizations,
@@ -43,14 +41,19 @@ export function OrganizationSwitcher({
   const currentOrganization = slimOrganizations.find(
     (organization) => organization.id === currentOrganizationId,
   );
-  const { mutate, isLoading } = useCreateOrganizationMutation({
-    onSuccess: (organization) => {
-      router.push(`/organization/${organization.id}`);
+  const { mutate, isLoading } = useToastMutation(
+    async (organizationTitle: string) => {
+      return await createOrganization(organizationTitle);
     },
-    onError: (error) => {
-      toast.error(error.message);
+    {
+      loadingMessage: 'Creating organization...',
+      errorMessage: 'Failed to create organization',
+      successMessage: 'Organization created!',
+      onSuccess: (organization) => {
+        router.push(`/organization/${organization.id}`);
+      },
     },
-  });
+  );
 
   const onConfirm = (organizationTitle: string) => {
     mutate(organizationTitle);

@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/Button';
 import { createChangelog } from '@/data/admin/internal-changelog';
-import { useSonnerMutation } from '@/hooks/useSonnerMutation';
+import { useToastMutation } from '@/hooks/useSonnerMutation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
@@ -19,7 +19,7 @@ type CreateChangelogFormSchema = z.infer<typeof createChangelogFormSchema>;
 export const CreateChangelog = () => {
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
-  const { mutate: createChangelogMutation, isLoading } = useSonnerMutation(
+  const { mutate: createChangelogMutation, isLoading } = useToastMutation(
     async ({ title, changes }: CreateChangelogFormSchema) => {
       return createChangelog({
         changes,

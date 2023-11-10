@@ -1,11 +1,11 @@
 'use client';
 import { Button } from '@/components/ui/Button';
 import TrashIcon from 'lucide-react/dist/esm/icons/trash-2';
-import { useSonnerMutation } from '@/hooks/useSonnerMutation';
+import { useToastMutation } from '@/hooks/useSonnerMutation';
 import { deleteBlogPost } from '@/data/admin/internal-blog';
 
 export function DeleteBlogPost({ blogPostId }: { blogPostId: string }) {
-  const { mutate, isLoading } = useSonnerMutation<void, void>(
+  const { mutate, isLoading } = useToastMutation<void, void>(
     async () => {
       return deleteBlogPost(blogPostId);
     },

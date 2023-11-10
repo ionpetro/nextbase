@@ -1,37 +1,38 @@
-'use client';
-
 import { TabsNavigation } from '@/components/presentational/tailwind/TabsNavigation';
-import { useMemo } from 'react';
+import { z } from 'zod';
 import UsersIcon from 'lucide-react/dist/esm/icons/users';
 import DollarSignIcon from 'lucide-react/dist/esm/icons/dollar-sign';
 import EditIcon from 'lucide-react/dist/esm/icons/edit';
-import { useOrganizationContext } from '@/contexts/OrganizationContext';
+
+const paramsSchema = z.object({
+  organizationId: z.string(),
+});
 
 export default function OrganizationSettingsLayout({
   children,
+  params,
 }: {
   children: React.ReactNode;
+  params: unknown;
 }) {
-  const { organizationId } = useOrganizationContext();
-  const tabs = useMemo(() => {
-    return [
-      {
-        label: 'General',
-        href: `/organization/${organizationId}/settings`,
-        icon: <EditIcon />,
-      },
-      {
-        label: 'Organization Members',
-        href: `/organization/${organizationId}/settings/members`,
-        icon: <UsersIcon />,
-      },
-      {
-        label: 'Billing',
-        href: `/organization/${organizationId}/settings/billing`,
-        icon: <DollarSignIcon />,
-      },
-    ];
-  }, [organizationId]);
+  const { organizationId } = paramsSchema.parse(params);
+  const tabs = [
+    {
+      label: 'General',
+      href: `/organization/${organizationId}/settings`,
+      icon: <EditIcon />,
+    },
+    {
+      label: 'Organization Members',
+      href: `/organization/${organizationId}/settings/members`,
+      icon: <UsersIcon />,
+    },
+    {
+      label: 'Billing',
+      href: `/organization/${organizationId}/settings/billing`,
+      icon: <DollarSignIcon />,
+    },
+  ];
 
   return (
     <div className="space-y-6">

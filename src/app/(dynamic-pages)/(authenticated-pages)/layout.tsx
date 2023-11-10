@@ -1,26 +1,17 @@
 import { ClientLayout } from './ClientLayout';
 import { AppSupabaseClient } from '@/types';
 import { User } from '@supabase/supabase-js';
-import { getIsAppAdmin, getUserProfile } from '@/utils/supabase-queries';
 import { errors } from '@/utils/errors';
-import { ReactNode, Suspense } from 'react';
+import { ReactNode } from 'react';
 import { redirect } from 'next/navigation';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
-import setCurrentOrganizationIdAction from './actions';
-import { cookies, headers } from 'next/headers';
-import { getAllOrganizationsForUser } from '@/utils/supabase-queries';
 import { LoggedInUserProvider } from '@/contexts/LoggedInUserContext';
+import { getUserProfile } from '@/data/user/user';
 
 async function fetchData(supabaseClient: AppSupabaseClient, authUser: User) {
-  const [isUserAppAdmin, userProfile] = await Promise.all([
-    getIsAppAdmin(supabaseClient, authUser),
-    getUserProfile(supabaseClient, authUser.id),
-  ]);
+  const [userProfile] = await Promise.all([getUserProfile(authUser.id)]);
 
-  const [initialOrganizationsList] = await Promise.all([
-    getAllOrganizationsForUser(supabaseClient, authUser.id),
-  ]);
-  return { initialOrganizationsList, isUserAppAdmin, userProfile };
+  return { userProfile };
 }
 
 export default async function Layout({ children }: { children: ReactNode }) {

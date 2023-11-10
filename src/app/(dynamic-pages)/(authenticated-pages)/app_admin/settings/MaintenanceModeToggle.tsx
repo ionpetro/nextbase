@@ -3,6 +3,10 @@ import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 import H3 from '@/components/presentational/tailwind/Text/H3';
 import { T } from '@/components/ui/Typography';
 import { useMaintenanceMode } from '@/contexts/MaintenanceModeContext';
+import {
+  disableMaintenanceModeAction,
+  enableMaintenanceModeAction,
+} from '@/data/admin/ maintenance-mode';
 import { classNames } from '@/utils/classNames';
 import { Switch } from '@headlessui/react';
 import { useMutation } from '@tanstack/react-query';
@@ -11,13 +15,9 @@ import { useRef } from 'react';
 import { toast } from 'react-hot-toast';
 
 export function MaintenanceModeToggle({
-  enableMaintenanceModeAction,
-  disableMaintenanceModeAction,
   isAppInMaintenanceMode,
 }: {
   isAppInMaintenanceMode: boolean;
-  enableMaintenanceModeAction: () => Promise<void>;
-  disableMaintenanceModeAction: () => Promise<void>;
 }) {
   const enableToastRef = useRef<string | null>(null);
   const disableToastRef = useRef<string | null>(null);
@@ -46,7 +46,7 @@ export function MaintenanceModeToggle({
           enableToastRef.current = null;
         },
         cacheTime: 0,
-      }
+      },
     );
   const { mutate: disableMaintenanceModeMutation, isLoading: isDisabling } =
     useMutation(
@@ -72,7 +72,7 @@ export function MaintenanceModeToggle({
           disableToastRef.current = null;
         },
         cacheTime: 0,
-      }
+      },
     );
 
   const toggleMaintenanceMode = async (checked: boolean) => {
@@ -104,14 +104,14 @@ export function MaintenanceModeToggle({
           onChange={toggleMaintenanceMode}
           className={classNames(
             isAppInMaintenanceMode ? 'bg-green-600' : 'bg-gray-200',
-            'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none'
+            'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none',
           )}
         >
           <span
             aria-hidden="true"
             className={classNames(
               isAppInMaintenanceMode ? 'translate-x-5' : 'translate-x-0',
-              'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out'
+              'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
             )}
           />
         </Switch>

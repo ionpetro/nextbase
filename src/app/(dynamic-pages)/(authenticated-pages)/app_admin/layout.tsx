@@ -1,20 +1,14 @@
-import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
-import { AppSupabaseClient } from '@/types';
 import { errors } from '@/utils/errors';
-import { getIsAppAdmin, getUserProfile } from '@/utils/supabase-queries';
-import { User } from '@supabase/supabase-js';
 import { redirect } from 'next/navigation';
 import { AppAdminNavigation } from './AppAdminNavigation';
-import { InternalNavbar } from '@/components/ui/NavigationMenu/InternalNavbar';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
-import { Badge } from '@/components/ui/Badge';
 import { Suspense } from 'react';
 import { ApplicationAdminSidebar } from './_sidebar/ApplicationAdminSidebar';
+import { getIsAppAdmin } from '@/data/user/user';
 
-async function fetchData(supabaseClient: AppSupabaseClient, authUser: User) {
-  const [isUserAppAdmin] = await Promise.all([
-    getIsAppAdmin(supabaseClient, authUser),
-  ]);
+async function fetchData() {
+  const user = await serverGetLoggedInUser();
+  const [isUserAppAdmin] = await Promise.all([getIsAppAdmin(user)]);
 
   return { isUserAppAdmin };
 }
@@ -24,11 +18,8 @@ export default async function Layout({
 }: {
   children: React.ReactNode;
 }) {
-  const supabaseClient = createSupabaseUserServerComponentClient();
-  const user = await serverGetLoggedInUser();
-
   try {
-    const { isUserAppAdmin } = await fetchData(supabaseClient, user);
+    const { isUserAppAdmin } = await fetchData();
 
     if (!isUserAppAdmin) {
       return redirect('/dashboard');

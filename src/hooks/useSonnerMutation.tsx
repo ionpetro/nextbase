@@ -6,27 +6,27 @@ import {
   MutationFunction,
 } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 type MutationFn<TData, TVariables> = MutationFunction<TData, TVariables>;
 
-interface SonnerMutationOptions<TData, TError, TVariables>
+interface ToastMutationOptions<TData, TError, TVariables>
   extends UseMutationOptions<TData, TError, TVariables> {
   loadingMessage?: string;
   successMessage?: string;
   errorMessage?: string;
 }
 
-export function useSonnerMutation<
+export function useToastMutation<
   TData = unknown,
   TVariables = unknown,
   TError = unknown,
 >(
   mutationFn: MutationFn<TData, TVariables>,
-  options?: SonnerMutationOptions<TData, TError, TVariables>,
+  options?: ToastMutationOptions<TData, TError, TVariables>,
 ): UseMutationResult<TData, TError, TVariables> {
   const toastIdRef = useRef<string | number | null>(null);
-
   return useMutation<TData, TError, TVariables>(mutationFn, {
     ...options,
     onMutate: async (variables) => {
@@ -38,6 +38,7 @@ export function useSonnerMutation<
       }
     },
     onSuccess: (data, variables, context) => {
+      // router.refresh();
       toast.success(options?.successMessage ?? 'Operation successful', {
         id: toastIdRef.current ?? undefined,
       });

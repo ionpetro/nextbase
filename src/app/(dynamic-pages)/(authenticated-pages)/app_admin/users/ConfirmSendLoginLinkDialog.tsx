@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/Dialog';
 import { useState } from 'react';
 import SendLinkIcon from 'lucide-react/dist/esm/icons/send';
-import { useSonnerMutation } from '@/hooks/useSonnerMutation';
+import { useToastMutation } from '@/hooks/useSonnerMutation';
 import { sendLoginLinkAction } from '@/data/admin/user';
 
 export const ConfirmSendLoginLinkDialog = ({
@@ -20,7 +20,7 @@ export const ConfirmSendLoginLinkDialog = ({
   userEmail: string;
 }) => {
   const [open, setOpen] = useState(false);
-  const { mutate: onConfirm, isLoading } = useSonnerMutation<undefined, void>(
+  const { mutate: onConfirm, isLoading } = useToastMutation<undefined, void>(
     async () => {
       await sendLoginLinkAction(userEmail);
     },

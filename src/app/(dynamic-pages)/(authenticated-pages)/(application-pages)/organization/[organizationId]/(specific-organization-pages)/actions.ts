@@ -1,23 +1,8 @@
 'use server';
 
 import { createSupabaseUserServerActionClient } from '@/supabase-clients/user/createSupabaseUserServerActionClient';
-import { nextCacheKeys } from '@/utils/nextCacheTags';
-import { createTeam } from '@/utils/supabase-queries';
 import { createProject } from '@/utils/supabase/projects';
-import { revalidatePath, revalidateTag } from 'next/cache';
-
-export const createTeamAction = async ({
-  organizationId,
-  name,
-}: {
-  organizationId: string;
-  name: string;
-}) => {
-  const supabaseClient = createSupabaseUserServerActionClient();
-  const team = await createTeam(supabaseClient, organizationId, name);
-  revalidateTag(nextCacheKeys.teamsInOrganization(organizationId));
-  return team;
-};
+import { revalidatePath } from 'next/cache';
 
 export const createProjectAction = async ({
   organizationId,
@@ -33,6 +18,6 @@ export const createProjectAction = async ({
     null,
     name,
   );
-  revalidateTag(nextCacheKeys.projectsInOrganization(organizationId));
+  revalidatePath(`/organization/${organizationId}`);
   return project;
 };

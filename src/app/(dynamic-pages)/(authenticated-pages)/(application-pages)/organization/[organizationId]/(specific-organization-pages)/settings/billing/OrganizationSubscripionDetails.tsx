@@ -1,85 +1,60 @@
-import { LoadingSpinner } from '@/components/presentational/tailwind/LoadingSpinner';
-import { PricingModeToggle } from '@/components/presentational/tailwind/PricingModeToggle';
-import H3 from '@/components/presentational/tailwind/Text/H3';
-import { classNames } from '@/utils/classNames';
-import {
-  useCreateOrganizationCheckoutSessionMutation,
-  useCreateOrganizationCustomerPortalMutation,
-  useGetAllActiveProducts,
-} from '@/utils/react-query-hooks';
-import { getStripe } from '@/utils/stripe-client';
-import { useMemo, useState } from 'react';
-import { toast } from 'react-hot-toast';
+'use server';
 import CheckIcon from 'lucide-react/dist/esm/icons/check';
-import ExternalLinkIcon from 'lucide-react/dist/esm/icons/external-link';
 import XIcon from 'lucide-react/dist/esm/icons/x';
-import { useOrganizationContext } from '@/contexts/OrganizationContext';
-import { Button } from '@/components/ui/Button';
 import { T } from '@/components/ui/Typography';
 import { formatNormalizedSubscription } from '@/utils/formatNormalizedSubscription';
-import { H2 } from '@/components/ui/Typography/H2';
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
+import { Enum, NormalizedSubscription, UnwrapPromise } from '@/types';
+import { getActiveProductsWithPrices } from '@/data/user/organizations';
+import {
+  CreateSubscriptionButton,
+  ManageSubscriptionButton,
+  StartFreeTrialButton,
+} from './ActionButtons';
 
-function ChoosePricingTable() {
-  const { organizationId, organizationRole } = useOrganizationContext();
-  const isOrganizationAdmin =
-    organizationRole === 'admin' || organizationRole === 'owner';
-  const {
-    data: activeProducts,
-    isLoading: isLoadingProducts,
-    error,
-  } = useGetAllActiveProducts();
-  const { mutate, isLoading: isCreatingCheckoutSession } =
-    useCreateOrganizationCheckoutSessionMutation({
-      onSuccess: async (sessionId) => {
-        const stripe = await getStripe();
-        stripe?.redirectToCheckout({ sessionId });
-      },
-      onError: (error) => {
-        toast.error(String(error));
-      },
-    });
+function getProductsSortedByPrice(
+  activeProducts: UnwrapPromise<ReturnType<typeof getActiveProductsWithPrices>>,
+) {
+  if (!activeProducts) return [];
+  const products = activeProducts
+    .map((product) => {
+      const prices = Array.isArray(product.prices)
+        ? product.prices
+        : [product.prices];
+
+      const pricesForProduct = prices.map((price) => {
+        const priceString = new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: price?.currency ?? undefined,
+          minimumFractionDigits: 0,
+        }).format((price?.unit_amount || 0) / 100);
+        return {
+          ...product,
+          price,
+          priceString,
+        };
+      });
+      return pricesForProduct;
+    })
+    .flat();
+
+  return products
+    .sort((a, b) => (a?.price?.unit_amount ?? 0) - (b?.price?.unit_amount ?? 0))
+    .filter(Boolean);
+}
+
+async function ChoosePricingTable({
+  organizationId,
+  isOrganizationAdmin,
+}: {
+  organizationId: string;
+  isOrganizationAdmin: boolean;
+}) {
+  const activeProducts = await getActiveProductsWithPrices();
 
   // supabase cannot sort by foreign table, so we do it here
-  const productsSortedByPrice = useMemo(() => {
-    if (!activeProducts) return [];
-    const products = activeProducts
-      .map((product) => {
-        const prices = Array.isArray(product.prices)
-          ? product.prices
-          : [product.prices];
+  const productsSortedByPrice = getProductsSortedByPrice(activeProducts);
 
-        const pricesForProduct = prices.map((price) => {
-          const priceString = new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: price?.currency ?? undefined,
-            minimumFractionDigits: 0,
-          }).format((price?.unit_amount || 0) / 100);
-          return {
-            ...product,
-            price,
-            priceString,
-          };
-        });
-        return pricesForProduct;
-      })
-      .flat();
-
-    return products
-      .sort(
-        (a, b) => (a?.price?.unit_amount ?? 0) - (b?.price?.unit_amount ?? 0),
-      )
-      .filter(Boolean);
-  }, [activeProducts]);
-
-  if (isLoadingProducts)
-    return (
-      <div>
-        <LoadingSpinner className="text-blue-500" />
-      </div>
-    );
-
-  if (error) return <div>Error</div>;
   return (
     <div className="max-w-7xl space-y-4">
       {/* <Overline>Pricing table</Overline> */}
@@ -162,30 +137,14 @@ function ChoosePricingTable() {
                   <div className="rounded-xl py-1 mb-5 mx-5 mt-4 text-center text-white text-xl space-y-2">
                     {isOrganizationAdmin ? (
                       <>
-                        <Button
-                          className="w-full"
-                          onClick={() => {
-                            mutate({
-                              organizationId: organizationId,
-                              priceId: priceId,
-                              isTrial: true,
-                            });
-                          }}
-                        >
-                          Start free trial
-                        </Button>
-                        <Button
-                          variant="outline"
-                          className="w-full"
-                          onClick={() => {
-                            mutate({
-                              organizationId: organizationId,
-                              priceId: priceId,
-                            });
-                          }}
-                        >
-                          {isCreatingCheckoutSession ? 'Loading...' : 'Choose'}
-                        </Button>
+                        <StartFreeTrialButton
+                          organizationId={organizationId}
+                          priceId={priceId}
+                        />
+                        <CreateSubscriptionButton
+                          organizationId={organizationId}
+                          priceId={priceId}
+                        />
                       </>
                     ) : (
                       <T.P className=" py-2 px-4 bg-gray-100 dark:bg-slate-400/20 text-sm text-gray-900 dark:text-slate-100 rounded-lg">
@@ -203,18 +162,17 @@ function ChoosePricingTable() {
   );
 }
 
-export function OrganizationSubscripionDetails() {
-  const { organizationId, normalizedSubscription, organizationRole } =
-    useOrganizationContext();
+export async function OrganizationSubscripionDetails({
+  organizationId,
+  organizationRole,
+  normalizedSubscription,
+}: {
+  normalizedSubscription: NormalizedSubscription;
+  organizationId: string;
+  organizationRole: Enum<'organization_member_role'>;
+}) {
   const isOrganizationAdmin =
     organizationRole === 'admin' || organizationRole === 'owner';
-
-  const { mutate, isLoading: isLoadingCustomerPortalLink } =
-    useCreateOrganizationCustomerPortalMutation({
-      onSuccess: (url) => {
-        window.location.assign(url);
-      },
-    });
 
   const subscriptionDetails = formatNormalizedSubscription(
     normalizedSubscription,
@@ -230,7 +188,10 @@ export function OrganizationSubscripionDetails() {
           title="Subscription"
           subTitle="This organization doesn't have any plan at the moment"
         />
-        <ChoosePricingTable />
+        <ChoosePricingTable
+          organizationId={organizationId}
+          isOrganizationAdmin={isOrganizationAdmin}
+        />
       </>
     );
   }
@@ -250,27 +211,7 @@ export function OrganizationSubscripionDetails() {
         <T.Subtle>{subscriptionDetails.description}</T.Subtle>
       </div>
       {isOrganizationAdmin ? (
-        <div className="space-y-2">
-          <Button
-            variant="default"
-            onClick={() => {
-              mutate({
-                organizationId: organizationId,
-              });
-            }}
-          >
-            <span>
-              {isLoadingCustomerPortalLink
-                ? 'Loading...'
-                : 'Manage Subscription'}{' '}
-            </span>
-            <ExternalLinkIcon aria-hidden="true" className="ml-2 w-5 h-5" />{' '}
-          </Button>
-          <T.P className="text-gray-500 dark:text-slate-400 text-sm">
-            Manage your subscription. You can modify, upgrade or cancel your
-            membership from here.
-          </T.P>
-        </div>
+        <ManageSubscriptionButton organizationId={organizationId} />
       ) : (
         <T.P className=" py-2 px-4 bg-gray-100 dark:bg-slate-400/20 text-sm text-gray-900 dark:text-slate-100 rounded-lg">
           Contact your administrator to upgrade plan.

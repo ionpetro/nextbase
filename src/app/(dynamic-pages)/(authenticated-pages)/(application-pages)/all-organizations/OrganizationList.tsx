@@ -2,14 +2,8 @@
 import { Anchor } from '@/components/Anchor';
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading/PageHeading';
 import moment from 'moment';
-import {
-  InitialOrganizationListType,
-  useCreateOrganizationMutation,
-  useOrganizationsList,
-} from '@/utils/react-query-hooks';
 import { CreateOrganizationDialog } from '@/components/presentational/tailwind/CreateOrganizationDialog';
 import { useRouter } from 'next/navigation';
-import { toast } from 'react-hot-toast';
 import {
   ShadcnTable,
   TableBody,
@@ -21,9 +15,12 @@ import {
 
 // convert the above organizationgraphs import to next dynamic
 import dynamic from 'next/dynamic';
-import { useMutation } from '@tanstack/react-query';
-import { Table } from '@/types';
 import { useRef, useState } from 'react';
+import { useToastMutation } from '@/hooks/useSonnerMutation';
+import {
+  InitialOrganizationListType,
+  createOrganization,
+} from '@/data/user/organizations';
 const OrganizationGraphs = dynamic(
   () => import('./OrganizationGraphs').then((mod) => mod.OrganizationGraphs),
   {
@@ -33,39 +30,19 @@ const OrganizationGraphs = dynamic(
 
 export function OrganizationList({
   organizationList,
-  createOrganization,
 }: {
   organizationList: InitialOrganizationListType;
-  createOrganization: (organizationTitle: string) => Promise<void>;
 }) {
-  const toastRef = useRef<string>();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const router = useRouter();
-  const { mutate, isLoading: isCreatingOrganization } = useMutation(
+  const { mutate, isLoading: isCreatingOrganization } = useToastMutation(
     async (organizationTitle: string) => {
-      return createOrganization(organizationTitle);
+      return await createOrganization(organizationTitle);
     },
     {
-      onMutate: async (name) => {
-        toastRef.current = toast.loading(`Creating organization ${name}...`);
-      },
-      onSuccess: () => {
-        // Invalidate the organization list query
-        toast.success(`Organization  created!`, {
-          id: toastRef.current,
-        });
-        toastRef.current = undefined;
-        // router.push(`/organization/${organization.id}`);
-      },
-      onError: (error) => {
-        const customError =
-          error instanceof Error ? error : new Error(String(error));
-        toast.error(`Error creating organization: ${customError.message}`, {
-          id: toastRef.current,
-        });
-        toastRef.current = undefined;
-      },
+      loadingMessage: 'Creating organization...',
+      successMessage: 'Organization created!',
+      errorMessage: 'Failed to create organization',
     },
   );
   const onConfirm = (organizationTitle: string) => {

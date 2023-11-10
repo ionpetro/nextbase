@@ -21,7 +21,6 @@ export function AddComment({
     content: string;
   }) => Promise<void>;
 }) {
-  const router = useRouter();
   const [content, setContent] = useState('');
   const toastRef = useRef<string | null>(null);
   const { mutate, isLoading } = useMutation(
@@ -42,7 +41,7 @@ export function AddComment({
         toastRef.current = null;
 
         setContent('');
-        router.refresh();
+        // router.refresh();
       },
       onError: (error) => {
         const errorMessage =
@@ -52,7 +51,7 @@ export function AddComment({
         });
         toastRef.current = null;
       },
-    }
+    },
   );
 
   return (

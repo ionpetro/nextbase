@@ -5,7 +5,7 @@ import { Label } from '@/components/ui/Label';
 import { classNames } from '@/utils/classNames';
 import { Button } from '@/components/ui/Button';
 import { useInput } from 'rooks';
-import { useSonnerMutation } from '@/hooks/useSonnerMutation';
+import { useToastMutation } from '@/hooks/useSonnerMutation';
 import { updateEmailAction } from '@/data/user/security';
 
 export const UpdateEmail = ({
@@ -15,7 +15,7 @@ export const UpdateEmail = ({
 }) => {
   const emailInput = useInput(initialEmail ?? '');
 
-  const { mutate: updateEmail, isLoading } = useSonnerMutation<void, void>(
+  const { mutate: updateEmail, isLoading } = useToastMutation<void, void>(
     async () => {
       await updateEmailAction(emailInput.value);
     },

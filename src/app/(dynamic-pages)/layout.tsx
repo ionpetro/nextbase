@@ -1,20 +1,12 @@
 import { DynamicLayoutProviders } from './DynamicLayoutProviders';
-import { errors } from '@/utils/errors';
-import { AppSupabaseClient } from '@/types';
-import { getIsAppInMaintenanceMode } from '@/utils/supabase-queries';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
+import { getIsAppInMaintenanceMode } from '@/data/global';
+import { unstable_noStore } from 'next/cache';
 
 // do not cache this layout
 export const dynamic = 'force-dynamic';
 export const fetchCache = 'only-no-store';
 export const revalidate = 0;
-
-async function fetchIsAppInMaintenanceMode(supabaseClient: AppSupabaseClient) {
-  const isAppInMaintenanceMode =
-    await getIsAppInMaintenanceMode(supabaseClient);
-
-  return isAppInMaintenanceMode;
-}
 
 export const metadata = {
   icons: {
@@ -29,10 +21,8 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const supabaseClient = createSupabaseUserServerComponentClient();
-  const [isAppInMaintenanceMode] = await Promise.all([
-    fetchIsAppInMaintenanceMode(supabaseClient),
-  ]);
+  unstable_noStore();
+  const isAppInMaintenanceMode = await getIsAppInMaintenanceMode();
   return (
     <DynamicLayoutProviders isAppInMaintenanceMode={isAppInMaintenanceMode}>
       {children}

@@ -11,12 +11,12 @@ import {
 } from '@/components/ui/Dialog';
 import { useState } from 'react';
 import GetLinkIcon from 'lucide-react/dist/esm/icons/link';
-import { useSonnerMutation } from '@/hooks/useSonnerMutation';
+import { useToastMutation } from '@/hooks/useSonnerMutation';
 import { appAdminGetUserImpersonationUrl } from '@/data/admin/user';
 
 export const GetLoginLinkDialog = ({ userId }: { userId: string }) => {
   const [open, setOpen] = useState(false);
-  const { mutate: onConfirm, isLoading } = useSonnerMutation<URL, void>(
+  const { mutate: onConfirm, isLoading } = useToastMutation<URL, void>(
     async () => {
       return await appAdminGetUserImpersonationUrl(userId);
     },

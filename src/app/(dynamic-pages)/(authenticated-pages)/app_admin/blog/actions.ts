@@ -1,10 +1,10 @@
 'use server';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
-import { Table, TableInsertPayload, TableUpdatePayload } from '@/types';
+import { TableInsertPayload, TableUpdatePayload } from '@/types';
 import { revalidatePath } from 'next/cache';
 
 export const createAuthorProfile = async (
-  payload: TableInsertPayload<'internal_blog_author_profiles'>
+  payload: TableInsertPayload<'internal_blog_author_profiles'>,
 ) => {
   const { error } = await supabaseAdminClient
     .from('internal_blog_author_profiles')
@@ -20,7 +20,7 @@ export const createAuthorProfile = async (
 export const createBlogPost = async (
   authorId: string,
   payload: TableInsertPayload<'internal_blog_posts'>,
-  tagIds: number[]
+  tagIds: number[],
 ) => {
   const { data, error } = await supabaseAdminClient
     .from('internal_blog_posts')
@@ -47,7 +47,7 @@ export const getBlogPostById = async (postId: string) => {
   const { data, error } = await supabaseAdminClient
     .from('internal_blog_posts')
     .select(
-      '*, internal_blog_author_posts(*, internal_blog_author_profiles(*))'
+      '*, internal_blog_author_posts(*, internal_blog_author_profiles(*))',
     )
     .eq('id', postId)
     .single();
@@ -63,7 +63,7 @@ export const getBlogPostBySlug = async (slug: string) => {
   const { data, error } = await supabaseAdminClient
     .from('internal_blog_posts')
     .select(
-      '*, internal_blog_author_posts(*, internal_blog_author_profiles(*))'
+      '*, internal_blog_author_posts(*, internal_blog_author_profiles(*))',
     )
     .eq('slug', slug)
     .single();
@@ -90,7 +90,7 @@ export const getBlogPostsByAuthorId = async (authorId: string) => {
 
 export const updateAuthorProfile = async (
   userId: string,
-  payload: Partial<TableUpdatePayload<'internal_blog_author_profiles'>>
+  payload: Partial<TableUpdatePayload<'internal_blog_author_profiles'>>,
 ) => {
   const { data, error } = await supabaseAdminClient
     .from('internal_blog_author_profiles')
@@ -110,7 +110,7 @@ export const updateBlogPost = async (
   authorId: string,
   postId: string,
   payload: Partial<TableUpdatePayload<'internal_blog_posts'>>,
-  tagIds: number[]
+  tagIds: number[],
 ) => {
   const { data, error } = await supabaseAdminClient
     .from('internal_blog_posts')
@@ -151,7 +151,7 @@ export const updateBlogPost = async (
 
 export const assignBlogPostToAuthor = async (
   authorId: string,
-  postId: string
+  postId: string,
 ) => {
   const { data, error } = await supabaseAdminClient
     .from('internal_blog_author_posts')
@@ -194,9 +194,8 @@ export const getAllAuthors = async () => {
 };
 
 export const getAllAppAdmins = async () => {
-  const { data: userIds, error } = await supabaseAdminClient.rpc(
-    'get_all_app_admins'
-  );
+  const { data: userIds, error } =
+    await supabaseAdminClient.rpc('get_all_app_admins');
 
   if (error) {
     throw error;
@@ -208,7 +207,7 @@ export const getAllAppAdmins = async () => {
     .select('*')
     .in(
       'id',
-      userIds.map((userId) => userId.user_id)
+      userIds.map((userId) => userId.user_id),
     );
 
   if (error2) {
@@ -245,7 +244,7 @@ export const deleteBlogPost = async (postId: string) => {
 };
 
 export const createBlogTag = async (
-  payload: TableInsertPayload<'internal_blog_post_tags'>
+  payload: TableInsertPayload<'internal_blog_post_tags'>,
 ) => {
   const { error } = await supabaseAdminClient
     .from('internal_blog_post_tags')
@@ -260,7 +259,7 @@ export const createBlogTag = async (
 
 export const updateBlogTag = async (
   id: number,
-  payload: Partial<TableUpdatePayload<'internal_blog_post_tags'>>
+  payload: Partial<TableUpdatePayload<'internal_blog_post_tags'>>,
 ) => {
   const { data, error } = await supabaseAdminClient
     .from('internal_blog_post_tags')
@@ -316,7 +315,7 @@ export const getBlogTagRelationships = async (blogPostId: string) => {
 
 export const updateBlogTagRelationships = async (
   blogPostId: string,
-  tagIds: number[]
+  tagIds: number[],
 ) => {
   const { data, error } = await supabaseAdminClient
     .from('internal_blog_post_tags_relationship')

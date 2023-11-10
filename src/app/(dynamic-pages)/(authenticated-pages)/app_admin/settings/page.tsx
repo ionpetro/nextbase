@@ -1,12 +1,9 @@
-import {
-  disableMaintenanceModeAction,
-  enableMaintenanceModeAction,
-  getIsAppInMaintenanceModeAction,
-} from './actions';
+import { getIsAppInMaintenanceMode } from '@/data/global';
+
 import { MaintenanceModeToggle } from './MaintenanceModeToggle';
 
 export default async function AdminPanel() {
-  const isAppInMaintenanceMode = await getIsAppInMaintenanceModeAction();
+  const isAppInMaintenanceMode = await getIsAppInMaintenanceMode();
   return (
     <div className="space-y-4">
       <p className="text-sm text-muted-foreground max-w-xl italic">
@@ -17,8 +14,6 @@ export default async function AdminPanel() {
       <div>
         <MaintenanceModeToggle
           isAppInMaintenanceMode={isAppInMaintenanceMode}
-          enableMaintenanceModeAction={enableMaintenanceModeAction}
-          disableMaintenanceModeAction={disableMaintenanceModeAction}
         />
       </div>
     </div>

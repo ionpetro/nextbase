@@ -1,16 +1,18 @@
 import { T } from '@/components/ui/Typography';
-import {
-  approveProjectAction,
-  rejectProjectAction,
-  submitProjectForApprovalAction,
-  markProjectAsCompletedAction,
-  addProjectCommentAction,
-  getProjectCommentsAction,
-} from './action';
-import { ProjectComments } from './ProjectComments';
+import { CommentInput } from './CommentInput';
 import LayersIcon from 'lucide-react/dist/esm/icons/layers';
+import { z } from 'zod';
+import { Suspense } from 'react';
+import { ProjectComments } from './ProjectComments';
+import { unstable_noStore } from 'next/cache';
 
-export default function ProjectPage() {
+const paramsSchema = z.object({
+  projectId: z.string(),
+});
+
+export default function ProjectPage({ params }: { params: unknown }) {
+  unstable_noStore();
+  const { projectId } = paramsSchema.parse(params);
   return (
     <div className="space-y-6">
       <div className="mb-10">
@@ -32,10 +34,17 @@ export default function ProjectPage() {
             </div>
           </div>
         </div>
-        <ProjectComments
-          addProjectCommentAction={addProjectCommentAction}
-          getProjectCommentsAction={getProjectCommentsAction}
-        />
+        <div className="space-y-4 max-w-md">
+          <T.H4>Comments</T.H4>
+          <div className="space-y-2 mb-10">
+            <div className="space-y-4 mt-4 mb-10">
+              <CommentInput projectId={projectId}></CommentInput>
+              <Suspense>
+                <ProjectComments projectId={projectId} />
+              </Suspense>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

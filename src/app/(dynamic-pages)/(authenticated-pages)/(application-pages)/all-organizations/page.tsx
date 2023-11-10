@@ -6,7 +6,7 @@ import { Anchor } from '@/components/Anchor';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/Alert';
 import InfoIcon from 'lucide-react/dist/esm/icons/info';
 import { User } from '@supabase/supabase-js';
-import { createOrganizationAction, fetchOrganizations } from './actions';
+import { getAllOrganizationsForUser } from '@/data/user/organizations';
 
 export const metadata = {
   title: 'Dashboard | Nextbase',
@@ -14,7 +14,7 @@ export const metadata = {
 
 const fetchData = async (supabaseClient: AppSupabaseClient, user: User) => {
   const [organizationList, pendingInvitations] = await Promise.all([
-    fetchOrganizations(user.id),
+    getAllOrganizationsForUser(user.id),
     user.email
       ? getUserPendingInvitationsByEmail(supabaseClient, user.email)
       : getUserPendingInvitationsByEmail(supabaseClient, user.id),
@@ -50,10 +50,7 @@ export default async function DashboardPage() {
           </Alert>
         </Anchor>
       ) : null}
-      <OrganizationList
-        createOrganization={createOrganizationAction}
-        organizationList={organizationList}
-      />
+      <OrganizationList organizationList={organizationList} />
     </div>
   );
 }

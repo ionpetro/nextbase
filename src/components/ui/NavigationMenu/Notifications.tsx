@@ -73,7 +73,7 @@ const useUnseenNotificationIds = (userId: string) => {
     return () => {
       channel.unsubscribe();
     };
-  }, [supabaseUserClientComponentClient]);
+  }, [refetch, userId]);
 
   return data ?? 0;
 };
