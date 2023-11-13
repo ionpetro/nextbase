@@ -1,5 +1,4 @@
 import { getUserProfileAction } from '@/app/(dynamic-pages)/_server-actions/user';
-import { createSupabaseAdminServerComponentClient } from '@/supabase-clients/admin/createSupabaseAdminServerComponentClient';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 import {
   getInternalFeedbackById,
@@ -25,7 +24,7 @@ export async function generateMetadata({ params }: { params: unknown }) {
   const { feedbackId } = feedbackItemPageParams.parse(params);
   const feedbackThread = await getInternalFeedbackById(
     supabaseAdminClient,
-    feedbackId
+    feedbackId,
   );
 
   return {

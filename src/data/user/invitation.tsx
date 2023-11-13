@@ -7,10 +7,13 @@ import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import { renderAsync } from '@react-email/render';
 import TeamInvitationEmail from 'emails/TeamInvitation';
 import { sendEmail } from '@/utils/api-routes/utils';
-import { createNotification } from './notifications';
-import { createAcceptedOrgInvitationNotification } from '@/utils/supabase/notifications';
+import {
+  createAcceptedOrgInvitationNotification,
+  createNotification,
+} from './notifications';
 import { getUserProfile } from '@/utils/supabase/user';
 import { revalidatePath } from 'next/cache';
+import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
 
 // This function allows an application admin with service_role
 // to check if a user with a given email exists in the auth.users table
@@ -245,7 +248,6 @@ export async function acceptInvitationAction(invitationId: string) {
   const userProfile = await getUserProfile(supabaseClient, user.id);
 
   await createAcceptedOrgInvitationNotification(
-    supabaseClient,
     invitationResponse.data?.inviter_user_id,
     {
       organizationId: invitationResponse.data.organization_id,
@@ -272,4 +274,52 @@ export async function declineInvitationAction(invitationId: string) {
   if (invitationResponse.error) {
     throw invitationResponse.error;
   }
+}
+
+export async function getPendingInvitationsOfUser() {
+  const supabaseClient = createSupabaseUserServerComponentClient();
+  const user = await serverGetLoggedInUser();
+
+  async function emailInvitations(email: string) {
+    const { data, error } = await supabaseClient
+      .from('organization_join_invitations')
+      .select(
+        '*, inviter:user_profiles!inviter_user_id(*), invitee:user_profiles!invitee_user_id(*), organization:organizations(*)',
+      )
+      .ilike('invitee_user_email', `%${user.email}%`)
+      .eq('status', 'active');
+
+    if (error) {
+      throw error;
+    }
+
+    return data || [];
+  }
+
+  async function idInvitations(userId: string) {
+    const { data, error } = await supabaseClient
+      .from('organization_join_invitations')
+      .select(
+        '*, inviter:user_profiles!inviter_user_id(*), invitee:user_profiles!invitee_user_id(*), organization:organizations(*)',
+      )
+      .eq('invitee_user_id', userId)
+      .eq('status', 'active');
+
+    if (error) {
+      throw error;
+    }
+
+    return data || [];
+  }
+
+  const emailInvitationsData = user.email
+    ? await emailInvitations(user.email)
+    : [];
+  const idInvitationsData = await idInvitations(user.id);
+
+  const invitations = [...emailInvitationsData, ...idInvitationsData];
+
+  return invitations.filter((invitation) => {
+    return Boolean(invitation.organization) && Boolean(invitation.inviter);
+  });
 }

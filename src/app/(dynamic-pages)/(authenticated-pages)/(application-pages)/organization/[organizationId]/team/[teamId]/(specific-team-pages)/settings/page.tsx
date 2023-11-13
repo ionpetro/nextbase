@@ -23,7 +23,7 @@ export default async function TeamSettingsPage({
   const { teamId } = parsedParams;
   const teamMembers = await getTeamMembersByTeamId(
     createSupabaseUserServerComponentClient(),
-    teamId
+    teamId,
   );
   return (
     <div className="space-y-2">

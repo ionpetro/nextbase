@@ -22,8 +22,9 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Enum } from '@/types';
 import { useState } from 'react';
-import { useCreateInternalFeedback } from '@/utils/react-queries/internalFeedback';
 import FeedbackIcon from 'lucide-react/dist/esm/icons/message-square';
+import { useToastMutation } from '@/hooks/useSonnerMutation';
+import { createInternalFeedback } from '@/data/user/internalFeedback';
 
 type FeedbackType = Enum<'internal_feedback_thread_type'>;
 
@@ -52,24 +53,29 @@ export const GiveFeedbackDialog = ({ isExpanded }: { isExpanded: boolean }) => {
       defaultValues: {
         type: 'bug',
       },
-    }
+    },
   );
 
   const {
-    mutate: createInternalFeedback,
+    mutate: createInternalFeedbackMutation,
     isLoading: isCreatingInternalFeedback,
-  } = useCreateInternalFeedback({
-    onSuccess: () => {
-      setIsOpen(false);
-      reset();
+  } = useToastMutation(
+    async (data: FeedbackFormType) => {
+      return await createInternalFeedback(data);
     },
-  });
+    {
+      onSuccess: () => {
+        setIsOpen(false);
+        reset();
+      },
+    },
+  );
 
   const { isValid, isLoading } = formState;
 
   const onSubmit = (data: FeedbackFormType) => {
     // handle form submission logic
-    createInternalFeedback(data);
+    createInternalFeedbackMutation(data);
   };
 
   return (

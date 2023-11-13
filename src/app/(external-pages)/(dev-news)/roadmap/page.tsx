@@ -1,43 +1,87 @@
-import BasicPageHeading from '@/components/ui/Headings/BasicPageHeading';
-
 import RoadmapCard from '@/components/ui/Card/RoadmapCard';
 import moment from 'moment';
-import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
+import {
+  anonGetCompletedRoadmapFeedbackList,
+  anonGetInProgressRoadmapFeedbackList,
+  anonGetPlannedRoadmapFeedbackList,
+} from '@/data/anon/internalFeedback';
+import { Suspense } from 'react';
+import { T } from '@/components/ui/Typography';
+
+async function PlannedCards() {
+  const plannedCards = await anonGetPlannedRoadmapFeedbackList();
+  return (
+    <div className=" space-y-3">
+      {plannedCards.length ? (
+        plannedCards.map((card) => (
+          <RoadmapCard
+            key={card.id}
+            title={card.title}
+            description={card.content}
+            tag={card.type}
+            date={moment(card.created_at).format('LL')}
+            priority={card.priority}
+          />
+        ))
+      ) : (
+        <T.Subtle className="italic text-xs text-slate-400 dark:text-slate-500">
+          Empty
+        </T.Subtle>
+      )}
+    </div>
+  );
+}
+
+async function InProgressCards() {
+  const inProgressCards = await anonGetInProgressRoadmapFeedbackList();
+  return (
+    <div className=" space-y-3">
+      {inProgressCards.length ? (
+        inProgressCards.map((card) => (
+          <RoadmapCard
+            key={card.id}
+            title={card.title}
+            description={card.content}
+            tag={card.type}
+            date={moment(card.created_at).format('LL')}
+            priority={card.priority}
+          />
+        ))
+      ) : (
+        <T.Subtle className="italic text-xs text-slate-400 dark:text-slate-500">
+          Empty
+        </T.Subtle>
+      )}
+    </div>
+  );
+}
+
+async function CompletedCards() {
+  const completedCards = await anonGetCompletedRoadmapFeedbackList();
+  return (
+    <div className=" space-y-3">
+      {completedCards.length ? (
+        completedCards.map((card) => (
+          <RoadmapCard
+            key={card.id}
+            title={card.title}
+            description={card.content}
+            tag={card.type}
+            date={moment(card.created_at).format('LL')}
+            priority={card.priority}
+          />
+        ))
+      ) : (
+        <T.Subtle className="italic text-xs text-slate-400 dark:text-slate-500">
+          Empty
+        </T.Subtle>
+      )}
+    </div>
+  );
+}
 
 export default async function Page() {
-  const roadmapItemsResponse = await supabaseAdminClient
-    .from('internal_feedback_threads')
-    .select('*')
-    .eq('added_to_roadmap', true);
-  if (roadmapItemsResponse.error) {
-    throw roadmapItemsResponse.error;
-  }
-  if (!roadmapItemsResponse.data) {
-    throw new Error('No data found');
-  }
-
-  const roadmapItems = roadmapItemsResponse.data;
-
-  const roadmapArray = roadmapItems.map((item) => {
-    return {
-      id: item.id,
-      title: item.title,
-      description: item.content,
-      status: item.status,
-      priority: item.priority,
-      tag: item.type,
-      date: moment(item.created_at).format('LL'),
-    };
-  });
-  const plannedCards = roadmapArray.filter((item) => item.status === 'planned');
-  const inProgress = roadmapArray.filter(
-    (item) => item.status === 'in_progress',
-  );
-  const completedCards = roadmapArray.filter(
-    (item) => item.status === 'completed',
-  );
-
   return (
     <div className="w-full space-y-10 px-4 md:p-0 mb-20">
       <PageHeading
@@ -57,18 +101,9 @@ export default async function Page() {
               </p>
             </div>
 
-            <div className=" space-y-3">
-              {plannedCards.map((card) => (
-                <RoadmapCard
-                  key={card.id}
-                  title={card.title}
-                  description={card.description}
-                  tag={card.tag}
-                  date={card.date}
-                  priority={card.priority}
-                />
-              ))}
-            </div>
+            <Suspense fallback={<T.Subtle>Loading...</T.Subtle>}>
+              <PlannedCards />
+            </Suspense>
           </div>
 
           {/* In Review */}
@@ -83,18 +118,9 @@ export default async function Page() {
               </p>
             </div>
 
-            <div className="space-y-3">
-              {inProgress.map((card) => (
-                <RoadmapCard
-                  key={card.id}
-                  title={card.title}
-                  description={card.description}
-                  tag={card.tag}
-                  date={card.date}
-                  priority={card.priority}
-                />
-              ))}
-            </div>
+            <Suspense fallback={<T.Subtle>Loading...</T.Subtle>}>
+              <InProgressCards />
+            </Suspense>
           </div>
 
           {/* Completed */}
@@ -109,18 +135,9 @@ export default async function Page() {
               </p>
             </div>
 
-            <div className="space-y-3">
-              {completedCards.map((card) => (
-                <RoadmapCard
-                  key={card.id}
-                  title={card.title}
-                  description={card.description}
-                  tag={card.tag}
-                  date={card.date}
-                  priority={card.priority}
-                />
-              ))}
-            </div>
+            <Suspense fallback={<T.Subtle>Loading...</T.Subtle>}>
+              <CompletedCards />
+            </Suspense>
           </div>
         </div>
       </div>

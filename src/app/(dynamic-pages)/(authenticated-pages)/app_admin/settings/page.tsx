@@ -1,4 +1,4 @@
-import { getIsAppInMaintenanceMode } from '@/data/global';
+import { getIsAppInMaintenanceMode } from '@/data/anon';
 
 import { MaintenanceModeToggle } from './MaintenanceModeToggle';
 

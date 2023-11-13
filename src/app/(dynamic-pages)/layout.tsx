@@ -1,6 +1,6 @@
 import { DynamicLayoutProviders } from './DynamicLayoutProviders';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
-import { getIsAppInMaintenanceMode } from '@/data/global';
+import { getIsAppInMaintenanceMode } from '@/data/anon';
 import { unstable_noStore } from 'next/cache';
 
 // do not cache this layout

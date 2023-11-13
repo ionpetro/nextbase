@@ -1,10 +1,7 @@
-'use client';
 import { Button } from '@/components/ui/Button';
 import { T } from '@/components/ui/Typography';
-import { Enum, UnwrapPromise } from '@/types';
+import { Enum } from '@/types';
 import { toSiteURL } from '@/utils/helpers';
-import { useGetUserPendingInvitations } from '@/utils/react-queries/invitations';
-import { getUserPendingInvitationsByEmail } from '@/utils/supabase/invitations';
 import {
   ShadcnTable,
   TableBody,
@@ -13,9 +10,9 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/Table/ShadcnTable';
-import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 import CheckIcon from 'lucide-react/dist/esm/icons/check';
 import RejectIcon from 'lucide-react/dist/esm/icons/x';
+import { getPendingInvitationsOfUser } from '@/data/user/invitation';
 
 const PendingInvitationsTable = ({
   pendingInvitationsList,
@@ -84,24 +81,10 @@ const PendingInvitationsTable = ({
   );
 };
 
-export const PendingInvitationsList = ({
-  initialPendingInvitationsList,
-}: {
-  initialPendingInvitationsList: UnwrapPromise<
-    ReturnType<typeof getUserPendingInvitationsByEmail>
-  >;
-}) => {
-  const { data, isLoading } = useGetUserPendingInvitations(
-    initialPendingInvitationsList
-  );
-  if (isLoading || !data) return <div>Loading...</div>;
-  if (data.length === 0) return null;
+export const PendingInvitationsList = async () => {
+  const pendingInvitatinos = await getPendingInvitationsOfUser();
 
-  const filteredData = data.filter((invitation) => {
-    return Boolean(invitation.organization) && Boolean(invitation.inviter);
-  });
-
-  const pendingInvitationsList = filteredData
+  const pendingInvitationsList = pendingInvitatinos
     .map((invitation) => {
       const inviter = Array.isArray(invitation.inviter)
         ? invitation.inviter[0]
@@ -124,14 +107,14 @@ export const PendingInvitationsList = ({
     })
     .filter(Boolean);
   return (
-    <div className="space-y-8">
-      <PageHeading
-        title="Pending Invitations"
-        subTitle="Manage pending invitations here."
-      />
-      <PendingInvitationsTable
-        pendingInvitationsList={pendingInvitationsList}
-      />
-    </div>
+    <>
+      {pendingInvitationsList.length > 0 ? (
+        <PendingInvitationsTable
+          pendingInvitationsList={pendingInvitationsList}
+        />
+      ) : (
+        <T.Subtle>You have no pending invitations.</T.Subtle>
+      )}
+    </>
   );
 };

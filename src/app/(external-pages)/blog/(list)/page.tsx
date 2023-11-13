@@ -1,11 +1,12 @@
 import { T } from '@/components/ui/Typography';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
-import {
-  getAllBlogTags,
-  getPublishedBlogPosts,
-} from '@/utils/supabase/internalBlog';
 import { PublicBlogList } from '../PublicBlogList';
 import { TagsNav } from '../TagsNav';
+import { Suspense } from 'react';
+import {
+  anonGetAllBlogTags,
+  anonGetPublishedBlogPosts,
+} from '@/data/anon/internalBlog';
 
 export const metadata = {
   title: 'Blog List | Nextbase',
@@ -15,12 +16,17 @@ export const metadata = {
   },
 };
 
-export default async function BlogListPage() {
-  const [blogPosts, tags] = await Promise.all([
-    getPublishedBlogPosts(supabaseAdminClient),
-    getAllBlogTags(supabaseAdminClient),
-  ]);
+async function Tags() {
+  const tags = await anonGetAllBlogTags();
+  return <TagsNav tags={tags} />;
+}
 
+async function BlogList() {
+  const blogPosts = await anonGetPublishedBlogPosts();
+  return <PublicBlogList blogPosts={blogPosts} />;
+}
+
+export default async function BlogListPage() {
   return (
     <div className="space-y-8 w-full">
       <div className="flex items-center flex-col space-y-4">
@@ -32,9 +38,13 @@ export default async function BlogListPage() {
             Nextbase.
           </T.P>
         </div>
-        <TagsNav tags={tags} />
+        <Suspense fallback={<T.Subtle>Loading tags...</T.Subtle>}>
+          <Tags />
+        </Suspense>
       </div>
-      <PublicBlogList blogPosts={blogPosts} />
+      <Suspense fallback={<T.Subtle>Loading posts...</T.Subtle>}>
+        <BlogList />
+      </Suspense>
     </div>
   );
 }

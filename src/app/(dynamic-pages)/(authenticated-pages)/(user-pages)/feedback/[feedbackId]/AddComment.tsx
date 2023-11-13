@@ -3,53 +3,22 @@
 import { Button } from '@/components/ui/Button';
 import { Textarea } from '@/components/ui/Textarea';
 import { T } from '@/components/ui/Typography';
-import { useMutation } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
-import { useRef, useState } from 'react';
-import { toast } from 'react-hot-toast';
+import { addCommentToInternalFeedbackThread } from '@/data/user/internalFeedback';
+import { useToastMutation } from '@/hooks/useSonnerMutation';
+import { useState } from 'react';
 
-export function AddComment({
-  feedbackId,
-  addComment,
-}: {
-  feedbackId: string;
-  addComment: ({
-    feedbackId,
-    content,
-  }: {
-    feedbackId: string;
-    content: string;
-  }) => Promise<void>;
-}) {
+export function AddComment({ feedbackId }: { feedbackId: string }) {
   const [content, setContent] = useState('');
-  const toastRef = useRef<string | null>(null);
-  const { mutate, isLoading } = useMutation(
-    async (content: string) => {
-      return addComment({
-        feedbackId,
-        content,
-      });
+  const { mutate, isLoading } = useToastMutation(
+    async () => {
+      return addCommentToInternalFeedbackThread(feedbackId, content);
     },
     {
-      onMutate: () => {
-        toastRef.current = toast.loading('Submitting comment...');
-      },
+      loadingMessage: 'Submitting Comment',
+      successMessage: 'Successfully submitted comment',
+      errorMessage: 'Failed to add comment',
       onSuccess: () => {
-        toast.success('Comment submitted', {
-          id: toastRef.current ?? undefined,
-        });
-        toastRef.current = null;
-
         setContent('');
-        // router.refresh();
-      },
-      onError: (error) => {
-        const errorMessage =
-          error instanceof Error ? error.message : 'An error occurred';
-        toast.error(errorMessage, {
-          id: toastRef.current ?? undefined,
-        });
-        toastRef.current = null;
       },
     },
   );

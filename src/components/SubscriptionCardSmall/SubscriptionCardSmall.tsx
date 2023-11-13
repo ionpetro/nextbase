@@ -5,9 +5,9 @@ import {
   HoverCardTrigger,
 } from '@/components/ui/HoverCard';
 import { T } from '@/components/ui/Typography';
+import { getNormalizedOrganizationSubscription } from '@/data/user/organizations';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
 import { formatNormalizedSubscription } from '@/utils/formatNormalizedSubscription';
-import { getNormalizedSubscription } from '@/utils/supabase/subscriptions';
 
 export async function SubscriptionCardSmall({
   organizationId,
@@ -15,10 +15,8 @@ export async function SubscriptionCardSmall({
   organizationId: string;
 }) {
   const supabaseClient = createSupabaseUserServerComponentClient();
-  const normalizedSubscription = await getNormalizedSubscription(
-    supabaseClient,
-    organizationId,
-  );
+  const normalizedSubscription =
+    await getNormalizedOrganizationSubscription(organizationId);
 
   const { title, sidenote, description } = formatNormalizedSubscription(
     normalizedSubscription,
