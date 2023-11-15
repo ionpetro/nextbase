@@ -8960,9 +8960,9 @@ postcss@8.4.31, postcss@^8.0.9, postcss@^8.1.6, postcss@^8.1.8, postcss@^8.3.5, 
     source-map-js "^1.0.2"
 
 posthog-js@^1.75.3:
-  version "1.90.0"
-  resolved "https://registry.yarnpkg.com/posthog-js/-/posthog-js-1.90.0.tgz#d5a8a45abdd154c017fa894202d7bb5392f7adb6"
-  integrity sha512-vQs5zkdRDguIBXu0jV9bj9mT4SPgVRraEx+vQiZhl+2H/tAHmX36aA2HrClBtH6MK4JQGGmBxwIXMseTjE6Qsw==
+  version "1.91.0"
+  resolved "https://registry.yarnpkg.com/posthog-js/-/posthog-js-1.91.0.tgz#17eaf723d699d677f49e6fe2576718e156ae4b71"
+  integrity sha512-VqyfzxjSlD5AIs2yWQxDvjsaC3GeFbqMbZBXqBeXyikDJBskKFCyxR6iCw+uYpNd8hWdxqIlAwiYaV1dnQWJVA==
   dependencies:
     fflate "^0.4.1"
 
