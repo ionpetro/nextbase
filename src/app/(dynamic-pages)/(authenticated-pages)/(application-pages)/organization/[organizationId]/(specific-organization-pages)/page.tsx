@@ -1,8 +1,15 @@
 import { AppSupabaseClient } from '@/types';
 import { z } from 'zod';
-import { getTopLevelDraftProjectsByOrganizationId } from '@/utils/supabase/projects';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
 import { DraftTeamProjectsList } from '@/components/presentational/tailwind/Projects/DraftTeamProjectsList';
+import { Suspense } from 'react';
+import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
+import { OrganizationPageHeading } from './OrganizationPageHeading';
+import { OrganizationGraphs } from './OrganizationGraphs';
+import { CreateProjectDialog } from '@/components/presentational/tailwind/CreateProjectDialog';
+import { ProjectsTable } from '@/components/presentational/tailwind/Projects/ProjectsTable';
+import { T } from '@/components/ui/Typography';
+import { getProjects } from '@/data/user/projects';
 
 const paramsSchema = z.object({
   organizationId: z.coerce.string(),
@@ -12,10 +19,7 @@ async function fetchDraftProjects(
   supabase: AppSupabaseClient,
   organizationId: string,
 ) {
-  const data = await getTopLevelDraftProjectsByOrganizationId(
-    supabase,
-    organizationId,
-  );
+  const data = await getProjects({ organizationId, teamId: null });
   return data;
 }
 
@@ -28,8 +32,36 @@ export default async function TeamPage({ params }: { params: unknown }) {
   );
 
   return (
-    <div className="space-y-4">
-      <DraftTeamProjectsList projects={projects} />
+    <div className="space-y-8">
+      <div className="space-y-0 block lg:hidden">
+        <Suspense
+          fallback={
+            <PageHeading
+              title={'Loading...'}
+              isLoading
+              titleHref={`/organization/${organizationId}`}
+            />
+          }
+        >
+          <OrganizationPageHeading organizationId={organizationId} />
+        </Suspense>
+      </div>
+      <div className="space-y-4 max-w-4xl">
+        <CreateProjectDialog organizationId={organizationId} teamId={null} />
+        <div className="space-y-4">
+          <div className="mt-10">
+            <T.H3 className="leading-none">Projects</T.H3>
+          </div>
+          <Suspense>
+            <ProjectsTable projects={projects} />
+          </Suspense>
+        </div>
+      </div>
+      <div>
+        <Suspense>
+          <OrganizationGraphs />
+        </Suspense>
+      </div>
     </div>
   );
 }

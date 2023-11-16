@@ -1,17 +1,14 @@
-import { AppSupabaseClient } from '@/types';
 import { z } from 'zod';
-import { getDraftProjectsByTeamId } from '@/utils/supabase/projects';
-import { DraftTeamProjectsList } from '@/components/presentational/tailwind/Projects/DraftTeamProjectsList';
-import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
+import { getProjects } from '@/data/user/projects';
+import { ProjectsTable } from '@/components/presentational/tailwind/Projects/ProjectsTable';
+import { Suspense } from 'react';
+import { CreateProjectDialog } from '@/components/presentational/tailwind/CreateProjectDialog';
+import { T } from '@/components/ui/Typography';
 
 const paramsSchema = z.object({
   teamId: z.coerce.number(),
+  organizationId: z.string(),
 });
-
-async function fetchDraftProjects(supabase: AppSupabaseClient, teamId: number) {
-  const data = await getDraftProjectsByTeamId(supabase, teamId);
-  return data;
-}
 
 export default async function TeamPage({
   params,
@@ -21,14 +18,21 @@ export default async function TeamPage({
   };
 }) {
   const parsedParams = paramsSchema.parse(params);
-  const { teamId } = parsedParams;
-  const projects = await fetchDraftProjects(
-    createSupabaseUserServerComponentClient(),
-    teamId,
-  );
+  const { teamId, organizationId } = parsedParams;
+  const projects = await getProjects({ organizationId, teamId });
   return (
     <div className="space-y-4">
-      <DraftTeamProjectsList projects={projects} />
+      <div className="space-y-4 max-w-4xl">
+        <CreateProjectDialog organizationId={organizationId} teamId={teamId} />
+        <div className="space-y-4">
+          <div className="mt-10">
+            <T.H3 className="leading-none">Projects</T.H3>
+          </div>
+          <Suspense>
+            <ProjectsTable projects={projects} />
+          </Suspense>
+        </div>
+      </div>
     </div>
   );
 }

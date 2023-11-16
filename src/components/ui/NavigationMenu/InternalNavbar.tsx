@@ -2,30 +2,25 @@ import { UserNav } from './UserNav';
 import { Badge } from '../Badge';
 import { cn } from '@/utils/cn';
 import { AppAdminLink } from './AppAdminLink/AppAdminLink';
-import { ReactNode } from 'react';
+import { ReactNode, Suspense } from 'react';
+import { PendingInvitationCounter } from './PendingInvitationCounter';
 
-export async function InternalNavbar({
-  title,
-  badge,
-}: {
-  title: ReactNode;
-  badge?: ReactNode;
-}) {
+export async function InternalNavbar({ children }: { children: ReactNode }) {
   return (
     <header className="sticky top-0 w-full z-10 dark:bg-slate-900/50 bg-white/90 backdrop-blur">
       <div
         className={cn(
-          'h-full text-sm font-medium flex mx-auto px-12 border-b dark:border-gray-700/50 py-2.5 w-full mb-8 justify-center items-center',
+          'h-full text-sm font-medium flex mx-auto px-12 border-b dark:border-gray-700/50 py-2.5 w-full mb-8 justify-between items-center',
         )}
       >
-        <div className={cn('hidden lg:block', 'relative ')}>
-          {title}
-          {badge ? badge : null}
-        </div>
-        <div className="relative flex basis-0 items-center justify-end space-x-2 sm:gap-3 md:flex-grow">
-          <AppAdminLink />
+        <Suspense>{children}</Suspense>
+        <div className="relative w-max flex items-center space-x-1">
           <div className="w-px h-5 mx-4 bg-muted-foreground" />
-          <UserNav />
+          <PendingInvitationCounter />
+          <AppAdminLink />
+          <div className="relative w-max flex items-center space-x-2">
+            <UserNav />
+          </div>
         </div>
       </div>
     </header>

@@ -3,7 +3,6 @@ import moment from 'moment';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { customMDXComponents } from '@/components/mdxComponents';
 import { cn } from '@/utils/cn';
-import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 import { anonGetAllChangelogItems } from '@/data/anon/internalChangelog';
 import { T } from '@/components/ui/Typography';

@@ -1,13 +1,12 @@
 import { UserNavPopover } from '@/components/presentational/tailwind/Sidebars/UserNavPopover';
 import { ThemeToggle } from '@/components/presentational/tailwind/ThemeToggle';
 import { Notifications } from '@/components/ui/NavigationMenu/Notifications';
+import { getUserProfile } from '@/data/user/user';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
 import { getUserAvatarUrl } from '@/utils/helpers';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
-import { getUserProfile } from '@/utils/supabase/user';
 
 export async function UserNav() {
-  const supabaseClient = createSupabaseUserServerComponentClient();
   const user = await serverGetLoggedInUser();
   const { email } = user;
   if (!email) {
@@ -15,7 +14,7 @@ export async function UserNav() {
     throw new Error('User email not found');
   }
 
-  const userProfile = await getUserProfile(supabaseClient, user.id);
+  const userProfile = await getUserProfile(user.id);
   return (
     <>
       <ThemeToggle />

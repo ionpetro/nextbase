@@ -1,3 +1,4 @@
+'use server';
 import { createSupabaseUserServerActionClient } from '@/supabase-clients/user/createSupabaseUserServerActionClient';
 import { AuthProvider } from '@/types';
 import { toSiteURL } from '@/utils/helpers';

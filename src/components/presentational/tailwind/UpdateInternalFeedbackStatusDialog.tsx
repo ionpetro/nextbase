@@ -12,7 +12,7 @@ import {
 import { Button } from '@/components/ui/Button';
 import { Enum } from '@/types';
 import { formatFieldValue } from '@/utils/feedback';
-import { FeedbackThreadStatusSelect } from '@/components/presentational/tailwind/FeedbackThreadStatusSelect';
+import { FeedbackThreadStatusSelect } from '@/components/Feedback/FeedbackThreadStatusSelect';
 
 type Props = {
   onUpdate: (status: Enum<'internal_feedback_thread_status'>) => void;

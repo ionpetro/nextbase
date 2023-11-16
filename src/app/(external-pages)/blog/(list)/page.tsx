@@ -1,5 +1,4 @@
 import { T } from '@/components/ui/Typography';
-import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 import { PublicBlogList } from '../PublicBlogList';
 import { TagsNav } from '../TagsNav';
 import { Suspense } from 'react';

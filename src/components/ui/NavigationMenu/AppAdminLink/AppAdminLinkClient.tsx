@@ -14,7 +14,7 @@ export function AppAdminLinkClient() {
     <Anchor
       href="/app_admin"
       className={classNames(
-        `flex gap-2.5 px-4 w-fit cursor-pointer items-center group py-2 mb-1 rounded-lg transition hover:cursor-pointer hover:bg-gray-200/50 dark:hover:bg-slate-700/50 `,
+        `flex gap-2.5 px-4 w-max cursor-pointer w-max items-center group py-2 mb-1 rounded-lg transition hover:cursor-pointer hover:bg-gray-200/50 dark:hover:bg-slate-700/50 `,
         isActive ? ' bg-gray-300/50  dark:bg-slate-800  ' : ' bg-transparent',
       )}
     >

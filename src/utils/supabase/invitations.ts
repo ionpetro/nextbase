@@ -37,22 +37,3 @@ export const getUserPendingInvitationsById = async (
 
   return data || [];
 };
-
-export const getInvitationById = async (
-  supabase: AppSupabaseClient,
-  invitationId: string,
-) => {
-  const { data, error } = await supabase
-    .from('organization_join_invitations')
-    .select(
-      '*, inviter:user_profiles!inviter_user_id(*), invitee:user_profiles!invitee_user_id(*), organization:organizations(*)',
-    )
-    .eq('id', invitationId)
-    .eq('status', 'active');
-
-  if (error) {
-    throw error;
-  }
-
-  return data?.[0];
-};

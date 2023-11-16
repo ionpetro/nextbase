@@ -1,3 +1,4 @@
+'use client';
 import { useState } from 'react';
 import {
   Dialog,
@@ -12,41 +13,46 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
 import UsersIcon from 'lucide-react/dist/esm/icons/users';
+import { PlusIcon } from '@radix-ui/react-icons';
+import { useToastMutation } from '@/hooks/useSonnerMutation';
+import { createTeamAction } from '@/data/user/teams';
+import { useRouter } from 'next/navigation';
 
 type CreateTeamDialogProps = {
-  title: string;
-  onConfirm: (teamTitle: string) => void;
-  isLoading: boolean;
-  trigger?: React.ReactNode;
+  organizationId: string;
 };
 
-export function CreateTeamDialog({
-  title,
-  onConfirm,
-  isLoading,
-  trigger,
-}: CreateTeamDialogProps) {
+export function CreateTeamDialog({ organizationId }: CreateTeamDialogProps) {
   const [teamTitle, setTeamTitle] = useState<string>('');
   const [open, setOpen] = useState(false);
+  const router = useRouter();
+  const { mutate, isLoading } = useToastMutation(
+    async () => {
+      return await createTeamAction(organizationId, teamTitle);
+    },
+    {
+      loadingMessage: 'Creating team...',
+      successMessage: 'Team created!',
+      errorMessage: 'Failed to create team.',
+      onSuccess: (data) => {
+        setOpen(false);
+        router.push(`/organization/${organizationId}/team/${data.id}`);
+      },
+    },
+  );
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onConfirm(teamTitle);
-    setOpen(false);
+    mutate({});
   };
 
   return (
     <>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          {trigger ? (
-            trigger
-          ) : (
-            <Button variant="outline" size="default">
-              <UsersIcon className="mr-2 w-5 h-5" />
-              {title ? title : 'Create Team'}
-            </Button>
-          )}
+          <Button size="xs">
+            <PlusIcon />
+          </Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
@@ -95,7 +101,7 @@ export function CreateTeamDialog({
                 className="w-full"
                 disabled={isLoading}
               >
-                Create Team
+                {isLoading ? 'Creating Team...' : 'Create Team'}
               </Button>
             </DialogFooter>
           </form>

@@ -1,8 +1,9 @@
 'use server';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 import { Enum } from '@/types';
-import { unstable_noStore as noStore } from 'next/cache';
+import { unstable_noStore as noStore, revalidatePath } from 'next/cache';
 import { ensureAppAdmin } from './security';
+import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 
 export const getPaginatedInternalFeedbackList = async ({
   query = '',
@@ -235,4 +236,176 @@ export async function toggleFeedbackThreadDiscussion(
   }
 
   return data;
+}
+
+export const appAdminGetSlimInternalFeedback = async (feedbackId: string) => {
+  const { data, error } = await supabaseAdminClient
+    .from('internal_feedback_threads')
+    .select('title,content,status')
+    .eq('id', feedbackId)
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};
+
+export const appAdminAddCommentToInternalFeedbackThread = async (
+  feedbackId: string,
+  content: string,
+) => {
+  const user = await serverGetLoggedInUser();
+  const { data, error } = await supabaseAdminClient
+    .from('internal_feedback_comments')
+    .insert({ thread_id: feedbackId, user_id: user.id, content })
+    .select('*');
+
+  if (error) {
+    throw error;
+  }
+
+  revalidatePath(`/feedback`, 'layout');
+  revalidatePath('/app_admin', 'layout');
+
+  return data;
+};
+
+export const appAdminGetInternalFeedbackComments = async (
+  feedbackId: string,
+) => {
+  const { data, error } = await supabaseAdminClient
+    .from('internal_feedback_comments')
+    .select('*')
+    .eq('thread_id', feedbackId);
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};
+
+export async function adminUpdateInternalFeedbackType({
+  feedbackId,
+  type,
+}: {
+  feedbackId: string;
+  type: Enum<'internal_feedback_thread_type'>;
+}) {
+  const { data, error } = await supabaseAdminClient
+    .from('internal_feedback_threads')
+    .update({ type })
+    .eq('id', feedbackId)
+    .select('*')
+    .single();
+
+  if (error) {
+    throw error;
+  }
+  revalidatePath('/feedback');
+  revalidatePath('/app_admin/feedback');
+  return data;
+}
+
+export async function adminUpdateInternalFeedbackStatus({
+  feedbackId,
+  status,
+}: {
+  feedbackId: string;
+  status: Enum<'internal_feedback_thread_status'>;
+}) {
+  const { data, error } = await supabaseAdminClient
+    .from('internal_feedback_threads')
+    .update({ status })
+    .eq('id', feedbackId)
+    .select('*')
+    .single();
+
+  if (error) {
+    throw error;
+  }
+  revalidatePath('/feedback');
+  revalidatePath('/app_admin/feedback');
+  return data;
+}
+
+export async function adminUpdateInternalFeedbackPriority({
+  feedbackId,
+  priority,
+}: {
+  feedbackId: string;
+  priority: Enum<'internal_feedback_thread_priority'>;
+}) {
+  const { data, error } = await supabaseAdminClient
+    .from('internal_feedback_threads')
+    .update({ priority })
+    .eq('id', feedbackId)
+    .select('*')
+    .single();
+
+  if (error) {
+    throw error;
+  }
+  revalidatePath('/feedback');
+  revalidatePath('/app_admin/feedback');
+  return data;
+}
+
+export const adminUpdateInternalFeedbackAddedToRoadmap = async ({
+  feedbackId,
+  isAddedToRoadmap,
+}: {
+  feedbackId: string;
+  isAddedToRoadmap: boolean;
+}) => {
+  const { data, error } = await supabaseAdminClient
+    .from('internal_feedback_threads')
+    .update({ added_to_roadmap: isAddedToRoadmap })
+    .eq('id', feedbackId)
+    .select('*');
+
+  if (error) {
+    throw error;
+  }
+
+  revalidatePath('/feedback');
+  revalidatePath('/app_admin/feedback');
+  return data;
+};
+
+export const adminUpdateInternalFeedbackVisibility = async ({
+  feedbackId,
+  isOpenToDiscussion,
+}: {
+  feedbackId: string;
+  isOpenToDiscussion: boolean;
+}) => {
+  const { data, error } = await supabaseAdminClient
+    .from('internal_feedback_threads')
+    .update({ open_for_public_discussion: isOpenToDiscussion })
+    .eq('id', feedbackId)
+    .select('*');
+
+  if (error) {
+    throw error;
+  }
+
+  revalidatePath('/feedback');
+  revalidatePath('/app_admin/feedback');
+  return data;
+};
+
+export async function adminGetInternalFeedbackById(feedbackId: string) {
+  const { data, error } = await supabaseAdminClient
+    .from('internal_feedback_threads')
+    .select('*')
+    .eq('id', feedbackId);
+
+  if (error) {
+    throw error;
+  }
+
+  return data[0];
 }

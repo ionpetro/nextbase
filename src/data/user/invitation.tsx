@@ -11,9 +11,11 @@ import {
   createAcceptedOrgInvitationNotification,
   createNotification,
 } from './notifications';
-import { getUserProfile } from '@/utils/supabase/user';
 import { revalidatePath } from 'next/cache';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
+import { redirect } from 'next/navigation';
+import { uniqBy } from 'lodash';
+import { getUserProfile } from './user';
 
 // This function allows an application admin with service_role
 // to check if a user with a given email exists in the auth.users table
@@ -245,7 +247,7 @@ export async function acceptInvitationAction(invitationId: string) {
     throw invitationResponse.error;
   }
 
-  const userProfile = await getUserProfile(supabaseClient, user.id);
+  const userProfile = await getUserProfile(user.id);
 
   await createAcceptedOrgInvitationNotification(
     invitationResponse.data?.inviter_user_id,
@@ -254,6 +256,9 @@ export async function acceptInvitationAction(invitationId: string) {
       inviteeFullName: userProfile.full_name ?? `User ${userProfile.id}`,
     },
   );
+
+  revalidatePath('/');
+  redirect('/dashboard');
 }
 
 export async function declineInvitationAction(invitationId: string) {
@@ -274,6 +279,8 @@ export async function declineInvitationAction(invitationId: string) {
   if (invitationResponse.error) {
     throw invitationResponse.error;
   }
+  revalidatePath('/');
+  redirect('/dashboard');
 }
 
 export async function getPendingInvitationsOfUser() {
@@ -319,7 +326,69 @@ export async function getPendingInvitationsOfUser() {
 
   const invitations = [...emailInvitationsData, ...idInvitationsData];
 
-  return invitations.filter((invitation) => {
-    return Boolean(invitation.organization) && Boolean(invitation.inviter);
-  });
+  return uniqBy(
+    invitations.filter((invitation) => {
+      return Boolean(invitation.organization) && Boolean(invitation.inviter);
+    }),
+    'id',
+  );
+}
+
+export const getInvitationById = async (invitationId: string) => {
+  const supabaseClient = createSupabaseUserServerComponentClient();
+
+  const { data, error } = await supabaseClient
+    .from('organization_join_invitations')
+    .select(
+      '*, inviter:user_profiles!inviter_user_id(*), invitee:user_profiles!invitee_user_id(*), organization:organizations(*)',
+    )
+    .eq('id', invitationId)
+    .eq('status', 'active')
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};
+
+export async function getPendingInvitationCountOfUser() {
+  const supabaseClient = createSupabaseUserServerComponentClient();
+  const user = await serverGetLoggedInUser();
+
+  async function emailInvitations(email: string) {
+    const { count, error } = await supabaseClient
+      .from('organization_join_invitations')
+      .select('id', { count: 'exact' })
+      .ilike('invitee_user_email', `%${user.email}%`)
+      .eq('status', 'active');
+
+    if (error) {
+      throw error;
+    }
+
+    return count || 0;
+  }
+
+  async function idInvitations(userId: string) {
+    const { count, error } = await supabaseClient
+      .from('organization_join_invitations')
+      .select('id', { count: 'exact' })
+      .eq('invitee_user_id', userId)
+      .eq('status', 'active');
+
+    if (error) {
+      throw error;
+    }
+
+    return count || 0;
+  }
+
+  const emailInvitationsCount = user.email
+    ? await emailInvitations(user.email)
+    : 0;
+  const idInvitationsCount = await idInvitations(user.id);
+
+  return emailInvitationsCount + idInvitationsCount;
 }

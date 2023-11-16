@@ -13,6 +13,7 @@ import {
 import CheckIcon from 'lucide-react/dist/esm/icons/check';
 import RejectIcon from 'lucide-react/dist/esm/icons/x';
 import { getPendingInvitationsOfUser } from '@/data/user/invitation';
+import { Anchor } from '@/components/Anchor';
 
 const PendingInvitationsTable = ({
   pendingInvitationsList,
@@ -52,24 +53,11 @@ const PendingInvitationsTable = ({
                 <TableCell>{invitation.role}</TableCell>
                 <TableCell>
                   <div className="flex space-x-2">
-                    <Button
-                      size="default"
-                      variant="default"
-                      onClick={() =>
-                        (window.location.href = invitation.acceptURL)
-                      }
-                    >
-                      <CheckIcon className="mr-2" /> Accept
-                    </Button>
-                    <Button
-                      size="default"
-                      variant="outline"
-                      onClick={() =>
-                        (window.location.href = invitation.declineURL)
-                      }
-                    >
-                      <RejectIcon className="mr-2" /> Decline
-                    </Button>
+                    <Anchor href={`/invitations/${invitation.id}`}>
+                      <Button size="default" variant="default">
+                        View Invitation
+                      </Button>
+                    </Anchor>
                   </div>
                 </TableCell>
               </TableRow>
@@ -82,9 +70,9 @@ const PendingInvitationsTable = ({
 };
 
 export const PendingInvitationsList = async () => {
-  const pendingInvitatinos = await getPendingInvitationsOfUser();
+  const pendingInvitations = await getPendingInvitationsOfUser();
 
-  const pendingInvitationsList = pendingInvitatinos
+  const pendingInvitationsList = pendingInvitations
     .map((invitation) => {
       const inviter = Array.isArray(invitation.inviter)
         ? invitation.inviter[0]
@@ -101,8 +89,6 @@ export const PendingInvitationsList = async () => {
         organizationTitle: organization.title,
         status: invitation.status,
         role: invitation.invitee_organization_role,
-        acceptURL: toSiteURL(`/api/invitations/accept/${invitation.id}`),
-        declineURL: toSiteURL(`/api/invitations/decline/${invitation.id}`),
       };
     })
     .filter(Boolean);

@@ -1,7 +1,6 @@
 'use client';
 
 import * as React from 'react';
-// team member roles = ['admin', 'member', 'owner']
 import {
   Select,
   SelectContent,
@@ -16,11 +15,12 @@ import { Enum } from '@/types';
 type ProjectTeamMemberRoleSelectProps = {
   value: Enum<'project_team_member_role'>;
   onChange: (value: Enum<'project_team_member_role'>) => void;
+  isLoading: boolean;
 };
 
 // typeguard to narrow string to Enum<'project_team_member_role'>
 function isTeamMemberRole(
-  value: string
+  value: string,
 ): value is Enum<'project_team_member_role'> {
   return ['admin', 'member', 'readonly'].includes(value);
 }
@@ -28,9 +28,11 @@ function isTeamMemberRole(
 export function ProjectTeamMemberRoleSelect({
   value,
   onChange,
+  isLoading = false,
 }: ProjectTeamMemberRoleSelectProps) {
   return (
     <Select
+      disabled={isLoading}
       value={value}
       onValueChange={(value) => {
         if (!isTeamMemberRole(value)) {

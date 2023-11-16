@@ -41,8 +41,8 @@ export const ProjectsTable = ({
               <TableHeader>
                 <TableRow>
                   <TableHead>Name</TableHead>
-                  <TableHead>Date</TableHead>
                   <TableHead>Project Status</TableHead>
+                  <TableHead>Created on</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -56,9 +56,7 @@ export const ProjectsTable = ({
                         {project.name}
                       </Anchor>
                     </TableCell>
-                    <TableCell>
-                      {moment(project.created_at).format('LLL')}
-                    </TableCell>
+
                     <TableCell>
                       {/* Add your project status rendering logic here */}
                       {project.project_status === 'completed' ? (
@@ -89,6 +87,9 @@ export const ProjectsTable = ({
                           </T.P>
                         </Badge>
                       )}
+                    </TableCell>
+                    <TableCell>
+                      {moment(project.created_at).format('LLL')}
                     </TableCell>
                   </TableRow>
                 ))}

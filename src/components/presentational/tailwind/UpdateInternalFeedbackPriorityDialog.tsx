@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/Dialog';
 import { Button } from '@/components/ui/Button';
 import { Enum } from '@/types';
-import { FeedbackThreadPrioritySelect } from '@/components/presentational/tailwind/FeedbackThreadPrioritySelect';
+import { FeedbackThreadPrioritySelect } from '@/components/Feedback/FeedbackThreadPrioritySelect';
 import { formatFieldValue } from '@/utils/feedback';
 
 type Props = {

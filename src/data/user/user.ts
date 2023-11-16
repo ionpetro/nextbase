@@ -100,23 +100,6 @@ export const getUserPendingInvitationsById = async (userId: string) => {
   return data || [];
 };
 
-export const getInvitationById = async (invitationId: string) => {
-  const supabaseClient = createSupabaseUserServerComponentClient();
-  const { data, error } = await supabaseClient
-    .from('organization_join_invitations')
-    .select(
-      '*, inviter:user_profiles!inviter_user_id(*), invitee:user_profiles!invitee_user_id(*), organization:organizations(*)',
-    )
-    .eq('id', invitationId)
-    .eq('status', 'active');
-
-  if (error) {
-    throw error;
-  }
-
-  return data?.[0];
-};
-
 export const uploadPublicUserAvatar = async (
   file: File,
   fileName: string,

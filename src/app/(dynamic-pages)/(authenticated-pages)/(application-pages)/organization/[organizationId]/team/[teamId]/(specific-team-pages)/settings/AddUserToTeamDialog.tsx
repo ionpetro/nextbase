@@ -1,3 +1,4 @@
+'use client';
 import { Button } from '@/components/ui/Button';
 import {
   Dialog,
@@ -12,19 +13,16 @@ import { T } from '@/components/ui/Typography';
 // convert the imports above into modularized imports
 // import Check from 'lucide-react/dist/esm/icons/check';
 import AddUserIcon from 'lucide-react/dist/esm/icons/user-plus';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { ProjectTeamMemberRoleSelect } from './ProjectTeamMemberRoleSelect';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useOrganizationContext } from '@/contexts/OrganizationContext';
-import { useTeamContext } from '@/contexts/TeamContext';
-import { useGetMembersInOrganization } from '@/utils/react-queries/organizations';
 import { OrganizationUsersSelect } from './OrganizationUsersSelect';
-import { Enum, Table } from '@/types';
-import { useMutation } from '@tanstack/react-query';
-import { toast } from 'react-hot-toast';
+import { Table } from '@/types';
 import { Label } from '@/components/ui/Label';
+import { useToastMutation } from '@/hooks/useSonnerMutation';
+import { addUserToTeamAction } from '@/data/user/teams';
 
 const addUserSchema = z.object({
   userId: z.string(),
@@ -33,76 +31,41 @@ const addUserSchema = z.object({
 
 type AddUserFormType = z.infer<typeof addUserSchema>;
 
+type AddableMember = Table<'organization_members'> & {
+  user_profiles: Table<'user_profiles'>;
+};
+
 export const AddUserToTeamDialog = ({
-  addUserToTeamAction,
+  organizationId,
+  teamId,
+  addableMembers,
 }: {
-  addUserToTeamAction: ({
-    userId,
-    teamId,
-    role,
-  }: {
-    userId: string;
-    teamId: number;
-    role: Enum<'project_team_member_role'>;
-  }) => Promise<Table<'team_members'>>;
+  organizationId: string;
+  teamId: number;
+  addableMembers: Array<AddableMember>;
 }) => {
   const [open, setOpen] = useState(false);
-  const { organizationId } = useOrganizationContext();
-  const { teamId } = useTeamContext();
+
   const { control, formState, handleSubmit } = useForm<AddUserFormType>({
     defaultValues: {
       role: 'member',
     },
     resolver: zodResolver(addUserSchema),
   });
-  const {
-    data: organizationTeamMembers,
-    isLoading: isOrganizationTeamMembersDataLoading,
-  } = useGetMembersInOrganization(organizationId);
-  const toastRef = useRef<string | undefined>(undefined);
-  const { mutate: addUser } = useMutation(
-    async ({
-      userId,
-      teamId,
-      role,
-    }: {
-      userId: string;
-      teamId: number;
-      role: Enum<'project_team_member_role'>;
-    }) => {
-      return addUserToTeamAction({ userId, teamId, role });
+
+  const addUserMutation = useToastMutation(addUserToTeamAction, {
+    loadingMessage: 'Adding user...',
+    successMessage: 'User added!',
+    errorMessage: 'Failed to add user',
+    onSuccess: () => {
+      setOpen(false);
     },
-    {
-      onMutate: () => {
-        toastRef.current = toast.loading('Adding user to team...');
-      },
-      onSuccess: () => {
-        toast.success('User added to team!', {
-          id: toastRef.current ?? undefined,
-        });
-      },
-      onError: (error: Error) => {
-        toast.error(String(error), {
-          id: toastRef.current ?? undefined,
-        });
-      },
-    }
-  );
-  const users =
-    isOrganizationTeamMembersDataLoading || !organizationTeamMembers
-      ? []
-      : organizationTeamMembers.map((member) => {
-        const userProfile = Array.isArray(member.user_profiles)
-          ? member.user_profiles[0]
-          : member.user_profiles;
-        if (!userProfile) {
-          throw new Error('User profile not found');
-        }
-        return {
-          value: userProfile.id,
-          label: userProfile.full_name ?? userProfile.id,
-        };
-      });
+  });
+
+  const users = addableMembers.map((member) => ({
+    value: member.user_profiles.id,
+    label: member.user_profiles.full_name ?? `User ${member.user_profiles.id}`,
+  }));
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -115,10 +78,11 @@ export const AddUserToTeamDialog = ({
       <DialogContent className="sm:max-w-[425px]">
         <form
           onSubmit={handleSubmit((data) => {
-            addUser({
+            addUserMutation.mutate({
               role: data.role,
               teamId,
               userId: data.userId,
+              organizationId,
             });
             setOpen(false);
           })}
@@ -143,7 +107,7 @@ export const AddUserToTeamDialog = ({
                 name="userId"
                 render={({ field }) => {
                   const selectedUser = users.find(
-                    (user) => user.value === field.value
+                    (user) => user.value === field.value,
                   );
                   return (
                     <OrganizationUsersSelect
@@ -167,15 +131,10 @@ export const AddUserToTeamDialog = ({
                       Select a role
                     </Label>
                     <ProjectTeamMemberRoleSelect
+                      isLoading={addUserMutation.isLoading}
                       value={field.value}
                       onChange={(newRole) => {
-                        // updateRole({
-                        //   newRole,
-                        //   teamId,
-                        //   userId: member.user_id,
-                        // });
                         field.onChange(newRole);
-                        // Handle role change here
                       }}
                     />
                   </div>

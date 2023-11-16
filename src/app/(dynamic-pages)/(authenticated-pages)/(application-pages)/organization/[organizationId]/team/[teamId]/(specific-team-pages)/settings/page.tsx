@@ -1,39 +1,29 @@
-import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
-import { getTeamMembersByTeamId } from '@/utils/supabase/teams';
 import { z } from 'zod';
-import {
-  addUserToTeamAction,
-  removeUserFromTeamAction,
-  updateUserRoleInTeamAction,
-} from './actions';
-import { ProjectTeamMembersTable } from './ProjectTeamMembersTable';
+import { Suspense } from 'react';
+import { T } from '@/components/ui/Typography';
+import { AutomaticTeamAdmins, TeamMembers } from './TeamMembers';
 
 const paramsSchema = z.object({
   teamId: z.coerce.number(),
+  organizationId: z.string(),
 });
 
 export default async function TeamSettingsPage({
   params,
 }: {
-  params: {
-    teamId: string;
-  };
+  params: unknown;
 }) {
   const parsedParams = paramsSchema.parse(params);
-  const { teamId } = parsedParams;
-  const teamMembers = await getTeamMembersByTeamId(
-    createSupabaseUserServerComponentClient(),
-    teamId,
-  );
+  const { teamId, organizationId } = parsedParams;
+
   return (
-    <div className="space-y-2">
-      <ProjectTeamMembersTable
-        updateUserRoleInTeamAction={updateUserRoleInTeamAction}
-        removeUserFromTeamAction={removeUserFromTeamAction}
-        addUserToTeamAction={addUserToTeamAction}
-        teamId={teamId}
-        teamMembers={teamMembers}
-      />
+    <div className="space-y-16">
+      <Suspense fallback={<T.P>Loading...</T.P>}>
+        <AutomaticTeamAdmins organizationId={organizationId} />
+      </Suspense>
+      <Suspense fallback={<T.P>Loading...</T.P>}>
+        <TeamMembers teamId={teamId} organizationId={organizationId} />
+      </Suspense>
     </div>
   );
 }

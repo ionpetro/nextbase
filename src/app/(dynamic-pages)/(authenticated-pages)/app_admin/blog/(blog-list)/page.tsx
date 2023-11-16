@@ -17,6 +17,7 @@ import {
 import { ManageAuthorsDialog } from './ManageAuthorsDialog';
 import { ManageBlogTagsDialog } from './ManageBlogTagsDialog';
 import { Suspense } from 'react';
+import { BlogList } from './BlogList';
 
 async function ActionButtons() {
   const [authors, appAdmins, blogTags] = await Promise.all([

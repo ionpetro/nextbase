@@ -6,7 +6,6 @@ import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import { createOrRetrieveCustomer } from '../admin/stripe';
 import { stripe } from '@/utils/stripe';
 import { toSiteURL } from '@/utils/helpers';
-import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 import { revalidatePath } from 'next/cache';
 
 export const createOrganization = async (name: string) => {
@@ -410,5 +409,38 @@ export const getTeamMembersInOrganization = async (organizationId: string) => {
     throw error;
   }
 
-  return data || [];
+  return data.map((member) => {
+    const { user_profiles, ...rest } = member;
+    if (!user_profiles) {
+      throw new Error('No user profile found for member');
+    }
+    return {
+      ...rest,
+      user_profiles: user_profiles,
+    };
+  });
+};
+
+export const getOrganizationAdmins = async (organizationId: string) => {
+  const supabase = createSupabaseUserServerComponentClient();
+  const { data, error } = await supabase
+    .from('organization_members')
+    .select('*, user_profiles(*)')
+    .eq('organization_id', organizationId)
+    .or('member_role.eq.admin,member_role.eq.owner');
+
+  if (error) {
+    throw error;
+  }
+
+  return data.map((member) => {
+    const { user_profiles, ...rest } = member;
+    if (!user_profiles) {
+      throw new Error('No user profile found for member');
+    }
+    return {
+      ...rest,
+      user_profiles: user_profiles,
+    };
+  });
 };

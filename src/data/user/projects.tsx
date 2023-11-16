@@ -1,12 +1,10 @@
 'use server';
-import { CommentList } from '@/app/(dynamic-pages)/(authenticated-pages)/(application-pages)/project/[projectId]/(specific-project-pages)/CommentList';
-import { ProjectComments } from '@/app/(dynamic-pages)/(authenticated-pages)/(application-pages)/project/[projectId]/(specific-project-pages)/ProjectComments';
+import { CommentList } from '@/components/Projects/CommentList';
 import { createSupabaseUserServerActionClient } from '@/supabase-clients/user/createSupabaseUserServerActionClient';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
 import { CommentWithUser } from '@/types';
 import { normalizeComment } from '@/utils/comments';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
-import { createProject } from '@/utils/supabase/projects';
 import { revalidatePath } from 'next/cache';
 import { Suspense } from 'react';
 
@@ -56,17 +54,29 @@ export const createProjectAction = async ({
 }: {
   organizationId: string;
   name: string;
-  teamId: number;
+  teamId: number | null;
 }) => {
   'use server';
   const supabaseClient = createSupabaseUserServerActionClient();
-  const project = await createProject(
-    supabaseClient,
-    organizationId,
-    teamId,
-    name,
-  );
-  revalidatePath(`/organization/${organizationId}`);
+  const { data: project, error } = await supabaseClient
+    .from('projects')
+    .insert({
+      organization_id: organizationId,
+      team_id: teamId,
+      name,
+    })
+    .select('*')
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  if (teamId) {
+    revalidatePath(`/organization/${organizationId}/team/${teamId}`);
+  } else {
+    revalidatePath(`/organization/${organizationId}`);
+  }
   return project;
 };
 
@@ -178,5 +188,30 @@ export const markProjectAsCompletedAction = async (projectId: string) => {
   }
 
   revalidatePath(`/project/${projectId}`);
+  return data;
+};
+
+export const getProjects = async ({
+  organizationId,
+  teamId,
+}: {
+  organizationId: string;
+  teamId: number | null;
+}) => {
+  const supabase = createSupabaseUserServerComponentClient();
+  let query = supabase
+    .from('projects')
+    .select('*')
+    .eq('organization_id', organizationId);
+  if (teamId) {
+    query = query.eq('team_id', teamId);
+  } else {
+    query = query.is('team_id', null);
+  }
+  const { data, error } = await query.order('created_at', { ascending: false });
+  if (error) {
+    throw error;
+  }
+
   return data;
 };

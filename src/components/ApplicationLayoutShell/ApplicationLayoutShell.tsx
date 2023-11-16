@@ -16,7 +16,7 @@ export function ApplicationLayoutShell({
     >
       <Suspense fallback={<div>Loading sidebar</div>}> {sidebar}</Suspense>
       <div className="h-full overflow-y-auto">
-        <div className="relative flex-1 h-auto mt-8 w-full overflow-auto">
+        <div className="relative flex-1 h-auto w-full overflow-auto">
           <div className="px-12 space-y-6 pb-10">{children}</div>
         </div>
       </div>
