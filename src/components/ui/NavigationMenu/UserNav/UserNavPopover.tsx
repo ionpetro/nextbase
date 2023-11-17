@@ -1,14 +1,11 @@
 'use client';
 import Image from 'next/image';
-import { UserSidebarMenu } from '../UserSidebarMenu';
-import ChevronRight from 'lucide-react/dist/esm/icons/chevron-right';
-import { cn } from '@/utils/cn';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/Popover';
-import { T } from '@/components/ui/Typography';
+import { UserSidebarMenu } from './UserSidebarMenu';
 
 export const UserNavPopover = ({
   avatarUrl,

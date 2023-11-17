@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Html,
   Head,
@@ -8,16 +8,16 @@ import {
   Tailwind,
   Hr,
   Container,
-} from "@react-email/components";
-interface ProjectRejectedProps{
-  projectName:string;
-  appMaker:string;
-  organisationName:string;
-  senderName:string;
-  position:string;
-  approver:string;
-  positionOfApprover:string;
-  dateOfRejection:Date;
+} from '@react-email/components';
+interface ProjectRejectedProps {
+  projectName: string;
+  appMaker: string;
+  organisationName: string;
+  senderName: string;
+  position: string;
+  approver: string;
+  positionOfApprover: string;
+  dateOfRejection: Date;
 }
 const ProjectRejected = ({
   projectName,
@@ -28,7 +28,7 @@ const ProjectRejected = ({
   positionOfApprover,
   dateOfRejection,
   position,
-}:ProjectRejectedProps) => {
+}: ProjectRejectedProps) => {
   return (
     <Html>
       <Head />
@@ -39,7 +39,10 @@ const ProjectRejected = ({
             <Hr className="my-5" />
             <Text className="text-base">Dear Smith,{appMaker}</Text>
             <Text className="text-base">
-            The project you submitted for approval to organization{organisationName}, has been rejected by their CEO{/*positionOfApprover*/}, Lary{/*approver*/}, on 11th July, 2023.{/*dateOfRejection*/}
+              The project you submitted for approval to organization
+              {organisationName}, has been rejected by their CEO
+              {/*positionOfApprover*/}, Lary{/*approver*/}, on 11th July, 2023.
+              {/*dateOfRejection*/}
             </Text>
             {/* <Text className="text-base">
               After careful consideration and thorough evaluation, we regret to
@@ -68,11 +71,9 @@ const ProjectRejected = ({
               we appreciate your contribution. We wish you all the best in your
               future endeavors.
             </Text>
+            <Text className="text-base">Sincerely,</Text>
             <Text className="text-base">
-              Sincerely,
-            </Text>
-            <Text className="text-base">
-            {senderName}Rebecca
+              {senderName}Rebecca
               <br />
               {position}CEO
               <br />

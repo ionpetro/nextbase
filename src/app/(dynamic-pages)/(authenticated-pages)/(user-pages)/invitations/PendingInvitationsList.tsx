@@ -22,9 +22,7 @@ const PendingInvitationsTable = ({
     id: string;
     inviterUserFullName: string;
     organizationTitle: string;
-    status: string;
-    acceptURL: string;
-    declineURL: string;
+    status: Enum<'organization_join_invitation_link_status'>;
     role: Enum<'organization_member_role'>;
   }>;
 }) => {

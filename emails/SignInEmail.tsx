@@ -20,8 +20,6 @@ export default function SignInEmail(props: SignInEmailProps) {
         <Column>
           <Button
             href={props.signInUrl}
-            pX={20}
-            pY={12}
             style={{ background: '#00f', color: '#fff', borderRadius: '6px' }}
           >
             Sign In to Your Account

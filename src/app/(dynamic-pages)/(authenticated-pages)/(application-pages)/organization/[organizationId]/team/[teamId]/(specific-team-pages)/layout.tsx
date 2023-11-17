@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { Anchor } from '@/components/Anchor';
 import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
 import { ApplicationLayoutShell } from '@/components/ApplicationLayoutShell';
-import { TeamSidebar } from '@/app/(dynamic-pages)/(authenticated-pages)/_sidebar/TeamSidebar';
+import { TeamSidebar } from '@/app/(dynamic-pages)/(authenticated-pages)/(application-pages)/_sidebar/TeamSidebar';
 import { InternalNavbar } from '@/components/ui/NavigationMenu/InternalNavbar';
 
 const paramsSchema = z.object({

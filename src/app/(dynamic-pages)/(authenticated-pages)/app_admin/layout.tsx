@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 import { AppAdminNavigation } from './AppAdminNavigation';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import { Suspense } from 'react';
-import { ApplicationAdminSidebar } from '../_sidebar/ApplicationAdminSidebar';
+import { ApplicationAdminSidebar } from '../(application-pages)/_sidebar/ApplicationAdminSidebar';
 import { getIsAppAdmin } from '@/data/user/user';
 import { InternalNavbar } from '@/components/ui/NavigationMenu/InternalNavbar';
 import { ApplicationLayoutShell } from '@/components/ApplicationLayoutShell';

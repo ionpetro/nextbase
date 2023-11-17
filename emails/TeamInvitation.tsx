@@ -37,8 +37,6 @@ export default function TeamInvitationEmail(props: TeamInvitationEmailProps) {
       <Section>
         <Button
           href={props.viewInvitationUrl}
-          pX={20}
-          pY={12}
           style={{ background: '#00f', color: '#fff', borderRadius: '6px' }}
         >
           View Invitation

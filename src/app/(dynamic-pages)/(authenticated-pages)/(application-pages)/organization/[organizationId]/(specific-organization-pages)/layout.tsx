@@ -2,7 +2,7 @@ import { ReactNode, Suspense } from 'react';
 import { z } from 'zod';
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 import { ApplicationLayoutShell } from '@/components/ApplicationLayoutShell/ApplicationLayoutShell';
-import { OrganizationSidebar } from '../../../../_sidebar/OrganizationSidebar';
+import { OrganizationSidebar } from '../../../_sidebar/OrganizationSidebar';
 import { getOrganizationTitle } from '@/data/user/organizations';
 import { InternalNavbar } from '@/components/ui/NavigationMenu/InternalNavbar';
 import { Anchor } from '@/components/Anchor';

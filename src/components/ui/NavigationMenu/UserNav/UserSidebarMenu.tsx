@@ -4,9 +4,9 @@ import SecurityIcon from 'lucide-react/dist/esm/icons/lock';
 import LogoutIcon from 'lucide-react/dist/esm/icons/log-out';
 import MailIcon from 'lucide-react/dist/esm/icons/mail';
 import { cn } from '@/utils/cn';
-import { FeatureViewModal } from '../FeatureViewModal';
 import Image from 'next/image';
 import { SelectSeparator } from '@radix-ui/react-select';
+import { FeatureViewModal } from './FeatureViewModal';
 
 export function UserSidebarMenu({
   userEmail,

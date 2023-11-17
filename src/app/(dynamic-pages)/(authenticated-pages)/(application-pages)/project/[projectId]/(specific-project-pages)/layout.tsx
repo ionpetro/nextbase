@@ -1,7 +1,7 @@
 import { ReactNode, Suspense } from 'react';
 import { z } from 'zod';
 import { ApplicationLayoutShell } from '@/components/ApplicationLayoutShell';
-import { ProjectSidebar } from '../../../../_sidebar/ProjectSidebar';
+import { ProjectSidebar } from '../../../_sidebar/ProjectSidebar';
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 import { ApprovalControls } from './ApprovalControls';
 import { getProjectTitleById } from '@/data/user/projects';

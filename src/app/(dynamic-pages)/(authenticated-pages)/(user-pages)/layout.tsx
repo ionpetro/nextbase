@@ -4,7 +4,7 @@ import { Anchor } from '@/components/Anchor';
 import { Badge } from '@/components/ui/Badge';
 import { unstable_noStore } from 'next/cache';
 import { ApplicationLayoutShell } from '@/components/ApplicationLayoutShell';
-import { UserSidebar } from '../_sidebar/UserSidebar';
+import { UserSidebar } from '../(application-pages)/_sidebar/UserSidebar';
 
 export default async function Layout({
   children,
