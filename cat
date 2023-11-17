@@ -1,9 +1,0 @@
-yarn run v1.22.18
-$ tsc --showConfig testconfig.ts
-{
-    "compilerOptions": {},
-    "files": [
-        "./testconfig.ts"
-    ]
-}
-Done in 0.27s.
