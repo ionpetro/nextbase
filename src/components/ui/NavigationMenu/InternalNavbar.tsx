@@ -10,7 +10,7 @@ export async function InternalNavbar({ children }: { children: ReactNode }) {
     <header className="sticky top-0 w-full z-10 dark:bg-slate-900/50 bg-white/90 backdrop-blur">
       <div
         className={cn(
-          'h-full text-sm font-medium flex mx-auto pr-12 border-b dark:border-gray-700/50 py-2.5 w-full mb-8 justify-between items-center',
+          'h-full text-sm font-medium flex mx-auto pl-6 pr-12 border-b dark:border-gray-700/50 py-2.5 w-full mb-8 justify-between items-center',
         )}
       >
         <Suspense>{children}</Suspense>

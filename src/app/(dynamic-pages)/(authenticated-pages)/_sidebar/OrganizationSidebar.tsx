@@ -11,7 +11,7 @@ export async function OrganizationSidebar({
 }) {
   const slimOrganizations = await fetchSlimOrganizations();
   return (
-    <div className="h-full  w-[264px]">
+    <div className="h-full  w-[264px] border-r dark:border-gray-700/50 select-none">
       <div className="flex flex-col justify-between h-full">
         <OrganizationSwitcher
           currentOrganizationId={currentOrganizationId}

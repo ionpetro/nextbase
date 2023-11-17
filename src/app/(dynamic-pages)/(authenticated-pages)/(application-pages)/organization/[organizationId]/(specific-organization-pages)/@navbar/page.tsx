@@ -1,5 +1,6 @@
 // https://github.com/vercel/next.js/issues/58272
 import { Anchor } from '@/components/Anchor';
+import { Badge } from '@/components/ui/Badge';
 import { T } from '@/components/ui/Typography';
 import { getOrganizationTitle } from '@/data/user/organizations';
 import { Suspense } from 'react';
@@ -12,7 +13,14 @@ const paramsSchema = z.object({
 async function Title({ organizationId }: { organizationId: string }) {
   const title = await getOrganizationTitle(organizationId);
 
-  return <T.P>{title}</T.P>;
+  return (
+    <div className="flex items-center space-x-1">
+      <T.P>{title}</T.P>
+      <Badge variant="information" size="lg">
+        Organization
+      </Badge>
+    </div>
+  );
 }
 
 export default async function OrganizationNavbar({

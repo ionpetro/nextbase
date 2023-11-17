@@ -13,7 +13,7 @@ export async function TeamSidebar({ teamId }: { teamId: number }) {
   ]);
   const organizationId = team.organization_id;
   return (
-    <div className="h-full  w-[264px]">
+    <div className="h-full w-[264px] border-r dark:border-gray-700/50 select-none">
       <div className="flex flex-col justify-between h-full">
         <div className="flex flex-col ">
           <OrganizationSwitcher

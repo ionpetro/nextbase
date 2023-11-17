@@ -2,7 +2,7 @@ import { ReactNode, Suspense } from 'react';
 import { z } from 'zod';
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 import { ApplicationLayoutShell } from '@/components/ApplicationLayoutShell/ApplicationLayoutShell';
-import { OrganizationSidebar } from '../../../_sidebar/OrganizationSidebar';
+import { OrganizationSidebar } from '../../../../_sidebar/OrganizationSidebar';
 import { getOrganizationTitle } from '@/data/user/organizations';
 import { InternalNavbar } from '@/components/ui/NavigationMenu/InternalNavbar';
 import { Anchor } from '@/components/Anchor';
@@ -34,8 +34,7 @@ export default async function Layout({
       <div>
         <InternalNavbar>
           <div className="flex w-full justify-between items-center">
-            {navbar}
-
+            <Suspense>{navbar}</Suspense>
             <div className="flex items-center space-x-2">
               <Suspense>
                 <SimpleDialog
@@ -61,7 +60,7 @@ export default async function Layout({
           </div>
         </InternalNavbar>
         <div className="relative flex-1 h-auto mt-8 w-full overflow-auto">
-          <div className="px-12 space-y-6 pb-10">{children}</div>
+          <div className="px-6 pr-12 space-y-6 pb-10">{children}</div>
         </div>
       </div>
     </ApplicationLayoutShell>

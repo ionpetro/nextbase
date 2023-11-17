@@ -51,6 +51,11 @@ export default async function OrganizationPage({
           <OrganizationPageHeading organizationId={organizationId} />
         </Suspense>
       </div>
+      <div>
+        <Suspense>
+          <OrganizationGraphs />
+        </Suspense>
+      </div>
       <div className="space-y-4 max-w-4xl">
         <CreateProjectDialog organizationId={organizationId} teamId={null} />
         <div className="space-y-4">
@@ -61,11 +66,6 @@ export default async function OrganizationPage({
             <ProjectsTable projects={projects} />
           </Suspense>
         </div>
-      </div>
-      <div>
-        <Suspense>
-          <OrganizationGraphs />
-        </Suspense>
       </div>
     </div>
   );

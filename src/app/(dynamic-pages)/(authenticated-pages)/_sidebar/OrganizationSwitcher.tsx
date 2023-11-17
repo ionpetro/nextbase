@@ -1,7 +1,6 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/utils/cn';
-import { toast } from 'react-hot-toast';
 import { CreateOrganizationDialog } from '@/components/presentational/tailwind/CreateOrganizationDialog';
 import {
   Command,
