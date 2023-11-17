@@ -1,5 +1,5 @@
 'use client';
-import { useToastMutation } from '@/hooks/useSonnerMutation';
+import { useToastMutation } from '@/hooks/useToastMutation';
 import { Switch } from '@/components/ui/Switch';
 import { Label } from '@/components/ui/Label';
 import { adminUpdateInternalFeedbackVisibility } from '@/data/admin/internal-feedback';

@@ -13,7 +13,7 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
 import LayersIcon from 'lucide-react/dist/esm/icons/layers';
-import { useToastMutation } from '@/hooks/useSonnerMutation';
+import { useToastMutation } from '@/hooks/useToastMutation';
 import { createProjectAction } from '@/data/user/projects';
 import { useRouter } from 'next/navigation';
 

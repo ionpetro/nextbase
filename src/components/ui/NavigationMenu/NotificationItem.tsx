@@ -1,9 +1,8 @@
 import { Anchor } from '@/components/Anchor';
-import { supabaseUserClientComponentClient } from '@/supabase-clients/user/supabaseUserClientComponentClient';
 import { cn } from '@/utils/cn';
-import { readNotification } from '@/utils/supabase/notifications';
 
 import { T } from '../Typography';
+import { readNotification } from './fetchClientNotifications';
 
 type NotificationItemProps = {
   title: string;
@@ -70,7 +69,7 @@ export function NotificationItem({
     return (
       <Anchor
         onClick={() => {
-          readNotification(supabaseUserClientComponentClient, notificationId);
+          readNotification(notificationId);
         }}
         href={href}
         className="w-full flex flex-col items-center"

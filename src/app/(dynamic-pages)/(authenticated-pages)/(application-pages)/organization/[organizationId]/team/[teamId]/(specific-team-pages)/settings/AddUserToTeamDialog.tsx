@@ -21,7 +21,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { OrganizationUsersSelect } from './OrganizationUsersSelect';
 import { Table } from '@/types';
 import { Label } from '@/components/ui/Label';
-import { useToastMutation } from '@/hooks/useSonnerMutation';
+import { useToastMutation } from '@/hooks/useToastMutation';
 import { addUserToTeamAction } from '@/data/user/teams';
 
 const addUserSchema = z.object({

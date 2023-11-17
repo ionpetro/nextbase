@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/Dialog';
 import { useState } from 'react';
 import SendLinkIcon from 'lucide-react/dist/esm/icons/send';
-import { useToastMutation } from '@/hooks/useSonnerMutation';
+import { useToastMutation } from '@/hooks/useToastMutation';
 import { sendLoginLinkAction } from '@/data/admin/user';
 
 export const ConfirmSendLoginLinkDialog = ({

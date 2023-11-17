@@ -10,7 +10,7 @@ import {
   rejectProjectAction,
   submitProjectForApprovalAction,
 } from '@/data/user/projects';
-import { useToastMutation } from '@/hooks/useSonnerMutation';
+import { useToastMutation } from '@/hooks/useToastMutation';
 import { Enum } from '@/types';
 
 export function ApprovalControlActions({

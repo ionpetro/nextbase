@@ -12,7 +12,7 @@ export async function ProjectSidebar({ projectId }: { projectId: string }) {
   const organizationId = project.organization_id;
 
   return (
-    <div className="flex flex-col space-y-2">
+    <div className="flex flex-col space-y-2 h-full w-[264px]">
       <OrganizationSwitcher
         currentOrganizationId={organizationId}
         slimOrganizations={slimOrganizations}

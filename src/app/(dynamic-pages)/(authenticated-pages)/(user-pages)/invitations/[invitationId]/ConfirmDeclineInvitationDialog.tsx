@@ -10,7 +10,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/Dialog';
 import { declineInvitationAction } from '@/data/user/invitation';
-import { useToastMutation } from '@/hooks/useSonnerMutation';
+import { useToastMutation } from '@/hooks/useToastMutation';
 import X from 'lucide-react/dist/esm/icons/x';
 import { useState } from 'react';
 

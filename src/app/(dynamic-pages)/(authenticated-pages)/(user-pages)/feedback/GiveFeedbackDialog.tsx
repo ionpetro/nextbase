@@ -23,7 +23,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Enum } from '@/types';
 import { useState } from 'react';
 import FeedbackIcon from 'lucide-react/dist/esm/icons/message-square';
-import { useToastMutation } from '@/hooks/useSonnerMutation';
+import { useToastMutation } from '@/hooks/useToastMutation';
 import { createInternalFeedback } from '@/data/user/internalFeedback';
 
 type FeedbackType = Enum<'internal_feedback_thread_type'>;

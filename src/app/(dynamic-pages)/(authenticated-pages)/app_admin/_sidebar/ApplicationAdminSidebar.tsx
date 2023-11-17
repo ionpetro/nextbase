@@ -6,9 +6,15 @@ import UsersIcon from 'lucide-react/dist/esm/icons/users';
 import FeedbackIcon from 'lucide-react/dist/esm/icons/help-circle';
 import ActivityLogIcon from 'lucide-react/dist/esm/icons/book';
 import RoadMapIcon from 'lucide-react/dist/esm/icons/map';
+import HomeIcon from 'lucide-react/dist/esm/icons/home';
 import { Anchor } from '@/components/Anchor';
 
 const links = [
+  {
+    label: 'Home',
+    href: `/dashboard`,
+    icon: <HomeIcon />,
+  },
   {
     label: 'Admin Dashboard',
     href: `/app_admin`,

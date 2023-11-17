@@ -2,7 +2,7 @@
 import { Button } from '@/components/presentational/tailwind/Button';
 import { T } from '@/components/ui/Typography';
 import { updateOrganizationTitle } from '@/data/user/organizations';
-import { useToastMutation } from '@/hooks/useSonnerMutation';
+import { useToastMutation } from '@/hooks/useToastMutation';
 import { classNames } from '@/utils/classNames';
 import { useState, useTransition } from 'react';
 

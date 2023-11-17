@@ -3,7 +3,7 @@ import { RenderProviders } from '@/components/presentational/tailwind/Auth/Rende
 import { Email } from '@/components/presentational/tailwind/Auth/Email';
 import { EmailAndPassword } from '@/components/presentational/tailwind/Auth/EmailAndPassword';
 import { useState } from 'react';
-import { useToastMutation } from '@/hooks/useSonnerMutation';
+import { useToastMutation } from '@/hooks/useToastMutation';
 import {
   signInWithMagicLink,
   signInWithProvider,

@@ -21,7 +21,7 @@ import ChevronUpDown from 'lucide-react/dist/esm/icons/chevrons-up-down';
 import CheckIcon from 'lucide-react/dist/esm/icons/check';
 import UsersIcon from 'lucide-react/dist/esm/icons/users';
 import { Button } from '@/components/ui/Button';
-import { useToastMutation } from '@/hooks/useSonnerMutation';
+import { useToastMutation } from '@/hooks/useToastMutation';
 import { createOrganization } from '@/data/user/organizations';
 
 export function OrganizationSwitcher({

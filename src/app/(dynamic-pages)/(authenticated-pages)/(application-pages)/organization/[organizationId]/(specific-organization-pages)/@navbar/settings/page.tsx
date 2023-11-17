@@ -21,6 +21,7 @@ export default function OrganizationSettingsNavbar({
           <span className="space-x-2 flex items-center">
             <ArrowLeftIcon />
             <span>Back to Organization</span>
+            <span>Settings</span>
           </span>
         </Anchor>
       </T.P>

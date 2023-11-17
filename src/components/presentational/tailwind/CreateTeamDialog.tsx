@@ -14,7 +14,7 @@ import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
 import UsersIcon from 'lucide-react/dist/esm/icons/users';
 import { PlusIcon } from '@radix-ui/react-icons';
-import { useToastMutation } from '@/hooks/useSonnerMutation';
+import { useToastMutation } from '@/hooks/useToastMutation';
 import { createTeamAction } from '@/data/user/teams';
 import { useRouter } from 'next/navigation';
 

@@ -6,7 +6,7 @@ import {
   getUnseenNotificationIds,
   readAllNotifications,
   seeNotification,
-} from '@/utils/supabase/notifications';
+} from './fetchClientNotifications';
 import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query';
 import { useCallback, useEffect } from 'react';
 import {
@@ -24,17 +24,14 @@ import { parseNotification } from '@/utils/parseNotification';
 import moment from 'moment';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
-import { Button } from '../Button';
+import { useToastMutation } from '@/hooks/useToastMutation';
 
 const NOTIFICATIONS_PAGE_SIZE = 10;
 const useUnseenNotificationIds = (userId: string) => {
   const { data, refetch } = useQuery(
     ['unseen-notification-ids', userId],
     async () => {
-      return getUnseenNotificationIds(
-        supabaseUserClientComponentClient,
-        userId,
-      );
+      return getUnseenNotificationIds(userId);
     },
     {
       initialData: [],
@@ -84,7 +81,6 @@ export const useNotifications = (userId: string) => {
       ['paginatedNotifications', userId],
       async ({ pageParam }) => {
         return getPaginatedNotifications(
-          supabaseUserClientComponentClient,
           userId,
           pageParam ?? 0,
           NOTIFICATIONS_PAGE_SIZE,
@@ -150,9 +146,7 @@ function Notification({
       }
       onClick={
         notificationPayload.actionType === 'button'
-          ? () => {
-            handleNotificationClick();
-          }
+          ? handleNotificationClick
           : undefined
       }
       image={notificationPayload.image}
@@ -161,7 +155,7 @@ function Notification({
       notificationId={notification.id}
       onHover={() => {
         if (!isSeen) {
-          seeNotification(supabaseUserClientComponentClient, notification.id);
+          seeNotification(notification.id);
           router.refresh();
         }
       }}
@@ -173,7 +167,7 @@ export const useReadAllNotifications = (userId: string) => {
   const router = useRouter();
   return useMutation(
     async () => {
-      return readAllNotifications(supabaseUserClientComponentClient, userId);
+      return readAllNotifications(userId);
     },
     {
       onSuccess: () => {
@@ -194,7 +188,16 @@ export const Notifications = ({ userId }: { userId: string }) => {
     isFetchingNextPage,
     isLoading,
   } = useNotifications(userId);
-  const { mutate: readAllNotifications } = useReadAllNotifications(userId);
+  const { mutate } = useToastMutation(
+    async () => {
+      return readAllNotifications(userId);
+    },
+    {
+      loadingMessage: 'Marking all notifications as read...',
+      successMessage: 'All notifications marked as read',
+      errorMessage: 'Failed to mark all notifications as read',
+    },
+  );
   return (
     <Popover>
       <PopoverTrigger className="focus:ring-none">
@@ -219,7 +222,7 @@ export const Notifications = ({ userId }: { userId: string }) => {
                     <CheckIcon className="h-5 w-5 text-muted-foreground dark:group-hover:text-gray-400" />{' '}
                     <span
                       onClick={() => {
-                        readAllNotifications();
+                        mutate({});
                       }}
                       className="underline underline-offset-4 text-muted-foreground dark:group-hover:text-gray-400 "
                     >

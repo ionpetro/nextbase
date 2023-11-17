@@ -2,7 +2,7 @@
 'use client';
 import { useState } from 'react';
 import { Enum } from '@/types';
-import { useToastMutation } from '@/hooks/useSonnerMutation';
+import { useToastMutation } from '@/hooks/useToastMutation';
 import { UpdatePriorityDialog } from '@/components/Feedback/UpdatePriorityDialog';
 import { adminUpdateInternalFeedbackPriority } from '@/data/admin/internal-feedback'; // Assuming you have this function
 

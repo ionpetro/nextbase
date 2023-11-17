@@ -14,7 +14,7 @@ import { Label } from '@/components/ui/Label';
 import Plus from 'lucide-react/dist/esm/icons/plus';
 import { useState } from 'react';
 import { User } from '@supabase/supabase-js';
-import { useToastMutation } from '@/hooks/useSonnerMutation';
+import { useToastMutation } from '@/hooks/useToastMutation';
 import { createUserAction } from '@/data/admin/user';
 import { useInput } from 'rooks';
 import { z } from 'zod';

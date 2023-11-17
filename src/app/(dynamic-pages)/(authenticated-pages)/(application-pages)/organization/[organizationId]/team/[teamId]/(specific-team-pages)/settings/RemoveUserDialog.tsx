@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/Dialog';
 import { useState } from 'react';
 import TrashIcon from 'lucide-react/dist/esm/icons/trash';
-import { useToastMutation } from '@/hooks/useSonnerMutation';
+import { useToastMutation } from '@/hooks/useToastMutation';
 import { removeUserFromTeam } from '@/data/user/teams';
 import { useRouter } from 'next/navigation';
 

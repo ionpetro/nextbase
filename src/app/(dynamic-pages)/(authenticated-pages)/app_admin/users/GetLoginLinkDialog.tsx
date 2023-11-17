@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/Dialog';
 import { useState } from 'react';
 import GetLinkIcon from 'lucide-react/dist/esm/icons/link';
-import { useToastMutation } from '@/hooks/useSonnerMutation';
+import { useToastMutation } from '@/hooks/useToastMutation';
 import { appAdminGetUserImpersonationUrl } from '@/data/admin/user';
 
 export const GetLoginLinkDialog = ({ userId }: { userId: string }) => {

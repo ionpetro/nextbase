@@ -20,7 +20,7 @@ export default function OrganizationSettingsNavbar({
         <Anchor href={`/organization/${organizationId}`}>
           <span className="space-x-2 flex items-center">
             <ArrowLeftIcon />
-            <span>Back to Organization</span>
+            <span>Billing</span>
           </span>
         </Anchor>
       </T.P>

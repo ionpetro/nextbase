@@ -6,7 +6,7 @@ import {
   createCheckoutSessionAction,
   createCustomerPortalLinkAction,
 } from '@/data/user/organizations';
-import { useToastMutation } from '@/hooks/useSonnerMutation';
+import { useToastMutation } from '@/hooks/useToastMutation';
 import { getStripe } from '@/utils/stripe-client';
 import ExternalLinkIcon from 'lucide-react/dist/esm/icons/external-link';
 

@@ -2,7 +2,7 @@
 import { Email } from '@/components/presentational/tailwind/Auth/Email';
 import { T } from '@/components/ui/Typography';
 import { resetPassword } from '@/data/auth/auth';
-import { useToastMutation } from '@/hooks/useSonnerMutation';
+import { useToastMutation } from '@/hooks/useToastMutation';
 import { useState } from 'react';
 
 export function ForgotPassword() {

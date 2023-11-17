@@ -35,8 +35,6 @@ async function ChangelogList() {
               'dark:prose-hr:border-slate-800',
             )}
           >
-            {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-            {/* @ts-expect-error */}
             <MDXRemote source={item.changes} components={customMDXComponents} />
           </div>
         </ChangeLogListCard>

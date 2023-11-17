@@ -2,9 +2,10 @@ import { UserNavPopover } from '@/components/presentational/tailwind/Sidebars/Us
 import { ThemeToggle } from '@/components/presentational/tailwind/ThemeToggle';
 import { Notifications } from '@/components/ui/NavigationMenu/Notifications';
 import { getUserProfile } from '@/data/user/user';
-import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
 import { getUserAvatarUrl } from '@/utils/helpers';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
+import { Suspense } from 'react';
+import NotificationIcon from 'lucide-react/dist/esm/icons/bell';
 
 export async function UserNav() {
   const user = await serverGetLoggedInUser();
@@ -19,6 +20,7 @@ export async function UserNav() {
     <>
       <ThemeToggle />
       <Notifications userId={user.id} />
+
       <UserNavPopover
         avatarUrl={getUserAvatarUrl({
           email,

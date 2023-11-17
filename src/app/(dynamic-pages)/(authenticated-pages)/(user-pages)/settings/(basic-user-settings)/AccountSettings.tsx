@@ -4,7 +4,7 @@ import {
   updateUserProfileNameAndAvatar,
   uploadPublicUserAvatar,
 } from '@/data/user/user';
-import { useToastMutation } from '@/hooks/useSonnerMutation';
+import { useToastMutation } from '@/hooks/useToastMutation';
 import { Table } from '@/types';
 import { useState } from 'react';
 

@@ -3,7 +3,7 @@ import { Label } from '@/components/ui/Label';
 import { classNames } from '@/utils/classNames';
 import { Button } from '@/components/ui/Button';
 import { useInput } from 'rooks';
-import { useToastMutation } from '@/hooks/useSonnerMutation';
+import { useToastMutation } from '@/hooks/useToastMutation';
 import { updatePasswordAction } from '@/data/user/security';
 
 export const UpdatePassword = () => {

@@ -10,6 +10,7 @@ import { CreateProjectDialog } from '@/components/presentational/tailwind/Create
 import { ProjectsTable } from '@/components/presentational/tailwind/Projects/ProjectsTable';
 import { T } from '@/components/ui/Typography';
 import { getProjects } from '@/data/user/projects';
+import { unstable_noStore } from 'next/cache';
 
 const paramsSchema = z.object({
   organizationId: z.coerce.string(),
@@ -23,7 +24,11 @@ async function fetchDraftProjects(
   return data;
 }
 
-export default async function TeamPage({ params }: { params: unknown }) {
+export default async function OrganizationPage({
+  params,
+}: {
+  params: unknown;
+}) {
   const parsedParams = paramsSchema.parse(params);
   const { organizationId } = parsedParams;
   const projects = await fetchDraftProjects(

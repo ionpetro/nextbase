@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { Enum } from '@/types';
-import { useToastMutation } from '@/hooks/useSonnerMutation';
+import { useToastMutation } from '@/hooks/useToastMutation';
 import { adminUpdateInternalFeedbackType } from '@/data/admin/internal-feedback';
 import { UpdateTypeDialog } from '@/components/Feedback/UpdateTypeDialog';
 type Props = {

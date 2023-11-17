@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/Button';
 import { createChangelog } from '@/data/admin/internal-changelog';
-import { useToastMutation } from '@/hooks/useSonnerMutation';
+import { useToastMutation } from '@/hooks/useToastMutation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useRef } from 'react';

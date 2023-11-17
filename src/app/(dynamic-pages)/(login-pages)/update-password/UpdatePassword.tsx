@@ -1,7 +1,7 @@
 'use client';
 import { Password } from '@/components/presentational/tailwind/Auth/Password';
 import { updatePasswordAction } from '@/data/user/security';
-import { useToastMutation } from '@/hooks/useSonnerMutation';
+import { useToastMutation } from '@/hooks/useToastMutation';
 import { useRouter } from 'next/navigation';
 
 export function UpdatePassword() {

@@ -5,6 +5,7 @@ import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import { Suspense } from 'react';
 import { ApplicationAdminSidebar } from './_sidebar/ApplicationAdminSidebar';
 import { getIsAppAdmin } from '@/data/user/user';
+import { InternalNavbar } from '@/components/ui/NavigationMenu/InternalNavbar';
 
 async function fetchData() {
   const user = await serverGetLoggedInUser();
@@ -34,10 +35,11 @@ export default async function Layout({
         <Suspense fallback={<p>Loading ...</p>}>
           <ApplicationAdminSidebar />
         </Suspense>
-        <div className="flex-1 pb-10 relative h-auto max-h-screen w-full overflow-auto">
-          <div className="px-12 space-y-6">
-            <AppAdminNavigation />
-            {children}
+        <div>
+          <InternalNavbar>Admin panel</InternalNavbar>
+          <AppAdminNavigation />
+          <div className="relative flex-1 h-auto mt-8 w-full overflow-auto">
+            <div className="space-y-6 pb-10">{children}</div>
           </div>
         </div>
       </div>

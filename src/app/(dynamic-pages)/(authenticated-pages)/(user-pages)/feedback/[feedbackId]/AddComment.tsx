@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/Button';
 import { Textarea } from '@/components/ui/Textarea';
 import { T } from '@/components/ui/Typography';
 import { addCommentToInternalFeedbackThread } from '@/data/user/internalFeedback';
-import { useToastMutation } from '@/hooks/useSonnerMutation';
+import { useToastMutation } from '@/hooks/useToastMutation';
 import { useState } from 'react';
 
 export function AddComment({ feedbackId }: { feedbackId: string }) {

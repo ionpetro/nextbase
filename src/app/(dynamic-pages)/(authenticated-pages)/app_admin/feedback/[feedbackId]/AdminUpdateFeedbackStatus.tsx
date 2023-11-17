@@ -2,7 +2,7 @@
 'use client';
 import { useState } from 'react';
 import { Enum } from '@/types';
-import { useToastMutation } from '@/hooks/useSonnerMutation';
+import { useToastMutation } from '@/hooks/useToastMutation';
 import { UpdateStatusDialog } from '@/components/Feedback/UpdateStatusDialog';
 import { adminUpdateInternalFeedbackStatus } from '@/data/admin/internal-feedback';
 

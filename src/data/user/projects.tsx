@@ -7,6 +7,7 @@ import { normalizeComment } from '@/utils/comments';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import { revalidatePath } from 'next/cache';
 import { Suspense } from 'react';
+import { customRevalidate } from '../anon/revalidate';
 
 export async function getSlimProjectById(projectId: string) {
   const supabaseClient = createSupabaseUserServerComponentClient();

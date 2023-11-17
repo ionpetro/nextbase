@@ -1,7 +1,7 @@
 'use client';
 
 import { updateTeamRole } from '@/data/user/teams';
-import { useToastMutation } from '@/hooks/useSonnerMutation';
+import { useToastMutation } from '@/hooks/useToastMutation';
 import { Enum } from '@/types';
 import { ProjectTeamMemberRoleSelect } from './ProjectTeamMemberRoleSelect';
 

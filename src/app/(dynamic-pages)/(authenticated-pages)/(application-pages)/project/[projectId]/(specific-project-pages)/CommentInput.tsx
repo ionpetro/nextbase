@@ -4,7 +4,7 @@ import { Textarea } from '@/components/ui/Textarea';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { useToastMutation } from '@/hooks/useSonnerMutation';
+import { useToastMutation } from '@/hooks/useToastMutation';
 import { createProjectCommentAction } from '@/data/user/projects';
 import { SelectSeparator } from '@/components/ui/Select';
 import { useRouter } from 'next/navigation';
