@@ -82,7 +82,7 @@ const changelogList = [
 
 export function ChangelogListPreview() {
   return (
-    <div className="space-y-4  max-w-5xl ">
+    <div className="space-y-4  max-w-5xl [&_a]:pointer-events-none">
       <div className="space-y-6">
         {changelogList.map((item) => (
           <ChangeLogListCard

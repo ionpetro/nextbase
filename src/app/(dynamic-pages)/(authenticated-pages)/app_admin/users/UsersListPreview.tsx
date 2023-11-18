@@ -29,7 +29,10 @@ export const UsersListPreview = () => {
   }));
 
   return (
-    <div className="space-y-2 rounded-lg border" style={{ overflowX: 'auto' }}>
+    <div
+      className="space-y-2 rounded-lg border [&_a]:pointer-events-none"
+      style={{ overflowX: 'auto' }}
+    >
       <ShadcnTable>
         <TableHeader>
           <TableRow>

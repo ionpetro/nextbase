@@ -22,7 +22,7 @@ export function OrganizationListPreview() {
   }));
 
   return (
-    <div className="rounded-lg overflow-hidden border">
+    <div className="rounded-lg overflow-hidden border [&_a]:pointer-events-none">
       <ShadcnTable>
         <TableHeader>
           <TableRow>

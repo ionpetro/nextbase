@@ -12,13 +12,32 @@ import { format } from 'date-fns';
 import { Suspense } from 'react';
 import { Fallback } from '@/components/AppAdminViewUserDetails/Fallback';
 import { Enum } from '@/types';
+import { T } from '@/components/ui/Typography';
+import Image from 'next/image';
+
+const loremIpsumTexts = [
+  'Lorem ipsum dolor sit amet',
+  'Consectetur adipiscing elit',
+  'Sed do eiusmod tempor incididunt',
+  'Ut labore et dolore magna aliqua',
+  'Ut enim ad minim veniam',
+  'Quis nostrud exercitation ullamco ',
+  'Duis aute irure dolor in reprehenderit',
+  'Excepteur sint occaecat cupidatat non proident',
+  'Sunt in culpa qui officia deserunt mollit anim id est laborum',
+  'Lorem ipsum dolor sit amet',
+  'Consectetur adipiscing elit',
+];
 
 export function FeedbackListPreview() {
   // Generate fake data
   const feedbackList = Array.from({ length: 10 }, (_, i) => ({
     id: i,
     user_id: `User ${i + 1}`,
-    title: `Feedback ${i + 1}`,
+    title:
+      loremIpsumTexts[i].length > 30
+        ? loremIpsumTexts[i].slice(0, 30) + '...'
+        : loremIpsumTexts[i],
     type: 'bug',
     priority: 'high',
     created_at: new Date().toISOString(),
@@ -26,7 +45,7 @@ export function FeedbackListPreview() {
   }));
 
   return (
-    <div className="flex rounded-lg bg-clip-border border max-w-[1296px] overflow-hidden">
+    <div className="flex rounded-lg bg-clip-border border max-w-[1296px] overflow-hidden [&_a]:pointer-events-none">
       <ShadcnTable>
         <TableHeader>
           <TableRow>
@@ -43,7 +62,16 @@ export function FeedbackListPreview() {
             <TableRow key={feedback.id}>
               <TableCell>
                 <Suspense fallback={<Fallback />}>
-                  <div>{feedback.user_id}</div>
+                  <span className="flex space-x-2 items-center">
+                    <Image
+                      className="rounded-full border border-slate-500 h-6 w-6"
+                      alt={feedback.user_id}
+                      src={`https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp`}
+                      height={24}
+                      width={24}
+                    />
+                    <T.P>{feedback.user_id}</T.P>
+                  </span>
                 </Suspense>
               </TableCell>
               <TableCell>

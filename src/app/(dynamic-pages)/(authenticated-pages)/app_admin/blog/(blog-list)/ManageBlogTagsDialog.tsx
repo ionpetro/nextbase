@@ -10,13 +10,13 @@ import {
 } from '@/components/ui/Dialog';
 import { Button } from '@/components/ui/Button';
 import { Table, TableInsertPayload, TableUpdatePayload } from '@/types';
-import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import Trash from 'lucide-react/dist/esm/icons/trash';
 import { AddBlogTagDialog } from './AddBlogTagDialog';
 import { EditBlogTagDialog } from './EditBlogTagDialog';
 import TagsIcon from 'lucide-react/dist/esm/icons/tag';
+import { useToastMutation } from '@/hooks/useToastMutation';
 
 export const ManageBlogTagsDialog = ({
   blogTags,
@@ -27,30 +27,29 @@ export const ManageBlogTagsDialog = ({
   blogTags: Array<Table<'internal_blog_post_tags'>>;
   updateBlogTag: (
     id: number,
-    data: Partial<TableUpdatePayload<'internal_blog_post_tags'>>
+    data: Partial<TableUpdatePayload<'internal_blog_post_tags'>>,
   ) => Promise<void>;
   deleteBlogTag: (id: number) => Promise<void>;
   createBlogTag: (
-    data: Partial<TableInsertPayload<'internal_blog_post_tags'>>
+    data: Partial<TableInsertPayload<'internal_blog_post_tags'>>,
   ) => Promise<void>;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
   const { mutate: deleteBlogTagMutation, isLoading: isDeletingBlogTag } =
-    useMutation<void, unknown, number>(
+    useToastMutation<void, number, number>(
       async (slug) => {
         return deleteBlogTag(slug);
       },
       {
+        loadingMessage: 'Deleting blog tag...',
+        successMessage: 'Blog tag deleted!',
+        errorMessage: 'Failed to delete blog tag',
         onSuccess: () => {
-          toast.success('Successfully deleted blog tag');
           router.refresh();
         },
-        onError: () => {
-          toast.error('Failed to delete blog tag');
-        },
-      }
+      },
     );
 
   return (

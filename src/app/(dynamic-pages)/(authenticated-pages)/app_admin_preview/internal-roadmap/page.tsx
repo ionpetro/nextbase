@@ -1,8 +1,8 @@
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
-import { AppAdminRoadmap } from './AppAdminRoadmap';
 import { Suspense } from 'react';
+import { AppAdminRoadmapPreview } from '../../app_admin/internal-roadmap/AppAdminRoadmapPreview';
 
-export default async function Page() {
+export default async function AdminRoadmapPreview() {
   return (
     <div className=" space-y-10 max-w-[1296px]">
       <PageHeading
@@ -11,9 +11,7 @@ export default async function Page() {
         subTitle="This is where you see where the application is going"
       />
 
-      <Suspense fallback={<div>Loading...</div>}>
-        <AppAdminRoadmap />
-      </Suspense>
+      <AppAdminRoadmapPreview />
     </div>
   );
 }

@@ -114,7 +114,7 @@ const blogs = [
 
 export function BlogListPreview() {
   return (
-    <div className="space-y-6 w-full ">
+    <div className="space-y-6 w-full [&_a]:pointer-events-none">
       {blogs.map((blog) => (
         <div key={blog.id}>
           <div className="shadow-md flex justify-between items-start bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-800 rounded-xl p-6">

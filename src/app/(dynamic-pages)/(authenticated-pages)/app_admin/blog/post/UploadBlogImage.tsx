@@ -26,7 +26,7 @@ const UploadBlogImage = ({
         formData,
         {
           withCredentials: true,
-        }
+        },
       );
 
       return data as unknown as {
@@ -51,17 +51,20 @@ const UploadBlogImage = ({
         });
         toastRef.current = undefined;
       },
-    }
+    },
   );
 
-  const onDrop = React.useCallback((acceptedFiles) => {
-    if (acceptedFiles.length === 0) return;
-    const file = acceptedFiles[0];
-    // check if file is of type File and is an image
-    if (!(file instanceof File) || !file.type.startsWith('image/')) return;
+  const onDrop = React.useCallback(
+    (acceptedFiles) => {
+      if (acceptedFiles.length === 0) return;
+      const file = acceptedFiles[0];
+      // check if file is of type File and is an image
+      if (!(file instanceof File) || !file.type.startsWith('image/')) return;
 
-    uploadImageMutation.mutate(file);
-  }, []);
+      uploadImageMutation.mutate(file);
+    },
+    [uploadImageMutation],
+  );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,

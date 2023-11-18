@@ -7,7 +7,7 @@ import {
   readAllNotifications,
   seeNotification,
 } from './fetchClientNotifications';
-import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { useCallback, useEffect } from 'react';
 import {
   Popover,
@@ -165,14 +165,16 @@ function Notification({
 
 export const useReadAllNotifications = (userId: string) => {
   const router = useRouter();
-  return useMutation(
+  return useToastMutation(
     async () => {
       return readAllNotifications(userId);
     },
     {
+      loadingMessage: 'Marking all notifications as read...',
+      successMessage: 'All notifications marked as read',
+      errorMessage: 'Failed to mark all notifications as read',
       onSuccess: () => {
         router.refresh();
-        toast.success('All notifications marked as read');
       },
     },
   );

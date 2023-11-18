@@ -1,5 +1,5 @@
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
-import { UsersListPreview } from './FakeUsersList';
+import { UsersListPreview } from '../../app_admin/users/UsersListPreview';
 import Pagination from '@/components/Pagination/Pagination';
 import { Search } from '@/components/Search';
 import { AppAdminCreateUserDialogPreview } from '../../app_admin/users/AppAdminCreateUserDialogPreview';
