@@ -1,7 +1,7 @@
 import { cn } from '@/utils/cn';
 import moment from 'moment';
-import ChangeLogListCard from '../ui/ChangeLog/ChangeLogListCard';
-import { customMDXComponents } from '../mdxComponents';
+import ChangeLogListCard from '@/components/ui/ChangeLog/ChangeLogListCard';
+import { customMDXComponents } from '@/components/mdxComponents';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { getChangelogList } from '@/data/admin/internal-changelog';
 

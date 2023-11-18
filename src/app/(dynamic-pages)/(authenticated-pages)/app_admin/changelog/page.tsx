@@ -2,7 +2,7 @@ import { Anchor } from '@/components/Anchor';
 import { Button } from '@/components/ui/Button';
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 import { Suspense } from 'react';
-import { AppAdminChangelogList } from '@/components/AppAdminChangelogList/AppAdminChangelogList';
+import { AppAdminChangelogList } from './AppAdminChangelogList';
 
 export default function Page() {
   return (
