@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/Table/ShadcnTable';
 import { Fallback } from '@/components/AppAdminViewUserDetails/Fallback';
 import { FeedbackDropdownFilters } from './FeedbackDropdownFilters';
+import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 
 const FeedbackListFallback: React.FC = () => {
   return (
@@ -68,7 +69,11 @@ export default async function FeedbackListPage({
   const totalPages = await getInternalFeedbackTotalPages(validatedSearchParams);
   const suspenseKey = JSON.stringify(validatedSearchParams);
   return (
-    <div className="space-y-2 max-w-[1296px]">
+    <div className="space-y-4 max-w-[1296px]">
+      <PageHeading
+        title="Feedback"
+        subTitle="View all feedback your users have submitted."
+      ></PageHeading>
       <div className="flex space-x-3 justify-between">
         <Search placeholder="Search Feedback... " />
         <FeedbackDropdownFilters />
