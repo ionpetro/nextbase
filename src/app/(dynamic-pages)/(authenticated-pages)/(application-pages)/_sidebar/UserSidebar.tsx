@@ -1,14 +1,52 @@
-import { Anchor } from '@/components/Anchor';
+import { SidebarTopComponent } from './SidebarTopComponent';
+import { SidebarLink } from './SidebarLink';
+import HomeIcon from 'lucide-react/dist/esm/icons/home';
+import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
+import SecurityIcon from 'lucide-react/dist/esm/icons/shield';
+import DeveloperIcon from 'lucide-react/dist/esm/icons/code';
+import InvitationsIcon from 'lucide-react/dist/esm/icons/mail';
+import FeedbackIcon from 'lucide-react/dist/esm/icons/file-question';
 
 export async function UserSidebar() {
   return (
-    <div className="h-full  w-[264px] flex flex-col space-y-2 border-r dark:border-gray-700/50 select-none">
-      <Anchor href="/dashboard">Dashboard</Anchor>
-      <Anchor href="/settings">Account Settings</Anchor>
-      <Anchor href="/settings/security">Security Settings</Anchor>
-      <Anchor href="/settings/developer">Developer Settings</Anchor>
-      <Anchor href="/invitations">Invitations</Anchor>
-      <Anchor href="/feedback">My Feedback</Anchor>
+    <div className="h-full w-[264px] flex flex-col space-y-2 border-r dark:border-gray-700/50 select-none">
+      <div className="flex flex-col px-3 py-4 justify-start h-full">
+        <div className="flex justify-between items-center">
+          <SidebarTopComponent />
+        </div>
+        <div className="space-y-1">
+          <SidebarLink
+            label="Dashboard"
+            href="/dashboard"
+            icon={<HomeIcon className="h-5 w-5" />}
+          />
+          <SidebarLink
+            label="Account Settings"
+            href="/settings"
+            icon={<SettingsIcon className="h-5 w-5" />}
+          />
+          <SidebarLink
+            label="Security Settings"
+            href="/settings/security"
+            icon={<SecurityIcon className="h-5 w-5" />}
+          />
+          <SidebarLink
+            label="Developer Settings"
+            href="/settings/developer"
+            icon={<DeveloperIcon className="h-5 w-5" />}
+          />
+          <SidebarLink
+            label="Invitations"
+            href="/invitations"
+            icon={<InvitationsIcon className="h-5 w-5" />}
+          />
+          <SidebarLink
+            label="My Feedback"
+            href="/feedback"
+            icon={<FeedbackIcon className="h-5 w-5" />}
+          />
+        </div>
+      </div>
     </div>
   );
 }

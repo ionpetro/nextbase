@@ -114,7 +114,7 @@ export function OrganizationGraphs() {
       <div className="h-2 mt-10">
         <T.H3 className="leading-none">Overview</T.H3>
       </div>
-      <div className="w-full grid grid-cols-3 grid-flow-row auto-rows-max mt-10 gap-10">
+      <div className="w-full grid grid-cols-3 grid-flow-row auto-rows-max mt-10 gap-3">
         <GraphContainer
           title="Monthly Churn Rate"
           subTitle="Monthly churn rate vs Organization Count"
