@@ -20,5 +20,5 @@ async function getDefaultOrganization(): Promise<string> {
 
 export default async function DashboardPage() {
   const firstOrganizationId = await getDefaultOrganization();
-  return redirect(`/organization/${firstOrganizationId}`, RedirectType.push);
+  return redirect(`/organization/${firstOrganizationId}`);
 }
