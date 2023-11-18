@@ -23,8 +23,6 @@ export default async function Page() {
     .select('*')
     .order('created_at', { ascending: false });
 
-  console.log(changelogItemsResponse.data?.map((t) => t.title));
-
   if (changelogItemsResponse.error) {
     throw changelogItemsResponse.error;
   }

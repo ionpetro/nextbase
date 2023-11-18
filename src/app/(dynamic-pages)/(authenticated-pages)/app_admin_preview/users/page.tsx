@@ -1,36 +1,22 @@
-import { Search } from '@/components/Search';
-import { appAdminUserFiltersSchema } from './schema';
-import { Suspense } from 'react';
-import { UserList } from './UsersList';
+import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
+import { UsersListPreview } from './FakeUsersList';
 import Pagination from '@/components/Pagination/Pagination';
-import { getUsersTotalPages } from '@/data/admin/user';
-import { AppAdminCreateUserDialog } from './AppAdminCreateUserDialog';
-import { unstable_noStore } from 'next/cache';
+import { Search } from '@/components/Search';
+import { AppAdminCreateUserDialogPreview } from '../../app_admin/users/AppAdminCreateUserDialogPreview';
 
-export const runtime = 'edge';
-export const metadata = {
-  title: 'User List | Admin Panel | Nextbase',
-};
-
-export default async function AdminUsersListPage({
-  searchParams,
-}: {
-  searchParams: unknown;
-}) {
-  unstable_noStore();
-  const validatedSearchParams = appAdminUserFiltersSchema.parse(searchParams);
-  const suspenseKey = JSON.stringify(validatedSearchParams);
-  const totalPages = await getUsersTotalPages(validatedSearchParams);
+export default function UsersPage() {
   return (
     <div className="space-y-4 max-w-[1296px]">
+      <PageHeading
+        title="Users"
+        subTitle="View all users in your app. Perform actions such as creating new users, sending users login links, debug bugs your users face by logging in as them and more!"
+      ></PageHeading>
       <div className="flex space-x-3  justify-between">
         <Search placeholder="Search Users... " />
-        <AppAdminCreateUserDialog />
+        <AppAdminCreateUserDialogPreview />
       </div>
-      <Suspense key={suspenseKey} fallback={<div>Loading...</div>}>
-        <UserList filters={validatedSearchParams} />
-      </Suspense>
-      <Pagination totalPages={totalPages} />
+      <UsersListPreview />
+      <Pagination totalPages={20} />
     </div>
   );
 }

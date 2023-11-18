@@ -1,46 +1,31 @@
-import { errors } from '@/utils/errors';
-import { redirect } from 'next/navigation';
-import { AppAdminNavigation } from './AppAdminNavigation';
-import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
-import { Suspense } from 'react';
-import { ApplicationAdminSidebar } from './_sidebar/ApplicationAdminSidebar';
-import { getIsAppAdmin } from '@/data/user/user';
 import { InternalNavbar } from '@/components/ui/NavigationMenu/InternalNavbar';
-
-async function fetchData() {
-  const user = await serverGetLoggedInUser();
-  const [isUserAppAdmin] = await Promise.all([getIsAppAdmin(user)]);
-
-  return { isUserAppAdmin };
-}
+import { ApplicationLayoutShell } from '@/components/ApplicationLayoutShell';
+import { cn } from '@/utils/cn';
+import { T } from '@/components/ui/Typography';
+import { ApplicationAdminPreviewSidebar } from '../(application-pages)/_sidebar/ApplicationAdminPreviewSidebar';
 
 export default async function Layout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  try {
-    return (
-      <div
-        className="h-screen w-full grid overflow-hidden"
-        style={{
-          gridTemplateColumns: 'auto 1fr',
-        }}
-      >
-        <Suspense fallback={<p>Loading ...</p>}>
-          <ApplicationAdminSidebar />
-        </Suspense>
-        <div>
-          <InternalNavbar>Admin panel</InternalNavbar>
-          <AppAdminNavigation />
-          <div className="relative flex-1 h-auto mt-8 w-full overflow-auto">
-            <div className="space-y-6 pb-10">{children}</div>
+  return (
+    <ApplicationLayoutShell sidebar={<ApplicationAdminPreviewSidebar />}>
+      <div className="h-full overflow-y-auto">
+        <InternalNavbar>Admin panel</InternalNavbar>
+        <div className="relative flex-1 h-auto mt-8 w-full">
+          <div className="pl-6 pr-12 space-y-6 pb-10">
+            <T.P
+              className={cn('text-muted-foreground text-purple-500 leading-6')}
+            >
+              All sections of this area are protected and only accessible by
+              Application Admins. This is a preview of the admin panel for demo
+              purposes.
+            </T.P>
+            {children}
           </div>
         </div>
       </div>
-    );
-  } catch (fetchDataError) {
-    errors.add(fetchDataError);
-    return <p>Error: An error occurred.</p>;
-  }
+    </ApplicationLayoutShell>
+  );
 }

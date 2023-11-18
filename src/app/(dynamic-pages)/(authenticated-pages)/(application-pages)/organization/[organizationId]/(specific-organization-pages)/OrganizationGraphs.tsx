@@ -125,7 +125,6 @@ export function OrganizationGraphs() {
             index="date"
             categories={['SemiAnalysis', 'The Pragmatic Engineer']}
             colors={['cyan', 'orange']}
-            valueFormatter={dataFormatter}
           />
         </GraphContainer>
 
@@ -139,7 +138,6 @@ export function OrganizationGraphs() {
             index="date"
             categories={['SemiAnalysis', 'The Pragmatic Engineer']}
             colors={['teal', 'blue']}
-            valueFormatter={dataFormatter}
             yAxisWidth={48}
           />
         </GraphContainer>
@@ -188,7 +186,6 @@ export function OrganizationGraphs() {
             index="date"
             categories={['SemiAnalysis', 'The Pragmatic Engineer']}
             colors={['cyan', 'orange']}
-            valueFormatter={dataFormatter}
           />
         </GraphContainer>
       </div>

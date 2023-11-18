@@ -6,6 +6,7 @@ import Pagination from '@/components/Pagination/Pagination';
 import { getUsersTotalPages } from '@/data/admin/user';
 import { AppAdminCreateUserDialog } from './AppAdminCreateUserDialog';
 import { unstable_noStore } from 'next/cache';
+import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 
 export const runtime = 'edge';
 export const metadata = {
@@ -23,6 +24,10 @@ export default async function AdminUsersListPage({
   const totalPages = await getUsersTotalPages(validatedSearchParams);
   return (
     <div className="space-y-4 max-w-[1296px]">
+      <PageHeading
+        title="Users"
+        subTitle="View all users in your app. Perform actions such as creating new users, sending users login links, debug bugs your users face by logging in as them and more!"
+      ></PageHeading>
       <div className="flex space-x-3  justify-between">
         <Search placeholder="Search Users... " />
         <AppAdminCreateUserDialog />

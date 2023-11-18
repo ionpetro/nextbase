@@ -17,58 +17,60 @@ const links = [
   },
   {
     label: 'Admin Dashboard',
-    href: `/app_admin`,
+    href: `/app_admin_preview`,
     icon: <FileLineChart />,
   },
   {
     label: 'Users',
-    href: `/app_admin/users`,
+    href: `/app_admin_preview/users`,
     icon: <UsersIcon />,
   },
   {
     label: 'Organizations',
-    href: `/app_admin/organizations`,
+    href: `/app_admin_preview/organizations`,
     icon: <BriefcaseIcon />,
   },
   {
     label: 'Application Settings',
-    href: `/app_admin/settings`,
+    href: `/app_admin_preview/settings`,
     icon: <SettingsIcon />,
   },
   {
     label: 'Blog',
-    href: `/app_admin/blog`,
+    href: `/app_admin_preview/blog`,
     icon: <PenToolIcon />,
   },
   {
     label: 'Feedback List',
-    href: `/app_admin/feedback`,
+    href: `/app_admin_preview/feedback`,
     icon: <FeedbackIcon />,
   },
 
   {
     label: 'Changelog List',
-    href: `/app_admin/changelog`,
+    href: `/app_admin_preview/changelog`,
     icon: <ActivityLogIcon />,
   },
   {
     label: 'Roadmap',
-    href: `/app_admin/internal-roadmap`,
+    href: `/app_admin_preview/internal-roadmap`,
     icon: <RoadMapIcon />,
   },
 ];
 
-export function ApplicationAdminSidebar() {
+export function ApplicationAdminPreviewSidebar() {
   return (
-    <div className="flex flex-col gap-1">
-      {links.map((link) => {
-        return (
-          <div key={link.href} className="flex flex-row items-center gap-2">
-            {link.icon}
-            <Anchor href={link.href}>{link.label}</Anchor>
-          </div>
-        );
-      })}
+    <div className="h-full w-[264px] border-r dark:border-gray-700/50 select-none">
+      <div className="h-full space-y-1">
+        {links.map((link) => {
+          return (
+            <div key={link.href} className="flex flex-row items-center gap-2">
+              {link.icon}
+              <Anchor href={link.href}>{link.label}</Anchor>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

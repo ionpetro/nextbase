@@ -44,19 +44,14 @@ export async function UserList({
               <TableCell> {user.full_name ?? '-'} </TableCell>
               <TableCell>{user.email}</TableCell>
               <TableCell>
-                {' '}
                 {user.is_app_admin ? (
                   <CheckIcon className="text-green-500 dark:text-green-400" />
                 ) : (
                   <CloseIcon className="text-red-500 dark:text-red-400" />
                 )}
               </TableCell>
+              <TableCell>{format(new Date(user.created_at), 'PPpp')}</TableCell>
               <TableCell>
-                {' '}
-                {format(new Date(user.created_at), 'PPpp')}
-              </TableCell>
-              <TableCell>
-                {' '}
                 {user.is_confirmed ? (
                   <CheckIcon className="text-green-500 dark:text-green-400" />
                 ) : (

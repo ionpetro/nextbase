@@ -22,11 +22,6 @@ import { toast } from 'sonner';
 import { getErrorMessage } from '@/utils/getErrorMessage';
 import { useRouter } from 'next/navigation';
 
-type Props = {
-  onSubmit: (email: string) => void;
-  isLoading: boolean;
-};
-
 export const AppAdminCreateUserDialog = () => {
   const emailInput = useInput('');
   const [open, setOpen] = useState(false);

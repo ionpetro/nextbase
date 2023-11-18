@@ -180,7 +180,6 @@ async function getProjectCountByMonth() {
     'app_admin_get_projects_created_per_month',
   );
 
-  console.log({ data, error });
   if (!data) {
     return [];
   }

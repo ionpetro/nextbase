@@ -7,6 +7,9 @@ import { ApplicationAdminSidebar } from '../(application-pages)/_sidebar/Applica
 import { getIsAppAdmin } from '@/data/user/user';
 import { InternalNavbar } from '@/components/ui/NavigationMenu/InternalNavbar';
 import { ApplicationLayoutShell } from '@/components/ApplicationLayoutShell';
+import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
+import { cn } from '@/utils/cn';
+import { T } from '@/components/ui/Typography';
 
 async function fetchData() {
   const user = await serverGetLoggedInUser();
@@ -36,9 +39,14 @@ export default async function Layout({
       >
         <div className="h-full overflow-y-auto">
           <InternalNavbar>Admin panel</InternalNavbar>
-          <AppAdminNavigation />
           <div className="relative flex-1 h-auto mt-8 w-full">
-            <div className="space-y-6 pb-10">{children}</div>
+            <div className="pl-6 pr-12 space-y-6 pb-10">
+              <T.P className={cn('text-muted-foreground leading-6')}>
+                All sections of this area are protected and only accessible by
+                Application Admins
+              </T.P>
+              {children}
+            </div>
           </div>
         </div>
       </ApplicationLayoutShell>

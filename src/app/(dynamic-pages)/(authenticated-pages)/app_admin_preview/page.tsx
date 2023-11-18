@@ -1,37 +1,9 @@
 import { T } from '@/components/ui/Typography';
-import { stripe } from '@/utils/stripe';
-import { SaaSMetrics } from './SaasMetrics';
 import { Suspense } from 'react';
-import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
+import { SaaSMetrics } from '../app_admin/SaasMetrics';
 
 async function getCurrentMRR() {
-  const startOfMonth = new Date();
-  startOfMonth.setDate(1);
-  startOfMonth.setHours(0, 0, 0, 0);
-
-  const endOfMonth = new Date(
-    startOfMonth.getFullYear(),
-    startOfMonth.getMonth() + 1,
-    1,
-  );
-
-  const subscriptions = await stripe.subscriptions.list({
-    created: {
-      gte: Math.floor(startOfMonth.getTime() / 1000),
-      lt: Math.floor(endOfMonth.getTime() / 1000),
-    },
-    status: 'all',
-  });
-
-  let mrr = 0;
-  subscriptions.data.forEach((sub) => {
-    if (sub.status === 'active' || sub.status === 'trialing') {
-      mrr +=
-        ((sub.items.data[0].price.unit_amount ?? 0) *
-          (sub.items.data[0].quantity ?? 0)) /
-        100;
-    }
-  });
+  const mrr = 48975;
 
   return mrr.toFixed(2);
 }
@@ -43,6 +15,7 @@ async function getMRR() {
   startDate.setHours(0, 0, 0, 0);
 
   const monthlyMRR: { month: string; mrr: string }[] = [];
+  let mrr = 15000;
 
   for (let i = 0; i <= 12; i++) {
     const startOfMonth = new Date(
@@ -50,29 +23,11 @@ async function getMRR() {
       startDate.getMonth() + i,
       1,
     );
-    const endOfMonth = new Date(
-      startDate.getFullYear(),
-      startDate.getMonth() + i + 1,
-      1,
-    );
 
-    const subscriptions = await stripe.subscriptions.list({
-      created: {
-        gte: Math.floor(startOfMonth.getTime() / 1000),
-        lt: Math.floor(endOfMonth.getTime() / 1000),
-      },
-      status: 'all',
-    });
+    // increment mrr by 10% each month
+    mrr = mrr * 1.1;
 
-    let mrr = 0;
-    subscriptions.data.forEach((sub) => {
-      if (sub.status === 'active' || sub.status === 'trialing') {
-        mrr +=
-          ((sub.items.data[0].price.unit_amount ?? 0) *
-            (sub.items.data[0].quantity ?? 0)) /
-          100;
-      }
-    });
+    // what is the mrr on the last month
 
     monthlyMRR.push({
       month: startOfMonth.toLocaleDateString('en-US', {
@@ -103,119 +58,127 @@ async function getChurnRate() {
       startDate.getMonth() + i,
       1,
     );
-    const endOfMonth = new Date(
-      startDate.getFullYear(),
-      startDate.getMonth() + i + 1,
-      1,
-    );
 
-    const subscriptionsCreated = await stripe.subscriptions.list({
-      created: {
-        gte: Math.floor(startOfMonth.getTime() / 1000),
-        lt: Math.floor(endOfMonth.getTime() / 1000),
-      },
-      status: 'all',
-    });
-
-    const canceledSubscriptions = subscriptionsCreated.data.filter(
-      (sub) => sub.status === 'canceled',
-    );
-
-    const churnRate =
-      (canceledSubscriptions.length / (subscriptionsCreated.data.length || 1)) *
-      100;
+    // Generate random churn rate between 1 and 10
+    const churnRate = (Math.random() * (10 - 1) + 1).toFixed(2);
 
     monthlyChurnRates.push({
       month: startOfMonth.toLocaleDateString('en-US', {
         month: 'long',
         year: 'numeric',
       }),
-      churnRate: churnRate.toFixed(2),
+      churnRate: churnRate,
     });
   }
 
   return monthlyChurnRates;
 }
 
-async function getTotalUserCount() {
-  const { data } = await supabaseAdminClient.rpc(
-    'app_admin_get_total_user_count',
-  );
-  return data ?? 0;
-}
-
-async function getTotalOrganizationsCount() {
-  const { data } = await supabaseAdminClient.rpc(
-    'app_admin_get_total_organization_count',
-  );
-  return data ?? 0;
-}
-
 async function getTotalProjectsCount() {
-  const { data } = await supabaseAdminClient.rpc(
-    'app_admin_get_total_project_count',
-  );
-  return data ?? 0;
+  return 22000;
 }
 
 async function getOrganizationCountByMonth() {
-  const { data } = await supabaseAdminClient.rpc(
-    'app_admin_get_organizations_created_per_month',
-  );
-  if (!data) {
-    return [];
+  const startDate = new Date();
+  startDate.setFullYear(startDate.getFullYear() - 1);
+  startDate.setDate(1);
+  startDate.setHours(0, 0, 0, 0);
+
+  const monthlyOrganizationCounts: Array<{
+    month: string;
+    number_of_organizations: number;
+  }> = [];
+
+  for (let i = 0; i <= 12; i++) {
+    const startOfMonth = new Date(
+      startDate.getFullYear(),
+      startDate.getMonth() + i,
+      1,
+    );
+
+    // Generate random organization count between 100 and 1000
+    const organizationCount = Math.floor(Math.random() * (1000 - 100) + 100);
+
+    monthlyOrganizationCounts.push({
+      month: startOfMonth.toLocaleDateString('en-US', {
+        month: 'long',
+        year: 'numeric',
+      }),
+      number_of_organizations: organizationCount,
+    });
   }
-  const formattedData = data.map((d) => ({
-    ...d,
-    month: new Date(d.month).toLocaleDateString('en-US', {
-      month: 'long',
-      year: 'numeric',
-    }),
-  }));
-  return formattedData;
+
+  return monthlyOrganizationCounts;
 }
 
 async function getProjectCountByMonth() {
-  const { data, error } = await supabaseAdminClient.rpc(
-    'app_admin_get_projects_created_per_month',
-  );
+  const startDate = new Date();
+  startDate.setFullYear(startDate.getFullYear() - 1);
+  startDate.setDate(1);
+  startDate.setHours(0, 0, 0, 0);
 
-  console.log({ data, error });
-  if (!data) {
-    return [];
+  const monthlyProjectCounts: Array<{
+    month: string;
+    number_of_projects: number;
+  }> = [];
+
+  for (let i = 0; i <= 12; i++) {
+    const startOfMonth = new Date(
+      startDate.getFullYear(),
+      startDate.getMonth() + i,
+      1,
+    );
+
+    // Generate random project count between 100 and 1000
+    const projectCount = Math.floor(Math.random() * (1000 - 100) + 100);
+
+    monthlyProjectCounts.push({
+      month: startOfMonth.toLocaleDateString('en-US', {
+        month: 'long',
+        year: 'numeric',
+      }),
+      number_of_projects: projectCount,
+    });
   }
-  const formattedData = data.map((d) => ({
-    ...d,
-    month: new Date(d.month).toLocaleDateString('en-US', {
-      month: 'long',
-      year: 'numeric',
-    }),
-  }));
-  return formattedData;
+
+  return monthlyProjectCounts;
 }
 
 async function getUserCountByMonth() {
-  const { data } = await supabaseAdminClient.rpc(
-    'app_admin_get_users_created_per_month',
-  );
-  if (!data) {
-    return [];
+  const startDate = new Date();
+  startDate.setFullYear(startDate.getFullYear() - 1);
+  startDate.setDate(1);
+  startDate.setHours(0, 0, 0, 0);
+
+  const monthlyUserCounts: Array<{
+    month: string;
+    number_of_users: number;
+  }> = [];
+
+  for (let i = 0; i <= 12; i++) {
+    const startOfMonth = new Date(
+      startDate.getFullYear(),
+      startDate.getMonth() + i,
+      1,
+    );
+
+    // Generate random user count between 100 and 1000
+    const userCount = Math.floor(Math.random() * (1000 - 100) + 100);
+
+    monthlyUserCounts.push({
+      month: startOfMonth.toLocaleDateString('en-US', {
+        month: 'long',
+        year: 'numeric',
+      }),
+      number_of_users: userCount,
+    });
   }
-  const formattedData = data.map((d) => ({
-    ...d,
-    month: new Date(d.month).toLocaleDateString('en-US', {
-      month: 'long',
-      year: 'numeric',
-    }),
-  }));
-  return formattedData;
+
+  return monthlyUserCounts;
 }
 
 async function getActiveUsers() {
-  const { data } = await supabaseAdminClient.rpc(
-    'app_admin_get_recent_30_day_signin_count',
-  );
-  return data ?? 0;
+  return 120000;
 }
 
 async function ActiveUsers() {
@@ -278,15 +241,7 @@ async function CurrentMRR() {
 }
 
 async function TotalUserCount() {
-  const { data, error } = await supabaseAdminClient
-    .from('user_profiles')
-    .select('id');
-
-  if (error) {
-    throw error;
-  }
-
-  const totalUserCount = String(data.length);
+  const totalUserCount = String(593045);
 
   return (
     <div className="bg-gray-200/30 dark:bg-gray-800/40 rounded-xl gap-2 p-16 flex items-center flex-col-reverse">
@@ -297,15 +252,7 @@ async function TotalUserCount() {
 }
 
 async function TotalOrganizationCount() {
-  const { data, error } = await supabaseAdminClient
-    .from('organizations')
-    .select('id');
-
-  if (error) {
-    throw error;
-  }
-
-  const totalOrganizationCount = String(data.length);
+  const totalOrganizationCount = String(890091);
   return (
     <div className="bg-gray-200/30 dark:bg-gray-800/40 rounded-xl gap-2 p-16 flex items-center flex-col-reverse">
       <T.P>Total Organizations</T.P>
@@ -314,7 +261,7 @@ async function TotalOrganizationCount() {
   );
 }
 
-export default async function AdminPanel() {
+export default async function AppAdminPanel() {
   return (
     <div className="space-y-4">
       <Suspense>
