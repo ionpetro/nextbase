@@ -8,7 +8,7 @@ import { updatePasswordAction } from '@/data/user/security';
 
 export const UpdatePassword = () => {
   const passwordInput = useInput('');
-  const { mutate: updatePassword, isLoading } = useToastMutation<void, void>(
+  const { mutate: updatePassword, isLoading } = useToastMutation(
     async () => {
       await updatePasswordAction(passwordInput.value);
     },

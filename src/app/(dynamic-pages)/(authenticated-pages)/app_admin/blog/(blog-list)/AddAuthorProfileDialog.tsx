@@ -54,7 +54,7 @@ export const AddAuthorProfileDialog = ({
   const {
     mutate: createAuthorProfileMutation,
     isLoading: isCreatingAuthorProfile,
-  } = useToastMutation<void, CreateAuthorPayload, unknown>(
+  } = useToastMutation<void, unknown, CreateAuthorPayload>(
     async (payload) => {
       return createAuthorProfile(payload);
     },

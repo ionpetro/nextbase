@@ -20,7 +20,7 @@ export const ConfirmSendLoginLinkDialog = ({
   userEmail: string;
 }) => {
   const [open, setOpen] = useState(false);
-  const { mutate: onConfirm, isLoading } = useToastMutation<undefined, void>(
+  const { mutate: onConfirm, isLoading } = useToastMutation(
     async () => {
       await sendLoginLinkAction(userEmail);
     },

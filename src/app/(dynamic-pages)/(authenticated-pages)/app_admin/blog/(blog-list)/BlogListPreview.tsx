@@ -11,7 +11,7 @@ import TrashIcon from 'lucide-react/dist/esm/icons/trash-2';
 import { useToastMutation } from '@/hooks/useToastMutation';
 
 function DeleteBlogPostPreview({ blogPostId }: { blogPostId: string }) {
-  const { mutate, isLoading } = useToastMutation<void, void>(
+  const { mutate, isLoading } = useToastMutation(
     async () => {
       // Simulate a delay to mimic the deletion process
       return new Promise((resolve) => setTimeout(resolve, 1000));

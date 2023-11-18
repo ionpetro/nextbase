@@ -224,7 +224,7 @@ export const Notifications = ({ userId }: { userId: string }) => {
                     <CheckIcon className="h-5 w-5 text-muted-foreground dark:group-hover:text-gray-400" />{' '}
                     <span
                       onClick={() => {
-                        mutate({});
+                        mutate();
                       }}
                       className="underline underline-offset-4 text-muted-foreground dark:group-hover:text-gray-400 "
                     >

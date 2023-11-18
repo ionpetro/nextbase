@@ -13,6 +13,7 @@ const UploadBlogImage = ({
     {
       publicUrl: string;
     },
+    unknown,
     File
   >(
     async (file) => {

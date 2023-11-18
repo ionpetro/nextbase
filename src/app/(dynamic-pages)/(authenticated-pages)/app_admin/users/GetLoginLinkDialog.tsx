@@ -16,7 +16,7 @@ import { appAdminGetUserImpersonationUrl } from '@/data/admin/user';
 
 export const GetLoginLinkDialog = ({ userId }: { userId: string }) => {
   const [open, setOpen] = useState(false);
-  const { mutate: onConfirm, isLoading } = useToastMutation<URL, void>(
+  const { mutate: onConfirm, isLoading } = useToastMutation<URL>(
     async () => {
       return await appAdminGetUserImpersonationUrl(userId);
     },

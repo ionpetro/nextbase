@@ -43,7 +43,7 @@ export function CreateTeamDialog({ organizationId }: CreateTeamDialogProps) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    mutate({});
+    mutate();
   };
 
   return (

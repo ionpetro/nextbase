@@ -19,7 +19,11 @@ export const AppAdminCreateUserDialogPreview = () => {
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState('');
 
-  const { mutate: createUser, isLoading } = useToastMutation(
+  const { mutate: createUser, isLoading } = useToastMutation<
+    string,
+    unknown,
+    string
+  >(
     async (email) => {
       // Simulate a delay
       await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -68,7 +72,9 @@ export const AppAdminCreateUserDialogPreview = () => {
         <DialogFooter className="mt-8">
           <Button
             onClick={() => {
-              createUser(email);
+              if (email.length > 0) {
+                createUser(email);
+              }
             }}
             aria-disabled={isLoading}
             type="button"

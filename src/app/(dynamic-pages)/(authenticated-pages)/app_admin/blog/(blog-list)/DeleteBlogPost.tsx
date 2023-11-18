@@ -5,7 +5,7 @@ import { useToastMutation } from '@/hooks/useToastMutation';
 import { deleteBlogPost } from '@/data/admin/internal-blog';
 
 export function DeleteBlogPost({ blogPostId }: { blogPostId: string }) {
-  const { mutate, isLoading } = useToastMutation<void, void>(
+  const { mutate, isLoading } = useToastMutation(
     async () => {
       return deleteBlogPost(blogPostId);
     },

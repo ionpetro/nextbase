@@ -26,7 +26,11 @@ export const AppAdminCreateUserDialog = () => {
   const emailInput = useInput('');
   const [open, setOpen] = useState(false);
   const router = useRouter();
-  const { mutate: createUser, isLoading } = useToastMutation<User, string>(
+  const { mutate: createUser, isLoading } = useToastMutation<
+    User,
+    unknown,
+    string
+  >(
     async (email) => {
       return await createUserAction(email);
     },

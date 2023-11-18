@@ -15,7 +15,7 @@ export const UpdateEmail = ({
 }) => {
   const emailInput = useInput(initialEmail ?? '');
 
-  const { mutate: updateEmail, isLoading } = useToastMutation<void, void>(
+  const { mutate: updateEmail, isLoading } = useToastMutation(
     async () => {
       await updateEmailAction(emailInput.value);
     },

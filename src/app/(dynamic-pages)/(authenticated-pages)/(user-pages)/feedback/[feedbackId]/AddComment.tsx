@@ -46,7 +46,9 @@ export function AddComment({ feedbackId }: { feedbackId: string }) {
         <Button
           variant="default"
           onClick={() => {
-            mutate(content);
+            if (content.length > 0) {
+              mutate();
+            }
           }}
           className="w-1/4"
           disabled={isLoading || content.length === 0}

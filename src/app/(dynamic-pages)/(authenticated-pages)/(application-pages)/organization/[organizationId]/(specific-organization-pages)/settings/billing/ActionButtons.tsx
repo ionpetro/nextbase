@@ -40,10 +40,7 @@ export function CreateSubscriptionButton({
       variant="outline"
       className="w-full"
       onClick={() => {
-        mutate({
-          organizationId: organizationId,
-          priceId: priceId,
-        });
+        mutate();
       }}
     >
       {isLoading ? 'Loading...' : 'Choose'}
@@ -82,10 +79,7 @@ export function StartFreeTrialButton({
       variant="outline"
       className="w-full"
       onClick={() => {
-        mutate({
-          organizationId: organizationId,
-          priceId: priceId,
-        });
+        mutate();
       }}
     >
       {isLoading ? 'Starting trial...' : 'Start Free Trial'}
@@ -118,9 +112,7 @@ export function ManageSubscriptionButton({
         variant="default"
         type="button"
         onClick={() => {
-          mutate({
-            organizationId: organizationId,
-          });
+          mutate();
         }}
       >
         <span>{isLoading ? 'Loading...' : 'Manage Subscription'} </span>

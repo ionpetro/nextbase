@@ -45,7 +45,7 @@ export const ManageAuthorsDialog = ({
   const {
     mutate: deleteAuthorProfileMutation,
     isLoading: isDeletingAuthorProfile,
-  } = useToastMutation<void, string>(
+  } = useToastMutation<void, unknown, string>(
     async (id) => {
       return deleteAuthorProfile(id);
     },

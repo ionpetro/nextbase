@@ -38,7 +38,7 @@ export const ManageBlogTagsDialog = ({
   const router = useRouter();
 
   const { mutate: deleteBlogTagMutation, isLoading: isDeletingBlogTag } =
-    useToastMutation<void, number, number>(
+    useToastMutation<void, unknown, number>(
       async (slug) => {
         return deleteBlogTag(slug);
       },
@@ -85,6 +85,7 @@ export const ManageBlogTagsDialog = ({
                   <EditBlogTagDialog tag={tag} updateBlogTag={updateBlogTag} />
                   <Button
                     variant="ghost"
+                    disabled={isDeletingBlogTag}
                     className="text-red-600 dark:text-red-400 hover:text-red-600  shadow-none hover:bg-red-100/50 dark:hover:bg-red-900/20"
                     onClick={() => {
                       deleteBlogTagMutation(tag.id);

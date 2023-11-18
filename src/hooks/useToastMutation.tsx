@@ -13,15 +13,15 @@ type MutationFn<TData, TVariables> = MutationFunction<TData, TVariables>;
 
 interface ToastMutationOptions<TData, TError, TVariables>
   extends UseMutationOptions<TData, TError, TVariables> {
-  loadingMessage?: string;
-  successMessage?: string;
-  errorMessage?: string;
+  loadingMessage?: string | ((variables: TVariables) => string);
+  successMessage?: string | ((data: TData, variables: TVariables) => string);
+  errorMessage?: string | ((error: TError, variables: TVariables) => string);
 }
 
 export function useToastMutation<
   TData = unknown,
-  TVariables = unknown,
   TError = unknown,
+  TVariables = void,
 >(
   mutationFn: MutationFn<TData, TVariables>,
   options?: ToastMutationOptions<TData, TError, TVariables>,
@@ -30,16 +30,26 @@ export function useToastMutation<
   return useMutation<TData, TError, TVariables>(mutationFn, {
     ...options,
     onMutate: async (variables) => {
-      toastIdRef.current = toast.loading(
-        options?.loadingMessage ?? 'Loading...',
-      );
+      const loadingMessage = options?.loadingMessage
+        ? typeof options.loadingMessage === 'function'
+          ? options.loadingMessage(variables)
+          : options.loadingMessage
+        : 'Loading...';
+
+      toastIdRef.current = toast.loading(loadingMessage);
+
       if (options?.onMutate) {
         await options.onMutate(variables);
       }
     },
     onSuccess: (data, variables, context) => {
       // router.refresh();
-      toast.success(options?.successMessage ?? 'Operation successful', {
+      const successMessage = options?.successMessage
+        ? typeof options.successMessage === 'function'
+          ? options.successMessage(data, variables)
+          : options.successMessage
+        : 'Success!';
+      toast.success(successMessage, {
         id: toastIdRef.current ?? undefined,
       });
       toastIdRef.current = null;
@@ -48,7 +58,12 @@ export function useToastMutation<
       }
     },
     onError: (error, variables, context) => {
-      toast.error(options?.errorMessage ?? 'Operation failed', {
+      const errorMessage = options?.errorMessage
+        ? typeof options.errorMessage === 'function'
+          ? options.errorMessage(error, variables)
+          : options.errorMessage
+        : 'Error!';
+      toast.error(errorMessage, {
         id: toastIdRef.current ?? undefined,
       });
       toastIdRef.current = null;

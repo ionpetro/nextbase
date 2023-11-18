@@ -1103,7 +1103,7 @@ const useScheduleLayoutEffect = () => {
 
   return (id: string | number, cb: () => void) => {
     fns.current.set(id, cb);
-    ss({});
+    ss();
   };
 };
 

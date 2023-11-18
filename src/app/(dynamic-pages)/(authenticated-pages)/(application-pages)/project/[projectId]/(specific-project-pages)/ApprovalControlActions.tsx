@@ -24,7 +24,7 @@ export function ApprovalControlActions({
   canOnlyEdit: boolean;
   projectStatus: Enum<'project_status'>;
 }) {
-  const { mutate: submitProjectForApproval } = useToastMutation<void, void>(
+  const { mutate: submitProjectForApproval } = useToastMutation(
     async () => {
       await submitProjectForApprovalAction(projectId);
     },
@@ -34,7 +34,7 @@ export function ApprovalControlActions({
       successMessage: 'Project submitted for approval!',
     },
   );
-  const { mutate: markProjectAsCompleted } = useToastMutation<void, void>(
+  const { mutate: markProjectAsCompleted } = useToastMutation(
     async () => {
       await markProjectAsCompletedAction(projectId);
     },
@@ -44,7 +44,7 @@ export function ApprovalControlActions({
       successMessage: 'Project marked as complete!',
     },
   );
-  const { mutate: approveProject } = useToastMutation<void, void>(
+  const { mutate: approveProject } = useToastMutation(
     async () => {
       await approveProjectAction(projectId);
     },
@@ -54,7 +54,7 @@ export function ApprovalControlActions({
       successMessage: 'Project approved!',
     },
   );
-  const { mutate: rejectProject } = useToastMutation<void, void>(
+  const { mutate: rejectProject } = useToastMutation(
     async () => {
       await rejectProjectAction(projectId);
     },

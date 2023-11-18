@@ -19,7 +19,7 @@ export function MaintenanceModeToggle({
   const disableToastRef = useRef<string | null>(null);
   const router = useRouter();
   const { mutate: enableMaintenanceModeMutation, isLoading: isEnabling } =
-    useToastMutation<void, void>(
+    useToastMutation(
       async () => {
         return enableMaintenanceModeAction();
       },
@@ -30,7 +30,7 @@ export function MaintenanceModeToggle({
       },
     );
   const { mutate: disableMaintenanceModeMutation, isLoading: isDisabling } =
-    useToastMutation<void, void>(
+    useToastMutation(
       async () => {
         return disableMaintenanceModeAction();
       },

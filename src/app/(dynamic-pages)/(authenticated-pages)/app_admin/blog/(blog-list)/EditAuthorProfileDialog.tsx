@@ -68,7 +68,7 @@ export const EditAuthorProfileDialog = ({
   const {
     mutate: updateAuthorProfileMutation,
     isLoading: isUpdatingAuthorProfile,
-  } = useToastMutation<void, UpdateAuthorPayload, unknown>(
+  } = useToastMutation<void, unknown, UpdateAuthorPayload>(
     async (payload) => {
       return updateAuthorProfile(profile.user_id, payload);
     },
