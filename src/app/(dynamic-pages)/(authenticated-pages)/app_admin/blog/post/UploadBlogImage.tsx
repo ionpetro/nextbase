@@ -1,8 +1,7 @@
 import React from 'react';
 import { useDropzone } from 'react-dropzone';
-import { useMutation } from '@tanstack/react-query';
-import { toast } from 'react-hot-toast';
 import axios from 'axios';
+import { useToastMutation } from '@/hooks/useToastMutation';
 
 const UploadBlogImage = ({
   onUpload,
@@ -10,11 +9,10 @@ const UploadBlogImage = ({
   onUpload: (path: string) => void;
 }) => {
   const toastRef = React.useRef<string | undefined>(undefined);
-  const uploadImageMutation = useMutation<
+  const uploadImageMutation = useToastMutation<
     {
       publicUrl: string;
     },
-    unknown,
     File
   >(
     async (file) => {
@@ -34,22 +32,11 @@ const UploadBlogImage = ({
       };
     },
     {
-      onMutate: () => {
-        toastRef.current = toast.loading('Uploading image...');
-      },
+      loadingMessage: 'Uploading image...',
+      successMessage: 'Image uploaded!',
+      errorMessage: 'Failed to upload image',
       onSuccess: (data) => {
         onUpload(data.publicUrl);
-        toast.success('Successfully uploaded image', {
-          id: toastRef.current,
-        });
-
-        toastRef.current = undefined;
-      },
-      onError: () => {
-        toast.error('Failed to upload image', {
-          id: toastRef.current,
-        });
-        toastRef.current = undefined;
       },
     },
   );

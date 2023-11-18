@@ -24,11 +24,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/Select';
-import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import { authorProfileSchema } from '@/utils/zod-schemas/internalBlog';
 import { useRouter } from 'next/navigation';
 import UserIcon from 'lucide-react/dist/esm/icons/user-plus';
+import { useToastMutation } from '@/hooks/useToastMutation';
 
 type AuthorProfileFormType = z.infer<typeof authorProfileSchema>;
 type CreateAuthorPayload = Omit<
@@ -54,7 +54,7 @@ export const AddAuthorProfileDialog = ({
   const {
     mutate: createAuthorProfileMutation,
     isLoading: isCreatingAuthorProfile,
-  } = useMutation<void, unknown, CreateAuthorPayload>(
+  } = useToastMutation<void, CreateAuthorPayload, unknown>(
     async (payload) => {
       return createAuthorProfile(payload);
     },
@@ -68,7 +68,7 @@ export const AddAuthorProfileDialog = ({
       onError: () => {
         toast.error('Failed to create author profile');
       },
-    }
+    },
   );
 
   const { isValid, isLoading } = formState;
@@ -122,7 +122,7 @@ export const AddAuthorProfileDialog = ({
                     <SelectContent>
                       {appAdmins.map((admin) => {
                         const disabled = authorProfiles.some(
-                          (profile) => profile.user_id === admin.id
+                          (profile) => profile.user_id === admin.id,
                         );
                         return (
                           <SelectItem key={admin.id} value={admin.id}>
