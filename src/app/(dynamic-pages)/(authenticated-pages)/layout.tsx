@@ -8,10 +8,21 @@ import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user
 import { LoggedInUserProvider } from '@/contexts/LoggedInUserContext';
 import { getUserProfile } from '@/data/user/user';
 import { unstable_noStore } from 'next/cache';
+import { cookies } from 'next/headers';
+import { SIDEBAR_VISIBILITY_COOKIE_KEY } from '@/constants';
+import { SidebarVisibilityProvider } from '@/contexts/SidebarVisibilityContext';
+
+function getSidebarVisibility() {
+  const cookieStore = cookies();
+  const cookieValue = cookieStore.get(SIDEBAR_VISIBILITY_COOKIE_KEY)?.value;
+  if (cookieValue) {
+    return cookieValue === 'true';
+  }
+  return true;
+}
 
 async function fetchData(supabaseClient: AppSupabaseClient, authUser: User) {
   const [userProfile] = await Promise.all([getUserProfile(authUser.id)]);
-
   return { userProfile };
 }
 
@@ -31,11 +42,13 @@ export default async function Layout({ children }: { children: ReactNode }) {
 
   try {
     const { userProfile } = await fetchData(supabaseClient, data.user);
-
+    const sidebarVisibility = getSidebarVisibility();
     return (
-      <LoggedInUserProvider user={user}>
-        <ClientLayout userProfile={userProfile}>{children}</ClientLayout>
-      </LoggedInUserProvider>
+      <SidebarVisibilityProvider initialValue={sidebarVisibility}>
+        <LoggedInUserProvider user={user}>
+          <ClientLayout userProfile={userProfile}>{children}</ClientLayout>
+        </LoggedInUserProvider>
+      </SidebarVisibilityProvider>
     );
   } catch (fetchDataError) {
     errors.add(fetchDataError);

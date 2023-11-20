@@ -2,42 +2,38 @@
 import { Anchor } from '@/components/Anchor';
 import { Badge } from '@/components/ui/Badge';
 import { T } from '@/components/ui/Typography';
+import { getProjectById, getProjectTitleById } from '@/data/user/projects';
 import { getTeamNameById } from '@/data/user/teams';
-import TeamIcon from 'lucide-react/dist/esm/icons/folder';
+import ProjectIcon from 'lucide-react/dist/esm/icons/layers';
 
 import { Suspense } from 'react';
 import { z } from 'zod';
 
 const paramsSchema = z.object({
-  organizationId: z.string(),
-  teamId: z.coerce.number(),
+  projectId: z.string(),
 });
 
-async function Title({ teamId }: { teamId: number }) {
-  const title = await getTeamNameById(teamId);
+async function Title({ projectId }: { projectId: string }) {
+  const project = await getProjectById(projectId);
   return (
     <div className="flex items-center gap-2">
-      <TeamIcon className="w-4 h-4" />
-      <T.P>{title}</T.P>
+      <ProjectIcon className="w-4 h-4" />
+      <T.P>{project.name}</T.P>
       <div className="flex items-center gap-2 p-0.5 px-2 rounded-md text-sm font-normal bg-gray-800 text-gray-100 dark:text-slate-900 border dark:bg-white/80 uppercase ">
-        Team
+        Project
       </div>
     </div>
   );
 }
 
-export default async function OrganizationNavbar({
-  params,
-}: {
-  params: unknown;
-}) {
-  const { organizationId, teamId } = paramsSchema.parse(params);
+export default async function ProjectNavbar({ params }: { params: unknown }) {
+  const { projectId } = paramsSchema.parse(params);
   return (
     <div className="flex items-center">
-      <Anchor href={`/organization/${organizationId}/team/${teamId}`}>
+      <Anchor href={`/project/${projectId}`}>
         <span className="space-x-2 flex items-center">
           <Suspense fallback={<span>Loading...</span>}>
-            <Title teamId={teamId} />
+            <Title projectId={projectId} />
           </Suspense>
         </span>
       </Anchor>

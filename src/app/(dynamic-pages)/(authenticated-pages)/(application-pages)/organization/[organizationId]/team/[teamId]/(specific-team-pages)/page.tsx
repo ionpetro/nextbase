@@ -21,17 +21,15 @@ export default async function TeamPage({
   const { teamId, organizationId } = parsedParams;
   const projects = await getProjects({ organizationId, teamId });
   return (
-    <div className="space-y-4">
-      <div className="space-y-4 max-w-4xl">
-        <CreateProjectDialog organizationId={organizationId} teamId={teamId} />
-        <div className="space-y-4">
-          <div className="mt-10">
-            <T.H3 className="leading-none">Projects</T.H3>
-          </div>
-          <Suspense>
-            <ProjectsTable projects={projects} />
-          </Suspense>
+    <div className="">
+      <div className="w-full">
+        <div className="flex justify-between items-center w-full">
+          <T.H3 className="mt-0 leading-none">Projects</T.H3>
+          <CreateProjectDialog organizationId={organizationId} teamId={null} />
         </div>
+        <Suspense>
+          <ProjectsTable projects={projects} />
+        </Suspense>
       </div>
     </div>
   );

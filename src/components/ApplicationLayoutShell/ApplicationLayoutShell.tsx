@@ -1,6 +1,8 @@
+'use server';
 import { ReactNode, Suspense } from 'react';
+import { ClientShell } from './ClientShell';
 
-export function ApplicationLayoutShell({
+export async function ApplicationLayoutShell({
   children,
   sidebar,
 }: {
@@ -8,18 +10,12 @@ export function ApplicationLayoutShell({
   sidebar: ReactNode;
 }) {
   return (
-    <div
-      className="h-screen w-full grid overflow-hidden"
-      style={{
-        gridTemplateColumns: 'auto 1fr',
-      }}
+    <ClientShell
+      sidebar={
+        <Suspense fallback={<div>Loading sidebar</div>}> {sidebar}</Suspense>
+      }
     >
-      <Suspense fallback={<div>Loading sidebar</div>}> {sidebar}</Suspense>
-      <div className="h-full overflow-y-auto">
-        <div className="relative flex-1 h-auto w-full overflow-auto">
-          {children}
-        </div>
-      </div>
-    </div>
+      {children}
+    </ClientShell>
   );
 }

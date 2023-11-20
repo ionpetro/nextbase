@@ -52,7 +52,7 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
   const allPages = generatePagination(currentPage, totalPages);
 
   return (
-    <div className="inline-flex">
+    <div className="inline-flex justify-between w-full">
       <PaginationArrow
         direction="left"
         href={createPageURL(currentPage - 1)}
@@ -106,7 +106,8 @@ function PaginationNumber({
       'rounded-l-md': position === 'first' || position === 'single',
       'rounded-r-md': position === 'last' || position === 'single',
       'z-10 bg-blue-600 border-blue-600 text-white': isActive,
-      'hover:bg-gray-100': !isActive && position !== 'middle',
+      'hover:bg-gray-100 dark:hover:bg-slate-800':
+        !isActive && position !== 'middle',
       'text-gray-300': position === 'middle',
     },
   );

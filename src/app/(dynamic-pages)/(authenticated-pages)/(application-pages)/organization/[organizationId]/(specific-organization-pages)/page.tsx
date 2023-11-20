@@ -1,28 +1,19 @@
-import { AppSupabaseClient } from '@/types';
 import { z } from 'zod';
-import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
-import { DraftTeamProjectsList } from '@/components/presentational/tailwind/Projects/DraftTeamProjectsList';
 import { Suspense } from 'react';
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 import { OrganizationPageHeading } from './OrganizationPageHeading';
 import { OrganizationGraphs } from './OrganizationGraphs';
 import { CreateProjectDialog } from '@/components/presentational/tailwind/CreateProjectDialog';
-import { ProjectsTable } from '@/components/presentational/tailwind/Projects/ProjectsTable';
+
 import { T } from '@/components/ui/Typography';
-import { getProjects } from '@/data/user/projects';
-import { unstable_noStore } from 'next/cache';
+import InfoIcon from 'lucide-react/dist/esm/icons/info';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/Dialog';
+import { Projects } from './Projects';
+import { getOrganizationTitle } from '@/data/user/organizations';
 
 const paramsSchema = z.object({
   organizationId: z.coerce.string(),
 });
-
-async function fetchDraftProjects(
-  supabase: AppSupabaseClient,
-  organizationId: string,
-) {
-  const data = await getProjects({ organizationId, teamId: null });
-  return data;
-}
 
 export default async function OrganizationPage({
   params,
@@ -31,13 +22,9 @@ export default async function OrganizationPage({
 }) {
   const parsedParams = paramsSchema.parse(params);
   const { organizationId } = parsedParams;
-  const projects = await fetchDraftProjects(
-    createSupabaseUserServerComponentClient(),
-    organizationId,
-  );
 
   return (
-    <div className="space-y-8">
+    <div className="">
       <div className="space-y-0 block lg:hidden">
         <Suspense
           fallback={
@@ -51,21 +38,39 @@ export default async function OrganizationPage({
           <OrganizationPageHeading organizationId={organizationId} />
         </Suspense>
       </div>
+      <div className="w-full">
+        <div className="flex justify-between items-center w-full">
+          <div className="text-2xl font-semibold tracking-tight flex gap-2 justify-start items-center mt-0 leading-none">
+            Projects
+            <Dialog>
+              <DialogTrigger asChild>
+                <InfoIcon className="h-4 w-4 text-gray-500 hover:text-gray-700 dark:text-slate-400 dark:hover:text-slate-200" />
+              </DialogTrigger>
+              <DialogContent className="w-128 dark:bg-slate-900 bg-white border border-gray-300 dark:border-gray-700">
+                <T.H2>Projects</T.H2>
+                <T.P className="text-muted-foreground">
+                  Projects are a way to organize your work. You can create
+                  projects within teams, or within your organization.
+                </T.P>
+              </DialogContent>
+            </Dialog>
+          </div>
+          <CreateProjectDialog organizationId={organizationId} teamId={null} />
+        </div>
+        <Suspense
+          fallback={
+            <div className="flex justify-center items-center">
+              <T.P>Loading Projects...</T.P>
+            </div>
+          }
+        >
+          <Projects organizationId={organizationId} />
+        </Suspense>
+      </div>
       <div>
         <Suspense>
           <OrganizationGraphs />
         </Suspense>
-      </div>
-      <div className="space-y-4 max-w-4xl">
-        <CreateProjectDialog organizationId={organizationId} teamId={null} />
-        <div className="space-y-4">
-          <div className="mt-10">
-            <T.H3 className="leading-none">Projects</T.H3>
-          </div>
-          <Suspense>
-            <ProjectsTable projects={projects} />
-          </Suspense>
-        </div>
       </div>
     </div>
   );

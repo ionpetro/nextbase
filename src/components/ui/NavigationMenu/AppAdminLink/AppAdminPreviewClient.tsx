@@ -14,27 +14,27 @@ export function AppAdminPreviewLink() {
     <Anchor
       href="/app_admin_preview"
       className={classNames(
-        `flex gap-2.5 px-4 w-max cursor-pointer w-max items-center group py-2 mb-1 rounded-lg transition hover:cursor-pointer hover:bg-gray-200/50 dark:hover:bg-slate-700/50 `,
-        isActive ? ' bg-gray-300/50  dark:bg-slate-800  ' : ' bg-transparent',
+        `flex px-4 w-max cursor-pointer items-center group py-1 rounded-lg transition hover:cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-800 `,
+        isActive ? ' bg-gray-100  dark:bg-slate-800  ' : ' bg-transparent',
       )}
     >
       <span
         className={classNames(
           'text-gray-700 dark:text-slate-300 ',
           isActive
-            ? ' text-gray-900 dark:text-slate-100 '
-            : ' text-gray-700 dark:text-slate-400 group-hover:text-gray-900 dark:group-hover:text-slate-300',
+            ? ' text-gray-700 dark:text-slate-300 '
+            : ' text-gray-500 dark:text-slate-400 group-hover:text-gray-700 dark:group-hover:text-slate-300',
         )}
       >
-        <ServerIcon className="h-5 w-5" />
+        <ServerIcon className="h-4 w-4 text-gray-500 dark:text-slate-400 group-hover:text-gray-700 dark:group-hover:text-slate-300" />
       </span>
 
       <span
         className={classNames(
           'transition text-sm font-medium mt-0.5 ',
           isActive
-            ? ' text-gray-900 dark:text-slate-100 '
-            : ' text-gray-700 dark:text-slate-400 group-hover:text-gray-900 dark:group-hover:text-slate-300',
+            ? ' text-gray-700 dark:text-slate-300 '
+            : ' text-gray-500 dark:text-slate-400 group-hover:text-gray-700 dark:group-hover:text-slate-300',
         )}
       >
         Admin Panel Preview

@@ -18,7 +18,7 @@ import {
 import { useState } from 'react';
 import ChevronUpDown from 'lucide-react/dist/esm/icons/chevrons-up-down';
 import CheckIcon from 'lucide-react/dist/esm/icons/check';
-import UsersIcon from 'lucide-react/dist/esm/icons/users';
+import UsersIcon from 'lucide-react/dist/esm/icons/users-2';
 import { Button } from '@/components/ui/Button';
 import { useToastMutation } from '@/hooks/useToastMutation';
 import { createOrganization } from '@/data/user/organizations';
@@ -100,7 +100,7 @@ export function OrganizationSwitcher({
                   }}
                   className="text-sm flex items-start"
                 >
-                  <UsersIcon className="mr-2 h-4 w-4 mt-0.5" />
+                  {/* <UsersIcon className="mr-2 h-4 w-4 mt-0.5" /> */}
                   {organization.title}
                   <CheckIcon
                     className={cn(

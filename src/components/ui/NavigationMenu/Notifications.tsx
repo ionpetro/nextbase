@@ -202,10 +202,10 @@ export const Notifications = ({ userId }: { userId: string }) => {
   );
   return (
     <Popover>
-      <PopoverTrigger className="focus:ring-none">
+      <PopoverTrigger className="relative focus:ring-none">
         <NotificationIcon className="h-5 w-5 px-0 text-muted-foreground hover:text-black dark:hover:text-white" />
         {unseenNotificationCount > 0 && (
-          <span className="absolute -top-1 -right-1.5 bg-red-500 text-white text-xs font-bold px-1.5 rounded-full">
+          <span className="absolute -top-1.5 -right-2 bg-red-500  text-white text-xs font-bold px-1.5 rounded-full">
             {unseenNotificationCount}
           </span>
         )}

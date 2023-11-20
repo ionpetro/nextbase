@@ -8,10 +8,12 @@ import { InternalNavbar } from '@/components/ui/NavigationMenu/InternalNavbar';
 import { Anchor } from '@/components/Anchor';
 
 import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
-import TeamsIcon from 'lucide-react/dist/esm/icons/users';
+import TeamsIcon from 'lucide-react/dist/esm/icons/folders';
 import { SimpleDialog } from '@/components/SimpleDialog';
 import { OrganizationTeams } from './OrganizationTeams';
 import { Button } from '@/components/ui/Button';
+import { classNames } from '@/utils/classNames';
+import { PendingInvitationCounter } from '@/components/ui/NavigationMenu/PendingInvitationCounter';
 
 const paramsSchema = z.object({
   organizationId: z.string(),
@@ -35,32 +37,35 @@ export default async function Layout({
         <InternalNavbar>
           <div className="flex w-full justify-between items-center">
             <Suspense>{navbar}</Suspense>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center gap-1">
               <Suspense>
                 <SimpleDialog
                   trigger={
-                    <Button
-                      size="xs"
-                      variant="infoLink"
-                      className="space-x-2 flex items-center"
-                    >
-                      <TeamsIcon />
-                    </Button>
+                    <div className="flex gap-1.5 py-1.5 px-3 cursor-pointer items-center group rounded-md transition hover:cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-800">
+                      <TeamsIcon className="w-4 h-4 text-gray-500 dark:text-slate-400 group-hover:text-gray-700 dark:group-hover:text-slate-300" />
+                      <p className="text-gray-500 dark:text-slate-400 group-hover:text-gray-700 dark:group-hover:text-slate-300 text-sm font-normal">
+                        Teams
+                      </p>
+                    </div>
                   }
                 >
                   <OrganizationTeams organizationId={organizationId} />
                 </SimpleDialog>
               </Suspense>
-              <Anchor href={`/organization/${organizationId}/settings`}>
-                <span className="space-x-2 flex items-center">
-                  <SettingsIcon />
-                </span>
+              <Anchor
+                className="flex gap-1.5 py-1.5 px-3 cursor-pointer items-center group rounded-md transition hover:cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-800"
+                href={`/organization/${organizationId}/settings`}
+              >
+                <SettingsIcon className="w-4 h-4 text-gray-500 dark:text-slate-400 group-hover:text-gray-700 dark:group-hover:text-slate-300" />
+                <p className="text-gray-500 dark:text-slate-400 group-hover:text-gray-700 dark:group-hover:text-slate-300 text-sm font-normal">
+                  Organization settings
+                </p>
               </Anchor>
             </div>
           </div>
         </InternalNavbar>
-        <div className="relative flex-1 h-auto mt-8 w-full overflow-auto">
-          <div className="px-6 pr-12 space-y-6 pb-10">{children}</div>
+        <div className="relative flex-1 h-auto mt-6 w-full overflow-auto">
+          <div className="px-6 space-y-6 pb-8">{children}</div>
         </div>
       </div>
     </ApplicationLayoutShell>

@@ -86,7 +86,7 @@ export async function AutomaticTeamAdmins({
 
   return (
     <div className="space-y-2">
-      <div className="space-y-2 max-w-lg">
+      <div className="space-y-2 max-w-2xl">
         <T.H2>Team Admins</T.H2>
         <T.Subtle>
           Below are organization admins of the organization{' '}
@@ -96,7 +96,7 @@ export async function AutomaticTeamAdmins({
         </T.Subtle>
       </div>
 
-      <div className="overflow-hidden shadow border sm:rounded-lg mt-8 max-w-lg">
+      <div className="overflow-hidden shadow border sm:rounded-lg mt-8 max-w-2xl">
         <ShadcnTable>
           <TableHeader>
             <TableRow>

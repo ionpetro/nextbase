@@ -1,6 +1,6 @@
 import { TabsNavigation } from '@/components/presentational/tailwind/TabsNavigation';
 import { z } from 'zod';
-import UsersIcon from 'lucide-react/dist/esm/icons/users';
+import UserIcon from 'lucide-react/dist/esm/icons/user-2';
 import DollarSignIcon from 'lucide-react/dist/esm/icons/dollar-sign';
 import EditIcon from 'lucide-react/dist/esm/icons/edit';
 
@@ -25,7 +25,7 @@ export default function OrganizationSettingsLayout({
     {
       label: 'Organization Members',
       href: `/organization/${organizationId}/settings/members`,
-      icon: <UsersIcon />,
+      icon: <UserIcon />,
     },
     {
       label: 'Billing',

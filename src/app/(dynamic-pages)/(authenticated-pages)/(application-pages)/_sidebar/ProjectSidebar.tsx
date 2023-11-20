@@ -6,7 +6,7 @@ import { SidebarLink } from './SidebarLink';
 import ArrowLeftIcon from 'lucide-react/dist/esm/icons/arrow-left';
 import ProjectIcon from 'lucide-react/dist/esm/icons/layers';
 import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
-import { SidebarTopComponent } from './SidebarTopComponent';
+import { SidebarLogo } from './SidebarLogo';
 
 export async function ProjectSidebar({ projectId }: { projectId: string }) {
   const [slimOrganizations, project] = await Promise.all([
@@ -17,10 +17,10 @@ export async function ProjectSidebar({ projectId }: { projectId: string }) {
 
   return (
     <div className="flex flex-col space-y-2 h-full w-[264px] border-r dark:border-gray-700/50 select-none">
-      <div className="flex flex-col px-3 py-4 justify-between h-full">
+      <div className="flex flex-col px-3 py-4 pt-2.5 justify-between h-full">
         <div>
-          <SidebarTopComponent />
-          <div className="flex flex-col gap-1">
+          <SidebarLogo />
+          <div className="flex flex-col">
             <SidebarLink
               label="Back to organization"
               href={`/organization/${organizationId}`}

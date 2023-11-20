@@ -1,4 +1,4 @@
-import { SidebarTopComponent } from './SidebarTopComponent';
+import { SidebarLogo } from './SidebarLogo';
 import { SidebarLink } from './SidebarLink';
 import HomeIcon from 'lucide-react/dist/esm/icons/home';
 import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
@@ -10,11 +10,11 @@ import FeedbackIcon from 'lucide-react/dist/esm/icons/file-question';
 export async function UserSidebar() {
   return (
     <div className="h-full w-[264px] flex flex-col space-y-2 border-r dark:border-gray-700/50 select-none">
-      <div className="flex flex-col px-3 py-4 justify-start h-full">
+      <div className="flex flex-col px-3 py-4 pt-2.5 justify-start h-full">
         <div className="flex justify-between items-center">
-          <SidebarTopComponent />
+          <SidebarLogo />
         </div>
-        <div className="space-y-1">
+        <div className="">
           <SidebarLink
             label="Dashboard"
             href="/dashboard"

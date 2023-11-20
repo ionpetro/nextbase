@@ -1,3 +1,4 @@
+'use server';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 import { revalidatePath } from 'next/cache';
 

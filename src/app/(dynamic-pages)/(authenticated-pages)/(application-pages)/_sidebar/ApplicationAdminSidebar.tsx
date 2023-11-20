@@ -8,7 +8,7 @@ import ActivityLogIcon from 'lucide-react/dist/esm/icons/book';
 import RoadMapIcon from 'lucide-react/dist/esm/icons/map';
 import HomeIcon from 'lucide-react/dist/esm/icons/home';
 import { Anchor } from '@/components/Anchor';
-import { SidebarTopComponent } from './SidebarTopComponent';
+import { SidebarLogo } from './SidebarLogo';
 import { SidebarLink } from './SidebarLink';
 
 const links = [
@@ -63,8 +63,8 @@ const links = [
 export function ApplicationAdminSidebar() {
   return (
     <div className="h-full w-[264px] border-r dark:border-slate-700/50 select-none">
-      <div className="flex flex-col px-3 py-4 justify-start h-full">
-        <SidebarTopComponent />
+      <div className="flex flex-col px-3 py-4 pt-2.5 justify-start h-full">
+        <SidebarLogo />
         <div className="h-full">
           {links.map((link) => {
             return (
