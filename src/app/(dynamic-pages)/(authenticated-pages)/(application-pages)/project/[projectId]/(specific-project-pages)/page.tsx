@@ -4,14 +4,12 @@ import LayersIcon from 'lucide-react/dist/esm/icons/layers';
 import { z } from 'zod';
 import { Suspense } from 'react';
 import { ProjectComments } from './ProjectComments';
-import { unstable_noStore } from 'next/cache';
 
 const paramsSchema = z.object({
   projectId: z.string(),
 });
 
 export default function ProjectPage({ params }: { params: unknown }) {
-  unstable_noStore();
   const { projectId } = paramsSchema.parse(params);
   return (
     <div className="space-y-6">

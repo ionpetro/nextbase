@@ -5,10 +5,8 @@ import { UserList } from './UsersList';
 import Pagination from '@/components/Pagination/Pagination';
 import { getUsersTotalPages } from '@/data/admin/user';
 import { AppAdminCreateUserDialog } from './AppAdminCreateUserDialog';
-import { unstable_noStore } from 'next/cache';
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 
-export const runtime = 'edge';
 export const metadata = {
   title: 'User List | Admin Panel | Nextbase',
 };
@@ -18,7 +16,6 @@ export default async function AdminUsersListPage({
 }: {
   searchParams: unknown;
 }) {
-  unstable_noStore();
   const validatedSearchParams = appAdminUserFiltersSchema.parse(searchParams);
   const suspenseKey = JSON.stringify(validatedSearchParams);
   const totalPages = await getUsersTotalPages(validatedSearchParams);
