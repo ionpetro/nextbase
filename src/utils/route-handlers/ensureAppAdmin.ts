@@ -1,5 +1,5 @@
+import { getIsAppAdmin } from '@/data/admin/security';
 import { createSupabaseUserRouteHandlerClient } from '@/supabase-clients/user/createSupabaseUserRouteHandlerClient';
-import { getIsAppAdmin } from '../supabase-queries';
 
 export const ensureAppAdmin = async () => {
   const supabaseClient = createSupabaseUserRouteHandlerClient();
@@ -9,11 +9,11 @@ export const ensureAppAdmin = async () => {
 
   if (!session || !session.user) {
     throw new Error(
-      'The user does not have an active session or is not authenticated'
+      'The user does not have an active session or is not authenticated',
     );
   }
 
-  const isAppAdmin = await getIsAppAdmin(supabaseClient, session.user);
+  const isAppAdmin = await getIsAppAdmin(session.user);
 
   if (!isAppAdmin) {
     throw new Error('The user is not allowed to perform this action');

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Html,
   Head,
@@ -10,7 +10,7 @@ import {
   Link,
   Button,
   Tailwind,
-} from "@react-email/components";
+} from '@react-email/components';
 
 const YourRoleChanged = ({
   appName,
@@ -21,7 +21,7 @@ const YourRoleChanged = ({
   senderName,
   keyRoles,
   position,
-  oldRole
+  oldRole,
 }) => {
   return (
     <Html>
@@ -29,11 +29,15 @@ const YourRoleChanged = ({
       <Tailwind>
         <Body className="bg-gray-200 font-sans font-light">
           <Container className="bg-white px-12 py-5">
-            <Heading>Your role has changed from junior developer{oldRole} to senior developer{newRole}</Heading>
+            <Heading>
+              Your role has changed from junior developer{oldRole} to senior
+              developer{newRole}
+            </Heading>
             <Hr className="my-5" />
             <Text className="text-base">Dear Robin{teamMateName},</Text>
             <Text className="text-base">
-              Max has changed your role from junior developer{oldRole} to senior developer{newRole}
+              Max has changed your role from junior developer{oldRole} to senior
+              developer{newRole}
             </Text>
             {/* <Text className="text-base">
               We believe that this change will provide you with new
@@ -50,7 +54,7 @@ const YourRoleChanged = ({
             >
               View Role Description
             </Button>
-            <Hr className="my-5"/>
+            <Hr className="my-5" />
             <Text className="text-base">
               We appreciate your flexibility and dedication throughout this
               process. Thank you for your continued commitment to our team's

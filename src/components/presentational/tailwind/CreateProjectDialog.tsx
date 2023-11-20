@@ -13,30 +13,46 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
 import LayersIcon from 'lucide-react/dist/esm/icons/layers';
+import { useToastMutation } from '@/hooks/useToastMutation';
+import { createProjectAction } from '@/data/user/projects';
+import { useRouter } from 'next/navigation';
 
 type CreateProjectDialogProps = {
-  onConfirm: (projectTitle: string) => void;
-  isLoading: boolean;
+  organizationId: string;
+  teamId: number | null;
 };
 
 export function CreateProjectDialog({
-  onConfirm,
-  isLoading,
+  organizationId,
+  teamId,
 }: CreateProjectDialogProps) {
   const [projectTitle, setProjectTitle] = useState<string>('');
   const [open, setOpen] = useState(false);
+  const router = useRouter();
+  const createProjectMutation = useToastMutation(createProjectAction, {
+    loadingMessage: 'Creating project...',
+    successMessage: 'Project created!',
+    errorMessage: 'Failed to create project',
+    onSuccess: (data) => {
+      setOpen(false);
+      router.push(`/project/${data.id}`);
+    },
+  });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onConfirm(projectTitle);
-    setOpen(false);
+    createProjectMutation.mutate({
+      organizationId,
+      teamId,
+      name: projectTitle,
+    });
   };
 
   return (
     <>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="default">
+          <Button variant="default" size="default">
             <LayersIcon className="mr-2 w-5 h-5" />
             Create Project
           </Button>
@@ -66,7 +82,7 @@ export function CreateProjectDialog({
                 id="name"
                 type="text"
                 placeholder="Project Name"
-                disabled={isLoading}
+                disabled={createProjectMutation.isLoading}
               />
             </div>
 
@@ -74,7 +90,7 @@ export function CreateProjectDialog({
               <Button
                 type="button"
                 variant="outline"
-                disabled={isLoading}
+                disabled={createProjectMutation.isLoading}
                 className="w-full"
                 onClick={() => {
                   setOpen(false);
@@ -86,9 +102,11 @@ export function CreateProjectDialog({
                 type="submit"
                 variant="default"
                 className="w-full"
-                disabled={isLoading}
+                disabled={createProjectMutation.isLoading}
               >
-                Create Project
+                {createProjectMutation.isLoading
+                  ? 'Creating project...'
+                  : 'Create Project'}
               </Button>
             </DialogFooter>
           </form>

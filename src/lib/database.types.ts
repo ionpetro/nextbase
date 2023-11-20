@@ -68,6 +68,7 @@ export interface Database {
           {
             foreignKeyName: "customers_organization_id_fkey"
             columns: ["organization_id"]
+            isOneToOne: false
             referencedRelation: "organizations"
             referencedColumns: ["id"]
           }
@@ -90,12 +91,14 @@ export interface Database {
           {
             foreignKeyName: "internal_blog_author_posts_author_id_fkey"
             columns: ["author_id"]
+            isOneToOne: false
             referencedRelation: "internal_blog_author_profiles"
             referencedColumns: ["user_id"]
           },
           {
             foreignKeyName: "internal_blog_author_posts_post_id_fkey"
             columns: ["post_id"]
+            isOneToOne: false
             referencedRelation: "internal_blog_posts"
             referencedColumns: ["id"]
           }
@@ -145,6 +148,7 @@ export interface Database {
           {
             foreignKeyName: "internal_blog_author_profiles_user_id_fkey"
             columns: ["user_id"]
+            isOneToOne: true
             referencedRelation: "user_profiles"
             referencedColumns: ["id"]
           }
@@ -188,12 +192,14 @@ export interface Database {
           {
             foreignKeyName: "internal_blog_post_tags_relationship_blog_post_id_fkey"
             columns: ["blog_post_id"]
+            isOneToOne: false
             referencedRelation: "internal_blog_posts"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "internal_blog_post_tags_relationship_tag_id_fkey"
             columns: ["tag_id"]
+            isOneToOne: false
             referencedRelation: "internal_blog_post_tags"
             referencedColumns: ["id"]
           }
@@ -270,6 +276,7 @@ export interface Database {
           {
             foreignKeyName: "internal_changelog_user_id_fkey"
             columns: ["user_id"]
+            isOneToOne: false
             referencedRelation: "user_profiles"
             referencedColumns: ["id"]
           }
@@ -304,12 +311,14 @@ export interface Database {
           {
             foreignKeyName: "internal_feedback_comments_thread_id_fkey"
             columns: ["thread_id"]
+            isOneToOne: false
             referencedRelation: "internal_feedback_threads"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "internal_feedback_comments_user_id_fkey"
             columns: ["user_id"]
+            isOneToOne: false
             referencedRelation: "user_profiles"
             referencedColumns: ["id"]
           }
@@ -359,6 +368,7 @@ export interface Database {
           {
             foreignKeyName: "internal_feedback_threads_user_id_fkey"
             columns: ["user_id"]
+            isOneToOne: false
             referencedRelation: "user_profiles"
             referencedColumns: ["id"]
           }
@@ -414,18 +424,21 @@ export interface Database {
           {
             foreignKeyName: "organization_join_invitations_invitee_user_id_fkey"
             columns: ["invitee_user_id"]
+            isOneToOne: false
             referencedRelation: "user_profiles"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "organization_join_invitations_inviter_user_id_fkey"
             columns: ["inviter_user_id"]
+            isOneToOne: false
             referencedRelation: "user_profiles"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "organization_join_invitations_organization_id_fkey"
             columns: ["organization_id"]
+            isOneToOne: false
             referencedRelation: "organizations"
             referencedColumns: ["id"]
           }
@@ -457,12 +470,14 @@ export interface Database {
           {
             foreignKeyName: "organization_members_member_id_fkey"
             columns: ["member_id"]
+            isOneToOne: false
             referencedRelation: "user_profiles"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "organization_members_organization_id_fkey"
             columns: ["organization_id"]
+            isOneToOne: false
             referencedRelation: "organizations"
             referencedColumns: ["id"]
           }
@@ -473,24 +488,28 @@ export interface Database {
           created_at: string
           created_by: string
           id: string
+          is_default: boolean
           title: string
         }
         Insert: {
           created_at?: string
           created_by: string
           id?: string
+          is_default?: boolean
           title?: string
         }
         Update: {
           created_at?: string
           created_by?: string
           id?: string
+          is_default?: boolean
           title?: string
         }
         Relationships: [
           {
             foreignKeyName: "organizations_created_by_fkey"
             columns: ["created_by"]
+            isOneToOne: false
             referencedRelation: "user_profiles"
             referencedColumns: ["id"]
           }
@@ -516,6 +535,7 @@ export interface Database {
           {
             foreignKeyName: "organizations_private_info_id_fkey"
             columns: ["id"]
+            isOneToOne: true
             referencedRelation: "organizations"
             referencedColumns: ["id"]
           }
@@ -565,6 +585,7 @@ export interface Database {
           {
             foreignKeyName: "prices_product_id_fkey"
             columns: ["product_id"]
+            isOneToOne: false
             referencedRelation: "products"
             referencedColumns: ["id"]
           }
@@ -626,6 +647,7 @@ export interface Database {
           {
             foreignKeyName: "project_comments_user_id_fkey"
             columns: ["user_id"]
+            isOneToOne: false
             referencedRelation: "user_profiles"
             referencedColumns: ["id"]
           }
@@ -717,12 +739,14 @@ export interface Database {
           {
             foreignKeyName: "subscriptions_organization_id_fkey"
             columns: ["organization_id"]
+            isOneToOne: false
             referencedRelation: "organizations"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "subscriptions_price_id_fkey"
             columns: ["price_id"]
+            isOneToOne: false
             referencedRelation: "prices"
             referencedColumns: ["id"]
           }
@@ -754,6 +778,7 @@ export interface Database {
           {
             foreignKeyName: "team_members_user_id_fkey"
             columns: ["user_id"]
+            isOneToOne: false
             referencedRelation: "user_profiles"
             referencedColumns: ["id"]
           }
@@ -777,6 +802,33 @@ export interface Database {
           id?: number
           name?: string
           organization_id?: string
+        }
+        Relationships: []
+      }
+      user_api_keys: {
+        Row: {
+          created_at: string
+          expires_at: string | null
+          is_revoked: boolean
+          key_id: string
+          masked_key: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          expires_at?: string | null
+          is_revoked?: boolean
+          key_id: string
+          masked_key: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          expires_at?: string | null
+          is_revoked?: boolean
+          key_id?: string
+          masked_key?: string
+          user_id?: string
         }
         Relationships: []
       }
@@ -812,6 +864,7 @@ export interface Database {
           {
             foreignKeyName: "user_notifications_user_id_fkey"
             columns: ["user_id"]
+            isOneToOne: false
             referencedRelation: "user_profiles"
             referencedColumns: ["id"]
           }
@@ -834,13 +887,15 @@ export interface Database {
           {
             foreignKeyName: "user_private_info_id_fkey"
             columns: ["id"]
-            referencedRelation: "users"
+            isOneToOne: true
+            referencedRelation: "app_admin_all_users"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "user_private_info_id_fkey"
             columns: ["id"]
-            referencedRelation: "app_admin_all_users"
+            isOneToOne: true
+            referencedRelation: "users"
             referencedColumns: ["id"]
           }
         ]
@@ -868,13 +923,15 @@ export interface Database {
           {
             foreignKeyName: "user_profiles_id_fkey"
             columns: ["id"]
-            referencedRelation: "users"
+            isOneToOne: true
+            referencedRelation: "app_admin_all_users"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "user_profiles_id_fkey"
             columns: ["id"]
-            referencedRelation: "app_admin_all_users"
+            isOneToOne: true
+            referencedRelation: "users"
             referencedColumns: ["id"]
           }
         ]
@@ -914,6 +971,12 @@ export interface Database {
           credits: number
         }[]
       }
+      app_admin_get_all_organizations_count: {
+        Args: {
+          search_query?: string
+        }
+        Returns: number
+      }
       app_admin_get_all_users: {
         Args: {
           search_query?: string
@@ -932,6 +995,12 @@ export interface Database {
           is_confirmed: boolean
           last_sign_in_at: string
         }[]
+      }
+      app_admin_get_all_users_count: {
+        Args: {
+          search_query?: string
+        }
+        Returns: number
       }
       app_admin_get_organizations_created_per_month: {
         Args: Record<PropertyKey, never>

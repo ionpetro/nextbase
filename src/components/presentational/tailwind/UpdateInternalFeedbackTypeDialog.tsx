@@ -12,7 +12,7 @@ import {
 import { Button } from '@/components/ui/Button';
 import { Enum } from '@/types';
 import { formatFieldValue } from '@/utils/feedback';
-import { FeedbackThreadTypeSelect } from '@/components/presentational/tailwind/FeedbackThreadTypeSelect';
+import { FeedbackThreadTypeSelect } from '@/components/Feedback/FeedbackThreadTypeSelect';
 import { useRouter } from 'next/navigation';
 import FeedbackIcon from 'lucide-react/dist/esm/icons/message-square';
 type Props = {

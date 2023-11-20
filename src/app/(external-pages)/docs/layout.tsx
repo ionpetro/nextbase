@@ -1,7 +1,5 @@
 import { Navigation } from './Navigation';
 import './layout.css';
-import { Header } from './Navbar';
-import { ExternalNavigation } from '../ExternalNavigation';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

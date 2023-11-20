@@ -14,13 +14,13 @@ import { Input } from '@/components/ui/Input';
 import { useForm, Controller } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
-import { toast } from 'react-hot-toast';
+
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import slugify from 'slugify';
 import { Textarea } from '@/components/ui/Textarea';
 import TagsIcon from 'lucide-react/dist/esm/icons/tag';
+import { useToastMutation } from '@/hooks/useToastMutation';
 
 const blogTagSchema = z.object({
   name: z.string(),
@@ -41,16 +41,18 @@ export const AddBlogTagDialog = ({
     useForm<BlogTagFormType>({ resolver: zodResolver(blogTagSchema) });
 
   const { mutate: createBlogTagMutation, isLoading: isCreatingBlogTag } =
-    useMutation(async (payload: BlogTagFormType) => createBlogTag(payload), {
-      onSuccess: () => {
-        router.refresh();
-        toast.success('Successfully created blog tag');
-        setIsOpen(false);
+    useToastMutation(
+      async (payload: BlogTagFormType) => createBlogTag(payload),
+      {
+        loadingMessage: 'Creating blog tag...',
+        successMessage: 'Blog tag created!',
+        errorMessage: 'Failed to create blog tag',
+        onSuccess: () => {
+          router.refresh();
+          setIsOpen(false);
+        },
       },
-      onError: () => {
-        toast.error('Failed to create blog tag');
-      },
-    });
+    );
 
   const { isValid } = formState;
   const nameValue = watch('name');
@@ -64,7 +66,7 @@ export const AddBlogTagDialog = ({
       });
       setValue('slug', slug);
     }
-  }, [nameValue]);
+  }, [nameValue, setValue]);
 
   const onSubmit = (data: BlogTagFormType) => {
     createBlogTagMutation(data);

@@ -1,8 +1,8 @@
 import { T } from '@/components/ui/Typography';
-import { createSupabaseAdminServerComponentClient } from '@/supabase-clients/admin/createSupabaseAdminServerComponentClient';
-import { AppSupabaseClient } from '@/types';
 import { stripe } from '@/utils/stripe';
 import { SaaSMetrics } from './SaasMetrics';
+import { Suspense } from 'react';
+import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 
 async function getCurrentMRR() {
   const startOfMonth = new Date();
@@ -12,7 +12,7 @@ async function getCurrentMRR() {
   const endOfMonth = new Date(
     startOfMonth.getFullYear(),
     startOfMonth.getMonth() + 1,
-    1
+    1,
   );
 
   const subscriptions = await stripe.subscriptions.list({
@@ -48,12 +48,12 @@ async function getMRR() {
     const startOfMonth = new Date(
       startDate.getFullYear(),
       startDate.getMonth() + i,
-      1
+      1,
     );
     const endOfMonth = new Date(
       startDate.getFullYear(),
       startDate.getMonth() + i + 1,
-      1
+      1,
     );
 
     const subscriptions = await stripe.subscriptions.list({
@@ -101,12 +101,12 @@ async function getChurnRate() {
     const startOfMonth = new Date(
       startDate.getFullYear(),
       startDate.getMonth() + i,
-      1
+      1,
     );
     const endOfMonth = new Date(
       startDate.getFullYear(),
       startDate.getMonth() + i + 1,
-      1
+      1,
     );
 
     const subscriptionsCreated = await stripe.subscriptions.list({
@@ -118,7 +118,7 @@ async function getChurnRate() {
     });
 
     const canceledSubscriptions = subscriptionsCreated.data.filter(
-      (sub) => sub.status === 'canceled'
+      (sub) => sub.status === 'canceled',
     );
 
     const churnRate =
@@ -137,28 +137,30 @@ async function getChurnRate() {
   return monthlyChurnRates;
 }
 
-async function getTotalUserCount(supabaseClient: AppSupabaseClient) {
-  const { data } = await supabaseClient.rpc('app_admin_get_total_user_count');
-  return data ?? 0;
-}
-
-async function getTotalOrganizationsCount(supabaseClient: AppSupabaseClient) {
-  const { data } = await supabaseClient.rpc(
-    'app_admin_get_total_organization_count'
+async function getTotalUserCount() {
+  const { data } = await supabaseAdminClient.rpc(
+    'app_admin_get_total_user_count',
   );
   return data ?? 0;
 }
 
-async function getTotalProjectsCount(supabaseClient: AppSupabaseClient) {
-  const { data } = await supabaseClient.rpc(
-    'app_admin_get_total_project_count'
+async function getTotalOrganizationsCount() {
+  const { data } = await supabaseAdminClient.rpc(
+    'app_admin_get_total_organization_count',
   );
   return data ?? 0;
 }
 
-async function getOrganizationCountByMonth(supabaseClient: AppSupabaseClient) {
-  const { data } = await supabaseClient.rpc(
-    'app_admin_get_organizations_created_per_month'
+async function getTotalProjectsCount() {
+  const { data } = await supabaseAdminClient.rpc(
+    'app_admin_get_total_project_count',
+  );
+  return data ?? 0;
+}
+
+async function getOrganizationCountByMonth() {
+  const { data } = await supabaseAdminClient.rpc(
+    'app_admin_get_organizations_created_per_month',
   );
   if (!data) {
     return [];
@@ -173,9 +175,27 @@ async function getOrganizationCountByMonth(supabaseClient: AppSupabaseClient) {
   return formattedData;
 }
 
-async function getProjectCountByMonth(supabaseClient: AppSupabaseClient) {
-  const { data } = await supabaseClient.rpc(
-    'app_admin_get_projects_created_per_month'
+async function getProjectCountByMonth() {
+  const { data, error } = await supabaseAdminClient.rpc(
+    'app_admin_get_projects_created_per_month',
+  );
+
+  if (!data) {
+    return [];
+  }
+  const formattedData = data.map((d) => ({
+    ...d,
+    month: new Date(d.month).toLocaleDateString('en-US', {
+      month: 'long',
+      year: 'numeric',
+    }),
+  }));
+  return formattedData;
+}
+
+async function getUserCountByMonth() {
+  const { data } = await supabaseAdminClient.rpc(
+    'app_admin_get_users_created_per_month',
   );
   if (!data) {
     return [];
@@ -190,89 +210,135 @@ async function getProjectCountByMonth(supabaseClient: AppSupabaseClient) {
   return formattedData;
 }
 
-async function getUserCountByMonth(supabaseClient: AppSupabaseClient) {
-  const { data } = await supabaseClient.rpc(
-    'app_admin_get_users_created_per_month'
+async function getActiveUsers() {
+  const { data } = await supabaseAdminClient.rpc(
+    'app_admin_get_recent_30_day_signin_count',
   );
-  if (!data) {
-    return [];
-  }
-  const formattedData = data.map((d) => ({
-    ...d,
-    month: new Date(d.month).toLocaleDateString('en-US', {
-      month: 'long',
-      year: 'numeric',
-    }),
-  }));
-  return formattedData;
+  return data ?? 0;
 }
 
-async function getActiveUsers(supabaseClient: AppSupabaseClient) {
-  const { data } = await supabaseClient.rpc(
-    'app_admin_get_recent_30_day_signin_count'
+async function ActiveUsers() {
+  const activeUsers = await getActiveUsers();
+
+  return (
+    <div className="bg-gray-200/30 dark:bg-gray-800/40 rounded-xl gap-2 p-16 flex items-center flex-col-reverse">
+      <T.P>Active Users (30 days)</T.P>
+      <T.H1>{activeUsers}</T.H1>
+    </div>
   );
-  return data ?? [];
 }
 
-export default async function AdminPanel() {
-  const supabaseClient = createSupabaseAdminServerComponentClient();
+async function Metrics() {
   const [
-    currentMRR,
     mrr,
     churnRate,
-    totalUserCount,
-    totalOrganizationsCount,
-    totalProjectsCount,
     organizationCountByMonth,
     projectCountByMonth,
     userCountByMonth,
-    activeUsers,
   ] = await Promise.all([
-    getCurrentMRR(),
     getMRR(),
     getChurnRate(),
-    getTotalUserCount(supabaseClient),
-    getTotalOrganizationsCount(supabaseClient),
-    getTotalProjectsCount(supabaseClient),
-    getOrganizationCountByMonth(supabaseClient),
-    getProjectCountByMonth(supabaseClient),
-    getUserCountByMonth(supabaseClient),
-    getActiveUsers(supabaseClient),
+    getOrganizationCountByMonth(),
+    getProjectCountByMonth(),
+    getUserCountByMonth(),
   ]);
 
   return (
+    <SaaSMetrics
+      mrrData={mrr}
+      churnRateData={churnRate}
+      organizationCountByMonth={organizationCountByMonth}
+      projectCountByMonth={projectCountByMonth}
+      userCountByMonth={userCountByMonth}
+    />
+  );
+}
+
+async function TotalProjectCount() {
+  const totalProjectsCount = await getTotalProjectsCount();
+
+  return (
+    <div className="bg-gray-200/30 dark:bg-gray-800/40 rounded-xl gap-2 p-16 flex items-center flex-col-reverse">
+      <T.P>Total Projects</T.P>
+      <T.H1>{totalProjectsCount}</T.H1>
+    </div>
+  );
+}
+
+async function CurrentMRR() {
+  const [currentMRR] = await Promise.all([getCurrentMRR()]);
+
+  return (
+    <div className="bg-gray-200/30 dark:bg-gray-800/40 rounded-xl gap-2 p-16 flex items-center flex-col-reverse">
+      <T.P>Current MRR</T.P>
+      <T.H1>{`$${currentMRR}`}</T.H1>
+    </div>
+  );
+}
+
+async function TotalUserCount() {
+  const { data, error } = await supabaseAdminClient
+    .from('user_profiles')
+    .select('id');
+
+  if (error) {
+    throw error;
+  }
+
+  const totalUserCount = String(data.length);
+
+  return (
+    <div className="bg-gray-200/30 dark:bg-gray-800/40 rounded-xl gap-2 p-16 flex items-center flex-col-reverse">
+      <T.P>Total Users</T.P>
+      <T.H1>{totalUserCount}</T.H1>
+    </div>
+  );
+}
+
+async function TotalOrganizationCount() {
+  const { data, error } = await supabaseAdminClient
+    .from('organizations')
+    .select('id');
+
+  if (error) {
+    throw error;
+  }
+
+  const totalOrganizationCount = String(data.length);
+  return (
+    <div className="bg-gray-200/30 dark:bg-gray-800/40 rounded-xl gap-2 p-16 flex items-center flex-col-reverse">
+      <T.P>Total Organizations</T.P>
+      <T.H1>{totalOrganizationCount}</T.H1>
+    </div>
+  );
+}
+
+export default async function AdminPanel() {
+  return (
     <div className="space-y-4">
-      <SaaSMetrics
-        mrrData={mrr}
-        churnRateData={churnRate}
-        organizationCountByMonth={organizationCountByMonth}
-        projectCountByMonth={projectCountByMonth}
-        userCountByMonth={userCountByMonth}
-      />
+      <Suspense>
+        <Metrics />
+      </Suspense>
       <div>
-        <p className="text-2xl mt-10 mb-2 font-bold">Quick Stats</p>
+        <T.P className="text-2xl mt-10 mb-2 font-bold">Quick Stats</T.P>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-        <div className="bg-gray-200/30 dark:bg-gray-800/40 rounded-xl gap-2 p-16 flex items-center flex-col-reverse">
-          <T.P>Current MRR</T.P>
-          <T.H1>{`$${currentMRR}`}</T.H1>
-        </div>
-        <div className="bg-gray-200/30 dark:bg-gray-800/40 rounded-xl gap-2 p-16 flex items-center flex-col-reverse">
-          <T.P>Total Users</T.P>
-          <T.H1>{totalUserCount}</T.H1>
-        </div>
-        <div className="bg-gray-200/30 dark:bg-gray-800/40 rounded-xl gap-2 p-16 flex items-center flex-col-reverse">
-          <T.P>Total Organizations</T.P>
-          <T.H1>{totalOrganizationsCount}</T.H1>
-        </div>
-        <div className="bg-gray-200/30 dark:bg-gray-800/40 rounded-xl gap-2 p-16 flex items-center flex-col-reverse">
-          <T.P>Total Projects</T.P>
-          <T.H1>{totalProjectsCount}</T.H1>
-        </div>
-        <div className="bg-gray-200/30 dark:bg-gray-800/40 rounded-xl gap-2 p-16 flex items-center flex-col-reverse">
-          <T.P>Active Users (30 days)</T.P>
-          <T.H1>{activeUsers}</T.H1>
-        </div>
+        <Suspense>
+          <CurrentMRR />
+        </Suspense>
+        <Suspense>
+          <TotalUserCount />
+        </Suspense>
+        <Suspense>
+          <TotalOrganizationCount />
+        </Suspense>
+        <Suspense>
+          <TotalProjectCount />
+        </Suspense>
+
+        <Suspense>
+          <ActiveUsers />
+        </Suspense>
       </div>
     </div>
   );

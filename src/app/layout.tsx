@@ -5,6 +5,7 @@ import '@/styles/prosemirror.css';
 import 'react-tooltip/dist/react-tooltip.css';
 import { AppProviders } from './AppProviders';
 import localFont from 'next/font/local';
+import { GeistSans } from 'geist/font/sans';
 
 // const satoshiFont = localFont({
 //   src: '../fonts/satoshi/Satoshi-Variable.woff2',
@@ -32,7 +33,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.className}>
+    <html lang="en" className={GeistSans.className}>
       <head></head>
       <body className="bg-white dark:bg-slate-900">
         <AppProviders>{children}</AppProviders>

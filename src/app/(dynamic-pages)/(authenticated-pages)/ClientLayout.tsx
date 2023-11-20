@@ -1,39 +1,21 @@
 'use client';
 
 import { MaintenanceModeBanner } from '@/components/presentational/tailwind/MaintenanceModeBanner';
-import { useMaintenanceMode } from '@/contexts/MaintenanceModeContext';
-import { useUserProfile } from '@/utils/react-queries/user';
-import { ReactNode, useState } from 'react';
+import { useState } from 'react';
 import { useWindowSize } from 'rooks';
 import { UserOnboardingFlow } from './UserOnboardingFlow';
 import ReactNoSSR from 'react-no-ssr';
 import Confetti from 'react-confetti';
 import { Table } from '@/types';
-import { AppAdminSidebar } from './Sidebar/AppAdminSidebar';
-import { UserSidebar } from './Sidebar/UserSidebar';
-import { useSelectedLayoutSegments } from 'next/navigation';
 import PostHogProvider from '@/contexts/PostHogProvider';
-import { InitialOrganizationListType } from '@/utils/react-query-hooks';
 
 export function ClientLayout({
   children,
-  isUserAppAdmin,
-  currentOrganizationId,
-  userProfile: initialUserProfile,
-  setCurrentOrganizationId,
-  organizationList,
+  userProfile,
 }: {
   children: React.ReactNode;
-  isUserAppAdmin: boolean;
-  currentOrganizationId: string | undefined;
   userProfile: Table<'user_profiles'>;
-  setCurrentOrganizationId: (organizationId: string) => Promise<void>;
-  organizationList: InitialOrganizationListType;
 }) {
-  const { data } = useUserProfile(initialUserProfile);
-  const userProfile = data ?? initialUserProfile;
-  const segments = useSelectedLayoutSegments();
-  const isAppAdminLayout = segments[0] === 'app_admin';
   const { innerHeight: _innerHeight, innerWidth: _innerWidth } =
     useWindowSize();
   const innerHeight = _innerHeight ?? 0;

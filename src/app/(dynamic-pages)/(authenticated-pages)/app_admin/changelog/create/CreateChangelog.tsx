@@ -1,13 +1,12 @@
 'use client';
 
 import { Button } from '@/components/ui/Button';
+import { createChangelog } from '@/data/admin/internal-changelog';
+import { useToastMutation } from '@/hooks/useToastMutation';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
-import axios, { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
-import { toast } from 'react-hot-toast';
 import { z } from 'zod';
 
 const createChangelogFormSchema = z.object({
@@ -17,49 +16,25 @@ const createChangelogFormSchema = z.object({
 
 type CreateChangelogFormSchema = z.infer<typeof createChangelogFormSchema>;
 
-export const CreateChangelog = ({
-  createChangelogAction,
-}: {
-  createChangelogAction: ({
-    title,
-    changes,
-  }: {
-    title: string;
-    changes: string;
-  }) => Promise<void>;
-}) => {
-  const toastRef = useRef<string | null>(null);
+export const CreateChangelog = () => {
   const router = useRouter();
-  const { mutate } = useMutation(
-    async ({ title, changes }: { title: string; changes: string }) => {
-      return createChangelogAction({ title, changes });
+  const formRef = useRef<HTMLFormElement>(null);
+  const { mutate: createChangelogMutation, isLoading } = useToastMutation(
+    async ({ title, changes }: CreateChangelogFormSchema) => {
+      return createChangelog({
+        changes,
+        title,
+      });
     },
     {
-      onMutate: () => {
-        const toastId = toast.loading('Creating changelog...');
-        toastRef.current = toastId;
-      },
+      loadingMessage: 'Creating changelog...',
+      successMessage: 'Changelog created!',
+      errorMessage: 'Failed to create changelog',
       onSuccess: () => {
-        toast.success('Changelog created', {
-          id: toastRef.current ?? undefined,
-        });
-        toastRef.current = null;
         router.refresh();
+        formRef.current?.reset();
       },
-      onError: (error) => {
-        let message = `Failed to create changelog`;
-        if (error instanceof Error) {
-          message += `: ${error.message}`;
-        } else if (typeof error === 'string') {
-          message += `: ${error}`;
-        }
-
-        toast.error(message, {
-          id: toastRef.current ?? undefined,
-        });
-        toastRef.current = null;
-      },
-    }
+    },
   );
 
   const { register, handleSubmit } = useForm<CreateChangelogFormSchema>({
@@ -68,9 +43,10 @@ export const CreateChangelog = ({
 
   return (
     <form
+      ref={formRef}
       className="space-y-3"
       onSubmit={handleSubmit((data) => {
-        mutate(data);
+        createChangelogMutation(data);
       })}
     >
       <input
@@ -89,8 +65,7 @@ export const CreateChangelog = ({
           Cancel
         </Button>
         <Button variant="default" type="submit" className="w-1/4">
-          {' '}
-          Submit
+          {isLoading ? 'Creating Changelog...' : 'Create Changelog'}
         </Button>
       </div>
     </form>

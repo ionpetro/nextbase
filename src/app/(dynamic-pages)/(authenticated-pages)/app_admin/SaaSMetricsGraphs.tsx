@@ -10,7 +10,8 @@ import {
   DonutChart,
 } from '@tremor/react';
 import { GraphContainer } from '@/components/presentational/tailwind/GraphContainer';
-
+const valueFormatter = (number: number) =>
+  `$ ${Intl.NumberFormat('us').format(number).toString()}`;
 const mrrBarListData = [
   {
     name: 'MRR',
@@ -64,7 +65,7 @@ export function SaaSMetricsGraphs({
 }) {
   return (
     <div className="flex flex-col space-y-2 mt-12 ">
-      <p className="text-2xl font-bold mb-2">Overview</p>
+      <p className="text-2xl font-bold mb-2">Admin Analytics</p>
       <div className="grid grid-cols-2 grid-flow-row auto-rows-max w-full gap-10 ">
         <GraphContainer
           title="Monthly Churn Rate"
@@ -87,7 +88,7 @@ export function SaaSMetricsGraphs({
             data={mrrData.map((item) => {
               return {
                 ...item,
-                mrr: Number(item.mrr),
+                mrr: Number.parseInt(item.mrr),
               };
             })}
             index="month"

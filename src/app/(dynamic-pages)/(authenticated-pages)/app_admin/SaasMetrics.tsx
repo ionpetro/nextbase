@@ -5,7 +5,7 @@ const SaaSMetricsGraphs = dynamic(
   () => import('./SaaSMetricsGraphs').then((mod) => mod.SaaSMetricsGraphs),
   {
     ssr: false,
-  }
+  },
 );
 
 export function SaaSMetrics(props: {

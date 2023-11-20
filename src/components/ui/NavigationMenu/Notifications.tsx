@@ -1,14 +1,13 @@
 'use client';
 
-import { useLoggedInUser } from '@/hooks/useLoggedInUser';
 import { supabaseUserClientComponentClient } from '@/supabase-clients/user/supabaseUserClientComponentClient';
 import {
   getPaginatedNotifications,
   getUnseenNotificationIds,
   readAllNotifications,
   seeNotification,
-} from '@/utils/supabase/notifications';
-import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query';
+} from './fetchClientNotifications';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { useCallback, useEffect } from 'react';
 import {
   Popover,
@@ -25,26 +24,21 @@ import { parseNotification } from '@/utils/parseNotification';
 import moment from 'moment';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
-import { Button } from '../Button';
+import { useToastMutation } from '@/hooks/useToastMutation';
 
 const NOTIFICATIONS_PAGE_SIZE = 10;
-const useUnseenNotificationIds = () => {
-  const user = useLoggedInUser();
-
+const useUnseenNotificationIds = (userId: string) => {
   const { data, refetch } = useQuery(
-    ['unseen-notification-ids', user.id],
+    ['unseen-notification-ids', userId],
     async () => {
-      return getUnseenNotificationIds(
-        supabaseUserClientComponentClient,
-        user.id,
-      );
+      return getUnseenNotificationIds(userId);
     },
     {
       initialData: [],
     },
   );
   useEffect(() => {
-    const channelId = `user-notifications:${user.id}`;
+    const channelId = `user-notifications:${userId}`;
     const channel = supabaseUserClientComponentClient
       .channel(channelId)
       .on(
@@ -53,7 +47,7 @@ const useUnseenNotificationIds = () => {
           event: 'INSERT',
           schema: 'public',
           table: 'user_notifications',
-          filter: 'user_id=eq.' + user.id,
+          filter: 'user_id=eq.' + userId,
         },
         () => {
           refetch();
@@ -65,7 +59,7 @@ const useUnseenNotificationIds = () => {
           event: 'UPDATE',
           schema: 'public',
           table: 'user_notifications',
-          filter: 'user_id=eq.' + user.id,
+          filter: 'user_id=eq.' + userId,
         },
         (payload) => {
           console.log(payload);
@@ -76,21 +70,18 @@ const useUnseenNotificationIds = () => {
     return () => {
       channel.unsubscribe();
     };
-  }, [supabaseUserClientComponentClient]);
+  }, [refetch, userId]);
 
   return data ?? 0;
 };
 
-export const useNotifications = () => {
-  const user = useLoggedInUser();
-
+export const useNotifications = (userId: string) => {
   const { data, isFetchingNextPage, isLoading, fetchNextPage, hasNextPage } =
     useInfiniteQuery(
-      ['paginatedNotifications', user.id],
+      ['paginatedNotifications', userId],
       async ({ pageParam }) => {
         return getPaginatedNotifications(
-          supabaseUserClientComponentClient,
-          user.id,
+          userId,
           pageParam ?? 0,
           NOTIFICATIONS_PAGE_SIZE,
         );
@@ -155,9 +146,7 @@ function Notification({
       }
       onClick={
         notificationPayload.actionType === 'button'
-          ? () => {
-            handleNotificationClick();
-          }
+          ? handleNotificationClick
           : undefined
       }
       image={notificationPayload.image}
@@ -166,7 +155,7 @@ function Notification({
       notificationId={notification.id}
       onHover={() => {
         if (!isSeen) {
-          seeNotification(supabaseUserClientComponentClient, notification.id);
+          seeNotification(notification.id);
           router.refresh();
         }
       }}
@@ -174,24 +163,25 @@ function Notification({
   );
 }
 
-export const useReadAllNotifications = () => {
+export const useReadAllNotifications = (userId: string) => {
   const router = useRouter();
-  const user = useLoggedInUser();
-  return useMutation(
+  return useToastMutation(
     async () => {
-      return readAllNotifications(supabaseUserClientComponentClient, user.id);
+      return readAllNotifications(userId);
     },
     {
+      loadingMessage: 'Marking all notifications as read...',
+      successMessage: 'All notifications marked as read',
+      errorMessage: 'Failed to mark all notifications as read',
       onSuccess: () => {
         router.refresh();
-        toast.success('All notifications marked as read');
       },
     },
   );
 };
 
-export const Notifications = () => {
-  const unseenNotificationIds = useUnseenNotificationIds();
+export const Notifications = ({ userId }: { userId: string }) => {
+  const unseenNotificationIds = useUnseenNotificationIds(userId);
   const unseenNotificationCount = unseenNotificationIds.length;
   const {
     notifications,
@@ -199,14 +189,23 @@ export const Notifications = () => {
     fetchNextPage,
     isFetchingNextPage,
     isLoading,
-  } = useNotifications();
-  const { mutate: readAllNotifications } = useReadAllNotifications();
+  } = useNotifications(userId);
+  const { mutate } = useToastMutation(
+    async () => {
+      return readAllNotifications(userId);
+    },
+    {
+      loadingMessage: 'Marking all notifications as read...',
+      successMessage: 'All notifications marked as read',
+      errorMessage: 'Failed to mark all notifications as read',
+    },
+  );
   return (
     <Popover>
-      <PopoverTrigger className="focus:ring-none">
+      <PopoverTrigger className="relative focus:ring-none">
         <NotificationIcon className="h-5 w-5 px-0 text-muted-foreground hover:text-black dark:hover:text-white" />
         {unseenNotificationCount > 0 && (
-          <span className="absolute -top-1 -right-1.5 bg-red-500 text-white text-xs font-bold px-1.5 rounded-full">
+          <span className="absolute -top-1.5 -right-2 bg-red-500  text-white text-xs font-bold px-1.5 rounded-full">
             {unseenNotificationCount}
           </span>
         )}
@@ -225,7 +224,7 @@ export const Notifications = () => {
                     <CheckIcon className="h-5 w-5 text-muted-foreground dark:group-hover:text-gray-400" />{' '}
                     <span
                       onClick={() => {
-                        readAllNotifications();
+                        mutate();
                       }}
                       className="underline underline-offset-4 text-muted-foreground dark:group-hover:text-gray-400 "
                     >

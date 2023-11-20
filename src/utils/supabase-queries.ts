@@ -109,28 +109,6 @@ export const createOrganization = async (
   return data;
 };
 
-export const updateOrganizationTitle = async (
-  supabase: AppSupabaseClient,
-  organizationId: string,
-  title: string,
-): Promise<Table<'organizations'>> => {
-  const { data, error } = await supabase
-    .from('organizations')
-    .update({
-      title,
-    })
-    .eq('id', organizationId)
-    .select('*')
-    .single();
-
-  if (error) {
-    errors.add(error.message);
-    throw error;
-  }
-
-  return data;
-};
-
 export const getTeamMembersInOrganization = async (
   supabase: AppSupabaseClient,
   organizationId: string,
@@ -187,68 +165,6 @@ export const getOrganizationSubscription = async (
   return data;
 };
 
-export const getUserProfile = async (
-  supabase: AppSupabaseClient,
-  userId: string,
-): Promise<Table<'user_profiles'>> => {
-  const { data, error } = await supabase
-    .from('user_profiles')
-    .select('*')
-    .eq('id', userId)
-    .single();
-
-  if (error) {
-    errors.add(error.message);
-    throw error;
-  }
-
-  return data;
-};
-
-export async function getIsAppAdmin(
-  supabaseClient: AppSupabaseClient,
-  authUser: User,
-): Promise<boolean> {
-  const { data: isUserAppAdmin, error } = await supabaseClient
-    .rpc('check_if_user_is_app_admin', {
-      user_id: authUser.id,
-    })
-    .single();
-  if (error) {
-    throw error;
-  }
-
-  return isUserAppAdmin;
-}
-
-export const updateUserProfileNameAndAvatar = async (
-  supabase: AppSupabaseClient,
-  userId: string,
-  {
-    fullName,
-    avatarUrl,
-  }: {
-    fullName?: string;
-    avatarUrl?: string;
-  },
-) => {
-  const { data, error } = await supabase
-    .from('user_profiles')
-    .update({
-      full_name: fullName,
-      avatar_url: avatarUrl,
-    })
-    .eq('id', userId)
-    .single();
-
-  if (error) {
-    errors.add(error.message);
-    throw error;
-  }
-
-  return data;
-};
-
 export const getUserOrganizationRole = async (
   supabase: AppSupabaseClient,
   userId: string,
@@ -260,25 +176,6 @@ export const getUserOrganizationRole = async (
     .eq('member_id', userId)
     .eq('organization_id', organizationId)
     .single();
-
-  if (error) {
-    errors.add(error.message);
-    throw error;
-  }
-
-  return data;
-};
-
-/* ==================== */
-/* Maintenance mode */
-/* ==================== */
-
-export const getIsAppInMaintenanceMode = async (
-  supabaseClient: AppSupabaseClient,
-): Promise<boolean> => {
-  const { data, error } = await supabaseClient.rpc(
-    'is_app_in_maintenance_mode',
-  );
 
   if (error) {
     errors.add(error.message);
@@ -350,47 +247,6 @@ export const updatePassword = async (
 ) => {
   const { error } = await supabase.auth.updateUser({
     password,
-  });
-
-  if (error) {
-    errors.add(error.message);
-    throw error;
-  }
-};
-
-export const signInWithProvider = async (
-  supabase: AppSupabaseClient,
-  provider: AuthProvider,
-  next?: string,
-) => {
-  const redirectToURL = new URL(toSiteURL('/auth/callback'));
-  if (next) {
-    redirectToURL.searchParams.set('next', next);
-  }
-  const { error } = await supabase.auth.signInWithOAuth({
-    provider,
-    options: {
-      redirectTo: redirectToURL.toString(),
-    },
-  });
-
-  if (error) {
-    errors.add(error.message);
-    throw error;
-  }
-};
-
-export const signUp = async (
-  supabase: AppSupabaseClient,
-  email: string,
-  password: string,
-) => {
-  const { error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: {
-      emailRedirectTo: toSiteURL('/auth/callback'),
-    },
   });
 
   if (error) {

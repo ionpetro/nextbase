@@ -14,14 +14,14 @@ import { Input } from '@/components/ui/Input';
 import { useForm, Controller } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
-import { toast } from 'react-hot-toast';
+
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import slugify from 'slugify';
 import { Textarea } from '@/components/ui/Textarea';
 import Edit from 'lucide-react/dist/esm/icons/edit';
 import { Table } from '@/types';
+import { useToastMutation } from '@/hooks/useToastMutation';
 
 const blogTagSchema = z.object({
   name: z.string(),
@@ -53,18 +53,17 @@ export const EditBlogTagDialog = ({
     });
 
   const { mutate: updateBlogTagMutation, isLoading: isUpdatingBlogTag } =
-    useMutation(
+    useToastMutation(
       async (payload: BlogTagFormType) => updateBlogTag(tag.id, payload),
       {
+        loadingMessage: 'Updating blog tag...',
+        successMessage: 'Blog tag updated!',
+        errorMessage: 'Failed to update blog tag',
         onSuccess: () => {
           router.refresh();
-          toast.success('Successfully updated blog tag');
           setIsOpen(false);
         },
-        onError: () => {
-          toast.error('Failed to update blog tag');
-        },
-      }
+      },
     );
 
   const { isValid } = formState;
@@ -77,7 +76,7 @@ export const EditBlogTagDialog = ({
       replacement: '-',
     });
     setValue('slug', slug);
-  }, [nameValue]);
+  }, [nameValue, setValue]);
 
   const onSubmit = (data: BlogTagFormType) => {
     updateBlogTagMutation(data);

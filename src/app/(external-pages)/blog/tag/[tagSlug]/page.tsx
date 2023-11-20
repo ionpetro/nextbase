@@ -1,14 +1,15 @@
 import { T } from '@/components/ui/Typography';
-import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
-import {
-  getAllBlogTags,
-  getPublishedBlogPostsByTagSlug,
-  getTagBySlug,
-} from '@/utils/supabase/internalBlog';
 import { Metadata } from 'next';
 import { z } from 'zod';
 import { PublicBlogList } from '../../PublicBlogList';
 import { TagsNav } from '../../TagsNav';
+import {
+  anonGetAllBlogTags,
+  anonGetPublishedBlogPosts,
+  anonGetPublishedBlogPostsByTagSlug,
+  anonGetTagBySlug,
+} from '@/data/anon/internalBlog';
+import { Suspense } from 'react';
 
 const BlogListByTagPageParamsSchema = z.object({
   tagSlug: z.string(),
@@ -21,12 +22,22 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   // read route params
   const { tagSlug } = BlogListByTagPageParamsSchema.parse(params);
-  const tag = await getTagBySlug(supabaseAdminClient, tagSlug);
+  const tag = await anonGetTagBySlug(tagSlug);
 
   return {
     title: `${tag.name} | Blog | Nextbase Ultimate`,
     description: tag.description,
   };
+}
+
+async function Tags() {
+  const tags = await anonGetAllBlogTags();
+  return <TagsNav tags={tags} />;
+}
+
+async function BlogList({ tagSlug }: { tagSlug: string }) {
+  const blogPosts = await anonGetPublishedBlogPostsByTagSlug(tagSlug);
+  return <PublicBlogList blogPosts={blogPosts} />;
 }
 
 export default async function BlogListByTagPage({
@@ -35,11 +46,8 @@ export default async function BlogListByTagPage({
   params: unknown;
 }) {
   const { tagSlug } = BlogListByTagPageParamsSchema.parse(params);
-  const [tag, blogPosts, allTags] = await Promise.all([
-    getTagBySlug(supabaseAdminClient, tagSlug),
-    getPublishedBlogPostsByTagSlug(supabaseAdminClient, tagSlug),
-    getAllBlogTags(supabaseAdminClient),
-  ]);
+
+  const tag = await anonGetTagBySlug(tagSlug);
 
   return (
     <div className="space-y-8 w-full">
@@ -49,9 +57,13 @@ export default async function BlogListByTagPage({
           <T.H1>{tag.name}</T.H1>
           <T.Subtle>{tag.description}</T.Subtle>
         </div>
-        <TagsNav tags={allTags} />
+        <Suspense fallback={<T.Subtle>Loading tags...</T.Subtle>}>
+          <Tags />
+        </Suspense>
       </div>
-      <PublicBlogList blogPosts={blogPosts} />
+      <Suspense fallback={<T.Subtle>Loading posts...</T.Subtle>}>
+        <BlogList tagSlug={tagSlug} />
+      </Suspense>
     </div>
   );
 }

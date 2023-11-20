@@ -47,8 +47,13 @@ export function CreateOrganizationDialog({
     <>
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger asChild>
-          <Button variant="default" size="default" className="w-full">
-            Create Organisation
+          <Button
+            variant="default"
+            size="default"
+            className="w-full flex space-x-1"
+          >
+            <PlusIcon />
+            <span>New Organization</span>
           </Button>
         </DialogTrigger>
         <DialogContent>

@@ -33,7 +33,7 @@ export const ProjectsTable = ({
   return (
     <div className="mt-6 flow-root">
       <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+        <div className="inline-block min-w-full align-middle sm:px-6 lg:px-8">
           {/* <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg"></div> */}
           {/* <div className="flex rounded-lg bg-clip-border border border-gray-200  max-w-[1296px] overflow-hidden"> */}
           <div className="border rounded-lg shadow-sm overflow-hidden dark:bg-slate-900 bg-white">
@@ -41,8 +41,8 @@ export const ProjectsTable = ({
               <TableHeader>
                 <TableRow>
                   <TableHead>Name</TableHead>
-                  <TableHead>Date</TableHead>
                   <TableHead>Project Status</TableHead>
+                  <TableHead>Created on</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -56,9 +56,7 @@ export const ProjectsTable = ({
                         {project.name}
                       </Anchor>
                     </TableCell>
-                    <TableCell>
-                      {moment(project.created_at).format('LLL')}
-                    </TableCell>
+
                     <TableCell>
                       {/* Add your project status rendering logic here */}
                       {project.project_status === 'completed' ? (
@@ -89,6 +87,9 @@ export const ProjectsTable = ({
                           </T.P>
                         </Badge>
                       )}
+                    </TableCell>
+                    <TableCell>
+                      {moment(project.created_at).format('LLL')}
                     </TableCell>
                   </TableRow>
                 ))}

@@ -1,10 +1,8 @@
 import { Anchor } from '@/components/Anchor';
-import { supabaseUserClientComponentClient } from '@/supabase-clients/user/supabaseUserClientComponentClient';
 import { cn } from '@/utils/cn';
-import { readNotification } from '@/utils/supabase/notifications';
-import { useEffect } from 'react';
-import { useInViewRef } from 'rooks';
+
 import { T } from '../Typography';
+import { readNotification } from './fetchClientNotifications';
 
 type NotificationItemProps = {
   title: string;
@@ -38,7 +36,7 @@ export function NotificationItem({
         ' flex justify-between items-center w-full text-gray-900 dark:text-white px-6 border-b border-gray-300/75 dark:border-gray-700/75',
         isRead
           ? 'bg-gray-100/50 dark:bg-gray-800/50'
-          : 'bg-white dark:bg-gray-900'
+          : 'bg-white dark:bg-gray-900',
       )}
     >
       <div className="flex justify-between items-start w-full  pt-1 ">
@@ -71,7 +69,7 @@ export function NotificationItem({
     return (
       <Anchor
         onClick={() => {
-          readNotification(supabaseUserClientComponentClient, notificationId);
+          readNotification(notificationId);
         }}
         href={href}
         className="w-full flex flex-col items-center"

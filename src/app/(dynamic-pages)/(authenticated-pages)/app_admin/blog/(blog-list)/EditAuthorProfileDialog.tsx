@@ -14,7 +14,6 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Textarea } from '@/components/ui/Textarea';
 import { Table } from '@/types';
-import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import { authorProfileSchema } from '@/utils/zod-schemas/internalBlog';
 import { useState } from 'react';
@@ -27,6 +26,7 @@ import {
 } from '@/components/ui/Select';
 import { useRouter } from 'next/navigation';
 import Edit from 'lucide-react/dist/esm/icons/edit';
+import { useToastMutation } from '@/hooks/useToastMutation';
 
 type AuthorProfileFormType = z.infer<typeof authorProfileSchema>;
 type UpdateAuthorPayload = Omit<
@@ -43,7 +43,7 @@ export const EditAuthorProfileDialog = ({
   appAdmins: Array<Table<'user_profiles'>>;
   updateAuthorProfile: (
     userId: string,
-    data: UpdateAuthorPayload
+    data: UpdateAuthorPayload,
   ) => Promise<void>;
 }) => {
   const router = useRouter();
@@ -68,20 +68,19 @@ export const EditAuthorProfileDialog = ({
   const {
     mutate: updateAuthorProfileMutation,
     isLoading: isUpdatingAuthorProfile,
-  } = useMutation<void, unknown, UpdateAuthorPayload>(
+  } = useToastMutation<void, unknown, UpdateAuthorPayload>(
     async (payload) => {
       return updateAuthorProfile(profile.user_id, payload);
     },
     {
+      loadingMessage: 'Updating author profile...',
+      successMessage: 'Author profile updated!',
+      errorMessage: 'Failed to update author profile',
       onSuccess: () => {
-        toast.success('Successfully updated author profile');
         setIsOpen(false);
         router.refresh();
       },
-      onError: () => {
-        toast.error('Failed to update author profile');
-      },
-    }
+    },
   );
 
   const { isValid, isLoading } = formState;

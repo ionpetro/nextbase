@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { getUserAvatarUrl } from '@/utils/helpers';
 import { PageHeading } from '../PageHeading';
-import H3 from '../Text/H3';
 import { Button } from '../Button';
 import { classNames } from '@/utils/classNames';
 import { useLoggedInUserEmail } from '@/hooks/useLoggedInUserEmail';
@@ -33,7 +32,6 @@ export function UpdateAvatarAndNameBody({
   isNewAvatarImageLoading: boolean;
   setIsNewAvatarImageLoading: (value: boolean) => void;
 }) {
-  const user = useLoggedInUser();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const email = useLoggedInUserEmail();
   const [fullName, setFullName] = useState(profileFullname ?? email);
@@ -136,7 +134,7 @@ export function UpdateAvatarAndNameBody({
                 'flex w-full justify-center rounded-lg border border-transparent py-2 text-white dark:text-black px-4 text-sm font-medium  shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2',
                 isLoading
                   ? 'bg-yellow-300 dark:bg-yellow-700 '
-                  : 'bg-black dark:bg-white hover:bg-gray-900 dark:hover:bg-gray-100  '
+                  : 'bg-black dark:bg-white hover:bg-gray-900 dark:hover:bg-gray-100  ',
               )}
               type="submit"
               disabled={isLoading}

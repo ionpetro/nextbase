@@ -3,19 +3,12 @@
 import { MaintenanceModeBanner } from '@/components/presentational/tailwind/MaintenanceModeBanner';
 import { ReactNode, useEffect } from 'react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import LoginHeader from 'public/assets/login-asset-dashboard.png';
-import LoginBackgroundLight from 'public/assets/image-background-login.png';
-import LoginBackgroundDark from 'public/assets/image-background-login.png';
 import LogoLoginLight from 'public/logos/nextbase-light-logo.png';
 import LogoLoginDark from 'public/logos/nextbase-dark-logo.png';
 import { T } from '@/components/ui/Typography';
 
 export function ClientLayout({ children }: { children: ReactNode }) {
-  const router = useRouter();
-  useEffect(() => {
-    router.prefetch('/dashboard');
-  }, []);
   return (
     <div
       className="grid h-full dark:bg-gray-900/20"

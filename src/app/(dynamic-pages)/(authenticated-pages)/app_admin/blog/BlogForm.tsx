@@ -94,7 +94,7 @@ type CreateBlogFormProps = {
   onSubmit: (
     authorId: string,
     data: TableInsertPayload<'internal_blog_posts'>,
-    tagIds: number[]
+    tagIds: number[],
   ) => Promise<void>;
 };
 
@@ -104,7 +104,7 @@ export type EditBlogFormProps = {
     authorId: string,
     postId: string,
     data: TableUpdatePayload<'internal_blog_posts'>,
-    tagIds: number[]
+    tagIds: number[],
   ) => Promise<void>;
   initialBlogPost: Partial<InternalBlogPostSchema>;
   postId: string;
@@ -135,7 +135,7 @@ export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
       replacement: '-',
     });
     setValue('slug', slug);
-  }, [titleValue]);
+  }, [setValue, titleValue]);
 
   const toastRef = useRef<string | null>(null);
   const { mutate: submitPostMutation, isLoading: isSubmittingPost } =
@@ -185,7 +185,7 @@ export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
           });
           toastRef.current = null;
         },
-      }
+      },
     );
 
   function onSubmit(data: InternalBlogPostSchema) {

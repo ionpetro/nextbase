@@ -1,34 +1,38 @@
 import { ClientLayout } from './ClientLayout';
 import { AppSupabaseClient } from '@/types';
 import { User } from '@supabase/supabase-js';
-import { getIsAppAdmin, getUserProfile } from '@/utils/supabase-queries';
 import { errors } from '@/utils/errors';
 import { ReactNode } from 'react';
 import { redirect } from 'next/navigation';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
-import setCurrentOrganizationIdAction from './actions';
+import { LoggedInUserProvider } from '@/contexts/LoggedInUserContext';
+import { getUserProfile } from '@/data/user/user';
+import { unstable_noStore } from 'next/cache';
 import { cookies } from 'next/headers';
-import { getAllOrganizationsForUser } from '@/utils/supabase-queries';
-import { LayoutShell } from './LayoutShell';
-import { Sidebar } from './Sidebar/Sidebar';
+import { SIDEBAR_VISIBILITY_COOKIE_KEY } from '@/constants';
+import { SidebarVisibilityProvider } from '@/contexts/SidebarVisibilityContext';
+
+function getSidebarVisibility() {
+  const cookieStore = cookies();
+  const cookieValue = cookieStore.get(SIDEBAR_VISIBILITY_COOKIE_KEY)?.value;
+  if (cookieValue) {
+    return cookieValue === 'true';
+  }
+  return true;
+}
 
 async function fetchData(supabaseClient: AppSupabaseClient, authUser: User) {
-  const [isUserAppAdmin, userProfile] = await Promise.all([
-    getIsAppAdmin(supabaseClient, authUser),
-    getUserProfile(supabaseClient, authUser.id),
-  ]);
-
-  const [initialOrganizationsList] = await Promise.all([
-    getAllOrganizationsForUser(supabaseClient, authUser.id),
-  ]);
-  return { initialOrganizationsList, isUserAppAdmin, userProfile };
+  const [userProfile] = await Promise.all([getUserProfile(authUser.id)]);
+  return { userProfile };
 }
 
 export default async function Layout({ children }: { children: ReactNode }) {
+  unstable_noStore();
   const supabaseClient = createSupabaseUserServerComponentClient();
   const { data, error } = await supabaseClient.auth.getUser();
+  const { user } = data;
 
-  if (!data.user) {
+  if (!user) {
     // This is unreachable because the user is authenticated
     // But we need to check for it anyway for TypeScript.
     return redirect('/login');
@@ -37,31 +41,14 @@ export default async function Layout({ children }: { children: ReactNode }) {
   }
 
   try {
-    const { initialOrganizationsList, isUserAppAdmin, userProfile } =
-      await fetchData(supabaseClient, data.user);
-
-    const currentOrganizationId = cookies().get('current_organization_id')
-      ?.value;
-
+    const { userProfile } = await fetchData(supabaseClient, data.user);
+    const sidebarVisibility = getSidebarVisibility();
     return (
-      <LayoutShell>
-        <Sidebar
-          isUserAppAdmin={isUserAppAdmin}
-          userProfile={userProfile}
-          currentOrganizationId={currentOrganizationId}
-          setCurrentOrganizationId={setCurrentOrganizationIdAction}
-          organizationList={initialOrganizationsList}
-        />
-        <ClientLayout
-          isUserAppAdmin={isUserAppAdmin}
-          userProfile={userProfile}
-          currentOrganizationId={currentOrganizationId}
-          setCurrentOrganizationId={setCurrentOrganizationIdAction}
-          organizationList={initialOrganizationsList}
-        >
-          {children}
-        </ClientLayout>
-      </LayoutShell>
+      <SidebarVisibilityProvider initialValue={sidebarVisibility}>
+        <LoggedInUserProvider user={user}>
+          <ClientLayout userProfile={userProfile}>{children}</ClientLayout>
+        </LoggedInUserProvider>
+      </SidebarVisibilityProvider>
     );
   } catch (fetchDataError) {
     errors.add(fetchDataError);

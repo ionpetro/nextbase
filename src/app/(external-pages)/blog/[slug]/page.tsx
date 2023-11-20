@@ -1,8 +1,8 @@
-import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 import {
-  getPublishedBlogPostBySlug,
-  getPublishedBlogPosts,
-} from '@/utils/supabase/internalBlog';
+  anonGetPublishedBlogPostBySlug,
+  anonGetPublishedBlogPosts,
+} from '@/data/anon/internalBlog';
+
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { z } from 'zod';
@@ -13,7 +13,7 @@ const paramsSchema = z.object({
 
 // Return a list of `params` to populate the [slug] dynamic segment
 export async function generateStaticParams() {
-  const posts = await getPublishedBlogPosts(supabaseAdminClient);
+  const posts = await anonGetPublishedBlogPosts();
 
   return posts.map((post) => ({
     slug: post.slug,
@@ -27,7 +27,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   // read route params
   const { slug } = paramsSchema.parse(params);
-  const post = await getPublishedBlogPostBySlug(supabaseAdminClient, slug);
+  const post = await anonGetPublishedBlogPostBySlug(slug);
 
   return {
     title: `${post.title} | Blog | Nextbase Ultimate`,
@@ -40,7 +40,7 @@ export async function generateMetadata({
 export default async function BlogPostPage({ params }: { params: unknown }) {
   try {
     const { slug } = paramsSchema.parse(params);
-    const post = await getPublishedBlogPostBySlug(supabaseAdminClient, slug);
+    const post = await anonGetPublishedBlogPostBySlug(slug);
     return (
       <div className="relative w-full space-y-8 px-4 md:px-0 max-w-4xl mx-auto">
         {post.cover_image ? (

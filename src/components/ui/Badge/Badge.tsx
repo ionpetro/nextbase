@@ -21,7 +21,7 @@ const badgeVariants = cva(
           'bg-purple-50 dark:bg-purple-400/10 text-purple-600 dark:text-purple-400 ring-purple-500/10 dark:ring-purple-400/20',
         sky: 'bg-sky-100 dark:bg-sky-500/10 hover:dark:bg-sky-500/20 hover:bg-sky-100 text-sky-900 dark:text-sky-500',
         indigo:
-          'bg-indigo-100 dark:bg-indigo-600/10 hover:dark:bg-indigo-500/20 hover:bg-indigo-200/20 text-indigo-900 dark:text-indigo-500',
+          'bg-indigo-50 dark:bg-indigo-600/10 hover:dark:bg-indigo-500/20 hover:bg-indigo-200/20 text-indigo-900 dark:text-indigo-500',
         outline: 'text-foreground',
         soliddefault:
           'bg-gray-100 dark:bg-gray-400/10 text-gray-600 dark:text-gray-400 ring-0 dark:ring-0',
@@ -44,14 +44,15 @@ const badgeVariants = cva(
         default: 'h-10 py-3 px-4 rounded-md',
         sm: 'h-8 rounded-lg',
         lg: 'h-11 rounded-md',
-        link: 'p-0',
-        xs: 'h-7 px-3 rounded-full',
+        link: 'p-0 rounded-full',
+        xs: 'h-7 px-3 py-0 rounded-full text-xs',
+        xxs: 'h-6 px-2 py-0 rounded-md text-xs',
       },
     },
     defaultVariants: {
       variant: 'default',
     },
-  }
+  },
 );
 
 export interface BadgeProps

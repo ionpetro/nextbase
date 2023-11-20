@@ -28,7 +28,7 @@ const buttonVariants = cva(
           'bg-yellow-500 text-base text-white rounded-lg hover:bg-yellow-400',
         info: 'bg-blue-500 text-base text-white rounded-lg hover:bg-blue-400',
         primaryLink:
-          'underline-offset-4 text-base rounded-lg shadow-none group-hover:underline text-primary hover:text-primary-foreground dark:text-slate-500 dark:hover:text-primary',
+          'underline-offset-4 text-base rounded-lg shadow-none group-hover:underline text-primary dark:text-slate-500',
         secondaryLink:
           'underline-offset-4 text-base rounded-lg shadow-none group-hover:underline text-secondary',
         infoLink:
@@ -48,7 +48,7 @@ const buttonVariants = cva(
       variant: 'default',
       size: 'default',
     },
-  }
+  },
 );
 
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
@@ -66,7 +66,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       />
     );
-  }
+  },
 );
 Button.displayName = 'Button';
 

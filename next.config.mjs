@@ -58,6 +58,9 @@ const withMDX = createWithMdx({
 });
 
 const nextConfig = {
+  experimental: {
+    serverActions: true,
+  },
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
   images: {
     remotePatterns: [
@@ -81,9 +84,7 @@ const nextConfig = {
       },
     ],
   },
-  experimental: {
-    serverActions: true,
-  },
+
   reactStrictMode: true,
   // webpack: (config) => {
   //   if (typeof nextRuntime === 'undefined') {

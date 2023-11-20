@@ -17,6 +17,10 @@ var srcRuleOverrides = {
   ],
   'prettier/prettier': 1,
   '@typescript-eslint/no-unused-vars': 'off',
+  '@typescript-eslint/no-non-null-assertion': 'error',
+  'import/no-extraneous-dependencies': 'error',
+  'react-hooks/rules-of-hooks': 'error',
+  'react-hooks/exhaustive-deps': 'error',
 };
 
 module.exports = {
@@ -32,7 +36,7 @@ module.exports = {
       parserOptions: {
         project: tsConfigs,
       },
-      plugins: ['@typescript-eslint', 'prettier'],
+      plugins: ['@typescript-eslint', 'prettier', 'import', 'react-hooks'],
       rules: srcRuleOverrides,
       files: ['src/**/*.ts', 'src/**/*.tsx'],
     },
@@ -47,14 +51,9 @@ module.exports = {
       parserOptions: {
         project: tsConfigEmail,
       },
-      plugins: ['@typescript-eslint', 'prettier'],
+      plugins: ['@typescript-eslint', 'prettier', 'import', 'react-hooks'],
       rules: srcRuleOverrides,
-      files: [
-        'src/**/*.ts',
-        'src/**/*.tsx',
-        'emails/**/*.ts',
-        'emails/**/*.tsx',
-      ],
+      files: ['emails/**/*.ts', 'emails/**/*.tsx'],
     },
     {
       extends: [
@@ -70,6 +69,8 @@ module.exports = {
         '@typescript-eslint',
         'plugin:playwright/playwright-test',
         'prettier',
+        'import',
+        'react-hooks',
       ],
       rules: srcRuleOverrides,
       files: ['e2e/**/*.spec.ts'],

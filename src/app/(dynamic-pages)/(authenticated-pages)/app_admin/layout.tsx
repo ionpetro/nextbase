@@ -1,16 +1,20 @@
-import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
-import { AppSupabaseClient } from '@/types';
 import { errors } from '@/utils/errors';
-import { getIsAppAdmin } from '@/utils/supabase-queries';
-import { User } from '@supabase/supabase-js';
 import { redirect } from 'next/navigation';
 import { AppAdminNavigation } from './AppAdminNavigation';
-import InternalNavbar from '@/components/ui/NavigationMenu/InternalNavbar';
+import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
+import { Suspense } from 'react';
+import { ApplicationAdminSidebar } from '../(application-pages)/_sidebar/ApplicationAdminSidebar';
+import { getIsAppAdmin } from '@/data/user/user';
+import { InternalNavbar } from '@/components/ui/NavigationMenu/InternalNavbar';
+import { ApplicationLayoutShell } from '@/components/ApplicationLayoutShell';
+import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
+import { cn } from '@/utils/cn';
+import { T } from '@/components/ui/Typography';
+import { Alert } from '@/components/ui/Alert';
 
-async function fetchData(supabaseClient: AppSupabaseClient, authUser: User) {
-  const [isUserAppAdmin] = await Promise.all([
-    getIsAppAdmin(supabaseClient, authUser),
-  ]);
+async function fetchData() {
+  const user = await serverGetLoggedInUser();
+  const [isUserAppAdmin] = await Promise.all([getIsAppAdmin(user)]);
 
   return { isUserAppAdmin };
 }
@@ -20,32 +24,41 @@ export default async function Layout({
 }: {
   children: React.ReactNode;
 }) {
-  const supabaseClient = createSupabaseUserServerComponentClient();
-  const { data, error } = await supabaseClient.auth.getUser();
-  if (error) {
-    errors.add(error);
-    return <p>Error: An error occurred.</p>;
-  }
-  if (!data.user) {
-    // This is unreachable because the user is authenticated
-    // But we need to check for it anyway for TypeScript.
-    return <p>No user</p>;
-  }
-
   try {
-    const { isUserAppAdmin } = await fetchData(supabaseClient, data.user);
+    const { isUserAppAdmin } = await fetchData();
 
     if (!isUserAppAdmin) {
       return redirect('/dashboard');
     }
     return (
-      <div className="flex-1 pb-10 relative h-auto max-h-screen w-full overflow-auto">
-        <InternalNavbar />
-        <div className="px-12 space-y-6">
-          <AppAdminNavigation />
-          {children}
+      <ApplicationLayoutShell
+        sidebar={
+          <Suspense fallback={<p>Loading ...</p>}>
+            <ApplicationAdminSidebar />
+          </Suspense>
+        }
+      >
+        <div className="h-full overflow-y-auto">
+          <InternalNavbar>
+            <div className="flex items-center justify-start w-full">
+              Admin panel
+            </div>
+          </InternalNavbar>
+          <div className="relative flex-1 h-auto mt-8 w-full">
+            <div className="pl-6 pr-12 space-y-6 pb-10">
+              <Alert
+                variant="default"
+                className="hover:bg-gray-50 dark:hover:bg-slate-800/50 bg-gray-50 dark:bg-slate-800/50 text-gray-600 dark:text-slate-400"
+              >
+                All sections of this area are protected and only accessible by
+                Application Admins. This is a preview of the admin panel for
+                demo purposes.
+              </Alert>
+              {children}
+            </div>
+          </div>
         </div>
-      </div>
+      </ApplicationLayoutShell>
     );
   } catch (fetchDataError) {
     errors.add(fetchDataError);
