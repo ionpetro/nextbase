@@ -44,20 +44,30 @@ export default async function OrganizationPage({
       </div>
       <div className="w-full">
         <div className="flex justify-between items-center w-full">
-          <div className="text-2xl font-semibold tracking-tight flex gap-2 justify-start items-center mt-0 leading-none">
-            Projects
-            <Dialog>
-              <DialogTrigger asChild>
-                <InfoIcon className="h-4 w-4 text-gray-500 hover:text-gray-700 dark:text-slate-400 dark:hover:text-slate-200" />
-              </DialogTrigger>
-              <DialogContent className="w-128 dark:bg-slate-900 bg-white border border-gray-300 dark:border-gray-700">
-                <T.H2>Projects</T.H2>
-                <T.P className="text-muted-foreground">
-                  Projects are a way to organize your work. You can create
-                  projects within teams, or within your organization.
-                </T.P>
-              </DialogContent>
-            </Dialog>
+          <div className="flex gap-2 justify-start items-center">
+            <div>
+              <div className="flex gap-3 items-center">
+                <T.H3 className="mt-0">Projects</T.H3>{' '}
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <InfoIcon className="h-4 w-4 text-gray-500 hover:text-gray-700 dark:text-slate-400 dark:hover:text-slate-200" />
+                  </DialogTrigger>
+                  <DialogContent className="w-128 dark:bg-slate-900 bg-white border border-gray-300 dark:border-gray-700">
+                    <T.H2>Projects</T.H2>
+                    <T.P className="text-muted-foreground">
+                      Projects are adaptable to diverse business usecases. For
+                      example, they could be tasks in a project management app,
+                      customer profiles in a CRM system, or appointments in a
+                      scheduling app.
+                    </T.P>
+                  </DialogContent>
+                </Dialog>
+              </div>
+              <T.P className="text-muted-foreground leading-6">
+                You can create projects within teams, or within your
+                organization.
+              </T.P>
+            </div>
           </div>
           <CreateProjectDialog organizationId={organizationId} teamId={null} />
         </div>
