@@ -14,5 +14,5 @@ export const createSupabaseAdminServerActionClient = () =>
       options: {
         global: { fetch },
       },
-    }
+    },
   );

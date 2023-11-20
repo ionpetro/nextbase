@@ -12,7 +12,6 @@ import {
   TableRow,
 } from '@/components/ui/Table/ShadcnTable';
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
-import { unstable_noStore } from 'next/cache';
 import { getAllInternalFeedbackForLoggedInUser } from '@/data/user/internalFeedback';
 import { Suspense } from 'react';
 
@@ -68,7 +67,6 @@ async function UserFeedbackList() {
 }
 
 export default async function MyFeedback() {
-  unstable_noStore();
   return (
     <div>
       <PageHeading

@@ -29,7 +29,7 @@ type FeedbackThreadStatusSelectProps = {
 
 // typeguard to narrow string to Enum<'internal_feedback_thread_status'>
 function isFeedbackThreadStatus(
-  value: string
+  value: string,
 ): value is Enum<'internal_feedback_thread_status'> {
   return [
     'open',

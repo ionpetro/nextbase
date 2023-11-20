@@ -1,5 +1,4 @@
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
-import { Suspense } from 'react';
 import { AppAdminRoadmapPreview } from '../../app_admin/internal-roadmap/AppAdminRoadmapPreview';
 
 export default async function AdminRoadmapPreview() {

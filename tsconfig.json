@@ -22,7 +22,9 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@public/*": ["public/*"]
+      "@public/*": ["public/*"],
+      // https://github.com/contentlayerdev/contentlayer/issues/456
+      "react": ["./node_modules/@types/react"]
     },
     "strictNullChecks": true
   },

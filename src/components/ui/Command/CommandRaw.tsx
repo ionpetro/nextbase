@@ -120,7 +120,7 @@ type Store = {
   setState: <K extends keyof State>(
     key: K,
     value: State[K],
-    opts?: any
+    opts?: any,
   ) => void;
   emit: () => void;
 };
@@ -315,7 +315,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>(
         inputId,
         labelId,
       }),
-      []
+      [],
     );
 
     function score(value: string) {
@@ -370,13 +370,13 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>(
             group.appendChild(
               item.parentElement === group
                 ? item
-                : item.closest(`${GROUP_ITEMS_SELECTOR} > *`)
+                : item.closest(`${GROUP_ITEMS_SELECTOR} > *`),
             );
           } else {
             list.appendChild(
               item.parentElement === list
                 ? item
-                : item.closest(`${GROUP_ITEMS_SELECTOR} > *`)
+                : item.closest(`${GROUP_ITEMS_SELECTOR} > *`),
             );
           }
         });
@@ -385,7 +385,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>(
         .sort((a, b) => b[1] - a[1])
         .forEach((group) => {
           const element = ref.current.querySelector(
-            `${GROUP_SELECTOR}[${VALUE_ATTR}="${group[0]}"]`
+            `${GROUP_SELECTOR}[${VALUE_ATTR}="${group[0]}"]`,
           );
           element?.parentElement.appendChild(element);
         });
@@ -455,7 +455,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>(
 
     function getSelectedItem() {
       return ref.current?.querySelector(
-        `${ITEM_SELECTOR}[aria-selected="true"]`
+        `${ITEM_SELECTOR}[aria-selected="true"]`,
       );
     }
 
@@ -619,7 +619,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>(
         </StoreContext.Provider>
       </div>
     );
-  }
+  },
 );
 
 /**
@@ -644,7 +644,7 @@ const Item = React.forwardRef<HTMLDivElement, ItemProps>(
 
     const store = useStore();
     const selected = useCmdk(
-      (state) => state.value && state.value === value.current
+      (state) => state.value && state.value === value.current,
     );
     const render = useCmdk((state) =>
       forceMount
@@ -653,7 +653,7 @@ const Item = React.forwardRef<HTMLDivElement, ItemProps>(
           ? true
           : !state.search
             ? true
-            : state.filtered.items.get(id) > 0
+            : state.filtered.items.get(id) > 0,
     );
 
     React.useEffect(() => {
@@ -693,7 +693,7 @@ const Item = React.forwardRef<HTMLDivElement, ItemProps>(
         {props.children}
       </div>
     );
-  }
+  },
 );
 
 /**
@@ -715,7 +715,7 @@ const Group = React.forwardRef<HTMLDivElement, GroupProps>(
           ? true
           : !state.search
             ? true
-            : state.filtered.groups.has(id)
+            : state.filtered.groups.has(id),
     );
 
     useLayoutEffect(() => {
@@ -726,7 +726,7 @@ const Group = React.forwardRef<HTMLDivElement, GroupProps>(
 
     const contextValue = React.useMemo(
       () => ({ id, forceMount }),
-      [forceMount]
+      [forceMount],
     );
     const inner = (
       <GroupContext.Provider value={contextValue}>
@@ -761,7 +761,7 @@ const Group = React.forwardRef<HTMLDivElement, GroupProps>(
         </div>
       </div>
     );
-  }
+  },
 );
 
 /**
@@ -783,7 +783,7 @@ const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>(
         role="separator"
       />
     );
-  }
+  },
 );
 
 /**
@@ -801,7 +801,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
     const selectedItemId = React.useMemo(() => {
       const item = context.commandRef.current?.querySelector(
-        `${ITEM_SELECTOR}[${VALUE_ATTR}="${value}"]`
+        `${ITEM_SELECTOR}[${VALUE_ATTR}="${value}"]`,
       );
       return item?.getAttribute('id');
     }, [value, context.commandRef]);
@@ -838,7 +838,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         }}
       />
     );
-  }
+  },
 );
 
 /**
@@ -862,7 +862,7 @@ const List = React.forwardRef<HTMLDivElement, ListProps>(
             const height = el.offsetHeight;
             wrapper.style.setProperty(
               `--cmdk-list-height`,
-              height.toFixed(1) + 'px'
+              height.toFixed(1) + 'px',
             );
           });
         });
@@ -889,7 +889,7 @@ const List = React.forwardRef<HTMLDivElement, ListProps>(
         </div>
       </div>
     );
-  }
+  },
 );
 
 /**
@@ -919,7 +919,7 @@ const Dialog = React.forwardRef<HTMLDivElement, DialogProps>(
         </RadixDialog.Portal>
       </RadixDialog.Root>
     );
-  }
+  },
 );
 
 /**
@@ -938,7 +938,7 @@ const Empty = React.forwardRef<HTMLDivElement, EmptyProps>(
     return (
       <div ref={forwardedRef} {...props} cmdk-empty="" role="presentation" />
     );
-  }
+  },
 );
 
 /**
@@ -962,7 +962,7 @@ const Loading = React.forwardRef<HTMLDivElement, LoadingProps>(
         <div aria-hidden>{children}</div>
       </div>
     );
-  }
+  },
 );
 
 const pkg = Object.assign(Command, {
@@ -1042,7 +1042,7 @@ function useLazyRef<T>(fn: () => T) {
 // https://github.com/gregberge/react-merge-refs
 // Copyright (c) 2020 Greg Bergé
 function mergeRefs<T = any>(
-  refs: Array<React.MutableRefObject<T> | React.LegacyRef<T>>
+  refs: Array<React.MutableRefObject<T> | React.LegacyRef<T>>,
 ): React.RefCallback<T> {
   return (value) => {
     refs.forEach((ref) => {
@@ -1065,7 +1065,7 @@ function useCmdk<T = any>(selector: (state: State) => T) {
 function useValue(
   id: string,
   ref: React.RefObject<HTMLElement>,
-  deps: (string | React.ReactNode | React.RefObject<HTMLElement>)[]
+  deps: (string | React.ReactNode | React.RefObject<HTMLElement>)[],
 ) {
   const valueRef = React.useRef<string>();
   const context = useCommand();

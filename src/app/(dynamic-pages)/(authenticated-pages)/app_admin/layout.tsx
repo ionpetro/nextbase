@@ -1,16 +1,14 @@
 import { errors } from '@/utils/errors';
 import { redirect } from 'next/navigation';
-import { AppAdminNavigation } from './AppAdminNavigation';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import { Suspense } from 'react';
 import { ApplicationAdminSidebar } from '../(application-pages)/_sidebar/ApplicationAdminSidebar';
 import { getIsAppAdmin } from '@/data/user/user';
 import { InternalNavbar } from '@/components/ui/NavigationMenu/InternalNavbar';
 import { ApplicationLayoutShell } from '@/components/ApplicationLayoutShell';
-import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
-import { cn } from '@/utils/cn';
-import { T } from '@/components/ui/Typography';
 import { Alert } from '@/components/ui/Alert';
+
+export const revalidate = 0;
 
 async function fetchData() {
   const user = await serverGetLoggedInUser();
@@ -61,6 +59,7 @@ export default async function Layout({
       </ApplicationLayoutShell>
     );
   } catch (fetchDataError) {
+    // console.log(new Error().stack);
     errors.add(fetchDataError);
     return <p>Error: An error occurred.</p>;
   }

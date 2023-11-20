@@ -4,17 +4,17 @@ import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user
 import { AppSupabaseClient } from '@/types';
 
 async function fetchDraftProjects(
-    supabase: AppSupabaseClient,
-    organizationId: string,
+  supabase: AppSupabaseClient,
+  organizationId: string,
 ) {
-    const data = await getProjects({ organizationId, teamId: null });
-    return data;
+  const data = await getProjects({ organizationId, teamId: null });
+  return data;
 }
 
 export async function Projects({ organizationId }: { organizationId: string }) {
-    const projects = await fetchDraftProjects(
-        createSupabaseUserServerComponentClient(),
-        organizationId,
-    );
-    return <ProjectsTable projects={projects} />;
+  const projects = await fetchDraftProjects(
+    createSupabaseUserServerComponentClient(),
+    organizationId,
+  );
+  return <ProjectsTable projects={projects} />;
 }

@@ -20,6 +20,6 @@ export const createSupabaseUserServerPagesClient = ({
           fetch,
         },
       },
-    }
+    },
   );
 };

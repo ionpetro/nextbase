@@ -14,5 +14,5 @@ export const createSupabaseUserRouteHandlerClient = () =>
           fetch,
         },
       },
-    }
+    },
   );

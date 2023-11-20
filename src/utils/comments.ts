@@ -3,9 +3,9 @@ import { CommentWithUser, Table } from '@/types';
 export function normalizeComment(
   comments: Table<'project_comments'> & {
     user_profiles:
-    | Table<'user_profiles'>
-    | Array<Table<'user_profiles'>>
-    | null;
+      | Table<'user_profiles'>
+      | Array<Table<'user_profiles'>>
+      | null;
   },
 ): CommentWithUser {
   const user_profiles = Array.isArray(comments.user_profiles)

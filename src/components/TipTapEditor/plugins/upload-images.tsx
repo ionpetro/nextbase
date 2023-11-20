@@ -24,7 +24,7 @@ const UploadImagesPlugin = () =>
           const image = document.createElement('img');
           image.setAttribute(
             'class',
-            'opacity-40 rounded-lg border border-stone-200'
+            'opacity-40 rounded-lg border border-stone-200',
           );
           image.src = src;
           placeholder.appendChild(image);
@@ -37,8 +37,8 @@ const UploadImagesPlugin = () =>
             set.find(
               undefined,
               undefined,
-              (spec) => spec.id == action.remove.id
-            )
+              (spec) => spec.id == action.remove.id,
+            ),
           );
         }
         return set;
@@ -140,7 +140,7 @@ export const handleImageUpload = (file: File) => {
         loading: 'Uploading image...',
         success: 'Image uploaded successfully.',
         error: (e) => e.message,
-      }
+      },
     );
   });
 };

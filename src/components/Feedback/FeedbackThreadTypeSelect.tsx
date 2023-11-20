@@ -29,7 +29,7 @@ type FeedbackThreadTypeSelectProps = {
 
 // typeguard to narrow string to Enum<'internal_feedback_thread_type'>
 function isFeedbackThreadType(
-  value: string
+  value: string,
 ): value is Enum<'internal_feedback_thread_type'> {
   return ['bug', 'feature_request', 'general'].includes(value);
 }

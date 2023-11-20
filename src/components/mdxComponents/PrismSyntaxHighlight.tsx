@@ -19,7 +19,7 @@ export const PrismSyntaxHighlight = ({ children, className, ...rest }) => {
           <code
             className={cn(
               className,
-              'block px-3 py-2 rounded-md text-sm font-mono overflow-x-auto my-6'
+              'block px-3 py-2 rounded-md text-sm font-mono overflow-x-auto my-6',
             )}
           >
             {tokens.slice(0, -1).map((line, i) => {

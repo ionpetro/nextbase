@@ -7,7 +7,6 @@ import { redirect } from 'next/navigation';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
 import { LoggedInUserProvider } from '@/contexts/LoggedInUserContext';
 import { getUserProfile } from '@/data/user/user';
-import { unstable_noStore } from 'next/cache';
 import { cookies } from 'next/headers';
 import { SIDEBAR_VISIBILITY_COOKIE_KEY } from '@/constants';
 import { SidebarVisibilityProvider } from '@/contexts/SidebarVisibilityContext';
@@ -27,7 +26,6 @@ async function fetchData(supabaseClient: AppSupabaseClient, authUser: User) {
 }
 
 export default async function Layout({ children }: { children: ReactNode }) {
-  unstable_noStore();
   const supabaseClient = createSupabaseUserServerComponentClient();
   const { data, error } = await supabaseClient.auth.getUser();
   const { user } = data;

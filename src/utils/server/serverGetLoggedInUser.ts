@@ -13,7 +13,7 @@ export const serverGetLoggedInUser = async () => {
   }
 
   if (!session?.user) {
-    throw new Error('Not logged in');
+    throw new Error('serverGetLoggedInUser: Not logged in');
   }
 
   return session.user;

@@ -13,5 +13,5 @@ export const createSupabaseUserServerActionClient = () =>
           fetch,
         },
       },
-    }
+    },
   );

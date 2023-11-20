@@ -98,11 +98,11 @@ export const ColorSelector: FC<ColorSelectorProps> = ({
   setIsOpen,
 }) => {
   const activeColorItem = TEXT_COLORS.find(({ color }) =>
-    editor.isActive('textStyle', { color })
+    editor.isActive('textStyle', { color }),
   );
 
   const activeHighlightItem = HIGHLIGHT_COLORS.find(({ color }) =>
-    editor.isActive('highlight', { color })
+    editor.isActive('highlight', { color }),
   );
 
   return (

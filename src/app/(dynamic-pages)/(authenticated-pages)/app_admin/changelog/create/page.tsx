@@ -8,10 +8,8 @@ import { customMDXComponents } from '@/components/mdxComponents';
 import { cn } from '@/utils/cn';
 import { createSupabaseAdminServerComponentClient } from '@/supabase-clients/admin/createSupabaseAdminServerComponentClient';
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
-import { unstable_noStore } from 'next/cache';
 
 export default async function Page() {
-  unstable_noStore();
   const supabaseClient = createSupabaseAdminServerComponentClient();
   const completedTasksListResponse = await supabaseClient
     .from('internal_feedback_threads')

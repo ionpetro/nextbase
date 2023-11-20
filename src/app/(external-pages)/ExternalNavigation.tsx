@@ -103,7 +103,7 @@ export function ExternalNavigation() {
     ];
 
     return nav;
-  }, [isHome]);
+  }, []);
 
   // Define the text color based on isDarkBg prop
   // const textColorClass = isDarkBg ? 'text-white' : 'text-gray-800';

@@ -77,10 +77,10 @@ export const UserOnboardingDialog = ({
                       hasImageLoaded
                         ? undefined
                         : {
-                          duration: 0.5,
-                          repeat: Infinity,
-                          repeatType: 'reverse',
-                        }
+                            duration: 0.5,
+                            repeat: Infinity,
+                            repeatType: 'reverse',
+                          }
                     }
                     onLoadingComplete={() => {
                       setHasImageLoaded(true);
