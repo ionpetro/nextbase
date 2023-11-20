@@ -58,9 +58,6 @@ const withMDX = createWithMdx({
 });
 
 const nextConfig = {
-  experimental: {
-    serverActions: true,
-  },
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
   images: {
     remotePatterns: [
