@@ -22,10 +22,13 @@ const uploadImage = async (req: NextApiRequest, res: NextApiResponse) => {
       : files.file;
     // get file from persistent file
 
+    if (!persistentFile)
+      return res.status(400).json({ error: 'No file found' });
+
     const fileName = slugify(
       (persistentFile.originalFilename ?? persistentFile.newFilename).split(
-        '.'
-      )[0]
+        '.',
+      )[0],
     );
     // Read the file into a Buffer
     const readFile = util.promisify(fs.readFile);
