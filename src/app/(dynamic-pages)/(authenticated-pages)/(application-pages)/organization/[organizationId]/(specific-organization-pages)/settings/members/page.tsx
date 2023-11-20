@@ -144,10 +144,10 @@ export default async function OrganizationPage({
   const { organizationId } = paramsSchema.parse(params);
   return (
     <div className="space-y-12">
-      <Suspense fallback={<T.P>Loading team members...</T.P>}>
+      <Suspense fallback={<T.Subtle>Loading team members...</T.Subtle>}>
         <TeamMembers organizationId={organizationId} />
       </Suspense>
-      <Suspense fallback={<T.P>Loading invitations...</T.P>}>
+      <Suspense fallback={<T.Subtle>Loading invitations...</T.Subtle>}>
         <TeamInvitations organizationId={organizationId} />
       </Suspense>
     </div>

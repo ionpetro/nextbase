@@ -7,8 +7,10 @@ import ArrowLeftIcon from 'lucide-react/dist/esm/icons/arrow-left';
 import ProjectIcon from 'lucide-react/dist/esm/icons/layers';
 import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
 import { SidebarLogo } from './SidebarLogo';
+import { Suspense } from 'react';
+import { SidebarFallback } from './SidebarFallback';
 
-export async function ProjectSidebar({ projectId }: { projectId: string }) {
+async function ProjectSidebarInternal({ projectId }: { projectId: string }) {
   const [slimOrganizations, project] = await Promise.all([
     fetchSlimOrganizations(),
     getSlimProjectById(projectId),
@@ -51,5 +53,13 @@ export async function ProjectSidebar({ projectId }: { projectId: string }) {
         />
       </div>
     </div>
+  );
+}
+
+export async function ProjectSidebar({ projectId }: { projectId: string }) {
+  return (
+    <Suspense fallback={<SidebarFallback />}>
+      <ProjectSidebarInternal projectId={projectId} />
+    </Suspense>
   );
 }

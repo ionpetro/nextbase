@@ -4,16 +4,20 @@ import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 import { OrganizationPageHeading } from './OrganizationPageHeading';
 import { OrganizationGraphs } from './OrganizationGraphs';
 import { CreateProjectDialog } from '@/components/presentational/tailwind/CreateProjectDialog';
-
 import { T } from '@/components/ui/Typography';
 import InfoIcon from 'lucide-react/dist/esm/icons/info';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/Dialog';
-import { Projects } from './Projects';
-import { getOrganizationTitle } from '@/data/user/organizations';
+import { getProjects } from '@/data/user/projects';
+import { ProjectsTable } from '@/components/presentational/tailwind/Projects/ProjectsTable';
 
 const paramsSchema = z.object({
   organizationId: z.coerce.string(),
 });
+
+async function Projects({ organizationId }: { organizationId: string }) {
+  const projects = await getProjects({ organizationId, teamId: null });
+  return <ProjectsTable projects={projects} />;
+}
 
 export default async function OrganizationPage({
   params,
@@ -60,7 +64,7 @@ export default async function OrganizationPage({
         <Suspense
           fallback={
             <div className="flex justify-center items-center">
-              <T.P>Loading Projects...</T.P>
+              <T.Subtle>Loading Projects...</T.Subtle>
             </div>
           }
         >

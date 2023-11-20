@@ -31,7 +31,7 @@ export default async function Layout({
   const { organizationId } = paramsSchema.parse(params);
   return (
     <ApplicationLayoutShell
-      sidebar={<OrganizationSidebar currentOrganizationId={organizationId} />}
+      sidebar={<OrganizationSidebar organizationId={organizationId} />}
     >
       <div>
         <InternalNavbar>

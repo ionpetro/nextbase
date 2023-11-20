@@ -1,4 +1,3 @@
-import { Anchor } from '@/components/Anchor';
 import { OrganizationSwitcher } from './OrganizationSwitcher';
 import { SubscriptionCardSmall } from '@/components/SubscriptionCardSmall';
 import { Suspense } from 'react';
@@ -10,8 +9,9 @@ import TeamIcon from 'lucide-react/dist/esm/icons/folder';
 import ArrowLeftIcon from 'lucide-react/dist/esm/icons/arrow-left';
 import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
 import { SidebarLogo } from './SidebarLogo';
+import { SidebarFallback } from './SidebarFallback';
 
-export async function TeamSidebar({ teamId }: { teamId: number }) {
+async function TeamSidebarInternal({ teamId }: { teamId: number }) {
   const [slimOrganizations, team] = await Promise.all([
     fetchSlimOrganizations(),
     getSlimTeamById(teamId),
@@ -57,5 +57,13 @@ export async function TeamSidebar({ teamId }: { teamId: number }) {
         </div>
       </div>
     </div>
+  );
+}
+
+export async function TeamSidebar({ teamId }: { teamId: number }) {
+  return (
+    <Suspense fallback={<SidebarFallback />}>
+      <TeamSidebarInternal teamId={teamId} />
+    </Suspense>
   );
 }

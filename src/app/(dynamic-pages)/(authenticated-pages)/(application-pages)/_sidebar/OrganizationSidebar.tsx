@@ -11,11 +11,12 @@ import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
 import HomeIcon from 'lucide-react/dist/esm/icons/home';
 import UserIcon from 'lucide-react/dist/esm/icons/user-2';
 import DollarIcon from 'lucide-react/dist/esm/icons/dollar-sign';
+import { SidebarFallback } from './SidebarFallback';
 
-export async function OrganizationSidebar({
-  currentOrganizationId,
+async function OrganizationSidebarInternal({
+  organizationId,
 }: {
-  currentOrganizationId: string;
+  organizationId: string;
 }) {
   const slimOrganizations = await fetchSlimOrganizations();
   return (
@@ -26,36 +27,36 @@ export async function OrganizationSidebar({
             <SidebarLogo />
           </div>
           <div className="flex flex-col gap-6 h-full overflow-y-auto">
-            {/* <ProjectsList organizationId={currentOrganizationId} />
-            <TeamsList organizationId={currentOrganizationId} /> */}
+            {/* <ProjectsList organizationId={organizationId} />
+            <TeamsList organizationId={organizationId} /> */}
             <div>
               <SidebarLink
                 label="Organization Home"
-                href={`/organization/${currentOrganizationId}`}
+                href={`/organization/${organizationId}`}
                 icon={<HomeIcon className="h-5 w-5" />}
               />
               <SidebarLink
                 label="Organization Settings"
-                href={`/organization/${currentOrganizationId}/settings`}
+                href={`/organization/${organizationId}/settings`}
                 icon={<SettingsIcon className="h-5 w-5" />}
               />
               <SidebarLink
                 label="Organization Members"
-                href={`/organization/${currentOrganizationId}/settings/members`}
+                href={`/organization/${organizationId}/settings/members`}
                 icon={<UserIcon className="h-5 w-5" />}
               />
               <SidebarLink
                 label="Billing"
-                href={`/organization/${currentOrganizationId}/settings/billing`}
+                href={`/organization/${organizationId}/settings/billing`}
                 icon={<DollarIcon className="h-5 w-5" />}
               />
             </div>
-            {/* <TeamsList organizationId={currentOrganizationId} /> */}
+            {/* <TeamsList organizationId={organizationId} /> */}
           </div>
         </div>
         <div className="flex flex-col gap-4">
           <Suspense fallback={<T.P>Loading subscription details...</T.P>}>
-            <SubscriptionCardSmall organizationId={currentOrganizationId} />
+            <SubscriptionCardSmall organizationId={organizationId} />
           </Suspense>
 
           <div className="flex flex-col gap-1">
@@ -63,12 +64,24 @@ export async function OrganizationSidebar({
               Select organization
             </p>
             <OrganizationSwitcher
-              currentOrganizationId={currentOrganizationId}
+              currentOrganizationId={organizationId}
               slimOrganizations={slimOrganizations}
             />
           </div>
         </div>
       </div>
     </div>
+  );
+}
+
+export async function OrganizationSidebar({
+  organizationId,
+}: {
+  organizationId: string;
+}) {
+  return (
+    <Suspense fallback={<SidebarFallback />}>
+      <OrganizationSidebarInternal organizationId={organizationId} />
+    </Suspense>
   );
 }

@@ -10,6 +10,18 @@ const paramsSchema = z.object({
   organizationId: z.string(),
 });
 
+async function Projects({
+  teamId,
+  organizationId,
+}: {
+  organizationId: string;
+  teamId: number;
+}) {
+  const projects = await getProjects({ organizationId, teamId });
+
+  return <ProjectsTable projects={projects} />;
+}
+
 export default async function TeamPage({
   params,
 }: {
@@ -19,7 +31,6 @@ export default async function TeamPage({
 }) {
   const parsedParams = paramsSchema.parse(params);
   const { teamId, organizationId } = parsedParams;
-  const projects = await getProjects({ organizationId, teamId });
   return (
     <div className="">
       <div className="w-full">
@@ -27,8 +38,8 @@ export default async function TeamPage({
           <T.H3 className="mt-0 leading-none">Projects</T.H3>
           <CreateProjectDialog organizationId={organizationId} teamId={null} />
         </div>
-        <Suspense>
-          <ProjectsTable projects={projects} />
+        <Suspense fallback={<T.Subtle>Loading projects...</T.Subtle>}>
+          <Projects teamId={teamId} organizationId={organizationId} />
         </Suspense>
       </div>
     </div>
