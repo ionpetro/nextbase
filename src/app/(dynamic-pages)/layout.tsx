@@ -5,7 +5,6 @@ import { getIsAppInMaintenanceMode } from '@/data/anon';
 // do not cache this layout
 export const dynamic = 'force-dynamic';
 export const fetchCache = 'only-no-store';
-export const revalidate = 0;
 
 export const metadata = {
   icons: {
