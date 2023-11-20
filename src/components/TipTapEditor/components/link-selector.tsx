@@ -37,7 +37,7 @@ export const LinkSelector: FC<LinkSelectorProps> = ({
             'underline decoration-stone-400 dark:decoration-slate-600 underline-offset-4',
             {
               'text-blue-500': editor.isActive('link'),
-            }
+            },
           )}
         >
           Link

@@ -34,7 +34,7 @@ const getIconVariantForTag = (tag: Enum<'internal_feedback_thread_type'>) => {
 };
 
 const getPriorityVariant = (
-  priority: Enum<'internal_feedback_thread_priority'>
+  priority: Enum<'internal_feedback_thread_priority'>,
 ): BadgeProps['variant'] => {
   switch (priority) {
     case 'high':
@@ -49,7 +49,7 @@ const getPriorityVariant = (
 };
 
 const getTagVariant = (
-  type: Enum<'internal_feedback_thread_type'>
+  type: Enum<'internal_feedback_thread_type'>,
 ): BadgeProps['variant'] => {
   switch (type) {
     case 'bug':

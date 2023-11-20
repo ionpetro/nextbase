@@ -44,7 +44,7 @@ export function Navbar() {
         'sticky top-0 z-50 flex flex-wrap items-center justify-between bg-white px-4 py-5 shadow-md shadow-slate-900/5 transition duration-500 dark:shadow-none sm:px-6 lg:px-8',
         isScrolled
           ? 'dark:bg-slate-900/95 dark:backdrop-blur dark:[@supports(backdrop-filter:blur(0))]:bg-slate-900/75'
-          : 'dark:bg-transparent'
+          : 'dark:bg-transparent',
       )}
     >
       <div className="mr-6 flex lg:hidden space-x-2">
@@ -62,7 +62,7 @@ export function Navbar() {
 
       <div
         className={cn(
-          ' mx-auto w-full max-w-8xl flex justify-center sm:px-2 lg:px-8 xl:px-12'
+          ' mx-auto w-full max-w-8xl flex justify-center sm:px-2 lg:px-8 xl:px-12',
         )}
       >
         <div className={cn('hidden lg:flex items-center gap-8', 'relative ')}>

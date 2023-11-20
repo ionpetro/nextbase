@@ -9,14 +9,14 @@ type NormalizedNotification = {
   image: string;
   type: UserNotification['type'] | 'unknown';
 } & (
-    | {
+  | {
       actionType: 'link';
       href: string;
     }
-    | {
+  | {
       actionType: 'button';
     }
-  );
+);
 export const parseNotification = (notificationPayload: unknown) => {
   try {
     const notification =

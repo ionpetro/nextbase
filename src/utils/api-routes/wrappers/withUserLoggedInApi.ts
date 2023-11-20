@@ -14,8 +14,8 @@ export const withUserLoggedInApi = (
     res: NextApiResponse,
     supabaseClient: AppSupabaseClient,
     session: Session,
-    user: User
-  ) => void
+    user: User,
+  ) => void,
 ) => {
   return async (req: NextApiRequest, res: NextApiResponse) => {
     const supabaseClient = createSupabaseUserServerPagesClient({ req, res });

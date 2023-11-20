@@ -17,20 +17,20 @@ import { useRouter } from 'next/navigation';
 import FeedbackIcon from 'lucide-react/dist/esm/icons/message-square';
 type Props = {
   onUpdate:
-  | (({
-    feedbackId,
-    type,
-  }: {
-    feedbackId: string;
-    type: Enum<'internal_feedback_thread_type'>;
-  }) => void)
-  | (({
-    feedbackId,
-    type,
-  }: {
-    feedbackId: string;
-    type: Enum<'internal_feedback_thread_type'>;
-  }) => Promise<void>);
+    | (({
+        feedbackId,
+        type,
+      }: {
+        feedbackId: string;
+        type: Enum<'internal_feedback_thread_type'>;
+      }) => void)
+    | (({
+        feedbackId,
+        type,
+      }: {
+        feedbackId: string;
+        type: Enum<'internal_feedback_thread_type'>;
+      }) => Promise<void>);
   currentType: Enum<'internal_feedback_thread_type'>;
   isLoading: boolean;
   feedbackId: string;

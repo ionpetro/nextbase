@@ -11,8 +11,8 @@ export type ErrorServerActionState<T> = {
 
 export type ServerActionState<T = undefined> =
   | {
-    message: null;
-    status: 'idle';
-  }
+      message: null;
+      status: 'idle';
+    }
   | ErrorServerActionState<T>
   | SuccessServerActionState<T>;

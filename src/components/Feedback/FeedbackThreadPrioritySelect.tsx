@@ -29,7 +29,7 @@ type FeedbackThreadPrioritySelectProps = {
 
 // typeguard to narrow string to Enum<'internal_feedback_thread_priority'>
 function isFeedbackThreadPriority(
-  value: string
+  value: string,
 ): value is Enum<'internal_feedback_thread_priority'> {
   return ['low', 'medium', 'high'].includes(value);
 }

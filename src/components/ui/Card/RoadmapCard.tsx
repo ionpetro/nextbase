@@ -32,7 +32,7 @@ type RoadmapCardProps = {
 };
 
 const getPriorityVariant = (
-  priority: Enum<'internal_feedback_thread_priority'>
+  priority: Enum<'internal_feedback_thread_priority'>,
 ): BadgeProps['variant'] => {
   switch (priority) {
     case 'high':
@@ -47,7 +47,7 @@ const getPriorityVariant = (
 };
 
 const getTagVariant = (
-  tag: Enum<'internal_feedback_thread_type'>
+  tag: Enum<'internal_feedback_thread_type'>,
 ): BadgeProps['variant'] => {
   switch (tag) {
     case 'bug':

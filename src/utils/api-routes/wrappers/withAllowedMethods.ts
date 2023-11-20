@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 export const withAllowedMethods = (
   allowedMethods: string[],
-  cb: (req: NextApiRequest, res: NextApiResponse, ...args: unknown[]) => void
+  cb: (req: NextApiRequest, res: NextApiResponse, ...args: unknown[]) => void,
 ) => {
   return async (
     req: NextApiRequest,

@@ -91,7 +91,7 @@ const createOrRetrieveCustomer = async ({
  */
 const copyBillingDetailsToCustomer = async (
   organizationId: string,
-  payment_method: Stripe.PaymentMethod
+  payment_method: Stripe.PaymentMethod,
 ) => {
   //Todo: check this assertion
   const customer = payment_method.customer as string;
@@ -130,7 +130,7 @@ const copyBillingDetailsToCustomer = async (
 const manageSubscriptionStatusChange = async (
   subscriptionId: string,
   customerId: string,
-  createAction = false
+  createAction = false,
 ) => {
   // Get organizations's UUID from mapping table.
   const { data: customerData, error: noCustomerError } =
@@ -140,8 +140,10 @@ const manageSubscriptionStatusChange = async (
       .eq('stripe_customer_id', customerId)
       .single();
   if (noCustomerError) throw noCustomerError;
-
-  const { organization_id: organizationId } = customerData!;
+  if (!customerData) {
+    throw new Error('No customer data');
+  }
+  const { organization_id: organizationId } = customerData;
 
   const subscription = await stripe.subscriptions.retrieve(subscriptionId, {
     expand: ['default_payment_method'],
@@ -165,10 +167,10 @@ const manageSubscriptionStatusChange = async (
         ? toDateTime(subscription.canceled_at).toISOString()
         : null,
       current_period_start: toDateTime(
-        subscription.current_period_start
+        subscription.current_period_start,
       ).toISOString(),
       current_period_end: toDateTime(
-        subscription.current_period_end
+        subscription.current_period_end,
       ).toISOString(),
       created: toDateTime(subscription.created).toISOString(),
       ended_at: subscription.ended_at
@@ -188,7 +190,7 @@ const manageSubscriptionStatusChange = async (
     .upsert([subscriptionData]);
   if (error) throw error;
   console.log(
-    `Inserted/updated subscription [${subscription.id}] for organization [${organizationId}]`
+    `Inserted/updated subscription [${subscription.id}] for organization [${organizationId}]`,
   );
 
   // For a new subscription copy the billing details to the customer object.
@@ -196,13 +198,13 @@ const manageSubscriptionStatusChange = async (
   if (subscription.default_payment_method && organizationId)
     await copyBillingDetailsToCustomer(
       organizationId,
-      subscription.default_payment_method as Stripe.PaymentMethod
+      subscription.default_payment_method as Stripe.PaymentMethod,
     );
 };
 
 export const updatePaymentMethod = async (
   paymentMethodId: string,
-  customerId: string
+  customerId: string,
 ) => {
   const { data: customerData, error: noCustomerError } =
     await supabaseAdminClient
@@ -213,7 +215,11 @@ export const updatePaymentMethod = async (
 
   if (noCustomerError) throw noCustomerError;
 
-  const { organization_id: organizationId } = customerData!;
+  if (!customerData) {
+    throw new Error('No customer data');
+  }
+
+  const { organization_id: organizationId } = customerData;
 
   const paymentMethod = await stripe.paymentMethods.retrieve(paymentMethodId);
   const billingAddress = paymentMethod.billing_details;
@@ -254,7 +260,7 @@ export const updatePaymentMethod = async (
 
 export const getUsersPaginated = async (
   pageNumber = 0,
-  search?: string | undefined
+  search?: string | undefined,
 ): Promise<[number, DBFunction<'app_admin_get_all_users'>]> => {
   // RPCs are 0-indexed, but our pagination is 1-indexed.
   const effectivePageNumber = pageNumber + 1;
@@ -264,7 +270,7 @@ export const getUsersPaginated = async (
       page: effectivePageNumber,
       search_query: search,
       page_size: ADMIN_USER_LIST_VIEW_PAGE_SIZE,
-    }
+    },
   );
   if (error) throw error;
   if (!data) {
@@ -275,7 +281,7 @@ export const getUsersPaginated = async (
 
 export const getOrganizationsPaginated = async (
   pageNumber = 0,
-  search?: string | undefined
+  search?: string | undefined,
 ): Promise<[number, DBFunction<'app_admin_get_all_organizations'>]> => {
   // RPCs are 0-indexed, but our pagination is 1-indexed.
   const effectivePageNumber = pageNumber + 1;
@@ -285,7 +291,7 @@ export const getOrganizationsPaginated = async (
       page: effectivePageNumber,
       search_query: search,
       page_size: ADMIN_ORGANIZATION_LIST_VIEW_PAGE_SIZE,
-    }
+    },
   );
   if (error) throw error;
   if (!data) {

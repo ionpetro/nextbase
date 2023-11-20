@@ -1,2 +1,2 @@
 'use server';
-export function updateAvatar() { }
+export function updateAvatar() {}

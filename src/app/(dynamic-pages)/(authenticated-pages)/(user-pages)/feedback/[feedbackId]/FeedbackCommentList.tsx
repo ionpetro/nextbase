@@ -31,7 +31,7 @@ export async function FeedbackCommentList({
       </div>
 
       {feedbackThreadStatus === 'closed' ||
-        feedbackThreadStatus === 'completed' ? (
+      feedbackThreadStatus === 'completed' ? (
         <T.Large className="my-6">
           This thread is now closed for discussion.
         </T.Large>
