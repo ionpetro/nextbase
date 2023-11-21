@@ -1,5 +1,6 @@
 'use client';
 import { GraphContainer } from '@/components/presentational/tailwind/GraphContainer';
+import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 import { T } from '@/components/ui/Typography';
 import {
   Card,
@@ -111,83 +112,92 @@ const valueFormatter = (number: number) =>
 export function OrganizationGraphs() {
   return (
     <>
-      <div className="h-2 mt-10">
-        <T.H3 className="leading-none">Overview</T.H3>
-      </div>
-      <div className="w-full grid grid-cols-3 grid-flow-row auto-rows-max mt-10 gap-10">
-        <GraphContainer
-          title="Monthly Churn Rate"
-          subTitle="Monthly churn rate vs Organization Count"
-        >
-          <AreaChart
-            className="h-72 mt-8"
-            data={chartdata}
-            index="date"
-            categories={['SemiAnalysis', 'The Pragmatic Engineer']}
-            colors={['cyan', 'orange']}
-          />
-        </GraphContainer>
+      <div className="mt-16 flex flex-col gap-6">
+        <PageHeading
+          title="Overview"
+          titleClassName="text-2xl leading-none"
+          subTitle="Nextbase uses Tremor charts for graphs, to visualize and interpret performance data."
+          subTitleClassName="leading-6 mb-0"
+        />
 
-        <GraphContainer
-          title="Organizations by Month"
-          subTitle="Number of organizations"
-        >
-          <BarChart
-            className="mt-6"
-            data={chartdata}
-            index="date"
-            categories={['SemiAnalysis', 'The Pragmatic Engineer']}
-            colors={['teal', 'blue']}
-            yAxisWidth={48}
-          />
-        </GraphContainer>
-        <GraphContainer
-          title="MRR Analytics"
-          subTitle="Monthly recurring revenue"
-        >
-          <DonutChart
-            className="mt-12"
-            data={chartdata}
-            index="date"
-            category="SemiAnalysis"
-            colors={[
-              'blue',
-              'violet',
-              'indigo',
-              'rose',
-              'cyan',
-              'amber',
-              'green',
-              'orange',
-              'pink',
-            ]}
-            valueFormatter={valueFormatter}
-          />
-        </GraphContainer>
-        <GraphContainer title="Projects by Month" subTitle="Number of projects">
-          <LineChart
-            className="h-72 mt-4"
-            data={chartdata}
-            index="date"
-            categories={['SemiAnalysis', 'The Pragmatic Engineer']}
-            colors={['cyan', 'orange']}
-          />
-        </GraphContainer>
-        <GraphContainer title="Users by Month" subTitle="Number of user">
-          <BarList data={barListData} className="mt-2" />
-        </GraphContainer>
-        <GraphContainer
-          title="Visitor Rate"
-          subTitle="Number of visitors vs Organization Count"
-        >
-          <AreaChart
-            className="h-72 mt-12"
-            data={chartdata}
-            index="date"
-            categories={['SemiAnalysis', 'The Pragmatic Engineer']}
-            colors={['cyan', 'orange']}
-          />
-        </GraphContainer>
+        <div className="w-full grid grid-cols-3 grid-flow-row auto-rows-max gap-10">
+          <GraphContainer
+            title="Monthly Churn Rate"
+            subTitle="Monthly churn rate vs Organization Count"
+          >
+            <AreaChart
+              className="h-72 mt-8"
+              data={chartdata}
+              index="date"
+              categories={['SemiAnalysis', 'The Pragmatic Engineer']}
+              colors={['cyan', 'orange']}
+            />
+          </GraphContainer>
+
+          <GraphContainer
+            title="Organizations by Month"
+            subTitle="Number of organizations"
+          >
+            <BarChart
+              className="mt-6"
+              data={chartdata}
+              index="date"
+              categories={['SemiAnalysis', 'The Pragmatic Engineer']}
+              colors={['teal', 'blue']}
+              yAxisWidth={48}
+            />
+          </GraphContainer>
+          <GraphContainer
+            title="MRR Analytics"
+            subTitle="Monthly recurring revenue"
+          >
+            <DonutChart
+              className="mt-12"
+              data={chartdata}
+              index="date"
+              category="SemiAnalysis"
+              colors={[
+                'blue',
+                'violet',
+                'indigo',
+                'rose',
+                'cyan',
+                'amber',
+                'green',
+                'orange',
+                'pink',
+              ]}
+              valueFormatter={valueFormatter}
+            />
+          </GraphContainer>
+          <GraphContainer
+            title="Projects by Month"
+            subTitle="Number of projects"
+          >
+            <LineChart
+              className="h-72 mt-4"
+              data={chartdata}
+              index="date"
+              categories={['SemiAnalysis', 'The Pragmatic Engineer']}
+              colors={['cyan', 'orange']}
+            />
+          </GraphContainer>
+          <GraphContainer title="Users by Month" subTitle="Number of user">
+            <BarList data={barListData} className="mt-2" />
+          </GraphContainer>
+          <GraphContainer
+            title="Visitor Rate"
+            subTitle="Number of visitors vs Organization Count"
+          >
+            <AreaChart
+              className="h-72 mt-12"
+              data={chartdata}
+              index="date"
+              categories={['SemiAnalysis', 'The Pragmatic Engineer']}
+              colors={['cyan', 'orange']}
+            />
+          </GraphContainer>
+        </div>
       </div>
     </>
   );

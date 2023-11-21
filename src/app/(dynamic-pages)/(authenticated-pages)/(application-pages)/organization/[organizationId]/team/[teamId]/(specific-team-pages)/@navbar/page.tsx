@@ -19,7 +19,7 @@ async function Title({ teamId }: { teamId: number }) {
     <div className="flex items-center gap-2">
       <TeamIcon className="w-4 h-4" />
       <T.P>{title}</T.P>
-      <div className="flex items-center gap-2 p-0.5 px-2 rounded-md text-sm font-normal bg-gray-800 text-gray-100 dark:text-slate-900 border dark:bg-white/80 uppercase ">
+      <div className="flex items-center gap-2 p-0.5 px-2 rounded-full text-xs font-normal  text-gray-600 dark:text-slate-300 border border-gray-600 dark:border-slate-300  uppercase ">
         Team
       </div>
     </div>
