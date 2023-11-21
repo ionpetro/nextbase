@@ -4,6 +4,7 @@ import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user
 import { SupabaseFileUploadOptions, Table } from '@/types';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import { User } from '@supabase/supabase-js';
+import { revalidatePath } from 'next/cache';
 import urlJoin from 'url-join';
 
 export async function getIsAppAdmin(authUser: User): Promise<boolean> {
@@ -152,6 +153,8 @@ export const updateUserProfileNameAndAvatar = async ({
   if (error) {
     throw error;
   }
+
+  revalidatePath('/');
 
   return data;
 };
