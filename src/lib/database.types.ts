@@ -488,21 +488,18 @@ export interface Database {
           created_at: string
           created_by: string
           id: string
-          is_default: boolean
           title: string
         }
         Insert: {
           created_at?: string
           created_by: string
           id?: string
-          is_default?: boolean
           title?: string
         }
         Update: {
           created_at?: string
           created_by?: string
           id?: string
-          is_default?: boolean
           title?: string
         }
         Relationships: [
@@ -873,17 +870,27 @@ export interface Database {
       user_private_info: {
         Row: {
           created_at: string | null
+          default_organization: string | null
           id: string
         }
         Insert: {
           created_at?: string | null
+          default_organization?: string | null
           id: string
         }
         Update: {
           created_at?: string | null
+          default_organization?: string | null
           id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "user_private_info_default_organization_fkey"
+            columns: ["default_organization"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "user_private_info_id_fkey"
             columns: ["id"]

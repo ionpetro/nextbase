@@ -24,7 +24,6 @@ export function EditOrganizationForm({
       errorMessage: 'Failed to update organization title',
     },
   );
-  console.log({ pending, isLoading });
 
   const [organizationTitle, setOrganizationTitle] =
     useState<string>(initialTitle);
