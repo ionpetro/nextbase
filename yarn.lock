@@ -9986,9 +9986,9 @@ solid-swr-store@0.10.7:
   integrity sha512-A6d68aJmRP471aWqKKPE2tpgOiR5fH4qXQNfKIec+Vap+MGQm3tvXlT8n0I8UgJSlNAsSAUuw2VTviH2h3Vv5g==
 
 sonner@^1.0.0:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/sonner/-/sonner-1.2.1.tgz#ebf5e22deed85fc8491d77e43376f7c5ddc2bd9c"
-  integrity sha512-YTW7SCURez/+jTUkgIIIbsbcz6YRVTO4hs5QGlPygEVDUs/pK6Yn52OADpzucF4aDWVZuY6zo9L5GIvAfBqqOw==
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/sonner/-/sonner-1.2.2.tgz#240e817eddd2cfdc7b09150b130b2f78484d1571"
+  integrity sha512-EHxYBr5tLDQW4CqosTsX95/Qd5oxjDeQN/EbKBZcjdNp4Hjs6snXB6Lmu1kTL27M3su0oG9DxkllfvX+aSoI4Q==
 
 source-map-js@^1.0.2:
   version "1.0.2"
