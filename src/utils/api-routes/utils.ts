@@ -2,7 +2,6 @@
 import { Resend } from 'resend';
 import { errors } from '../errors';
 
-// sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 type EmailOptions = {

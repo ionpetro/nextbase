@@ -13,7 +13,6 @@ declare global {
       NEXT_PUBLIC_VERCEL_URL?: string;
       NEXT_PUBLIC_SITE_URL?: string;
       SUPABASE_JWT_SECRET: string;
-      SENDGRID_API_KEY: string;
       STRIPE_WEBHOOK_SECRET: string;
       STRIPE_WEBHOOK_SECRET_LIVE: string | undefined | null;
       ADMIN_EMAIL: string;
@@ -27,4 +26,4 @@ declare global {
 }
 
 // eslint-disable-next-line prettier/prettier
-export {};
+export { };
