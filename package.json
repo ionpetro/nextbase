@@ -155,7 +155,7 @@
     "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "jsdom": "^22.0.0",
+    "jsdom": "^23.0.0",
     "postcss": "^8.4.20",
     "prettier": "^3.0.0",
     "rehype-autolink-headings": "^7.0.0",
