@@ -28,9 +28,9 @@
     "@react-email/render": "^0.0.10",
     "@sentry/nextjs": "^7.59.3",
     "@stripe/stripe-js": "^2.0.0",
-    "@supabase/auth-helpers-nextjs": "^0.8.0",
+    "@supabase/auth-helpers-nextjs": "^0.8.7",
     "@supabase/auth-helpers-react": "^0.4.0",
-    "@supabase/supabase-js": "^2.33.1",
+    "@supabase/supabase-js": "^2.38.5",
     "@tailwindcss/typography": "^0.5.9",
     "@tanstack/react-query": "^4.20.4",
     "@tiptap/core": "^2.0.3",
@@ -156,6 +156,7 @@
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "jsdom": "^23.0.0",
+    "node-gyp-build": "^4.7.1",
     "postcss": "^8.4.20",
     "prettier": "^3.0.0",
     "rehype-autolink-headings": "^7.0.0",
@@ -170,5 +171,8 @@
   },
   "resolutions": {
     "@react-email/render": "^0.0.10"
+  },
+  "overrides": {
+    "node-gyp-build": "4.7.1"
   }
 }

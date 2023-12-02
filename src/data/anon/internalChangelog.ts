@@ -4,7 +4,8 @@ import { supabaseAnonClient } from '@/supabase-clients/anon/supabaseAnonClient';
 export async function anonGetAllChangelogItems() {
   const changelogItemsResponse = await supabaseAnonClient
     .from('internal_changelog')
-    .select('*');
+    .select('*')
+    .order('created_at', { ascending: false });
 
   if (changelogItemsResponse.error) {
     throw changelogItemsResponse.error;

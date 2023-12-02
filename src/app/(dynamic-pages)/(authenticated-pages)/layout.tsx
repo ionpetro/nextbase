@@ -10,6 +10,7 @@ import { getUserProfile } from '@/data/user/user';
 import { cookies } from 'next/headers';
 import { SIDEBAR_VISIBILITY_COOKIE_KEY } from '@/constants';
 import { SidebarVisibilityProvider } from '@/contexts/SidebarVisibilityContext';
+import PosthogProvider from '@/contexts/PostHogProvider';
 
 function getSidebarVisibility() {
   const cookieStore = cookies();

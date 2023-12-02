@@ -1,11 +1,11 @@
-import { useUser } from '@supabase/auth-helpers-react';
+import { useLoggedInUser } from '@/hooks/useLoggedInUser';
 import posthog from 'posthog-js';
 import { PostHogProvider } from 'posthog-js/react';
 import { ReactNode, useEffect, useState } from 'react';
 import { useGetIsMounted } from 'rooks';
 
 const useInitPostHog = () => {
-  const user = useUser();
+  const user = useLoggedInUser();
   const [hasInit, setHasInit] = useState<boolean>(false);
   const getIsMounted = useGetIsMounted();
   useEffect(() => {

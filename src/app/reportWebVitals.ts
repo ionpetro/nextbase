@@ -8,26 +8,41 @@ export function useMyReportWebVitals() {
   const pathname = usePathname();
 
   useEffect(() => {
-    ReactGA.initialize(process.env.NEXT_PUBLIC_GA_ID);
+    try {
+      ReactGA.initialize(process.env.NEXT_PUBLIC_GA_ID);
+    } catch (error) {
+      console.error(error);
+      console.error('Could not initialize Google Analytics.');
+    }
   }, []);
 
   useEffect(() => {
     if (pathname) {
       // pageview(pathname);
-      ReactGA.send({
-        hitType: 'pageview',
-        page: pathname,
-      });
+      try {
+        ReactGA.send({
+          hitType: 'pageview',
+          page: pathname,
+        });
+      } catch (error) {
+        console.error(error);
+        console.error('Could not send pageview to Google Analytics.');
+      }
     }
   }, [pathname]);
 
   useReportWebVitals(({ id, name, value }: NextWebVitalsMetric) => {
-    ReactGA.event({
-      category: 'web-vital',
-      label: id, // Needed to aggregate events.
-      value: Math.round(name === 'CLS' ? value * 1000 : value), // Optional
-      nonInteraction: true, // avoids affecting bounce rate.
-      action: 'web-vital',
-    });
+    try {
+      ReactGA.event({
+        category: 'web-vital',
+        label: id, // Needed to aggregate events.
+        value: Math.round(name === 'CLS' ? value * 1000 : value), // Optional
+        nonInteraction: true, // avoids affecting bounce rate.
+        action: 'web-vital',
+      });
+    } catch (error) {
+      console.error(error);
+      console.error('Could not send web-vital to Google Analytics.');
+    }
   });
 }
