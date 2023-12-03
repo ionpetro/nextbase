@@ -1,8 +1,8 @@
-import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
-import { UsersListPreview } from '../../app_admin/users/UsersListPreview';
-import Pagination from '@/components/Pagination/Pagination';
+import { Pagination } from '@/components/Pagination';
 import { Search } from '@/components/Search';
+import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 import { AppAdminCreateUserDialogPreview } from '../../app_admin/users/AppAdminCreateUserDialogPreview';
+import { UsersListPreview } from '../../app_admin/users/UsersListPreview';
 
 export default function UsersPage() {
   return (

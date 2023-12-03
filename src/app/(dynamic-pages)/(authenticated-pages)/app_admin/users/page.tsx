@@ -1,11 +1,11 @@
+import { Pagination } from '@/components/Pagination';
 import { Search } from '@/components/Search';
-import { appAdminUserFiltersSchema } from './schema';
-import { Suspense } from 'react';
-import { UserList } from './UsersList';
-import Pagination from '@/components/Pagination/Pagination';
-import { getUsersTotalPages } from '@/data/admin/user';
-import { AppAdminCreateUserDialog } from './AppAdminCreateUserDialog';
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
+import { getUsersTotalPages } from '@/data/admin/user';
+import { Suspense } from 'react';
+import { AppAdminCreateUserDialog } from './AppAdminCreateUserDialog';
+import { UserList } from './UsersList';
+import { appAdminUserFiltersSchema } from './schema';
 
 export const metadata = {
   title: 'User List | Admin Panel | Nextbase',

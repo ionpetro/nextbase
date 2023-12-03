@@ -1,10 +1,10 @@
+import { Pagination } from '@/components/Pagination';
 import { Search } from '@/components/Search';
-import Pagination from '@/components/Pagination/Pagination';
-import { Suspense } from 'react';
-import { getOrganizationsTotalPages } from '@/data/admin/organizations';
-import { appAdminOrganizationsFiltersSchema } from './schema';
-import { OrganizationList } from './OrganizationList';
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
+import { getOrganizationsTotalPages } from '@/data/admin/organizations';
+import { Suspense } from 'react';
+import { OrganizationList } from './OrganizationList';
+import { appAdminOrganizationsFiltersSchema } from './schema';
 
 export const metadata = {
   title: 'Organizations List | Admin Panel | Nextbase',

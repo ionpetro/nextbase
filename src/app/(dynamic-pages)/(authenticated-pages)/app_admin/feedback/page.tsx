@@ -1,21 +1,21 @@
-import { getInternalFeedbackTotalPages } from '@/data/admin/internal-feedback';
-import Pagination from '@/components/Pagination/Pagination';
-import { Suspense } from 'react';
-import { FiltersSchema, filtersSchema } from './schema';
-import { FeedbackList } from './FeedbackList';
+import { Pagination } from '@/components/Pagination';
 import { Search } from '@/components/Search';
+import { getInternalFeedbackTotalPages } from '@/data/admin/internal-feedback';
+import { Suspense } from 'react';
+import { FeedbackList } from './FeedbackList';
+import { filtersSchema } from './schema';
 
-import {
-  TableRow,
-  TableCell,
-  ShadcnTable,
-  TableHeader,
-  TableHead,
-  TableBody,
-} from '@/components/ui/Table/ShadcnTable';
 import { Fallback } from '@/components/AppAdminViewUserDetails/Fallback';
-import { FeedbackDropdownFilters } from './FeedbackDropdownFilters';
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
+import {
+  ShadcnTable,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/Table/ShadcnTable';
+import { FeedbackDropdownFilters } from './FeedbackDropdownFilters';
 
 const FeedbackListFallback: React.FC = () => {
   return (
