@@ -16,7 +16,7 @@
     "./src/app/**/{route,layout,page,loading,error,not-found,default}.{js,jsx,ts,tsx}",
     "src/middleware.{js,jsx,ts,tsx}",
     "next.config.{js,jsx,ts,tsx,mjs}",
-    "src/mdx-components/**/*.{js,jsx,ts,tsx}"
+    "src/mdx-components.{js,jsx,ts,tsx}"
   ],
   "ignoreUnimported": [],
   "ignoreUnused": ["next", "react", "react-dom"],
