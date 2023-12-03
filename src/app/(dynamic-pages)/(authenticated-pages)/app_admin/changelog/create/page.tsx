@@ -6,17 +6,16 @@ import { CreateChangelog } from './CreateChangelog';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { customMDXComponents } from '@/components/mdxComponents';
 import { cn } from '@/utils/cn';
-import { createSupabaseAdminServerComponentClient } from '@/supabase-clients/admin/createSupabaseAdminServerComponentClient';
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
+import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 
 export default async function Page() {
-  const supabaseClient = createSupabaseAdminServerComponentClient();
-  const completedTasksListResponse = await supabaseClient
+  const completedTasksListResponse = await supabaseAdminClient
     .from('internal_feedback_threads')
     .select('*')
     .eq('status', 'completed');
 
-  const changelogItemsResponse = await supabaseClient
+  const changelogItemsResponse = await supabaseAdminClient
     .from('internal_changelog')
     .select('*')
     .order('created_at', { ascending: false });
