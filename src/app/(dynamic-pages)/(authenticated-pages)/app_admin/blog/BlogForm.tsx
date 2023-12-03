@@ -95,7 +95,7 @@ type CreateBlogFormProps = {
     authorId: string,
     data: TableInsertPayload<'internal_blog_posts'>,
     tagIds: number[],
-  ) => Promise<void>;
+  ) => Promise<unknown>;
 };
 
 export type EditBlogFormProps = {
@@ -105,7 +105,7 @@ export type EditBlogFormProps = {
     postId: string,
     data: TableUpdatePayload<'internal_blog_posts'>,
     tagIds: number[],
-  ) => Promise<void>;
+  ) => Promise<unknown>;
   initialBlogPost: Partial<InternalBlogPostSchema>;
   postId: string;
 };

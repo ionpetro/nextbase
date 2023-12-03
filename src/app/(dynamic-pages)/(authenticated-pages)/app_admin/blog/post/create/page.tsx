@@ -1,16 +1,31 @@
-import { Button } from '@/components/ui/Button';
 import { T } from '@/components/ui/Typography';
 import Link from 'next/link';
-import { createBlogPost, getAllAuthors, getAllBlogTags } from '../../actions';
 import { BlogForm } from '../../BlogForm';
 import ChevronLeft from 'lucide-react/dist/esm/icons/chevron-left';
 import Overline from '@/components/presentational/tailwind/Text/Overline';
+import { Suspense } from 'react';
+import {
+  createBlogPost,
+  getAllAuthors,
+  getAllBlogTags,
+} from '@/data/admin/internal-blog';
 
-export default async function CreateBlogPostPage() {
+async function BlogFormWrapper() {
   const [authors, tags] = await Promise.all([
     getAllAuthors(),
     getAllBlogTags(),
   ]);
+  return (
+    <BlogForm
+      tags={tags}
+      authors={authors}
+      mode="create"
+      onSubmit={createBlogPost}
+    />
+  );
+}
+
+export default async function CreateBlogPostPage() {
   return (
     <div className="space-y-4">
       <Link href="/app_admin/blog">
@@ -22,12 +37,9 @@ export default async function CreateBlogPostPage() {
         </div>
       </Link>
       <T.H3>Create Blog Post</T.H3>
-      <BlogForm
-        tags={tags}
-        authors={authors}
-        mode="create"
-        onSubmit={createBlogPost}
-      />
+      <Suspense fallback={<div>Loading...</div>}>
+        <BlogFormWrapper />
+      </Suspense>
     </div>
   );
 }
