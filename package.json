@@ -167,6 +167,7 @@
     "supabase": "^1.53.0",
     "tailwindcss-cli": "^0.1.2",
     "typescript": "^5.0.0",
+    "unimported": "^1.31.1",
     "vitest": "^0.34.0"
   },
   "resolutions": {
