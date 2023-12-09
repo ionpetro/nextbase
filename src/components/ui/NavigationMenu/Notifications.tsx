@@ -1,30 +1,30 @@
 'use client';
 
+import { NotificationItem } from '@/components/ui/NavigationMenu/NotificationItem';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/Popover';
+import { useToastMutation } from '@/hooks/useToastMutation';
 import { supabaseUserClientComponentClient } from '@/supabase-clients/user/supabaseUserClientComponentClient';
+import { Table } from '@/types';
+import { parseNotification } from '@/utils/parseNotification';
+import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query';
+import NotificationIcon from 'lucide-react/dist/esm/icons/bell';
+import CheckIcon from 'lucide-react/dist/esm/icons/check';
+import moment from 'moment';
+import { useRouter } from 'next/navigation';
+import { useCallback, useEffect } from 'react';
+import { useDidMount } from 'rooks';
+import { toast } from 'sonner';
+import { T } from '../Typography';
 import {
   getPaginatedNotifications,
   getUnseenNotificationIds,
   readAllNotifications,
   seeNotification,
 } from './fetchClientNotifications';
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
-import { useCallback, useEffect } from 'react';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/Popover';
-import CheckIcon from 'lucide-react/dist/esm/icons/check';
-import { NotificationItem } from '@/components/ui/NavigationMenu/NotificationItem';
-import NotificationIcon from 'lucide-react/dist/esm/icons/bell';
-import { useDidMount } from 'rooks';
-import { T } from '../Typography';
-import { Table } from '@/types';
-import { parseNotification } from '@/utils/parseNotification';
-import moment from 'moment';
-import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
-import { useToastMutation } from '@/hooks/useToastMutation';
 
 const NOTIFICATIONS_PAGE_SIZE = 10;
 const useUnseenNotificationIds = (userId: string) => {
@@ -133,6 +133,17 @@ function Notification({
     }
   }, [notificationPayload]);
 
+  const { mutate: mutateSeeMutation } = useMutation(
+    async () => {
+      return await seeNotification(notification.id);
+    },
+    {
+      onSuccess: () => {
+        router.refresh();
+      },
+    },
+  );
+
   return (
     <NotificationItem
       key={notification.id}
@@ -155,8 +166,7 @@ function Notification({
       notificationId={notification.id}
       onHover={() => {
         if (!isSeen) {
-          seeNotification(notification.id);
-          router.refresh();
+          mutateSeeMutation();
         }
       }}
     />
@@ -183,6 +193,7 @@ export const useReadAllNotifications = (userId: string) => {
 export const Notifications = ({ userId }: { userId: string }) => {
   const unseenNotificationIds = useUnseenNotificationIds(userId);
   const unseenNotificationCount = unseenNotificationIds.length;
+  const router = useRouter();
   const {
     notifications,
     hasNextPage,
@@ -198,6 +209,9 @@ export const Notifications = ({ userId }: { userId: string }) => {
       loadingMessage: 'Marking all notifications as read...',
       successMessage: 'All notifications marked as read',
       errorMessage: 'Failed to mark all notifications as read',
+      onSuccess: () => {
+        router.refresh();
+      },
     },
   );
   return (
