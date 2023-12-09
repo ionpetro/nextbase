@@ -74,6 +74,7 @@ export const UsersListPreview = () => {
                     className="flex items-center "
                     href={`mailto:${user.email}`}
                     target="_blank"
+                    rel="noreferrer"
                   >
                     <MailIcon className="h-5 w-5 mr-2 " />{' '}
                     <T.Small className=" font-medium underline underline-offset-4 ">

@@ -1,22 +1,14 @@
 'use client';
 import { Button } from '@/components/ui/Button';
+import { SelectSeparator } from '@/components/ui/Select';
 import { Textarea } from '@/components/ui/Textarea';
+import { T } from '@/components/ui/Typography';
+import { createProjectCommentAction } from '@/data/user/projects';
+import { useToastMutation } from '@/hooks/useToastMutation';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Fragment, startTransition, useOptimistic } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { useToastMutation } from '@/hooks/useToastMutation';
-import { createProjectCommentAction } from '@/data/user/projects';
-import { SelectSeparator } from '@/components/ui/Select';
-import { useRouter } from 'next/navigation';
-import {
-  Fragment,
-  ReactNode,
-  startTransition,
-  useOptimistic,
-  useState,
-} from 'react';
-import { T } from '@/components/ui/Typography';
-import { Alert } from '@/components/ui/Alert';
 
 const addCommentSchema = z.object({
   text: z.string().min(1),
@@ -93,7 +85,7 @@ export const CommentInput = ({ projectId }: { projectId: string }) => {
         <SelectSeparator />
       </div>
       {commentsInFlight.map((comment) => (
-        <div className="space-y-2">
+        <div className="space-y-2" key={comment.id}>
           <T.Subtle className="text-xs italic">Sending comment</T.Subtle>
           <Fragment key={comment.id}>{comment.children}</Fragment>
         </div>

@@ -1,7 +1,5 @@
+import { Anchor } from '@/components/Anchor';
 import { Button } from '@/components/ui/Button';
-import { T } from '@/components/ui/Typography';
-import { Enum } from '@/types';
-import { toSiteURL } from '@/utils/helpers';
 import {
   ShadcnTable,
   TableBody,
@@ -10,10 +8,9 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/Table/ShadcnTable';
-import CheckIcon from 'lucide-react/dist/esm/icons/check';
-import RejectIcon from 'lucide-react/dist/esm/icons/x';
+import { T } from '@/components/ui/Typography';
 import { getPendingInvitationsOfUser } from '@/data/user/invitation';
-import { Anchor } from '@/components/Anchor';
+import { Enum } from '@/types';
 
 const PendingInvitationsTable = ({
   pendingInvitationsList,
