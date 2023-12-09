@@ -6,6 +6,7 @@ import {
 } from '@/data/user/user';
 import { useToastMutation } from '@/hooks/useToastMutation';
 import { Table } from '@/types';
+import { useRouter } from 'next/navigation';
 
 export function UserOnboardingFlow({
   userProfile,
@@ -14,6 +15,7 @@ export function UserOnboardingFlow({
   userProfile: Table<'user_profiles'>;
   onSuccess: () => void;
 }) {
+  const router = useRouter();
   const { mutate: updateProfile, isLoading: isUpdatingProfile } =
     useToastMutation(
       async ({
@@ -31,6 +33,7 @@ export function UserOnboardingFlow({
         errorMessage: 'Error updating profile',
         onSuccess: () => {
           onSuccess();
+          router.refresh();
         },
       },
     );
@@ -45,6 +48,9 @@ export function UserOnboardingFlow({
       loadingMessage: 'Uploading avatar...',
       successMessage: 'Avatar uploaded!',
       errorMessage: 'Error uploading avatar',
+      onSuccess: () => {
+        router.refresh();
+      },
     },
   );
 

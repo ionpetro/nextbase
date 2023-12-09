@@ -1,16 +1,16 @@
 'use client';
-import { RenderProviders } from '@/components/presentational/tailwind/Auth/RenderProviders';
 import { Email } from '@/components/presentational/tailwind/Auth/Email';
 import { EmailAndPassword } from '@/components/presentational/tailwind/Auth/EmailAndPassword';
-import { useState } from 'react';
-import { useToastMutation } from '@/hooks/useToastMutation';
+import { RenderProviders } from '@/components/presentational/tailwind/Auth/RenderProviders';
 import {
   signInWithMagicLink,
   signInWithProvider,
   signUp,
 } from '@/data/auth/auth';
+import { useToastMutation } from '@/hooks/useToastMutation';
 import { AuthProvider } from '@/types';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 export function SignUp({
   next,
@@ -23,14 +23,6 @@ export function SignUp({
 
   const router = useRouter();
 
-  function redirectToDashboard() {
-    router.refresh();
-    if (next) {
-      router.push(`/auth/callback?next=${next}`);
-    } else {
-      router.push('/auth/callback');
-    }
-  }
   const magicLinkMutation = useToastMutation(
     async (email: string) => {
       // since we can't use the onSuccess callback here to redirect from here
@@ -55,7 +47,9 @@ export function SignUp({
       return await signUp(email, password);
     },
     {
-      onSuccess: redirectToDashboard,
+      onSuccess: () => {
+        setSuccessMessage('A confirmation link has been sent to your email!');
+      },
       loadingMessage: 'Creating account...',
       errorMessage: 'Failed to create account',
       successMessage: 'Account created!',

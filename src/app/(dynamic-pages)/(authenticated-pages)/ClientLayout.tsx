@@ -1,13 +1,13 @@
 'use client';
 
 import { MaintenanceModeBanner } from '@/components/presentational/tailwind/MaintenanceModeBanner';
+import PostHogProvider from '@/contexts/PostHogProvider';
+import { Table } from '@/types';
 import { useState } from 'react';
+import Confetti from 'react-confetti';
+import ReactNoSSR from 'react-no-ssr';
 import { useWindowSize } from 'rooks';
 import { UserOnboardingFlow } from './UserOnboardingFlow';
-import ReactNoSSR from 'react-no-ssr';
-import Confetti from 'react-confetti';
-import { Table } from '@/types';
-import PostHogProvider from '@/contexts/PostHogProvider';
 
 export function ClientLayout({
   children,
