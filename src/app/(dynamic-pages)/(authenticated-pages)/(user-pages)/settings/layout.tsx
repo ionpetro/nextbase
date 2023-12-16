@@ -1,9 +1,10 @@
 'use client';
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 import { TabsNavigation } from '@/components/presentational/tailwind/TabsNavigation';
-import { useMemo } from 'react';
+import ComputerIcon from 'lucide-react/dist/esm/icons/computer';
 import LockIcon from 'lucide-react/dist/esm/icons/lock';
 import UserIcon from 'lucide-react/dist/esm/icons/user';
+import { useMemo } from 'react';
 
 export default function UserSettingsClientLayout({
   children,
@@ -16,6 +17,11 @@ export default function UserSettingsClientLayout({
         label: 'Account Settings',
         href: `/settings`,
         icon: <UserIcon />,
+      },
+      {
+        label: 'Developer Settings',
+        href: `/settings/developer`,
+        icon: <ComputerIcon />,
       },
       {
         label: 'Security',

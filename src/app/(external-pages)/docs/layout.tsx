@@ -1,4 +1,4 @@
-import { Navigation } from './Navigation';
+import { DocsNavigation } from '@/components/ui/NavigationMenu/ExternalNavbar/DocsNavigation';
 import './layout.css';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -10,7 +10,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className="absolute bottom-0 right-0 top-16 hidden h-12 w-px bg-gradient-to-t from-slate-800 dark:block" />
           <div className="absolute bottom-0 right-0 top-16 hidden w-px bg-slate-800 dark:block" />
           <div className="sticky top-[1rem] h-[calc(100vh-4.5rem)] w-64 overflow-y-auto overflow-x-hidden py-20 xl:w-72 xl:pr-8">
-            <Navigation />
+            <DocsNavigation />
           </div>
         </div>
         {children}

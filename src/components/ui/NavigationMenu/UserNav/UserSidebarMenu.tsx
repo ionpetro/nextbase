@@ -1,11 +1,11 @@
 import { Anchor } from '@/components/Anchor';
-import AccountsIcon from 'lucide-react/dist/esm/icons/user';
+import { cn } from '@/utils/cn';
+import ComputerIcon from 'lucide-react/dist/esm/icons/computer';
 import SecurityIcon from 'lucide-react/dist/esm/icons/lock';
 import LogoutIcon from 'lucide-react/dist/esm/icons/log-out';
 import MailIcon from 'lucide-react/dist/esm/icons/mail';
-import { cn } from '@/utils/cn';
+import AccountsIcon from 'lucide-react/dist/esm/icons/user';
 import Image from 'next/image';
-import { SelectSeparator } from '@radix-ui/react-select';
 import { FeatureViewModal } from './FeatureViewModal';
 
 export function UserSidebarMenu({
@@ -55,7 +55,15 @@ export function UserSidebarMenu({
       >
         <AccountsIcon className="text-lg" /> Account settings
       </Anchor>
-
+      <Anchor
+        href="/settings/developer"
+        className={cn(
+          'hover:bg-gray-100 hover:text-gray-900 text-gray-700 rounded-sm dark:text-gray-400 dark:hover:bg-gray-700/50',
+          'flex px-3 gap-2 items-center py-2 text-sm',
+        )}
+      >
+        <ComputerIcon className="text-lg" /> Developer Settings
+      </Anchor>
       <Anchor
         href="/settings/security"
         className={cn(
@@ -65,6 +73,7 @@ export function UserSidebarMenu({
       >
         <SecurityIcon className="text-lg" /> Security Settings
       </Anchor>
+
       <div className="h-px bg-gray-200 dark:bg-gray-700 mx-2.5 my-2" />
       <FeatureViewModal />
       <Anchor

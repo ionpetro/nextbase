@@ -1,15 +1,14 @@
 'use client';
-import { ComponentProps, useEffect, useState } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { Dialog } from '@headlessui/react';
-import { Navigation } from './Navigation';
-import SidebarIcon from 'lucide-react/dist/esm/icons/sidebar';
+import { ScrollArea } from '@/components/ui/ScrollArea';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/Sheet';
 import lightLogo from '@public/logos/acme-logo-dark.png';
 import darkLogo from '@public/logos/acme-logo-light.png';
-import { Sheet, SheetTrigger, SheetContent } from '@/components/ui/Sheet';
-import { ScrollArea } from '@/components/ui/ScrollArea';
+import SidebarIcon from 'lucide-react/dist/esm/icons/sidebar';
+import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+import { ComponentProps, useState } from 'react';
+import { DocsNavigation } from './DocsNavigation';
 
 function MenuIcon(props: ComponentProps<'svg'>) {
   return (
@@ -44,22 +43,12 @@ function CloseIcon(props: ComponentProps<'svg'>) {
 export function DocsMobileNavigation() {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+  const isDocs = pathname ? pathname.startsWith('/docs') : false;
 
-  // useEffect(() => {
-  //   if (!isOpen) return
-
-  //   function onRouteChange() {
-  //     setIsOpen(false)
-  //   }
-
-  //   router.events.on('routeChangeComplete', onRouteChange)
-  //   router.events.on('routeChangeError', onRouteChange)
-
-  //   return () => {
-  //     router.events.off('routeChangeComplete', onRouteChange)
-  //     router.events.off('routeChangeError', onRouteChange)
-  //   }
-  // }, [router, isOpen])
+  if (!isDocs) {
+    return null;
+  }
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -95,7 +84,7 @@ export function DocsMobileNavigation() {
           </Link>
         </div>
         <ScrollArea className="h-screen overflow-y-auto">
-          <Navigation setIsOpen={setIsOpen} className="mt-5 px-1 pb-40" />
+          <DocsNavigation setIsOpen={setIsOpen} className="mt-5 px-1 pb-40" />
         </ScrollArea>
       </SheetContent>
     </Sheet>

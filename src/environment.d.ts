@@ -21,9 +21,12 @@ declare global {
       NEXT_PUBLIC_POSTHOG_APP_ID: string;
       NEXT_PUBLIC_POSTHOG_HOST: string;
       NEXT_PUBLIC_GA_ID: string;
+      UNKEY_ROOT_KEY: string;
+      UNKEY_API_ID: string;
     }
   }
 }
 
 // eslint-disable-next-line prettier/prettier
-export {};
+export { };
+
