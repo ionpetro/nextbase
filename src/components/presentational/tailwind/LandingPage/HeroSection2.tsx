@@ -1,8 +1,8 @@
 import { Anchor } from '@/components/Anchor';
 import { Button } from '@/components/ui/Button';
-import Image from 'next/image';
-import ChevronRightIcon from 'lucide-react/dist/esm/icons/chevron-right';
 import { T } from '@/components/ui/Typography';
+import ChevronRightIcon from 'lucide-react/dist/esm/icons/chevron-right';
+import Image from 'next/image';
 
 type HeroSection2Props = {
   title: string;
@@ -15,9 +15,9 @@ const HeroSection2 = ({ title, description, image }: HeroSection2Props) => {
   return (
     <section className="w-full mx-auto">
       <div className="md:container mx-auto">
-        <div className="px-4 md:px-4 relative lg:px-24 flex flex-col items-center">
+        <div className="px-4 md:px-4 w-full relative lg:px-24 flex flex-col items-center">
           <div className="flex flex-col items-center gap-y-6 max-w-5xl mb-16 ">
-            <div className=" flex  flex-col gap-4 mt-24 md:items-center">
+            <div className=" flex w-full flex-col gap-4 mt-24 md:items-center">
               <div className="flex gap-x-4 border group w-fit items-center pr-2 mb-2 border-gray-300 dark:border-gray-700 rounded-xl shadow-sm p-[2px]">
                 <div className="flex items-center border border-gray-300 bg-muted dark:bg-slate-800 dark:border-gray-700 rounded-lg shadow-sm px-2 py-[2px]">
                   <T.Small className="text-xs md:text-sm text-gray-600 dark:text-slate-400">
