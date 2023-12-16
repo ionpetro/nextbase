@@ -30,13 +30,23 @@ export async function generateMetadata({
   const post = await anonGetPublishedBlogPostBySlug(slug);
 
   return {
-    title: `${post.title} | Blog | Nextbase Ultimate`,
+    title: `${post.title} | Blog | Nextbase Boilerplate`,
+    description: post.summary,
     openGraph: {
+      title: `${post.title} | Blog | Nextbase Boilerplate`,
+      description: post.summary,
+      type: 'website',
       images: post.cover_image ? [post.cover_image] : undefined,
+    },
+    twitter: {
+      images: post.cover_image ? [post.cover_image] : undefined,
+      title: `${post.title} | Blog | Nextbase Boilerplate`,
+      card: 'summary_large_image',
+      site: '@usenextbase',
+      description: post.summary,
     },
   };
 }
-
 export default async function BlogPostPage({ params }: { params: unknown }) {
   try {
     const { slug } = paramsSchema.parse(params);

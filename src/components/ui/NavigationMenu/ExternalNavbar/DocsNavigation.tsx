@@ -1,16 +1,16 @@
 'use client';
 
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
 import clsx from 'clsx';
-import { navigation } from './links';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { navigation } from './docslinks';
 
 type NavigationProps = {
   className?: string;
   setIsOpen?: (isOpen: boolean) => void;
 };
 
-export function Navigation({ className, setIsOpen }: NavigationProps) {
+export function DocsNavigation({ className, setIsOpen }: NavigationProps) {
   const pathname = usePathname();
   const handleClick = () => {
     setTimeout(() => {
