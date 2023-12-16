@@ -1,8 +1,7 @@
 'use client';
-import { Anchor } from '@/components/Anchor';
-import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
 import { useContext } from 'react';
+import { LoginCTAButton } from './LoginCTAButton';
 import { MobileMenuContext } from './MobileMenuContext';
 import { navbarLinks } from './constants';
 
@@ -22,8 +21,12 @@ export function MobileMenu() {
               </Link>
             </li>
           ))}
+
           <hr className="w-full h-2" />
-          <Anchor href="/login" className="px-4 w-full">
+          <div className="flex w-full px-4">
+            <LoginCTAButton />
+          </div>
+          {/* <Anchor href="/login" className="px-4 w-full">
             <Button variant="default" size="default" className="group w-full">
               Log In
               <svg
@@ -39,7 +42,7 @@ export function MobileMenu() {
                 />
               </svg>
             </Button>
-          </Anchor>
+          </Anchor> */}
         </ul>
       )}
     </>

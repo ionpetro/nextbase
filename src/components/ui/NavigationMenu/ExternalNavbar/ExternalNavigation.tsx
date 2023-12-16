@@ -15,19 +15,21 @@ export function ExternalNavigation() {
           aria-label="Global"
         >
           <LeftNav />
-          <Suspense
-            fallback={
-              <div className="flex space-x-10 items-center lg:-mr-2"></div>
-            }
-          >
-            <div className="flex space-x-10 items-center lg:-mr-2">
-              <ThemeToggle />
-              <div className="ml-6 hidden lg:block" suppressHydrationWarning>
-                <LoginCTAButton />
+          <div className="flex gap-5">
+            <Suspense
+              fallback={
+                <div className="flex space-x-10 items-center lg:-mr-2"></div>
+              }
+            >
+              <div className="flex space-x-10 items-center lg:-mr-2">
+                <ThemeToggle />
+                <div className="ml-6 hidden lg:block" suppressHydrationWarning>
+                  <LoginCTAButton />
+                </div>
               </div>
-            </div>
-          </Suspense>
-          <MobileMenuOpen />
+            </Suspense>
+            <MobileMenuOpen />
+          </div>
         </nav>
         <MobileMenu />
       </header>
