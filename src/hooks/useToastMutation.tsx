@@ -1,13 +1,13 @@
 'use client';
+import * as Sentry from '@sentry/nextjs';
 import {
-  useMutation,
+  MutationFunction,
   UseMutationOptions,
   UseMutationResult,
-  MutationFunction,
+  useMutation,
 } from '@tanstack/react-query';
+import { useRef } from 'react';
 import { toast } from 'sonner';
-import { useEffect, useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
 
 type MutationFn<TData, TVariables> = MutationFunction<TData, TVariables>;
 
@@ -63,6 +63,7 @@ export function useToastMutation<
           ? options.errorMessage(error, variables)
           : options.errorMessage
         : 'Error!';
+      Sentry.captureException(error);
       toast.error(errorMessage, {
         id: toastIdRef.current ?? undefined,
       });
