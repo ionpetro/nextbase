@@ -18,6 +18,7 @@ import moment from 'moment';
 import { Suspense } from 'react';
 import { z } from 'zod';
 import { InviteUser } from './InviteUser';
+import { RevokeInvitationDialog } from './RevokeInvitationDialog';
 
 async function TeamMembers({ organizationId }: { organizationId: string }) {
   const members = await getTeamMembersInOrganization(organizationId);
@@ -81,8 +82,10 @@ async function TeamMembers({ organizationId }: { organizationId: string }) {
 }
 
 async function TeamInvitations({ organizationId }: { organizationId: string }) {
-  const invitations = await getPendingInvitationsInOrganization(organizationId);
-
+  const [invitations, organizationRole] = await Promise.all([
+    getPendingInvitationsInOrganization(organizationId),
+    getLoggedInUserOrganizationRole(organizationId),
+  ]);
   const normalizedInvitations = invitations.map((invitation, index) => {
     return {
       index: index + 1,
@@ -93,6 +96,15 @@ async function TeamInvitations({ organizationId }: { organizationId: string }) {
     };
   });
 
+  if (!normalizedInvitations.length) {
+    return (
+      <div className="space-y-4 max-w-4xl">
+        <T.H3>Invitations</T.H3>
+        <T.Subtle>No pending invitations</T.Subtle>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-4 max-w-4xl">
       <T.H3>Invitations</T.H3>
@@ -102,9 +114,11 @@ async function TeamInvitations({ organizationId }: { organizationId: string }) {
             <TableRow>
               <TableHead scope="col"> # </TableHead>
               <TableHead scope="col">Email</TableHead>
-
               <TableHead scope="col">Sent On</TableHead>
               <TableHead scope="col">Status</TableHead>
+              {organizationRole === 'admin' || organizationRole === 'owner' ? (
+                <TableHead scope="col">Actions</TableHead>
+              ) : null}
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -113,7 +127,6 @@ async function TeamInvitations({ organizationId }: { organizationId: string }) {
                 <TableRow key={invitation.id}>
                   <TableCell>{index + 1}</TableCell>
                   <TableCell>{invitation.email}</TableCell>
-
                   <TableCell>{invitation.created_at}</TableCell>
                   <TableCell className="uppercase">
                     <span>
@@ -122,6 +135,12 @@ async function TeamInvitations({ organizationId }: { organizationId: string }) {
                         : invitation.status}
                     </span>
                   </TableCell>
+                  {organizationRole === 'admin' ||
+                    organizationRole === 'owner' ? (
+                    <TableCell>
+                      <RevokeInvitationDialog invitationId={invitation.id} />
+                    </TableCell>
+                  ) : null}
                 </TableRow>
               );
             })}

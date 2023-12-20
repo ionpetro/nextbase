@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { VariantProps, cva } from 'class-variance-authority';
 import { cn } from '@/utils/cn';
+import { VariantProps, cva } from 'class-variance-authority';
+import * as React from 'react';
 
 const outlineColorClasses = (color: string) => `
   border-2 border-${color}-400 text-sm bg-${color}-100 hover:bg-${color}-200 text-${color}-700 rounded-full hover:text-${color}-900

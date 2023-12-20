@@ -1,20 +1,20 @@
 'use server';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 import { createSupabaseUserServerActionClient } from '@/supabase-clients/user/createSupabaseUserServerActionClient';
+import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
 import { Enum } from '@/types';
+import { sendEmail } from '@/utils/api-routes/utils';
 import { toSiteURL } from '@/utils/helpers';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import { renderAsync } from '@react-email/render';
 import TeamInvitationEmail from 'emails/TeamInvitation';
-import { sendEmail } from '@/utils/api-routes/utils';
+import { uniqBy } from 'lodash';
+import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 import {
   createAcceptedOrgInvitationNotification,
   createNotification,
 } from './notifications';
-import { revalidatePath } from 'next/cache';
-import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
-import { redirect } from 'next/navigation';
-import { uniqBy } from 'lodash';
 import { getUserProfile } from './user';
 
 // This function allows an application admin with service_role
@@ -391,4 +391,23 @@ export async function getPendingInvitationCountOfUser() {
   const idInvitationsCount = await idInvitations(user.id);
 
   return emailInvitationsCount + idInvitationsCount;
+}
+
+export async function revokeInvitation(invitationId: string) {
+  'use server';
+  const supabaseClient = createSupabaseUserServerActionClient();
+
+  const invitationResponse = await supabaseClient
+    .from('organization_join_invitations')
+    .delete()
+    .eq('id', invitationId)
+    .single();
+
+  if (invitationResponse.error) {
+    throw invitationResponse.error;
+  }
+
+  revalidatePath('/');
+
+  return invitationResponse.data;
 }
