@@ -11,7 +11,6 @@ import {
 } from '@/components/ui/Dialog';
 import { revokeUnkeyToken } from '@/data/user/unkey';
 import { useToastMutation } from '@/hooks/useToastMutation';
-import X from 'lucide-react/dist/esm/icons/x';
 import { useState } from 'react';
 
 type Props = {
@@ -33,7 +32,7 @@ export const ConfirmRevokeTokenDialog = ({ keyId }: Props) => {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="destructiveLink" size="xs">
-          <X /> Revoke Token
+          Revoke
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] [&>.dialog-close]:hidden">

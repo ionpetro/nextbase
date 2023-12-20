@@ -1,6 +1,14 @@
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
-import { T } from '@/components/ui/Typography';
+import {
+  ShadcnTable,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/Table';
 import { getRevokedApiKeyList } from '@/data/user/unkey';
+import { format } from 'date-fns/esm';
 
 export async function RevokedApiKeyList() {
   const revokedApiKeyList = await getRevokedApiKeyList();
@@ -10,22 +18,41 @@ export async function RevokedApiKeyList() {
   }
 
   const heading = (
-    <PageHeading title="Revoked API Keys" titleClassName="text-lg" />
+    <PageHeading
+      title="Revoked API Keys"
+      subTitle="Below is the list of your revoked API keys with their details."
+      titleClassName="text-lg"
+    />
   );
 
   return (
-    <div className="space-y-8 max-w-sm">
+    <div className="space-y-8 max-w-4xl">
       {heading}
       <div className="space-y-2">
-        {revokedApiKeyList.map((key) => {
-          return (
-            <div className="space-y-1">
-              <div className="flex justify-between">
-                <T.P className="mt-0">{key.masked_key}</T.P>
-              </div>
-            </div>
-          );
-        })}
+        <ShadcnTable>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[120px]">API Key</TableHead>
+              <TableHead className="w-[140px]">Generated On</TableHead>
+              <TableHead className="w-[140px]">Status</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {revokedApiKeyList.map((apiKey) => {
+              return (
+                <TableRow key={apiKey.key_id}>
+                  <TableCell className="font-medium">
+                    {apiKey.masked_key}
+                  </TableCell>
+                  <TableCell>
+                    {format(new Date(apiKey.created_at), 'PPP')}
+                  </TableCell>
+                  <TableCell>Revoked</TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </ShadcnTable>
       </div>
     </div>
   );
