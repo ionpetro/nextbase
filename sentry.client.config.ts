@@ -20,7 +20,7 @@ Sentry.init({
   // If the entire session is not sampled, use the below sample rate to sample
   // sessions when an error occurs.
   replaysOnErrorSampleRate: 1.0,
-  enabled: process.env.NODE_ENV === 'production',
+  enabled: process.env.NODE_ENV !== 'development',
 
   integrations: [
     new Sentry.Replay({
