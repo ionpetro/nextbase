@@ -13,7 +13,7 @@ export async function sendEmail(options: EmailOptions) {
   try {
     const resend = new Resend(process.env.RESEND_API_KEY);
     // return sendgrid.send(options);
-    return resend.sendEmail(options);
+    return resend.emails.send(options);
   } catch (error) {
     errors.add(error);
   }
