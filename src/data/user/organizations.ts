@@ -2,11 +2,11 @@
 import { createSupabaseUserServerActionClient } from '@/supabase-clients/user/createSupabaseUserServerActionClient';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
 import { Enum, NormalizedSubscription, Table, UnwrapPromise } from '@/types';
-import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
-import { createOrRetrieveCustomer } from '../admin/stripe';
-import { stripe } from '@/utils/stripe';
 import { toSiteURL } from '@/utils/helpers';
+import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
+import { stripe } from '@/utils/stripe';
 import { revalidatePath } from 'next/cache';
+import { createOrRetrieveCustomer } from '../admin/stripe';
 
 export const createOrganization = async (name: string) => {
   const supabase = createSupabaseUserServerComponentClient();
@@ -351,9 +351,13 @@ export async function createCheckoutSessionAction({
       mode: 'subscription',
       allow_promotion_codes: true,
       subscription_data: {
-        trial_from_plan: true,
-        metadata: {},
+        trial_settings: {
+          end_behavior: {
+            missing_payment_method: 'cancel',
+          },
+        },
       },
+      metadata: {},
       success_url: toSiteURL(
         `/organization/${organizationId}/settings/billing`,
       ),
