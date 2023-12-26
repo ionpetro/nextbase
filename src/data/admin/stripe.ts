@@ -1,6 +1,5 @@
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 import { stripe } from '@/utils/stripe';
-import Stripe from 'stripe';
 
 export const createOrRetrieveCustomer = async ({
   email,
