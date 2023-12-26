@@ -1,16 +1,16 @@
 'use client';
-import { RenderProviders } from '@/components/presentational/tailwind/Auth/RenderProviders';
 import { Email } from '@/components/presentational/tailwind/Auth/Email';
 import { EmailAndPassword } from '@/components/presentational/tailwind/Auth/EmailAndPassword';
-import { useState } from 'react';
-import { useToastMutation } from '@/hooks/useToastMutation';
+import { RenderProviders } from '@/components/presentational/tailwind/Auth/RenderProviders';
 import {
   signInWithMagicLink,
-  signInWithProvider,
   signInWithPassword,
+  signInWithProvider,
 } from '@/data/auth/auth';
+import { useToastMutation } from '@/hooks/useToastMutation';
 import { AuthProvider } from '@/types';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 export function Login({
   next,
@@ -75,7 +75,7 @@ export function Login({
       ) : (
         <div className="space-y-8 ">
           <div className="flex flex-col items-start gap-0 w-[320px]">
-            <p className="text-xl font-[700]">Login to Nextbase</p>
+            <h1 className="text-xl font-[700]">Login to Nextbase</h1>
             <p className="text-base text-left font-[400]">
               Login with the account you used to signup.
             </p>

@@ -1,12 +1,11 @@
 'use client';
 import { Anchor } from '@/components/Anchor';
-import { classNames } from '@/utils/classNames';
-import { PropsOf } from '@headlessui/react/dist/types';
-import { useMemo } from 'react';
-import { useState } from 'react';
-import { Button } from '../Button';
 import { Label } from '@/components/ui/Label';
 import { T } from '@/components/ui/Typography';
+import { classNames } from '@/utils/classNames';
+import { PropsOf } from '@headlessui/react/dist/types';
+import { useMemo, useState } from 'react';
+import { Button } from '../Button';
 
 export const Email = ({
   onSubmit,
@@ -45,6 +44,7 @@ export const Email = ({
         event.preventDefault();
         onSubmit(email);
       }}
+      data-testid="magic-link-form"
     >
       <div className="space-y-2">
         <div className="space-y-2">

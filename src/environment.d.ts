@@ -23,10 +23,10 @@ declare global {
       NEXT_PUBLIC_GA_ID: string;
       UNKEY_ROOT_KEY: string;
       UNKEY_API_ID: string;
+      TESTMAIL_PREFIX?: string;
     }
   }
 }
 
 // eslint-disable-next-line prettier/prettier
 export { };
-
