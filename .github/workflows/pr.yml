@@ -28,3 +28,9 @@ jobs:
       - uses: ./.github/actions/ci-setup
       - name: test
         run: yarn run test
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      - run: supabase start
+      - name: Run e2e tests
+        run: yarn run test:e2e
