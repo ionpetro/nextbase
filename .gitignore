@@ -1,5 +1,6 @@
 .env.local
 .env.*.local
+.env.test
 node_modules
 .next
 tsconfig.tsbuildinfo
@@ -7,3 +8,6 @@ tsconfig.tsbuildinfo
 ./supabase/.DS_Store
 ./analyze
 .vercel
+playwright/.auth/user.json
+./test-results/
+supabase/.temp

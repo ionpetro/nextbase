@@ -76,7 +76,7 @@ export function SignUp({
         <div className="space-y-8 ">
           {/* <Auth providers={['twitter']} supabaseClient={supabase} /> */}
           <div className="flex flex-col items-start gap-0 w-[320px]">
-            <p className="text-xl font-[700]">Signup to Nextbase</p>
+            <h1 className="text-xl font-[700]">Signup to Nextbase</h1>
             <p className="text-base text-left font-[400]">
               How would you like to signup?
             </p>

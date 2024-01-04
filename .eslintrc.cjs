@@ -73,7 +73,7 @@ module.exports = {
         'react-hooks',
       ],
       rules: srcRuleOverrides,
-      files: ['e2e/**/*.spec.ts'],
+      files: ['e2e/**/*.ts'],
     },
     {
       extends: [

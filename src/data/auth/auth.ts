@@ -44,6 +44,7 @@ export const signInWithMagicLink = async (email: string, next?: string) => {
   });
 
   if (error) {
+    console.log(error);
     throw error;
   }
 };

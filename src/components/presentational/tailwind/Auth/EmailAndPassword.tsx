@@ -1,9 +1,9 @@
 import { Anchor } from '@/components/Anchor';
+import { Label } from '@/components/ui/Label';
 import { classNames } from '@/utils/classNames';
 import { PropsOf } from '@headlessui/react/dist/types';
 import { useState } from 'react';
 import { Button } from '../Button';
-import { Label } from '@/components/ui/Label';
 
 export const EmailAndPassword = ({
   onSubmit,
@@ -27,6 +27,7 @@ export const EmailAndPassword = ({
           password,
         });
       }}
+      data-testid="password-form"
     >
       <div className="space-y-4">
         <div>
