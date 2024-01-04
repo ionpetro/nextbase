@@ -1,47 +1,90 @@
-import { test as setup } from '@playwright/test';
+import { expect, request, test as setup } from '@playwright/test';
 
-const API_KEY = process.env.TESTMAIL_API_KEY;
-const NAMESPACE = process.env.TESTMAIL_PREFIX;
+const INBUCKET_URL = `http://localhost:54324`;
 
 // eg endpoint: https://api.testmail.app/api/json?apikey=${APIKEY}&namespace=${NAMESPACE}&pretty=true
-async function checkIfTestMailReceivedEmail(tag: string): Promise<string> {
+async function checkIfTestMailReceivedEmail(username: string): Promise<{
+  token: string;
+  url: string
+}> {
+  const requestContext = await request.newContext()
+  const messages = await requestContext
+    .get(`${INBUCKET_URL}/api/v1/mailbox/${username}`)
+    .then((res) => res.json())
+    // InBucket doesn't have any params for sorting, so here
+    // we're sorting the messages by date
+    .then((items) =>
+      [...items].sort((a, b) => {
+        if (a.date < b.date) {
+          return 1
+        }
 
-  const timeNow = Date.now();
-  const url = `https://api.testmail.app/api/json?apikey=${API_KEY}&namespace=${NAMESPACE}&pretty=true&tag=${tag}&timestamp_from=${timeNow - 10000}&livequery=true`;
-  const response = await fetch(url);
-  const json = await response.json();
-  if (json.count > 0 && json.result === 'success') {
-    const emailObject = json.emails[0];
-    return emailObject.html as string;
+        if (a.date > b.date) {
+          return -1
+        }
+
+        return 0
+      })
+    );
+
+  const latestMessageId = messages[0]?.id
+
+  if (latestMessageId) {
+    const message = await requestContext
+      .get(
+        `${INBUCKET_URL}/api/v1/mailbox/${username}/${latestMessageId}`
+      )
+      .then((res) => res.json())
+
+    // We've got the latest email. We're going to use regular
+    // expressions to match the bits we need.
+    const token = message.body.text.match(/enter the code: ([0-9]+)/)[1]
+    const url = message.body.text.match(/Log In \( (.+) \)/)[1]
+
+    return { token, url }
   }
 
-  throw new Error('No email received');
+  throw new Error('No email received')
 }
 
-function parseEmail(email: string): string {
-  // email looks like this https://tehlvbdeixytzrwjfils.supabase.co/auth/v1/verify?token=pkce_31568bbc57c710e1cb2b4dc824e7ea0a481e711c4dbf0aa5062e8288&amp;type=magiclink&amp;redirect_to=http://localhost:3000/auth/callback
-  // there are two &amp; in the url which need to be replaced with &
-  const emailDecoded = decodeURIComponent(email);
-  const emailDecoded2 = emailDecoded.replace(/&amp;/g, '&');
-  return emailDecoded2;
+function getIdentifier(): string {
+  return `johndoe` + Date.now().toString().slice(-4)
 }
+
 
 const authFile = 'playwright/.auth/user.json';
 
 setup('authenticate', async ({ page }) => {
-  const tag = 'test1'
-  const emailAddress = `${NAMESPACE}.${tag}@inbox.testmail.app`
+  const identifier = getIdentifier()
+  const emailAddress = `${identifier}@myapp.com`
   // Perform authentication steps. Replace these actions with your own.
   await page.goto('/login');
   await page.getByTestId('magic-link-form').locator('input').fill(emailAddress);
   // await page.getByLabel('Password').fill('password');
   await page.getByRole('button', { name: 'Login with Magic Link' }).click();
-  const emailHTML = await checkIfTestMailReceivedEmail(tag);
-  const magicLink = emailHTML.match(/href="([^"]*)/)?.[1];
-  // magiclink is escaped parse it
-  const magicLinkDecoded = parseEmail(magicLink!);
-  await page.goto(magicLinkDecoded!);
-  await page.waitForURL('/dashboard');
-  await page.context().storageState({ path: authFile });
+  // check for this text - A magic link has been sent to your email!
+  await page.waitForSelector('text=A magic link has been sent to your email!');
+  let url;
+  await expect.poll(async () => {
+    try {
+      const { url: urlFromCheck } = await checkIfTestMailReceivedEmail(identifier);
+      url = urlFromCheck;
+      return typeof urlFromCheck;
+    } catch (e) {
+      return null;
+    }
+  }, {
+    message: 'make sure the email is received',
+    intervals: [1000, 2000, 5000, 10000, 20000],
+  }).toBe('string')
 
+  await page.goto(url);
+  await page.waitForURL('/dashboard');
+  // wait for "Create new profile" onboarding modal
+  await page.waitForSelector('text=Create new profile');
+  // enter text in the input field
+  await page.fill('input[name="name"]', 'John Doe');
+  // get button with text "save"
+  await page.getByRole('button', { name: 'Save' }).click();
+  await page.context().storageState({ path: authFile });
 });

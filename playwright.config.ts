@@ -1,14 +1,5 @@
 import { PlaywrightTestConfig, devices } from '@playwright/test';
-import dotenv from 'dotenv';
 import path from 'path';
-
-// check if running in github aciton
-if (!process.env.GITHUB_ACTION) {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  // Alternatively, read from "../my.env" file.
-  dotenv.config({ path: path.resolve(__dirname, '.env.test') });
-}
-
 
 
 // Use process.env.PORT by default and fallback to port 3000
@@ -31,7 +22,7 @@ const config: PlaywrightTestConfig = {
   // Run your local dev server before starting the tests:
   // https://playwright.dev/docs/test-advanced#launching-a-development-web-server-during-the-tests
   webServer: {
-    command: 'yarn dev',
+    command: 'NODE_ENV=test yarn dev',
     url: baseURL,
     timeout: 120 * 1000,
     reuseExistingServer: !process.env.CI,
@@ -45,6 +36,8 @@ const config: PlaywrightTestConfig = {
     // Retry a test if its failing with enabled tracing. This allows you to analyse the DOM, console logs, network traffic etc.
     // More information: https://playwright.dev/docs/trace-viewer
     trace: 'retry-with-trace',
+
+    actionTimeout: 3 * 1000,
 
     // All available context options: https://playwright.dev/docs/api/class-browser#browser-new-context
     // contextOptions: {
@@ -64,6 +57,7 @@ const config: PlaywrightTestConfig = {
       dependencies: ['with-auth'],
       use: {
         ...devices['Desktop Chrome'],
+        storageState: 'playwright/.auth/user.json',
       },
     },
     {
@@ -75,5 +69,6 @@ const config: PlaywrightTestConfig = {
     },
 
   ],
+  globalSetup: './playwright/global-setup.ts',
 }
 export default config

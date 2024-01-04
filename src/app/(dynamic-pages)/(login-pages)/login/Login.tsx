@@ -42,6 +42,9 @@ export function Login({
       onSuccess: () => {
         setSuccessMessage('A magic link has been sent to your email!');
       },
+      onError: (error) => {
+        console.log(error);
+      },
       onMutate: () => {
         setSuccessMessage(null);
       },
