@@ -36,6 +36,7 @@ export function EditOrganizationForm({
         </T.P>
       </div>
       <form
+        data-testid="edit-organization-title-form"
         onSubmit={(event) => {
           event.preventDefault();
           startTransition(() => {

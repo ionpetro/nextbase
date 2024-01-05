@@ -1,6 +1,5 @@
 'use client';
-import { useState } from 'react';
-import { useRouter } from 'next/router';
+import { Button } from '@/components/ui/Button';
 import {
   Dialog,
   DialogContent,
@@ -10,11 +9,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/Dialog';
-import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
-import PlusIcon from 'lucide-react/dist/esm/icons/plus';
 import OrganizationIcon from 'lucide-react/dist/esm/icons/network';
+import PlusIcon from 'lucide-react/dist/esm/icons/plus';
+import { useState } from 'react';
 
 type CreateOrganizationDialogProps = {
   onConfirm: (organizationTitle: string) => void;
@@ -45,7 +44,11 @@ export function CreateOrganizationDialog({
 
   return (
     <>
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+      <Dialog
+        open={isDialogOpen}
+        data-testid="create-organization-dialog"
+        onOpenChange={setIsDialogOpen}
+      >
         <DialogTrigger asChild>
           <Button
             variant="default"
@@ -68,7 +71,7 @@ export function CreateOrganizationDialog({
               </DialogDescription>
             </div>
           </DialogHeader>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} data-testid="create-organization-form">
             <div className="mb-8">
               <Label className="text-muted-foreground">Organization Name</Label>
               <Input
@@ -79,6 +82,7 @@ export function CreateOrganizationDialog({
                 required
                 className="mt-1.5 shadow appearance-none border h-11 rounded-lg w-full py-2 px-3 focus:ring-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-base"
                 id="name"
+                name="name"
                 type="text"
                 placeholder="Organization Name"
                 disabled={isLoading}
