@@ -1,9 +1,9 @@
-import { UserNavPopover } from './UserNavPopover';
 import { ThemeToggle } from '@/components/presentational/tailwind/ThemeToggle';
 import { Notifications } from '@/components/ui/NavigationMenu/Notifications';
 import { getUserProfile } from '@/data/user/user';
 import { getUserAvatarUrl } from '@/utils/helpers';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
+import { UserNavPopover } from './UserNavPopover';
 
 export async function UserNav() {
   const user = await serverGetLoggedInUser();
@@ -26,6 +26,7 @@ export async function UserNav() {
         })}
         userFullname={userProfile.full_name ?? `User ${email}`}
         userEmail={email}
+        userId={user.id}
       />
     </>
   );

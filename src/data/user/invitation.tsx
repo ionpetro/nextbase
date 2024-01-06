@@ -5,10 +5,10 @@ import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user
 import { Enum } from '@/types';
 import { sendEmail } from '@/utils/api-routes/utils';
 import { toSiteURL } from '@/utils/helpers';
+import { sendEmailInbucket } from '@/utils/sendEmailInbucket';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import { renderAsync } from '@react-email/render';
 import TeamInvitationEmail from 'emails/TeamInvitation';
-import { uniqBy } from 'lodash';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import {
@@ -199,18 +199,24 @@ export async function createInvitationHandler({
     />,
   );
 
-  if (process.env.NODE_ENV === 'development') {
-    // In development, we log the email to the console instead of sending it.
+  if (
+    process.env.NODE_ENV === 'development' ||
+    process.env.NODE_ENV === 'test'
+  ) {
     console.log({
       viewInvitationUrl,
+    });
+    await sendEmailInbucket({
+      to: email,
+      subject: `Invitation to join ${organizationResponse.data.title}`,
+      html: invitationEmailHTML,
+      from: process.env.ADMIN_EMAIL,
     });
   } else {
     await sendEmail({
       to: email,
       subject: `Invitation to join ${organizationResponse.data.title}`,
       html: invitationEmailHTML,
-      //TODO: Modify this to your app's admin email
-      // Make sure you have verified this email in your Sendgrid (mail provider) account
       from: process.env.ADMIN_EMAIL,
     });
   }
@@ -228,7 +234,9 @@ export async function createInvitationHandler({
   return invitationResponse.data;
 }
 
-export async function acceptInvitationAction(invitationId: string) {
+export async function acceptInvitationAction(
+  invitationId: string,
+): Promise<string> {
   'use server';
   const supabaseClient = createSupabaseUserServerActionClient();
   const user = await serverGetLoggedInUser();
@@ -258,7 +266,7 @@ export async function acceptInvitationAction(invitationId: string) {
   );
 
   revalidatePath('/');
-  redirect('/dashboard');
+  return invitationResponse.data.organization_id;
 }
 
 export async function declineInvitationAction(invitationId: string) {
@@ -287,22 +295,6 @@ export async function getPendingInvitationsOfUser() {
   const supabaseClient = createSupabaseUserServerComponentClient();
   const user = await serverGetLoggedInUser();
 
-  async function emailInvitations(email: string) {
-    const { data, error } = await supabaseClient
-      .from('organization_join_invitations')
-      .select(
-        '*, inviter:user_profiles!inviter_user_id(*), invitee:user_profiles!invitee_user_id(*), organization:organizations(*)',
-      )
-      .ilike('invitee_user_email', `%${user.email}%`)
-      .eq('status', 'active');
-
-    if (error) {
-      throw error;
-    }
-
-    return data || [];
-  }
-
   async function idInvitations(userId: string) {
     const { data, error } = await supabaseClient
       .from('organization_join_invitations')
@@ -319,19 +311,9 @@ export async function getPendingInvitationsOfUser() {
     return data || [];
   }
 
-  const emailInvitationsData = user.email
-    ? await emailInvitations(user.email)
-    : [];
   const idInvitationsData = await idInvitations(user.id);
 
-  const invitations = [...emailInvitationsData, ...idInvitationsData];
-
-  return uniqBy(
-    invitations.filter((invitation) => {
-      return Boolean(invitation.organization) && Boolean(invitation.inviter);
-    }),
-    'id',
-  );
+  return idInvitationsData;
 }
 
 export const getInvitationById = async (invitationId: string) => {
@@ -357,24 +339,10 @@ export async function getPendingInvitationCountOfUser() {
   const supabaseClient = createSupabaseUserServerComponentClient();
   const user = await serverGetLoggedInUser();
 
-  async function emailInvitations(email: string) {
-    const { count, error } = await supabaseClient
-      .from('organization_join_invitations')
-      .select('id', { count: 'exact' })
-      .ilike('invitee_user_email', `%${user.email}%`)
-      .eq('status', 'active');
-
-    if (error) {
-      throw error;
-    }
-
-    return count || 0;
-  }
-
   async function idInvitations(userId: string) {
     const { count, error } = await supabaseClient
       .from('organization_join_invitations')
-      .select('id', { count: 'exact' })
+      .select('id', { count: 'exact', head: true })
       .eq('invitee_user_id', userId)
       .eq('status', 'active');
 
@@ -385,12 +353,9 @@ export async function getPendingInvitationCountOfUser() {
     return count || 0;
   }
 
-  const emailInvitationsCount = user.email
-    ? await emailInvitations(user.email)
-    : 0;
   const idInvitationsCount = await idInvitations(user.id);
 
-  return emailInvitationsCount + idInvitationsCount;
+  return idInvitationsCount;
 }
 
 export async function revokeInvitation(invitationId: string) {

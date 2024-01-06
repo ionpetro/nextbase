@@ -21,6 +21,7 @@ const PendingInvitationsTable = ({
     organizationTitle: string;
     status: Enum<'organization_join_invitation_link_status'>;
     role: Enum<'organization_member_role'>;
+    organizationId: string;
   }>;
 }) => {
   return (
@@ -39,7 +40,11 @@ const PendingInvitationsTable = ({
           </TableHeader>
           <TableBody>
             {pendingInvitationsList.map((invitation, index) => (
-              <TableRow key={invitation.id}>
+              <TableRow
+                key={invitation.id}
+                data-invitation-id={invitation.id}
+                data-organization-id={invitation.organizationId}
+              >
                 <TableCell>{index + 1}</TableCell>
                 <TableCell className="text-left">
                   {invitation.inviterUserFullName}
@@ -84,6 +89,7 @@ export const PendingInvitationsList = async () => {
         organizationTitle: organization.title,
         status: invitation.status,
         role: invitation.invitee_organization_role,
+        organizationId: organization.id,
       };
     })
     .filter(Boolean);

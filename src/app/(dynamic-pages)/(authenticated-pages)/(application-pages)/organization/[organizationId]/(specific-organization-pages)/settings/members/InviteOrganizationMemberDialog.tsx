@@ -1,5 +1,6 @@
 'use client';
-import { useState } from 'react';
+import { OrganizationMemberRoleSelect } from '@/components/presentational/tailwind/OrganizationMemberRoleSelect';
+import { Button } from '@/components/ui/Button';
 import {
   Dialog,
   DialogContent,
@@ -9,12 +10,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/Dialog';
-import { Button } from '@/components/ui/Button';
-import { Enum } from '@/types';
-import { OrganizationMemberRoleSelect } from '@/components/presentational/tailwind/OrganizationMemberRoleSelect';
-import AddUserIcon from 'lucide-react/dist/esm/icons/user-plus';
-import { Label } from '@/components/ui/Label';
 import { Input } from '@/components/ui/Input';
+import { Label } from '@/components/ui/Label';
+import { Enum } from '@/types';
+import AddUserIcon from 'lucide-react/dist/esm/icons/user-plus';
+import { useState } from 'react';
 
 type Props = {
   onInvite: (email: string, role: Enum<'organization_member_role'>) => void;
@@ -32,9 +32,13 @@ export const InviteOrganizationMemberDialog = ({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="default" size="default">
+        <Button
+          variant="default"
+          data-testid="invite-user-button"
+          size="default"
+        >
           <AddUserIcon className="mr-2 w-5 h-5" />
-          Invite user{' '}
+          Invite user
         </Button>
       </DialogTrigger>
       <DialogContent>
@@ -50,6 +54,7 @@ export const InviteOrganizationMemberDialog = ({
           </div>
         </DialogHeader>
         <form
+          data-testid="invite-user-form"
           onSubmit={(event) => {
             event.preventDefault();
             onInvite(email, role);
@@ -70,6 +75,7 @@ export const InviteOrganizationMemberDialog = ({
               className="mt-1.5 shadow appearance-none border h-11 rounded-lg w-full py-2 px-3 focus:ring-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-base"
               id="email"
               value={email}
+              name="email"
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email"
               type="email"

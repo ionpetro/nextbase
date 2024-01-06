@@ -4,7 +4,7 @@ import { expect, request, test } from '@playwright/test';
 const INBUCKET_URL = `http://localhost:54324`;
 
 // eg endpoint: https://api.testmail.app/api/json?apikey=${APIKEY}&namespace=${NAMESPACE}&pretty=true
-async function checkIfTestMailReceivedEmail(username: string): Promise<{
+async function getResetPasswordEmail(username: string): Promise<{
   url: string
 }> {
   const requestContext = await request.newContext()
@@ -89,7 +89,7 @@ test('forgot password works correctly', async ({ page }) => {
   let url;
   await expect.poll(async () => {
     try {
-      const { url: urlFromCheck } = await checkIfTestMailReceivedEmail(identifier);
+      const { url: urlFromCheck } = await getResetPasswordEmail(identifier);
       url = urlFromCheck;
       return typeof urlFromCheck;
     } catch (e) {

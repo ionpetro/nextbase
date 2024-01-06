@@ -1,9 +1,10 @@
 import { expect, request, test as setup } from '@playwright/test';
+import { onboardUserHelper } from 'e2e/helpers/onboard-user.helper';
 
 const INBUCKET_URL = `http://localhost:54324`;
 
 // eg endpoint: https://api.testmail.app/api/json?apikey=${APIKEY}&namespace=${NAMESPACE}&pretty=true
-async function checkIfTestMailReceivedEmail(username: string): Promise<{
+async function getConfirmEmail(username: string): Promise<{
   token: string;
   url: string
 }> {
@@ -67,7 +68,7 @@ setup('authenticate', async ({ page }) => {
   let url;
   await expect.poll(async () => {
     try {
-      const { url: urlFromCheck } = await checkIfTestMailReceivedEmail(identifier);
+      const { url: urlFromCheck } = await getConfirmEmail(identifier);
       url = urlFromCheck;
       return typeof urlFromCheck;
     } catch (e) {
@@ -80,11 +81,6 @@ setup('authenticate', async ({ page }) => {
 
   await page.goto(url);
   await page.waitForURL('/dashboard');
-  // wait for "Create new profile" onboarding modal
-  await page.waitForSelector('text=Create new profile');
-  // enter text in the input field
-  await page.fill('input[name="name"]', 'John Doe');
-  // get button with text "save"
-  await page.getByRole('button', { name: 'Save' }).click();
+  await onboardUserHelper({ page, name: 'John Doe' });
   await page.context().storageState({ path: authFile });
 });

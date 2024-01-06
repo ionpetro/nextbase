@@ -58,6 +58,7 @@ export const UserOnboardingDialog = ({
           </div>
         </DialogHeader>
         <form
+          data-testid="user-onboarding-form"
           onSubmit={(event) => {
             event.preventDefault();
             onSubmit(fullName);

@@ -22,7 +22,7 @@ export function InviteUser({ organizationId }: { organizationId: string }) {
     },
     {
       loadingMessage: 'Inviting user...',
-      errorMessage: 'Failed to invite user',
+      errorMessage: 'Failed to invite user  ',
       successMessage: 'User invited!',
     },
   );
