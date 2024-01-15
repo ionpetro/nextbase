@@ -83,7 +83,7 @@ export const UserOnboardingDialog = ({
                           repeatType: 'reverse',
                         }
                     }
-                    onLoadingComplete={() => {
+                    onLoad={() => {
                       setHasImageLoaded(true);
                     }}
                     onLoadStart={() => {

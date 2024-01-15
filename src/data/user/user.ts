@@ -5,6 +5,7 @@ import { SupabaseFileUploadOptions, Table } from '@/types';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import { User } from '@supabase/supabase-js';
 import { revalidatePath } from 'next/cache';
+import slugify from 'slugify';
 import urlJoin from 'url-join';
 
 export async function getIsAppAdmin(authUser: User): Promise<boolean> {
@@ -102,15 +103,24 @@ export const getUserPendingInvitationsById = async (userId: string) => {
 };
 
 export const uploadPublicUserAvatar = async (
-  file: File,
+  formData: FormData,
   fileName: string,
   fileOptions?: SupabaseFileUploadOptions | undefined,
 ): Promise<string> => {
   'use server';
+  const file = formData.get('file');
+  if (!file) {
+    throw new Error('File is empty');
+  }
+  const slugifiedFilename = slugify(fileName, {
+    lower: true,
+    strict: true,
+    replacement: '-',
+  });
   const supabaseClient = createSupabaseUserServerActionClient();
   const user = await serverGetLoggedInUser();
   const userId = user.id;
-  const userImagesPath = `${userId}/images/${fileName}`;
+  const userImagesPath = `${userId}/images/${slugifiedFilename}`;
 
   const { data, error } = await supabaseClient.storage
     .from('public-user-assets')
@@ -128,6 +138,7 @@ export const uploadPublicUserAvatar = async (
     '/storage/v1/object/public/public-user-assets',
     filePath,
   );
+
   return supabaseFileUrl;
 };
 

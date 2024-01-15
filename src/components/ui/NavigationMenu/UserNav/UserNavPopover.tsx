@@ -36,9 +36,10 @@ export const UserNavPopover = ({
               quality={100}
               sizes="100vw"
               alt="User avatar"
+              objectFit="cover"
+              className="h-full w-full"
               style={{
                 borderRadius: '50%',
-                objectFit: 'contain',
               }}
             />
           </div>

@@ -19,7 +19,12 @@ export function UserSidebarMenu({
 }) {
   return (
     <div className="dark:bg-black ">
-      <div className="flex items-start mt-1 gap-2 px-2.5 mb-2">
+      <div
+        className="grid items-start mt-1 gap-2 px-2.5 mb-2"
+        style={{
+          gridTemplateColumns: 'min-content 1fr',
+        }}
+      >
         <div className="h-[28px] mt-1 w-[28px] rounded-full border">
           <Image
             src={userAvatarUrl}
@@ -30,9 +35,10 @@ export function UserSidebarMenu({
             quality={100}
             sizes="100vw"
             alt="User avatar"
+            className="h-full w-full"
+            objectFit="cover"
             style={{
               borderRadius: '50%',
-              objectFit: 'contain',
             }}
           />
         </div>
