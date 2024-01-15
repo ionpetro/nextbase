@@ -6,7 +6,7 @@ const SearchParamsSchema = z.object({
   nextActionType: z.string().optional(),
 });
 
-export default function SignupPage({
+export default function SignUpPage({
   searchParams,
 }: {
   searchParams: unknown;

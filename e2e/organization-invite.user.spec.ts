@@ -5,6 +5,7 @@ function getInviteeIdentifier(): string {
 }
 
 import { request } from '@playwright/test';
+import { dashboardDefaultOrganizationIdHelper } from './helpers/dashboard-default-organization-id.helper';
 import { getUserIdHelper } from './helpers/get-user-id.helper';
 import { onboardUserHelper } from './helpers/onboard-user.helper';
 
@@ -52,21 +53,7 @@ async function getInvitationEmail(username: string): Promise<{
 }
 
 test('invite user to an organization', async ({ page }) => {
-  await page.goto('/dashboard');
-
-  let organizationId;
-  await page.waitForURL(url => {
-    const match = url.toString().match(/\/organization\/([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})/);
-    if (match) {
-      organizationId = match[1];
-      return true;
-    }
-    return false;
-  });
-
-  if (!organizationId) {
-    throw new Error('organizationId creation failed');
-  }
+  const organizationId = await dashboardDefaultOrganizationIdHelper({ page });
 
   const membersPageURL = `/organization/${organizationId}/settings/members`;
 

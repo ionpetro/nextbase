@@ -9,15 +9,18 @@ type NormalizedNotification = {
   image: string;
   type: UserNotification['type'] | 'unknown';
 } & (
-  | {
+    | {
       actionType: 'link';
       href: string;
     }
-  | {
+    | {
       actionType: 'button';
     }
-);
-export const parseNotification = (notificationPayload: unknown) => {
+  );
+
+export const parseNotification = (
+  notificationPayload: unknown,
+): NormalizedNotification => {
   try {
     const notification =
       userNotificationPayloadSchema.parse(notificationPayload);
@@ -31,7 +34,7 @@ export const parseNotification = (notificationPayload: unknown) => {
           image: '/logos/logo-black.png',
           actionType: 'link',
           type: notification.type,
-        } as NormalizedNotification;
+        };
       case 'acceptedOrganizationInvitation':
         return {
           title: 'Accepted invitation to join organization',
@@ -39,7 +42,8 @@ export const parseNotification = (notificationPayload: unknown) => {
           href: `/organization/${notification.organizationId}/settings/members`,
           image: '/logos/logo-black.png',
           actionType: 'link',
-        } as NormalizedNotification;
+          type: notification.type,
+        };
       case 'welcome':
         return {
           title: 'Welcome to the Nextbase',
@@ -48,7 +52,7 @@ export const parseNotification = (notificationPayload: unknown) => {
           actionType: 'button',
           image: '/logos/logo-black.png',
           type: notification.type,
-        } as NormalizedNotification;
+        };
       default: {
         return {
           title: 'Unknown notification type',
@@ -57,7 +61,7 @@ export const parseNotification = (notificationPayload: unknown) => {
           image: '/logos/logo-black.png',
           actionType: 'link',
           type: 'unknown',
-        } as NormalizedNotification;
+        };
       }
     }
   } catch (error) {
@@ -67,6 +71,6 @@ export const parseNotification = (notificationPayload: unknown) => {
       image: '/logos/logo-black.png',
       actionType: 'button',
       type: 'unknown',
-    } as NormalizedNotification;
+    };
   }
 };

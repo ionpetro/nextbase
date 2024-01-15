@@ -1,11 +1,11 @@
 /** @type {import('next').NextConfig} */
 
-import createWithMdx from '@next/mdx';
-import rehypeToc from 'rehype-toc';
-import rehypeSlug from 'rehype-slug';
-import { h } from 'hastscript';
-import { withSentryConfig } from '@sentry/nextjs';
 import createWithBundleAnalyzer from '@next/bundle-analyzer';
+import createWithMdx from '@next/mdx';
+import { withSentryConfig } from '@sentry/nextjs';
+import { h } from 'hastscript';
+import rehypeSlug from 'rehype-slug';
+import rehypeToc from 'rehype-toc';
 
 const withBundleAnalyzer = createWithBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',

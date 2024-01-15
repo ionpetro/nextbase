@@ -1,20 +1,8 @@
 import { test } from '@playwright/test';
+import { dashboardDefaultOrganizationIdHelper } from './helpers/dashboard-default-organization-id.helper';
 
 test('dashboard for a user with profile', async ({ page }) => {
-  // Start from the index page (the baseURL is set via the webServer in the playwright.config.ts)
-  await page.goto('/dashboard');
-  // wait for the url to change to `/organization/<organizationUUID>`
-  let organizationId;
-  await page.waitForURL(url => {
-    console.log(url.toString());
-    const match = url.toString().match(/\/organization\/([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})/);
-    if (match) {
-      organizationId = match[1];
-      return true;
-    }
-    return false;
-  });
-
+  const organizationId = await dashboardDefaultOrganizationIdHelper({ page });
   const settingsPageURL = `/organization/${organizationId}/settings`;
   const billingPageURL = `/organization/${organizationId}/settings/billing`;
   const membersPageURL = `/organization/${organizationId}/settings/members`;
