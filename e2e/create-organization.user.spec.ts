@@ -76,5 +76,4 @@ test('create organization works correctly', async ({ page }) => {
   // wait for text "Organization title updated!"
 
   await page.waitForSelector('text=Organization title updated!');
-
 });
