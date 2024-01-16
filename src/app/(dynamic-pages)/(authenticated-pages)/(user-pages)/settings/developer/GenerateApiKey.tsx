@@ -23,6 +23,7 @@ export function GenerateApiKey() {
   return (
     <>
       <form
+        className=" max-w-sm"
         onSubmit={(event) => {
           event.preventDefault();
           mutate();
