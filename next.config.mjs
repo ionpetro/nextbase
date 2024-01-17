@@ -4,6 +4,7 @@ import createWithBundleAnalyzer from '@next/bundle-analyzer';
 import createWithMdx from '@next/mdx';
 import { withSentryConfig } from '@sentry/nextjs';
 import { h } from 'hastscript';
+import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeSlug from 'rehype-slug';
 import rehypeToc from 'rehype-toc';
 
@@ -53,6 +54,12 @@ const withMDX = createWithMdx({
         },
       ],
       rehypeWrapMainContent,
+      [
+        rehypePrettyCode,
+        {
+          theme: 'one-dark-pro',
+        },
+      ],
     ],
   },
 });

@@ -1,9 +1,8 @@
-import type { MDXComponents } from 'mdx/types';
-import React, { HTMLAttributes } from 'react';
-import Link from 'next/link';
 import { cn } from '@/utils/cn';
+import type { MDXComponents } from 'mdx/types';
+import Link from 'next/link';
+import React, { HTMLAttributes } from 'react';
 import { HashLink } from './/HashLink';
-import { PrismSyntaxHighlight } from './/PrismSyntaxHighlight';
 
 type TocNavProps = HTMLAttributes<HTMLElement>;
 
@@ -53,13 +52,6 @@ export const customMDXComponents: MDXComponents = {
       </Link>
     );
   },
-  pre: ({ children, className, ...props }) => {
-    return (
-      <PrismSyntaxHighlight className={className} {...props}>
-        {children}
-      </PrismSyntaxHighlight>
-    );
-  },
   TocNav,
   prose: ({ as: Component = 'div', className, ...props }) => {
     return (
@@ -79,6 +71,72 @@ export const customMDXComponents: MDXComponents = {
           'prose-pre:rounded-xl prose-pre:bg-slate-900 prose-pre:shadow-lg dark:prose-pre:bg-slate-800/60 dark:prose-pre:shadow-none dark:prose-pre:ring-1 dark:prose-pre:ring-slate-300/10',
           // hr
           'dark:prose-hr:border-slate-800',
+        )}
+        {...props}
+      />
+    );
+  },
+  table: ({ className, ...props }) => {
+    return (
+      <div className="overflow-x-auto">
+        <table
+          className={cn(
+            className,
+            'table-auto w-full border-collapse border-gray-200 dark:border-gray-700',
+          )}
+          {...props}
+        />
+      </div>
+    );
+  },
+  th: ({ className, ...props }) => {
+    return (
+      <th
+        className={cn(
+          className,
+          'px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider',
+        )}
+        style={{ wordWrap: 'break-word' }} // Add this line
+        {...props}
+      />
+    );
+  },
+  td: ({ className, ...props }) => {
+    return (
+      <td
+        className={cn(
+          className,
+          'px-6 py-4 text-sm text-gray-900 dark:text-gray-100',
+        )}
+        style={{ wordWrap: 'break-word' }} // Add this line
+        {...props}
+      />
+    );
+  },
+  tr: ({ className, ...props }) => {
+    return (
+      <tr
+        className={cn(
+          className,
+          'border-t border-gray-200 dark:border-gray-700',
+        )}
+        {...props}
+      />
+    );
+  },
+  code: ({ className, ...props }) => {
+    const languageClassExist = className
+      ?.split(' ')
+      ?.find((className) => className.indexOf('language') !== -1);
+    // check if data-language prop exists
+    const languageProp = Boolean(props['data-language']) || languageClassExist;
+    return (
+      <code
+        className={cn(
+          className,
+          languageProp
+            ? ''
+            : 'p-1 border border-gray-700 dark:border-purple-600 dark:bg-transparent bg-purple-100',
         )}
         {...props}
       />
