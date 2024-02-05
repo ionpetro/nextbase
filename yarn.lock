@@ -1748,7 +1748,7 @@
   resolved "https://registry.yarnpkg.com/@react-email/preview/-/preview-0.0.7.tgz#8d1c9fd27ba45f0449ef6e35484c94da5a6a0de5"
   integrity sha512-YLfIwHdexPi8IgP1pSuVXdAmKzMQ8ctCCLEjkMttT2vkSFqT6m/e6UFWK2l30rKm2dDsLvQyEvo923mPXjnNzg==
 
-"@react-email/render@0.0.10", "@react-email/render@0.0.7", "@react-email/render@0.0.9", "@react-email/render@^0.0.10":
+"@react-email/render@0.0.11", "@react-email/render@0.0.7", "@react-email/render@0.0.9", "@react-email/render@^0.0.10":
   version "0.0.10"
   resolved "https://registry.yarnpkg.com/@react-email/render/-/render-0.0.10.tgz#d72363bf2b15fbcc042ab8ab393b34724b77cd7c"
   integrity sha512-FdLhg/E5PH5qZU/jf9NbvRi5v5134kbX7o8zIhOJIk/TALxB18ggprnH5tQX96dGQFqlLob8OLReaRwrpEF7YA==
@@ -9305,15 +9305,15 @@ react-dropzone@^14.2.3:
     file-selector "^0.6.0"
     prop-types "^15.8.1"
 
-react-email@1.10.0:
-  version "1.10.0"
-  resolved "https://registry.yarnpkg.com/react-email/-/react-email-1.10.0.tgz#340ef4c45b3ce4df9ee760d3eae74c0c0f9c66c1"
-  integrity sha512-IrLs28p3Iqyx9JASSrdEoTC+TQeb3jDcJ++2xzVS71yR6U8GYAqff7NKPGZJIA6z5oGtwRFv6GCViR4JiGdmXg==
+react-email@1.10.1:
+  version "1.10.1"
+  resolved "https://registry.yarnpkg.com/react-email/-/react-email-1.10.1.tgz#e6b3e8fc867d7f8325afe7b59a1117334bcea2a0"
+  integrity sha512-nK92iY5TT2aD+YQNNQhnUbqy4dVd8jkRNmEAASbrkPU0/5btIP8o9YWlp1BNY1k26GU8qLiAAXm9TiWokYtbGA==
   dependencies:
     "@commander-js/extra-typings" "9.4.1"
     "@manypkg/find-root" "2.2.1"
     "@octokit/rest" "19.0.7"
-    "@react-email/render" "0.0.10"
+    "@react-email/render" "0.0.11"
     chokidar "3.5.3"
     commander "9.4.1"
     detect-package-manager "2.0.1"
