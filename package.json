@@ -25,7 +25,7 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-switch": "^1.0.2",
     "@react-email/components": "^0.0.12",
-    "@react-email/render": "^0.0.10",
+    "@react-email/render": "^0.0.12",
     "@sentry/nextjs": "^7.59.3",
     "@stripe/stripe-js": "^2.2.2",
     "@supabase/auth-helpers-nextjs": "^0.8.7",
@@ -182,7 +182,7 @@
     "vitest": "^0.34.0"
   },
   "resolutions": {
-    "@react-email/render": "^0.0.10",
+    "@react-email/render": "^0.0.12",
     "strip-ansi": "6.0.1",
     "string-width": "4.2.3",
     "wrap-ansi": "7.0.0"
