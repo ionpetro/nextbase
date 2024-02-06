@@ -10124,17 +10124,17 @@ shelljs@0.8.5:
     interpret "^1.0.0"
     rechoir "^0.6.2"
 
-shikiji-core@0.10.0-beta.4:
-  version "0.10.0-beta.4"
-  resolved "https://registry.yarnpkg.com/shikiji-core/-/shikiji-core-0.10.0-beta.4.tgz#f3283d1cfd5897741274de0df9fbde137119d7ed"
-  integrity sha512-TqLiUIlCHCBGuLwUg+4O74OLZD8ftiAA+SKhD2SwyAj4xnczGAipsIInZLbocjFNeAFUWjYKUKZPQTVCAhD60w==
+shikiji-core@0.10.2:
+  version "0.10.2"
+  resolved "https://registry.yarnpkg.com/shikiji-core/-/shikiji-core-0.10.2.tgz#19c5cba664c12a80e726bd627a0e08313a67bd5f"
+  integrity sha512-9Of8HMlF96usXJHmCL3Gd0Fcf0EcyJUF9m8EoAKKd98mHXi0La2AZl1h6PegSFGtiYcBDK/fLuKbDa1l16r1fA==
 
 shikiji@^0.10.0-beta.4:
-  version "0.10.0-beta.4"
-  resolved "https://registry.yarnpkg.com/shikiji/-/shikiji-0.10.0-beta.4.tgz#174ef92a63f666a4aa7cba1bf4a6dde3a1adc178"
-  integrity sha512-Jj0BjAGAv/cZKiAwLJQCX610rtSqptFihGItTQtLTj8FagNcpfl7a6SLKoRZDwRxjg97V0dd7sH5NVs+6ZV4CQ==
+  version "0.10.2"
+  resolved "https://registry.yarnpkg.com/shikiji/-/shikiji-0.10.2.tgz#178391422225c50c0499f4d841baaa9568a79769"
+  integrity sha512-wtZg3T0vtYV2PnqusWQs3mDaJBdCPWxFDrBM/SE5LfrX92gjUvfEMlc+vJnoKY6Z/S44OWaCRzNIsdBRWcTAiw==
   dependencies:
-    shikiji-core "0.10.0-beta.4"
+    shikiji-core "0.10.2"
 
 side-channel@^1.0.4:
   version "1.0.4"
