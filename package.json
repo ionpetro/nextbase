@@ -188,6 +188,6 @@
     "wrap-ansi": "7.0.0"
   },
   "overrides": {
-    "node-gyp-build": "4.7.1"
+    "node-gyp-build": "4.8.0"
   }
 }
