@@ -5131,7 +5131,7 @@ fetch-blob@^3.1.2, fetch-blob@^3.1.4:
     node-domexception "^1.0.0"
     web-streams-polyfill "^3.0.3"
 
-fflate@^0.4.1:
+fflate@^0.4.8:
   version "0.4.8"
   resolved "https://registry.yarnpkg.com/fflate/-/fflate-0.4.8.tgz#f90b82aefbd8ac174213abb338bd7ef848f0f5ae"
   integrity sha512-FJqqoDBR00Mdj9ppamLa/Y7vxm+PRmNWA67N846RvsoYVMKB4q3y/de5PA7gUmRMYK/8CMz2GDZQmCRN1wBcWA==
@@ -8964,11 +8964,12 @@ postcss@^8.1.6, postcss@^8.1.8, postcss@^8.3.5, postcss@^8.4.20, postcss@^8.4.23
     source-map-js "^1.0.2"
 
 posthog-js@^1.75.3:
-  version "1.94.1"
-  resolved "https://registry.yarnpkg.com/posthog-js/-/posthog-js-1.94.1.tgz#a6b807512fec9e93f4044b6c258a6074e1cf6d38"
-  integrity sha512-O9JnF7FM/OX8p0o/SEmzzOWj4wgnyTCMRApIoZkjn7Ds1Q5M5wUMhIYXFe4ugd6xBXetrnJU5rF3OvW2n93vcA==
+  version "1.105.4"
+  resolved "https://registry.yarnpkg.com/posthog-js/-/posthog-js-1.105.4.tgz#eefbadb667a66b71e869add03d130b78975537e4"
+  integrity sha512-hazxQYi4nxSqktu0Hh1xCV+sJCpN8mp5E5Ei/cfEa2nsb13xQbzn81Lf3VIDA0xMU1mXxNRStntlY267eQVC/w==
   dependencies:
-    fflate "^0.4.1"
+    fflate "^0.4.8"
+    preact "^10.19.3"
 
 posthog-node@^3.1.1:
   version "3.2.0"
@@ -8977,6 +8978,11 @@ posthog-node@^3.1.1:
   dependencies:
     axios "^1.6.2"
     rusha "^0.8.14"
+
+preact@^10.19.3:
+  version "10.19.3"
+  resolved "https://registry.yarnpkg.com/preact/-/preact-10.19.3.tgz#7a7107ed2598a60676c943709ea3efb8aaafa899"
+  integrity sha512-nHHTeFVBTHRGxJXKkKu5hT8C/YWBkPso4/Gad6xuj5dbptt9iF9NZr9pHbPhBrnT2klheu7mHTxTZ/LjwJiEiQ==
 
 prelude-ls@^1.2.1:
   version "1.2.1"
