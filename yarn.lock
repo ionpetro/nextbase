@@ -3380,7 +3380,7 @@ bidi-js@^1.0.3:
   dependencies:
     require-from-string "^2.0.2"
 
-bin-links@^4.0.1:
+bin-links@^4.0.3:
   version "4.0.3"
   resolved "https://registry.yarnpkg.com/bin-links/-/bin-links-4.0.3.tgz#9e4a3c5900830aee3d7f52178b65e01dcdde64a5"
   integrity sha512-obsRaULtJurnfox/MDwgq6Yo9kzbv1CPTk/1/s7Z/61Lezc8IKkFCOXNeVLXz0456WRzBQmSsDWlai2tIhBsfA==
@@ -8317,7 +8317,7 @@ node-fetch@^2.6.7:
   dependencies:
     whatwg-url "^5.0.0"
 
-node-fetch@^3.2.10, node-fetch@^3.3.0:
+node-fetch@^3.3.0, node-fetch@^3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-3.3.2.tgz#d1e889bacdf733b4ff3b2b243eb7a12866a0b78b"
   integrity sha512-dRB78srN/l6gqWulah9SrxeYnxeddIG30+GOqK/9OlLVyLg3HPnr6SqOWTWOXKRwC2eGYCkZ59NNuSgvSrpgOA==
@@ -10448,13 +10448,13 @@ sucrase@^3.32.0:
     ts-interface-checker "^0.1.9"
 
 supabase@^1.127.4:
-  version "1.127.4"
-  resolved "https://registry.yarnpkg.com/supabase/-/supabase-1.127.4.tgz#e80af187f0187c89c6d6de1e8f1d9f0ae6c9bd36"
-  integrity sha512-9vxMsRkG8Qqju+gjTL++G/DaUcMyVr9YAT3jeRkNKIzbVVd0QiHUp2NHXXlqs6EByJVZzpMYJf4h55ml/H7gpg==
+  version "1.142.1"
+  resolved "https://registry.yarnpkg.com/supabase/-/supabase-1.142.1.tgz#1489591929786f8d21dfbd1e49f3428c48b223db"
+  integrity sha512-bBq2bHgpkRdAWYUPM9RoToWDw8CrkjxYQYLmo9+MvdrOFeXwZ5XGWvy9RDqNDRy31q9gJki84idy0yOnqDebWA==
   dependencies:
-    bin-links "^4.0.1"
+    bin-links "^4.0.3"
     https-proxy-agent "^7.0.2"
-    node-fetch "^3.2.10"
+    node-fetch "^3.3.2"
     tar "6.2.0"
 
 supports-color@^2.0.0:
@@ -11457,9 +11457,9 @@ web-namespaces@^2.0.0:
   integrity sha512-bKr1DkiNa2krS7qxNtdrtHAmzuYGFQLiQ13TsorsdT6ULTkPLKuu5+GsFpDlg6JFjUTwX2DyhMPG2be8uPrqsQ==
 
 web-streams-polyfill@^3.0.3:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/web-streams-polyfill/-/web-streams-polyfill-3.2.1.tgz#71c2718c52b45fd49dbeee88634b3a60ceab42a6"
-  integrity sha512-e0MO3wdXWKrLbL0DgGnUV7WHVuw9OUvL4hjgnPkIeEvESk74gAITi5G606JtZPp39cd8HA9VQzCIvA49LpPN5Q==
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/web-streams-polyfill/-/web-streams-polyfill-3.3.2.tgz#32e26522e05128203a7de59519be3c648004343b"
+  integrity sha512-3pRGuxRF5gpuZc0W+EpwQRmCD7gRqcDOMt688KmdlDAgAyaB1XlN0zq2njfDNm44XVdIouE7pZ6GzbdyH47uIQ==
 
 web-vitals@^3.4.0:
   version "3.5.2"
