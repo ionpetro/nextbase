@@ -51,7 +51,7 @@
     "@tremor/react": "^3.6.5",
     "@types/mdx": "^2.0.5",
     "@unkey/api": "^0.13.1",
-    "@unkey/nextjs": "^0.13.5",
+    "@unkey/nextjs": "^0.15.0",
     "@vercel/analytics": "^1.0.1",
     "ai": "^2.1.20",
     "autoprefixer": "^10.4.13",

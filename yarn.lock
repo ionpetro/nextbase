@@ -2964,12 +2964,17 @@
   resolved "https://registry.yarnpkg.com/@unkey/api/-/api-0.13.1.tgz#16b902b7a58b17166673d44185a9f69fb16d9e1f"
   integrity sha512-UycJqArrmCf3NdfSQrkmpomng0vam5NnsyJ1cTOZRSbx3t/DnCLkEHQm3V3m+FHasMPdOU3t2i29fOSb3t/93w==
 
-"@unkey/nextjs@^0.13.5":
-  version "0.13.5"
-  resolved "https://registry.yarnpkg.com/@unkey/nextjs/-/nextjs-0.13.5.tgz#cd18ad64cee1edb53b7f7f7131ed7aa5bac130f8"
-  integrity sha512-7e7czCb4bXUIra477WowRCkUO1Go76tWaQ6DxWYWAfzIquv0euWHzIr+wlFtZ5OzjJDM+wirDpNvEpFIfcahVA==
+"@unkey/api@^0.17.0":
+  version "0.17.0"
+  resolved "https://registry.yarnpkg.com/@unkey/api/-/api-0.17.0.tgz#4afc84b0ac093cd6d7ebaa86c691d5f877477a52"
+  integrity sha512-/rpzSG6VkDo+s/vr9Vz+94zNARrwsuDaqghQQlQ5aHlRR3TR+O8ikOF/hMYDV14k7ksOnvbBZ8lsq970kX23lw==
+
+"@unkey/nextjs@^0.15.0":
+  version "0.15.0"
+  resolved "https://registry.yarnpkg.com/@unkey/nextjs/-/nextjs-0.15.0.tgz#cbd39f8180d9107d024f192a7d008b0c77508692"
+  integrity sha512-LeDUKoxv3RExt/3FdRmCwzVJytJK5yg4ISxaZQhsG8BmQgQo+ftaA2bQ1WAS/DAyQXeZpJRnIzMODUZKW+IBEA==
   dependencies:
-    "@unkey/api" "^0.13.1"
+    "@unkey/api" "^0.17.0"
 
 "@vercel/analytics@^1.0.1":
   version "1.1.3"
