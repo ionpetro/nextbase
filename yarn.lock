@@ -2959,11 +2959,6 @@
   resolved "https://registry.yarnpkg.com/@ungap/structured-clone/-/structured-clone-1.2.0.tgz#756641adb587851b5ccb3e095daf27ae581c8406"
   integrity sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==
 
-"@unkey/api@^0.13.1":
-  version "0.13.1"
-  resolved "https://registry.yarnpkg.com/@unkey/api/-/api-0.13.1.tgz#16b902b7a58b17166673d44185a9f69fb16d9e1f"
-  integrity sha512-UycJqArrmCf3NdfSQrkmpomng0vam5NnsyJ1cTOZRSbx3t/DnCLkEHQm3V3m+FHasMPdOU3t2i29fOSb3t/93w==
-
 "@unkey/api@^0.17.0":
   version "0.17.0"
   resolved "https://registry.yarnpkg.com/@unkey/api/-/api-0.17.0.tgz#4afc84b0ac093cd6d7ebaa86c691d5f877477a52"
