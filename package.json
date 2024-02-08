@@ -165,7 +165,7 @@
     "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "jsdom": "^23.0.0",
+    "jsdom": "^24.0.0",
     "node-gyp-build": "^4.7.1",
     "postcss": "^8.4.20",
     "prettier": "^3.0.0",
