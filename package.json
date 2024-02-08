@@ -183,7 +183,7 @@
   },
   "resolutions": {
     "@react-email/render": "^0.0.12",
-    "strip-ansi": "6.0.1",
+    "strip-ansi": "7.1.0",
     "string-width": "7.1.0",
     "wrap-ansi": "7.0.0"
   },
