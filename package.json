@@ -102,7 +102,7 @@
     "rehype-toc": "^3.0.2",
     "remark-frontmatter": "^5.0.0",
     "remark-mdx-frontmatter": "^4.0.0",
-    "resend": "^0.17.2",
+    "resend": "^3.0.0",
     "rooks": "^7.14.0",
     "server-only": "^0.0.1",
     "shadcn-ui": "^0.8.0",
