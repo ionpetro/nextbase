@@ -179,7 +179,7 @@
     "tailwindcss-cli": "^0.1.2",
     "typescript": "^5.0.0",
     "unimported": "^1.31.1",
-    "vitest": "^0.34.0"
+    "vitest": "^1.0.0"
   },
   "resolutions": {
     "@react-email/render": "^0.0.12",
