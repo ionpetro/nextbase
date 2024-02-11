@@ -1,7 +1,7 @@
 'use client';
-import { Email } from '@/components/presentational/tailwind/Auth/Email';
-import { EmailAndPassword } from '@/components/presentational/tailwind/Auth/EmailAndPassword';
-import { RenderProviders } from '@/components/presentational/tailwind/Auth/RenderProviders';
+import { Email } from '@/components/Auth/Email';
+import { EmailAndPassword } from '@/components/Auth/EmailAndPassword';
+import { RenderProviders } from '@/components/Auth/RenderProviders';
 import {
   signInWithMagicLink,
   signInWithProvider,
@@ -88,7 +88,7 @@ export function SignUp({
           />
           <hr />
           <Email
-            onSubmit={magicLinkMutation.mutate}
+            onSubmit={(email) => magicLinkMutation.mutate(email)}
             isLoading={magicLinkMutation.isLoading}
             view="sign-up"
           />

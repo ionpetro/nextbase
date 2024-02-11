@@ -1,10 +1,10 @@
 'use client';
+import { Button } from '@/components/presentational/tailwind/Button';
 import { T } from '@/components/ui/Typography';
 import { Label } from '@/components/ui/label';
 import { classNames } from '@/utils/classNames';
 import { PropsOf } from '@headlessui/react/dist/types';
 import { useState } from 'react';
-import { Button } from '../Button';
 
 export const Password = ({
   onSubmit,
@@ -12,14 +12,13 @@ export const Password = ({
   successMessage,
   label = 'Password',
   buttonLabel = 'Update',
-  withMaintenanceMode,
 }: {
   onSubmit: (password: string) => void;
   isLoading: boolean;
   successMessage?: string;
   label?: string;
   buttonLabel?: string;
-} & Pick<PropsOf<typeof Button>, 'withMaintenanceMode'>) => {
+} & PropsOf<typeof Button>) => {
   const [password, setPassword] = useState<string>('');
 
   return (
@@ -51,7 +50,6 @@ export const Password = ({
         <div>
           {isLoading ? (
             <Button
-              withMaintenanceMode={withMaintenanceMode}
               disabled
               type="submit"
               className={classNames(
@@ -65,7 +63,6 @@ export const Password = ({
             </Button>
           ) : (
             <Button
-              withMaintenanceMode={withMaintenanceMode}
               type="submit"
               className={classNames(
                 'flex w-full justify-center rounded-lg border border-transparent py-2 text-white dark:text-black px-4 text-sm font-medium  shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2',

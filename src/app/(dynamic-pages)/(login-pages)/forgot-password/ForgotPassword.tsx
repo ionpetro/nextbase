@@ -1,5 +1,5 @@
 'use client';
-import { Email } from '@/components/presentational/tailwind/Auth/Email';
+import { Email } from '@/components/Auth/Email';
 import { T } from '@/components/ui/Typography';
 import { resetPassword } from '@/data/auth/auth';
 import { useToastMutation } from '@/hooks/useToastMutation';
@@ -37,7 +37,7 @@ export function ForgotPassword() {
           <T.P className="text-blue-500 text-sm">{successMessage}</T.P>
         ) : null}
         <Email
-          onSubmit={magicLinkMutation.mutate}
+          onSubmit={(email) => magicLinkMutation.mutate(email)}
           isLoading={magicLinkMutation.isLoading}
           view="forgot-password"
         />

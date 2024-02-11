@@ -1,28 +1,28 @@
 'use client';
+import {
+  Button as TailwindButton,
+  ButtonProps as TailwindButtonProps,
+} from '@/components/ui/button';
 import { useMaintenanceMode } from '@/contexts/MaintenanceModeContext';
 import { Tooltip } from 'react-tooltip';
-
-type ButtonProps = React.DetailedHTMLProps<
-  React.ButtonHTMLAttributes<HTMLButtonElement>,
-  HTMLButtonElement
-> & {
-  withMaintenanceMode?: boolean;
-};
 
 export function Button({
   className: classNameProp,
   disabled: disabledProp,
-  withMaintenanceMode = false,
   ...props
-}: ButtonProps) {
-  const isInMaintenanceMode = useMaintenanceMode() && withMaintenanceMode;
+}: TailwindButtonProps) {
+  const isInMaintenanceMode = useMaintenanceMode();
   const disabled = isInMaintenanceMode || disabledProp;
   const className = isInMaintenanceMode
     ? `${classNameProp} cursor-not-allowed `
     : classNameProp;
 
   const buttonElement = (
-    <button disabled={disabled} className={className} {...props}></button>
+    <TailwindButton
+      disabled={disabled}
+      className={className}
+      {...props}
+    ></TailwindButton>
   );
   if (isInMaintenanceMode) {
     const wrapperId = `${props.id}-wrapper`;

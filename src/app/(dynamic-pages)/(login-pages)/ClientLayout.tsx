@@ -1,19 +1,19 @@
 'use client';
 
 import { MaintenanceModeBanner } from '@/components/presentational/tailwind/MaintenanceModeBanner';
-import { ReactNode, useEffect } from 'react';
+import { T } from '@/components/ui/Typography';
 import Image from 'next/image';
 import LoginHeader from 'public/assets/login-asset-dashboard.png';
-import LogoLoginLight from 'public/logos/nextbase-light-logo.png';
 import LogoLoginDark from 'public/logos/nextbase-dark-logo.png';
-import { T } from '@/components/ui/Typography';
+import LogoLoginLight from 'public/logos/nextbase-light-logo.png';
+import { ReactNode } from 'react';
 
 export function ClientLayout({ children }: { children: ReactNode }) {
   return (
     <div
       className="grid h-full dark:bg-gray-900/20"
       style={{
-        gridTemplateRows: '1fr 1fr',
+        gridTemplateRows: 'auto 1fr',
       }}
     >
       <div className="row-auto">
@@ -34,7 +34,7 @@ export function ClientLayout({ children }: { children: ReactNode }) {
           {/* Blue Background Image */}
           <div
             className="gap-10 bg-cover flex flex-col justify-between rounded-xl w-full dark:bg-gray-800 bg-gray-100 bg-opacity-90 h-full px-10 pt-10 pb-10"
-            // style={{ backgroundImage: `url(${LoginBackgroundLight.src})` }}
+          // style={{ backgroundImage: `url(${LoginBackgroundLight.src})` }}
           >
             <div className="ml-6 space-y-8">
               <div className="relative flex items-center space-x-2">

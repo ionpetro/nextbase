@@ -128,7 +128,6 @@ export function UpdateAvatarAndNameBody({
           </div>
           <div className="flex justify-start space-x-2">
             <Button
-              withMaintenanceMode
               className={classNames(
                 'flex w-full justify-center rounded-lg border border-transparent py-2 text-white dark:text-black px-4 text-sm font-medium  shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2',
                 isLoading

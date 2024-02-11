@@ -1,20 +1,19 @@
+import { Button } from '@/components/presentational/tailwind/Button';
 import { Label } from '@/components/ui/label';
 import { classNames } from '@/utils/classNames';
 import { PropsOf } from '@headlessui/react/dist/types';
 import Link from 'next/link';
 import { useState } from 'react';
-import { Button } from '../Button';
 
 export const EmailAndPassword = ({
   onSubmit,
   view,
   isLoading,
-  withMaintenanceMode,
 }: {
   onSubmit: (data: { email: string; password: string }) => void;
   view: 'sign-in' | 'sign-up';
   isLoading: boolean;
-} & Pick<PropsOf<typeof Button>, 'withMaintenanceMode'>) => {
+} & PropsOf<typeof Button>) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
@@ -109,7 +108,6 @@ export const EmailAndPassword = ({
             <Button
               disabled
               type="submit"
-              withMaintenanceMode={withMaintenanceMode}
               className={classNames(
                 'flex w-full justify-center rounded-lg border border-transparent py-3 text-white dark:text-black px-4 text-sm font-medium  shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2',
                 isLoading
@@ -122,7 +120,6 @@ export const EmailAndPassword = ({
           ) : (
             <Button
               type="submit"
-              withMaintenanceMode={withMaintenanceMode}
               className={classNames(
                 'flex w-full justify-center rounded-lg border border-transparent py-2 text-white dark:text-black px-4 text-sm font-medium  shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2',
                 isLoading
