@@ -1,13 +1,13 @@
 'use server';
+import { T } from '@/components/ui/Typography';
 import {
-  ShadcnTable,
+  Table as ShadcnTable,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/Table/ShadcnTable';
-import { T } from '@/components/ui/Typography';
+} from '@/components/ui/table';
 import {
   getLoggedInUserOrganizationRole,
   getPendingInvitationsInOrganization,

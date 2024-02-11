@@ -1,4 +1,6 @@
 'use client';
+import { T } from '@/components/ui/Typography';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -7,19 +9,15 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/Dialog';
-import { Button } from '@/components/ui/Button';
+} from '@/components/ui/dialog';
+import { useToastMutation } from '@/hooks/useToastMutation';
 import { Table, TableUpdatePayload } from '@/types';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { toast } from 'react-hot-toast';
+import Trash from 'lucide-react/dist/esm/icons/trash';
+import UsersIcon from 'lucide-react/dist/esm/icons/users';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { AddAuthorProfileDialog } from './AddAuthorProfileDialog';
 import { EditAuthorProfileDialog } from './EditAuthorProfileDialog';
-import Trash from 'lucide-react/dist/esm/icons/trash';
-import UsersIcon from 'lucide-react/dist/esm/icons/users';
-import { T } from '@/components/ui/Typography';
-import { useToastMutation } from '@/hooks/useToastMutation';
 
 type AuthorProfile = Table<'internal_blog_author_profiles'>;
 
@@ -62,7 +60,7 @@ export const ManageAuthorsDialog = ({
   return (
     <Dialog open={isOpen} onOpenChange={(newIsOpen) => setIsOpen(newIsOpen)}>
       <DialogTrigger asChild>
-        <Button variant="outline">
+        <Button variant="link">
           <UsersIcon className="mr-2 w-5 h-5" />
           Manage author profiles
         </Button>

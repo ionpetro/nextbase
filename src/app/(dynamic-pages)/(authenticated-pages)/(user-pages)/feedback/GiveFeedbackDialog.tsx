@@ -1,5 +1,5 @@
 'use client';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -7,24 +7,24 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/Dialog';
-import { Input } from '@/components/ui/Input';
-import { Label } from '@/components/ui/Label';
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/Select';
+} from '@/components/ui/select';
+import { createInternalFeedback } from '@/data/user/internalFeedback';
+import { useToastMutation } from '@/hooks/useToastMutation';
+import { Enum } from '@/types';
+import { zodResolver } from '@hookform/resolvers/zod';
+import FeedbackIcon from 'lucide-react/dist/esm/icons/message-square';
+import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Enum } from '@/types';
-import { useState } from 'react';
-import FeedbackIcon from 'lucide-react/dist/esm/icons/message-square';
-import { useToastMutation } from '@/hooks/useToastMutation';
-import { createInternalFeedback } from '@/data/user/internalFeedback';
 
 type FeedbackType = Enum<'internal_feedback_thread_type'>;
 

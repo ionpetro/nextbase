@@ -1,15 +1,15 @@
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
+import { T } from '@/components/ui/Typography';
 import {
-  ShadcnTable,
+  Table as ShadcnTable,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/Table';
-import { T } from '@/components/ui/Typography';
+} from '@/components/ui/table';
 import { getActiveDeveloperKeys } from '@/data/user/unkey';
-import { format } from 'date-fns/esm';
+import { format } from 'date-fns';
 import moment from 'moment';
 import { ConfirmRevokeTokenDialog } from './ConfirmRevokeTokenDialog';
 

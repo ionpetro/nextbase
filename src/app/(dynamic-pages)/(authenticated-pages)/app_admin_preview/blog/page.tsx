@@ -1,5 +1,5 @@
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import PenSquareIcon from 'lucide-react/dist/esm/icons/pen-tool';
 import { BlogListPreview } from '../../app_admin/blog/(blog-list)/BlogListPreview';
 

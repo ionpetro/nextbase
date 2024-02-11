@@ -1,11 +1,12 @@
 'use client';
 
 import { NotificationItem } from '@/components/NavigationMenu/NotificationItem';
+import { T } from '@/components/ui/Typography';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/Popover';
+} from '@/components/ui/popover';
 import { useToastMutation } from '@/hooks/useToastMutation';
 import { supabaseUserClientComponentClient } from '@/supabase-clients/user/supabaseUserClientComponentClient';
 import { Table } from '@/types';
@@ -18,7 +19,6 @@ import { useRouter } from 'next/navigation';
 import { useCallback, useEffect } from 'react';
 import { useDidMount } from 'rooks';
 import { toast } from 'sonner';
-import { T } from '../ui/Typography';
 import {
   getPaginatedNotifications,
   getUnseenNotificationIds,

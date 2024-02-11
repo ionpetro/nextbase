@@ -1,9 +1,9 @@
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
 const CalltoActionSection = () => {
   return (
-    <section className="bg-white dark:bg-gray-900 mb-24">
+    <section className="bg-gradient-to-r from-indigo-500 to-blue-500">
       <div className="mx-auto md:container px-4 xl:px-6 md:px-6 sm:py-24">
         <div className="flex flex-col md:flex-row justify-between items-center w-full py-10 px-6 md:py-16 md:px-16 bg-gray-100 dark:bg-slate-800 rounded-xl">
           <div className=" max-w-3xl w-full">

@@ -1,13 +1,13 @@
 'use server';
-import ChangeLogListCard from '@/components/ui/ChangeLog/ChangeLogListCard';
-import InternalRoadmapCard from '@/components/ui/Card/InternalRoadmapCard';
-import moment from 'moment';
-import { CreateChangelog } from './CreateChangelog';
-import { MDXRemote } from 'next-mdx-remote/rsc';
+import ChangeLogListCard from '@/components/ChangeLog/ChangeLogListCard';
+import InternalRoadmapCard from '@/components/InternalRoadmapCard';
 import { customMDXComponents } from '@/components/mdxComponents';
-import { cn } from '@/utils/cn';
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
+import { cn } from '@/utils/cn';
+import moment from 'moment';
+import { MDXRemote } from 'next-mdx-remote/rsc';
+import { CreateChangelog } from './CreateChangelog';
 
 export default async function Page() {
   const completedTasksListResponse = await supabaseAdminClient

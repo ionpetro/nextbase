@@ -4,17 +4,6 @@ var tsConfigEmail = ['./tsconfig-emails.json'];
 var ruleOverrides = {};
 
 var srcRuleOverrides = {
-  'no-restricted-imports': [
-    'error',
-    {
-      paths: [
-        {
-          name: 'lucide-react',
-          message: 'Please use lucide-react/dist/esm/icons instead.',
-        },
-      ],
-    },
-  ],
   'prettier/prettier': 1,
   '@typescript-eslint/no-unused-vars': 'off',
   '@typescript-eslint/no-non-null-assertion': 'error',

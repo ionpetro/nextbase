@@ -1,5 +1,5 @@
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { AppAdminChangelogList } from './AppAdminChangelogList';

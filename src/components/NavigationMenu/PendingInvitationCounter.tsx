@@ -1,9 +1,9 @@
 'use server';
 
+import { Badge } from '@/components/ui/badge';
 import { getPendingInvitationCountOfUser } from '@/data/user/invitation';
 import FeedbackIcon from 'lucide-react/dist/esm/icons/mail';
 import Link from 'next/link';
-import { Badge } from '../ui/Badge';
 
 export async function PendingInvitationCounter() {
   const count = await getPendingInvitationCountOfUser();

@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { createChangelog } from '@/data/admin/internal-changelog';
 import { useToastMutation } from '@/hooks/useToastMutation';
 import { zodResolver } from '@hookform/resolvers/zod';

@@ -1,5 +1,5 @@
 'use client';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -8,11 +8,11 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/Dialog';
-import { useState } from 'react';
-import GetLinkIcon from 'lucide-react/dist/esm/icons/link';
-import { useToastMutation } from '@/hooks/useToastMutation';
+} from '@/components/ui/dialog';
 import { appAdminGetUserImpersonationUrl } from '@/data/admin/user';
+import { useToastMutation } from '@/hooks/useToastMutation';
+import GetLinkIcon from 'lucide-react/dist/esm/icons/link';
+import { useState } from 'react';
 
 export const GetLoginLinkDialog = ({ userId }: { userId: string }) => {
   const [open, setOpen] = useState(false);
@@ -32,11 +32,7 @@ export const GetLoginLinkDialog = ({ userId }: { userId: string }) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button
-          variant="primaryLink"
-          className="text-sm font-medium underline underline-offset-4 "
-          aria-disabled={isLoading}
-        >
+        <Button variant="outline" aria-disabled={isLoading}>
           Get login link
         </Button>
       </DialogTrigger>

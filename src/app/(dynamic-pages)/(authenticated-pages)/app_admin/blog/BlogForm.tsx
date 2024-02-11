@@ -1,25 +1,25 @@
 'use client';
-import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
-import { Label } from '@/components/ui/Label';
-import { Controller, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Textarea } from '@/components/ui/Textarea';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/Select';
+} from '@/components/ui/select';
+import { Switch } from '@/components/ui/switch';
+import { Textarea } from '@/components/ui/textarea';
 import { Table, TableInsertPayload, TableUpdatePayload } from '@/types';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
-import { toast } from 'react-hot-toast';
-import { useEffect, useRef } from 'react';
-import slugify from 'slugify';
-import { Switch } from '@/components/ui/Switch';
-import ReactSelect from 'react-select';
 import { useTheme } from 'next-themes';
+import { useEffect, useRef } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { toast } from 'react-hot-toast';
+import ReactSelect from 'react-select';
+import slugify from 'slugify';
 
 const darkThemeStyles = {
   control: (styles) => ({
@@ -70,14 +70,14 @@ const darkThemeStyles = {
   }),
 };
 
-import { useRouter } from 'next/navigation';
 import {
   internalBlogPostSchema,
   InternalBlogPostSchema,
 } from '@/utils/zod-schemas/internalBlog';
-import { UploadBlogImage } from './post/UploadBlogImage';
-import Image from 'next/image';
 import Trash from 'lucide-react/dist/esm/icons/trash';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { UploadBlogImage } from './post/UploadBlogImage';
 
 import { TipTapEditor } from '@/components/TipTapEditor';
 

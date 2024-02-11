@@ -1,5 +1,5 @@
 'use client';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -8,7 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/Dialog';
+} from '@/components/ui/dialog';
 import { revokeUnkeyToken } from '@/data/user/unkey';
 import { useToastMutation } from '@/hooks/useToastMutation';
 import { useState } from 'react';
@@ -31,9 +31,7 @@ export const ConfirmRevokeTokenDialog = ({ keyId }: Props) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="destructiveLink" size="xs">
-          Revoke
-        </Button>
+        <Button>Revoke</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] [&>.dialog-close]:hidden">
         <form

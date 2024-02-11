@@ -1,13 +1,13 @@
 'use client';
-import { Badge } from '@/components/ui/Badge';
+import { Badge } from '@/components/ui/badge';
 import {
-  ShadcnTable,
+  Table as ShadcnTable,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/Table/ShadcnTable';
+} from '@/components/ui/table';
 import { T } from '@/components/ui/Typography';
 import { Table } from '@/types';
 import Check from 'lucide-react/dist/esm/icons/check';
@@ -35,7 +35,7 @@ export const ProjectsTable = ({
         <div className="inline-block min-w-full align-middle sm:px-6 lg:px-8">
           {/* <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg"></div> */}
           {/* <div className="flex rounded-lg bg-clip-border border border-gray-200  max-w-[1296px] overflow-hidden"> */}
-          <div className="border rounded-lg shadow-sm overflow-hidden dark:bg-slate-900 bg-white">
+          <div className="border rounded-lg shadow-sm overflow-hidden">
             <ShadcnTable>
               <TableHeader>
                 <TableRow>
@@ -59,27 +59,27 @@ export const ProjectsTable = ({
                     <TableCell>
                       {/* Add your project status rendering logic here */}
                       {project.project_status === 'completed' ? (
-                        <Badge size="sm" variant="success">
-                          <Check size={16} className="mr-2" />
-                          <T.P>Completed</T.P>
+                        <Badge variant="default">
+                          <Check size={16} className="mr-1" />
+                          Completed
                         </Badge>
                       ) : project.project_status === 'pending_approval' ? (
-                        <Badge size="sm" variant="warning">
-                          <Pen size={16} className="mr-2" />
-                          <T.P>Pending Approval</T.P>
+                        <Badge variant="outline">
+                          <Pen size={16} className="mr-1" />
+                          Pending Approval
                         </Badge>
                       ) : project.project_status === 'approved' ? (
-                        <Badge size="sm" variant="success">
-                          <ThumbsUp size={16} className="mr-2" />
-                          <T.P>Approved</T.P>
+                        <Badge variant="secondary">
+                          <ThumbsUp size={16} className="mr-1" />
+                          Approved
                         </Badge>
                       ) : project.project_status === 'draft' ? (
-                        <Badge size="sm" variant="default">
-                          <Timer size={16} className="mr-2" />
-                          <T.P>Draft</T.P>
+                        <Badge variant="default">
+                          <Timer size={16} className="mr-1" />
+                          Draft
                         </Badge>
                       ) : (
-                        <Badge size="sm" variant="information">
+                        <Badge>
                           <Timer size={16} />
                           <T.P>
                             {String(project.project_status).replace('_', ' ')}

@@ -1,6 +1,5 @@
 'use client';
 
-import * as React from 'react';
 // team member roles = ['admin', 'member', 'owner']
 import {
   Select,
@@ -10,9 +9,8 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/Select';
+} from '@/components/ui/select';
 import { Enum } from '@/types';
-import { Label } from '@/components/ui/Label';
 
 type DefaultValueProp = {
   defaultValue: Enum<'organization_member_role'>;

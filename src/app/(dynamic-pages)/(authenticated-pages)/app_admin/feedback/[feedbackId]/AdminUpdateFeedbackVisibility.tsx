@@ -1,8 +1,8 @@
 'use client';
-import { useToastMutation } from '@/hooks/useToastMutation';
-import { Switch } from '@/components/ui/Switch';
-import { Label } from '@/components/ui/Label';
+import { Label } from '@/components/ui/label';
+import { Switch } from '@/components/ui/switch';
 import { adminUpdateInternalFeedbackVisibility } from '@/data/admin/internal-feedback';
+import { useToastMutation } from '@/hooks/useToastMutation';
 
 export function AdminUpdateVisibility({
   feedbackId,

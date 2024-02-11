@@ -1,5 +1,4 @@
 import React from 'react';
-import { T } from '../ui/Typography';
 
 const Fallback: React.FC = () => {
   return (

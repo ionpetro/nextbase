@@ -1,8 +1,8 @@
 'use client';
-import { Button } from '@/components/ui/Button';
-import TrashIcon from 'lucide-react/dist/esm/icons/trash-2';
-import { useToastMutation } from '@/hooks/useToastMutation';
+import { Button } from '@/components/ui/button';
 import { deleteBlogPost } from '@/data/admin/internal-blog';
+import { useToastMutation } from '@/hooks/useToastMutation';
+import TrashIcon from 'lucide-react/dist/esm/icons/trash-2';
 
 export function DeleteBlogPost({ blogPostId }: { blogPostId: string }) {
   const { mutate, isLoading } = useToastMutation(
@@ -22,11 +22,11 @@ export function DeleteBlogPost({ blogPostId }: { blogPostId: string }) {
       onClick={() => {
         mutate();
       }}
-      variant="infoLink"
+      size="icon"
+      variant="ghost"
       aria-disabled={isLoading}
-      className="text-red-500 dark:text-red-500 hover:text-red-600 hover:dark:text-red-400 p-0"
     >
-      {<TrashIcon className="mr-2 h-5 w-5" />}
+      <TrashIcon className="h-6 w-6" />
     </Button>
   );
 }

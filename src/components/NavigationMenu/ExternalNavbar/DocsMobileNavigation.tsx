@@ -1,6 +1,6 @@
 'use client';
-import { ScrollArea } from '@/components/ui/ScrollArea';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/Sheet';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import lightLogo from '@public/logos/acme-logo-dark.png';
 import darkLogo from '@public/logos/acme-logo-light.png';
 import SidebarIcon from 'lucide-react/dist/esm/icons/sidebar';
@@ -63,7 +63,7 @@ export function DocsMobileNavigation() {
         </button>
       </SheetTrigger>
       <SheetContent
-        position="left"
+        side="left"
         className="min-h-full w-full max-w-xs bg-white px-6 pb-12 pt-5 dark:bg-gray-900 sm:px-6"
       >
         <div className="flex items-center">

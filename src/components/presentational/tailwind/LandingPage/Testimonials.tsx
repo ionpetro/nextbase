@@ -2,13 +2,11 @@
 
 import { T } from '@/components/ui/Typography';
 import { Transition } from '@headlessui/react';
-import { useEffect, useState } from 'react';
-import acmeDarkLogo from '@public/logos/acme-logo-dark.png';
-import acmeLightLogo from '@public/logos/acme-logo-light.png';
-import Image from 'next/image';
 import Avatar1 from '@public/assets/avatar_1.jpg';
 import Avatar2 from '@public/assets/avatar_2.jpg';
 import Avatar3 from '@public/assets/avatar_3.jpg';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 const Testimonials = () => {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
@@ -41,7 +39,7 @@ const Testimonials = () => {
   ];
 
   return (
-    <section className="bg-gray-50 dark:bg-slate-800 my-24 mt-40">
+    <section className="my-24 mt-40">
       <div className="max-w-screen-lg mx-auto text-center py-16 sm:py-20 px-4 lg:py-24">
         <figure className=" mx-auto">
           <svg
@@ -98,11 +96,10 @@ const Testimonials = () => {
               <div
                 key={index}
                 onClick={() => setActiveTestimonial(index)}
-                className={`w-3 h-3 rounded-full cursor-pointer ${
-                  activeTestimonial === index
+                className={`w-3 h-3 rounded-full cursor-pointer ${activeTestimonial === index
                     ? 'bg-gray-500 dark:bg-slate-400'
                     : 'bg-gray-300 dark:bg-slate-700'
-                }`}
+                  }`}
               ></div>
             ))}
           </div>

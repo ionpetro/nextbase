@@ -1,5 +1,5 @@
 'use client';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -8,7 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/Dialog';
+} from '@/components/ui/dialog';
 import { acceptInvitationAction } from '@/data/user/invitation';
 import { useToastMutation } from '@/hooks/useToastMutation';
 import Check from 'lucide-react/dist/esm/icons/check';
@@ -35,7 +35,7 @@ export const ConfirmAcceptInvitationDialog = ({
       <DialogTrigger asChild>
         <Button
           data-testid="dialog-accept-invitation-trigger"
-          variant="success"
+          variant="default"
           size="default"
         >
           <Check className="mr-2 h-5 w-5" /> Accept Invitation
@@ -73,7 +73,7 @@ export const ConfirmAcceptInvitationDialog = ({
             type="button"
             data-testid="confirm"
             disabled={isLoading}
-            variant="success"
+            variant="default"
             className="w-full"
             onClick={() => {
               mutate(invitationId);

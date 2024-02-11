@@ -1,19 +1,19 @@
+import { Fallback } from '@/components/AppAdminViewUserDetails/Fallback';
+import { T } from '@/components/ui/Typography';
+import { Badge } from '@/components/ui/badge';
 import {
-  ShadcnTable,
+  Table as ShadcnTable,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/Table/ShadcnTable';
-import { formatFieldValue, mapStatusToVariant } from '@/utils/feedback';
-import { Badge } from '@/components/ui/Badge';
-import { format } from 'date-fns';
-import { Suspense } from 'react';
-import { Fallback } from '@/components/AppAdminViewUserDetails/Fallback';
+} from '@/components/ui/table';
 import { Enum } from '@/types';
-import { T } from '@/components/ui/Typography';
+import { formatFieldValue } from '@/utils/feedback';
+import { format } from 'date-fns';
 import Image from 'next/image';
+import { Suspense } from 'react';
 
 const loremIpsumTexts = [
   'Lorem ipsum dolor sit amet',
@@ -86,11 +86,7 @@ export function FeedbackListPreview() {
                 {format(new Date(feedback.created_at), 'PPpp')}
               </TableCell>
               <TableCell className="py-2">
-                <Badge
-                  className="whitespace-nowrap"
-                  size="sm"
-                  variant={mapStatusToVariant(feedback.status)}
-                >
+                <Badge className="whitespace-nowrap" size="sm">
                   {formatFieldValue(feedback.status)}
                 </Badge>
               </TableCell>

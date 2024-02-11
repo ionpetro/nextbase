@@ -1,6 +1,6 @@
 'use client';
 import { CreateOrganizationDialog } from '@/components/presentational/tailwind/CreateOrganizationDialog';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import {
   Command,
   CommandEmpty,
@@ -8,7 +8,7 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-} from '@/components/ui/Command';
+} from '@/components/ui/command';
 import { createOrganization } from '@/data/user/organizations';
 import { useToastMutation } from '@/hooks/useToastMutation';
 import { cn } from '@/utils/cn';
@@ -85,7 +85,7 @@ export function OrganizationSwitcher({
       <PopoverContent
         side="bottom"
         align="end"
-        className="w-[238px] border -ml-1 my-2 rounded-lg p-0 bg-white dark:bg-slate-900"
+        className="w-[238px] border -ml-1 my-2 rounded-lg p-0 "
       >
         <Command>
           <CommandList>

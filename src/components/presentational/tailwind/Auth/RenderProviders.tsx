@@ -1,12 +1,12 @@
-import { AuthProvider } from '@/types';
 import * as SocialIcons from '@/components/presentational/tailwind/Auth/Icons';
+import { T } from '@/components/ui/Typography';
+import { Button } from '@/components/ui/button';
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
-} from '@/components/ui/HoverCard';
-import { T } from '@/components/ui/Typography';
-import { Button } from '@/components/ui/Button';
+} from '@/components/ui/hover-card';
+import { AuthProvider } from '@/types';
 
 function capitalize(word: string) {
   const lower = word.toLowerCase();

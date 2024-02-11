@@ -1,9 +1,9 @@
 import { cn } from '@/utils/cn';
 
+import { T } from '@/components/ui/Typography';
 import { useMutation } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { T } from '../ui/Typography';
 import { readNotification } from './fetchClientNotifications';
 
 type NotificationItemProps = {

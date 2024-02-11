@@ -1,5 +1,5 @@
 'use client';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -8,21 +8,21 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/Dialog';
+} from '@/components/ui/dialog';
 import { T } from '@/components/ui/Typography';
 // convert the imports above into modularized imports
 // import Check from 'lucide-react/dist/esm/icons/check';
+import { Label } from '@/components/ui/label';
+import { addUserToTeamAction } from '@/data/user/teams';
+import { useToastMutation } from '@/hooks/useToastMutation';
+import { Table } from '@/types';
+import { zodResolver } from '@hookform/resolvers/zod';
 import AddUserIcon from 'lucide-react/dist/esm/icons/user-plus';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { ProjectTeamMemberRoleSelect } from './ProjectTeamMemberRoleSelect';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { OrganizationUsersSelect } from './OrganizationUsersSelect';
-import { Table } from '@/types';
-import { Label } from '@/components/ui/Label';
-import { useToastMutation } from '@/hooks/useToastMutation';
-import { addUserToTeamAction } from '@/data/user/teams';
+import { ProjectTeamMemberRoleSelect } from './ProjectTeamMemberRoleSelect';
 
 const addUserSchema = z.object({
   userId: z.string(),

@@ -1,14 +1,14 @@
-import { z } from 'zod';
-import { Suspense } from 'react';
-import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
-import { OrganizationPageHeading } from './OrganizationPageHeading';
-import { OrganizationGraphs } from './OrganizationGraphs';
 import { CreateProjectDialog } from '@/components/presentational/tailwind/CreateProjectDialog';
-import { T } from '@/components/ui/Typography';
-import InfoIcon from 'lucide-react/dist/esm/icons/info';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/Dialog';
-import { getProjects } from '@/data/user/projects';
+import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 import { ProjectsTable } from '@/components/presentational/tailwind/Projects/ProjectsTable';
+import { T } from '@/components/ui/Typography';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { getProjects } from '@/data/user/projects';
+import InfoIcon from 'lucide-react/dist/esm/icons/info';
+import { Suspense } from 'react';
+import { z } from 'zod';
+import { OrganizationGraphs } from './OrganizationGraphs';
+import { OrganizationPageHeading } from './OrganizationPageHeading';
 
 const paramsSchema = z.object({
   organizationId: z.coerce.string(),
@@ -52,7 +52,7 @@ export default async function OrganizationPage({
                   <DialogTrigger asChild>
                     <InfoIcon className="h-4 w-4 text-gray-500 hover:text-gray-700 dark:text-slate-400 dark:hover:text-slate-200" />
                   </DialogTrigger>
-                  <DialogContent className="w-128 dark:bg-slate-900 bg-white border border-gray-300 dark:border-gray-700">
+                  <DialogContent className="w-128">
                     <T.H2>Projects</T.H2>
                     <T.P className="text-muted-foreground">
                       Projects are adaptable to diverse business usecases. For

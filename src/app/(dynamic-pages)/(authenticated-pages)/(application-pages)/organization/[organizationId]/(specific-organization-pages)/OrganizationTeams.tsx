@@ -1,13 +1,13 @@
 import { CreateTeamDialog } from '@/components/presentational/tailwind/CreateTeamDialog';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/Dialog';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import {
-  ShadcnTable,
+  Table as ShadcnTable,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/Table/ShadcnTable';
+} from '@/components/ui/table';
 import { T } from '@/components/ui/Typography';
 import { getTeamsInOrganization } from '@/data/user/teams';
 import Link from 'next/link';
@@ -54,7 +54,7 @@ export const OrganizationTeams = async ({
 
       {teams.length ? (
         <div className="overflow-auto max-h-[600px] shadow ring-1 mt-6 ring-black ring-opacity-5 border sm:rounded-lg">
-          <ShadcnTable className="bg-white dark:bg-slate-900">
+          <ShadcnTable>
             <TableHeader>
               <TableRow>
                 <TableHead>Row</TableHead>

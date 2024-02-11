@@ -1,7 +1,7 @@
+import ChangeLogListCard from '@/components/ChangeLog/ChangeLogListCard';
+import { customMDXComponents } from '@/components/mdxComponents';
 import { cn } from '@/utils/cn';
 import moment from 'moment';
-import ChangeLogListCard from '@/components/ui/ChangeLog/ChangeLogListCard';
-import { customMDXComponents } from '@/components/mdxComponents';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 
 const changesParagraph = `

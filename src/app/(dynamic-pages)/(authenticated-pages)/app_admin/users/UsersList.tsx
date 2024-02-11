@@ -1,22 +1,22 @@
 'use server';
 
+import { T } from '@/components/ui/Typography';
 import {
-  ShadcnTable,
+  Table as ShadcnTable,
   TableBody,
   TableCell,
   TableHeader,
   TableRow,
-} from '@/components/ui/Table';
+} from '@/components/ui/table';
 import { getPaginatedUserList } from '@/data/admin/user';
-import { AppAdminUserFiltersSchema } from './schema';
-import CheckIcon from 'lucide-react/dist/esm/icons/check';
-import CloseIcon from 'lucide-react/dist/esm/icons/x';
-import MailIcon from 'lucide-react/dist/esm/icons/mail';
 import { format } from 'date-fns';
-import { T } from '@/components/ui/Typography';
+import CheckIcon from 'lucide-react/dist/esm/icons/check';
+import MailIcon from 'lucide-react/dist/esm/icons/mail';
+import CloseIcon from 'lucide-react/dist/esm/icons/x';
+import { Suspense } from 'react';
 import { ConfirmSendLoginLinkDialog } from './ConfirmSendLoginLinkDialog';
 import { GetLoginLinkDialog } from './GetLoginLinkDialog';
-import { Suspense } from 'react';
+import { AppAdminUserFiltersSchema } from './schema';
 export async function UserList({
   filters,
 }: {
@@ -24,7 +24,7 @@ export async function UserList({
 }) {
   const users = await getPaginatedUserList(filters);
   return (
-    <div className="space-y-2 rounded-lg border" style={{ overflowX: 'auto' }}>
+    <div className="space-y-2 border" style={{ overflowX: 'auto' }}>
       <ShadcnTable>
         <TableHeader>
           <TableRow>

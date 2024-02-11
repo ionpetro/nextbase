@@ -1,23 +1,23 @@
-import { Button } from '@/components/ui/Button';
+import { T } from '@/components/ui/Typography';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogClose,
   DialogContent,
   DialogFooter,
   DialogTrigger,
-} from '@/components/ui/Dialog';
+} from '@/components/ui/dialog';
 import {
-  ShadcnTable,
+  Table as ShadcnTable,
   TableBody,
   TableCell,
   TableHeader,
   TableRow,
-} from '@/components/ui/Table';
-import { T } from '@/components/ui/Typography';
-import CheckIcon from 'lucide-react/dist/esm/icons/check';
-import CloseIcon from 'lucide-react/dist/esm/icons/x';
-import MailIcon from 'lucide-react/dist/esm/icons/mail';
+} from '@/components/ui/table';
 import { format } from 'date-fns';
+import CheckIcon from 'lucide-react/dist/esm/icons/check';
+import MailIcon from 'lucide-react/dist/esm/icons/mail';
+import CloseIcon from 'lucide-react/dist/esm/icons/x';
 export const UsersListPreview = () => {
   const users = Array.from({ length: 10 }, (_, i) => ({
     id: i + 1,
@@ -86,10 +86,7 @@ export const UsersListPreview = () => {
               <TableCell>
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Button
-                      variant="primaryLink"
-                      className="text-sm font-medium underline underline-offset-4 "
-                    >
+                    <Button className="text-sm font-medium underline underline-offset-4 ">
                       Send login link
                     </Button>
                   </DialogTrigger>
@@ -114,10 +111,7 @@ export const UsersListPreview = () => {
               <TableCell>
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Button
-                      variant="primaryLink"
-                      className="text-sm font-medium underline underline-offset-4 "
-                    >
+                    <Button className="text-sm font-medium underline underline-offset-4 ">
                       Get login link
                     </Button>
                   </DialogTrigger>
