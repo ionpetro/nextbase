@@ -3,15 +3,15 @@ import {
   ShadcnTable,
   TableBody,
   TableCell,
-  TableHeader,
   TableHead,
+  TableHeader,
   TableRow,
 } from '@/components/ui/Table/ShadcnTable';
-import { AppAdminOrganizationsFiltersSchema } from './schema';
 import { getPaginatedOrganizationList } from '@/data/admin/organizations';
 import { format } from 'date-fns';
-import { Anchor } from '@/components/Anchor';
 import MailIcon from 'lucide-react/dist/esm/icons/mail';
+import Link from 'next/link';
+import { AppAdminOrganizationsFiltersSchema } from './schema';
 
 export async function OrganizationList({
   filters,
@@ -45,13 +45,13 @@ export async function OrganizationList({
 
               <TableCell>
                 <span className="flex items-center space-x-2">
-                  <Anchor
+                  <Link
                     title="Send email"
                     href={`mailto:${organization.owner_email}`}
                     target="_blank"
                   >
                     <MailIcon className="w-5 h-5" />
-                  </Anchor>
+                  </Link>
                 </span>
               </TableCell>
             </TableRow>

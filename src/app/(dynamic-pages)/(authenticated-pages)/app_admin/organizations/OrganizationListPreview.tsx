@@ -1,14 +1,14 @@
-import { format } from 'date-fns';
-import { Anchor } from '@/components/Anchor';
-import MailIcon from 'lucide-react/dist/esm/icons/mail';
 import {
   ShadcnTable,
   TableBody,
   TableCell,
-  TableHeader,
   TableHead,
+  TableHeader,
   TableRow,
 } from '@/components/ui/Table/ShadcnTable';
+import { format } from 'date-fns';
+import MailIcon from 'lucide-react/dist/esm/icons/mail';
+import Link from 'next/link';
 
 export function OrganizationListPreview() {
   // Generate fake data
@@ -47,13 +47,13 @@ export function OrganizationListPreview() {
 
               <TableCell>
                 <span className="flex items-center space-x-2">
-                  <Anchor
+                  <Link
                     title="Send email"
                     href={`mailto:${organization.owner_email}`}
                     target="_blank"
                   >
                     <MailIcon className="w-5 h-5" />
-                  </Anchor>
+                  </Link>
                 </span>
               </TableCell>
             </TableRow>

@@ -1,5 +1,5 @@
-import { Anchor } from '@/components/Anchor';
 import { Button } from '@/components/ui/Button';
+import Link from 'next/link';
 
 export function ExternalNavigationCTAButton({
   isLoggedIn = false,
@@ -11,7 +11,7 @@ export function ExternalNavigationCTAButton({
   const href = isLoggedIn ? '/dashboard' : '/login';
   const text = isLoggedIn ? 'Dashboard' : 'Log In';
   return (
-    <Anchor href={href} className="w-full">
+    <Link href={href} className="w-full">
       <Button variant="default" size="default" className="group w-full">
         {isLoading ? (
           'Please wait...'
@@ -33,6 +33,6 @@ export function ExternalNavigationCTAButton({
           </>
         )}
       </Button>
-    </Anchor>
+    </Link>
   );
 }

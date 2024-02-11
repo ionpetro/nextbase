@@ -1,9 +1,8 @@
 // https://github.com/vercel/next.js/issues/58272
-import { Anchor } from '@/components/Anchor';
-import { Badge } from '@/components/ui/Badge';
 import { T } from '@/components/ui/Typography';
 import { getTeamNameById } from '@/data/user/teams';
 import TeamIcon from 'lucide-react/dist/esm/icons/folder';
+import Link from 'next/link';
 
 import { Suspense } from 'react';
 import { z } from 'zod';
@@ -34,13 +33,13 @@ export default async function OrganizationNavbar({
   const { organizationId, teamId } = paramsSchema.parse(params);
   return (
     <div className="flex items-center">
-      <Anchor href={`/organization/${organizationId}/team/${teamId}`}>
+      <Link href={`/organization/${organizationId}/team/${teamId}`}>
         <span className="space-x-2 flex items-center">
           <Suspense fallback={<span>Loading...</span>}>
             <Title teamId={teamId} />
           </Suspense>
         </span>
-      </Anchor>
+      </Link>
     </div>
   );
 }

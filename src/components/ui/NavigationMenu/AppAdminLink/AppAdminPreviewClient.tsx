@@ -1,7 +1,7 @@
 'use client';
-import { Anchor } from '@/components/Anchor';
 import { classNames } from '@/utils/classNames';
 import ServerIcon from 'lucide-react/dist/esm/icons/server';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { match } from 'path-to-regexp';
 
@@ -11,7 +11,7 @@ export function AppAdminPreviewLink() {
   const isActive = pathname ? matchAppAdmin(pathname) : false;
 
   return (
-    <Anchor
+    <Link
       href="/app_admin_preview"
       className={classNames(
         `flex px-4 w-max cursor-pointer items-center group py-1 rounded-lg transition hover:cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-800 `,
@@ -39,6 +39,6 @@ export function AppAdminPreviewLink() {
       >
         Admin Panel Preview
       </span>
-    </Anchor>
+    </Link>
   );
 }

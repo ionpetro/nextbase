@@ -1,7 +1,7 @@
 'use client';
-import { Anchor } from '@/components/Anchor';
 import { classNames } from '@/utils/classNames';
 import ServerIcon from 'lucide-react/dist/esm/icons/server';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { match } from 'path-to-regexp';
 
@@ -11,7 +11,7 @@ export function AppAdminLinkClient() {
   const isActive = pathname ? matchAppAdmin(pathname) : false;
 
   return (
-    <Anchor
+    <Link
       href="/app_admin"
       className={classNames(
         `flex gap-1.5 py-1.5 px-3 cursor-pointer items-center group rounded-md transition hover:cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-800 `,
@@ -39,6 +39,6 @@ export function AppAdminLinkClient() {
       >
         Admin Panel
       </span>
-    </Anchor>
+    </Link>
   );
 }

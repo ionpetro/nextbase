@@ -12,16 +12,16 @@ import {
   getOrganizationTitle,
 } from '@/data/user/organizations';
 import {
+  getAddableMembers,
   getCanLoggedInUserManageTeam,
   getTeamMembersByTeamId,
 } from '@/data/user/teams';
+import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
+import Link from 'next/link';
+import { Suspense } from 'react';
+import { AddUserToTeamDialog } from './AddUserToTeamDialog';
 import { ChangeRole } from './ChangeRole';
 import { RemoveUserDialog } from './RemoveUserDialog';
-import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
-import { AddUserToTeamDialog } from './AddUserToTeamDialog';
-import { getAddableMembers } from '@/data/user/teams';
-import { Suspense } from 'react';
-import { Anchor } from '@/components/Anchor';
 
 async function AddUserToTeam({
   organizationId,
@@ -41,12 +41,12 @@ async function AddUserToTeam({
         <T.H3>Want to invite a member to this team? </T.H3>
         <T.Subtle>
           No more users to add. Invite users to the organization first{' '}
-          <Anchor
+          <Link
             className="text-blue-500 underline cursor-pointer"
             href={`/organization/${organizationId}/settings/members`}
           >
             here
-          </Anchor>
+          </Link>
           .
         </T.Subtle>
       </div>

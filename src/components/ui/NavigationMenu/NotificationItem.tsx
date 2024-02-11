@@ -1,7 +1,7 @@
-import { Anchor } from '@/components/Anchor';
 import { cn } from '@/utils/cn';
 
 import { useMutation } from '@tanstack/react-query';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { T } from '../Typography';
 import { readNotification } from './fetchClientNotifications';
@@ -80,13 +80,13 @@ export function NotificationItem({
   );
   if (href) {
     return (
-      <Anchor
+      <Link
         onClick={() => mutateReadMutation()}
         href={href}
         className="w-full flex flex-col items-center"
       >
         {content}
-      </Anchor>
+      </Link>
     );
   } else {
     return (

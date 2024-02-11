@@ -1,10 +1,8 @@
 // https://github.com/vercel/next.js/issues/58272
-import { Anchor } from '@/components/Anchor';
-import { Badge } from '@/components/ui/Badge';
 import { T } from '@/components/ui/Typography';
-import { getProjectById, getProjectTitleById } from '@/data/user/projects';
-import { getTeamNameById } from '@/data/user/teams';
+import { getProjectById } from '@/data/user/projects';
 import ProjectIcon from 'lucide-react/dist/esm/icons/layers';
+import Link from 'next/link';
 
 import { Suspense } from 'react';
 import { z } from 'zod';
@@ -30,13 +28,13 @@ export default async function ProjectNavbar({ params }: { params: unknown }) {
   const { projectId } = paramsSchema.parse(params);
   return (
     <div className="flex items-center">
-      <Anchor href={`/project/${projectId}`}>
+      <Link href={`/project/${projectId}`}>
         <span className="space-x-2 flex items-center">
           <Suspense fallback={<span>Loading...</span>}>
             <Title projectId={projectId} />
           </Suspense>
         </span>
-      </Anchor>
+      </Link>
     </div>
   );
 }

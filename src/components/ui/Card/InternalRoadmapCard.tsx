@@ -1,13 +1,13 @@
-import { Anchor } from '@/components/Anchor';
 import { Enum } from '@/types';
 import { formatFieldValue } from '@/utils/feedback';
 import {
   Bug as BugIcon,
-  Info as InfoIcon,
-  Command as FeatureIcon,
   Calendar as CalendarIcon,
   Pencil as EditIcon,
+  Command as FeatureIcon,
+  Info as InfoIcon,
 } from 'lucide-react/dist/esm/icons';
+import Link from 'next/link';
 import { Badge, BadgeProps } from '../Badge';
 import { Button } from '../Button/ButtonShadcn';
 
@@ -96,12 +96,12 @@ export default function InternalRoadmapCard({
           </div>
         </div>
       </div>
-      <Anchor href={`/app_admin/feedback/${feedbackItemId}`} className="mt-1">
+      <Link href={`/app_admin/feedback/${feedbackItemId}`} className="mt-1">
         <Button variant="primaryLink" size="link">
           <EditIcon className="mr-2 h-4 w-4" />
           Edit
         </Button>
-      </Anchor>
+      </Link>
     </div>
   );
 }

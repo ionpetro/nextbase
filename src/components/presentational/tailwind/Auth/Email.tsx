@@ -1,9 +1,9 @@
 'use client';
-import { Anchor } from '@/components/Anchor';
 import { Label } from '@/components/ui/Label';
 import { T } from '@/components/ui/Typography';
 import { classNames } from '@/utils/classNames';
 import { PropsOf } from '@headlessui/react/dist/types';
+import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { Button } from '../Button';
 
@@ -69,12 +69,12 @@ export const Email = ({
         <div className="flex items-center justify-between">
           {view === 'forgot-password' ? (
             <div className="text-sm">
-              <Anchor
+              <Link
                 href="/login"
                 className="font-medium text-blue-600 dark:text-blue-400 hover:text-blue-500"
               >
                 Log in instead?
-              </Anchor>
+              </Link>
             </div>
           ) : null}
         </div>

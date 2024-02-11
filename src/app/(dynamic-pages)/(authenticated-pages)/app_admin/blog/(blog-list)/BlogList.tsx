@@ -1,13 +1,11 @@
-import React from 'react';
-import moment from 'moment';
-import { Table } from '@/types';
-import { Anchor } from '@/components/Anchor';
+import { T } from '@/components/ui/Typography';
+import { getAllBlogPosts } from '@/data/admin/internal-blog';
+import ArrowUpRightIcon from 'lucide-react/dist/esm/icons/arrow-up-right';
 import CalendarIcon from 'lucide-react/dist/esm/icons/calendar';
 import PencilIcon from 'lucide-react/dist/esm/icons/pencil';
-import ArrowUpRightIcon from 'lucide-react/dist/esm/icons/arrow-up-right';
-import { T } from '@/components/ui/Typography';
+import moment from 'moment';
+import Link from 'next/link';
 import { DeleteBlogPost } from './DeleteBlogPost';
-import { getAllBlogPosts } from '@/data/admin/internal-blog';
 
 export async function BlogList() {
   const blogs = await getAllBlogPosts();
@@ -38,19 +36,19 @@ export async function BlogList() {
               </div>
             </div>
             <div className="inline-flex space-x-2">
-              <Anchor
+              <Link
                 href={`/blog/${blog.slug}`}
                 className="p-0 inline-flex m-1 mt-2"
               >
                 {' '}
                 <ArrowUpRightIcon className="mr-2 h-6 w-6 text-gray-500 hover:text-gray-700 dark:text-gray-600 hover:dark:text-gray-400" />
-              </Anchor>
-              <Anchor
+              </Link>
+              <Link
                 href={`/app_admin/blog/post/${blog.id}/edit`}
                 className="p-0 inline-flex m-1 mt-2"
               >
                 <PencilIcon className="mr-2 h-5 w-5 text-gray-500 hover:text-gray-700 dark:text-gray-600 hover:dark:text-gray-400" />
-              </Anchor>
+              </Link>
               <DeleteBlogPost blogPostId={blog.id} />
             </div>
           </div>

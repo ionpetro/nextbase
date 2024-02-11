@@ -1,13 +1,5 @@
 'use client';
-import { Anchor } from '@/components/Anchor';
-import { T } from '@/components/ui/Typography';
-import { Table } from '@/types';
-import Check from 'lucide-react/dist/esm/icons/check';
-import ExternalLink from 'lucide-react/dist/esm/icons/external-link';
-import Pen from 'lucide-react/dist/esm/icons/pen-tool';
-import ThumbsUp from 'lucide-react/dist/esm/icons/thumbs-up';
-import Timer from 'lucide-react/dist/esm/icons/timer';
-import moment from 'moment';
+import { Badge } from '@/components/ui/Badge';
 import {
   ShadcnTable,
   TableBody,
@@ -16,7 +8,14 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/Table/ShadcnTable';
-import { Badge } from '@/components/ui/Badge';
+import { T } from '@/components/ui/Typography';
+import { Table } from '@/types';
+import Check from 'lucide-react/dist/esm/icons/check';
+import Pen from 'lucide-react/dist/esm/icons/pen-tool';
+import ThumbsUp from 'lucide-react/dist/esm/icons/thumbs-up';
+import Timer from 'lucide-react/dist/esm/icons/timer';
+import moment from 'moment';
+import Link from 'next/link';
 
 export const ProjectsTable = ({
   projects,
@@ -49,12 +48,12 @@ export const ProjectsTable = ({
                 {projects.map((project) => (
                   <TableRow key={project.id}>
                     <TableCell>
-                      <Anchor
+                      <Link
                         href={`/project/${project.id}`}
                         className=" font-medium underline underline-offset-4 "
                       >
                         {project.name}
-                      </Anchor>
+                      </Link>
                     </TableCell>
 
                     <TableCell>

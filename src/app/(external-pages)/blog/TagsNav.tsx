@@ -1,6 +1,6 @@
-import { Anchor } from '@/components/Anchor';
 import { Button } from '@/components/ui/Button';
 import { Table } from '@/types';
+import Link from 'next/link';
 
 export function TagsNav({
   tags,
@@ -9,17 +9,17 @@ export function TagsNav({
 }) {
   return (
     <div className="space-x-2 flex">
-      <Anchor href="/blog">
+      <Link href="/blog">
         <Button variant="outline" className="mr-2 mb-2">
           All
         </Button>
-      </Anchor>
+      </Link>
       {tags.map((tag) => (
-        <Anchor href={`/blog/tag/${tag.slug}`} key={tag.id}>
+        <Link href={`/blog/tag/${tag.slug}`} key={tag.id}>
           <Button variant="outline" className="mr-2 mb-2">
             {tag.name}
           </Button>
-        </Anchor>
+        </Link>
       ))}
     </div>
   );

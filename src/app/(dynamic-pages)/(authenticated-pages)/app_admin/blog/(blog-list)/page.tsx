@@ -1,23 +1,23 @@
-import { Anchor } from '@/components/Anchor';
 import { Button } from '@/components/ui/Button';
 import { T } from '@/components/ui/Typography';
 import PenSquareIcon from 'lucide-react/dist/esm/icons/pen-tool';
 import {
   createAuthorProfile,
+  createBlogTag,
+  deleteAuthorProfile,
+  deleteBlogTag,
   getAllAppAdmins,
   getAllAuthors,
-  deleteAuthorProfile,
-  updateAuthorProfile,
   getAllBlogTags,
-  createBlogTag,
-  deleteBlogTag,
+  updateAuthorProfile,
   updateBlogTag,
 } from '../actions';
 
-import { ManageAuthorsDialog } from './ManageAuthorsDialog';
-import { ManageBlogTagsDialog } from './ManageBlogTagsDialog';
+import Link from 'next/link';
 import { Suspense } from 'react';
 import { BlogList } from './BlogList';
+import { ManageAuthorsDialog } from './ManageAuthorsDialog';
+import { ManageBlogTagsDialog } from './ManageBlogTagsDialog';
 
 async function ActionButtons() {
   const [authors, appAdmins, blogTags] = await Promise.all([
@@ -28,11 +28,11 @@ async function ActionButtons() {
   return (
     <div className="space-x-2 mb-6">
       {authors.length ? (
-        <Anchor href="/app_admin/blog/post/create">
+        <Link href="/app_admin/blog/post/create">
           <Button variant="default" className="text-sm">
             <PenSquareIcon className="mr-2 w-5 h-5" /> Create blog post
           </Button>
-        </Anchor>
+        </Link>
       ) : null}
       <ManageAuthorsDialog
         appAdmins={appAdmins}
