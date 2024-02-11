@@ -3,7 +3,7 @@
 import { getPendingInvitationCountOfUser } from '@/data/user/invitation';
 import FeedbackIcon from 'lucide-react/dist/esm/icons/mail';
 import Link from 'next/link';
-import { Badge } from '../Badge';
+import { Badge } from '../ui/Badge';
 
 export async function PendingInvitationCounter() {
   const count = await getPendingInvitationCountOfUser();

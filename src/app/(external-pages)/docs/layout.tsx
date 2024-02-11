@@ -1,4 +1,4 @@
-import { DocsNavigation } from '@/components/ui/NavigationMenu/ExternalNavbar/DocsNavigation';
+import { DocsNavigation } from '@/components/NavigationMenu/ExternalNavbar/DocsNavigation';
 import './layout.css';
 
 export default function Layout({ children }: { children: React.ReactNode }) {

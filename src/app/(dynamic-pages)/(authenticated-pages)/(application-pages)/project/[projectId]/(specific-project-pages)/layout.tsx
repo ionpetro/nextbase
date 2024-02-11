@@ -1,6 +1,6 @@
 import { ApplicationLayoutShell } from '@/components/ApplicationLayoutShell';
+import { InternalNavbar } from '@/components/NavigationMenu/InternalNavbar';
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
-import { InternalNavbar } from '@/components/ui/NavigationMenu/InternalNavbar';
 import { getProjectTitleById } from '@/data/user/projects';
 import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
 import Link from 'next/link';

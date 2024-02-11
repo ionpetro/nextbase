@@ -1,9 +1,7 @@
-import { InternalNavbar } from '@/components/ui/NavigationMenu/InternalNavbar';
 import { ApplicationLayoutShell } from '@/components/ApplicationLayoutShell';
-import { cn } from '@/utils/cn';
-import { T } from '@/components/ui/Typography';
-import { ApplicationAdminPreviewSidebar } from '../(application-pages)/_sidebar/ApplicationAdminPreviewSidebar';
+import { InternalNavbar } from '@/components/NavigationMenu/InternalNavbar';
 import { Alert } from '@/components/ui/Alert';
+import { ApplicationAdminPreviewSidebar } from '../(application-pages)/_sidebar/ApplicationAdminPreviewSidebar';
 
 export default async function Layout({
   children,

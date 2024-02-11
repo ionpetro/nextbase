@@ -1,6 +1,6 @@
 'use client';
 
-import { ExternalNavigationCTAButton } from '@/components/ui/NavigationMenu/ExternalNavbar/ExternalNavigationCTAButton';
+import { ExternalNavigationCTAButton } from '@/components/NavigationMenu/ExternalNavbar/ExternalNavigationCTAButton';
 import { supabaseUserClientComponentClient } from '@/supabase-clients/user/supabaseUserClientComponentClient';
 import { useQuery } from '@tanstack/react-query';
 

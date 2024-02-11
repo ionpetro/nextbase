@@ -1,6 +1,6 @@
 import { TeamSidebar } from '@/app/(dynamic-pages)/(authenticated-pages)/(application-pages)/_sidebar/TeamSidebar';
 import { ApplicationLayoutShell } from '@/components/ApplicationLayoutShell';
-import { InternalNavbar } from '@/components/ui/NavigationMenu/InternalNavbar';
+import { InternalNavbar } from '@/components/NavigationMenu/InternalNavbar';
 import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
 import Link from 'next/link';
 import { ReactNode, Suspense } from 'react';

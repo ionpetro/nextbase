@@ -3,7 +3,7 @@ import { cn } from '@/utils/cn';
 import { useMutation } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { T } from '../Typography';
+import { T } from '../ui/Typography';
 import { readNotification } from './fetchClientNotifications';
 
 type NotificationItemProps = {
