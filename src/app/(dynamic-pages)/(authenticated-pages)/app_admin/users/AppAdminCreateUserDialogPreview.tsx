@@ -1,5 +1,5 @@
 'use client';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -8,12 +8,12 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/Dialog';
-import { Input } from '@/components/ui/Input';
-import { Label } from '@/components/ui/Label';
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useToastMutation } from '@/hooks/useToastMutation';
 import Plus from 'lucide-react/dist/esm/icons/plus';
 import { useState } from 'react';
-import { useToastMutation } from '@/hooks/useToastMutation';
 
 export const AppAdminCreateUserDialogPreview = () => {
   const [open, setOpen] = useState(false);

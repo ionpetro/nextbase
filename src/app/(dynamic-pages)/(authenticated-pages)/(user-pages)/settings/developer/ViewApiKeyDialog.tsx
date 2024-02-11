@@ -1,5 +1,5 @@
 'use client';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -7,7 +7,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/Dialog';
+} from '@/components/ui/dialog';
 import CopyIcon from 'lucide-react/dist/esm/icons/copy';
 import CopyCheckedIcon from 'lucide-react/dist/esm/icons/copy-check';
 import { useState } from 'react';

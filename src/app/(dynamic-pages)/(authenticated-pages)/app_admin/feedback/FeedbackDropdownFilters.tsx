@@ -1,22 +1,23 @@
 'use client';
+import { T } from '@/components/ui/Typography';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
-  DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-} from '@/components/ui/DropdownMenu';
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import {
-  formatFieldValue,
-  STATUS_OPTIONS,
   PRIORITY_OPTIONS,
+  STATUS_OPTIONS,
   TYPE_OPTIONS,
+  formatFieldValue,
+  mapPriorityToVariant,
   mapStatusToVariant,
   mapTypeToVariant,
-  mapPriorityToVariant,
 } from '@/utils/feedback';
 import FilterIcon from 'lucide-react/dist/esm/icons/filter';
-import { Button } from '@/components/ui/Button/ButtonShadcn';
-import { Badge } from '@/components/ui/Badge';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import {
   FeedbackDropdownFiltersSchema,
@@ -26,7 +27,6 @@ import {
   feedbackTypesSchema,
   sortSchema,
 } from './schema';
-import { T } from '@/components/ui/Typography';
 
 export function FeedbackDropdownFilters() {
   const searchParams = useSearchParams();
@@ -125,8 +125,8 @@ export function FeedbackDropdownFilters() {
                     ...filters,
                     statuses: filters.statuses?.includes(statusOption)
                       ? filters.statuses.filter(
-                          (status) => status !== statusOption,
-                        )
+                        (status) => status !== statusOption,
+                      )
                       : [...(filters.statuses || []), statusOption],
                   })
                 }
@@ -213,8 +213,8 @@ export function FeedbackDropdownFilters() {
                     ...filters,
                     priorities: filters.priorities?.includes(priorityOption)
                       ? filters.priorities.filter(
-                          (priority) => priority !== priorityOption,
-                        )
+                        (priority) => priority !== priorityOption,
+                      )
                       : [...(filters.priorities || []), priorityOption],
                   })
                 }

@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -8,15 +8,15 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/Dialog';
-import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
-import { Label } from '@/components/ui/Label';
-import UsersIcon from 'lucide-react/dist/esm/icons/users';
-import { PlusIcon } from '@radix-ui/react-icons';
-import { useToastMutation } from '@/hooks/useToastMutation';
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { createTeamAction } from '@/data/user/teams';
+import { useToastMutation } from '@/hooks/useToastMutation';
+import { PlusIcon } from '@radix-ui/react-icons';
+import UsersIcon from 'lucide-react/dist/esm/icons/users';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 type CreateTeamDialogProps = {
   organizationId: string;
@@ -50,7 +50,7 @@ export function CreateTeamDialog({ organizationId }: CreateTeamDialogProps) {
     <>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button size="xs">
+          <Button>
             <PlusIcon />
           </Button>
         </DialogTrigger>

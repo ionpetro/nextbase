@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -5,28 +6,26 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/Dialog';
-import { Input } from '@/components/ui/Input';
-import { Label } from '@/components/ui/Label';
-import { Button } from '@/components/ui/Button';
-import { Controller, useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Textarea } from '@/components/ui/Textarea';
-import { Table } from '@/types';
-import { toast } from 'react-hot-toast';
-import { authorProfileSchema } from '@/utils/zod-schemas/internalBlog';
-import { useState } from 'react';
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/Select';
-import { useRouter } from 'next/navigation';
-import Edit from 'lucide-react/dist/esm/icons/edit';
+} from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
 import { useToastMutation } from '@/hooks/useToastMutation';
+import { Table } from '@/types';
+import { authorProfileSchema } from '@/utils/zod-schemas/internalBlog';
+import { zodResolver } from '@hookform/resolvers/zod';
+import Edit from 'lucide-react/dist/esm/icons/edit';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 type AuthorProfileFormType = z.infer<typeof authorProfileSchema>;
 type UpdateAuthorPayload = Omit<

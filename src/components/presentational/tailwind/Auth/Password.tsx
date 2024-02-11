@@ -1,10 +1,10 @@
 'use client';
+import { T } from '@/components/ui/Typography';
+import { Label } from '@/components/ui/label';
+import { classNames } from '@/utils/classNames';
 import { PropsOf } from '@headlessui/react/dist/types';
 import { useState } from 'react';
 import { Button } from '../Button';
-import { Label } from '@/components/ui/Label';
-import { classNames } from '@/utils/classNames';
-import { T } from '@/components/ui/Typography';
 
 export const Password = ({
   onSubmit,

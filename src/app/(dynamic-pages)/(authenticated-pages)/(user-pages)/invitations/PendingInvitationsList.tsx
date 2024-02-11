@@ -1,12 +1,12 @@
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import {
-  ShadcnTable,
+  Table as ShadcnTable,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/Table/ShadcnTable';
+} from '@/components/ui/table';
 import { T } from '@/components/ui/Typography';
 import { getPendingInvitationsOfUser } from '@/data/user/invitation';
 import { Enum } from '@/types';

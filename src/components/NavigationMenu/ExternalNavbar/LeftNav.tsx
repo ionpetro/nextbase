@@ -5,7 +5,7 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-} from '@/components/ui/Select/Select';
+} from '@/components/ui/select';
 import { cn } from '@/utils/cn';
 import acmeLightLogo from '@public/logos/acme-logo-dark.png';
 import acmeDarkLogo from '@public/logos/acme-logo-light.png';

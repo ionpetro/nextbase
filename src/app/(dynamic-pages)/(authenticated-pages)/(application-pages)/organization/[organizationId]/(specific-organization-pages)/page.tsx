@@ -1,14 +1,14 @@
-import { z } from 'zod';
-import { Suspense } from 'react';
-import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
-import { OrganizationPageHeading } from './OrganizationPageHeading';
-import { OrganizationGraphs } from './OrganizationGraphs';
 import { CreateProjectDialog } from '@/components/presentational/tailwind/CreateProjectDialog';
-import { T } from '@/components/ui/Typography';
-import InfoIcon from 'lucide-react/dist/esm/icons/info';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/Dialog';
-import { getProjects } from '@/data/user/projects';
+import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 import { ProjectsTable } from '@/components/presentational/tailwind/Projects/ProjectsTable';
+import { T } from '@/components/ui/Typography';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { getProjects } from '@/data/user/projects';
+import InfoIcon from 'lucide-react/dist/esm/icons/info';
+import { Suspense } from 'react';
+import { z } from 'zod';
+import { OrganizationGraphs } from './OrganizationGraphs';
+import { OrganizationPageHeading } from './OrganizationPageHeading';
 
 const paramsSchema = z.object({
   organizationId: z.coerce.string(),

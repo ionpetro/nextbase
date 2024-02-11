@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -6,12 +7,11 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/Dialog';
-import { Button } from '@/components/ui/Button';
+} from '@/components/ui/dialog';
+import { Enum } from '@/types';
 import { formatFieldValue } from '@/utils/feedback';
 import FeedbackIcon from 'lucide-react/dist/esm/icons/message-square';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { Enum } from '@/types';
 import { FeedbackThreadTypeSelect } from './FeedbackThreadTypeSelect';
 
 export function UpdateTypeDialog({

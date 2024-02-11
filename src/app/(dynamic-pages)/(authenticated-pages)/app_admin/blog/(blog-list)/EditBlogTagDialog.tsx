@@ -1,27 +1,27 @@
-import { useState } from 'react';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
-  DialogTrigger,
   DialogContent,
-  DialogHeader,
-  DialogTitle,
   DialogDescription,
   DialogFooter,
-} from '@/components/ui/Dialog';
-import { Label } from '@/components/ui/Label';
-import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
-import { useForm, Controller } from 'react-hook-form';
-import { z } from 'zod';
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { z } from 'zod';
 
+import { Textarea } from '@/components/ui/textarea';
+import { useToastMutation } from '@/hooks/useToastMutation';
+import { Table } from '@/types';
+import Edit from 'lucide-react/dist/esm/icons/edit';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import slugify from 'slugify';
-import { Textarea } from '@/components/ui/Textarea';
-import Edit from 'lucide-react/dist/esm/icons/edit';
-import { Table } from '@/types';
-import { useToastMutation } from '@/hooks/useToastMutation';
 
 const blogTagSchema = z.object({
   name: z.string(),

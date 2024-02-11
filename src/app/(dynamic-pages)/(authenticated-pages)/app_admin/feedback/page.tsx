@@ -8,13 +8,13 @@ import { filtersSchema } from './schema';
 import { Fallback } from '@/components/AppAdminViewUserDetails/Fallback';
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 import {
-  ShadcnTable,
+  Table as ShadcnTable,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/Table/ShadcnTable';
+} from '@/components/ui/table';
 import { FeedbackDropdownFilters } from './FeedbackDropdownFilters';
 
 const FeedbackListFallback: React.FC = () => {

@@ -1,6 +1,5 @@
 'use client';
 
-import * as React from 'react';
 // feedback thread priorities = ['low', 'medium', 'high']
 import {
   Select,
@@ -10,7 +9,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/Select';
+} from '@/components/ui/select';
 import { Enum } from '@/types';
 
 type DefaultValueProp = {

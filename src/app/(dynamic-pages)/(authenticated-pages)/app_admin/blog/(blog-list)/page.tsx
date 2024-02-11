@@ -1,5 +1,5 @@
-import { Button } from '@/components/ui/Button';
 import { T } from '@/components/ui/Typography';
+import { Button } from '@/components/ui/button';
 import PenSquareIcon from 'lucide-react/dist/esm/icons/pen-tool';
 import {
   createAuthorProfile,

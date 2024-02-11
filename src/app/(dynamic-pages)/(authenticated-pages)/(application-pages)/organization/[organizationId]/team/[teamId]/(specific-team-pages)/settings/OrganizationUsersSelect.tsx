@@ -1,6 +1,6 @@
-import Select from 'react-select';
-import { Label } from '@/components/ui/Label';
+import { Label } from '@/components/ui/label';
 import { useTheme } from 'next-themes';
+import Select from 'react-select';
 
 const darkThemeStyles = {
   control: (styles) => ({

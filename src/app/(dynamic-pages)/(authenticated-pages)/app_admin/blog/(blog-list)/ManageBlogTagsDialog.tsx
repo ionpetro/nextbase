@@ -1,22 +1,21 @@
 'use client';
-import { useState } from 'react';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
-  DialogTrigger,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogDescription,
-} from '@/components/ui/Dialog';
-import { Button } from '@/components/ui/Button';
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import { useToastMutation } from '@/hooks/useToastMutation';
 import { Table, TableInsertPayload, TableUpdatePayload } from '@/types';
-import { toast } from 'react-hot-toast';
-import { useRouter } from 'next/navigation';
+import TagsIcon from 'lucide-react/dist/esm/icons/tag';
 import Trash from 'lucide-react/dist/esm/icons/trash';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { AddBlogTagDialog } from './AddBlogTagDialog';
 import { EditBlogTagDialog } from './EditBlogTagDialog';
-import TagsIcon from 'lucide-react/dist/esm/icons/tag';
-import { useToastMutation } from '@/hooks/useToastMutation';
 
 export const ManageBlogTagsDialog = ({
   blogTags,

@@ -1,14 +1,14 @@
 import { AppAdminViewUserDetails } from '@/components/AppAdminViewUserDetails';
 import { Fallback } from '@/components/AppAdminViewUserDetails/Fallback';
-import { Badge } from '@/components/ui/Badge';
+import { Badge } from '@/components/ui/badge';
 import {
-  ShadcnTable,
+  Table as ShadcnTable,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/Table/ShadcnTable';
+} from '@/components/ui/table';
 import { getPaginatedInternalFeedbackList } from '@/data/admin/internal-feedback';
 import { formatFieldValue, mapStatusToVariant } from '@/utils/feedback';
 import { format } from 'date-fns';

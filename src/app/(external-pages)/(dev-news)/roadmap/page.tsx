@@ -1,5 +1,5 @@
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
-import RoadmapCard from '@/components/ui/Card/RoadmapCard';
+import RoadmapCard from '@/components/RoadmapCard';
 import { T } from '@/components/ui/Typography';
 import {
   anonGetCompletedRoadmapFeedbackList,

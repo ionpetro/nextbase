@@ -1,5 +1,5 @@
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { ChangelogListPreview } from '../../app_admin/changelog/ChangelogListPreview';
 
 export default function AppAdminChangelogPreview() {

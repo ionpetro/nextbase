@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 
-import { Label } from '@/components/ui/Label';
 import { T } from '@/components/ui/Typography';
+import { Label } from '@/components/ui/label';
 import { useLoggedInUserEmail } from '@/hooks/useLoggedInUserEmail';
 import { classNames } from '@/utils/classNames';
 import { getUserAvatarUrl } from '@/utils/helpers';

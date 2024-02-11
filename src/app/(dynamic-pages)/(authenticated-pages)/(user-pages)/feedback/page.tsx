@@ -1,15 +1,15 @@
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
-import { Badge } from '@/components/ui/Badge';
+import { Badge } from '@/components/ui/badge';
 import {
-  ShadcnTable,
+  Table as ShadcnTable,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/Table/ShadcnTable';
+} from '@/components/ui/table';
 import { getAllInternalFeedbackForLoggedInUser } from '@/data/user/internalFeedback';
-import { formatFieldValue, mapStatusToVariant } from '@/utils/feedback';
+import { formatFieldValue } from '@/utils/feedback';
 import moment from 'moment';
 import Link from 'next/link';
 import { Suspense } from 'react';
@@ -50,12 +50,7 @@ async function UserFeedbackList() {
                   {moment(feedback.created_at).format('LL')}
                 </TableCell>
                 <TableCell>
-                  <Badge
-                    size="sm"
-                    variant={mapStatusToVariant(feedback.status)}
-                  >
-                    {formatFieldValue(feedback.status)}
-                  </Badge>
+                  <Badge size="sm">{formatFieldValue(feedback.status)}</Badge>
                 </TableCell>
               </TableRow>
             ))

@@ -1,12 +1,12 @@
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 import {
-  ShadcnTable,
+  Table as ShadcnTable,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/Table';
+} from '@/components/ui/table';
 import { getRevokedApiKeyList } from '@/data/user/unkey';
 import { format } from 'date-fns/esm';
 

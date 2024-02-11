@@ -1,5 +1,5 @@
 'use client';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { T } from '@/components/ui/Typography';
 import { useToastMutation } from '@/hooks/useToastMutation';
 import ArrowUpRightIcon from 'lucide-react/dist/esm/icons/arrow-up-right';
@@ -28,7 +28,6 @@ function DeleteBlogPostPreview({ blogPostId }: { blogPostId: string }) {
       onClick={() => {
         mutate();
       }}
-      variant="infoLink"
       aria-disabled={isLoading}
       className="text-red-500 dark:text-red-500 hover:text-red-600 hover:dark:text-red-400 p-0"
     >

@@ -1,7 +1,7 @@
 'use client';
-import { Button } from '@/components/ui/Button';
-import { SelectSeparator } from '@/components/ui/Select';
-import { Textarea } from '@/components/ui/Textarea';
+import { Button } from '@/components/ui/button';
+import { SelectSeparator } from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
 import { T } from '@/components/ui/Typography';
 import { createProjectCommentAction } from '@/data/user/projects';
 import { useToastMutation } from '@/hooks/useToastMutation';

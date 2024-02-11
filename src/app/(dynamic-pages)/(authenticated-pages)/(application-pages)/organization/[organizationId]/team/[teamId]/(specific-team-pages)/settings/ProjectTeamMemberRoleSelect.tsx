@@ -1,6 +1,5 @@
 'use client';
 
-import * as React from 'react';
 import {
   Select,
   SelectContent,
@@ -9,7 +8,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/Select';
+} from '@/components/ui/select';
 import { Enum } from '@/types';
 
 type ProjectTeamMemberRoleSelectProps = {

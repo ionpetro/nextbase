@@ -1,13 +1,13 @@
 'use client';
-import { Badge } from '@/components/ui/Badge';
+import { Badge } from '@/components/ui/badge';
 import {
-  ShadcnTable,
+  Table as ShadcnTable,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/Table/ShadcnTable';
+} from '@/components/ui/table';
 import { T } from '@/components/ui/Typography';
 import { Table } from '@/types';
 import Check from 'lucide-react/dist/esm/icons/check';
@@ -59,17 +59,17 @@ export const ProjectsTable = ({
                     <TableCell>
                       {/* Add your project status rendering logic here */}
                       {project.project_status === 'completed' ? (
-                        <Badge size="sm" variant="success">
+                        <Badge size="sm" variant="default">
                           <Check size={16} className="mr-2" />
                           <T.P>Completed</T.P>
                         </Badge>
                       ) : project.project_status === 'pending_approval' ? (
-                        <Badge size="sm" variant="warning">
+                        <Badge size="sm" variant="outline">
                           <Pen size={16} className="mr-2" />
                           <T.P>Pending Approval</T.P>
                         </Badge>
                       ) : project.project_status === 'approved' ? (
-                        <Badge size="sm" variant="success">
+                        <Badge size="sm" variant="secondary">
                           <ThumbsUp size={16} className="mr-2" />
                           <T.P>Approved</T.P>
                         </Badge>
@@ -79,7 +79,7 @@ export const ProjectsTable = ({
                           <T.P>Draft</T.P>
                         </Badge>
                       ) : (
-                        <Badge size="sm" variant="information">
+                        <Badge size="sm">
                           <Timer size={16} />
                           <T.P>
                             {String(project.project_status).replace('_', ' ')}

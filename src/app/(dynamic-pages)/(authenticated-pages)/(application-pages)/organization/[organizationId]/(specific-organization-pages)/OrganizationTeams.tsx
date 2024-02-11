@@ -1,13 +1,13 @@
 import { CreateTeamDialog } from '@/components/presentational/tailwind/CreateTeamDialog';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/Dialog';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import {
-  ShadcnTable,
+  Table as ShadcnTable,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/Table/ShadcnTable';
+} from '@/components/ui/table';
 import { T } from '@/components/ui/Typography';
 import { getTeamsInOrganization } from '@/data/user/teams';
 import Link from 'next/link';

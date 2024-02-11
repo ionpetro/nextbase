@@ -1,6 +1,6 @@
 import { ApplicationLayoutShell } from '@/components/ApplicationLayoutShell';
 import { InternalNavbar } from '@/components/NavigationMenu/InternalNavbar';
-import { Alert } from '@/components/ui/Alert';
+import { Alert } from '@/components/ui/alert';
 import { getIsAppAdmin } from '@/data/user/user';
 import { errors } from '@/utils/errors';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';

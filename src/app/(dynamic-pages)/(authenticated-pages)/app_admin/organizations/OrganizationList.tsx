@@ -1,12 +1,12 @@
 'use server';
 import {
-  ShadcnTable,
+  Table as ShadcnTable,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/Table/ShadcnTable';
+} from '@/components/ui/table';
 import { getPaginatedOrganizationList } from '@/data/admin/organizations';
 import { format } from 'date-fns';
 import MailIcon from 'lucide-react/dist/esm/icons/mail';

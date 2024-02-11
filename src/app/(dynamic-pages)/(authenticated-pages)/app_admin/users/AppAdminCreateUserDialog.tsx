@@ -1,5 +1,5 @@
 'use client';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -8,19 +8,19 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/Dialog';
-import { Input } from '@/components/ui/Input';
-import { Label } from '@/components/ui/Label';
-import Plus from 'lucide-react/dist/esm/icons/plus';
-import { useState } from 'react';
-import { User } from '@supabase/supabase-js';
-import { useToastMutation } from '@/hooks/useToastMutation';
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { createUserAction } from '@/data/admin/user';
-import { useInput } from 'rooks';
-import { z } from 'zod';
-import { toast } from 'sonner';
+import { useToastMutation } from '@/hooks/useToastMutation';
 import { getErrorMessage } from '@/utils/getErrorMessage';
+import { User } from '@supabase/supabase-js';
+import Plus from 'lucide-react/dist/esm/icons/plus';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { useInput } from 'rooks';
+import { toast } from 'sonner';
+import { z } from 'zod';
 
 export const AppAdminCreateUserDialog = () => {
   const emailInput = useInput('');

@@ -1,3 +1,4 @@
+import { BadgeProps } from '@/components/ui/badge';
 import { Enum } from '@/types';
 
 export const formatFieldValue = (type: string) => {
@@ -25,16 +26,16 @@ export const TYPE_OPTIONS: Array<Enum<'internal_feedback_thread_type'>> = [
 
 export const mapStatusToVariant = (
   status: Enum<'internal_feedback_thread_status'>,
-) => {
+): BadgeProps['variant'] => {
   switch (status) {
     case 'closed':
-      return 'success';
+      return 'outline';
     case 'open':
     case 'in_progress':
-      return 'warning';
+      return 'default';
     case 'planned':
     case 'under_review':
-      return 'information';
+      return 'secondary';
     default:
       return 'default';
   }
@@ -42,14 +43,14 @@ export const mapStatusToVariant = (
 
 export const mapTypeToVariant = (
   type: Enum<'internal_feedback_thread_type'>,
-) => {
+): BadgeProps['variant'] => {
   switch (type) {
     case 'bug':
-      return 'danger';
+      return 'destructive';
     case 'feature_request':
-      return 'success';
+      return 'secondary';
     case 'general':
-      return 'information';
+      return 'default';
     default:
       return 'default';
   }
@@ -57,14 +58,14 @@ export const mapTypeToVariant = (
 
 export const mapPriorityToVariant = (
   priority: Enum<'internal_feedback_thread_priority'>,
-) => {
+): BadgeProps['variant'] => {
   switch (priority) {
     case 'low':
-      return 'information';
+      return 'outline';
     case 'medium':
-      return 'warning';
+      return 'default';
     case 'high':
-      return 'danger';
+      return 'destructive';
     default:
       return 'default';
   }

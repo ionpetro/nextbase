@@ -1,5 +1,5 @@
 'use client';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -8,12 +8,12 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/Dialog';
-import { useState } from 'react';
-import TrashIcon from 'lucide-react/dist/esm/icons/trash';
-import { useToastMutation } from '@/hooks/useToastMutation';
+} from '@/components/ui/dialog';
 import { removeUserFromTeam } from '@/data/user/teams';
+import { useToastMutation } from '@/hooks/useToastMutation';
+import TrashIcon from 'lucide-react/dist/esm/icons/trash';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 type Props = {
   teamId: number;

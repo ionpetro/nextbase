@@ -1,8 +1,9 @@
-const defaultTheme = require('tailwindcss/defaultTheme');
-
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: 'class',
+  darkMode: ['class'],
   content: ['./src/**/*.tsx', './node_modules/@tremor/**/*.{js,ts,jsx,tsx}'],
+
+  prefix: '',
   theme: {
     container: {
       center: true,
@@ -72,6 +73,7 @@ module.exports = {
             inverted: '#000000', // black
           },
         },
+
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
@@ -130,8 +132,8 @@ module.exports = {
         tremorSmall: '0.375rem',
         tremorDefault: '0.5rem',
         tremorFull: '9999px',
-        lg: `var(--radius)`,
-        md: `calc(var(--radius) - 2px)`,
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
       fontFamily: {

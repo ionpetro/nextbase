@@ -1,6 +1,6 @@
+import { T } from '@/components/ui/Typography';
 import { UserAvatar } from '../UserAvatar';
 import { UserFullName } from '../UserFullName';
-import { T } from '../ui/Typography';
 
 export async function FeedbackItem({
   userId,

@@ -3,7 +3,7 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/Popover';
+} from '@/components/ui/popover';
 import Image from 'next/image';
 import { UserSidebarMenu } from './UserSidebarMenu';
 

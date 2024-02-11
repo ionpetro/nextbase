@@ -1,11 +1,11 @@
-import ChangeLogListCard from '@/components/ui/ChangeLog/ChangeLogListCard';
+import ChangeLogListCard from '@/components/ChangeLog/ChangeLogListCard';
+import { customMDXComponents } from '@/components/mdxComponents';
+import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
+import { T } from '@/components/ui/Typography';
+import { anonGetAllChangelogItems } from '@/data/anon/internalChangelog';
+import { cn } from '@/utils/cn';
 import moment from 'moment';
 import { MDXRemote } from 'next-mdx-remote/rsc';
-import { customMDXComponents } from '@/components/mdxComponents';
-import { cn } from '@/utils/cn';
-import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
-import { anonGetAllChangelogItems } from '@/data/anon/internalChangelog';
-import { T } from '@/components/ui/Typography';
 import { Suspense } from 'react';
 
 async function ChangelogList() {

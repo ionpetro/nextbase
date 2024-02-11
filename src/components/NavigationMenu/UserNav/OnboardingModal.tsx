@@ -1,19 +1,16 @@
 'use client';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
   DialogFooter,
-} from '@/components/ui/Dialog';
-import { ReactNode, useState } from 'react';
-import GuideIcon from 'lucide-react/dist/esm/icons/help-circle';
-import { Button } from '@/components/ui/Button';
-import Image from 'next/image';
-import { AspectRatio } from '@/components/ui/AspectRatio';
+  DialogTrigger,
+} from '@/components/ui/dialog';
 import { cn } from '@/utils/cn';
+import GuideIcon from 'lucide-react/dist/esm/icons/help-circle';
+import Image from 'next/image';
+import { ReactNode, useState } from 'react';
 
 type OnboardingFeature = {
   title: string;

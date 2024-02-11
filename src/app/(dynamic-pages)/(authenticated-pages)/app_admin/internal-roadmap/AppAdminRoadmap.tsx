@@ -1,4 +1,4 @@
-import InternalRoadmapCard from '@/components/ui/Card/InternalRoadmapCard';
+import InternalRoadmapCard from '@/components/InternalRoadmapCard';
 import { getRoadmap } from '@/data/admin/internal-roadmap';
 
 export async function AppAdminRoadmap() {

@@ -1,6 +1,6 @@
 import { ApplicationLayoutShell } from '@/components/ApplicationLayoutShell';
 import { InternalNavbar } from '@/components/NavigationMenu/InternalNavbar';
-import { Alert } from '@/components/ui/Alert';
+import { Alert } from '@/components/ui/alert';
 import { ApplicationAdminPreviewSidebar } from '../(application-pages)/_sidebar/ApplicationAdminPreviewSidebar';
 
 export default async function Layout({

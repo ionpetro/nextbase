@@ -1,4 +1,4 @@
-import InternalRoadmapCard from '@/components/ui/Card/InternalRoadmapCard';
+import InternalRoadmapCard from '@/components/InternalRoadmapCard';
 import { Enum } from '@/types';
 
 export function AppAdminRoadmapPreview() {

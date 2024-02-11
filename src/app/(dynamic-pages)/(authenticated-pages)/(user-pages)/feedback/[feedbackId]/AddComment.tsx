@@ -1,7 +1,7 @@
 'use client';
 
-import { Button } from '@/components/ui/Button';
-import { Textarea } from '@/components/ui/Textarea';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
 import { T } from '@/components/ui/Typography';
 import { addCommentToInternalFeedbackThread } from '@/data/user/internalFeedback';
 import { useToastMutation } from '@/hooks/useToastMutation';

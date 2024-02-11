@@ -1,4 +1,4 @@
-import { Label } from '@/components/ui/Label';
+import { Label } from '@/components/ui/label';
 import { classNames } from '@/utils/classNames';
 import { PropsOf } from '@headlessui/react/dist/types';
 import Link from 'next/link';
