@@ -1,15 +1,14 @@
-import FileLineChart from 'lucide-react/dist/esm/icons/file-line-chart';
+import ActivityLogIcon from 'lucide-react/dist/esm/icons/book';
 import BriefcaseIcon from 'lucide-react/dist/esm/icons/briefcase';
+import FileLineChart from 'lucide-react/dist/esm/icons/file-line-chart';
+import FeedbackIcon from 'lucide-react/dist/esm/icons/help-circle';
+import HomeIcon from 'lucide-react/dist/esm/icons/home';
+import RoadMapIcon from 'lucide-react/dist/esm/icons/map';
 import PenToolIcon from 'lucide-react/dist/esm/icons/pen-tool';
 import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
 import UsersIcon from 'lucide-react/dist/esm/icons/users';
-import FeedbackIcon from 'lucide-react/dist/esm/icons/help-circle';
-import ActivityLogIcon from 'lucide-react/dist/esm/icons/book';
-import RoadMapIcon from 'lucide-react/dist/esm/icons/map';
-import HomeIcon from 'lucide-react/dist/esm/icons/home';
-import { Anchor } from '@/components/Anchor';
-import { SidebarLogo } from './SidebarLogo';
 import { SidebarLink } from './SidebarLink';
+import { SidebarLogo } from './SidebarLogo';
 
 const links = [
   {
