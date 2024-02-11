@@ -54,7 +54,7 @@ export const ManageBlogTagsDialog = ({
   return (
     <Dialog open={isOpen} onOpenChange={(newIsOpen) => setIsOpen(newIsOpen)}>
       <DialogTrigger asChild>
-        <Button variant="outline">
+        <Button variant="link">
           <TagsIcon className="mr-2 w-5 h-5" />
           Manage blog tags
         </Button>

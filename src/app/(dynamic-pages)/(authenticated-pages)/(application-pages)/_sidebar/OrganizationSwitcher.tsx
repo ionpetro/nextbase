@@ -85,7 +85,7 @@ export function OrganizationSwitcher({
       <PopoverContent
         side="bottom"
         align="end"
-        className="w-[238px] border -ml-1 my-2 rounded-lg p-0 bg-white dark:bg-slate-900"
+        className="w-[238px] border -ml-1 my-2 rounded-lg p-0 "
       >
         <Command>
           <CommandList>

@@ -27,13 +27,6 @@ async function ActionButtons() {
   ]);
   return (
     <div className="space-x-2 mb-6">
-      {authors.length ? (
-        <Link href="/app_admin/blog/post/create">
-          <Button variant="default" className="text-sm">
-            <PenSquareIcon className="mr-2 w-5 h-5" /> Create blog post
-          </Button>
-        </Link>
-      ) : null}
       <ManageAuthorsDialog
         appAdmins={appAdmins}
         authorProfiles={authors}
@@ -47,6 +40,13 @@ async function ActionButtons() {
         deleteBlogTag={deleteBlogTag}
         updateBlogTag={updateBlogTag}
       />
+      {authors.length ? (
+        <Link href="/app_admin/blog/post/create">
+          <Button variant="default">
+            <PenSquareIcon className="w-6 h-6 mr-2" /> Create blog post
+          </Button>
+        </Link>
+      ) : null}
     </div>
   );
 }
@@ -68,7 +68,7 @@ export default function BlogListPage() {
   return (
     <div className=" max-w-5xl space-y-4 ">
       <div className="">
-        <div className="space-y-4 max-w-6xl bg-gray-100/50 dark:bg-slate-950/40 border  rounded-lg p-10 py-6 ">
+        <div className="space-y-4 max-w-6xl">
           <div className="space-y-2">
             <div className="flex justify-between items-baseline">
               <div className="flex-1 mt-4">

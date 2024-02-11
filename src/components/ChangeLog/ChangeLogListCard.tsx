@@ -1,4 +1,10 @@
-import { T } from '@/components/ui/Typography';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { ReactNode } from 'react';
 type ChangeLogListCardProps = {
   date: string;
@@ -12,15 +18,12 @@ export default function ChangeLogListCard({
   children,
 }: ChangeLogListCardProps) {
   return (
-    <div
-      className="flex flex-col md:grid md:grid-cols-2 gap-8 border b-gray-200 bg-gray-200/30 dark:bg-slate-950/40 rounded-xl px-6 py-4 shadow-sm w-full"
-      style={{ gridTemplateColumns: '160px auto' }}
-    >
-      <p>{date}</p>
-      <div>
-        <T.H2 className=" border-none text-blue-500">{title}</T.H2>
-        {children}
-      </div>
-    </div>
+    <Card className="rounded-xl shadow-sm w-full">
+      <CardHeader>
+        <CardTitle>{title}</CardTitle>
+        <CardDescription>{date}</CardDescription>
+      </CardHeader>
+      <CardContent>{children}</CardContent>
+    </Card>
   );
 }

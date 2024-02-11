@@ -1,5 +1,12 @@
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 import RoadmapCard from '@/components/RoadmapCard';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { T } from '@/components/ui/Typography';
 import {
   anonGetCompletedRoadmapFeedbackList,
@@ -60,7 +67,7 @@ async function InProgressCards() {
 async function CompletedCards() {
   const completedCards = await anonGetCompletedRoadmapFeedbackList();
   return (
-    <div className=" space-y-3">
+    <>
       {completedCards.length ? (
         completedCards.map((card) => (
           <RoadmapCard
@@ -77,7 +84,7 @@ async function CompletedCards() {
           Empty
         </T.Subtle>
       )}
-    </div>
+    </>
   );
 }
 
@@ -90,55 +97,45 @@ export default async function Page() {
       />
 
       <div className="space-y-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Planned */}
-          <div className="h-max space-y-6 bg-gray-100 dark:bg-slate-950/40 px-6 py-5 rounded-xl border">
-            <div>
-              <p className="text-lg dark:text-slate-300 font-[600]">Planned</p>
-              <p className="text-base font-[500] text-muted-foreground">
-                {' '}
-                These are Planned
-              </p>
-            </div>
-
-            <Suspense fallback={<T.Subtle>Loading...</T.Subtle>}>
-              <PlannedCards />
-            </Suspense>
-          </div>
+          <Card className="h-max">
+            <CardHeader>
+              <CardTitle>Planned</CardTitle>
+              <CardDescription>These are Planned</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Suspense fallback={<T.Subtle>Loading...</T.Subtle>}>
+                <PlannedCards />
+              </Suspense>
+            </CardContent>
+          </Card>
 
           {/* In Review */}
-          <div className="h-max space-y-6 bg-gray-100 dark:bg-slate-950/40 px-6 py-5 rounded-xl border">
-            <div>
-              <p className="text-lg  dark:text-slate-300  font-[600]">
-                In Review
-              </p>
-              <p className="text-base font-[500] text-muted-foreground">
-                {' '}
-                These are in review
-              </p>
-            </div>
-
-            <Suspense fallback={<T.Subtle>Loading...</T.Subtle>}>
-              <InProgressCards />
-            </Suspense>
-          </div>
+          <Card className="h-max">
+            <CardHeader>
+              <CardTitle> In Review</CardTitle>
+              <CardDescription>These are Completed</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Suspense fallback={<T.Subtle>Loading...</T.Subtle>}>
+                <InProgressCards />
+              </Suspense>
+            </CardContent>
+          </Card>
 
           {/* Completed */}
-          <div className="h-max space-y-6 bg-gray-100 dark:bg-slate-950/40 px-6 py-5 rounded-xl border">
-            <div>
-              <p className="text-lg  dark:text-slate-300  font-[600]">
-                Completed
-              </p>
-              <p className="text-base font-[500] text-muted-foreground">
-                {' '}
-                These are Completed
-              </p>
-            </div>
-
-            <Suspense fallback={<T.Subtle>Loading...</T.Subtle>}>
-              <CompletedCards />
-            </Suspense>
-          </div>
+          <Card className="h-max">
+            <CardHeader>
+              <CardTitle> Completed</CardTitle>
+              <CardDescription>These are Completed</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Suspense fallback={<T.Subtle>Loading...</T.Subtle>}>
+                <CompletedCards />
+              </Suspense>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>

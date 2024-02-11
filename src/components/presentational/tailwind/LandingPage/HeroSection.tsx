@@ -17,7 +17,7 @@ export default function HeroSection({
 }: HeroSectionProps) {
   const imageSrc = image ? image : '/mockups/laptop.jpeg';
   return (
-    <section className="bg-white dark:bg-gray-900 mt-20">
+    <section className="mt-20">
       <div className="px-4 md:px-6 grid mx-auto md:container lg:gap-8 xl:gap-0 lg:grid-cols-12">
         <div className="place-self-center max-w-2xl space-y-6 mr-auto mb-16 lg:col-span-7">
           <div className="flex flex-col gap-4 items-start justify-start">

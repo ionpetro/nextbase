@@ -66,11 +66,11 @@ export default function InternalRoadmapCard({
 
         <div className="mt-3 -mb-0.5">
           <div className="flex space-x-2 mb-3">
-            <Badge size="sm" variant="default">
+            <Badge size="sm" variant="outline">
               {getIconVariantForTag(tag)}
               {formatFieldValue(tag)}
             </Badge>
-            <Badge size="sm" variant={getPriorityVariant(priority)}>
+            <Badge size="sm" variant={'outline'}>
               {formatFieldValue(priority)}
             </Badge>
           </div>
@@ -82,9 +82,8 @@ export default function InternalRoadmapCard({
         </div>
       </div>
       <Link href={`/app_admin/feedback/${feedbackItemId}`} className="mt-1">
-        <Button>
-          <EditIcon className="mr-2 h-4 w-4" />
-          Edit
+        <Button variant={'ghost'} size="icon">
+          <EditIcon className="h-4 w-4" />
         </Button>
       </Link>
     </div>

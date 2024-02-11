@@ -1,16 +1,16 @@
-import { getInternalFeedbackById } from '@/data/user/internalFeedback';
-import { AdminUpdateFeedbackType } from './AdminUpdateFeedbackType';
+import { adminGetInternalFeedbackById } from '@/data/admin/internal-feedback';
+import { AdminUpdateFeedbackAddedToRoadmap } from './AdminUpdateFeedbackAddedToRoadmap';
 import { AdminUpdateFeedbackPriority } from './AdminUpdateFeedbackPriority';
 import { AdminUpdateFeedbackStatus } from './AdminUpdateFeedbackStatus';
+import { AdminUpdateFeedbackType } from './AdminUpdateFeedbackType';
 import { AdminUpdateVisibility } from './AdminUpdateFeedbackVisibility';
-import { AdminUpdateFeedbackAddedToRoadmap } from './AdminUpdateFeedbackAddedToRoadmap';
 
 export async function FeedbackStatusDetails({
   feedbackId,
 }: {
   feedbackId: string;
 }) {
-  const feedbackThread = await getInternalFeedbackById(feedbackId);
+  const feedbackThread = await adminGetInternalFeedbackById(feedbackId);
   return (
     <div className="flex justify-between items-center mb-2 ">
       <div className="flex space-x-2">

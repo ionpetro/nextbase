@@ -24,7 +24,7 @@ export async function UserList({
 }) {
   const users = await getPaginatedUserList(filters);
   return (
-    <div className="space-y-2 rounded-lg border" style={{ overflowX: 'auto' }}>
+    <div className="space-y-2 border" style={{ overflowX: 'auto' }}>
       <ShadcnTable>
         <TableHeader>
           <TableRow>

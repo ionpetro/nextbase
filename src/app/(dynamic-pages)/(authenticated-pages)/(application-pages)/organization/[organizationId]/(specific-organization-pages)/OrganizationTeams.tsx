@@ -54,7 +54,7 @@ export const OrganizationTeams = async ({
 
       {teams.length ? (
         <div className="overflow-auto max-h-[600px] shadow ring-1 mt-6 ring-black ring-opacity-5 border sm:rounded-lg">
-          <ShadcnTable className="bg-white dark:bg-slate-900">
+          <ShadcnTable>
             <TableHeader>
               <TableRow>
                 <TableHead>Row</TableHead>

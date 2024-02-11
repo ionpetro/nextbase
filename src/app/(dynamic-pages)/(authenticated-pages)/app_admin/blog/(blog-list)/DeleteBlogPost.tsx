@@ -22,10 +22,11 @@ export function DeleteBlogPost({ blogPostId }: { blogPostId: string }) {
       onClick={() => {
         mutate();
       }}
+      size="icon"
+      variant="ghost"
       aria-disabled={isLoading}
-      className="text-red-500 dark:text-red-500 hover:text-red-600 hover:dark:text-red-400 p-0"
     >
-      {<TrashIcon className="mr-2 h-5 w-5" />}
+      <TrashIcon className="h-6 w-6" />
     </Button>
   );
 }

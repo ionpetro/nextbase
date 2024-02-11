@@ -115,7 +115,7 @@ export function BlogListPreview() {
     <div className="space-y-6 w-full [&_a]:pointer-events-none">
       {blogs.map((blog) => (
         <div key={blog.id}>
-          <div className="shadow-md flex justify-between items-start bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-800 rounded-xl p-6">
+          <div className="shadow-md flex justify-between items-start border rounded-xl p-6">
             <div className="max-w-[720px]">
               <T.H4 className="mt-0 mb-2 font-bold">{blog.title}</T.H4>
               <T.P className="leading-6 text-muted-foreground max-w-[480px] mb-4">

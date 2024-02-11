@@ -21,7 +21,7 @@ export default async function RootLayout({
   return (
     <html lang="en" className={GeistSans.className} suppressHydrationWarning>
       <head></head>
-      <body className="bg-white dark:bg-slate-900">
+      <body className="">
         <AppProviders>{children}</AppProviders>
       </body>
     </html>

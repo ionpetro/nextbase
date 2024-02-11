@@ -52,7 +52,7 @@ export default async function OrganizationPage({
                   <DialogTrigger asChild>
                     <InfoIcon className="h-4 w-4 text-gray-500 hover:text-gray-700 dark:text-slate-400 dark:hover:text-slate-200" />
                   </DialogTrigger>
-                  <DialogContent className="w-128 dark:bg-slate-900 bg-white border border-gray-300 dark:border-gray-700">
+                  <DialogContent className="w-128">
                     <T.H2>Projects</T.H2>
                     <T.P className="text-muted-foreground">
                       Projects are adaptable to diverse business usecases. For

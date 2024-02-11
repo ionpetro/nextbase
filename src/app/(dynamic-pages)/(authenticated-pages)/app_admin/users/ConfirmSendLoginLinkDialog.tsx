@@ -33,10 +33,7 @@ export const ConfirmSendLoginLinkDialog = ({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button
-          className="text-sm font-medium underline underline-offset-4 "
-          aria-disabled={isLoading}
-        >
+        <Button variant={'outline'} aria-disabled={isLoading}>
           Send login link
         </Button>
       </DialogTrigger>

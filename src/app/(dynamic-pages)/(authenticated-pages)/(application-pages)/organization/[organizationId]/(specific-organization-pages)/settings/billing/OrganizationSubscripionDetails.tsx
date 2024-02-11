@@ -3,6 +3,7 @@ import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 import { T } from '@/components/ui/Typography';
 import { getActiveProductsWithPrices } from '@/data/user/organizations';
 import { Enum, NormalizedSubscription, UnwrapPromise } from '@/types';
+import { cn } from '@/utils/cn';
 import { formatNormalizedSubscription } from '@/utils/formatNormalizedSubscription';
 import CheckIcon from 'lucide-react/dist/esm/icons/check';
 import XIcon from 'lucide-react/dist/esm/icons/x';
@@ -80,10 +81,17 @@ async function ChoosePricingTable({
               <>
                 <div
                   key={product.id + priceId}
-                  className="w-full flex flex-col justify-between mt-3 order-2 dark:bg-slate-900 bg-gray-200/10 shadow-none overflow-hidden rounded-xl hover:shadow-xl transition sm:w-96 lg:w-full lg:order-1 border mb-2  hover:border-gray-400 dark:hover:border-gray-700 "
+                  className={cn(
+                    'w-full',
+                    'flex flex-col justify-between',
+                    'mt-3 order-2 shadow-none overflow-hidden rounded-xl',
+                    'hover:shadow-xl transition',
+                    'sm:w-96 lg:w-full lg:order-1',
+                    'border mb-2',
+                  )}
                 >
                   <div>
-                    <div className="mb-6 p-7 pt-6 flex items-center border-b bg-gray-200/40 dark:bg-slate-800">
+                    <div className="mb-6 p-7 pt-6 flex items-center border-b">
                       <div>
                         <T.H4 className="mt-0 mb-4 dark:text-slate-300">
                           {' '}
