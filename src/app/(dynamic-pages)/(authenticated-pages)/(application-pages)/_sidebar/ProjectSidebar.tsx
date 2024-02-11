@@ -1,14 +1,13 @@
-import { Anchor } from '@/components/Anchor';
-import { OrganizationSwitcher } from './OrganizationSwitcher';
 import { fetchSlimOrganizations } from '@/data/user/organizations';
 import { getSlimProjectById } from '@/data/user/projects';
-import { SidebarLink } from './SidebarLink';
 import ArrowLeftIcon from 'lucide-react/dist/esm/icons/arrow-left';
 import ProjectIcon from 'lucide-react/dist/esm/icons/layers';
 import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
-import { SidebarLogo } from './SidebarLogo';
 import { Suspense } from 'react';
+import { OrganizationSwitcher } from './OrganizationSwitcher';
 import { SidebarFallback } from './SidebarFallback';
+import { SidebarLink } from './SidebarLink';
+import { SidebarLogo } from './SidebarLogo';
 
 async function ProjectSidebarInternal({ projectId }: { projectId: string }) {
   const [slimOrganizations, project] = await Promise.all([

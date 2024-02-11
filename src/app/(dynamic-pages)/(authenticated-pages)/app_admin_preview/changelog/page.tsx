@@ -1,6 +1,5 @@
 import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 import { Button } from '@/components/ui/Button';
-import { Anchor } from '@radix-ui/react-popover';
 import { ChangelogListPreview } from '../../app_admin/changelog/ChangelogListPreview';
 
 export default function AppAdminChangelogPreview() {

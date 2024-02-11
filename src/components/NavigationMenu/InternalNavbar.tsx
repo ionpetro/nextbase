@@ -1,10 +1,9 @@
-import { UserNav } from './UserNav';
-import { Badge } from '../Badge';
 import { cn } from '@/utils/cn';
-import { AppAdminLink } from './AppAdminLink/AppAdminLink';
 import { ReactNode, Suspense } from 'react';
+import { AppAdminLink } from './AppAdminLink/AppAdminLink';
 import { PendingInvitationCounter } from './PendingInvitationCounter';
 import { SidebarOpen } from './SidebarOpen';
+import { UserNav } from './UserNav';
 
 export async function InternalNavbar({ children }: { children: ReactNode }) {
   return (

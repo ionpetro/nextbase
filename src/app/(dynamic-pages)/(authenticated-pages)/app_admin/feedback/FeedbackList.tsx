@@ -1,3 +1,6 @@
+import { AppAdminViewUserDetails } from '@/components/AppAdminViewUserDetails';
+import { Fallback } from '@/components/AppAdminViewUserDetails/Fallback';
+import { Badge } from '@/components/ui/Badge';
 import {
   ShadcnTable,
   TableBody,
@@ -7,14 +10,11 @@ import {
   TableRow,
 } from '@/components/ui/Table/ShadcnTable';
 import { getPaginatedInternalFeedbackList } from '@/data/admin/internal-feedback';
-import { FiltersSchema } from './schema';
-import { Anchor } from '@/components/Anchor';
 import { formatFieldValue, mapStatusToVariant } from '@/utils/feedback';
-import { Badge } from '@/components/ui/Badge';
 import { format } from 'date-fns';
+import Link from 'next/link';
 import { Suspense } from 'react';
-import { AppAdminViewUserDetails } from '@/components/AppAdminViewUserDetails';
-import { Fallback } from '@/components/AppAdminViewUserDetails/Fallback';
+import { FiltersSchema } from './schema';
 
 export async function FeedbackList({ filters }: { filters: FiltersSchema }) {
   const feedbackList = await getPaginatedInternalFeedbackList(filters);
@@ -41,13 +41,13 @@ export async function FeedbackList({ filters }: { filters: FiltersSchema }) {
                 </Suspense>
               </TableCell>
               <TableCell>
-                <Anchor
+                <Link
                   className=" font-medium underline underline-offset-4 "
                   key={feedback.id}
                   href={`/app_admin/feedback/${feedback.id}`}
                 >
                   {feedback.title}
-                </Anchor>
+                </Link>
               </TableCell>
 
               <TableCell>{formatFieldValue(feedback.type)}</TableCell>

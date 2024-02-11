@@ -1,14 +1,13 @@
 'use client';
-import React from 'react';
-import moment from 'moment';
-import { Anchor } from '@/components/Anchor';
+import { Button } from '@/components/ui/Button';
+import { T } from '@/components/ui/Typography';
+import { useToastMutation } from '@/hooks/useToastMutation';
+import ArrowUpRightIcon from 'lucide-react/dist/esm/icons/arrow-up-right';
 import CalendarIcon from 'lucide-react/dist/esm/icons/calendar';
 import PencilIcon from 'lucide-react/dist/esm/icons/pencil';
-import ArrowUpRightIcon from 'lucide-react/dist/esm/icons/arrow-up-right';
-import { T } from '@/components/ui/Typography';
-import { Button } from '@/components/ui/Button';
 import TrashIcon from 'lucide-react/dist/esm/icons/trash-2';
-import { useToastMutation } from '@/hooks/useToastMutation';
+import moment from 'moment';
+import Link from 'next/link';
 
 function DeleteBlogPostPreview({ blogPostId }: { blogPostId: string }) {
   const { mutate, isLoading } = useToastMutation(
@@ -132,16 +131,16 @@ export function BlogListPreview() {
               </div>
             </div>
             <div className="inline-flex space-x-2">
-              <Anchor href={`#`} className="p-0 inline-flex m-1 mt-2">
+              <Link href={`#`} className="p-0 inline-flex m-1 mt-2">
                 {' '}
                 <ArrowUpRightIcon className="mr-2 h-6 w-6 text-gray-500 hover:text-gray-700 dark:text-gray-600 hover:dark:text-gray-400" />
-              </Anchor>
-              <Anchor
+              </Link>
+              <Link
                 href={`/app_admin/blog/post/${blog.id}/edit`}
                 className="p-0 inline-flex m-1 mt-2"
               >
                 <PencilIcon className="mr-2 h-5 w-5 text-gray-500 hover:text-gray-700 dark:text-gray-600 hover:dark:text-gray-400" />
-              </Anchor>
+              </Link>
               <DeleteBlogPostPreview blogPostId={blog.id} />
             </div>
           </div>

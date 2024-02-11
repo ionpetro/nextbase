@@ -1,4 +1,5 @@
-import { Anchor } from '@/components/Anchor';
+import { CreateTeamDialog } from '@/components/presentational/tailwind/CreateTeamDialog';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/Dialog';
 import {
   ShadcnTable,
   TableBody,
@@ -7,18 +8,9 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/Table/ShadcnTable';
-import { ProjectsListContainer } from '@/components/presentational/tailwind/ProjectsListContainer';
-import { getTeamsInOrganization } from '@/data/user/teams';
 import { T } from '@/components/ui/Typography';
-import { Button } from '@/components/ui/Button';
-import { PlusIcon } from '@radix-ui/react-icons';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/Popover';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/Dialog';
-import { CreateTeamDialog } from '@/components/presentational/tailwind/CreateTeamDialog';
+import { getTeamsInOrganization } from '@/data/user/teams';
+import Link from 'next/link';
 
 export const OrganizationTeams = async ({
   organizationId,
@@ -74,12 +66,12 @@ export const OrganizationTeams = async ({
                 <TableRow key={team.id}>
                   <TableCell>{index + 1}</TableCell>
                   <TableCell>
-                    <Anchor
+                    <Link
                       className=" font-medium underline underline-offset-4"
                       href={`/organization/${organizationId}/team/${team.id}`}
                     >
                       {team.name}
-                    </Anchor>
+                    </Link>
                   </TableCell>
                 </TableRow>
               ))}

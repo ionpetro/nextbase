@@ -1,12 +1,12 @@
+import { ApplicationLayoutShell } from '@/components/ApplicationLayoutShell';
+import { InternalNavbar } from '@/components/NavigationMenu/InternalNavbar';
+import { Alert } from '@/components/ui/Alert';
+import { getIsAppAdmin } from '@/data/user/user';
 import { errors } from '@/utils/errors';
-import { redirect } from 'next/navigation';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
+import { redirect } from 'next/navigation';
 import { Suspense } from 'react';
 import { ApplicationAdminSidebar } from '../(application-pages)/_sidebar/ApplicationAdminSidebar';
-import { getIsAppAdmin } from '@/data/user/user';
-import { InternalNavbar } from '@/components/ui/NavigationMenu/InternalNavbar';
-import { ApplicationLayoutShell } from '@/components/ApplicationLayoutShell';
-import { Alert } from '@/components/ui/Alert';
 
 export const revalidate = 0;
 

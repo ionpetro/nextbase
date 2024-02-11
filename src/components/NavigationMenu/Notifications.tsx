@@ -1,6 +1,6 @@
 'use client';
 
-import { NotificationItem } from '@/components/ui/NavigationMenu/NotificationItem';
+import { NotificationItem } from '@/components/NavigationMenu/NotificationItem';
 import {
   Popover,
   PopoverContent,
@@ -18,7 +18,7 @@ import { useRouter } from 'next/navigation';
 import { useCallback, useEffect } from 'react';
 import { useDidMount } from 'rooks';
 import { toast } from 'sonner';
-import { T } from '../Typography';
+import { T } from '../ui/Typography';
 import {
   getPaginatedNotifications,
   getUnseenNotificationIds,

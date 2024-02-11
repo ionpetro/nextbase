@@ -1,4 +1,3 @@
-import { Anchor } from '@/components/Anchor';
 import { Button } from '@/components/ui/Button';
 import {
   ShadcnTable,
@@ -11,6 +10,7 @@ import {
 import { T } from '@/components/ui/Typography';
 import { getPendingInvitationsOfUser } from '@/data/user/invitation';
 import { Enum } from '@/types';
+import Link from 'next/link';
 
 const PendingInvitationsTable = ({
   pendingInvitationsList,
@@ -53,11 +53,11 @@ const PendingInvitationsTable = ({
                 <TableCell>{invitation.role}</TableCell>
                 <TableCell>
                   <div className="flex space-x-2">
-                    <Anchor href={`/invitations/${invitation.id}`}>
+                    <Link href={`/invitations/${invitation.id}`}>
                       <Button size="default" variant="default">
                         View Invitation
                       </Button>
-                    </Anchor>
+                    </Link>
                   </div>
                 </TableCell>
               </TableRow>

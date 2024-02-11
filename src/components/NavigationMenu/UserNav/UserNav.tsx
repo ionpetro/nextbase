@@ -1,5 +1,5 @@
+import { Notifications } from '@/components/NavigationMenu/Notifications';
 import { ThemeToggle } from '@/components/presentational/tailwind/ThemeToggle';
-import { Notifications } from '@/components/ui/NavigationMenu/Notifications';
 import { getUserProfile } from '@/data/user/user';
 import { getUserAvatarUrl } from '@/utils/helpers';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';

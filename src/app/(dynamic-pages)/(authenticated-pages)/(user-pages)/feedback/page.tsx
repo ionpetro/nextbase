@@ -1,7 +1,4 @@
-import { GiveFeedbackDialog } from './GiveFeedbackDialog';
-import { Anchor } from '@/components/Anchor';
-import { formatFieldValue, mapStatusToVariant } from '@/utils/feedback';
-import moment from 'moment';
+import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 import { Badge } from '@/components/ui/Badge';
 import {
   ShadcnTable,
@@ -11,9 +8,12 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/Table/ShadcnTable';
-import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 import { getAllInternalFeedbackForLoggedInUser } from '@/data/user/internalFeedback';
+import { formatFieldValue, mapStatusToVariant } from '@/utils/feedback';
+import moment from 'moment';
+import Link from 'next/link';
 import { Suspense } from 'react';
+import { GiveFeedbackDialog } from './GiveFeedbackDialog';
 
 async function UserFeedbackList() {
   const feedbackList = await getAllInternalFeedbackForLoggedInUser();
@@ -33,32 +33,32 @@ async function UserFeedbackList() {
         <TableBody>
           {feedbackList
             ? feedbackList.map((feedback, index) => (
-                <TableRow key={feedback.id}>
-                  <TableCell>{index + 1}</TableCell>
-                  <TableCell>
-                    <Anchor
-                      className=" font-medium underline underline-offset-4"
-                      key={feedback.id}
-                      href={`/feedback/${feedback.id}`}
-                    >
-                      {feedback.title}
-                    </Anchor>
-                  </TableCell>
-                  <TableCell>{formatFieldValue(feedback.type)}</TableCell>
-                  <TableCell>{formatFieldValue(feedback.priority)}</TableCell>
-                  <TableCell>
-                    {moment(feedback.created_at).format('LL')}
-                  </TableCell>
-                  <TableCell>
-                    <Badge
-                      size="sm"
-                      variant={mapStatusToVariant(feedback.status)}
-                    >
-                      {formatFieldValue(feedback.status)}
-                    </Badge>
-                  </TableCell>
-                </TableRow>
-              ))
+              <TableRow key={feedback.id}>
+                <TableCell>{index + 1}</TableCell>
+                <TableCell>
+                  <Link
+                    className=" font-medium underline underline-offset-4"
+                    key={feedback.id}
+                    href={`/feedback/${feedback.id}`}
+                  >
+                    {feedback.title}
+                  </Link>
+                </TableCell>
+                <TableCell>{formatFieldValue(feedback.type)}</TableCell>
+                <TableCell>{formatFieldValue(feedback.priority)}</TableCell>
+                <TableCell>
+                  {moment(feedback.created_at).format('LL')}
+                </TableCell>
+                <TableCell>
+                  <Badge
+                    size="sm"
+                    variant={mapStatusToVariant(feedback.status)}
+                  >
+                    {formatFieldValue(feedback.status)}
+                  </Badge>
+                </TableCell>
+              </TableRow>
+            ))
             : null}
         </TableBody>
       </ShadcnTable>

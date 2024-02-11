@@ -1,26 +1,19 @@
 'use client';
-import { Anchor } from '@/components/Anchor';
-import { T } from '@/components/ui/Typography';
 import { cn } from '@/utils/cn';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ComponentProps, useEffect, useState } from 'react';
+import { ComponentPropsWithRef, useEffect, useState } from 'react';
 import { MobileNavigation } from './MobileNavigation';
 
-function NavLink({
-  href,
-  ...props
-}: {
-  href: string;
-} & ComponentProps<typeof Anchor>) {
+function NavLink({ href, ...props }: ComponentPropsWithRef<typeof Link>) {
   const pathname = usePathname();
   const isActive = pathname === href;
   return (
-    <Anchor
+    <Link
       {...props}
       href={href}
       className={cn(isActive ? 'font-bold text-blue-600' : 'font-medium')}
-    ></Anchor>
+    ></Link>
   );
 }
 
@@ -66,13 +59,13 @@ export function Navbar() {
         )}
       >
         <div className={cn('hidden lg:flex items-center gap-8', 'relative ')}>
-          <Anchor href="/" aria-label="Home page">
+          <Link href="/" aria-label="Home page">
             <img
               src="https://usenextbase.com/logos/nextbase/Logo%2006.png"
               className="h-9 block sm:h-9"
               alt="Nextbase Logo"
             />
-          </Anchor>
+          </Link>
           <NavLink href="/blog" aria-label="Blog">
             Blog
           </NavLink>

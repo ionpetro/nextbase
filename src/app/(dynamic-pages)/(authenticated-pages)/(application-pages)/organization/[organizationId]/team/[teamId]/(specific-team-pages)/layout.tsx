@@ -1,10 +1,10 @@
+import { TeamSidebar } from '@/app/(dynamic-pages)/(authenticated-pages)/(application-pages)/_sidebar/TeamSidebar';
+import { ApplicationLayoutShell } from '@/components/ApplicationLayoutShell';
+import { InternalNavbar } from '@/components/NavigationMenu/InternalNavbar';
+import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
+import Link from 'next/link';
 import { ReactNode, Suspense } from 'react';
 import { z } from 'zod';
-import { Anchor } from '@/components/Anchor';
-import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
-import { ApplicationLayoutShell } from '@/components/ApplicationLayoutShell';
-import { TeamSidebar } from '@/app/(dynamic-pages)/(authenticated-pages)/(application-pages)/_sidebar/TeamSidebar';
-import { InternalNavbar } from '@/components/ui/NavigationMenu/InternalNavbar';
 
 const paramsSchema = z.object({
   teamId: z.coerce.number(),
@@ -33,7 +33,7 @@ export default async function Layout({
           <div className="flex w-full justify-between items-center">
             <Suspense>{navbar}</Suspense>
             <div className="flex items-center space-x-2">
-              <Anchor
+              <Link
                 className="flex gap-1.5 py-1.5 px-3 cursor-pointer items-center group rounded-md transition hover:cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-800"
                 href={`/organization/${organizationId}/team/${teamId}/settings`}
               >
@@ -41,7 +41,7 @@ export default async function Layout({
                 <p className="text-gray-500 dark:text-slate-400 group-hover:text-gray-700 dark:group-hover:text-slate-300 text-sm font-normal">
                   Team settings
                 </p>
-              </Anchor>
+              </Link>
             </div>
           </div>
         </InternalNavbar>
