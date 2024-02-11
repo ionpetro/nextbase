@@ -1,16 +1,15 @@
-import { ClientLayout } from './ClientLayout';
-import { AppSupabaseClient } from '@/types';
-import { User } from '@supabase/supabase-js';
-import { errors } from '@/utils/errors';
-import { ReactNode } from 'react';
-import { redirect } from 'next/navigation';
-import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
-import { LoggedInUserProvider } from '@/contexts/LoggedInUserContext';
-import { getUserProfile } from '@/data/user/user';
-import { cookies } from 'next/headers';
 import { SIDEBAR_VISIBILITY_COOKIE_KEY } from '@/constants';
+import { LoggedInUserProvider } from '@/contexts/LoggedInUserContext';
 import { SidebarVisibilityProvider } from '@/contexts/SidebarVisibilityContext';
-import PosthogProvider from '@/contexts/PostHogProvider';
+import { getUserProfile } from '@/data/user/user';
+import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
+import { AppSupabaseClient } from '@/types';
+import { errors } from '@/utils/errors';
+import { User } from '@supabase/supabase-js';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+import { ReactNode } from 'react';
+import { ClientLayout } from './ClientLayout';
 
 function getSidebarVisibility() {
   const cookieStore = cookies();
@@ -28,7 +27,7 @@ async function fetchData(supabaseClient: AppSupabaseClient, authUser: User) {
 
 export default async function Layout({ children }: { children: ReactNode }) {
   const supabaseClient = createSupabaseUserServerComponentClient();
-  const { data, error } = await supabaseClient.auth.getUser();
+  const { data, error } = await supabaseClient.auth.getUser(); // this will cause memory leak in client side
   const { user } = data;
 
   if (!user) {
