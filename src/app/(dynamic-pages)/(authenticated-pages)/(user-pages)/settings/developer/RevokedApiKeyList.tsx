@@ -8,7 +8,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { getRevokedApiKeyList } from '@/data/user/unkey';
-import { format } from 'date-fns/esm';
+import { format } from 'date-fns';
 
 export async function RevokedApiKeyList() {
   const revokedApiKeyList = await getRevokedApiKeyList();

@@ -9,7 +9,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { getActiveDeveloperKeys } from '@/data/user/unkey';
-import { format } from 'date-fns/esm';
+import { format } from 'date-fns';
 import moment from 'moment';
 import { ConfirmRevokeTokenDialog } from './ConfirmRevokeTokenDialog';
 
