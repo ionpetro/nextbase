@@ -11,16 +11,23 @@ jobs:
 
     steps:
       - name: Check repository
+        id: check_repo
         run: |
           if [[ "${{ github.repository }}" != "imbhargav5/nextbase-ultimate" ]]; then
             echo "Workflow can only run on imbhargav5/nextbase-ultimate"
+            echo "::set-output name=should_run::true"
             exit 0
+          else
+            echo "::set-output name=should_run::false"
+            echo "Workflow can only run on imbhargav5/nextbase-ultimate"
           fi
 
       - name: Checkout
+        if: steps.check_repo.outputs.should_run == 'true'
         uses: actions/checkout@v4
 
       - name: Sync fork
+        if: steps.check_repo.outputs.should_run == 'true'
         uses: repo-sync/github-sync@v2
         with:
           source_repo: 'https://${{secrets.NEXTBASE_SYNC_REPO_SECRET}}@github.com/usenextbase/nextbase-ultimate.git'
