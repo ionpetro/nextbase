@@ -1,18 +1,6 @@
-import { T } from '@/components/ui/Typography';
-import { SidebarLink } from './SidebarLink';
-import ProjectIcon from 'lucide-react/dist/esm/icons/layers';
 import { getProjects } from '@/data/user/projects';
-import { z } from 'zod';
-import { AppSupabaseClient } from '@/types';
-import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
-
-async function fetchDraftProjects(
-  supabase: AppSupabaseClient,
-  organizationId: string,
-) {
-  const data = await getProjects({ organizationId, teamId: null });
-  return data;
-}
+import ProjectIcon from 'lucide-react/dist/esm/icons/layers';
+import { SidebarLink } from './SidebarLink';
 
 export async function ProjectsList({
   organizationId,

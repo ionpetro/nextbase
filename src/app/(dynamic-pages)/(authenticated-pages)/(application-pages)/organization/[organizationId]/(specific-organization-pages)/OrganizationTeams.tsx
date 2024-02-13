@@ -1,4 +1,4 @@
-import { CreateTeamDialog } from '@/components/presentational/tailwind/CreateTeamDialog';
+import { CreateTeamDialog } from '@/components/CreateTeamDialog';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import {
   Table as ShadcnTable,

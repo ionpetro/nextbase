@@ -1,15 +1,12 @@
 'use client';
-import React from 'react';
+import { GraphContainer } from '@/components/GraphContainer';
 import {
-  Card,
-  Title,
   AreaChart,
   BarChart,
   BarList,
-  LineChart,
   DonutChart,
+  LineChart
 } from '@tremor/react';
-import { GraphContainer } from '@/components/presentational/tailwind/GraphContainer';
 const valueFormatter = (number: number) =>
   `$ ${Intl.NumberFormat('us').format(number).toString()}`;
 const mrrBarListData = [

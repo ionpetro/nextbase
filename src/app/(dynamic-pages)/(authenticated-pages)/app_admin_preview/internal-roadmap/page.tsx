@@ -1,4 +1,4 @@
-import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
+import { PageHeading } from '@/components/PageHeading';
 import { AppAdminRoadmapPreview } from '../../app_admin/internal-roadmap/AppAdminRoadmapPreview';
 
 export default async function AdminRoadmapPreview() {

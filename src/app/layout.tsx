@@ -1,7 +1,6 @@
 import '@/styles/globals.css';
 import '@/styles/prosemirror.css';
 import { GeistSans } from 'geist/font/sans';
-import 'react-tooltip/dist/react-tooltip.css';
 import 'server-only';
 import { AppProviders } from './AppProviders';
 

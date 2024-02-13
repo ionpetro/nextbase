@@ -1,5 +1,5 @@
 'use client';
-import { UserOnboardingDialog } from '@/components/presentational/tailwind/UserOnboardingDialog';
+import { UserOnboardingDialog } from '@/components/UserOnboardingDialog';
 import {
   updateUserProfileNameAndAvatar,
   uploadPublicUserAvatar,

@@ -1,6 +1,6 @@
 'use client';
 
-import { MaintenanceModeBanner } from '@/components/presentational/tailwind/MaintenanceModeBanner';
+import { MaintenanceModeBanner } from '@/components/MaintenanceModeBanner';
 import PostHogProvider from '@/contexts/PostHogProvider';
 import { Table } from '@/types';
 import dynamic from 'next/dynamic';

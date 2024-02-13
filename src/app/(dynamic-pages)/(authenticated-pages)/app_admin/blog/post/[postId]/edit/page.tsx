@@ -1,4 +1,4 @@
-import Overline from '@/components/presentational/tailwind/Text/Overline';
+import Overline from '@/components/Text/Overline';
 import { T } from '@/components/ui/Typography';
 import ChevronLeft from 'lucide-react/dist/esm/icons/chevron-left';
 import Link from 'next/link';

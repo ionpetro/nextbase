@@ -1,6 +1,6 @@
 import ChangeLogListCard from '@/components/ChangeLog/ChangeLogListCard';
 import { customMDXComponents } from '@/components/mdxComponents';
-import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
+import { PageHeading } from '@/components/PageHeading';
 import { T } from '@/components/ui/Typography';
 import { anonGetAllChangelogItems } from '@/data/anon/internalChangelog';
 import { cn } from '@/utils/cn';

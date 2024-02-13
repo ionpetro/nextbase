@@ -1,4 +1,4 @@
-import { ThemeToggle } from '@/components/presentational/tailwind/ThemeToggle';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import { Suspense } from 'react';
 import { LeftNav } from './LeftNav';
 import { LoginCTAButton } from './LoginCTAButton';

@@ -1,4 +1,4 @@
-import { Button } from '@/components/presentational/tailwind/Button';
+import { Button } from '@/components/Button';
 import { Label } from '@/components/ui/label';
 import { classNames } from '@/utils/classNames';
 import { PropsOf } from '@headlessui/react/dist/types';

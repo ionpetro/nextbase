@@ -1,4 +1,4 @@
-import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
+import { PageHeading } from '@/components/PageHeading';
 import { MaintenanceModeTogglePreview } from '../../app_admin/settings/MaintenanceModeTogglePreview';
 
 export default async function AdminPanelSettingsPreview() {

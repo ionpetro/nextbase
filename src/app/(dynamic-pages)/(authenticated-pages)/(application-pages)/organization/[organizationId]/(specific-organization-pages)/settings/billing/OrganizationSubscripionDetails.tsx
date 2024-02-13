@@ -1,5 +1,5 @@
 'use server';
-import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
+import { PageHeading } from '@/components/PageHeading';
 import { T } from '@/components/ui/Typography';
 import { getActiveProductsWithPrices } from '@/data/user/organizations';
 import { Enum, NormalizedSubscription, UnwrapPromise } from '@/types';

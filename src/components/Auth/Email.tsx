@@ -1,5 +1,5 @@
 'use client';
-import { Button } from '@/components/presentational/tailwind/Button';
+import { Button } from '@/components/Button';
 import { T } from '@/components/ui/Typography';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';

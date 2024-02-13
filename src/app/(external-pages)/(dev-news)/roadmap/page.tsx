@@ -1,4 +1,4 @@
-import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
+import { PageHeading } from '@/components/PageHeading';
 import RoadmapCard from '@/components/RoadmapCard';
 import {
   Card,

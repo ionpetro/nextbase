@@ -1,8 +1,8 @@
 'use server';
 import ChangeLogListCard from '@/components/ChangeLog/ChangeLogListCard';
 import InternalRoadmapCard from '@/components/InternalRoadmapCard';
+import { PageHeading } from '@/components/PageHeading';
 import { customMDXComponents } from '@/components/mdxComponents';
-import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 import { cn } from '@/utils/cn';
 import moment from 'moment';

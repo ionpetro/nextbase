@@ -3,8 +3,13 @@ import {
   Button as TailwindButton,
   ButtonProps as TailwindButtonProps,
 } from '@/components/ui/button';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { useMaintenanceMode } from '@/contexts/MaintenanceModeContext';
-import { Tooltip } from 'react-tooltip';
 
 export function Button({
   className: classNameProp,
@@ -25,14 +30,17 @@ export function Button({
     ></TailwindButton>
   );
   if (isInMaintenanceMode) {
-    const wrapperId = `${props.id}-wrapper`;
     return (
       <>
-        <div id={wrapperId}>{buttonElement}</div>
-        <Tooltip anchorId={wrapperId}>
-          <p>The App is currently in maintenance mode. </p>
-          <p>Please check back later.</p>
-        </Tooltip>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>{buttonElement}</TooltipTrigger>
+            <TooltipContent>
+              <p>The App is currently in maintenance mode. </p>
+              <p>Please check back later.</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </>
     );
   }
