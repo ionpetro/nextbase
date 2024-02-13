@@ -7,6 +7,8 @@ module.exports = {
 
   prefix: '',
   theme: {
+    transparent: 'transparent',
+    current: 'currentColor',
     container: {
       center: true,
       padding: '2rem',
@@ -194,5 +196,6 @@ module.exports = {
     require('tailwindcss-animate'),
     require('@tailwindcss/typography'),
     require('@headlessui/tailwindcss'),
+    require('@tailwindcss/forms'),
   ],
 };
