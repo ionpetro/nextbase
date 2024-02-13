@@ -1,5 +1,5 @@
 'use client';
-import { CreateOrganizationDialog } from '@/components/presentational/tailwind/CreateOrganizationDialog';
+import { CreateOrganizationDialog } from '@/components/CreateOrganizationDialog';
 import { Button } from '@/components/ui/button';
 import {
   Command,

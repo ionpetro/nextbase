@@ -1,6 +1,6 @@
+import { PageHeading } from '@/components/PageHeading';
 import { Pagination } from '@/components/Pagination';
 import { Search } from '@/components/Search';
-import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 import { getUsersTotalPages } from '@/data/admin/user';
 import { Suspense } from 'react';
 import { AppAdminCreateUserDialog } from './AppAdminCreateUserDialog';

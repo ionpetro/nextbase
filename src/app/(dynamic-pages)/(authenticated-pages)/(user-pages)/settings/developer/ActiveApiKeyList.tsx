@@ -1,4 +1,4 @@
-import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
+import { PageHeading } from '@/components/PageHeading';
 import { T } from '@/components/ui/Typography';
 import {
   Table as ShadcnTable,

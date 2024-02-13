@@ -1,5 +1,5 @@
-import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
-import Overline from '@/components/presentational/tailwind/Text/Overline';
+import { PageHeading } from '@/components/PageHeading';
+import Overline from '@/components/Text/Overline';
 import { T } from '@/components/ui/Typography';
 import {
   adminGetInternalFeedbackById,

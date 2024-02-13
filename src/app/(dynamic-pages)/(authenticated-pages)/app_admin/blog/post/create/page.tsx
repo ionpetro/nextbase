@@ -1,14 +1,14 @@
+import Overline from '@/components/Text/Overline';
 import { T } from '@/components/ui/Typography';
-import Link from 'next/link';
-import { BlogForm } from '../../BlogForm';
-import ChevronLeft from 'lucide-react/dist/esm/icons/chevron-left';
-import Overline from '@/components/presentational/tailwind/Text/Overline';
-import { Suspense } from 'react';
 import {
   createBlogPost,
   getAllAuthors,
   getAllBlogTags,
 } from '@/data/admin/internal-blog';
+import ChevronLeft from 'lucide-react/dist/esm/icons/chevron-left';
+import Link from 'next/link';
+import { Suspense } from 'react';
+import { BlogForm } from '../../BlogForm';
 
 async function BlogFormWrapper() {
   const [authors, tags] = await Promise.all([

@@ -1,4 +1,4 @@
-import { LandingPage2 } from '@/components/presentational/tailwind/LandingPage/LandingPage2';
+import { LandingPage2 } from '@/components/LandingPage/LandingPage2';
 
 const Page = () => {
   return <LandingPage2 />;

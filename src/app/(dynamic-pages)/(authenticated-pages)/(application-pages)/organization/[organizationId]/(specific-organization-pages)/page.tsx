@@ -1,6 +1,6 @@
-import { CreateProjectDialog } from '@/components/presentational/tailwind/CreateProjectDialog';
-import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
-import { ProjectsTable } from '@/components/presentational/tailwind/Projects/ProjectsTable';
+import { CreateProjectDialog } from '@/components/CreateProjectDialog';
+import { PageHeading } from '@/components/PageHeading';
+import { ProjectsTable } from '@/components/Projects/ProjectsTable';
 import { T } from '@/components/ui/Typography';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { getProjects } from '@/data/user/projects';

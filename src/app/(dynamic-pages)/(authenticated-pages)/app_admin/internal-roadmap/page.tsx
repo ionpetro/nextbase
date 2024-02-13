@@ -1,6 +1,6 @@
-import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
-import { AppAdminRoadmap } from './AppAdminRoadmap';
+import { PageHeading } from '@/components/PageHeading';
 import { Suspense } from 'react';
+import { AppAdminRoadmap } from './AppAdminRoadmap';
 
 export default async function Page() {
   return (

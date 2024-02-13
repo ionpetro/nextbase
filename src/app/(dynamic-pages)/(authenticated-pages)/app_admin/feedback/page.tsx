@@ -6,7 +6,7 @@ import { FeedbackList } from './FeedbackList';
 import { filtersSchema } from './schema';
 
 import { Fallback } from '@/components/AppAdminViewUserDetails/Fallback';
-import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
+import { PageHeading } from '@/components/PageHeading';
 import {
   Table as ShadcnTable,
   TableBody,

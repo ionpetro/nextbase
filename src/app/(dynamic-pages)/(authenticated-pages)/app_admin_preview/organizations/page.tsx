@@ -1,6 +1,6 @@
+import { PageHeading } from '@/components/PageHeading';
 import { Pagination } from '@/components/Pagination';
 import { Search } from '@/components/Search';
-import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 import { OrganizationListPreview } from '../../app_admin/organizations/OrganizationListPreview';
 
 export default function UsersPage() {

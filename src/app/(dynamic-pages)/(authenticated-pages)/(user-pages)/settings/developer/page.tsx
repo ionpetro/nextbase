@@ -1,4 +1,4 @@
-import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
+import { PageHeading } from '@/components/PageHeading';
 import { T } from '@/components/ui/Typography';
 import { getActiveDeveloperKeyCount } from '@/data/user/unkey';
 import { Suspense } from 'react';

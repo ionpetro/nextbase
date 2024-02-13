@@ -1,6 +1,6 @@
+import { PageHeading } from '@/components/PageHeading';
 import { Pagination } from '@/components/Pagination';
 import { Search } from '@/components/Search';
-import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
 import { getOrganizationsTotalPages } from '@/data/admin/organizations';
 import { Suspense } from 'react';
 import { OrganizationList } from './OrganizationList';

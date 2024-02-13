@@ -1,5 +1,5 @@
 'use client';
-import { OrganizationMemberRoleSelect } from '@/components/presentational/tailwind/OrganizationMemberRoleSelect';
+import { OrganizationMemberRoleSelect } from '@/components/OrganizationMemberRoleSelect';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,

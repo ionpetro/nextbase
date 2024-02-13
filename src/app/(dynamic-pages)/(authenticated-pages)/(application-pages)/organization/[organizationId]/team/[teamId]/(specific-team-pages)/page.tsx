@@ -1,9 +1,9 @@
-import { z } from 'zod';
-import { getProjects } from '@/data/user/projects';
-import { ProjectsTable } from '@/components/presentational/tailwind/Projects/ProjectsTable';
-import { Suspense } from 'react';
-import { CreateProjectDialog } from '@/components/presentational/tailwind/CreateProjectDialog';
+import { CreateProjectDialog } from '@/components/CreateProjectDialog';
+import { ProjectsTable } from '@/components/Projects/ProjectsTable';
 import { T } from '@/components/ui/Typography';
+import { getProjects } from '@/data/user/projects';
+import { Suspense } from 'react';
+import { z } from 'zod';
 
 const paramsSchema = z.object({
   teamId: z.coerce.number(),

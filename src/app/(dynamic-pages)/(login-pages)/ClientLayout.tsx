@@ -1,6 +1,6 @@
 'use client';
 
-import { MaintenanceModeBanner } from '@/components/presentational/tailwind/MaintenanceModeBanner';
+import { MaintenanceModeBanner } from '@/components/MaintenanceModeBanner';
 import { T } from '@/components/ui/Typography';
 import Image from 'next/image';
 import LoginHeader from 'public/assets/login-asset-dashboard.png';

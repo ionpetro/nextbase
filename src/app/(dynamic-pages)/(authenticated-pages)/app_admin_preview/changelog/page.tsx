@@ -1,4 +1,4 @@
-import { PageHeading } from '@/components/presentational/tailwind/PageHeading';
+import { PageHeading } from '@/components/PageHeading';
 import { Button } from '@/components/ui/button';
 import { ChangelogListPreview } from '../../app_admin/changelog/ChangelogListPreview';
 
