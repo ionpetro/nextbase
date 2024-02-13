@@ -119,7 +119,6 @@
     "react-no-ssr": "^1.1.0",
     "react-resizable-panels": "^2.0.4",
     "react-select": "^5.7.3",
-    "react-tooltip": "^5.4.0",
     "rehype-pretty-code": "^0.12.4",
     "rehype-toc": "^3.0.2",
     "remark-frontmatter": "^5.0.0",
