@@ -21,11 +21,11 @@ jobs:
           fi
 
       - name: Checkout
-        if: env.SHOULD_CONTINUE == 'true'
+        if: env.STATE_SHOULD_CONTINUE == 'true'
         uses: actions/checkout@v4
 
       - name: Sync fork
-        if: env.SHOULD_CONTINUE == 'true'
+        if: env.STATE_SHOULD_CONTINUE == 'true'
         uses: repo-sync/github-sync@v2
         with:
           source_repo: 'https://${{secrets.NEXTBASE_SYNC_REPO_SECRET}}@github.com/usenextbase/nextbase-ultimate.git'
