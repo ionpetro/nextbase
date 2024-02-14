@@ -49,7 +49,7 @@ export function OnboardingModal({
         <div
           className={cn(
             'hover:bg-gray-100 hover:text-gray-900 cursor-pointer text-gray-700 rounded-sm dark:text-gray-400 dark:hover:bg-gray-700/50',
-            'flex px-3 gap-2 items-center py-2 text-sm',
+            'flex gap-2 items-center py-2 text-sm',
           )}
         >
           <GuideIcon />

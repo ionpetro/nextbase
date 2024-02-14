@@ -1,6 +1,12 @@
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { getInternalFeedbackById } from '@/data/user/internalFeedback';
 import { Enum } from '@/types';
 import { formatFieldValue } from '@/utils/feedback';
@@ -49,10 +55,19 @@ function ViewType({
 
 function ViewVisibility({ currentVisibility }: { currentVisibility: boolean }) {
   return (
-    <div className="flex items-center space-x-2 ">
-      <Switch disabled checked={currentVisibility} />{' '}
-      <Label className="text-base ">Visible to Public</Label>
-    </div>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <div className="flex items-center space-x-2 cursor-not-allowed">
+            <Switch disabled checked={currentVisibility} />{' '}
+            <Label className="text-base ">Visible to Public</Label>
+          </div>
+        </TooltipTrigger>
+        <TooltipContent>
+          Only application admins can modify this setting.
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }
 
@@ -62,10 +77,19 @@ function ViewIsAddedToRoadmap({
   currentIsAddedToRoadmap: boolean;
 }) {
   return (
-    <div className="flex items-center space-x-2">
-      <Switch disabled checked={currentIsAddedToRoadmap} />
-      <Label className="text-base">Added to Roadmap</Label>
-    </div>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <div className="flex items-center space-x-2 cursor-not-allowed">
+            <Switch disabled checked={currentIsAddedToRoadmap} />
+            <Label className="text-base">Added to Roadmap</Label>
+          </div>
+        </TooltipTrigger>
+        <TooltipContent>
+          Only application admins can modify this setting.
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }
 
@@ -101,7 +125,7 @@ export async function FeedbackStatusDetails({
         </div>
       </div>
 
-      <div className="flex space-x-6">
+      <div className="flex space-x-6" suppressHydrationWarning>
         <ViewVisibility
           currentVisibility={feedbackThread.open_for_public_discussion}
         />

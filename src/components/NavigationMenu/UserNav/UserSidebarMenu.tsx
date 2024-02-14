@@ -20,7 +20,7 @@ export function UserSidebarMenu({
   return (
     <div className="dark:bg-black ">
       <div
-        className="grid items-start mt-1 gap-2 px-2.5 mb-2"
+        className="grid items-start mt-1 gap-2 mb-2 overflow-hidden"
         style={{
           gridTemplateColumns: 'min-content 1fr',
         }}
@@ -42,21 +42,21 @@ export function UserSidebarMenu({
             }}
           />
         </div>
-        <div className="mb-1">
-          <div className="text-sm font-medium text-gray-900 dark:text-white">
+        <div className="mb-1 overflow-hidden">
+          <div className="text-sm font-medium text-gray-900 dark:text-white truncate w-full text-ellipsis">
             {userFullName}
           </div>
-          <div className="text-xs text-gray-500 dark:text-gray-400">
+          <div className="text-xs text-gray-500 dark:text-gray-400 truncate w-full text-ellipsis">
             {userEmail}
           </div>
         </div>
       </div>
-      <div className="h-px bg-gray-200 dark:bg-gray-700 mx-2.5 my-2" />
+      <div className="h-px bg-gray-200 dark:bg-gray-700  my-2" />
       <Link
         href="/settings"
         className={cn(
           'hover:bg-gray-100 hover:text-gray-900 text-gray-700 rounded-sm dark:text-gray-400 dark:hover:bg-gray-700/50',
-          'flex px-3 gap-2 items-center py-2 text-sm',
+          'flex gap-2 items-center py-2 text-sm',
         )}
       >
         <AccountsIcon className="text-lg" /> Account settings
@@ -65,7 +65,7 @@ export function UserSidebarMenu({
         href="/settings/developer"
         className={cn(
           'hover:bg-gray-100 hover:text-gray-900 text-gray-700 rounded-sm dark:text-gray-400 dark:hover:bg-gray-700/50',
-          'flex px-3 gap-2 items-center py-2 text-sm',
+          'flex gap-2 items-center py-2 text-sm',
         )}
       >
         <ComputerIcon className="text-lg" /> Developer Settings
@@ -74,32 +74,32 @@ export function UserSidebarMenu({
         href="/settings/security"
         className={cn(
           'hover:bg-gray-100 hover:text-gray-900 text-gray-700 rounded-sm dark:text-gray-400 dark:hover:bg-gray-700/50',
-          'flex px-3 gap-2 items-center py-2 text-sm',
+          'flex gap-2 items-center py-2 text-sm',
         )}
       >
         <SecurityIcon className="text-lg" /> Security Settings
       </Link>
 
-      <div className="h-px bg-gray-200 dark:bg-gray-700 mx-2.5 my-2" />
+      <div className="h-px bg-gray-200 dark:bg-gray-700  my-2" />
       <FeatureViewModal />
       <Link
         href="/feedback"
         prefetch={false}
         className={cn(
           'hover:bg-gray-100 hover:text-gray-900 text-gray-700 rounded-sm dark:text-gray-400 dark:hover:bg-gray-700/50',
-          'flex px-3 gap-2 items-center py-2 text-sm',
+          'flex gap-2 items-center py-2 text-sm',
         )}
       >
         <MailIcon className="text-lg" />
         Feedback
       </Link>
-      <div className="h-px bg-gray-200 dark:bg-gray-700 mx-2.5 my-2" />
+      <div className="h-px bg-gray-200 dark:bg-gray-700  my-2" />
       <Link
         href="/logout"
         prefetch={false}
         className={cn(
           'hover:bg-gray-100 hover:text-gray-900 text-gray-700 rounded-sm dark:text-gray-400 dark:hover:bg-gray-700/50',
-          'flex px-3 gap-2 items-center py-2 text-sm',
+          'flex gap-2 items-center py-2 text-sm',
         )}
       >
         <LogoutIcon className="text-lg" />
