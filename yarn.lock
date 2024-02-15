@@ -10354,11 +10354,9 @@ react-remove-scroll@2.5.5:
     use-sidecar "^1.1.2"
 
 react-resizable-panels@^2.0.4:
-  version "2.0.8"
-  resolved "https://registry.yarnpkg.com/react-resizable-panels/-/react-resizable-panels-2.0.8.tgz#032f97508b001c081586e8161be1376fe3459d44"
-  integrity sha512-iAazXPOZJcH7wF9V0S7VoloXoDvz1UZqkcGjz4tCF6vxZjA9hkccns5ItXPxrJ5m+qZOARaf8OczYi9C+eZr7g==
-  dependencies:
-    stacking-order "^1"
+  version "2.0.9"
+  resolved "https://registry.yarnpkg.com/react-resizable-panels/-/react-resizable-panels-2.0.9.tgz#35acd8116475ebebb916c1559e75de3594004546"
+  integrity sha512-ZylBvs7oG7Y/INWw3oYGolqgpFvoPW8MPeg9l1fURDeKpxrmUuCHBUmPj47BdZ11MODImu3kZYXG85rbySab7w==
 
 react-select@^5.7.3:
   version "5.8.0"
@@ -11262,11 +11260,6 @@ stackback@0.0.2:
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/stackback/-/stackback-0.0.2.tgz#1ac8a0d9483848d1695e418b6d031a3c3ce68e3b"
   integrity sha512-1XMJE5fQo1jGH6Y/7ebnwPOBEkIEnT4QF32d5R1+VXdXveM0IBMJt8zfaxX1P3QhVwrYe+576+jkANtSS2mBbw==
-
-stacking-order@^1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/stacking-order/-/stacking-order-1.0.1.tgz#dd362c9390e53f38f1e3cb172cd4374a011f4d1f"
-  integrity sha512-IxD2jw+DDiQ3FaXr6QcvSt5uE2vDWBYcC7bbCWfI5R9kEoj8Zgi4rFwPXALOjTtE96iIdZjcJFLQVr7r7xIdAA==
 
 stacktrace-parser@0.1.10, stacktrace-parser@^0.1.10:
   version "0.1.10"
