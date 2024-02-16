@@ -3479,9 +3479,9 @@
   integrity sha512-/rpzSG6VkDo+s/vr9Vz+94zNARrwsuDaqghQQlQ5aHlRR3TR+O8ikOF/hMYDV14k7ksOnvbBZ8lsq970kX23lw==
 
 "@unkey/nextjs@^0.15.0":
-  version "0.15.0"
-  resolved "https://registry.yarnpkg.com/@unkey/nextjs/-/nextjs-0.15.0.tgz#cbd39f8180d9107d024f192a7d008b0c77508692"
-  integrity sha512-LeDUKoxv3RExt/3FdRmCwzVJytJK5yg4ISxaZQhsG8BmQgQo+ftaA2bQ1WAS/DAyQXeZpJRnIzMODUZKW+IBEA==
+  version "0.15.1"
+  resolved "https://registry.yarnpkg.com/@unkey/nextjs/-/nextjs-0.15.1.tgz#05575d79eb5aa8152ecc0db780a81106182ee783"
+  integrity sha512-7Uyq2kkwi8TXRlCKMVbWys6Yjk3yqWL7vt+lE/VSZhPFBZ97TvaS6tTLARO8AIvio9mJq54v5FMAwAMZo9abAQ==
   dependencies:
     "@unkey/api" "^0.17.0"
 
