@@ -12,11 +12,13 @@ export const UserNavPopover = ({
   userFullname,
   userEmail,
   userId,
+  appAdminSidebarLink,
 }: {
   avatarUrl: string;
   userFullname: string;
   userEmail: string;
   userId: string;
+  appAdminSidebarLink: React.ReactNode;
 }) => {
   return (
     <>
@@ -49,6 +51,7 @@ export const UserNavPopover = ({
             userEmail={userEmail}
             userFullName={userFullname}
             userAvatarUrl={avatarUrl}
+            appAdminSidebarLink={appAdminSidebarLink}
           />
         </PopoverContent>
       </Popover>

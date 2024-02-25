@@ -1,13 +1,14 @@
+import { SidebarLink } from '@/components/SidebarLink';
 import { fetchSlimOrganizations } from '@/data/user/organizations';
 import { getSlimProjectById } from '@/data/user/projects';
+import { cn } from '@/utils/cn';
 import ArrowLeftIcon from 'lucide-react/dist/esm/icons/arrow-left';
 import ProjectIcon from 'lucide-react/dist/esm/icons/layers';
 import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
 import { Suspense } from 'react';
-import { OrganizationSwitcher } from './OrganizationSwitcher';
-import { SidebarFallback } from './SidebarFallback';
-import { SidebarLink } from './SidebarLink';
-import { SidebarLogo } from './SidebarLogo';
+import { OrganizationSwitcher } from './_components/OrganizationSwitcher';
+import { DesktopSidebarFallback } from './_components/SidebarFallback';
+import { SidebarLogoAndToggle } from './_components/SidebarLogo';
 
 async function ProjectSidebarInternal({ projectId }: { projectId: string }) {
   const [slimOrganizations, project] = await Promise.all([
@@ -17,47 +18,50 @@ async function ProjectSidebarInternal({ projectId }: { projectId: string }) {
   const organizationId = project.organization_id;
 
   return (
-    <div className="flex flex-col space-y-2 h-full w-[264px] border-r dark:border-gray-700/50 select-none">
-      <div className="flex flex-col px-3 py-4 pt-2.5 justify-between h-full">
-        <div>
-          <SidebarLogo />
-          <div className="flex flex-col">
+    <div
+      className={cn(
+        'flex flex-col justify-between h-full',
+        'lg:px-3 lg:py-4 lg:pt-2.5 ',
+      )}
+    >
+      <div>
+        <SidebarLogoAndToggle />
+        <div className="flex flex-col">
+          <SidebarLink
+            label="Back to organization"
+            href={`/organization/${organizationId}`}
+            icon={<ArrowLeftIcon className="h-5 w-5" />}
+          />
+          {project.team_id && (
             <SidebarLink
-              label="Back to organization"
-              href={`/organization/${organizationId}`}
+              label="Back to team"
+              href={`/organization/${organizationId}/team/${project.team_id}`}
               icon={<ArrowLeftIcon className="h-5 w-5" />}
             />
-            {project.team_id && (
-              <SidebarLink
-                label="Back to team"
-                href={`/organization/${organizationId}/team/${project.team_id}`}
-                icon={<ArrowLeftIcon className="h-5 w-5" />}
-              />
-            )}
-            <SidebarLink
-              label="Project Home"
-              href={`/project/${projectId}`}
-              icon={<ProjectIcon className="h-5 w-5" />}
-            />
-            <SidebarLink
-              label="Project Settings"
-              href={`/project/${projectId}/settings`}
-              icon={<SettingsIcon className="h-5 w-5" />}
-            />
-          </div>
+          )}
+          <SidebarLink
+            label="Project Home"
+            href={`/project/${projectId}`}
+            icon={<ProjectIcon className="h-5 w-5" />}
+          />
+          <SidebarLink
+            label="Project Settings"
+            href={`/project/${projectId}/settings`}
+            icon={<SettingsIcon className="h-5 w-5" />}
+          />
         </div>
-        <OrganizationSwitcher
-          currentOrganizationId={organizationId}
-          slimOrganizations={slimOrganizations}
-        />
       </div>
+      <OrganizationSwitcher
+        currentOrganizationId={organizationId}
+        slimOrganizations={slimOrganizations}
+      />
     </div>
   );
 }
 
 export async function ProjectSidebar({ projectId }: { projectId: string }) {
   return (
-    <Suspense fallback={<SidebarFallback />}>
+    <Suspense fallback={<DesktopSidebarFallback />}>
       <ProjectSidebarInternal projectId={projectId} />
     </Suspense>
   );

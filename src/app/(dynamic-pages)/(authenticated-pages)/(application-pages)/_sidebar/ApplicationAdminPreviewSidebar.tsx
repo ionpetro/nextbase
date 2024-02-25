@@ -1,3 +1,5 @@
+import { SidebarLink } from '@/components/SidebarLink';
+import { cn } from '@/utils/cn';
 import ActivityLogIcon from 'lucide-react/dist/esm/icons/book';
 import BriefcaseIcon from 'lucide-react/dist/esm/icons/briefcase';
 import FileLineChart from 'lucide-react/dist/esm/icons/file-line-chart';
@@ -7,8 +9,7 @@ import RoadMapIcon from 'lucide-react/dist/esm/icons/map';
 import PenToolIcon from 'lucide-react/dist/esm/icons/pen-tool';
 import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
 import UsersIcon from 'lucide-react/dist/esm/icons/users';
-import { SidebarLink } from './SidebarLink';
-import { SidebarLogo } from './SidebarLogo';
+import { SidebarLogoAndToggle } from './_components/SidebarLogo';
 
 const links = [
   {
@@ -61,21 +62,24 @@ const links = [
 
 export function ApplicationAdminPreviewSidebar() {
   return (
-    <div className="h-full w-[264px] border-r dark:border-gray-700/50 select-none">
-      <div className="flex flex-col px-3 py-4 pt-2.5 justify-start h-full">
-        <SidebarLogo />
-        <div className="h-full">
-          {links.map((link) => {
-            return (
-              <SidebarLink
-                key={link.href}
-                label={link.label}
-                href={link.href}
-                icon={link.icon}
-              />
-            );
-          })}
-        </div>
+    <div
+      className={cn(
+        'flex flex-col justify-between h-full',
+        'lg:px-3 lg:py-4 lg:pt-2.5 ',
+      )}
+    >
+      <SidebarLogoAndToggle />
+      <div className="h-full">
+        {links.map((link) => {
+          return (
+            <SidebarLink
+              key={link.href}
+              label={link.label}
+              href={link.href}
+              icon={link.icon}
+            />
+          );
+        })}
       </div>
     </div>
   );

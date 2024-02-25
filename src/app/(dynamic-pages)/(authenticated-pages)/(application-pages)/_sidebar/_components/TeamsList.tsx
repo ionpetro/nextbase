@@ -1,9 +1,6 @@
-import { T } from '@/components/ui/Typography';
-import { SidebarLink } from './SidebarLink';
-import TeamIcon from 'lucide-react/dist/esm/icons/users-2';
-import { z } from 'zod';
-import { AppSupabaseClient } from '@/types';
+import { SidebarLink } from '@/components/SidebarLink';
 import { getTeamsInOrganization } from '@/data/user/teams';
+import TeamIcon from 'lucide-react/dist/esm/icons/users-2';
 
 export async function TeamsList({
   organizationId,

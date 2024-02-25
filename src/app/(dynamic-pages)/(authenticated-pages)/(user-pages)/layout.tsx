@@ -14,7 +14,9 @@ export default async function Layout({
     <ApplicationLayoutShell sidebar={<UserSidebar />}>
       <div>
         <InternalNavbar>
-          <Suspense>{navbar}</Suspense>
+          <div className="hidden lg:flex w-full justify-between items-center">
+            <Suspense>{navbar}</Suspense>
+          </div>
         </InternalNavbar>
         <div className="relative flex-1 h-auto mt-6 w-full overflow-auto">
           <div className="px-6 space-y-6 pb-10">{children}</div>
