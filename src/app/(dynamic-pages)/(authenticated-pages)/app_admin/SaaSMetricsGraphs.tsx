@@ -5,7 +5,7 @@ import {
   BarChart,
   BarList,
   DonutChart,
-  LineChart
+  LineChart,
 } from '@tremor/react';
 const valueFormatter = (number: number) =>
   `$ ${Intl.NumberFormat('us').format(number).toString()}`;
@@ -63,7 +63,7 @@ export function SaaSMetricsGraphs({
   return (
     <div className="flex flex-col space-y-2 mt-12 ">
       <p className="text-2xl font-bold mb-2">Admin Analytics</p>
-      <div className="grid grid-cols-2 grid-flow-row auto-rows-max w-full gap-10 ">
+      <div className="grid grid-cols-1 md:grid-cols-2 grid-flow-row auto-rows-max w-full gap-10 ">
         <GraphContainer
           title="Monthly Churn Rate"
           subTitle="Monthly recurring revenue"
@@ -114,7 +114,7 @@ export function SaaSMetricsGraphs({
         <p className="text-2xl mt-10 mb-2 font-bold">All Stats</p>
       </div>
 
-      <div className="grid grid-cols-3 grid-flow-row auto-rows-max gap-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 grid-flow-row auto-rows-max gap-10">
         <GraphContainer
           title="Organizations by month"
           subTitle="Number of organizations"
