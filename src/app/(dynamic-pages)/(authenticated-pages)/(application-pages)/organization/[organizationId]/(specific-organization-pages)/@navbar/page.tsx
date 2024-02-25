@@ -1,5 +1,6 @@
 // https://github.com/vercel/next.js/issues/58272
 import { T } from '@/components/ui/Typography';
+import { Badge } from '@/components/ui/badge';
 import { getOrganizationTitle } from '@/data/user/organizations';
 import UsersIcon from 'lucide-react/dist/esm/icons/users-2';
 import Link from 'next/link';
@@ -28,9 +29,9 @@ async function Title({ organizationId }: { organizationId: string }) {
     <div className="flex items-center gap-2">
       <UsersIcon className="w-4 h-4" />
       <T.P>{title}</T.P>
-      <div className="flex items-center gap-2 p-0.5 px-2 rounded-full text-xs font-normal  text-gray-600 dark:text-slate-300 border border-gray-600 dark:border-slate-300  uppercase ">
+      <Badge variant="outline" className="hidden lg:inline-flex">
         Organization
-      </div>
+      </Badge>
     </div>
   );
 }
