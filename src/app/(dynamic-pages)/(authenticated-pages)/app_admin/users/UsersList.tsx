@@ -5,6 +5,7 @@ import {
   Table as ShadcnTable,
   TableBody,
   TableCell,
+  TableHead,
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
@@ -24,18 +25,18 @@ export async function UserList({
 }) {
   const users = await getPaginatedUserList(filters);
   return (
-    <div className="space-y-2 border" style={{ overflowX: 'auto' }}>
+    <div className="space-y-2 border">
       <ShadcnTable>
         <TableHeader>
           <TableRow>
-            <TableCell>Full Name</TableCell>
-            <TableCell>Email</TableCell>
-            <TableCell>Admin</TableCell>
-            <TableCell>Created At</TableCell>
-            <TableCell>Confirmed</TableCell>
-            <TableCell>Contact User</TableCell>
-            <TableCell>Send Login Link</TableCell>
-            <TableCell>Debug</TableCell>
+            <TableHead>Full Name</TableHead>
+            <TableHead>Email</TableHead>
+            <TableHead>Admin</TableHead>
+            <TableHead>Created At</TableHead>
+            <TableHead>Confirmed</TableHead>
+            <TableHead>Contact User</TableHead>
+            <TableHead>Send Login Link</TableHead>
+            <TableHead>Debug</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
