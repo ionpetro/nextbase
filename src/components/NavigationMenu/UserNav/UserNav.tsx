@@ -3,6 +3,8 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 import { getUserProfile } from '@/data/user/user';
 import { getUserAvatarUrl } from '@/utils/helpers';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
+import { Suspense } from 'react';
+import { AppAdminSidebarLink } from '../../AppAdminSidebarLink';
 import { UserNavPopover } from './UserNavPopover';
 
 export async function UserNav() {
@@ -27,6 +29,12 @@ export async function UserNav() {
         userFullname={userProfile.full_name ?? `User ${email}`}
         userEmail={email}
         userId={user.id}
+        appAdminSidebarLink={
+          <Suspense>
+            <div className="h-px bg-gray-200 dark:bg-gray-700  my-2" />
+            <AppAdminSidebarLink />
+          </Suspense>
+        }
       />
     </>
   );

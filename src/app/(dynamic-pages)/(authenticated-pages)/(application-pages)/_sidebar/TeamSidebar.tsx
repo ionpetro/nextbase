@@ -1,3 +1,4 @@
+import { SidebarLink } from '@/components/SidebarLink';
 import { SubscriptionCardSmall } from '@/components/SubscriptionCardSmall';
 import { T } from '@/components/ui/Typography';
 import { fetchSlimOrganizations } from '@/data/user/organizations';
@@ -9,7 +10,6 @@ import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
 import { Suspense } from 'react';
 import { OrganizationSwitcher } from './_components/OrganizationSwitcher';
 import { DesktopSidebarFallback } from './_components/SidebarFallback';
-import { SidebarLink } from './_components/SidebarLink';
 import { SidebarLogoAndToggle } from './_components/SidebarLogo';
 
 async function TeamSidebarInternal({ teamId }: { teamId: number }) {

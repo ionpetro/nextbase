@@ -1,3 +1,4 @@
+import { SidebarLink } from '@/components/SidebarLink';
 import { cn } from '@/utils/cn';
 import DeveloperIcon from 'lucide-react/dist/esm/icons/code';
 import FeedbackIcon from 'lucide-react/dist/esm/icons/file-question';
@@ -5,7 +6,6 @@ import HomeIcon from 'lucide-react/dist/esm/icons/home';
 import InvitationsIcon from 'lucide-react/dist/esm/icons/mail';
 import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
 import SecurityIcon from 'lucide-react/dist/esm/icons/shield';
-import { SidebarLink } from './_components/SidebarLink';
 import { SidebarLogoAndToggle } from './_components/SidebarLogo';
 
 export async function UserSidebar() {

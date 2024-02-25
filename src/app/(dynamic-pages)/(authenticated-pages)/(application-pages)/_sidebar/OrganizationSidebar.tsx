@@ -1,3 +1,4 @@
+import { SidebarItem, SidebarLink } from '@/components/SidebarLink';
 import { SimpleDialog } from '@/components/SimpleDialog';
 import { SubscriptionCardSmall } from '@/components/SubscriptionCardSmall';
 import { T } from '@/components/ui/Typography';
@@ -12,7 +13,7 @@ import { Suspense } from 'react';
 import { OrganizationSwitcher } from './_components/OrganizationSwitcher';
 import { OrganizationTeams } from './_components/OrganizationTeams';
 import { DesktopSidebarFallback } from './_components/SidebarFallback';
-import { SidebarItem, SidebarLink } from './_components/SidebarLink';
+
 import { SidebarLogoAndToggle } from './_components/SidebarLogo';
 
 async function OrganizationSidebarInternal({

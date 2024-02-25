@@ -1,3 +1,4 @@
+import { SidebarLink } from '@/components/SidebarLink';
 import { cn } from '@/utils/cn';
 import ActivityLogIcon from 'lucide-react/dist/esm/icons/book';
 import BriefcaseIcon from 'lucide-react/dist/esm/icons/briefcase';
@@ -8,7 +9,6 @@ import RoadMapIcon from 'lucide-react/dist/esm/icons/map';
 import PenToolIcon from 'lucide-react/dist/esm/icons/pen-tool';
 import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
 import UsersIcon from 'lucide-react/dist/esm/icons/users';
-import { SidebarLink } from './_components/SidebarLink';
 import { SidebarLogoAndToggle } from './_components/SidebarLogo';
 
 const links = [

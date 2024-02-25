@@ -6,16 +6,19 @@ import MailIcon from 'lucide-react/dist/esm/icons/mail';
 import AccountsIcon from 'lucide-react/dist/esm/icons/user';
 import Image from 'next/image';
 import Link from 'next/link';
+import { ReactNode } from 'react';
 import { FeatureViewModal } from './FeatureViewModal';
 
 export function UserSidebarMenu({
   userEmail,
   userFullName,
   userAvatarUrl,
+  appAdminSidebarLink,
 }: {
   userEmail: string;
   userFullName: string;
   userAvatarUrl: string;
+  appAdminSidebarLink: ReactNode;
 }) {
   return (
     <div className="dark:bg-black ">
@@ -80,6 +83,7 @@ export function UserSidebarMenu({
         <SecurityIcon className="text-lg" /> Security Settings
       </Link>
 
+      {appAdminSidebarLink}
       <div className="h-px bg-gray-200 dark:bg-gray-700  my-2" />
       <FeatureViewModal />
       <Link

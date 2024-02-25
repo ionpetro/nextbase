@@ -1,6 +1,6 @@
+import { SidebarLink } from '@/components/SidebarLink';
 import { getProjects } from '@/data/user/projects';
 import ProjectIcon from 'lucide-react/dist/esm/icons/layers';
-import { SidebarLink } from './SidebarLink';
 
 export async function ProjectsList({
   organizationId,

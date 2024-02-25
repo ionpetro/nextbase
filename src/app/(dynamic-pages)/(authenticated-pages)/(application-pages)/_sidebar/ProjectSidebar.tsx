@@ -1,3 +1,4 @@
+import { SidebarLink } from '@/components/SidebarLink';
 import { fetchSlimOrganizations } from '@/data/user/organizations';
 import { getSlimProjectById } from '@/data/user/projects';
 import { cn } from '@/utils/cn';
@@ -7,7 +8,6 @@ import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
 import { Suspense } from 'react';
 import { OrganizationSwitcher } from './_components/OrganizationSwitcher';
 import { DesktopSidebarFallback } from './_components/SidebarFallback';
-import { SidebarLink } from './_components/SidebarLink';
 import { SidebarLogoAndToggle } from './_components/SidebarLogo';
 
 async function ProjectSidebarInternal({ projectId }: { projectId: string }) {
