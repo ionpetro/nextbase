@@ -2136,9 +2136,9 @@
     type-fest "^2.19.0"
 
 "@remixicon/react@^4.1.1":
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/@remixicon/react/-/react-4.1.1.tgz#ccd1a1d85dda1a1b6d3f0f8ae204f1f37f1735f3"
-  integrity sha512-a2WSRfuv94OwSX2AK2IRhDEYAYxL0AOeF5+3boTILpC41e8Mp8ZJ7b2980ekOnJsnkcBofcHi4/GDR9cKTl/Bg==
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/@remixicon/react/-/react-4.2.0.tgz#9093ea394e288ee9a88d0613bd38739c728f02ac"
+  integrity sha512-eGhKpZ88OU0qkcY9pJu6khBmItDV82nU130E6C68yc+FbljueHlUYy/4CrJsmf860RIDMay2Rpzl27OSJ81miw==
 
 "@rollup/plugin-commonjs@24.0.0":
   version "24.0.0"
