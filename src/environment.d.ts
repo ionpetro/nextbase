@@ -14,7 +14,6 @@ declare global {
       NEXT_PUBLIC_SITE_URL?: string;
       SUPABASE_JWT_SECRET: string;
       STRIPE_WEBHOOK_SECRET: string;
-      STRIPE_WEBHOOK_SECRET_LIVE: string | undefined | null;
       ADMIN_EMAIL: string;
       NEXT_PUBLIC_SENTRY_DSN: string;
       NEXT_PUBLIC_POSTHOG_API_KEY: string;
