@@ -78,7 +78,6 @@ export default function HeroSection({
         <div className="lg:mt-0 lg:col-span-5 rounded-lg overflow-hidden h-[320px] md:h-[640px] md:w-full lg:flex">
           <Image
             src={imageSrc}
-            layout="responsive"
             width={640}
             height={960}
             alt="mockup"

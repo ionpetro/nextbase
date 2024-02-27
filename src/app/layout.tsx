@@ -10,6 +10,9 @@ export const metadata = {
   },
   title: 'Nextbase Ultimate',
   description: 'Nextbase Ultimate',
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ?? `https://usenextbase.com`,
+  ),
 };
 
 export default async function RootLayout({
