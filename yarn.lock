@@ -3438,12 +3438,7 @@
   resolved "https://registry.yarnpkg.com/@ungap/structured-clone/-/structured-clone-1.2.0.tgz#756641adb587851b5ccb3e095daf27ae581c8406"
   integrity sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==
 
-"@unkey/api@^0.17.0":
-  version "0.17.0"
-  resolved "https://registry.yarnpkg.com/@unkey/api/-/api-0.17.0.tgz#4afc84b0ac093cd6d7ebaa86c691d5f877477a52"
-  integrity sha512-/rpzSG6VkDo+s/vr9Vz+94zNARrwsuDaqghQQlQ5aHlRR3TR+O8ikOF/hMYDV14k7ksOnvbBZ8lsq970kX23lw==
-
-"@unkey/api@^0.19.2":
+"@unkey/api@^0.19.0", "@unkey/api@^0.19.2":
   version "0.19.2"
   resolved "https://registry.yarnpkg.com/@unkey/api/-/api-0.19.2.tgz#1a66841901a6f4796c8c745b24b121a94beac9ad"
   integrity sha512-/n7Ymp0I7XcGQMujHpbkL57sXOk4+HlT0phGAT04LC6Av9c+JozfyvSVHIpTfx1HltTFq8rn5rbwlgDe0jXSZQ==

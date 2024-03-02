@@ -67,7 +67,7 @@
     "@tiptap/suggestion": "^2.0.3",
     "@tremor/react": "^3.6.5",
     "@types/mdx": "^2.0.5",
-    "@unkey/api": "^0.17.0",
+    "@unkey/api": "^0.19.0",
     "@unkey/nextjs": "^0.15.0",
     "@vercel/analytics": "^1.0.1",
     "ai": "^2.1.20",
