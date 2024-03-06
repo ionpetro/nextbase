@@ -1,3 +1,4 @@
+import { ProFeatureGateDialog } from '@/components/ProFeatureGateDialog';
 import { SidebarLink } from '@/components/SidebarLink';
 import { SubscriptionCardSmall } from '@/components/SubscriptionCardSmall';
 import { T } from '@/components/ui/Typography';
@@ -5,6 +6,7 @@ import { fetchSlimOrganizations } from '@/data/user/organizations';
 import { getSlimTeamById } from '@/data/user/teams';
 import { cn } from '@/utils/cn';
 import ArrowLeftIcon from 'lucide-react/dist/esm/icons/arrow-left';
+import FileBoxIcon from 'lucide-react/dist/esm/icons/file-box';
 import TeamIcon from 'lucide-react/dist/esm/icons/folder';
 import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
 import { Suspense } from 'react';
@@ -43,6 +45,13 @@ async function TeamSidebarInternal({ teamId }: { teamId: number }) {
             href={`/organization/${organizationId}/team/${teamId}`}
             icon={<SettingsIcon className="h-5 w-5" />}
           />
+          <Suspense>
+            <ProFeatureGateDialog
+              organizationId={organizationId}
+              label="Feature Pro"
+              icon={<FileBoxIcon className="h-5 w-5" />}
+            />
+          </Suspense>
         </div>
       </div>
       <div className="flex flex-col gap-4">

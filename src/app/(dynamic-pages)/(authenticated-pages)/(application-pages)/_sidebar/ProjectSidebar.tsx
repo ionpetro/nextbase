@@ -1,8 +1,10 @@
+import { ProFeatureGateDialog } from '@/components/ProFeatureGateDialog';
 import { SidebarLink } from '@/components/SidebarLink';
 import { fetchSlimOrganizations } from '@/data/user/organizations';
 import { getSlimProjectById } from '@/data/user/projects';
 import { cn } from '@/utils/cn';
 import ArrowLeftIcon from 'lucide-react/dist/esm/icons/arrow-left';
+import FileBoxIcon from 'lucide-react/dist/esm/icons/file-box';
 import ProjectIcon from 'lucide-react/dist/esm/icons/layers';
 import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
 import { Suspense } from 'react';
@@ -49,6 +51,13 @@ async function ProjectSidebarInternal({ projectId }: { projectId: string }) {
             href={`/project/${projectId}/settings`}
             icon={<SettingsIcon className="h-5 w-5" />}
           />
+          <Suspense>
+            <ProFeatureGateDialog
+              organizationId={organizationId}
+              label="Feature Pro"
+              icon={<FileBoxIcon className="h-5 w-5" />}
+            />
+          </Suspense>
         </div>
       </div>
       <OrganizationSwitcher
