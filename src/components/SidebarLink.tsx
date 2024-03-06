@@ -42,10 +42,9 @@ export function SidebarLink({ label, href, icon, isPro }: SidebarLinkProps) {
 type SidebarItemProps = {
   label: string;
   icon: JSX.Element;
-  isPro?: boolean;
 };
 
-export function SidebarItem({ label, icon, isPro }: SidebarItemProps) {
+export function SidebarItem({ label, icon }: SidebarItemProps) {
   return (
     <div
       key={label}
@@ -55,11 +54,6 @@ export function SidebarItem({ label, icon, isPro }: SidebarItemProps) {
       <T.P className="p-2 w-full text-sm group-hover:text-foreground ">
         {label}
       </T.P>
-      {isPro && (
-        <T.P className="text-xs rounded-md px-2 py-1 uppercase font-medium bg-muted text-foreground ">
-          Pro
-        </T.P>
-      )}
     </div>
   );
 }
