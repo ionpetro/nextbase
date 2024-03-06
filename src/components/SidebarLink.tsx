@@ -10,10 +10,9 @@ type SidebarLinkProps = {
   label: string;
   href: string;
   icon: JSX.Element;
-  isPro?: boolean;
 };
 
-export function SidebarLink({ label, href, icon, isPro }: SidebarLinkProps) {
+export function SidebarLink({ label, href, icon }: SidebarLinkProps) {
   const { setVisibility } = useContext(SidebarVisibilityContext);
   const isMobile = useMatchMedia(MOBILE_MEDIA_QUERY_MATCHER);
 
@@ -30,11 +29,6 @@ export function SidebarLink({ label, href, icon, isPro }: SidebarLinkProps) {
       >
         {label}
       </Link>
-      {isPro && (
-        <T.P className="text-xs rounded-md px-2 py-1 uppercase font-medium bg-muted text-foreground ">
-          Pro
-        </T.P>
-      )}
     </div>
   );
 }
