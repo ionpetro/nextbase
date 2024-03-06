@@ -19,11 +19,9 @@ export function SidebarLink({ label, href, icon }: SidebarLinkProps) {
   return (
     <div
       key={href}
-      className="text-gray-500 hover:cursor-pointer dark:text-slate-400 rounded-md hover:bg-gray-100 dark:hover:bg-slate-800 group w-full flex items-center"
+      className=" hover:cursor-pointer hover:text-foreground text-muted-foreground rounded-md hover:bg-accent group w-full flex items-center pr-2"
     >
-      <div className="p-2 group-hover:text-gray-800 dark:group-hover:text-slate-300">
-        {icon}
-      </div>
+      <div className="p-2 group-hover:text-foreground">{icon}</div>
       <Link
         onClick={() => isMobile && setVisibility(false)}
         className="p-2 w-full text-sm group-hover:text-gray-800 dark:group-hover:text-slate-300"
@@ -44,12 +42,10 @@ export function SidebarItem({ label, icon }: SidebarItemProps) {
   return (
     <div
       key={label}
-      className="text-gray-500 hover:cursor-pointer dark:text-slate-400 rounded-md hover:bg-gray-100 dark:hover:bg-slate-800 group w-full flex items-center"
+      className=" hover:cursor-pointer hover:text-foreground text-muted-foreground rounded-md hover:bg-accent group w-full flex items-center pr-2"
     >
-      <div className="p-2 group-hover:text-gray-800 dark:group-hover:text-slate-300">
-        {icon}
-      </div>
-      <T.P className="p-2 w-full text-sm group-hover:text-gray-800 dark:group-hover:text-slate-300">
+      <div className="p-2 group-hover:text-foreground">{icon}</div>
+      <T.P className="p-2 w-full text-sm group-hover:text-foreground ">
         {label}
       </T.P>
     </div>

@@ -5,6 +5,7 @@ import { T } from '@/components/ui/Typography';
 import { fetchSlimOrganizations } from '@/data/user/organizations';
 import { cn } from '@/utils/cn';
 import DollarIcon from 'lucide-react/dist/esm/icons/dollar-sign';
+import FileBoxIcon from 'lucide-react/dist/esm/icons/file-box';
 import TeamsIcon from 'lucide-react/dist/esm/icons/folders';
 import HomeIcon from 'lucide-react/dist/esm/icons/home';
 import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
@@ -14,6 +15,7 @@ import { OrganizationSwitcher } from './_components/OrganizationSwitcher';
 import { OrganizationTeams } from './_components/OrganizationTeams';
 import { DesktopSidebarFallback } from './_components/SidebarFallback';
 
+import { ProFeatureGateDialog } from '@/components/ProFeatureGateDialog';
 import { SidebarLogoAndToggle } from './_components/SidebarLogo';
 
 async function OrganizationSidebarInternal({
@@ -57,6 +59,13 @@ async function OrganizationSidebarInternal({
               href={`/organization/${organizationId}/settings/billing`}
               icon={<DollarIcon className="h-5 w-5" />}
             />
+            <Suspense>
+              <ProFeatureGateDialog
+                organizationId={organizationId}
+                label="Feature Pro"
+                icon={<FileBoxIcon className="h-5 w-5" />}
+              />
+            </Suspense>
             <Suspense>
               <SimpleDialog
                 trigger={
