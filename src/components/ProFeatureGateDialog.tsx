@@ -62,7 +62,7 @@ export function ProFeatureGateDialog({
                         className="absolute inset-0 w-full h-full flex place-content-center"
                     >
                         <Image
-                            src="/assets/feature-pro.png"
+                            src="/assets/feature-pro.jpeg"
                             alt="Feature Pro"
                             fill
                             className="z-10"
