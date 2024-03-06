@@ -51,7 +51,16 @@ export function SignUp({
         setSuccessMessage('A confirmation link has been sent to your email!');
       },
       loadingMessage: 'Creating account...',
-      errorMessage: 'Failed to create account',
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          } else return 'Create account failed ' + String(error);
+        } catch (_err) {
+          console.warn(_err);
+          return 'Create account failed ';
+        }
+      },
       successMessage: 'Account created!',
     },
   );
