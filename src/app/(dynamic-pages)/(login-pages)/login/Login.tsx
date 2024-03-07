@@ -7,7 +7,7 @@ import {
   signInWithPassword,
   signInWithProvider,
 } from '@/data/auth/auth';
-import { useToastMutation } from '@/hooks/useToastMutation';
+import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import { AuthProvider } from '@/types';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -31,7 +31,7 @@ export function Login({
       router.push('/auth/callback');
     }
   }
-  const magicLinkMutation = useToastMutation(
+  const magicLinkMutation = useSAToastMutation(
     async (email: string) => {
       return await signInWithMagicLink(email, next);
     },
@@ -50,7 +50,7 @@ export function Login({
       },
     },
   );
-  const passwordMutation = useToastMutation(
+  const passwordMutation = useSAToastMutation(
     async ({ email, password }: { email: string; password: string }) => {
       return await signInWithPassword(email, password);
     },
@@ -61,7 +61,8 @@ export function Login({
         try {
           if (error instanceof Error) {
             return String(error.message);
-          } else return 'Sign in account failed ' + String(error);
+          }
+          return `Sign in account failed ${String(error)}`;
         } catch (_err) {
           console.warn(_err);
           return 'Sign in account failed';
@@ -70,7 +71,7 @@ export function Login({
       successMessage: 'Logged in!',
     },
   );
-  const providerMutation = useToastMutation(
+  const providerMutation = useSAToastMutation(
     async (provider: AuthProvider) => {
       return signInWithProvider(provider, next);
     },

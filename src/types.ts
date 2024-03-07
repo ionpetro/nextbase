@@ -151,3 +151,13 @@ export type TeamMembersTableProps = {
   members: Array<TeamMemberRowProps>;
   organizationId: string;
 };
+
+export type ValidSAPayload<TData = undefined> =
+  | {
+      status: 'success';
+      data?: TData;
+    }
+  | {
+      status: 'error';
+      message: string;
+    };

@@ -7,7 +7,7 @@ import {
   signInWithProvider,
   signUp,
 } from '@/data/auth/auth';
-import { useToastMutation } from '@/hooks/useToastMutation';
+import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import { AuthProvider } from '@/types';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -23,7 +23,7 @@ export function SignUp({
 
   const router = useRouter();
 
-  const magicLinkMutation = useToastMutation(
+  const magicLinkMutation = useSAToastMutation(
     async (email: string) => {
       // since we can't use the onSuccess callback here to redirect from here
       // we pass on the `next` to the signInWithMagicLink function
@@ -42,7 +42,7 @@ export function SignUp({
       },
     },
   );
-  const passwordMutation = useToastMutation(
+  const passwordMutation = useSAToastMutation(
     async ({ email, password }: { email: string; password: string }) => {
       return await signUp(email, password);
     },
@@ -55,7 +55,8 @@ export function SignUp({
         try {
           if (error instanceof Error) {
             return String(error.message);
-          } else return 'Create account failed ' + String(error);
+          }
+          return `Create account failed ${String(error)}`;
         } catch (_err) {
           console.warn(_err);
           return 'Create account failed ';
@@ -64,7 +65,7 @@ export function SignUp({
       successMessage: 'Account created!',
     },
   );
-  const providerMutation = useToastMutation(
+  const providerMutation = useSAToastMutation(
     async (provider: AuthProvider) => {
       // since we can't use the onSuccess callback here to redirect from here
       // we pass on the `next` to the signInWithProvider function
