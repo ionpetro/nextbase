@@ -92,7 +92,7 @@ const baseDefaultValues: Partial<InternalBlogPostSchema> = {
 type CreateBlogFormProps = {
   mode: 'create';
   onSubmit: (
-    authorId: string,
+    authorId: string | undefined,
     data: TableInsertPayload<'internal_blog_posts'>,
     tagIds: number[],
   ) => Promise<unknown>;
@@ -101,7 +101,7 @@ type CreateBlogFormProps = {
 export type EditBlogFormProps = {
   mode: 'update';
   onSubmit: (
-    authorId: string,
+    authorId: string | undefined,
     postId: string,
     data: TableUpdatePayload<'internal_blog_posts'>,
     tagIds: number[],
@@ -189,6 +189,9 @@ export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
     );
 
   function onSubmit(data: InternalBlogPostSchema) {
+    if (!data.author_id) {
+      delete data.author_id;
+    }
     submitPostMutation(data);
   }
 

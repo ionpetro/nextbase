@@ -1,7 +1,7 @@
 'use server';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
-import { revalidatePath } from 'next/cache';
 import { TableInsertPayload, TableUpdatePayload } from '@/types';
+import { revalidatePath } from 'next/cache';
 
 export const deleteBlogPost = async (blogPostId: string) => {
   'use server';
@@ -62,11 +62,13 @@ export const createBlogPost = async (
     throw error;
   }
 
-  // assign to author
-  await supabaseAdminClient.from('internal_blog_author_posts').insert({
-    author_id: authorId,
-    post_id: data.id,
-  });
+  if (authorId) {
+    // assign to author
+    await supabaseAdminClient.from('internal_blog_author_posts').insert({
+      author_id: authorId,
+      post_id: data.id,
+    });
+  }
 
   await updateBlogTagRelationships(data.id, tagIds);
 

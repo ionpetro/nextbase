@@ -118,32 +118,34 @@ export const updateBlogPost = async (
     .eq('id', postId)
     .select('*')
     .single();
-
   if (error) {
     throw error;
   }
-
-  const { data: oldAuthors, error: oldAuthorsError } = await supabaseAdminClient
-    .from('internal_blog_author_posts')
-    .select('*')
-    .eq('post_id', postId);
-  if (oldAuthorsError) {
-    throw oldAuthorsError;
-  }
-
-  for (const oldAuthor of oldAuthors) {
-    const { error: deleteError } = await supabaseAdminClient
-      .from('internal_blog_author_posts')
-      .delete()
-      .eq('author_id', oldAuthor.author_id)
-      .eq('post_id', postId);
-    if (deleteError) {
-      throw deleteError;
+  if (authorId) {
+    const { data: oldAuthors, error: oldAuthorsError } =
+      await supabaseAdminClient
+        .from('internal_blog_author_posts')
+        .select('*')
+        .eq('post_id', postId);
+    if (oldAuthorsError) {
+      throw oldAuthorsError;
     }
+
+    for (const oldAuthor of oldAuthors) {
+      const { error: deleteError } = await supabaseAdminClient
+        .from('internal_blog_author_posts')
+        .delete()
+        .eq('author_id', oldAuthor.author_id)
+        .eq('post_id', postId);
+      if (deleteError) {
+        throw deleteError;
+      }
+    }
+
+    // assign new author to the post
+    await assignBlogPostToAuthor(authorId, postId);
   }
 
-  // assign new author to the post
-  await assignBlogPostToAuthor(authorId, postId);
   await updateBlogTagRelationships(data.id, tagIds);
 
   revalidatePath('/');

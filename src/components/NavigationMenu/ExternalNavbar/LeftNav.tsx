@@ -76,7 +76,7 @@ export function LeftNav() {
       <DocsMobileNavigation />
       <div className="flex space-x-8">
         <Link href="/" className={cn('font-bold text-xl ')}>
-          <div className="relative flex space-x-2 w-10 h-10 md:w-fit items-center justify-center text-black dark:text-white dark:-ml-4 -ml-2">
+          <div className="relative flex space-x-2 h-10 md:w-fit items-center justify-center text-black dark:text-white dark:-ml-4 -ml-2">
             <Image
               src={acmeLightLogo}
               width={40}
@@ -91,6 +91,7 @@ export function LeftNav() {
               alt="logo"
               className="hidden dark:block h-8 w-8"
             />
+            <span className="lg:hidden font-bold">Nextbase Blog</span>
             <span className="hidden font-bold lg:inline-block">acme</span>
           </div>
         </Link>

@@ -3,9 +3,11 @@ import {
   anonGetPublishedBlogPosts,
 } from '@/data/anon/internalBlog';
 
+import { T } from '@/components/ui/Typography';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { z } from 'zod';
+import AuthorCard from '../AuthorCard';
 
 const paramsSchema = z.object({
   slug: z.string(),
@@ -64,6 +66,16 @@ export default async function BlogPostPage({ params }: { params: unknown }) {
           <h1>{post.title}</h1>
           <div dangerouslySetInnerHTML={{ __html: post.content }}></div>
         </div>
+        {post?.internal_blog_author_posts[0]?.internal_blog_author_profiles ? (
+          <>
+            <T.H1 className="pb-4">Author</T.H1>
+            <AuthorCard
+              author={
+                post.internal_blog_author_posts[0].internal_blog_author_profiles
+              }
+            />
+          </>
+        ) : null}
       </div>
     );
   } catch (error) {

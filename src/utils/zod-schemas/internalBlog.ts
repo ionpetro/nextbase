@@ -20,7 +20,7 @@ export const internalBlogPostSchema = z.object({
   is_featured: z.boolean(),
   status: z.enum(['draft', 'published']),
   cover_image: z.string().optional(),
-  author_id: z.string(),
+  author_id: z.string().optional(),
   tag_ids: z.array(z.number()),
 });
 

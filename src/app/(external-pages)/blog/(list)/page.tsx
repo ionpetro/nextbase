@@ -1,11 +1,11 @@
 import { T } from '@/components/ui/Typography';
-import { PublicBlogList } from '../PublicBlogList';
-import { TagsNav } from '../TagsNav';
-import { Suspense } from 'react';
 import {
   anonGetAllBlogTags,
   anonGetPublishedBlogPosts,
 } from '@/data/anon/internalBlog';
+import { Suspense } from 'react';
+import { PublicBlogList } from '../PublicBlogList';
+import { TagsNav } from '../TagsNav';
 
 export const metadata = {
   title: 'Blog List | Nextbase',

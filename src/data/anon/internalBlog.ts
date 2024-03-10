@@ -135,10 +135,23 @@ export const anonGetAllBlogPosts = async (
   return data;
 };
 
-export const anonGetAllAuthors = async (supabaseClient: AppSupabaseClient) => {
+export const anonGetAllAuthors = async () => {
   const { data, error } = await supabaseAnonClient
     .from('internal_blog_author_profiles')
     .select('*');
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};
+
+export const anonGetOneAuthor = async (userId: string) => {
+  const { data, error } = await supabaseAnonClient
+    .from('internal_blog_author_profiles')
+    .select('*')
+    .eq('user_id', userId);
 
   if (error) {
     throw error;

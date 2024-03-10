@@ -40,29 +40,29 @@ async function ActionButtons() {
         deleteBlogTag={deleteBlogTag}
         updateBlogTag={updateBlogTag}
       />
-      {authors.length ? (
-        <Link href="/app_admin/blog/post/create">
-          <Button variant="default">
-            <PenSquareIcon className="w-6 h-6 mr-2" /> Create blog post
-          </Button>
-        </Link>
-      ) : null}
+      {/* {authors.length ? ( */}
+      <Link href="/app_admin/blog/post/create">
+        <Button variant="default">
+          <PenSquareIcon className="w-6 h-6 mr-2" /> Create blog post
+        </Button>
+      </Link>
+      {/* ) : null} */}
     </div>
   );
 }
 
-async function NoAuthorShoutout() {
-  const authors = await getAllAuthors();
-  return (
-    <>
-      {authors.length ? null : (
-        <T.Subtle>
-          You need to create an author profile before you can write a blog post
-        </T.Subtle>
-      )}
-    </>
-  );
-}
+// async function NoAuthorShoutout() {
+//   const authors = await getAllAuthors();
+//   return (
+//     <>
+//       {authors.length ? null : (
+//         <T.Subtle>
+//           You need to create an author profile before you can write a blog post
+//         </T.Subtle>
+//       )}
+//     </>
+//   );
+// }
 
 export default function BlogListPage() {
   return (
@@ -78,9 +78,9 @@ export default function BlogListPage() {
                 <ActionButtons />
               </Suspense>
             </div>
-            <Suspense>
+            {/* <Suspense>
               <NoAuthorShoutout />
-            </Suspense>
+            </Suspense> */}
           </div>
           <div className="w-full">
             <Suspense fallback={<p>Loading...</p>}>

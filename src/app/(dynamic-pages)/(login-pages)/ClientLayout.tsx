@@ -19,16 +19,11 @@ export function ClientLayout({ children }: { children: ReactNode }) {
       <div className="row-auto">
         <MaintenanceModeBanner />
       </div>
-      <div
-        className="grid"
-        style={{
-          gridTemplateColumns: '1fr 1fr',
-        }}
-      >
+      <div className="grid grid-cols-1 lg:grid-cols-2">
         <div className="text-center flex flex-col items-center justify-center space-y-8 h-screen">
           <div>{children}</div>
         </div>
-        <div className="relative p-3">
+        <div className="relative p-3 hidden lg:block">
           {/* Background Overlay */}
 
           {/* Blue Background Image */}
@@ -61,7 +56,7 @@ export function ClientLayout({ children }: { children: ReactNode }) {
                 <Image width="600" src={LoginHeader} alt="Login Header" />
               </div>
 
-              <div className=" w-[640px]">
+              <div className="xl:w-[640px]">
                 <T.H3 className=" tracking-tight">
                   <p className="text-6xl -ml-4 mb-0 leading-none">＂</p>
                   We are now able to ship our product quicker, allowing us to
