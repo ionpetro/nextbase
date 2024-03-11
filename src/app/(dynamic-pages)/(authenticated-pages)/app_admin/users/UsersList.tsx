@@ -14,6 +14,7 @@ import { format } from 'date-fns';
 import CheckIcon from 'lucide-react/dist/esm/icons/check';
 import MailIcon from 'lucide-react/dist/esm/icons/mail';
 import CloseIcon from 'lucide-react/dist/esm/icons/x';
+import Link from 'next/link';
 import { Suspense } from 'react';
 import { ConfirmSendLoginLinkDialog } from './ConfirmSendLoginLinkDialog';
 import { GetLoginLinkDialog } from './GetLoginLinkDialog';
@@ -43,7 +44,9 @@ export async function UserList({
           {users.map((user) => (
             <TableRow key={user.id}>
               <TableCell> {user.full_name ?? '-'} </TableCell>
-              <TableCell>{user.email}</TableCell>
+              <TableCell>
+                <Link href={`/app_admin/users/${user.id}`}>{user.email}</Link>
+              </TableCell>
               <TableCell>
                 {user.is_app_admin ? (
                   <CheckIcon className="text-green-500 dark:text-green-400" />

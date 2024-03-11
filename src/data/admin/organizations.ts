@@ -45,3 +45,42 @@ export async function getPaginatedOrganizationList({
   }
   return data;
 }
+
+export async function getSlimOrganizationsOfUser(userId: string) {
+  const { data: organizations, error: organizationsError } =
+    await supabaseAdminClient
+      .from('organization_members')
+      .select('*')
+      .eq('member_id', userId);
+
+  if (organizationsError) {
+    throw organizationsError;
+  }
+
+  const { data, error } = await supabaseAdminClient
+    .from('organizations')
+    .select('id,title')
+    .in(
+      'id',
+      organizations.map((org) => org.organization_id),
+    )
+    .order('created_at', {
+      ascending: false,
+    });
+  if (error) {
+    throw error;
+  }
+
+  const combinedData = data.map((org) => {
+    const organization = organizations.find(
+      (organization) => organization.organization_id === org.id,
+    );
+    if (!organization) throw new Error('Organization not found');
+    return {
+      ...org,
+      member_role: organization?.member_role,
+    };
+  });
+
+  return combinedData;
+}

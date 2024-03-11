@@ -1,4 +1,5 @@
 'use client';
+import { PageHeading } from '@/components/PageHeading';
 import { UpdateAvatarAndNameBody } from '@/components/UpdateAvatarAndName';
 import {
   updateUserProfileNameAndAvatar,
@@ -8,6 +9,7 @@ import { useToastMutation } from '@/hooks/useToastMutation';
 import { Table } from '@/types';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { ConfirmDeleteAccountDialog } from './ConfirmDeleteAccountDialog';
 
 export function AccountSettings({
   userProfile,
@@ -68,24 +70,35 @@ export function AccountSettings({
   );
 
   return (
-    <div className="max-w-2xl">
-      <UpdateAvatarAndNameBody
-        onSubmit={(fullName: string) => {
-          mutate({
-            fullName,
-            avatarUrl,
-          });
-        }}
-        onFileUpload={(file: File) => {
-          upload(file);
-        }}
-        isNewAvatarImageLoading={isNewAvatarImageLoading}
-        setIsNewAvatarImageLoading={setIsNewAvatarImageLoading}
-        isUploading={isUploading}
-        isLoading={isLoading ?? isUploading}
-        profileAvatarUrl={avatarUrl ?? undefined}
-        profileFullname={userProfile.full_name ?? undefined}
-      />
+    <div className="max-w-sm">
+      <div className="space-y-16">
+        <UpdateAvatarAndNameBody
+          onSubmit={(fullName: string) => {
+            mutate({
+              fullName,
+              avatarUrl,
+            });
+          }}
+          onFileUpload={(file: File) => {
+            upload(file);
+          }}
+          isNewAvatarImageLoading={isNewAvatarImageLoading}
+          setIsNewAvatarImageLoading={setIsNewAvatarImageLoading}
+          isUploading={isUploading}
+          isLoading={isLoading ?? isUploading}
+          profileAvatarUrl={avatarUrl ?? undefined}
+          profileFullname={userProfile.full_name ?? undefined}
+        />
+        <div className="space-y-2">
+          <PageHeading
+            title="Danger zone"
+            titleClassName="text-xl"
+            subTitleClassName="text-base -mt-1"
+            subTitle="Delete your account. This action is irreversible. All your data will be lost."
+          />
+          <ConfirmDeleteAccountDialog onDeleteConfirm={() => { }} />
+        </div>
+      </div>
     </div>
   );
 }
