@@ -22,4 +22,11 @@ SELECT TO authenticated USING (
     )
   );
 
-  DROP TRIGGER on_auth_user_created_create_team ON auth.users;
+
+DROP TRIGGER on_auth_user_created_create_team ON auth.users;
+DROP TRIGGER on_organization_created_create_owner ON public.organizations;
+
+
+-- Drop a function
+DROP FUNCTION IF EXISTS public.handle_create_owner_on_organization_creation();
+DROP FUNCTION IF EXISTS public.handle_create_organization_for_auth_user();
