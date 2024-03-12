@@ -21,3 +21,5 @@ SELECT TO authenticated USING (
       )
     )
   );
+
+  DROP TRIGGER on_auth_user_created_create_team ON auth.users;
