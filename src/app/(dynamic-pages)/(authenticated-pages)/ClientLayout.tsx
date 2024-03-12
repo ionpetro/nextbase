@@ -1,6 +1,5 @@
 'use client';
 
-import { MaintenanceModeBanner } from '@/components/MaintenanceModeBanner';
 import PostHogProvider from '@/contexts/PostHogProvider';
 import { Table } from '@/types';
 import dynamic from 'next/dynamic';
@@ -42,7 +41,6 @@ export function ClientLayout({
   return (
     <PostHogProvider>
       <div className="flex overflow-y-auto flex-col h-full w-full">
-        <MaintenanceModeBanner />
         <div className="flex h-full">
           <div className="flex-1 h-auto overflow-auto">
             <div className="space-y-10">{children}</div>

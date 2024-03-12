@@ -6,7 +6,7 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
-export interface Database {
+export type Database = {
   public: {
     Tables: {
       app_admins: {
@@ -71,7 +71,7 @@ export interface Database {
             isOneToOne: false
             referencedRelation: "organizations"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       internal_blog_author_posts: {
@@ -101,7 +101,7 @@ export interface Database {
             isOneToOne: false
             referencedRelation: "internal_blog_posts"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       internal_blog_author_profiles: {
@@ -151,7 +151,7 @@ export interface Database {
             isOneToOne: true
             referencedRelation: "user_profiles"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       internal_blog_post_tags: {
@@ -202,7 +202,7 @@ export interface Database {
             isOneToOne: false
             referencedRelation: "internal_blog_post_tags"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       internal_blog_posts: {
@@ -279,7 +279,7 @@ export interface Database {
             isOneToOne: false
             referencedRelation: "user_profiles"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       internal_feedback_comments: {
@@ -321,7 +321,7 @@ export interface Database {
             isOneToOne: false
             referencedRelation: "user_profiles"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       internal_feedback_threads: {
@@ -371,7 +371,7 @@ export interface Database {
             isOneToOne: false
             referencedRelation: "user_profiles"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       organization_credits: {
@@ -441,7 +441,7 @@ export interface Database {
             isOneToOne: false
             referencedRelation: "organizations"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       organization_members: {
@@ -480,37 +480,26 @@ export interface Database {
             isOneToOne: false
             referencedRelation: "organizations"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       organizations: {
         Row: {
           created_at: string
-          created_by: string
           id: string
           title: string
         }
         Insert: {
           created_at?: string
-          created_by: string
           id?: string
           title?: string
         }
         Update: {
           created_at?: string
-          created_by?: string
           id?: string
           title?: string
         }
-        Relationships: [
-          {
-            foreignKeyName: "organizations_created_by_fkey"
-            columns: ["created_by"]
-            isOneToOne: false
-            referencedRelation: "user_profiles"
-            referencedColumns: ["id"]
-          }
-        ]
+        Relationships: []
       }
       organizations_private_info: {
         Row: {
@@ -535,7 +524,7 @@ export interface Database {
             isOneToOne: true
             referencedRelation: "organizations"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       prices: {
@@ -585,7 +574,7 @@ export interface Database {
             isOneToOne: false
             referencedRelation: "products"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       products: {
@@ -647,7 +636,7 @@ export interface Database {
             isOneToOne: false
             referencedRelation: "user_profiles"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       projects: {
@@ -663,7 +652,7 @@ export interface Database {
         Insert: {
           created_at?: string
           id?: string
-          name?: string
+          name: string
           organization_id: string
           project_status?: Database["public"]["Enums"]["project_status"]
           team_id?: number | null
@@ -746,61 +735,8 @@ export interface Database {
             isOneToOne: false
             referencedRelation: "prices"
             referencedColumns: ["id"]
-          }
+          },
         ]
-      }
-      team_members: {
-        Row: {
-          created_at: string | null
-          id: number
-          role: Database["public"]["Enums"]["project_team_member_role"]
-          team_id: number
-          user_id: string
-        }
-        Insert: {
-          created_at?: string | null
-          id?: number
-          role?: Database["public"]["Enums"]["project_team_member_role"]
-          team_id: number
-          user_id: string
-        }
-        Update: {
-          created_at?: string | null
-          id?: number
-          role?: Database["public"]["Enums"]["project_team_member_role"]
-          team_id?: number
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "team_members_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "user_profiles"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
-      teams: {
-        Row: {
-          created_at: string | null
-          id: number
-          name: string
-          organization_id: string
-        }
-        Insert: {
-          created_at?: string | null
-          id?: number
-          name: string
-          organization_id: string
-        }
-        Update: {
-          created_at?: string | null
-          id?: number
-          name?: string
-          organization_id?: string
-        }
-        Relationships: []
       }
       user_api_keys: {
         Row: {
@@ -837,7 +773,7 @@ export interface Database {
           is_seen: boolean
           payload: Json
           updated_at: string
-          user_id: string
+          user_id: string | null
         }
         Insert: {
           created_at?: string
@@ -846,7 +782,7 @@ export interface Database {
           is_seen?: boolean
           payload?: Json
           updated_at?: string
-          user_id: string
+          user_id?: string | null
         }
         Update: {
           created_at?: string
@@ -855,7 +791,7 @@ export interface Database {
           is_seen?: boolean
           payload?: Json
           updated_at?: string
-          user_id?: string
+          user_id?: string | null
         }
         Relationships: [
           {
@@ -864,7 +800,7 @@ export interface Database {
             isOneToOne: false
             referencedRelation: "user_profiles"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       user_private_info: {
@@ -904,7 +840,7 @@ export interface Database {
             isOneToOne: true
             referencedRelation: "users"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       user_profiles: {
@@ -940,7 +876,7 @@ export interface Database {
             isOneToOne: true
             referencedRelation: "users"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
     }
@@ -1085,17 +1021,6 @@ export interface Database {
           user_id: string
         }[]
       }
-      get_app_admin_organizations_created_per_month: {
-        Args: Record<PropertyKey, never>
-        Returns: {
-          month: string
-          number_of_organizations: number
-        }[]
-      }
-      get_executing_role_name: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
       get_invited_organizations_for_user_v2: {
         Args: {
           user_id: string
@@ -1113,19 +1038,12 @@ export interface Database {
           member_id: string
         }[]
       }
-      get_organization_id_by_team_id:
-        | {
-            Args: {
-              p_id: number
-            }
-            Returns: string
-          }
-        | {
-            Args: {
-              p_id: number
-            }
-            Returns: string
-          }
+      get_organization_id_by_team_id: {
+        Args: {
+          p_id: number
+        }
+        Returns: string
+      }
       get_organization_id_for_project_id: {
         Args: {
           project_id: string
@@ -1148,43 +1066,11 @@ export interface Database {
           organization_id: string
         }[]
       }
-      get_project_admins_by_team_id: {
-        Args: {
-          team_id: number
-        }
-        Returns: {
-          user_id: string
-        }[]
-      }
-      get_project_members_by_team_id: {
-        Args: {
-          team_id: number
-        }
-        Returns: {
-          user_id: string
-        }[]
-      }
-      get_team_admins_by_team_id: {
-        Args: {
-          team_id: number
-        }
-        Returns: {
-          user_id: string
-        }[]
-      }
       get_team_id_for_project_id: {
         Args: {
           project_id: string
         }
         Returns: number
-      }
-      get_team_members_team_id: {
-        Args: {
-          team_id: number
-        }
-        Returns: {
-          user_id: string
-        }[]
       }
       increment_credits: {
         Args: {
@@ -1212,10 +1098,6 @@ export interface Database {
           user_id: string
         }
         Returns: undefined
-      }
-      test_role: {
-        Args: Record<PropertyKey, never>
-        Returns: string
       }
     }
     Enums: {
@@ -1260,16 +1142,197 @@ export interface Database {
       [_ in never]: never
     }
   }
+  storage: {
+    Tables: {
+      buckets: {
+        Row: {
+          allowed_mime_types: string[] | null
+          avif_autodetection: boolean | null
+          created_at: string | null
+          file_size_limit: number | null
+          id: string
+          name: string
+          owner: string | null
+          owner_id: string | null
+          public: boolean | null
+          updated_at: string | null
+        }
+        Insert: {
+          allowed_mime_types?: string[] | null
+          avif_autodetection?: boolean | null
+          created_at?: string | null
+          file_size_limit?: number | null
+          id: string
+          name: string
+          owner?: string | null
+          owner_id?: string | null
+          public?: boolean | null
+          updated_at?: string | null
+        }
+        Update: {
+          allowed_mime_types?: string[] | null
+          avif_autodetection?: boolean | null
+          created_at?: string | null
+          file_size_limit?: number | null
+          id?: string
+          name?: string
+          owner?: string | null
+          owner_id?: string | null
+          public?: boolean | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      migrations: {
+        Row: {
+          executed_at: string | null
+          hash: string
+          id: number
+          name: string
+        }
+        Insert: {
+          executed_at?: string | null
+          hash: string
+          id: number
+          name: string
+        }
+        Update: {
+          executed_at?: string | null
+          hash?: string
+          id?: number
+          name?: string
+        }
+        Relationships: []
+      }
+      objects: {
+        Row: {
+          bucket_id: string | null
+          created_at: string | null
+          id: string
+          last_accessed_at: string | null
+          metadata: Json | null
+          name: string | null
+          owner: string | null
+          owner_id: string | null
+          path_tokens: string[] | null
+          updated_at: string | null
+          version: string | null
+        }
+        Insert: {
+          bucket_id?: string | null
+          created_at?: string | null
+          id?: string
+          last_accessed_at?: string | null
+          metadata?: Json | null
+          name?: string | null
+          owner?: string | null
+          owner_id?: string | null
+          path_tokens?: string[] | null
+          updated_at?: string | null
+          version?: string | null
+        }
+        Update: {
+          bucket_id?: string | null
+          created_at?: string | null
+          id?: string
+          last_accessed_at?: string | null
+          metadata?: Json | null
+          name?: string | null
+          owner?: string | null
+          owner_id?: string | null
+          path_tokens?: string[] | null
+          updated_at?: string | null
+          version?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "objects_bucketId_fkey"
+            columns: ["bucket_id"]
+            isOneToOne: false
+            referencedRelation: "buckets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      can_insert_object: {
+        Args: {
+          bucketid: string
+          name: string
+          owner: string
+          metadata: Json
+        }
+        Returns: undefined
+      }
+      extension: {
+        Args: {
+          name: string
+        }
+        Returns: string
+      }
+      filename: {
+        Args: {
+          name: string
+        }
+        Returns: string
+      }
+      foldername: {
+        Args: {
+          name: string
+        }
+        Returns: unknown
+      }
+      get_size_by_bucket: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          size: number
+          bucket_id: string
+        }[]
+      }
+      search: {
+        Args: {
+          prefix: string
+          bucketname: string
+          limits?: number
+          levels?: number
+          offsets?: number
+          search?: string
+          sortcolumn?: string
+          sortorder?: string
+        }
+        Returns: {
+          name: string
+          id: string
+          updated_at: string
+          created_at: string
+          last_accessed_at: string
+          metadata: Json
+        }[]
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
 }
+
+type PublicSchema = Database[Extract<keyof Database, "public">]
 
 export type Tables<
   PublicTableNameOrOptions extends
-    | keyof (Database["public"]["Tables"] & Database["public"]["Views"])
+    | keyof (PublicSchema["Tables"] & PublicSchema["Views"])
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
     ? keyof (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
         Database[PublicTableNameOrOptions["schema"]]["Views"])
-    : never = never
+    : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
       Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
@@ -1277,67 +1340,68 @@ export type Tables<
     }
     ? R
     : never
-  : PublicTableNameOrOptions extends keyof (Database["public"]["Tables"] &
-      Database["public"]["Views"])
-  ? (Database["public"]["Tables"] &
-      Database["public"]["Views"])[PublicTableNameOrOptions] extends {
-      Row: infer R
-    }
-    ? R
+  : PublicTableNameOrOptions extends keyof (PublicSchema["Tables"] &
+        PublicSchema["Views"])
+    ? (PublicSchema["Tables"] &
+        PublicSchema["Views"])[PublicTableNameOrOptions] extends {
+        Row: infer R
+      }
+      ? R
+      : never
     : never
-  : never
 
 export type TablesInsert<
   PublicTableNameOrOptions extends
-    | keyof Database["public"]["Tables"]
+    | keyof PublicSchema["Tables"]
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
     ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
-    : never = never
+    : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Insert: infer I
     }
     ? I
     : never
-  : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
-  ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
-      Insert: infer I
-    }
-    ? I
+  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
+    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
+        Insert: infer I
+      }
+      ? I
+      : never
     : never
-  : never
 
 export type TablesUpdate<
   PublicTableNameOrOptions extends
-    | keyof Database["public"]["Tables"]
+    | keyof PublicSchema["Tables"]
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
     ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
-    : never = never
+    : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Update: infer U
     }
     ? U
     : never
-  : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
-  ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
-      Update: infer U
-    }
-    ? U
+  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
+    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
+        Update: infer U
+      }
+      ? U
+      : never
     : never
-  : never
 
 export type Enums<
   PublicEnumNameOrOptions extends
-    | keyof Database["public"]["Enums"]
+    | keyof PublicSchema["Enums"]
     | { schema: keyof Database },
   EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
     ? keyof Database[PublicEnumNameOrOptions["schema"]]["Enums"]
-    : never = never
+    : never = never,
 > = PublicEnumNameOrOptions extends { schema: keyof Database }
   ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
-  : PublicEnumNameOrOptions extends keyof Database["public"]["Enums"]
-  ? Database["public"]["Enums"][PublicEnumNameOrOptions]
-  : never
+  : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
+    ? PublicSchema["Enums"][PublicEnumNameOrOptions]
+    : never
+

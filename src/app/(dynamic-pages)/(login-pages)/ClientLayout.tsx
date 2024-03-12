@@ -1,6 +1,5 @@
 'use client';
 
-import { MaintenanceModeBanner } from '@/components/MaintenanceModeBanner';
 import { T } from '@/components/ui/Typography';
 import Image from 'next/image';
 import LoginHeader from 'public/assets/login-asset-dashboard.png';
@@ -13,12 +12,9 @@ export function ClientLayout({ children }: { children: ReactNode }) {
     <div
       className="grid h-full dark:bg-gray-900/20"
       style={{
-        gridTemplateRows: 'auto 1fr',
+        gridTemplateRows: ' 1fr',
       }}
     >
-      <div className="row-auto">
-        <MaintenanceModeBanner />
-      </div>
       <div className="grid grid-cols-1 lg:grid-cols-2">
         <div className="text-center flex flex-col items-center justify-center space-y-8 h-screen">
           <div>{children}</div>
