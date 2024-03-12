@@ -24,33 +24,6 @@ export type Database = {
         }
         Relationships: []
       }
-      app_settings: {
-        Row: {
-          id: number
-          maintenance_message: string | null
-          maintenance_status:
-            | Database["public"]["Enums"]["maintenance_status"]
-            | null
-          scheduled_maintenance_ends_at: string | null
-        }
-        Insert: {
-          id?: number
-          maintenance_message?: string | null
-          maintenance_status?:
-            | Database["public"]["Enums"]["maintenance_status"]
-            | null
-          scheduled_maintenance_ends_at?: string | null
-        }
-        Update: {
-          id?: number
-          maintenance_message?: string | null
-          maintenance_status?:
-            | Database["public"]["Enums"]["maintenance_status"]
-            | null
-          scheduled_maintenance_ends_at?: string | null
-        }
-        Relationships: []
-      }
       customers: {
         Row: {
           organization_id: string
@@ -1007,14 +980,6 @@ export type Database = {
         }
         Returns: undefined
       }
-      disable_maintenance_mode: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      enable_maintenance_mode: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
       get_all_app_admins: {
         Args: Record<PropertyKey, never>
         Returns: {
@@ -1079,14 +1044,6 @@ export type Database = {
         }
         Returns: undefined
       }
-      is_app_in_maintenance_mode: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
-      }
-      is_app_not_in_maintenance_mode: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
-      }
       make_user_app_admin: {
         Args: {
           user_id: string
@@ -1112,7 +1069,6 @@ export type Database = {
         | "in_progress"
         | "completed"
       internal_feedback_thread_type: "bug" | "feature_request" | "general"
-      maintenance_status: "inactive" | "active" | "scheduled"
       organization_join_invitation_link_status:
         | "active"
         | "finished_accepted"

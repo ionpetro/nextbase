@@ -1,5 +1,4 @@
 import { PageHeading } from '@/components/PageHeading';
-import { MaintenanceModeTogglePreview } from '../../app_admin/settings/MaintenanceModeTogglePreview';
 
 export default async function AdminPanelSettingsPreview() {
   return (
@@ -10,9 +9,7 @@ export default async function AdminPanelSettingsPreview() {
       You can build components similar to Retool and make them available to
       your administrators to quickly act and solve issues for your users."
       ></PageHeading>
-      <div>
-        <MaintenanceModeTogglePreview />
-      </div>
+      <div></div>
     </div>
   );
 }

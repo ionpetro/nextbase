@@ -6,7 +6,6 @@ import { Database } from '@/lib/database.types';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 import { DBFunction } from '@/types';
 import Stripe from 'stripe';
-import { errors } from './errors';
 import { toDateTime } from './helpers';
 import { stripe } from './stripe';
 
@@ -300,33 +299,10 @@ export const getOrganizationsPaginated = async (
   return [pageNumber, data];
 };
 
-export const enableMaintenanceMode = async () => {
-  const { data, error } = await supabaseAdminClient
-    .rpc('enable_maintenance_mode')
-    .single();
-
-  if (error) {
-    errors.add(error.message);
-    throw error;
-  }
-
-  return data;
-};
-
-export const disableMaintenanceMode = async () => {
-  const { data, error } = await supabaseAdminClient
-    .rpc('disable_maintenance_mode')
-    .single();
-
-  if (error) {
-    errors.add(error.message);
-    throw error;
-  }
-
-  return data;
-};
-
 export {
   createOrRetrieveCustomer,
-  manageSubscriptionStatusChange, upsertPriceRecord, upsertProductRecord
+  manageSubscriptionStatusChange,
+  upsertPriceRecord,
+  upsertProductRecord
 };
+
