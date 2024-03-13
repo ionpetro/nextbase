@@ -1,6 +1,6 @@
 'use server';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
-import { ensureAppAdmin } from '@/utils/route-handlers/ensureAppAdmin';
+import { ensureAppAdmin } from './security';
 
 export async function getOrganizationsTotalPages({
   query = '',

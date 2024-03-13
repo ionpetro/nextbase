@@ -1,6 +1,6 @@
-import { NextRequest } from 'next/server';
-import { ensureAppAdmin } from '@/utils/route-handlers/ensureAppAdmin';
+import { ensureAppAdmin } from '@/data/admin/security';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
+import { NextRequest } from 'next/server';
 
 export async function POST(request: NextRequest) {
   await ensureAppAdmin();

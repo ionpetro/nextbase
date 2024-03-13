@@ -9,21 +9,6 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      app_admins: {
-        Row: {
-          role: Database["public"]["Enums"]["app_admin_role"] | null
-          user_id: string
-        }
-        Insert: {
-          role?: Database["public"]["Enums"]["app_admin_role"] | null
-          user_id: string
-        }
-        Update: {
-          role?: Database["public"]["Enums"]["app_admin_role"] | null
-          user_id?: string
-        }
-        Relationships: []
-      }
       customers: {
         Row: {
           organization_id: string
@@ -804,13 +789,6 @@ export type Database = {
             foreignKeyName: "user_private_info_id_fkey"
             columns: ["id"]
             isOneToOne: true
-            referencedRelation: "app_admin_all_users"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "user_private_info_id_fkey"
-            columns: ["id"]
-            isOneToOne: true
             referencedRelation: "users"
             referencedColumns: ["id"]
           },
@@ -840,35 +818,40 @@ export type Database = {
             foreignKeyName: "user_profiles_id_fkey"
             columns: ["id"]
             isOneToOne: true
-            referencedRelation: "app_admin_all_users"
+            referencedRelation: "users"
             referencedColumns: ["id"]
           },
+        ]
+      }
+      user_roles: {
+        Row: {
+          id: number
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: number
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: number
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: [
           {
-            foreignKeyName: "user_profiles_id_fkey"
-            columns: ["id"]
-            isOneToOne: true
-            referencedRelation: "users"
+            foreignKeyName: "user_roles_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
             referencedColumns: ["id"]
           },
         ]
       }
     }
     Views: {
-      app_admin_all_users: {
-        Row: {
-          avatar_url: string | null
-          confirmed_at: string | null
-          created_at: string | null
-          email: string | null
-          full_name: string | null
-          id: string | null
-          is_app_admin: boolean | null
-          is_confirmed: boolean | null
-          last_sign_in_at: string | null
-          updated_at: string | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
       app_admin_get_all_organizations: {
@@ -973,6 +956,12 @@ export type Database = {
         }
         Returns: boolean
       }
+      custom_access_token_hook: {
+        Args: {
+          event: Json
+        }
+        Returns: Json
+      }
       decrement_credits: {
         Args: {
           org_id: string
@@ -1059,6 +1048,7 @@ export type Database = {
     }
     Enums: {
       app_admin_role: "moderator" | "admin" | "super_admin"
+      app_role: "admin"
       internal_blog_post_status: "draft" | "published"
       internal_feedback_thread_priority: "low" | "medium" | "high"
       internal_feedback_thread_status:

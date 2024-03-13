@@ -3,23 +3,16 @@ import { createSupabaseUserServerActionClient } from '@/supabase-clients/user/cr
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
 import { SupabaseFileUploadOptions, Table } from '@/types';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
-import { User } from '@supabase/supabase-js';
 import { revalidatePath } from 'next/cache';
 import slugify from 'slugify';
 import urlJoin from 'url-join';
 
-export async function getIsAppAdmin(authUser: User): Promise<boolean> {
-  const supabaseClient = createSupabaseUserServerComponentClient();
-  const { data: isUserAppAdmin, error } = await supabaseClient
-    .rpc('check_if_user_is_app_admin', {
-      user_id: authUser.id,
-    })
-    .single();
-  if (error) {
-    throw error;
+export async function getIsAppAdmin(): Promise<boolean> {
+  const user = await serverGetLoggedInUser();
+  if ('user_role' in user) {
+    return user.user_role === 'admin';
   }
-
-  return isUserAppAdmin;
+  return false;
 }
 
 export const getUserProfile = async (

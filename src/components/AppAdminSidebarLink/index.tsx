@@ -1,10 +1,10 @@
-import { isLoggedInUserAppAdmin } from '@/data/admin/security';
+import { getIsAppAdmin } from '@/data/user/user';
 import { cn } from '@/utils/cn';
 import ServerIcon from 'lucide-react/dist/esm/icons/server';
 import Link from 'next/link';
 
 export async function AppAdminSidebarLink() {
-  const isUserAppAdmin = await isLoggedInUserAppAdmin();
+  const isUserAppAdmin = await getIsAppAdmin();
   return (
     <>
       {isUserAppAdmin ? (

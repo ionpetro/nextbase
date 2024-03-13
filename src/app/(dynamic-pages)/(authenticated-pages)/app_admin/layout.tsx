@@ -3,7 +3,6 @@ import { InternalNavbar } from '@/components/NavigationMenu/InternalNavbar';
 import { Alert } from '@/components/ui/alert';
 import { getIsAppAdmin } from '@/data/user/user';
 import { errors } from '@/utils/errors';
-import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import { redirect } from 'next/navigation';
 import { Suspense } from 'react';
 import { ApplicationAdminSidebar } from '../(application-pages)/_sidebar/ApplicationAdminSidebar';
@@ -11,8 +10,7 @@ import { ApplicationAdminSidebar } from '../(application-pages)/_sidebar/Applica
 export const revalidate = 0;
 
 async function fetchData() {
-  const user = await serverGetLoggedInUser();
-  const [isUserAppAdmin] = await Promise.all([getIsAppAdmin(user)]);
+  const [isUserAppAdmin] = await Promise.all([getIsAppAdmin()]);
 
   return { isUserAppAdmin };
 }
