@@ -3453,11 +3453,11 @@
   integrity sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==
 
 "@unkey/api@^0.19.0", "@unkey/api@^0.19.2":
-  version "0.19.2"
-  resolved "https://registry.yarnpkg.com/@unkey/api/-/api-0.19.2.tgz#1a66841901a6f4796c8c745b24b121a94beac9ad"
-  integrity sha512-/n7Ymp0I7XcGQMujHpbkL57sXOk4+HlT0phGAT04LC6Av9c+JozfyvSVHIpTfx1HltTFq8rn5rbwlgDe0jXSZQ==
+  version "0.19.3"
+  resolved "https://registry.yarnpkg.com/@unkey/api/-/api-0.19.3.tgz#c965f470d148052e12c2853cc54f14dd5fad8d2c"
+  integrity sha512-OSskwhK0OG0w6uKjp8sgRzOPjyx5j9+B0d+TV20UcSFha9PCaNnSR0QCUfW56zM3v887a1O1gcjt+zsCO6SNTQ==
   dependencies:
-    "@unkey/rbac" "^0.1.10"
+    "@unkey/rbac" "^0.1.11"
 
 "@unkey/nextjs@^0.15.0":
   version "0.15.5"
@@ -3466,10 +3466,10 @@
   dependencies:
     "@unkey/api" "^0.19.2"
 
-"@unkey/rbac@^0.1.10":
-  version "0.1.10"
-  resolved "https://registry.yarnpkg.com/@unkey/rbac/-/rbac-0.1.10.tgz#ac66496789b11d40c72d32af7600a6fa637ed841"
-  integrity sha512-7oPPFeoFL2ljo+hu47YMis7DBxYRA59WsldnpPfD7Gz/tJU7B3ZZHJBa19+NxCXyUH3m2Klbvn/FG10r+ypvpw==
+"@unkey/rbac@^0.1.11":
+  version "0.1.11"
+  resolved "https://registry.yarnpkg.com/@unkey/rbac/-/rbac-0.1.11.tgz#ca17592a070874cd2663b713bcc66f4f4bbd3abb"
+  integrity sha512-S1XkX6rrynW6t6qTZpJd5yxpj9FxsSuZzqKDJBMYsJD1AJXOKBEE0dPqlq/g5nmz/fd2q5hjDEBp7m1s3wPFtQ==
   dependencies:
     zod "^3.22.4"
     zod-error "^1.5.0"
