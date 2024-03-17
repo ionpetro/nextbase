@@ -3359,9 +3359,9 @@
   integrity sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==
 
 "@unkey/api@^0.19.0", "@unkey/api@^0.19.3":
-  version "0.19.3"
-  resolved "https://registry.yarnpkg.com/@unkey/api/-/api-0.19.3.tgz#c965f470d148052e12c2853cc54f14dd5fad8d2c"
-  integrity sha512-OSskwhK0OG0w6uKjp8sgRzOPjyx5j9+B0d+TV20UcSFha9PCaNnSR0QCUfW56zM3v887a1O1gcjt+zsCO6SNTQ==
+  version "0.19.4"
+  resolved "https://registry.yarnpkg.com/@unkey/api/-/api-0.19.4.tgz#a8742b9e506f10cc05b99a3021c8433661de7f6d"
+  integrity sha512-edACid6dwZYGlmoOIP4F6mmS1qDdn1CUfs9EnHu3kChrIoc4RXDrtJCDNPqOn2OrBZbqiFMa1ieOibKr2JMCYw==
   dependencies:
     "@unkey/rbac" "^0.1.11"
 
