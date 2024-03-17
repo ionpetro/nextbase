@@ -2,11 +2,8 @@
 import { createSupabaseUserServerActionClient } from '@/supabase-clients/user/createSupabaseUserServerActionClient';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
 import { Enum, NormalizedSubscription, Table, UnwrapPromise } from '@/types';
-import { toSiteURL } from '@/utils/helpers';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
-import { stripe } from '@/utils/stripe';
 import { revalidatePath } from 'next/cache';
-import { createOrRetrieveCustomer } from '../admin/stripe';
 
 export const createOrganization = async (name: string) => {
   const supabase = createSupabaseUserServerComponentClient();
@@ -253,120 +250,6 @@ export const getNormalizedOrganizationSubscription = async (
     };
   }
 };
-
-export async function createCustomerPortalLinkAction(organizationId: string) {
-  'use server';
-  const user = await serverGetLoggedInUser();
-  const supabaseClient = createSupabaseUserServerActionClient();
-  const { data, error } = await supabaseClient
-    .from('organizations')
-    .select('id, title')
-    .eq('id', organizationId)
-    .single();
-
-  if (error) {
-    throw error;
-  }
-
-  if (!data) {
-    throw new Error('Organization not found');
-  }
-
-  const customer = await createOrRetrieveCustomer({
-    organizationId: organizationId,
-    organizationTitle: data.title,
-    email: user.email || '',
-  });
-
-  if (!customer) throw Error('Could not get customer');
-  const { url } = await stripe.billingPortal.sessions.create({
-    customer,
-    return_url: toSiteURL(`/organization/${organizationId}/settings/billing`),
-  });
-
-  return url;
-}
-
-export async function createCheckoutSessionAction({
-  organizationId,
-  priceId,
-  isTrial = false,
-}: {
-  organizationId: string;
-  priceId: string;
-  isTrial?: boolean;
-}) {
-  'use server';
-  const TRIAL_DAYS = 14;
-  const user = await serverGetLoggedInUser();
-
-  const organizationTitle = await getOrganizationTitle(organizationId);
-
-  const customer = await createOrRetrieveCustomer({
-    organizationId: organizationId,
-    organizationTitle: organizationTitle,
-    email: user.email || '',
-  });
-  if (!customer) throw Error('Could not get customer');
-  if (isTrial) {
-    const stripeSession = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      billing_address_collection: 'required',
-      customer,
-      line_items: [
-        {
-          price: priceId,
-          quantity: 1,
-        },
-      ],
-      mode: 'subscription',
-      allow_promotion_codes: true,
-      subscription_data: {
-        trial_period_days: TRIAL_DAYS,
-        trial_settings: {
-          end_behavior: {
-            missing_payment_method: 'cancel',
-          },
-        },
-        metadata: {},
-      },
-      success_url: toSiteURL(
-        `/organization/${organizationId}/settings/billing`,
-      ),
-      cancel_url: toSiteURL(`/organization/${organizationId}/settings/billing`),
-    });
-
-    return stripeSession.id;
-  } else {
-    const stripeSession = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      billing_address_collection: 'required',
-      customer,
-      line_items: [
-        {
-          price: priceId,
-          quantity: 1,
-        },
-      ],
-      mode: 'subscription',
-      allow_promotion_codes: true,
-      subscription_data: {
-        trial_settings: {
-          end_behavior: {
-            missing_payment_method: 'cancel',
-          },
-        },
-      },
-      metadata: {},
-      success_url: toSiteURL(
-        `/organization/${organizationId}/settings/billing`,
-      ),
-      cancel_url: toSiteURL(`/organization/${organizationId}/settings/billing`),
-    });
-
-    return stripeSession.id;
-  }
-}
 
 export const getActiveProductsWithPrices = async () => {
   const supabase = createSupabaseUserServerComponentClient();

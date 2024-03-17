@@ -1,8 +1,8 @@
 import { T } from '@/components/ui/Typography';
-import { stripe } from '@/utils/stripe';
-import { SaaSMetrics } from './SaasMetrics';
-import { Suspense } from 'react';
+import { getMRR, getSubscriptions } from '@/lib/payments/paymentUtilsServer';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
+import { Suspense } from 'react';
+import { SaaSMetrics } from './SaasMetrics';
 
 async function getCurrentMRR() {
   const startOfMonth = new Date();
@@ -15,28 +15,12 @@ async function getCurrentMRR() {
     1,
   );
 
-  const subscriptions = await stripe.subscriptions.list({
-    created: {
-      gte: Math.floor(startOfMonth.getTime() / 1000),
-      lt: Math.floor(endOfMonth.getTime() / 1000),
-    },
-    status: 'all',
-  });
-
-  let mrr = 0;
-  subscriptions.data.forEach((sub) => {
-    if (sub.status === 'active' || sub.status === 'trialing') {
-      mrr +=
-        ((sub.items.data[0].price.unit_amount ?? 0) *
-          (sub.items.data[0].quantity ?? 0)) /
-        100;
-    }
-  });
+  const mrr = await getMRR(startOfMonth, endOfMonth);
 
   return mrr.toFixed(2);
 }
 
-async function getMRR() {
+async function _getMRR() {
   const startDate = new Date();
   startDate.setFullYear(startDate.getFullYear() - 1);
   startDate.setDate(1);
@@ -55,24 +39,7 @@ async function getMRR() {
       startDate.getMonth() + i + 1,
       1,
     );
-
-    const subscriptions = await stripe.subscriptions.list({
-      created: {
-        gte: Math.floor(startOfMonth.getTime() / 1000),
-        lt: Math.floor(endOfMonth.getTime() / 1000),
-      },
-      status: 'all',
-    });
-
-    let mrr = 0;
-    subscriptions.data.forEach((sub) => {
-      if (sub.status === 'active' || sub.status === 'trialing') {
-        mrr +=
-          ((sub.items.data[0].price.unit_amount ?? 0) *
-            (sub.items.data[0].quantity ?? 0)) /
-          100;
-      }
-    });
+    const mrr = await getMRR(startOfMonth, endOfMonth);
 
     monthlyMRR.push({
       month: startOfMonth.toLocaleDateString('en-US', {
@@ -109,13 +76,10 @@ async function getChurnRate() {
       1,
     );
 
-    const subscriptionsCreated = await stripe.subscriptions.list({
-      created: {
-        gte: Math.floor(startOfMonth.getTime() / 1000),
-        lt: Math.floor(endOfMonth.getTime() / 1000),
-      },
-      status: 'all',
-    });
+    const subscriptionsCreated = await getSubscriptions(
+      startOfMonth,
+      endOfMonth,
+    );
 
     const canceledSubscriptions = subscriptionsCreated.data.filter(
       (sub) => sub.status === 'canceled',
@@ -236,7 +200,7 @@ async function Metrics() {
     projectCountByMonth,
     userCountByMonth,
   ] = await Promise.all([
-    getMRR(),
+    _getMRR(),
     getChurnRate(),
     getOrganizationCountByMonth(),
     getProjectCountByMonth(),

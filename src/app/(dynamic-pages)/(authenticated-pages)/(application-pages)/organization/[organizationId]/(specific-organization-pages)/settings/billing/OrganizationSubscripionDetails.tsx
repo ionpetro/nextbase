@@ -2,7 +2,7 @@
 import { PageHeading } from '@/components/PageHeading';
 import { T } from '@/components/ui/Typography';
 import { getActiveProductsWithPrices } from '@/data/user/organizations';
-import { Enum, NormalizedSubscription, UnwrapPromise } from '@/types';
+import type { Enum, NormalizedSubscription, UnwrapPromise } from '@/types';
 import { cn } from '@/utils/cn';
 import { formatNormalizedSubscription } from '@/utils/formatNormalizedSubscription';
 import CheckIcon from 'lucide-react/dist/esm/icons/check';
@@ -17,27 +17,25 @@ function getProductsSortedByPrice(
   activeProducts: UnwrapPromise<ReturnType<typeof getActiveProductsWithPrices>>,
 ) {
   if (!activeProducts) return [];
-  const products = activeProducts
-    .map((product) => {
-      const prices = Array.isArray(product.prices)
-        ? product.prices
-        : [product.prices];
+  const products = activeProducts.flatMap((product) => {
+    const prices = Array.isArray(product.prices)
+      ? product.prices
+      : [product.prices];
 
-      const pricesForProduct = prices.map((price) => {
-        const priceString = new Intl.NumberFormat('en-US', {
-          style: 'currency',
-          currency: price?.currency ?? undefined,
-          minimumFractionDigits: 0,
-        }).format((price?.unit_amount || 0) / 100);
-        return {
-          ...product,
-          price,
-          priceString,
-        };
-      });
-      return pricesForProduct;
-    })
-    .flat();
+    const pricesForProduct = prices.map((price) => {
+      const priceString = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: price?.currency ?? undefined,
+        minimumFractionDigits: 0,
+      }).format((price?.unit_amount || 0) / 100);
+      return {
+        ...product,
+        price,
+        priceString,
+      };
+    });
+    return pricesForProduct;
+  });
 
   return products
     .sort((a, b) => (a?.price?.unit_amount ?? 0) - (b?.price?.unit_amount ?? 0))

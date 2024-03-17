@@ -1,11 +1,11 @@
-import { z } from 'zod';
-import { OrganizationSubscripionDetails } from './OrganizationSubscripionDetails';
+import { T } from '@/components/ui/Typography';
 import {
   getLoggedInUserOrganizationRole,
   getNormalizedOrganizationSubscription,
 } from '@/data/user/organizations';
 import { Suspense } from 'react';
-import { T } from '@/components/ui/Typography';
+import { z } from 'zod';
+import { OrganizationSubscripionDetails } from './OrganizationSubscripionDetails';
 
 const paramsSchema = z.object({
   organizationId: z.string(),
@@ -33,7 +33,7 @@ export default async function OrganizationSettingsPage({
   const { organizationId } = paramsSchema.parse(params);
   return (
     <Suspense fallback={<T.Subtle>Loading billing details...</T.Subtle>}>
-      <Subscription organizationId={organizationId} />;
+      <Subscription organizationId={organizationId} />
     </Suspense>
   );
 }
