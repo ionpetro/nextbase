@@ -32,7 +32,7 @@ export const ConfirmAcceptInvitationDialog = ({
   });
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
+      <DialogTrigger>
         <Button
           data-testid="dialog-accept-invitation-trigger"
           variant="default"

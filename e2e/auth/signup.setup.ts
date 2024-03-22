@@ -60,6 +60,18 @@ setup('create account', async ({ page }) => {
   const emailAddress = `${identifier}@myapp.com`
   // Perform authentication steps. Replace these actions with your own.
   await page.goto('/sign-up');
+
+
+
+
+  const magicLoginButton = await page.waitForSelector('button:has-text("Magic Link")');
+
+  if (!magicLoginButton) {
+    throw new Error("magicLoginButton not found");
+  }
+
+  await magicLoginButton.click();
+  
   await page.getByTestId('magic-link-form').locator('input').fill(emailAddress);
   // await page.getByLabel('Password').fill('password');
   await page.getByRole('button', { name: 'Sign up with Magic Link' }).click();

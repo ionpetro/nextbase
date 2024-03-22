@@ -3,7 +3,7 @@ import { Button } from '@/components/Button';
 import { T } from '@/components/ui/Typography';
 import { Label } from '@/components/ui/label';
 import { classNames } from '@/utils/classNames';
-import { PropsOf } from '@headlessui/react/dist/types';
+import type { PropsOf } from '@headlessui/react/dist/types';
 import { useState } from 'react';
 
 export const Password = ({

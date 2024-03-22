@@ -57,20 +57,7 @@ module.exports = {
       rules: srcRuleOverrides,
       files: ['e2e/**/*.ts'],
     },
-    {
-      extends: [
-        'eslint:recommended',
-        'plugin:@typescript-eslint/recommended',
-        'prettier',
-      ],
-      parser: '@typescript-eslint/parser',
-      parserOptions: {
-        project: tsConfigs,
-      },
-      plugins: ['@typescript-eslint', 'prettier'],
-      rules: srcRuleOverrides,
-      files: ['vitest.config.ts'],
-    },
+
     {
       extends: ['eslint:recommended', 'prettier'],
       files: '*.mjs',

@@ -1,14 +1,12 @@
 import { SIDEBAR_VISIBILITY_COOKIE_KEY } from '@/constants';
 import { LoggedInUserProvider } from '@/contexts/LoggedInUserContext';
 import { SidebarVisibilityProvider } from '@/contexts/SidebarVisibilityContext';
-import { getUserProfile } from '@/data/user/user';
+import { getOnboardingConditions } from '@/data/user/user';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
-import { AppSupabaseClient } from '@/types';
 import { errors } from '@/utils/errors';
-import { User } from '@supabase/supabase-js';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { ClientLayout } from './ClientLayout';
 
 function getSidebarVisibility() {
@@ -20,11 +18,6 @@ function getSidebarVisibility() {
   return true;
 }
 
-async function fetchData(supabaseClient: AppSupabaseClient, authUser: User) {
-  const [userProfile] = await Promise.all([getUserProfile(authUser.id)]);
-  return { userProfile };
-}
-
 export default async function Layout({ children }: { children: ReactNode }) {
   const supabaseClient = createSupabaseUserServerComponentClient();
   const { data, error } = await supabaseClient.auth.getUser(); // this will cause memory leak in client side
@@ -34,17 +27,22 @@ export default async function Layout({ children }: { children: ReactNode }) {
     // This is unreachable because the user is authenticated
     // But we need to check for it anyway for TypeScript.
     return redirect('/login');
-  } else if (error) {
+  }
+  if (error) {
     return <p>Error: An error occurred.</p>;
   }
 
   try {
-    const { userProfile } = await fetchData(supabaseClient, data.user);
     const sidebarVisibility = getSidebarVisibility();
+
+    const onboardingConditions = await getOnboardingConditions(user.id);
+
     return (
       <SidebarVisibilityProvider initialValue={sidebarVisibility}>
         <LoggedInUserProvider user={user}>
-          <ClientLayout userProfile={userProfile}>{children}</ClientLayout>
+          <ClientLayout onboardingConditions={onboardingConditions}>
+            {children}
+          </ClientLayout>
         </LoggedInUserProvider>
       </SidebarVisibilityProvider>
     );

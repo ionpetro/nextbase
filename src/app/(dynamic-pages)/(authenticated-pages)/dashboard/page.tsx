@@ -4,6 +4,7 @@ import {
   setDefaultOrganization,
 } from '@/data/user/organizations';
 import { notFound, redirect } from 'next/navigation';
+import { Suspense } from 'react';
 
 async function getOrganizationToRedirectTo(): Promise<string> {
   const [slimOrganizations, defaultOrganizationId] = await Promise.all([
@@ -25,7 +26,17 @@ async function getOrganizationToRedirectTo(): Promise<string> {
   return firstOrganization.id;
 }
 
-export default async function DashboardPage() {
+async function RedirectToDefaultOrg() {
   const firstOrganizationId = await getOrganizationToRedirectTo();
   return redirect(`/organization/${firstOrganizationId}`);
+}
+
+export default async function DashboardPage() {
+  return (
+    <>
+      <Suspense fallback={'Please wait...'}>
+        <RedirectToDefaultOrg />
+      </Suspense>
+    </>
+  );
 }

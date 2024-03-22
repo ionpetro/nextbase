@@ -1,11 +1,11 @@
-import { Table } from '@/types';
 import { T } from '@/components/ui/Typography';
 import { getInvitationById } from '@/data/user/invitation';
-import { z } from 'zod';
+import type { Table } from '@/types';
+import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
+import { z } from 'zod';
 import { ConfirmAcceptInvitationDialog } from './ConfirmAcceptInvitationDialog';
 import { ConfirmDeclineInvitationDialog } from './ConfirmDeclineInvitationDialog';
-import { notFound } from 'next/navigation';
 
 const paramsSchema = z.object({
   invitationId: z.string(),
@@ -48,6 +48,7 @@ async function Invitation({ invitationId }: { invitationId: string }) {
 
 export default async function InvitationPage({ params }: { params: unknown }) {
   const { invitationId } = paramsSchema.parse(params);
+
   return (
     <Suspense fallback={<T.Subtle>Loading...</T.Subtle>}>
       <Invitation invitationId={invitationId} />

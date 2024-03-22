@@ -1,7 +1,7 @@
 import { Button } from '@/components/Button';
 import { Label } from '@/components/ui/label';
 import { classNames } from '@/utils/classNames';
-import { PropsOf } from '@headlessui/react/dist/types';
+import type { PropsOf } from '@headlessui/react/dist/types';
 import Link from 'next/link';
 import { useState } from 'react';
 
@@ -30,7 +30,7 @@ export const EmailAndPassword = ({
     >
       <div className="space-y-4">
         <div>
-          <Label htmlFor="email" className="text-muted-foreground">
+          <Label htmlFor="email" className="text-foreground">
             Email address
           </Label>
           <div className="mt-1">
@@ -50,7 +50,7 @@ export const EmailAndPassword = ({
           </div>
         </div>
         <div className="space-y-1">
-          <Label htmlFor="password" className="text-muted-foreground">
+          <Label htmlFor="password" className="text-foreground">
             Password
           </Label>
           <div className="mt-1">
@@ -75,35 +75,15 @@ export const EmailAndPassword = ({
           {view === 'sign-in' ? (
             <div className="text-sm">
               <Link
-                href="/sign-up"
-                className="font-medium text-blue-600 dark:text-blue-400 hover:text-blue-500"
-              >
-                Sign up instead?
-              </Link>
-            </div>
-          ) : (
-            <div className="text-sm">
-              <Link
-                href="/login"
-                className="font-medium text-blue-600 dark:text-blue-400 hover:text-blue-500"
-              >
-                Login instead?
-              </Link>
-            </div>
-          )}
-
-          {view === 'sign-in' ? (
-            <div className="text-sm">
-              <Link
                 href="/forgot-password"
-                className="font-medium text-muted-foreground dark:hover:text-gray-600"
+                className="font-medium text-muted-foreground dark:hover:text-gray-600 hover:text-foreground"
               >
                 Forgot your password?
               </Link>
             </div>
           ) : null}
         </div>
-        <div>
+        <div className="space-y-2">
           {isLoading ? (
             <Button
               disabled
@@ -130,6 +110,27 @@ export const EmailAndPassword = ({
               {view === 'sign-in' ? 'Login' : 'Sign up'}
             </Button>
           )}
+          <div className="w-full text-center">
+            {view === 'sign-in' ? (
+              <div className="text-sm">
+                <Link
+                  href="/sign-up"
+                  className="font-medium text-muted-foreground hover:text-foreground"
+                >
+                  Don't have an account? Sign up
+                </Link>
+              </div>
+            ) : (
+              <div className="text-sm">
+                <Link
+                  href="/login"
+                  className="font-medium text-muted-foreground hover:text-foreground"
+                >
+                  Already have an account? Log in
+                </Link>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </form>

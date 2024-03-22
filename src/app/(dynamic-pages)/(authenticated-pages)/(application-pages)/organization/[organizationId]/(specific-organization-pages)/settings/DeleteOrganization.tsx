@@ -1,7 +1,6 @@
 'use client';
 import { T } from '@/components/ui/Typography';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 import {
   Dialog,
   DialogContent,
@@ -58,49 +57,47 @@ export const DeleteOrganization = ({
   return (
     <div className="space-y-4">
       <T.H3 className="dark:text-white">Danger Zone</T.H3>
-      <Card className="dark:border-red-500/40 p-6 flex justify-between text-sm border-red-300 max-w-3xl items-center">
-        <div>
-          <p className="font-bold">Delete your organization</p>
-          <p className="text-muted-foreground">
-            Once you delete an organization, there is no going back. Please be
-            certain.
-          </p>
-        </div>
+      <div>
+        <T.P>Delete your organization</T.P>
+        <T.Subtle>
+          Once you delete an organization, there is no going back. Please be
+          certain.
+        </T.Subtle>
+      </div>
 
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild>
-            <Button variant={'destructive'}>Delete Organization</Button>
-          </DialogTrigger>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger asChild>
+          <Button variant={'destructive'}>Delete Organization</Button>
+        </DialogTrigger>
 
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Delete Organization</DialogTitle>
-              <DialogDescription>
-                Type <strong> "delete {organizationTitle}" </strong>to confirm.
-              </DialogDescription>
-            </DialogHeader>
-            <form
-              className="flex flex-col gap-4"
-              onSubmit={handleSubmit(onSubmit)}
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Delete Organization</DialogTitle>
+            <DialogDescription>
+              Type <strong> "delete {organizationTitle}" </strong>to confirm.
+            </DialogDescription>
+          </DialogHeader>
+          <form
+            className="flex flex-col gap-4"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <Input type="text" {...register('organizationTitle')} />
+            {errors.organizationTitle && (
+              <p className="text-red-400 text-sm font-bold">
+                {errors.organizationTitle.message}
+              </p>
+            )}
+
+            <Button
+              type="submit"
+              variant="destructive"
+              className="w-fit self-end"
             >
-              <Input type="text" {...register('organizationTitle')} />
-              {errors.organizationTitle && (
-                <p className="text-red-400 text-sm font-bold">
-                  {errors.organizationTitle.message}
-                </p>
-              )}
-
-              <Button
-                type="submit"
-                variant="destructive"
-                className="w-fit self-end"
-              >
-                Delete Organization
-              </Button>
-            </form>
-          </DialogContent>
-        </Dialog>
-      </Card>
+              Delete Organization
+            </Button>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

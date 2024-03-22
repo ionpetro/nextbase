@@ -2,7 +2,7 @@
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 import { createSupabaseUserServerActionClient } from '@/supabase-clients/user/createSupabaseUserServerActionClient';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
-import { Enum } from '@/types';
+import type { Enum } from '@/types';
 import { sendEmail } from '@/utils/api-routes/utils';
 import { toSiteURL } from '@/utils/helpers';
 import { sendEmailInbucket } from '@/utils/sendEmailInbucket';
@@ -15,6 +15,7 @@ import {
   createAcceptedOrgInvitationNotification,
   createNotification,
 } from './notifications';
+import { getOrganizationById } from './organizations';
 import { getUserProfile } from './user';
 
 // This function allows an application admin with service_role
@@ -308,7 +309,16 @@ export async function getPendingInvitationsOfUser() {
       throw error;
     }
 
-    return data || [];
+    const organizationId = data[0].organization_id;
+
+    const organization = await getOrganizationById(organizationId);
+
+    return data.map((invitation) => {
+      return {
+        ...invitation,
+        organization: organization,
+      };
+    });
   }
 
   const idInvitationsData = await idInvitations(user.id);
@@ -325,14 +335,22 @@ export const getInvitationById = async (invitationId: string) => {
       '*, inviter:user_profiles!inviter_user_id(*), invitee:user_profiles!invitee_user_id(*), organization:organizations(*)',
     )
     .eq('id', invitationId)
-    .eq('status', 'active')
-    .single();
+    .eq('status', 'active');
 
   if (error) {
     throw error;
   }
 
-  return data;
+  const organizationId = data[0].organization_id;
+
+  const organization = await getOrganizationById(organizationId);
+
+  return data.map((invitation) => {
+    return {
+      ...invitation,
+      organization: organization,
+    };
+  })[0];
 };
 
 export async function getPendingInvitationCountOfUser() {

@@ -61,6 +61,14 @@ test('login works correctly', async ({ page }) => {
 
   await page.goto(`/login`);
 
+  const magicLinkButton = page.locator('button:has-text("Magic Link")');
+
+  if (!magicLinkButton) {
+    throw new Error('Magic Link button not found');
+  }
+
+  await magicLinkButton.click();
+
   if (!emailAddress) {
     throw new Error('Email is empty');
   }

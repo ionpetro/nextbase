@@ -1,3 +1,4 @@
+import { T } from '@/components/ui/Typography';
 import { Button } from '@/components/ui/button';
 import {
   Table as ShadcnTable,
@@ -7,9 +8,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { T } from '@/components/ui/Typography';
 import { getPendingInvitationsOfUser } from '@/data/user/invitation';
-import { Enum } from '@/types';
+import type { Enum } from '@/types';
 import Link from 'next/link';
 
 const PendingInvitationsTable = ({
@@ -83,6 +83,7 @@ export const PendingInvitationsList = async () => {
       if (!organization || !inviter) {
         throw new Error('Organization or Inviter not found');
       }
+
       return {
         id: invitation.id,
         inviterUserFullName: inviter.full_name ?? invitation.invitee_user_email,

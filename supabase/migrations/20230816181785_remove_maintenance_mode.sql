@@ -3,7 +3,7 @@ DROP POLICY IF EXISTS "All authenticated users can create organizations" ON "pub
 
 -- Recreate the policy without the maintenance mode check
 CREATE POLICY "All authenticated users can create organizations" ON "public"."organizations" FOR
-INSERT TO "authenticated";
+INSERT TO "authenticated" WITH CHECK (TRUE);
 
 
 -- Drop the existing policy

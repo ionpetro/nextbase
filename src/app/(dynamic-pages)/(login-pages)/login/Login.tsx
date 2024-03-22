@@ -3,12 +3,20 @@ import { Email } from '@/components/Auth/Email';
 import { EmailAndPassword } from '@/components/Auth/EmailAndPassword';
 import { RenderProviders } from '@/components/Auth/RenderProviders';
 import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import {
   signInWithMagicLink,
   signInWithPassword,
   signInWithProvider,
 } from '@/data/auth/auth';
 import { useSAToastMutation } from '@/hooks/useSAToastMutation';
-import { AuthProvider } from '@/types';
+import type { AuthProvider } from '@/types';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -37,16 +45,20 @@ export function Login({
     },
     {
       loadingMessage: 'Sending magic link...',
-      errorMessage: 'Failed to send magic link',
-      successMessage: 'Magic link sent!',
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Send magic link failed ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Send magic link failed ';
+        }
+      },
+      successMessage: 'A magic link has been sent to your email!',
       onSuccess: () => {
         setSuccessMessage('A magic link has been sent to your email!');
-      },
-      onError: (error) => {
-        console.log(error);
-      },
-      onMutate: () => {
-        setSuccessMessage(null);
       },
     },
   );
@@ -82,36 +94,72 @@ export function Login({
     },
   );
   return (
-    <div className="container h-full grid items-center text-left max-w-lg mx-auto overflow-auto">
+    <div className="container items-center text-left max-w-lg mx-auto overflow-auto min-h-[470px]">
       {successMessage ? (
         <p className="text-blue-500 text-sm">{successMessage}</p>
       ) : (
-        <div className="space-y-8 ">
-          <div className="flex flex-col items-start gap-0 w-[320px]">
-            <h1 className="text-xl font-[700]">Login to Nextbase</h1>
-            <p className="text-base text-left font-[400]">
-              Login with the account you used to signup.
-            </p>
-          </div>
-          <RenderProviders
-            providers={['google', 'github', 'twitter']}
-            isLoading={providerMutation.isLoading}
-            onProviderLoginRequested={providerMutation.mutate}
-          />
-          <hr />
-          <Email
-            onSubmit={(email) => magicLinkMutation.mutate(email)}
-            isLoading={magicLinkMutation.isLoading}
-            view="sign-in"
-          />
-          <hr />
-          <EmailAndPassword
-            isLoading={passwordMutation.isLoading}
-            onSubmit={(data) => {
-              passwordMutation.mutate(data);
-            }}
-            view="sign-in"
-          />
+        <div className="space-y-8 bg-background p-6 rounded-lg shadow dark:border">
+          <Tabs defaultValue="password" className="md:min-w-[400px]">
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger value="password">Password</TabsTrigger>
+              <TabsTrigger value="magic-link">Magic Link</TabsTrigger>
+              <TabsTrigger value="social-login">Social Login</TabsTrigger>
+            </TabsList>
+            <TabsContent value="password">
+              <Card className="border-none shadow-none">
+                <CardHeader className="py-6 px-0">
+                  <CardTitle>Login to NextBase</CardTitle>
+                  <CardDescription>
+                    Login with the account you used to signup.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-2 p-0">
+                  <EmailAndPassword
+                    isLoading={passwordMutation.isLoading}
+                    onSubmit={(data) => {
+                      passwordMutation.mutate(data);
+                    }}
+                    view="sign-in"
+                  />
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="magic-link">
+              <Card className="border-none shadow-none">
+                <CardHeader className="py-6 px-0">
+                  <CardTitle>Login to NextBase</CardTitle>
+                  <CardDescription>
+                    Login with magic link we will send to your email.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-2 p-0">
+                  <Email
+                    onSubmit={(email) => magicLinkMutation.mutate(email)}
+                    isLoading={magicLinkMutation.isLoading}
+                    view="sign-in"
+                  />
+                </CardContent>
+              </Card>
+            </TabsContent>
+            <TabsContent value="social-login">
+              <Card className="border-none shadow-none">
+                <CardHeader className="py-6 px-0">
+                  <CardTitle>Login to NextBase</CardTitle>
+                  <CardDescription>
+                    Login with your social account.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-2 p-0">
+                  <RenderProviders
+                    providers={['google', 'github', 'twitter']}
+                    isLoading={providerMutation.isLoading}
+                    onProviderLoginRequested={providerMutation.mutate}
+                  />
+                </CardContent>
+              </Card>
+            </TabsContent>
+          </Tabs>
         </div>
       )}
     </div>

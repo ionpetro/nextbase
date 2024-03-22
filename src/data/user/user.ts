@@ -1,11 +1,11 @@
 'use server';
 import { createSupabaseUserServerActionClient } from '@/supabase-clients/user/createSupabaseUserServerActionClient';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
-import { SupabaseFileUploadOptions, Table } from '@/types';
+import type { SupabaseFileUploadOptions, Table } from '@/types';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
-import { revalidatePath } from 'next/cache';
 import slugify from 'slugify';
 import urlJoin from 'url-join';
+import { getDefaultOrganizationId } from './organizations';
 
 export async function getIsAppAdmin(): Promise<boolean> {
   const user = await serverGetLoggedInUser();
@@ -152,13 +152,61 @@ export const updateUserProfileNameAndAvatar = async ({
       avatar_url: avatarUrl,
     })
     .eq('id', user.id)
+    .select()
     .single();
 
   if (error) {
     throw error;
   }
 
-  revalidatePath('/');
+  return data;
+};
+
+export const acceptTermsOfService = async (accepted: boolean) => {
+  const supabaseClient = createSupabaseUserServerComponentClient();
+
+  const userId = (await serverGetLoggedInUser()).id;
+
+  const { data, error } = await supabaseClient
+    .from('user_onboarding')
+    .upsert(
+      {
+        user_id: userId,
+        accepted_terms: accepted,
+      },
+      { onConflict: 'user_id' },
+    )
+    .select();
+
+  if (error) {
+    throw error;
+  }
 
   return data;
+};
+
+export const getAcceptedTermsOfService = async (userId: string) => {
+  const supabaseClient = createSupabaseUserServerActionClient();
+  const { data, error } = await supabaseClient
+    .from('user_onboarding')
+    .select('accepted_terms')
+    .eq('user_id', userId);
+
+  if (error) {
+    throw error;
+  }
+
+  return data || [];
+};
+
+export const getOnboardingConditions = async (userId: string) => {
+  const userProfile = await getUserProfile(userId);
+  const organizationId = await getDefaultOrganizationId();
+  const acceptedTerms = await getAcceptedTermsOfService(userId);
+
+  return {
+    userProfile,
+    organizationId,
+    terms: acceptedTerms,
+  };
 };

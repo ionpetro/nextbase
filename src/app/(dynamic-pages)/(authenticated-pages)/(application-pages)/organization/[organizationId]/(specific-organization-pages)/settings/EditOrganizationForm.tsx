@@ -14,6 +14,7 @@ export function EditOrganizationForm({
   organizationId: string;
 }) {
   const [pending, startTransition] = useTransition();
+
   const { mutate, isLoading } = useToastMutation(
     async (organizationTitle: string) => {
       return await updateOrganizationTitle(organizationId, organizationTitle);

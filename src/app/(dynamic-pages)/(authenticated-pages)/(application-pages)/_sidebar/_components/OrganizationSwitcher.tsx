@@ -48,7 +48,7 @@ export function OrganizationSwitcher({
       errorMessage: 'Failed to create organization',
       successMessage: 'Organization created!',
       onSuccess: (organization) => {
-        router.push(`/organization/${organization.id}`);
+        router.push(`/organization/${organization}`);
       },
     },
   );

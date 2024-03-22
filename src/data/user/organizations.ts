@@ -1,27 +1,47 @@
 'use server';
+import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 import { createSupabaseUserServerActionClient } from '@/supabase-clients/user/createSupabaseUserServerActionClient';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
-import { Enum, NormalizedSubscription, Table, UnwrapPromise } from '@/types';
+import type {
+  Enum,
+  NormalizedSubscription,
+  Table,
+  UnwrapPromise,
+} from '@/types';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import { revalidatePath } from 'next/cache';
+import { v4 as uuid } from 'uuid';
 
 export const createOrganization = async (name: string) => {
   const supabase = createSupabaseUserServerComponentClient();
   const user = await serverGetLoggedInUser();
-  const { data, error } = await supabase
-    .from('organizations')
-    .insert({
-      title: name,
-      created_by: user.id,
-    })
-    .select('*')
-    .single();
+
+  const organizationId = uuid();
+
+  const { error } = await supabase.from('organizations').insert({
+    title: name,
+    id: organizationId,
+  });
 
   if (error) {
+    console.log('HERE', error);
     throw error;
   }
 
-  return data;
+  const { data: orgMemberData, error: orgMemberErrors } =
+    await supabaseAdminClient.from('organization_members').insert([
+      {
+        member_id: user.id,
+        organization_id: organizationId,
+        member_role: 'owner',
+      },
+    ]);
+
+  if (orgMemberErrors) {
+    throw orgMemberErrors;
+  }
+
+  return organizationId;
 };
 
 export async function fetchSlimOrganizations() {
@@ -107,7 +127,7 @@ export type InitialOrganizationListType = UnwrapPromise<
 export const getOrganizationById = async (organizationId: string) => {
   const supabaseClient = createSupabaseUserServerComponentClient();
 
-  const { data, error } = await supabaseClient
+  const { data, error } = await supabaseAdminClient
     .from('organizations')
     // query team_members and team_invitations in one go
     .select('*')
@@ -335,7 +355,7 @@ export const getOrganizationAdmins = async (organizationId: string) => {
 export const getDefaultOrganization = async () => {
   const supabaseClient = createSupabaseUserServerComponentClient();
   const user = await serverGetLoggedInUser();
-  const { data: preferences, error } = await supabaseClient
+  const { data, error } = await supabaseClient
     .from('user_private_info')
     .select('id, default_organization')
     .eq('id', user.id)
@@ -345,7 +365,25 @@ export const getDefaultOrganization = async () => {
     throw error;
   }
 
-  return preferences.default_organization;
+  return data.default_organization;
+};
+
+export const getDefaultOrganizationId = async () => {
+  const supabaseClient = createSupabaseUserServerComponentClient();
+  const { data, error } = await supabaseClient
+    .from('user_private_info')
+    .select('default_organization')
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  if (!data.default_organization) {
+    return null;
+  }
+
+  return data.default_organization;
 };
 
 export async function setDefaultOrganization(organizationId: string) {
@@ -360,5 +398,5 @@ export async function setDefaultOrganization(organizationId: string) {
     throw updateError;
   }
 
-  revalidatePath('/');
+  revalidatePath(`/organization/${organizationId}`);
 }

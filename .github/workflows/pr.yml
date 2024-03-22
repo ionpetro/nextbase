@@ -30,6 +30,6 @@ jobs:
           version: latest
       - run: supabase start
       - name: Install playwright browsers
-        run: pnpm run playwright install --with-deps
+        run: npx playwright install --with-deps
       - name: Run e2e tests
         run: pnpm run test:e2e

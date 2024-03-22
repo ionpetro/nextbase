@@ -7,6 +7,8 @@ export async function updatePasswordAction(password: string) {
     password,
   });
 
+  console.log('error', error);
+
   if (error) {
     throw error;
   }

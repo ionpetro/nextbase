@@ -1,6 +1,6 @@
 'use server';
 import { createSupabaseUserServerActionClient } from '@/supabase-clients/user/createSupabaseUserServerActionClient';
-import { AuthProvider, ValidSAPayload } from '@/types';
+import type { AuthProvider, ValidSAPayload } from '@/types';
 import { toSiteURL } from '@/utils/helpers';
 
 export const signUp = async (
@@ -9,7 +9,7 @@ export const signUp = async (
 ): Promise<ValidSAPayload> => {
   const supabase = createSupabaseUserServerActionClient();
 
-  const { error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {

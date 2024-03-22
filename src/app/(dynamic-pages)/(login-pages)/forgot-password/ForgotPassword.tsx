@@ -1,6 +1,13 @@
 'use client';
 import { Email } from '@/components/Auth/Email';
 import { T } from '@/components/ui/Typography';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { resetPassword } from '@/data/auth/auth';
 import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import { useState } from 'react';
@@ -36,21 +43,26 @@ export function ForgotPassword() {
   return (
     <div className="container h-full grid items-center text-left max-w-lg mx-auto overflow-auto">
       <div className="space-y-8 ">
-        {/* <Auth providers={['twitter']} supabaseClient={supabase} /> */}
-        <div className="flex flex-col items-start gap-0 w-[320px]">
-          <T.H4>Forgot Password</T.H4>
-          <T.P className="text-muted-foreground">
-            Enter your email to recieve a Magic Link to reset your password.
-          </T.P>
-        </div>
         {successMessage ? (
           <T.P className="text-blue-500 text-sm">{successMessage}</T.P>
         ) : null}
-        <Email
-          onSubmit={(email) => magicLinkMutation.mutate(email)}
-          isLoading={magicLinkMutation.isLoading}
-          view="forgot-password"
-        />
+        <Card>
+          <CardHeader>
+            <CardTitle>Forgot Password</CardTitle>
+            <CardDescription>
+              <T.P className="text-muted-foreground">
+                Enter your email to recieve a Magic Link to reset your password.
+              </T.P>
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Email
+              onSubmit={(email) => magicLinkMutation.mutate(email)}
+              isLoading={magicLinkMutation.isLoading}
+              view="forgot-password"
+            />
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

@@ -761,6 +761,32 @@ export type Database = {
           },
         ]
       }
+      user_onboarding: {
+        Row: {
+          accepted_terms: boolean
+          created_at: string
+          user_id: string
+        }
+        Insert: {
+          accepted_terms?: boolean
+          created_at?: string
+          user_id: string
+        }
+        Update: {
+          accepted_terms?: boolean
+          created_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_onboarding_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_private_info: {
         Row: {
           created_at: string | null
@@ -1230,7 +1256,7 @@ export type Database = {
         Args: {
           name: string
         }
-        Returns: unknown
+        Returns: string[]
       }
       get_size_by_bucket: {
         Args: Record<PropertyKey, never>
