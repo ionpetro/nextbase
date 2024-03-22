@@ -16,17 +16,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useTheme } from 'next-themes';
 import { useEffect } from 'react';
 import {
-  Controller,
-  useController,
-  useForm,
-  type Control,
+  type Control
 } from 'react-hook-form';
 import ReactSelect from 'react-select';
 import slugify from 'slugify';
 
 import {
-  internalBlogPostSchema,
-  type InternalBlogPostSchema,
+  internalBlogPostSchema
 } from '@/utils/zod-schemas/internalBlog';
 import Trash from 'lucide-react/dist/esm/icons/trash';
 import Image from 'next/image';
@@ -206,7 +202,7 @@ export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
             ...restPayload,
             json_content:
               typeof restPayload.json_content === 'object' &&
-              restPayload.json_content !== null
+                restPayload.json_content !== null
                 ? restPayload.json_content
                 : JSON.parse(restPayload.json_content),
           },
@@ -254,7 +250,7 @@ export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
             ...restPayload,
             json_content:
               typeof restPayload.json_content === 'object' &&
-              restPayload.json_content !== null
+                restPayload.json_content !== null
                 ? restPayload.json_content
                 : JSON.parse(restPayload.json_content),
           },
