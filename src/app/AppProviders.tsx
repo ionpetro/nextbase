@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 "use client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
@@ -7,6 +8,15 @@ import ReactNoSSR from "react-no-ssr";
 import { Toaster as SonnerToaster } from "sonner";
 import { ThemeProvider } from "./ThemeProvider";
 import { useMyReportWebVitals } from "./reportWebVitals";
+=======
+'use client';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { AppProgressBar as ProgressBar } from 'next-nprogress-bar';
+import React, { Suspense } from 'react';
+import { Toaster as SonnerToaster } from 'sonner';
+import { ThemeProvider } from './ThemeProvider';
+import { useMyReportWebVitals } from './reportWebVitals';
+>>>>>>> 3ab6d7d (Remove ReactNoSSR and import Confetti dynamically)
 
 // Create a client
 const queryClient = new QueryClient();
@@ -30,9 +40,13 @@ export function AppProviders({
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <QueryClientProvider client={queryClient}>
           {children}
+<<<<<<< HEAD
           <ReactNoSSR>
             <SonnerToaster theme={"light"} />
           </ReactNoSSR>
+=======
+          <SonnerToaster theme={'light'} />
+>>>>>>> 3ab6d7d (Remove ReactNoSSR and import Confetti dynamically)
           <Suspense>
             <ProgressBar
               height="4px"

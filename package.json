@@ -127,7 +127,6 @@
     "react-email": "2.1.0",
     "react-ga4": "^2.1.0",
     "react-hook-form": "^7.50.1",
-    "react-no-ssr": "^1.1.0",
     "react-resizable-panels": "^2.0.4",
     "react-select": "^5.7.3",
     "rehype-pretty-code": "^0.12.4",

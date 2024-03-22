@@ -371,9 +371,6 @@ dependencies:
   react-hook-form:
     specifier: ^7.50.1
     version: 7.51.1(react@18.2.0)
-  react-no-ssr:
-    specifier: ^1.1.0
-    version: 1.1.0(react@18.2.0)
   react-resizable-panels:
     specifier: ^2.0.4
     version: 2.0.13(react-dom@18.2.0)(react@18.2.0)
@@ -8665,13 +8662,6 @@ packages:
       }
     dependencies:
       toggle-selection: 1.0.6
-    dev: false
-
-  /core-util-is@1.0.2:
-    resolution:
-      {
-        integrity: sha512-3lqz5YjWTYnW6dlDa5TLaTCcShfar1e40rmcJVwCBJC6mWlFuj0eCHIElmG1g5kyuJ/GD+8Wn4FFCcz4gJPfaQ==,
-      }
     dev: false
 
   /cors@2.8.5:
