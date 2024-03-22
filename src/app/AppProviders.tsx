@@ -2,7 +2,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AppProgressBar as ProgressBar } from 'next-nprogress-bar';
 import React, { Suspense } from 'react';
-import { Toaster as HotToaster } from 'react-hot-toast';
 import ReactNoSSR from 'react-no-ssr';
 import { Toaster as SonnerToaster } from 'sonner';
 import { ThemeProvider } from './ThemeProvider';
@@ -32,7 +31,6 @@ export function AppProviders({
           {children}
           <ReactNoSSR>
             <SonnerToaster theme={'light'} />
-            <HotToaster />
           </ReactNoSSR>
           <Suspense>
             <ProgressBar

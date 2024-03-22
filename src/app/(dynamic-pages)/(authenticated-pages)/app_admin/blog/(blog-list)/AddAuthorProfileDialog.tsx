@@ -27,7 +27,7 @@ import UserIcon from 'lucide-react/dist/esm/icons/user-plus';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { toast } from 'react-hot-toast';
+import { toast } from 'sonner';
 import { z } from 'zod';
 
 type AuthorProfileFormType = z.infer<typeof authorProfileSchema>;

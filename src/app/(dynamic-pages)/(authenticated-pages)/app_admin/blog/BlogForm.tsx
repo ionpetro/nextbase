@@ -17,7 +17,6 @@ import { useMutation } from '@tanstack/react-query';
 import { useTheme } from 'next-themes';
 import { useEffect, useRef } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { toast } from 'react-hot-toast';
 import ReactSelect from 'react-select';
 import slugify from 'slugify';
 
@@ -80,6 +79,7 @@ import { useRouter } from 'next/navigation';
 import { UploadBlogImage } from './post/UploadBlogImage';
 
 import { TipTapEditor } from '@/components/TipTapEditor';
+import { toast } from 'sonner';
 
 const baseDefaultValues: Partial<InternalBlogPostSchema> = {
   status: 'draft',
@@ -137,7 +137,7 @@ export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
     setValue('slug', slug);
   }, [setValue, titleValue]);
 
-  const toastRef = useRef<string | null>(null);
+  const toastRef = useRef<string | number | null>(null);
   const { mutate: submitPostMutation, isLoading: isSubmittingPost } =
     useMutation(
       async (data: InternalBlogPostSchema) => {
