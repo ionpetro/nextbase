@@ -5,7 +5,6 @@ import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user
 import type { Enum } from '@/types';
 import { sendEmail } from '@/utils/api-routes/utils';
 import { toSiteURL } from '@/utils/helpers';
-import { sendEmailInbucket } from '@/utils/sendEmailInbucket';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import { renderAsync } from '@react-email/render';
 import TeamInvitationEmail from 'emails/TeamInvitation';
@@ -200,27 +199,12 @@ export async function createInvitationHandler({
     />,
   );
 
-  if (
-    process.env.NODE_ENV === 'development' ||
-    process.env.NODE_ENV === 'test'
-  ) {
-    console.log({
-      viewInvitationUrl,
-    });
-    await sendEmailInbucket({
-      to: email,
-      subject: `Invitation to join ${organizationResponse.data.title}`,
-      html: invitationEmailHTML,
-      from: process.env.ADMIN_EMAIL,
-    });
-  } else {
-    await sendEmail({
-      to: email,
-      subject: `Invitation to join ${organizationResponse.data.title}`,
-      html: invitationEmailHTML,
-      from: process.env.ADMIN_EMAIL,
-    });
-  }
+  await sendEmail({
+    to: email,
+    subject: `Invitation to join ${organizationResponse.data.title}`,
+    html: invitationEmailHTML,
+    from: process.env.ADMIN_EMAIL,
+  });
 
   // send notification
   await createNotification(inviteeUserDetails.userId, {

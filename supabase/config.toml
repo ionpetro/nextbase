@@ -66,3 +66,8 @@ url = ""
 [auth.hook.custom_access_token]
 enabled = true
 uri = "pg-functions://postgres/public/custom_access_token_hook"
+
+[inbucket]
+
+smtp_port = 54325
+pop3_port = 54326

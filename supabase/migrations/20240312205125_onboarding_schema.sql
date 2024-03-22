@@ -1,5 +1,5 @@
 CREATE TABLE "public"."user_onboarding" (
-  "user_id" uuid NOT NULL PRIMARY KEY REFERENCES "public"."user_profiles"("id"),
+  "user_id" uuid NOT NULL PRIMARY KEY REFERENCES "public"."user_profiles"("id") ON DELETE CASCADE,
   "created_at" timestamp WITH time zone NOT NULL DEFAULT NOW(),
   "accepted_terms" boolean NOT NULL DEFAULT false
 );

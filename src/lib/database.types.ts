@@ -9,6 +9,29 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      account_delete_tokens: {
+        Row: {
+          token: string
+          user_id: string
+        }
+        Insert: {
+          token?: string
+          user_id: string
+        }
+        Update: {
+          token?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "account_delete_tokens_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       customers: {
         Row: {
           organization_id: string

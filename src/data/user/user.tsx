@@ -1,8 +1,13 @@
 'use server';
+import { PRODUCT_NAME } from '@/constants';
 import { createSupabaseUserServerActionClient } from '@/supabase-clients/user/createSupabaseUserServerActionClient';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
-import type { SupabaseFileUploadOptions, Table } from '@/types';
+import type { SupabaseFileUploadOptions, Table, ValidSAPayload } from '@/types';
+import { sendEmail } from '@/utils/api-routes/utils';
+import { toSiteURL } from '@/utils/helpers';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
+import { renderAsync } from '@react-email/render';
+import ConfirmAccountDeletionEmail from 'emails/account-deletion-request';
 import slugify from 'slugify';
 import urlJoin from 'url-join';
 import { getDefaultOrganizationId } from './organizations';
@@ -210,3 +215,47 @@ export const getOnboardingConditions = async (userId: string) => {
     terms: acceptedTerms,
   };
 };
+
+export async function requestAccountDeletion(): Promise<
+  ValidSAPayload<Table<'account_delete_tokens'>>
+> {
+  const supabaseClient = createSupabaseUserServerActionClient();
+  const user = await serverGetLoggedInUser();
+  if (!user.email) {
+    return { status: 'error', message: 'User email not found' };
+  }
+  const { data, error } = await supabaseClient
+    .from('account_delete_tokens')
+    .upsert({
+      user_id: user.id,
+    })
+    .select('*')
+    .single();
+
+  if (error) {
+    return { status: 'error', message: error.message };
+  }
+
+  const userFullName =
+    (await getUserFullName(user.id)) ?? `User ${user.email ?? ''}`;
+
+  const deletionHTML = await renderAsync(
+    <ConfirmAccountDeletionEmail
+      deletionConfirmationLink={toSiteURL(`/confirm-delete-user/${data.token}`)}
+      userName={userFullName}
+      appName={PRODUCT_NAME}
+    />,
+  );
+
+  await sendEmail({
+    from: process.env.ADMIN_EMAIL,
+    html: deletionHTML,
+    subject: `Confirm Account Deletion - ${PRODUCT_NAME}`,
+    to: user.email,
+  });
+
+  return {
+    status: 'success',
+    data,
+  };
+}
