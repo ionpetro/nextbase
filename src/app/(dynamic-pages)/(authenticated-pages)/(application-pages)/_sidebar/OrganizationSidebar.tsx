@@ -71,7 +71,7 @@ async function OrganizationSidebarInternal({
                 trigger={
                   <SidebarItem
                     label="Teams"
-                    icon={<TeamsIcon className="h-5 w-5" />}
+                    icon={<TeamsIcon className="size-5" />}
                   />
                 }
               >
