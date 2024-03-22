@@ -64,6 +64,8 @@ export function LeftNav() {
   const isALandingPage = pathname
     ? pathname.startsWith('/version') || pathname === '/'
     : false;
+  const isBlogPage = pathname?.startsWith('/blog');
+  const isDocsPage = pathname?.startsWith('/docs');
 
   useEffect(() => {
     const newSelectedVersion =
@@ -91,17 +93,13 @@ export function LeftNav() {
               alt="logo"
               className="hidden dark:block h-8 w-8"
             />
-            <span className="lg:hidden font-bold">Nextbase Blog</span>
-            <span className="hidden font-bold lg:inline-block">acme</span>
+            {isBlogPage && <span className="font-bold">Nextbase Blog</span>}
+            {isDocsPage && <span className="font-bold">Nextbase Docs</span>}
+            {!isBlogPage && !isDocsPage && (
+              <span className="font-bold">Nextbase</span>
+            )}
           </div>
         </Link>
-
-        {isALandingPage && (
-          <VersionSwitcher
-            selectedVersion={selectedVersion}
-            setSelectedVersion={setSelectedVersion}
-          />
-        )}
       </div>
       {isALandingPage ? (
         <ul className="hidden -ml-24 lg:flex gap-8 font-medium items-center">

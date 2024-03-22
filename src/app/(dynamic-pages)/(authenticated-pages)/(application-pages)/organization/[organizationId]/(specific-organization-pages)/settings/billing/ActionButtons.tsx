@@ -2,12 +2,17 @@
 
 import { Button } from '@/components/ui/button';
 import { T } from '@/components/ui/Typography';
-import {
-  createCheckoutSessionAction,
-  createCustomerPortalLinkAction,
-} from '@/data/user/organizations';
 import { useToastMutation } from '@/hooks/useToastMutation';
-import { getStripe } from '@/utils/stripe-client';
+import {
+  createSubSuccessCB,
+  createTrialSubSuccessCB,
+  manageSubsSuccessCB,
+} from '@/lib/payments/paymentGatewayUtils';
+import {
+  createSubscription,
+  manageSubscription,
+  startTrial,
+} from '@/lib/payments/paymentUtilsServer';
 import ExternalLinkIcon from 'lucide-react/dist/esm/icons/external-link';
 
 export function CreateSubscriptionButton({
@@ -19,19 +24,13 @@ export function CreateSubscriptionButton({
 }) {
   const { mutate, isLoading } = useToastMutation(
     async () => {
-      return await createCheckoutSessionAction({
-        organizationId: organizationId,
-        priceId: priceId,
-      });
+      return await createSubscription(organizationId, priceId);
     },
     {
       loadingMessage: 'Please wait...',
       errorMessage: 'Failed to create subscription',
       successMessage: 'Redirecting...',
-      onSuccess: async (sessionId) => {
-        const stripe = await getStripe();
-        stripe?.redirectToCheckout({ sessionId });
-      },
+      onSuccess: createSubSuccessCB,
     },
   );
 
@@ -57,20 +56,13 @@ export function StartFreeTrialButton({
 }) {
   const { mutate, isLoading } = useToastMutation(
     async () => {
-      return await createCheckoutSessionAction({
-        organizationId: organizationId,
-        priceId: priceId,
-        isTrial: true,
-      });
+      return await startTrial(organizationId, priceId);
     },
     {
       loadingMessage: 'Please wait...',
       errorMessage: 'Failed to create subscription',
       successMessage: 'Redirecting...',
-      onSuccess: async (sessionId) => {
-        const stripe = await getStripe();
-        stripe?.redirectToCheckout({ sessionId });
-      },
+      onSuccess: createTrialSubSuccessCB,
     },
   );
 
@@ -94,15 +86,13 @@ export function ManageSubscriptionButton({
 }) {
   const { mutate, isLoading } = useToastMutation(
     async () => {
-      return await createCustomerPortalLinkAction(organizationId);
+      return await manageSubscription(organizationId);
     },
     {
       loadingMessage: 'Please wait...',
       errorMessage: 'Failed to get customer portal link',
       successMessage: 'Redirecting...',
-      onSuccess: (url) => {
-        window.location.assign(url);
-      },
+      onSuccess: manageSubsSuccessCB,
     },
   );
 
