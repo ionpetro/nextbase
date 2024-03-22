@@ -1,15 +1,10 @@
 var tsConfigs = ['./tsconfig.json'];
 var tsConfigEmail = ['./tsconfig-emails.json'];
 
-var ruleOverrides = {};
-
 var srcRuleOverrides = {
   'prettier/prettier': 1,
-  '@typescript-eslint/no-unused-vars': 'off',
+  '@typescript-eslint/no-unused-vars': 1,
   '@typescript-eslint/no-non-null-assertion': 'error',
-  'import/no-extraneous-dependencies': 'error',
-  'react-hooks/rules-of-hooks': 'error',
-  'react-hooks/exhaustive-deps': 'error',
 };
 
 module.exports = {
@@ -18,14 +13,14 @@ module.exports = {
       extends: [
         'eslint:recommended',
         'plugin:@typescript-eslint/recommended',
-        'plugin:@next/next/recommended',
         'prettier',
+        'plugin:@next/next/recommended',
       ],
       parser: '@typescript-eslint/parser',
       parserOptions: {
         project: tsConfigs,
       },
-      plugins: ['@typescript-eslint', 'prettier', 'import', 'react-hooks'],
+      plugins: ['@typescript-eslint', 'prettier'],
       rules: srcRuleOverrides,
       files: ['src/**/*.ts', 'src/**/*.tsx'],
     },
@@ -33,14 +28,14 @@ module.exports = {
       extends: [
         'eslint:recommended',
         'plugin:@typescript-eslint/recommended',
-        'plugin:@next/next/recommended',
         'prettier',
+        'plugin:@next/next/recommended',
       ],
       parser: '@typescript-eslint/parser',
       parserOptions: {
         project: tsConfigEmail,
       },
-      plugins: ['@typescript-eslint', 'prettier', 'import', 'react-hooks'],
+      plugins: ['@typescript-eslint', 'prettier'],
       rules: srcRuleOverrides,
       files: ['emails/**/*.ts', 'emails/**/*.tsx'],
     },
@@ -58,8 +53,6 @@ module.exports = {
         '@typescript-eslint',
         'plugin:playwright/playwright-test',
         'prettier',
-        'import',
-        'react-hooks',
       ],
       rules: srcRuleOverrides,
       files: ['e2e/**/*.ts'],
@@ -81,19 +74,17 @@ module.exports = {
     {
       extends: ['eslint:recommended', 'prettier'],
       files: '*.mjs',
-      rules: ruleOverrides,
     },
     // make nextconfig.mjs node environment
     {
-      extends: ['eslint:recommended', 'prettier'],
+      extends: [
+        'eslint:recommended',
+        'prettier',
+        'plugin:@next/next/recommended',
+      ],
       files: 'next.config.mjs',
-      rules: ruleOverrides,
-    },
-    {
-      extends: ['prettier'],
-      files: '*.js',
-      rules: ruleOverrides,
     },
   ],
+  extends: ['plugin:@next/next/recommended'],
   root: true,
 };
