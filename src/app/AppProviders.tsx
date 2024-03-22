@@ -2,7 +2,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AppProgressBar as ProgressBar } from 'next-nprogress-bar';
 import React, { Suspense } from 'react';
-import ReactNoSSR from 'react-no-ssr';
 import { Toaster as SonnerToaster } from 'sonner';
 import { ThemeProvider } from './ThemeProvider';
 import { useMyReportWebVitals } from './reportWebVitals';
@@ -29,9 +28,7 @@ export function AppProviders({
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <QueryClientProvider client={queryClient}>
           {children}
-          <ReactNoSSR>
-            <SonnerToaster theme={'light'} />
-          </ReactNoSSR>
+          <SonnerToaster theme={'light'} />
           <Suspense>
             <ProgressBar
               height="4px"
