@@ -1,7 +1,8 @@
-import { Suspense } from 'react';
-import { EditOrganizationForm } from './EditOrganizationForm';
-import { getOrganizationTitle } from '@/data/user/organizations';
 import { T } from '@/components/ui/Typography';
+import { getOrganizationTitle } from '@/data/user/organizations';
+import { Suspense } from 'react';
+import { DeleteOrganization } from './DeleteOrganization';
+import { EditOrganizationForm } from './EditOrganizationForm';
 import { SetDefaultOrganizationPreference } from './SetDefaultOrganizationPreference';
 
 async function EditOrganization({
@@ -26,6 +27,8 @@ export default async function EditOrganizationPage({
   };
 }) {
   const { organizationId } = params;
+
+  const organizationTitle = await getOrganizationTitle(organizationId);
   return (
     <div className="space-y-4">
       <Suspense fallback={<T.Subtle>Loading...</T.Subtle>}>
@@ -34,6 +37,10 @@ export default async function EditOrganizationPage({
       <Suspense fallback={<T.Subtle>Loading...</T.Subtle>}>
         <SetDefaultOrganizationPreference organizationId={organizationId} />
       </Suspense>
+      <DeleteOrganization
+        organizationId={organizationId}
+        organizationTitle={organizationTitle}
+      />
     </div>
   );
 }
