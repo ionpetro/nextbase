@@ -67,9 +67,9 @@ export function useSAToastMutation<
         const errorMessage = options?.errorMessage
           ? typeof options.errorMessage === 'function'
             ? options.errorMessage(
-              new Error(baseErrorMessage) as TError,
-              variables,
-            )
+                new Error(baseErrorMessage) as TError,
+                variables,
+              )
             : `${options.errorMessage ?? 'Error!'}: ${baseErrorMessage}`
           : 'Error!';
         toast.error(errorMessage, {

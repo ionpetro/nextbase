@@ -96,7 +96,7 @@ export function AccountSettings({
             subTitleClassName="text-base -mt-1"
             subTitle="Delete your account. This action is irreversible. All your data will be lost."
           />
-          <ConfirmDeleteAccountDialog onDeleteConfirm={() => { }} />
+          <ConfirmDeleteAccountDialog onDeleteConfirm={() => {}} />
         </div>
       </div>
     </div>

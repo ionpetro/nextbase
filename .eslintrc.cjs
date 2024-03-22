@@ -79,13 +79,13 @@ module.exports = {
       files: ['vitest.config.ts'],
     },
     {
-      extends: ['eslint:recommended', 'prettier', 'esnext'],
+      extends: ['eslint:recommended', 'prettier'],
       files: '*.mjs',
       rules: ruleOverrides,
     },
     // make nextconfig.mjs node environment
     {
-      extends: ['eslint:recommended', 'prettier', 'node'],
+      extends: ['eslint:recommended', 'prettier'],
       files: 'next.config.mjs',
       rules: ruleOverrides,
     },

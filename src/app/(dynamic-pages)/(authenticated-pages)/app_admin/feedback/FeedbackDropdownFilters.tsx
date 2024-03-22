@@ -125,8 +125,8 @@ export function FeedbackDropdownFilters() {
                     ...filters,
                     statuses: filters.statuses?.includes(statusOption)
                       ? filters.statuses.filter(
-                        (status) => status !== statusOption,
-                      )
+                          (status) => status !== statusOption,
+                        )
                       : [...(filters.statuses || []), statusOption],
                   })
                 }
@@ -213,8 +213,8 @@ export function FeedbackDropdownFilters() {
                     ...filters,
                     priorities: filters.priorities?.includes(priorityOption)
                       ? filters.priorities.filter(
-                        (priority) => priority !== priorityOption,
-                      )
+                          (priority) => priority !== priorityOption,
+                        )
                       : [...(filters.priorities || []), priorityOption],
                   })
                 }

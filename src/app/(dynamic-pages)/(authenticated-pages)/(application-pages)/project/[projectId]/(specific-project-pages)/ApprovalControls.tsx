@@ -2,7 +2,7 @@
 
 import {
   getLoggedInUserOrganizationRole,
-  getSlimOrganizationById
+  getSlimOrganizationById,
 } from '@/data/user/organizations';
 import { getSlimProjectById } from '@/data/user/projects';
 import { ApprovalControlActions } from './ApprovalControlActions';

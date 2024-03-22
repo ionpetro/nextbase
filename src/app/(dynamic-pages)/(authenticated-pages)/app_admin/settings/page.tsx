@@ -1,4 +1,3 @@
-
 export default async function AdminPanel() {
   return (
     <div className="space-y-4">

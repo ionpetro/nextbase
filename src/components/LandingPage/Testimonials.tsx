@@ -96,10 +96,11 @@ const Testimonials = () => {
               <div
                 key={index}
                 onClick={() => setActiveTestimonial(index)}
-                className={`w-3 h-3 rounded-full cursor-pointer ${activeTestimonial === index
+                className={`w-3 h-3 rounded-full cursor-pointer ${
+                  activeTestimonial === index
                     ? 'bg-gray-500 dark:bg-slate-400'
                     : 'bg-gray-300 dark:bg-slate-700'
-                  }`}
+                }`}
               ></div>
             ))}
           </div>

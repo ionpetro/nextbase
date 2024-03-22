@@ -14,7 +14,8 @@ export default async function BlogPostPage({ params }: { params: unknown }) {
             <T.Subtle>Contributions</T.Subtle>
             <T.H1>Authors</T.H1>
             <T.P className="text-xl leading-[30px] text-muted-foreground">
-              Our blog is made possible because of contributions from these awesome folks!
+              Our blog is made possible because of contributions from these
+              awesome folks!
             </T.P>
           </div>
         </div>

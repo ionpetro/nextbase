@@ -33,27 +33,27 @@ async function UserFeedbackList() {
         <TableBody>
           {feedbackList
             ? feedbackList.map((feedback, index) => (
-              <TableRow key={feedback.id}>
-                <TableCell>{index + 1}</TableCell>
-                <TableCell>
-                  <Link
-                    className=" font-medium underline underline-offset-4"
-                    key={feedback.id}
-                    href={`/feedback/${feedback.id}`}
-                  >
-                    {feedback.title}
-                  </Link>
-                </TableCell>
-                <TableCell>{formatFieldValue(feedback.type)}</TableCell>
-                <TableCell>{formatFieldValue(feedback.priority)}</TableCell>
-                <TableCell>
-                  {moment(feedback.created_at).format('LL')}
-                </TableCell>
-                <TableCell>
-                  <Badge size="sm">{formatFieldValue(feedback.status)}</Badge>
-                </TableCell>
-              </TableRow>
-            ))
+                <TableRow key={feedback.id}>
+                  <TableCell>{index + 1}</TableCell>
+                  <TableCell>
+                    <Link
+                      className=" font-medium underline underline-offset-4"
+                      key={feedback.id}
+                      href={`/feedback/${feedback.id}`}
+                    >
+                      {feedback.title}
+                    </Link>
+                  </TableCell>
+                  <TableCell>{formatFieldValue(feedback.type)}</TableCell>
+                  <TableCell>{formatFieldValue(feedback.priority)}</TableCell>
+                  <TableCell>
+                    {moment(feedback.created_at).format('LL')}
+                  </TableCell>
+                  <TableCell>
+                    <Badge size="sm">{formatFieldValue(feedback.status)}</Badge>
+                  </TableCell>
+                </TableRow>
+              ))
             : null}
         </TableBody>
       </ShadcnTable>

@@ -153,9 +153,9 @@
     "build": "next build",
     "test:e2e": "cross-env NODE_ENV=test playwright test",
     "test": "vitest --root src",
-    "lint:eslint": "yarn eslint --fix src",
+    "lint:eslint": "pnpm eslint --fix src",
     "lint:prettier": "prettier --write src",
-    "lint": "yarn lint:eslint && yarn lint:prettier",
+    "lint": "pnpm lint:eslint && pnpm lint:prettier",
     "tsc": "tsc"
   },
   "devDependencies": {
@@ -181,9 +181,7 @@
     "cross-env": "^7.0.3",
     "dotenv": "^16.3.1",
     "env-cmd": "^10.1.0",
-    "eslint": "^8.31.0",
-    "eslint-config-esnext": "^4.1.0",
-    "eslint-config-node": "^4.1.0",
+    "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-prettier": "^5.0.0",
@@ -205,9 +203,6 @@
     "vitest": "^1.0.0"
   },
   "resolutions": {
-    "@react-email/render": "^0.0.12",
-    "strip-ansi": "7.1.0",
-    "string-width": "7.1.0",
-    "wrap-ansi": "9.0.0"
+    "@react-email/render": "^0.0.12"
   }
 }

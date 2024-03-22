@@ -11,3 +11,4 @@ playwright/.auth/user.json
 ./test-results/
 supabase/.temp
 /test-results/*
+.yarn
