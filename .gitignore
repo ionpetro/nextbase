@@ -12,3 +12,7 @@ playwright/.auth/user.json
 supabase/.temp
 /test-results/*
 .yarn
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

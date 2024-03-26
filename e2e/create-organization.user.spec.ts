@@ -1,4 +1,4 @@
-import test from "playwright/test";
+import test from "@playwright/test";
 
 test('create organization works correctly', async ({ page }) => {
   // Start from the index page (the baseURL is set via the webServer in the playwright.config.ts)
