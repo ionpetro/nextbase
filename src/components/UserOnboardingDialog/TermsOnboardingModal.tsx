@@ -8,10 +8,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { motion } from 'framer-motion';
-import Image from 'next/image';
-
-const MotionImage = motion(Image);
 
 export const TermsOnboardingDialog = ({
   isOpen,
@@ -26,20 +22,21 @@ export const TermsOnboardingDialog = ({
     <Dialog open={isOpen}>
       <DialogContent>
         <DialogHeader>
-          <div className="p-1">
-            <DialogTitle className="text-lg">🎉 Welcome Aboard!</DialogTitle>
-            <DialogDescription className="text-base mt-0">
+          <DialogTitle className="text-lg">🎉 Welcome Aboard!</DialogTitle>
+          <DialogDescription className="space-y-4 text-base">
+            <div>
               Before diving into Nextbase Ultimate starter kit, please take a
               moment to go through our updated Terms of Service.
-            </DialogDescription>
-          </div>
+            </div>
+            <p className="font-medium">Last updated : 24th Feb 2024</p>
+            <div className="text-muted-foreground">
+              These terms and conditions govern the use of Nextbase starter
+              kit’s products and services.They're designed to ensure a smooth
+              and secure experience for you.
+            </div>
+          </DialogDescription>
         </DialogHeader>
         <div data-testid="accept-terms-onboarding">
-          <div>
-            These terms and conditions govern the use of Nextbase starter kit’s
-            products and services.They're designed to ensure a smooth and secure
-            experience for you.
-          </div>
           <DialogFooter className="mt-6">
             <Dialog data-testid="dialog-terms">
               <DialogTrigger asChild>
@@ -49,25 +46,17 @@ export const TermsOnboardingDialog = ({
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
-                  <DialogTitle className="text-lg font-bold space-y-4">
-                    <p>Terms and conditions</p>
-                    <p className="font-bold text-foreground text-sm">
+                  <DialogTitle className="text-lg pb-4 space-y-4">
+                    <p className="font-medium">Terms and conditions</p>
+                    <p className="font-semibold text-muted-foreground text-sm">
                       Last updated : 24th Feb 2024
                     </p>
                   </DialogTitle>
                 </DialogHeader>
-
-                <form
-                  onSubmit={(event) => {
-                    event.preventDefault();
-                    onSubmit(true);
-                  }}
-                  data-testid="terms-form"
-                  className="p-2 space-y-6"
-                >
-                  <div className="overflow-auto max-h-64 flex flex-col gap-8 py-8 px-4 ring-1 ring-primary-foreground rounded-md ">
-                    <p>Terms and conditions</p>
-                    <p className="text-sm bg-gray-200 dark:bg-slate-800 p-4 rounded-lg">
+                <div className="ring-1 ring-foreground/10 rounded-md p-2">
+                  <p className="text-muted-foreground">Terms and conditions</p>
+                  <div className="overflow-auto max-h-80 flex flex-col gap-8 p-8">
+                    <p className="text-sm bg-gray-200 dark:bg-slate-800 p-4 rounded-lg text-foreground/70">
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                       In sed lorem placerat, finibus nulla vitae, molestie
                       ligula. Praesent viverra elit luctus metus sagittis
@@ -83,16 +72,17 @@ export const TermsOnboardingDialog = ({
                       tempor luctus.
                     </p>
                   </div>
+                </div>
 
-                  <Button
-                    type="submit"
-                    variant="default"
-                    disabled={isLoading}
-                    className="w-full"
-                  >
-                    {isLoading ? 'Accepting terms...' : 'Accept Terms'}
-                  </Button>
-                </form>
+                <Button
+                  type="button"
+                  onClick={() => onSubmit(true)}
+                  variant="default"
+                  disabled={isLoading}
+                  className="w-full"
+                >
+                  {isLoading ? 'Accepting terms...' : 'Accept Terms'}
+                </Button>
               </DialogContent>
             </Dialog>
           </DialogFooter>
