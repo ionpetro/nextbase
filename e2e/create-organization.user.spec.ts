@@ -3,12 +3,16 @@ import test from "@playwright/test";
 test('create organization works correctly', async ({ page }) => {
   // Start from the index page (the baseURL is set via the webServer in the playwright.config.ts)
   await page.goto('/dashboard');
+  await page.waitForTimeout(5000)
 
   // click button with role combobox and data-name "organization-switcher"
-  await page.click('button[role="combobox"][data-name="organization-switcher"]');
+  const orgSwitcherButton = page.locator('button[role="combobox"][data-name="organization-switcher"]');
+  await orgSwitcherButton.click();
 
   // click button with text New Organization
-  await page.click('button:has-text("New Organization")');
+  await page.waitForTimeout(5000)
+  const button = page.locator('button:has-text("New Organization")');
+  await button.click();
 
   // wait for form within a div role dialog to show up with data-testid "create-organization-form"
   const form = await page.waitForSelector('div[role="dialog"] form[data-testid="create-organization-form"]');

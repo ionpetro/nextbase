@@ -1,93 +1,85 @@
 import type { Page } from "@playwright/test";
 
 export async function onboardUserHelper({
-	page,
-	name,
+  page,
+  name,
 }: { page: Page; name: string }) {
-	const viewTermsDialog = await page.waitForSelector(
-		'div[role="dialog"] div[data-testid="accept-terms-onboarding"]',
-	);
+  const viewTermsDialog = await page.waitForSelector(
+    'div[role="dialog"] div[data-testid="accept-terms-onboarding"]',
+  );
 
-  if(!viewTermsDialog) {
+  if (!viewTermsDialog) {
     throw new Error("acceptTermsForm not found");
   }
 
   const viewTermsButton = await viewTermsDialog.waitForSelector('button:has-text("View Terms")');
 
-  if(!viewTermsButton) {
+  if (!viewTermsButton) {
     throw new Error("view accept terms not found");
   }
 
   await viewTermsButton.click();
 
-	const acceptTermsForm = await page.waitForSelector(
-		'div:has-text("Terms and conditions") form',
-	);
+  const acceptTermsButton = await page.waitForSelector(
+    'button:has-text("Accept Terms")',
+  );
 
-	if (!acceptTermsForm) {
-		throw new Error("acceptTermsForm not found");
-	}
+  if (!acceptTermsButton) {
+    throw new Error("acceptTermsButton not found");
+  }
 
-	const acceptTermsButton = await acceptTermsForm.waitForSelector(
-		'button:has-text("Accept Terms")',
-	);
+  await acceptTermsButton.click();
 
-	if (!acceptTermsButton) {
-		throw new Error("acceptTermsButton not found");
-	}
+  // wait for text "Terms accepted!"
+  await page.waitForSelector("text=Terms accepted!");
 
-	await acceptTermsButton.click();
+  const form = await page.waitForSelector(
+    'div[role="dialog"] form[data-testid="user-onboarding-form"]',
+  );
+  if (!form) {
+    throw new Error("form not found");
+  }
+  const input = await form.waitForSelector('input[name="name"]');
+  // enter text in the input field
+  await input.fill(name);
+  // get button with text "save"
+  const submitButton = await form.waitForSelector('button:has-text("Save")');
+  if (!submitButton) {
+    throw new Error("submitButton not found");
+  }
+  await submitButton.click();
 
-	// wait for text "Terms accepted!"
-	await page.waitForSelector("text=Terms accepted!");
+  // wait for text "Profile updated!"
+  await page.waitForSelector("text=Profile updated!");
 
-	const form = await page.waitForSelector(
-		'div[role="dialog"] form[data-testid="user-onboarding-form"]',
-	);
-	if (!form) {
-		throw new Error("form not found");
-	}
-	const input = await form.waitForSelector('input[name="name"]');
-	// enter text in the input field
-	await input.fill(name);
-	// get button with text "save"
-	const submitButton = await form.waitForSelector('button:has-text("Save")');
-	if (!submitButton) {
-		throw new Error("submitButton not found");
-	}
-	await submitButton.click();
+  const createOrganizationForm = await page.waitForSelector(
+    'div[role="dialog"] form[data-testid="create-organization-form"]',
+  );
 
-	// wait for text "Profile updated!"
-	await page.waitForSelector("text=Profile updated!");
+  if (!createOrganizationForm) {
+    throw new Error("createOrganizationForm not found");
+  }
 
-	const createOrganizationForm = await page.waitForSelector(
-		'div[role="dialog"] form[data-testid="create-organization-form"]',
-	);
+  const inputCreateOrg = await form.waitForSelector('input[name="name"]');
 
-	if (!createOrganizationForm) {
-		throw new Error("createOrganizationForm not found");
-	}
+  if (!inputCreateOrg) {
+    throw new Error("inputCreateOrg not found");
+  }
 
-	const inputCreateOrg = await form.waitForSelector('input[name="name"]');
+  await inputCreateOrg.fill("My Organization");
 
-	if (!inputCreateOrg) {
-		throw new Error("inputCreateOrg not found");
-	}
-
-	await inputCreateOrg.fill("My Organization");
-
-	const createOrganizationButton = await createOrganizationForm.waitForSelector(
-		'button:has-text("Create Organization")',
-	);
+  const createOrganizationButton = await createOrganizationForm.waitForSelector(
+    'button:has-text("Create Organization")',
+  );
 
 
-	if (!createOrganizationButton) {
-		throw new Error("createOrganizationButton not found");
-	}
+  if (!createOrganizationButton) {
+    throw new Error("createOrganizationButton not found");
+  }
 
-	await createOrganizationButton.click();
+  await createOrganizationButton.click();
 
-	// wait for text "Organization created!"
-	await page.waitForSelector("text=Organization created!");
+  // wait for text "Organization created!"
+  await page.waitForSelector("text=Organization created!");
 
 }
