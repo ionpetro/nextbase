@@ -50,7 +50,10 @@ const config: PlaywrightTestConfig = {
     {
       name: 'with-auth',
       testMatch: 'auth/**/*.setup.ts',
-
+    },
+    {
+      name: 'with-app-admin',
+      testMatch: 'app_admin/**/*.setup.ts',
     },
     {
       name: 'Logged In Users (Desktop Chrome)',
