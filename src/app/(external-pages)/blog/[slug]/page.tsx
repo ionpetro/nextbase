@@ -8,7 +8,7 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { z } from 'zod';
 import AuthorCard from '../AuthorCard';
-import { BlogContent } from './BlogContent';
+import { BlogContentWrapper } from './BlogContentWrapper';
 
 const paramsSchema = z.object({
   slug: z.string(),
@@ -66,7 +66,7 @@ export default async function BlogPostPage({ params }: { params: unknown }) {
         ) : null}
         <div className="prose prose-lg prose-slate  dark:prose-invert prose-headings:font-display font-default focus:outline-none max-w-full">
           <h1>{post.title}</h1>
-          <BlogContent jsonContent={post.json_content} />
+          <BlogContentWrapper jsonContent={post.json_content} />
         </div>
         {post?.internal_blog_author_posts[0]?.internal_blog_author_profiles ? (
           <>
