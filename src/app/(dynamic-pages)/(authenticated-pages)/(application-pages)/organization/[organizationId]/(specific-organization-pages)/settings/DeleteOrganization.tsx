@@ -10,7 +10,10 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
+import { deleteOrganization } from '@/data/user/organizations';
+import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
@@ -26,6 +29,29 @@ export const DeleteOrganization = ({
   organizationId,
 }: DeleteOrganizationProps) => {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
+  const { mutate, isLoading } = useSAToastMutation(
+    async () => deleteOrganization(organizationId),
+    {
+      onSuccess: () => {
+        toast.success('Organization deleted');
+        setOpen(false);
+        router.push('/dashboard');
+      },
+      loadingMessage: 'Deleting organization...',
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to delete organization ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to delete organization';
+        }
+      },
+    },
+  );
 
   type inputs = {
     organizationTitle: string;
@@ -43,20 +69,20 @@ export const DeleteOrganization = ({
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<inputs>({
     resolver: zodResolver(formSchema),
   });
 
-  const onSubmit = (data: inputs) => {
-    console.log(data, organizationId);
+  const onSubmit = () => {
+    mutate();
     toast.success('Organization deleted');
     setOpen(false);
   };
 
   return (
     <div className="space-y-4">
-      <T.H3 className="dark:text-white">Danger Zone</T.H3>
+      <T.H3>Danger Zone</T.H3>
       <div>
         <T.P>Delete your organization</T.P>
         <T.Subtle>
@@ -89,11 +115,12 @@ export const DeleteOrganization = ({
             )}
 
             <Button
+              disabled={isLoading || !isValid}
               type="submit"
               variant="destructive"
               className="w-fit self-end"
             >
-              Delete Organization
+              {isLoading ? 'Deleting...' : 'Delete'} Organization
             </Button>
           </form>
         </DialogContent>

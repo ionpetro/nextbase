@@ -24,11 +24,7 @@ export function UserOnboardingFlow({
   onboardingConditions: onBoardProps;
   onSuccess: () => void;
 }) {
-  const {
-    userProfile,
-    organizationId: defaultOrganizationId,
-    terms,
-  } = onboardingConditions;
+  const { userProfile, defaultOrganizationId, terms } = onboardingConditions;
 
   const [avatarUrl, setAvatarUrl] = useState<string | undefined>(
     userProfile.avatar_url ?? undefined,

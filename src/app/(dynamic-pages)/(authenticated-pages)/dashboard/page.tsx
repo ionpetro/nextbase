@@ -1,7 +1,6 @@
 import {
   fetchSlimOrganizations,
-  getDefaultOrganization,
-  setDefaultOrganization,
+  getDefaultOrganization
 } from '@/data/user/organizations';
 import { notFound, redirect } from 'next/navigation';
 import { Suspense } from 'react';
@@ -17,11 +16,11 @@ async function getOrganizationToRedirectTo(): Promise<string> {
     return defaultOrganizationId;
   }
 
+  // this condition is unreachable as the parent ../layout component ensures at least
+  // one organization exists
   if (!firstOrganization) {
     return notFound();
   }
-
-  await setDefaultOrganization(firstOrganization.id);
 
   return firstOrganization.id;
 }

@@ -1,5 +1,8 @@
 import { T } from '@/components/ui/Typography';
-import { getOrganizationTitle } from '@/data/user/organizations';
+import {
+  getLoggedInUserOrganizationRole,
+  getOrganizationTitle,
+} from '@/data/user/organizations';
 import { Suspense } from 'react';
 import { DeleteOrganization } from './DeleteOrganization';
 import { EditOrganizationForm } from './EditOrganizationForm';
@@ -19,6 +22,28 @@ async function EditOrganization({
   );
 }
 
+async function DeleteOrganizationIfAdmin({
+  organizationId,
+}: {
+  organizationId: string;
+}) {
+  const [organizationTitle, organizationRole] = await Promise.all([
+    getOrganizationTitle(organizationId),
+    getLoggedInUserOrganizationRole(organizationId),
+  ]);
+  const isOrganizationAdmin =
+    organizationRole === 'admin' || organizationRole === 'owner';
+  if (!isOrganizationAdmin) {
+    return null;
+  }
+  return (
+    <DeleteOrganization
+      organizationId={organizationId}
+      organizationTitle={organizationTitle}
+    />
+  );
+}
+
 export default async function EditOrganizationPage({
   params,
 }: {
@@ -28,7 +53,6 @@ export default async function EditOrganizationPage({
 }) {
   const { organizationId } = params;
 
-  const organizationTitle = await getOrganizationTitle(organizationId);
   return (
     <div className="space-y-4">
       <Suspense fallback={<T.Subtle>Loading...</T.Subtle>}>
@@ -37,10 +61,9 @@ export default async function EditOrganizationPage({
       <Suspense fallback={<T.Subtle>Loading...</T.Subtle>}>
         <SetDefaultOrganizationPreference organizationId={organizationId} />
       </Suspense>
-      <DeleteOrganization
-        organizationId={organizationId}
-        organizationTitle={organizationTitle}
-      />
+      <Suspense fallback={null}>
+        <DeleteOrganizationIfAdmin organizationId={organizationId} />
+      </Suspense>
     </div>
   );
 }

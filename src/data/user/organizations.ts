@@ -7,6 +7,7 @@ import type {
   NormalizedSubscription,
   Table,
   UnwrapPromise,
+  ValidSAPayload,
 } from '@/types';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import { revalidatePath } from 'next/cache';
@@ -127,7 +128,7 @@ export type InitialOrganizationListType = UnwrapPromise<
 export const getOrganizationById = async (organizationId: string) => {
   const supabaseClient = createSupabaseUserServerComponentClient();
 
-  const { data, error } = await supabaseAdminClient
+  const { data, error } = await supabaseClient
     .from('organizations')
     // query team_members and team_invitations in one go
     .select('*')
@@ -399,4 +400,24 @@ export async function setDefaultOrganization(organizationId: string) {
   }
 
   revalidatePath(`/organization/${organizationId}`);
+}
+
+export async function deleteOrganization(
+  organizationId: string,
+): Promise<ValidSAPayload<string>> {
+  const supabaseClient = createSupabaseUserServerActionClient();
+  const { error } = await supabaseClient
+    .from('organizations')
+    .delete()
+    .eq('id', organizationId);
+
+  if (error) {
+    return { status: 'error', message: error.message };
+  }
+
+  revalidatePath(`/organization/${organizationId}`);
+  return {
+    status: 'success',
+    data: `Organization ${organizationId} deleted successfully`,
+  };
 }

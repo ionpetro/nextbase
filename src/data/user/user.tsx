@@ -10,7 +10,6 @@ import { renderAsync } from '@react-email/render';
 import ConfirmAccountDeletionEmail from 'emails/account-deletion-request';
 import slugify from 'slugify';
 import urlJoin from 'url-join';
-import { getDefaultOrganizationId } from './organizations';
 
 export async function getIsAppAdmin(): Promise<boolean> {
   const user = await serverGetLoggedInUser();
@@ -202,18 +201,6 @@ export const getAcceptedTermsOfService = async (userId: string) => {
   }
 
   return data || [];
-};
-
-export const getOnboardingConditions = async (userId: string) => {
-  const userProfile = await getUserProfile(userId);
-  const organizationId = await getDefaultOrganizationId();
-  const acceptedTerms = await getAcceptedTermsOfService(userId);
-
-  return {
-    userProfile,
-    organizationId,
-    terms: acceptedTerms,
-  };
 };
 
 export async function requestAccountDeletion(): Promise<

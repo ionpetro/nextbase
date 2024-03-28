@@ -14,7 +14,7 @@ const UserOnboardingFlow = dynamic(
 
 export type onBoardProps = {
   userProfile: Table<'user_profiles'>;
-  organizationId: string | null;
+  defaultOrganizationId: string | null;
   terms: { accepted_terms: boolean }[];
 };
 const Confetti = dynamic(
@@ -36,9 +36,9 @@ export function ClientLayout({
 
   const [showConfetti, setShowConfetti] = useState<boolean>(false);
 
-  const { userProfile, organizationId, terms } = onboardingConditions;
+  const { userProfile, defaultOrganizationId, terms } = onboardingConditions;
 
-  if (!userProfile.full_name || !organizationId || !terms) {
+  if (!userProfile.full_name || !defaultOrganizationId || !terms) {
     return (
       <UserOnboardingFlow
         onSuccess={() => {

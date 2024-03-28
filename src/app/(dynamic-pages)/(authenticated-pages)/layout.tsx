@@ -1,7 +1,12 @@
 import { SIDEBAR_VISIBILITY_COOKIE_KEY } from '@/constants';
 import { LoggedInUserProvider } from '@/contexts/LoggedInUserContext';
 import { SidebarVisibilityProvider } from '@/contexts/SidebarVisibilityContext';
-import { getOnboardingConditions } from '@/data/user/user';
+import {
+  fetchSlimOrganizations,
+  getDefaultOrganization,
+  setDefaultOrganization,
+} from '@/data/user/organizations';
+import { getAcceptedTermsOfService, getUserProfile } from '@/data/user/user';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
 import { errors } from '@/utils/errors';
 import { cookies } from 'next/headers';
@@ -17,6 +22,38 @@ function getSidebarVisibility() {
   }
   return true;
 }
+
+async function getDefaultOrganizationOrSet(): Promise<string | null> {
+  const [slimOrganizations, defaultOrganizationId] = await Promise.all([
+    fetchSlimOrganizations(),
+    getDefaultOrganization(),
+  ]);
+  const firstOrganization = slimOrganizations[0];
+
+  if (defaultOrganizationId) {
+    return defaultOrganizationId;
+  }
+
+  if (!firstOrganization) {
+    return null;
+  }
+
+  await setDefaultOrganization(firstOrganization.id);
+
+  return firstOrganization.id;
+}
+
+const getOnboardingConditions = async (userId: string) => {
+  const userProfile = await getUserProfile(userId);
+  const defaultOrganizationId = await getDefaultOrganizationOrSet();
+  const acceptedTerms = await getAcceptedTermsOfService(userId);
+
+  return {
+    userProfile,
+    defaultOrganizationId,
+    terms: acceptedTerms,
+  };
+};
 
 export default async function Layout({ children }: { children: ReactNode }) {
   const supabaseClient = createSupabaseUserServerComponentClient();
