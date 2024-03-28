@@ -1,4 +1,5 @@
 import { test as setup } from '@playwright/test';
+import { signupUserHelper } from 'e2e/helpers/signup.helper';
 import { Client } from 'pg';
 
 
@@ -10,12 +11,12 @@ const authFile = 'playwright/.auth/admin.json';
 
 setup('check current database user and set admin role', async ({ page }) => {
 
-  // const identifier = getIdentifier()
-  // const emailAddress = `${identifier}@myapp.com`
-  // await signupUserHelper({ page, emailAddress, identifier });
+  const identifier = getIdentifier()
+  const emailAddress = `${identifier}@myapp.com`
+  await signupUserHelper({ page, emailAddress, identifier });
   // await onboardUserHelper({ page, name: 'Admin Joe' });
-  const emailAddress = `adminjoe3952@myapp.com`
-  const identifier = 'adminjoe3952'
+  // const emailAddress = `adminjoe3952@myapp.com`
+  // const identifier = 'adminjoe3952'
 
   // Connect to the PostgreSQL database
   const client = new Client({
