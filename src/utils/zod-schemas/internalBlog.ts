@@ -22,6 +22,7 @@ export const internalBlogPostSchema = z.object({
   cover_image: z.string().optional(),
   author_id: z.string().optional(),
   tag_ids: z.array(z.number()),
+  json_content: z.record(z.unknown()),
 });
 
 export type InternalBlogPostSchema = z.infer<typeof internalBlogPostSchema>;

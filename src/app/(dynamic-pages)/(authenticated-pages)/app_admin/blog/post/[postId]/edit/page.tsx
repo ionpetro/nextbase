@@ -45,6 +45,12 @@ async function BlogFormWrapper({ postId }: { postId: string }) {
     summary: post.summary,
     title: post.title,
     status: post.status,
+    json_content:
+      typeof post.json_content === 'string'
+        ? JSON.parse(post.json_content)
+        : typeof post.json_content === 'object' && post.json_content !== null
+          ? post.json_content
+          : {},
     tag_ids: blogTagRelationships.map((relationship) => relationship.tag_id),
   };
 

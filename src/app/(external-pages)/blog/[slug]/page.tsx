@@ -8,6 +8,7 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { z } from 'zod';
 import AuthorCard from '../AuthorCard';
+import { BlogContent } from './BlogContent';
 
 const paramsSchema = z.object({
   slug: z.string(),
@@ -53,6 +54,7 @@ export default async function BlogPostPage({ params }: { params: unknown }) {
   try {
     const { slug } = paramsSchema.parse(params);
     const post = await anonGetPublishedBlogPostBySlug(slug);
+
     return (
       <div className="relative w-full space-y-8 px-4 md:px-0 max-w-4xl mx-auto">
         {post.cover_image ? (
@@ -64,7 +66,7 @@ export default async function BlogPostPage({ params }: { params: unknown }) {
         ) : null}
         <div className="prose prose-lg prose-slate  dark:prose-invert prose-headings:font-display font-default focus:outline-none max-w-full">
           <h1>{post.title}</h1>
-          <div dangerouslySetInnerHTML={{ __html: post.content }}></div>
+          <BlogContent jsonContent={post.json_content} />
         </div>
         {post?.internal_blog_author_posts[0]?.internal_blog_author_profiles ? (
           <>

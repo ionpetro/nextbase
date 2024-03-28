@@ -16,9 +16,46 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { useTheme } from 'next-themes';
 import { useEffect, useRef } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { Control, Controller, useController, useForm } from 'react-hook-form';
 import ReactSelect from 'react-select';
 import slugify from 'slugify';
+
+import {
+  internalBlogPostSchema,
+  InternalBlogPostSchema,
+} from '@/utils/zod-schemas/internalBlog';
+import Trash from 'lucide-react/dist/esm/icons/trash';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { UploadBlogImage } from './post/UploadBlogImage';
+
+import { TipTapEditor } from '@/components/TipTapEditor';
+import { Editor } from '@tiptap/core';
+import { toast } from 'sonner';
+
+const defaultContent = {
+  type: 'doc',
+  content: [
+    {
+      type: 'paragraph',
+      content: [
+        {
+          type: 'text',
+          text: 'Example ',
+        },
+        {
+          type: 'text',
+          marks: [
+            {
+              type: 'bold',
+            },
+          ],
+          text: 'Text',
+        },
+      ],
+    },
+  ],
+};
 
 const darkThemeStyles = {
   control: (styles) => ({
@@ -69,23 +106,11 @@ const darkThemeStyles = {
   }),
 };
 
-import {
-  internalBlogPostSchema,
-  InternalBlogPostSchema,
-} from '@/utils/zod-schemas/internalBlog';
-import Trash from 'lucide-react/dist/esm/icons/trash';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { UploadBlogImage } from './post/UploadBlogImage';
-
-import { TipTapEditor } from '@/components/TipTapEditor';
-import { toast } from 'sonner';
-
 const baseDefaultValues: Partial<InternalBlogPostSchema> = {
   status: 'draft',
   is_featured: false,
   title: '',
-  content: '<p>Hello world</p>',
+  json_content: defaultContent,
   tag_ids: [],
 };
 
@@ -96,6 +121,37 @@ type CreateBlogFormProps = {
     data: TableInsertPayload<'internal_blog_posts'>,
     tagIds: number[],
   ) => Promise<unknown>;
+};
+
+const TipTapWrapper = ({
+  control,
+}: {
+  control: Control<InternalBlogPostSchema>;
+}) => {
+  const { field: contentField } = useController({
+    name: 'content',
+    control,
+  });
+
+  return (
+    <Controller
+      control={control}
+      name="json_content"
+      render={({ field }) => {
+        return (
+          <TipTapEditor
+            value={field.value}
+            onChange={(editor: Editor) => {
+              console.log(editor.getJSON());
+              field.onChange(editor.getJSON());
+              contentField.onChange(editor.getHTML());
+            }}
+            onBlur={field.onBlur}
+          />
+        );
+      }}
+    />
+  );
 };
 
 export type EditBlogFormProps = {
@@ -142,10 +198,29 @@ export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
     useMutation(
       async (data: InternalBlogPostSchema) => {
         const { author_id, tag_ids, ...restPayload } = data;
+        console.log(restPayload.json_content);
         if (rest.mode === 'create') {
-          return rest.onSubmit(author_id, restPayload, tag_ids);
+          return rest.onSubmit(
+            author_id,
+            {
+              ...restPayload,
+              json_content:
+                typeof restPayload.json_content === 'object' &&
+                  restPayload.json_content !== null
+                  ? restPayload.json_content
+                  : JSON.parse(restPayload.json_content),
+            },
+            tag_ids,
+          );
         } else {
-          return rest.onSubmit(author_id, rest.postId, restPayload, tag_ids);
+          return rest.onSubmit(author_id, rest.postId, {
+            ...restPayload,
+            json_content:
+              typeof restPayload.json_content === 'object' &&
+                restPayload.json_content !== null
+                ? restPayload.json_content
+                : JSON.parse(restPayload.json_content),
+          }, tag_ids);
         }
       },
       {
@@ -257,13 +332,7 @@ export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
 
       <div className="space-y-2">
         <Label>Content</Label>
-        <Controller
-          control={control}
-          name="content"
-          render={({ field }) => {
-            return <TipTapEditor {...field} />;
-          }}
-        />
+        <TipTapWrapper control={control} />
       </div>
       <div className="space-y-2">
         <Label>Summary</Label>

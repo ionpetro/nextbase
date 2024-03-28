@@ -1,6 +1,4 @@
 'use server';
-import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
-import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import { getIsAppAdmin } from '../user/user';
 
 export const ensureAppAdmin = async () => {
@@ -14,16 +12,7 @@ export const ensureAppAdmin = async () => {
 };
 
 export async function isLoggedInUserAppAdmin(): Promise<boolean> {
-  const authUser = await serverGetLoggedInUser();
-  const supabaseClient = createSupabaseUserServerComponentClient();
-  const { data: isUserAppAdmin, error } = await supabaseClient
-    .rpc('check_if_user_is_app_admin', {
-      user_id: authUser.id,
-    })
-    .single();
-  if (error) {
-    throw error;
-  }
+  const isAppAdmin = await getIsAppAdmin();
 
-  return isUserAppAdmin;
+  return isAppAdmin;
 }

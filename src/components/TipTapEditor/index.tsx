@@ -1,27 +1,28 @@
 'use client';
 
-import { useEditor, EditorContent, generateJSON } from '@tiptap/react';
-import { TiptapEditorProps } from './props';
-import { TiptapExtensions } from './extensions';
+import { Editor } from '@tiptap/core';
+import { EditorContent, useEditor } from '@tiptap/react';
 import { EditorBubbleMenu } from './components';
+import { TiptapExtensions } from './extensions';
+import { TiptapEditorProps } from './props';
 
 export function TipTapEditor({
   value,
   onChange,
   onBlur,
 }: {
-  value: string;
-  onChange: (value: string) => void;
+  value: Record<string, unknown>;
+  onChange: (editor: Editor) => void;
   onBlur?: () => void;
 }) {
   const editor = useEditor({
     extensions: TiptapExtensions,
     editorProps: TiptapEditorProps,
     onUpdate: (e) => {
-      onChange(e.editor.getHTML());
+      onChange(e.editor);
     },
     autofocus: 'end',
-    content: generateJSON(value, TiptapExtensions),
+    content: value,
     onBlur,
   });
 
