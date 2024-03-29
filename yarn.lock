@@ -3642,9 +3642,9 @@ agent-base@^7.0.2, agent-base@^7.1.0:
     debug "^4.3.4"
 
 ai@^3.0.0:
-  version "3.0.15"
-  resolved "https://registry.yarnpkg.com/ai/-/ai-3.0.15.tgz#312ea9a78c018d93e555d1f1bc47f4476ae3a902"
-  integrity sha512-ZQOsVWvH8OOAz9nuOluOWUs/3U+c3w7m6iWEQPbaxsuRcG/8W6fjPD6gdtzwRA+wX5i2OxoA/01iX1VD2yVA1A==
+  version "3.0.16"
+  resolved "https://registry.yarnpkg.com/ai/-/ai-3.0.16.tgz#f0a753de6c5408eda0bf1d364da4063cab9f478a"
+  integrity sha512-P6GGUYbE8PDUVeGT9D7tT9nF7lufDjbieZ97YVIVL/eZkGcfXQMvJleO1VzJ1eutoI8f5Llazmhg4K66Gs5q3Q==
   dependencies:
     eventsource-parser "1.1.2"
     jsondiffpatch "^0.6.0"
