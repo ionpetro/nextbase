@@ -8948,9 +8948,9 @@ next-mdx-remote@^4.4.1:
     vfile-matter "^3.0.1"
 
 next-nprogress-bar@^2.1.2:
-  version "2.3.10"
-  resolved "https://registry.yarnpkg.com/next-nprogress-bar/-/next-nprogress-bar-2.3.10.tgz#7c3e2611837e74da93f6575c2d51111c5266d40e"
-  integrity sha512-1ij8BHY4OFurrxI8Z6uDhTzthAdWsYP3Oo2ov5uhValZOE5780McOXrPfXd9Tl82zH3vBSaFt5r27Pp+GZLZ2Q==
+  version "2.3.11"
+  resolved "https://registry.yarnpkg.com/next-nprogress-bar/-/next-nprogress-bar-2.3.11.tgz#19f41eadbb39a6c013e4a2d4157b32a04a5b3bf5"
+  integrity sha512-OjSvsQwgSWa2qBMYO478QreGG9Jt82tr4wTQptmiyzNqqjzHCyKZNkhANnzPrjuFAoelIvmruJuakODofSnvTQ==
   dependencies:
     nprogress "^0.2.0"
 
