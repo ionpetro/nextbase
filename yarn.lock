@@ -3634,7 +3634,14 @@ agent-base@6:
   dependencies:
     debug "4"
 
-agent-base@^7.0.2, agent-base@^7.1.0:
+agent-base@^7.0.2:
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/agent-base/-/agent-base-7.1.1.tgz#bdbded7dfb096b751a2a087eeeb9664725b2e317"
+  integrity sha512-H0TSyFNDMomMNJQBn8wFV5YC/2eJ+VXECwOadZJT554xP6cODZHPX3H9QMQECxvrgiSOP1pHjy1sMWQVYJOUOA==
+  dependencies:
+    debug "^4.3.4"
+
+agent-base@^7.1.0:
   version "7.1.0"
   resolved "https://registry.yarnpkg.com/agent-base/-/agent-base-7.1.0.tgz#536802b76bc0b34aa50195eb2442276d613e3434"
   integrity sha512-o/zjMZRhJxny7OyEF+Op8X+efiELC7k7yOjMzgfzVqOzXqkBkWI79YoTdOtsuWd5BWhAGAuOY/Xa6xpiaWXiNg==
@@ -11244,9 +11251,9 @@ sucrase@^3.32.0:
     ts-interface-checker "^0.1.9"
 
 supabase@^1.127.4:
-  version "1.151.1"
-  resolved "https://registry.yarnpkg.com/supabase/-/supabase-1.151.1.tgz#d88522bcef0bd68740671761790c10e5adcefa56"
-  integrity sha512-fl4h9mgG3z+bQ7UntymT30yqvOPJ4AfiCDKvDCFAdpkDhiozSfQqh1LwytEQSqMpgt6PEAcDJdYEbvholqPKOQ==
+  version "1.153.1"
+  resolved "https://registry.yarnpkg.com/supabase/-/supabase-1.153.1.tgz#077d96535dfe9d5e409ec23554559ef567394df4"
+  integrity sha512-YhB843C9lSBeNjWohOSzJqUWlBRiOK/Tz/EhlK5o8VdYPdC/hPsEHdvoFO9Gym2RpexvKQMnhD28yQ4CYZIVTw==
   dependencies:
     bin-links "^4.0.3"
     https-proxy-agent "^7.0.2"
