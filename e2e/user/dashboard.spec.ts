@@ -1,5 +1,5 @@
 import { test } from '@playwright/test';
-import { dashboardDefaultOrganizationIdHelper } from './helpers/dashboard-default-organization-id.helper';
+import { dashboardDefaultOrganizationIdHelper } from '../_helpers/dashboard-default-organization-id.helper';
 
 test('dashboard for a user with profile', async ({ page }) => {
   const organizationId = await dashboardDefaultOrganizationIdHelper({ page });

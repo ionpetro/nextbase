@@ -50,15 +50,25 @@ const config: PlaywrightTestConfig = {
   projects: [
     {
       name: 'with-auth',
-      testMatch: 'auth/**/*.setup.ts',
+      testMatch: '_setups/user.setup.ts',
     },
     {
       name: 'with-app-admin',
-      testMatch: 'app_admin/**/*.setup.ts',
+      testMatch: '_setups/admin.setup.ts',
+    },
+    {
+      name: 'admin-users',
+      testMatch: 'admin/**/*.spec.ts',
+      retries: 0,
+      dependencies: ['with-app-admin'],
+      use: {
+        ...devices['Desktop Chrome'],
+        // storage state is loaded within test cases
+      },
     },
     {
       name: 'logged-in-users',
-      testMatch: /.*user.spec.ts/,
+      testMatch: 'user/**/*.spec.ts',
       retries: 0,
       dependencies: ['with-auth'],
       use: {
@@ -67,8 +77,8 @@ const config: PlaywrightTestConfig = {
       },
     },
     {
-      name: 'logged-out-users',
-      testIgnore: /.*user.spec.ts/,
+      name: 'anon-users',
+      testMatch: 'anon/**/*.spec.ts',
       use: {
         ...devices['Desktop Chrome'],
       },

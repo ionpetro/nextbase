@@ -44,47 +44,6 @@ const upsertPriceRecord = async (price: Stripe.Price) => {
   console.log(`Price inserted/updated: ${price.id}`);
 };
 
-const createOrRetrieveCustomer = async ({
-  email,
-  organizationId,
-  organizationTitle,
-}: {
-  email?: string;
-  organizationId: string;
-  organizationTitle?: string;
-}) => {
-  const { data, error } = await supabaseAdminClient
-    .from('customers')
-    .select('stripe_customer_id')
-    .eq('organization_id', organizationId)
-    .single();
-  if (error || !data?.stripe_customer_id) {
-    // No customer record found, let's create one.
-    const customerData: {
-      metadata: { supabaseOrganizationId: string };
-      email?: string;
-      description?: string;
-    } = {
-      metadata: {
-        supabaseOrganizationId: organizationId,
-      },
-    };
-    if (email) customerData.email = email;
-    if (organizationTitle) customerData.description = organizationTitle;
-    const customer = await stripe.customers.create(customerData);
-    // Now insert the customer ID into our Supabase mapping table.
-    const { error: supabaseError } = await supabaseAdminClient
-      .from('customers')
-      .insert([
-        { organization_id: organizationId, stripe_customer_id: customer.id },
-      ]);
-    if (supabaseError) throw supabaseError;
-    console.log(`New customer created and inserted for ${organizationId}.`);
-    return customer.id;
-  }
-  return data.stripe_customer_id;
-};
-
 /**
  * Copies the billing details from the payment method to the customer object.
  */
@@ -150,38 +109,38 @@ const manageSubscriptionStatusChange = async (
   // Upsert the latest status of the subscription object.
   /* eslint-disable prettier/prettier */
   const subscriptionData: Database['public']['Tables']['subscriptions']['Insert'] =
-    {
-      id: subscription.id,
-      organization_id: organizationId,
-      metadata: subscription.metadata,
-      status: subscription.status,
-      price_id: subscription.items.data[0].price.id,
-      //TODO check quantity on subscription
-      quantity: subscription.items.data[0].quantity,
-      cancel_at_period_end: subscription.cancel_at_period_end,
-      cancel_at: subscription.cancel_at
-        ? toDateTime(subscription.cancel_at).toISOString()
-        : null,
-      canceled_at: subscription.canceled_at
-        ? toDateTime(subscription.canceled_at).toISOString()
-        : null,
-      current_period_start: toDateTime(
-        subscription.current_period_start,
-      ).toISOString(),
-      current_period_end: toDateTime(
-        subscription.current_period_end,
-      ).toISOString(),
-      created: toDateTime(subscription.created).toISOString(),
-      ended_at: subscription.ended_at
-        ? toDateTime(subscription.ended_at).toISOString()
-        : null,
-      trial_start: subscription.trial_start
-        ? toDateTime(subscription.trial_start).toISOString()
-        : null,
-      trial_end: subscription.trial_end
-        ? toDateTime(subscription.trial_end).toISOString()
-        : null,
-    };
+  {
+    id: subscription.id,
+    organization_id: organizationId,
+    metadata: subscription.metadata,
+    status: subscription.status,
+    price_id: subscription.items.data[0].price.id,
+    //TODO check quantity on subscription
+    quantity: subscription.items.data[0].quantity,
+    cancel_at_period_end: subscription.cancel_at_period_end,
+    cancel_at: subscription.cancel_at
+      ? toDateTime(subscription.cancel_at).toISOString()
+      : null,
+    canceled_at: subscription.canceled_at
+      ? toDateTime(subscription.canceled_at).toISOString()
+      : null,
+    current_period_start: toDateTime(
+      subscription.current_period_start,
+    ).toISOString(),
+    current_period_end: toDateTime(
+      subscription.current_period_end,
+    ).toISOString(),
+    created: toDateTime(subscription.created).toISOString(),
+    ended_at: subscription.ended_at
+      ? toDateTime(subscription.ended_at).toISOString()
+      : null,
+    trial_start: subscription.trial_start
+      ? toDateTime(subscription.trial_start).toISOString()
+      : null,
+    trial_end: subscription.trial_end
+      ? toDateTime(subscription.trial_end).toISOString()
+      : null,
+  };
   /* eslint-enable prettier/prettier */
 
   const { error } = await supabaseAdminClient
@@ -300,8 +259,8 @@ export const getOrganizationsPaginated = async (
 };
 
 export {
-  createOrRetrieveCustomer,
   manageSubscriptionStatusChange,
   upsertPriceRecord,
-  upsertProductRecord,
+  upsertProductRecord
 };
+

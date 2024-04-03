@@ -1,6 +1,7 @@
 import { expect, request, test } from '@playwright/test';
+import { loginUserHelper } from 'e2e/_helpers/login-user.helper';
 import { uniqueId } from 'lodash';
-import { dashboardDefaultOrganizationIdHelper } from './helpers/dashboard-default-organization-id.helper';
+import { dashboardDefaultOrganizationIdHelper } from '../_helpers/dashboard-default-organization-id.helper';
 
 
 const INBUCKET_URL = `http://localhost:54324`;
@@ -10,50 +11,6 @@ test.describe.serial('authentication group', () => {
   test('login works correctly', async ({ page }) => {
 
 
-    // eg endpoint: https://api.testmail.app/api/json?apikey=${APIKEY}&namespace=${NAMESPACE}&pretty=true
-    async function getConfirmEmail(username: string): Promise<{
-      token: string;
-      url: string
-    }> {
-      const requestContext = await request.newContext()
-      const messages = await requestContext
-        .get(`${INBUCKET_URL}/api/v1/mailbox/${username}`)
-        .then((res) => res.json())
-        // InBucket doesn't have any params for sorting, so here
-        // we're sorting the messages by date
-        .then((items) =>
-          [...items].sort((a, b) => {
-            if (a.date < b.date) {
-              return 1
-            }
-
-            if (a.date > b.date) {
-              return -1
-            }
-
-            return 0
-          })
-        );
-
-      const latestMessageId = messages[0]?.id
-
-      if (latestMessageId) {
-        const message = await requestContext
-          .get(
-            `${INBUCKET_URL}/api/v1/mailbox/${username}/${latestMessageId}`
-          )
-          .then((res) => res.json())
-
-        // We've got the latest email. We're going to use regular
-        // expressions to match the bits we need.
-        const token = message.body.text.match(/enter the code: ([0-9]+)/)[1]
-        const url = message.body.text.match(/Log In \( (.+) \)/)[1]
-
-        return { token, url }
-      }
-
-      throw new Error('No email received')
-    }
 
     await page.goto(`/settings/security`);
 
@@ -61,43 +18,14 @@ test.describe.serial('authentication group', () => {
     const emailInput = page.locator('input[name="email"]');
     const emailAddress = await emailInput.getAttribute('value');
 
-    await page.goto(`/logout`);
-
-    await page.goto(`/login`);
-
-    const magicLinkButton = page.locator('button:has-text("Magic Link")');
-
-    if (!magicLinkButton) {
-      throw new Error('Magic Link button not found');
-    }
-
-    await magicLinkButton.click();
-
     if (!emailAddress) {
       throw new Error('Email is empty');
     }
 
-    await page.getByTestId('magic-link-form').locator('input').fill(emailAddress);
-    // await page.getByLabel('Password').fill('password');
-    await page.getByRole('button', { name: 'Login with Magic Link' }).click();
-    // check for this text - A magic link has been sent to your email!
-    await page.waitForSelector('text=A magic link has been sent to your email!');
-    const identifier = emailAddress.split('@')[0];
-    let url;
-    await expect.poll(async () => {
-      try {
-        const { url: urlFromCheck } = await getConfirmEmail(identifier);
-        url = urlFromCheck;
-        return typeof urlFromCheck;
-      } catch (e) {
-        return null;
-      }
-    }, {
-      message: 'make sure the email is received',
-      intervals: [1000, 2000, 5000, 10000, 20000],
-    }).toBe('string')
+    await page.goto(`/logout`);
 
-    await page.goto(url);
+
+    await loginUserHelper({ page, emailAddress });
     await dashboardDefaultOrganizationIdHelper({ page });
   });
 
@@ -149,40 +77,31 @@ test.describe.serial('authentication group', () => {
       url: string;
     }> {
       const requestContext = await request.newContext();
+      const now = new Date().getTime();
       const messages = await requestContext
         .get(`${INBUCKET_URL}/api/v1/mailbox/${username}`)
         .then((res) => res.json())
-        // InBucket doesn't have any params for sorting, so here
-        // we're sorting the messages by date
         .then((items) =>
-          [...items].sort((a, b) => {
-            if (a.date < b.date) {
-              return 1;
-            }
-
-            if (a.date > b.date) {
-              return -1;
-            }
-
-            return 0;
-          }),
+          items.filter((item) => {
+            const itemDate = new Date(item.date).getTime();
+            return Math.abs(now - itemDate) < 10000; // Filter out emails received older the last 20 seconds
+          }).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()),
         );
 
-      const latestMessageId = messages[0]?.id;
+      const latestMessage = messages[0];
 
-      if (latestMessageId) {
+      if (latestMessage) {
         const message = await requestContext
-          .get(`${INBUCKET_URL}/api/v1/mailbox/${username}/${latestMessageId}`)
+          .get(`${INBUCKET_URL}/api/v1/mailbox/${username}/${latestMessage.id}`)
           .then((res) => res.json());
 
-        // We've got the latest email. We're going to use regular
-        // expressions to match the bits we need.
+        const urlMatch = message.body.text.match(/Reset password \( (.+) \)/);
 
-        // match this text and extract url
-        // --------------\nReset password\n--------------\n\nFollow this link to reset the password for your user:\n\nReset password ( http://127.0.0.1:54321/auth/v1/verify?token=pkce_e2df68ace87a16abf48dd04aca116f9ee35612772ab190212a27ac88&type=recovery&redirect_to=http://localhost:3000/update-password )\n\nAlternatively, enter the code: 719963
-        const url = message.body.text.match(/Reset password \( (.+) \)/)[1];
+        if (!urlMatch) {
+          throw new Error("Email format unexpected");
+        }
 
-        return { url };
+        return { url: urlMatch[1] };
       }
 
       throw new Error("No email received");

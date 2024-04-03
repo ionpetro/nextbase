@@ -1,0 +1,35 @@
+{
+  "cookies": [
+    {
+      "name": "ph_NEXT_PUBLIC_POSTHOG_API_KEY_posthog",
+      "value": "%7B%22distinct_id%22%3A%2214070c49-0c67-4e27-9779-d6312c1d6eb7%22%2C%22%24sesid%22%3A%5B1712157576762%2C%22018ea48b-3ef0-7bdc-9513-6e8f24d285ea%22%2C1712157572848%5D%7D",
+      "domain": "localhost",
+      "path": "/",
+      "expires": 1743693576,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "sb-localhost-auth-token",
+      "value": "%5B%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJtYWdpY2xpbmsiLCJ0aW1lc3RhbXAiOjE3MTIxNTc1ODB9XSwiYXBwX21ldGFkYXRhIjp7InByb3ZpZGVyIjoiZW1haWwiLCJwcm92aWRlcnMiOlsiZW1haWwiXX0sImF1ZCI6ImF1dGhlbnRpY2F0ZWQiLCJlbWFpbCI6ImFkbWluam9lMzIzOEBteWFwcC5jb20iLCJleHAiOjE3MTIxNjExODAsImlhdCI6MTcxMjE1NzU4MCwiaXNzIjoiaHR0cDovLzEyNy4wLjAuMTo1NDMyMS9hdXRoL3YxIiwicGhvbmUiOiIiLCJyb2xlIjoiYXV0aGVudGljYXRlZCIsInNlc3Npb25faWQiOiI0ODRiMjg2Yy1jZjJhLTQ0MDEtYTM4Yy03MTI0Yzk5OTA3ZWIiLCJzdWIiOiIxNDA3MGM0OS0wYzY3LTRlMjctOTc3OS1kNjMxMmMxZDZlYjciLCJ1c2VyX21ldGFkYXRhIjp7fSwidXNlcl9yb2xlIjoiYWRtaW4ifQ.LX3XqvhRc3QlXyBeeTpfRnvQSanfA3ePA1upAb0cyC0%22%2C%22ZXfllstdFLQ-NpiYJBtQzg%22%2Cnull%2Cnull%2Cnull%5D",
+      "domain": "localhost",
+      "path": "/",
+      "expires": 1746717580.795679,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "http://localhost:3000",
+      "localStorage": [
+        {
+          "name": "ph_NEXT_PUBLIC_POSTHOG_API_KEY_posthog",
+          "value": "{\"distinct_id\":\"14070c49-0c67-4e27-9779-d6312c1d6eb7\",\"$sesid\":[1712157581612,\"018ea48b-3ef0-7bdc-9513-6e8f24d285ea\",1712157572848],\"$device_id\":\"018ea48b-3ee9-7d3f-8d4e-75e539eb3355\",\"$user_state\":\"identified\",\"$user_id\":\"14070c49-0c67-4e27-9779-d6312c1d6eb7\",\"$stored_person_properties\":{\"email\":\"adminjoe3238@myapp.com\"},\"$client_session_props\":{\"sessionId\":\"018ea48b-3ef0-7bdc-9513-6e8f24d285ea\",\"props\":{\"initialPathName\":\"/dashboard\",\"referringDomain\":\"$direct\"}}}"
+        }
+      ]
+    }
+  ]
+}

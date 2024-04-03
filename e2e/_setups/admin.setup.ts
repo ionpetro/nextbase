@@ -1,5 +1,7 @@
 import { test as setup } from '@playwright/test';
-import { signupUserHelper } from 'e2e/helpers/signup.helper';
+import { loginUserHelper } from 'e2e/_helpers/login-user.helper';
+import { onboardUserHelper } from 'e2e/_helpers/onboard-user.helper';
+import { signupUserHelper } from 'e2e/_helpers/signup.helper';
 import { Client } from 'pg';
 
 
@@ -7,14 +9,14 @@ function getIdentifier(): string {
   return `adminjoe` + Date.now().toString().slice(-4)
 }
 
-const authFile = 'playwright/.auth/admin.json';
+const adminAuthFile = 'playwright/.auth/admin.json';
 
 setup('check current database user and set admin role', async ({ page }) => {
 
   const identifier = getIdentifier()
   const emailAddress = `${identifier}@myapp.com`
   await signupUserHelper({ page, emailAddress, identifier });
-  // await onboardUserHelper({ page, name: 'Admin Joe' });
+  await onboardUserHelper({ page, name: 'Admin Joe' });
   // const emailAddress = `adminjoe3952@myapp.com`
   // const identifier = 'adminjoe3952'
 
@@ -36,6 +38,10 @@ setup('check current database user and set admin role', async ({ page }) => {
     if (userId) {
       await client.query("INSERT INTO public.user_roles (user_id, role) VALUES ($1, 'admin');", [userId]);
       console.log(`Admin role set for ${emailAddress}`);
+      await page.goto(`/logout`);
+      await loginUserHelper({ page, emailAddress });
+
+      await page.context().storageState({ path: adminAuthFile });
     } else {
       console.log(`User not found for email ${emailAddress}`);
     }

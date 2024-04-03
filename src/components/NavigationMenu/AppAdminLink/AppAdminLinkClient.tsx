@@ -13,6 +13,7 @@ export function AppAdminLinkClient() {
   return (
     <Link
       href="/app_admin"
+      data-testid="admin-panel-link"
       className={classNames(
         `flex gap-1.5 py-1.5 px-3 cursor-pointer items-center group rounded-md transition hover:cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-800 `,
         isActive ? ' bg-gray-100  dark:bg-slate-800  ' : ' bg-transparent',

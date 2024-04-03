@@ -12,6 +12,7 @@ export function AppAdminPreviewLink() {
 
   return (
     <Link
+      data-testid="admin-panel-link"
       href="/app_admin_preview"
       className={classNames(
         `flex px-4 w-max cursor-pointer items-center group py-1 rounded-lg transition hover:cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-800 `,

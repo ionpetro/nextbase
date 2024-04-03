@@ -1,6 +1,6 @@
 import { test as setup } from '@playwright/test';
-import { onboardUserHelper } from 'e2e/helpers/onboard-user.helper';
-import { signupUserHelper } from 'e2e/helpers/signup.helper';
+import { onboardUserHelper } from 'e2e/_helpers/onboard-user.helper';
+import { signupUserHelper } from 'e2e/_helpers/signup.helper';
 
 
 function getIdentifier(): string {

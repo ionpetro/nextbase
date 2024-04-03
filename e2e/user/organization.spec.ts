@@ -1,10 +1,10 @@
 import { expect, request, test } from '@playwright/test';
-import { dashboardDefaultOrganizationIdHelper } from './helpers/dashboard-default-organization-id.helper';
-import { getUserIdHelper } from './helpers/get-user-id.helper';
-import { onboardUserHelper } from './helpers/onboard-user.helper';
+import { dashboardDefaultOrganizationIdHelper } from '../_helpers/dashboard-default-organization-id.helper';
+import { getUserIdHelper } from '../_helpers/get-user-id.helper';
+import { onboardUserHelper } from '../_helpers/onboard-user.helper';
 
 
-test.describe('Organization', () => {
+test.describe.parallel('Organization', () => {
   test('create organization works correctly', async ({ page }) => {
     // Start from the index page (the baseURL is set via the webServer in the playwright.config.ts)
     await page.goto('/dashboard');
