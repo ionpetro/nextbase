@@ -94,9 +94,14 @@ export function Login({
     },
   );
   return (
-    <div className="container items-center text-left max-w-lg mx-auto overflow-auto min-h-[470px]">
+    <div
+      data-success={successMessage}
+      className="container data-[success]:flex items-center data-[success]:justify-center text-left max-w-lg mx-auto overflow-auto data-[success]:h-full min-h-[470px]"
+    >
       {successMessage ? (
-        <p className="text-blue-500 text-sm">{successMessage}</p>
+        <Card className="p-8">
+          <p className="text-blue-500 text-sm">{successMessage}</p>
+        </Card>
       ) : (
         <div className="space-y-8 bg-background p-6 rounded-lg shadow dark:border">
           <Tabs defaultValue="password" className="md:min-w-[400px]">
