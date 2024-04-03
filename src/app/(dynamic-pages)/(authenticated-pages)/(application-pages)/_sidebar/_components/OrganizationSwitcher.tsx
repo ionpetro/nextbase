@@ -71,7 +71,7 @@ export function OrganizationSwitcher({
         <Button
           variant="ghost"
           size="sm"
-          data-name="organization-switcher"
+          data-testid="organization-switcher"
           role="combobox"
           className="mx-0 px-2 py-5 border hover:border-neutral-700 dark:hover:border-gray-500 hover:bg-transparent rounded-sm font-normal text-gray-500 dark:text-gray-300 text-sm justify-between truncate w-full "
         >

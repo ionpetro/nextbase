@@ -10,11 +10,11 @@ import { renderAsync } from '@react-email/render';
 import TeamInvitationEmail from 'emails/TeamInvitation';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { getInvitationOrganizationDetails } from './elevatedQueries';
 import {
   createAcceptedOrgInvitationNotification,
   createNotification,
 } from './notifications';
-import { getOrganizationById } from './organizations';
 import { getUserProfile } from './user';
 
 // This function allows an application admin with service_role
@@ -295,7 +295,7 @@ export async function getPendingInvitationsOfUser() {
 
     const organizationId = data[0].organization_id;
 
-    const organization = await getOrganizationById(organizationId);
+    const organization = await getInvitationOrganizationDetails(organizationId);
 
     return data.map((invitation) => {
       return {
@@ -327,7 +327,7 @@ export const getInvitationById = async (invitationId: string) => {
 
   const organizationId = data[0].organization_id;
 
-  const organization = await getOrganizationById(organizationId);
+  const organization = await getInvitationOrganizationDetails(organizationId);
 
   return data.map((invitation) => {
     return {

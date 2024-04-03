@@ -1,7 +1,10 @@
 'use server';
 import { createSupabaseUserServerActionClient } from '@/supabase-clients/user/createSupabaseUserServerActionClient';
+import { ValidSAPayload } from '@/types';
 
-export async function updatePasswordAction(password: string) {
+export async function updatePasswordAction(
+  password: string,
+): Promise<ValidSAPayload<true>> {
   const supabaseClient = createSupabaseUserServerActionClient();
   const { error } = await supabaseClient.auth.updateUser({
     password,
@@ -10,8 +13,16 @@ export async function updatePasswordAction(password: string) {
   console.log('error', error);
 
   if (error) {
-    throw error;
+    return {
+      status: 'error',
+      message: error.message,
+    };
   }
+
+  return {
+    status: 'success',
+    data: true,
+  };
 }
 
 export async function updateEmailAction(email: string) {

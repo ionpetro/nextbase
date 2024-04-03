@@ -22,10 +22,11 @@ const config: PlaywrightTestConfig = {
   // Run your local dev server before starting the tests:
   // https://playwright.dev/docs/test-advanced#launching-a-development-web-server-during-the-tests
   webServer: {
-    command: 'cross-env NODE_ENV=test next dev',
+    command: 'cross-env NODE_ENV=test pnpm dev',
     url: baseURL,
     timeout: 120 * 1000,
-    reuseExistingServer: !process.env.CI,
+    // reuseExistingServer: !process.env.CI,
+
   },
 
   use: {
@@ -56,7 +57,7 @@ const config: PlaywrightTestConfig = {
       testMatch: 'app_admin/**/*.setup.ts',
     },
     {
-      name: 'Logged In Users (Desktop Chrome)',
+      name: 'logged-in-users',
       testMatch: /.*user.spec.ts/,
       retries: 0,
       dependencies: ['with-auth'],
@@ -66,7 +67,7 @@ const config: PlaywrightTestConfig = {
       },
     },
     {
-      name: 'Logged Out Users (Desktop Chrome)',
+      name: 'logged-out-users',
       testIgnore: /.*user.spec.ts/,
       use: {
         ...devices['Desktop Chrome'],
