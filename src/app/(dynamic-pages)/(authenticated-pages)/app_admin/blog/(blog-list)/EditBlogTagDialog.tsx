@@ -16,6 +16,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { Textarea } from '@/components/ui/textarea';
+import { updateBlogTag } from '@/data/admin/internal-blog';
 import { useToastMutation } from '@/hooks/useToastMutation';
 import { Table } from '@/types';
 import Edit from 'lucide-react/dist/esm/icons/edit';
@@ -33,10 +34,8 @@ type BlogTagFormType = z.infer<typeof blogTagSchema>;
 
 export const EditBlogTagDialog = ({
   tag,
-  updateBlogTag,
 }: {
   tag: Table<'internal_blog_post_tags'>;
-  updateBlogTag: (id: number, data: BlogTagFormType) => Promise<void>;
 }) => {
   const router = useRouter();
 

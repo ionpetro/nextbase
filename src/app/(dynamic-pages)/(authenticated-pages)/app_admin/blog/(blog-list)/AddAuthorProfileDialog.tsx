@@ -19,6 +19,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
+import { createAuthorProfile } from '@/data/admin/internal-blog';
 import { useToastMutation } from '@/hooks/useToastMutation';
 import { Table } from '@/types';
 import { authorProfileSchema } from '@/utils/zod-schemas/internalBlog';
@@ -37,12 +38,10 @@ type CreateAuthorPayload = Omit<
 >;
 export const AddAuthorProfileDialog = ({
   appAdmins,
-  createAuthorProfile,
   authorProfiles,
 }: {
   appAdmins: Array<Table<'user_profiles'>>;
   authorProfiles: Array<Table<'internal_blog_author_profiles'>>;
-  createAuthorProfile: (data: CreateAuthorPayload) => Promise<void>;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();

@@ -17,6 +17,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
+import { updateAuthorProfile } from '@/data/admin/internal-blog';
 import { useToastMutation } from '@/hooks/useToastMutation';
 import { Table } from '@/types';
 import { authorProfileSchema } from '@/utils/zod-schemas/internalBlog';
@@ -35,15 +36,10 @@ type UpdateAuthorPayload = Omit<
 
 export const EditAuthorProfileDialog = ({
   profile,
-  updateAuthorProfile,
   appAdmins,
 }: {
   profile: UpdateAuthorPayload;
   appAdmins: Array<Table<'user_profiles'>>;
-  updateAuthorProfile: (
-    userId: string,
-    data: UpdateAuthorPayload,
-  ) => Promise<void>;
 }) => {
   const router = useRouter();
 

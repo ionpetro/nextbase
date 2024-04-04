@@ -1,6 +1,11 @@
 'use server';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
-import { TableInsertPayload, TableUpdatePayload } from '@/types';
+import {
+  Table,
+  TableInsertPayload,
+  TableUpdatePayload,
+  ValidSAPayload,
+} from '@/types';
 import { revalidatePath } from 'next/cache';
 
 export const deleteBlogPost = async (blogPostId: string) => {
@@ -14,21 +19,19 @@ export const deleteBlogPost = async (blogPostId: string) => {
   if (error) {
     throw error;
   }
-
-  revalidatePath('/blog');
-  revalidatePath(`/app_admin`);
+  revalidatePath('/', 'layout');
 };
 
 export const getAllBlogPosts = async () => {
-  'use server';
   const { data, error } = await supabaseAdminClient
     .from('internal_blog_posts')
-    .select('*');
+    .select('*')
+    .order('created_at', { ascending: false });
 
   if (error) {
     throw error;
   }
-
+  console.log({ data });
   return data;
 };
 
@@ -42,16 +45,14 @@ export const createAuthorProfile = async (
   if (error) {
     throw error;
   }
-
-  revalidatePath('/');
-  return data;
 };
 
 export const createBlogPost = async (
-  authorId: string,
+  authorId: string | undefined,
   payload: TableInsertPayload<'internal_blog_posts'>,
   tagIds: number[],
-) => {
+): Promise<ValidSAPayload<Table<'internal_blog_posts'>>> => {
+  'use server';
   const { data, error } = await supabaseAdminClient
     .from('internal_blog_posts')
     .insert(payload)
@@ -59,7 +60,10 @@ export const createBlogPost = async (
     .single();
 
   if (error) {
-    throw error;
+    return {
+      status: 'error',
+      message: error.message,
+    };
   }
 
   if (authorId) {
@@ -71,10 +75,11 @@ export const createBlogPost = async (
   }
 
   await updateBlogTagRelationships(data.id, tagIds);
-
-  revalidatePath('/');
-
-  return data;
+  revalidatePath('/', 'layout');
+  return {
+    status: 'success',
+    data,
+  };
 };
 
 export const getBlogPostById = async (postId: string) => {
@@ -136,16 +141,14 @@ export const updateAuthorProfile = async (
   if (error) {
     throw error;
   }
-
-  revalidatePath('/');
 };
 
 export const updateBlogPost = async (
-  authorId: string,
+  authorId: string | undefined,
   postId: string,
   payload: Partial<TableUpdatePayload<'internal_blog_posts'>>,
   tagIds: number[],
-) => {
+): Promise<ValidSAPayload<Table<'internal_blog_posts'>>> => {
   const { data, error } = await supabaseAdminClient
     .from('internal_blog_posts')
     .update(payload)
@@ -154,7 +157,10 @@ export const updateBlogPost = async (
     .single();
 
   if (error) {
-    throw error;
+    return {
+      status: 'error',
+      message: error.message,
+    };
   }
 
   const { data: oldAuthors, error: oldAuthorsError } = await supabaseAdminClient
@@ -177,10 +183,16 @@ export const updateBlogPost = async (
   }
 
   // assign new author to the post
-  await assignBlogPostToAuthor(authorId, postId);
+  if (authorId) {
+    await assignBlogPostToAuthor(authorId, postId);
+  }
   await updateBlogTagRelationships(data.id, tagIds);
+  revalidatePath('/', 'layout');
 
-  revalidatePath('/');
+  return {
+    status: 'success',
+    data,
+  };
 };
 
 export const assignBlogPostToAuthor = async (
@@ -248,8 +260,6 @@ export const deleteAuthorProfile = async (userId: string) => {
   if (error) {
     throw error;
   }
-
-  revalidatePath('/');
 };
 
 export const createBlogTag = async (
@@ -262,9 +272,6 @@ export const createBlogTag = async (
   if (error) {
     throw error;
   }
-
-  revalidatePath('/');
-  return data;
 };
 
 export const updateBlogTag = async (
@@ -281,9 +288,6 @@ export const updateBlogTag = async (
   if (error) {
     throw error;
   }
-
-  revalidatePath('/');
-  return data;
 };
 
 export const deleteBlogTag = async (id: number) => {
@@ -295,8 +299,6 @@ export const deleteBlogTag = async (id: number) => {
   if (error) {
     throw error;
   }
-
-  revalidatePath('/');
 };
 
 export const getAllBlogTags = async () => {
@@ -349,6 +351,4 @@ export const updateBlogTagRelationships = async (
       throw error2;
     }
   }
-
-  revalidatePath('/');
 };

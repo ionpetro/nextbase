@@ -1,10 +1,6 @@
 import Overline from '@/components/Text/Overline';
 import { T } from '@/components/ui/Typography';
-import {
-  createBlogPost,
-  getAllAuthors,
-  getAllBlogTags,
-} from '@/data/admin/internal-blog';
+import { getAllAuthors, getAllBlogTags } from '@/data/admin/internal-blog';
 import ChevronLeft from 'lucide-react/dist/esm/icons/chevron-left';
 import Link from 'next/link';
 import { Suspense } from 'react';
@@ -15,14 +11,7 @@ async function BlogFormWrapper() {
     getAllAuthors(),
     getAllBlogTags(),
   ]);
-  return (
-    <BlogForm
-      tags={tags}
-      authors={authors}
-      mode="create"
-      onSubmit={createBlogPost}
-    />
-  );
+  return <BlogForm tags={tags} authors={authors} mode="create" />;
 }
 
 export default async function CreateBlogPostPage() {

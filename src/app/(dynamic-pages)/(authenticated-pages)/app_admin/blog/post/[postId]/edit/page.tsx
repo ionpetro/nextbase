@@ -1,18 +1,17 @@
 import Overline from '@/components/Text/Overline';
 import { T } from '@/components/ui/Typography';
+import {
+  getAllAuthors,
+  getAllBlogTags,
+  getBlogPostById,
+  getBlogTagRelationships,
+} from '@/data/admin/internal-blog';
 import ChevronLeft from 'lucide-react/dist/esm/icons/chevron-left';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 import { z } from 'zod';
 import { BlogForm, EditBlogFormProps } from '../../../BlogForm';
-import {
-  getAllAuthors,
-  getAllBlogTags,
-  getBlogPostById,
-  getBlogTagRelationships,
-  updateBlogPost,
-} from '../../../actions';
 
 const paramsSchema = z.object({
   postId: z.string(),
@@ -60,7 +59,6 @@ async function BlogFormWrapper({ postId }: { postId: string }) {
       authors={authors}
       mode="update"
       initialBlogPost={initialBlogPost}
-      onSubmit={updateBlogPost}
       postId={post.id}
     />
   );

@@ -16,6 +16,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { Textarea } from '@/components/ui/textarea';
+import { createBlogTag } from '@/data/admin/internal-blog';
 import { useToastMutation } from '@/hooks/useToastMutation';
 import TagsIcon from 'lucide-react/dist/esm/icons/tag';
 import { useRouter } from 'next/navigation';
@@ -30,11 +31,7 @@ const blogTagSchema = z.object({
 
 type BlogTagFormType = z.infer<typeof blogTagSchema>;
 
-export const AddBlogTagDialog = ({
-  createBlogTag,
-}: {
-  createBlogTag: (data: BlogTagFormType) => Promise<void>;
-}) => {
+export const AddBlogTagDialog = () => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const { control, handleSubmit, watch, setValue, formState } =

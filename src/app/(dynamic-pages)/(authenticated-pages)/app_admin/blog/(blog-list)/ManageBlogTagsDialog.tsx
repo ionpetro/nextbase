@@ -8,8 +8,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import { deleteBlogTag } from '@/data/admin/internal-blog';
 import { useToastMutation } from '@/hooks/useToastMutation';
-import { Table, TableInsertPayload, TableUpdatePayload } from '@/types';
+import { Table } from '@/types';
 import TagsIcon from 'lucide-react/dist/esm/icons/tag';
 import Trash from 'lucide-react/dist/esm/icons/trash';
 import { useRouter } from 'next/navigation';
@@ -19,19 +20,8 @@ import { EditBlogTagDialog } from './EditBlogTagDialog';
 
 export const ManageBlogTagsDialog = ({
   blogTags,
-  updateBlogTag,
-  deleteBlogTag,
-  createBlogTag,
 }: {
   blogTags: Array<Table<'internal_blog_post_tags'>>;
-  updateBlogTag: (
-    id: number,
-    data: Partial<TableUpdatePayload<'internal_blog_post_tags'>>,
-  ) => Promise<void>;
-  deleteBlogTag: (id: number) => Promise<void>;
-  createBlogTag: (
-    data: Partial<TableInsertPayload<'internal_blog_post_tags'>>,
-  ) => Promise<void>;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
@@ -81,7 +71,7 @@ export const ManageBlogTagsDialog = ({
               >
                 <p>{tag.name}</p>
                 <div className="flex items-center gap-1">
-                  <EditBlogTagDialog tag={tag} updateBlogTag={updateBlogTag} />
+                  <EditBlogTagDialog tag={tag} />
                   <Button
                     variant="ghost"
                     disabled={isDeletingBlogTag}
@@ -97,7 +87,7 @@ export const ManageBlogTagsDialog = ({
               </div>
             ))}
           </div>
-          <AddBlogTagDialog createBlogTag={createBlogTag} />
+          <AddBlogTagDialog />
         </div>
       </DialogContent>
     </Dialog>

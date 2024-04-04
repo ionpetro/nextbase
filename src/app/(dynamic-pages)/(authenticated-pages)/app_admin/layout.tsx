@@ -47,8 +47,7 @@ export default async function Layout({
                 className="hover:bg-gray-50 dark:hover:bg-slate-800/50 bg-gray-50 dark:bg-slate-800/50 text-gray-600 dark:text-slate-400"
               >
                 All sections of this area are protected and only accessible by
-                Application Admins. This is a preview of the admin panel for
-                demo purposes.
+                Application Admins.
               </Alert>
               {children}
             </div>

@@ -10,8 +10,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import { deleteAuthorProfile } from '@/data/admin/internal-blog';
 import { useToastMutation } from '@/hooks/useToastMutation';
-import { Table, TableUpdatePayload } from '@/types';
+import { Table } from '@/types';
 import Trash from 'lucide-react/dist/esm/icons/trash';
 import UsersIcon from 'lucide-react/dist/esm/icons/users';
 import { useRouter } from 'next/navigation';
@@ -24,18 +25,9 @@ type AuthorProfile = Table<'internal_blog_author_profiles'>;
 export const ManageAuthorsDialog = ({
   appAdmins,
   authorProfiles,
-  updateAuthorProfile,
-  deleteAuthorProfile,
-  createAuthorProfile,
 }: {
   appAdmins: Array<Table<'user_profiles'>>;
   authorProfiles: Array<Table<'internal_blog_author_profiles'>>;
-  updateAuthorProfile: (
-    userId: string,
-    data: Partial<TableUpdatePayload<'internal_blog_author_profiles'>>,
-  ) => Promise<void>;
-  deleteAuthorProfile: (userId: string) => Promise<void>;
-  createAuthorProfile: (data: AuthorProfile) => Promise<void>;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
@@ -101,7 +93,6 @@ export const ManageAuthorsDialog = ({
                   <EditAuthorProfileDialog
                     appAdmins={appAdmins}
                     profile={profile}
-                    updateAuthorProfile={updateAuthorProfile}
                   />
                   <Button
                     variant="ghost"
@@ -128,7 +119,6 @@ export const ManageAuthorsDialog = ({
             Cancel
           </Button>
           <AddAuthorProfileDialog
-            createAuthorProfile={createAuthorProfile}
             appAdmins={appAdmins}
             authorProfiles={authorProfiles}
           />

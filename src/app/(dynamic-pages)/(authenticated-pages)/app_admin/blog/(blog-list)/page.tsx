@@ -1,17 +1,11 @@
 import { T } from '@/components/ui/Typography';
 import { Button } from '@/components/ui/button';
-import PenSquareIcon from 'lucide-react/dist/esm/icons/pen-tool';
 import {
-  createAuthorProfile,
-  createBlogTag,
-  deleteAuthorProfile,
-  deleteBlogTag,
   getAllAppAdmins,
   getAllAuthors,
-  getAllBlogTags,
-  updateAuthorProfile,
-  updateBlogTag,
-} from '../actions';
+  getAllBlogTags
+} from '@/data/admin/internal-blog';
+import PenSquareIcon from 'lucide-react/dist/esm/icons/pen-tool';
 
 import Link from 'next/link';
 import { Suspense } from 'react';
@@ -27,19 +21,8 @@ async function ActionButtons() {
   ]);
   return (
     <div className="space-x-2 mb-6">
-      <ManageAuthorsDialog
-        appAdmins={appAdmins}
-        authorProfiles={authors}
-        updateAuthorProfile={updateAuthorProfile}
-        deleteAuthorProfile={deleteAuthorProfile}
-        createAuthorProfile={createAuthorProfile}
-      />
-      <ManageBlogTagsDialog
-        blogTags={blogTags}
-        createBlogTag={createBlogTag}
-        deleteBlogTag={deleteBlogTag}
-        updateBlogTag={updateBlogTag}
-      />
+      <ManageAuthorsDialog appAdmins={appAdmins} authorProfiles={authors} />
+      <ManageBlogTagsDialog blogTags={blogTags} />
       {/* {authors.length ? ( */}
       <Link href="/app_admin/blog/post/create">
         <Button variant="default">

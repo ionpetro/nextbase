@@ -11,11 +11,10 @@ import {
 } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
-import { Table, TableInsertPayload, TableUpdatePayload } from '@/types';
+import { Table } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
 import { useTheme } from 'next-themes';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { Control, Controller, useController, useForm } from 'react-hook-form';
 import ReactSelect from 'react-select';
 import slugify from 'slugify';
@@ -30,8 +29,9 @@ import { useRouter } from 'next/navigation';
 import { UploadBlogImage } from './post/UploadBlogImage';
 
 import { TipTapEditor } from '@/components/TipTapEditor';
+import { createBlogPost, updateBlogPost } from '@/data/admin/internal-blog';
+import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import { Editor } from '@tiptap/core';
-import { toast } from 'sonner';
 
 const defaultContent = {
   type: 'doc',
@@ -116,11 +116,6 @@ const baseDefaultValues: Partial<InternalBlogPostSchema> = {
 
 type CreateBlogFormProps = {
   mode: 'create';
-  onSubmit: (
-    authorId: string | undefined,
-    data: TableInsertPayload<'internal_blog_posts'>,
-    tagIds: number[],
-  ) => Promise<unknown>;
 };
 
 const TipTapWrapper = ({
@@ -156,12 +151,6 @@ const TipTapWrapper = ({
 
 export type EditBlogFormProps = {
   mode: 'update';
-  onSubmit: (
-    authorId: string | undefined,
-    postId: string,
-    data: TableUpdatePayload<'internal_blog_posts'>,
-    tagIds: number[],
-  ) => Promise<unknown>;
   initialBlogPost: Partial<InternalBlogPostSchema>;
   postId: string;
 };
@@ -193,72 +182,90 @@ export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
     setValue('slug', slug);
   }, [setValue, titleValue]);
 
-  const toastRef = useRef<string | number | null>(null);
-  const { mutate: submitPostMutation, isLoading: isSubmittingPost } =
-    useMutation(
+  const { mutate: createPostMutation, isLoading: isCreatingPost } =
+    useSAToastMutation(
       async (data: InternalBlogPostSchema) => {
         const { author_id, tag_ids, ...restPayload } = data;
         console.log(restPayload.json_content);
-        if (rest.mode === 'create') {
-          return rest.onSubmit(
-            author_id,
-            {
-              ...restPayload,
-              json_content:
-                typeof restPayload.json_content === 'object' &&
-                  restPayload.json_content !== null
-                  ? restPayload.json_content
-                  : JSON.parse(restPayload.json_content),
-            },
-            tag_ids,
-          );
-        } else {
-          return rest.onSubmit(author_id, rest.postId, {
+        if (rest.mode !== 'create') {
+          throw new Error('Invalid mode');
+        }
+        const response = await createBlogPost(
+          author_id,
+          {
             ...restPayload,
             json_content:
               typeof restPayload.json_content === 'object' &&
                 restPayload.json_content !== null
                 ? restPayload.json_content
                 : JSON.parse(restPayload.json_content),
-          }, tag_ids);
-        }
+          },
+          tag_ids,
+        );
+        router.refresh();
+        return response;
       },
       {
-        onMutate: () => {
-          if (rest.mode === 'update') {
-            const toastId = toast.loading('Updating blog post...');
-            toastRef.current = toastId;
-          } else {
-            const toastId = toast.loading('Creating blog post...');
-            toastRef.current = toastId;
+        loadingMessage: 'Creating post...',
+        successMessage: 'Post created!',
+        errorMessage(error) {
+          try {
+            if (error instanceof Error) {
+              return String(error.message);
+            }
+            return `Failed to create post ${String(error)}`;
+          } catch (_err) {
+            console.warn(_err);
+            return 'Failed to create post';
           }
         },
-        onSuccess: () => {
-          router.refresh();
-          if (rest.mode === 'update') {
-            toast.success('Blog post updated successfully', {
-              id: toastRef.current ?? undefined,
-            });
+        onSuccess: (response) => {
+          if ('data' in response && response.data) {
+            const data = response.data;
+            router.push(`/app_admin/blog/post/${data.id}/edit`);
           } else {
-            toast.success('Blog post created', {
-              id: toastRef.current ?? undefined,
-            });
-            router.push('/app_admin/blog');
+            throw new Error('Failed to create post');
           }
-          toastRef.current = null;
         },
-        onError: (error) => {
-          let message = `Failed`;
-          if (error instanceof Error) {
-            message += `: ${error.message}`;
-          } else if (typeof error === 'string') {
-            message += `: ${error}`;
-          }
+      },
+    );
 
-          toast.error(message, {
-            id: toastRef.current ?? undefined,
-          });
-          toastRef.current = null;
+  const { mutate: updatePostMutation, isLoading: isUpdatingPost } =
+    useSAToastMutation(
+      async (data: InternalBlogPostSchema) => {
+        const { author_id, tag_ids, ...restPayload } = data;
+        if (rest.mode !== 'update') {
+          throw new Error('Invalid mode');
+        }
+        const response = await updateBlogPost(
+          author_id,
+          rest.postId,
+          {
+            ...restPayload,
+            json_content:
+              typeof restPayload.json_content === 'object' &&
+                restPayload.json_content !== null
+                ? restPayload.json_content
+                : JSON.parse(restPayload.json_content),
+          },
+          tag_ids,
+        );
+        router.refresh();
+        return response;
+      },
+      {
+        loadingMessage: 'Updating post...',
+        successMessage: 'Post updated!',
+        errorMessage(error) {
+          try {
+            if (error instanceof Error) {
+              return String(error.message);
+            }
+            return `Failed to update post ${String(error)}`;
+          } catch (_err) {
+            console.warn(_err);
+            return 'Failed to update post';
+          }
         },
       },
     );
@@ -267,7 +274,11 @@ export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
     if (!data.author_id) {
       delete data.author_id;
     }
-    submitPostMutation(data);
+    if (rest.mode === 'update') {
+      updatePostMutation(data);
+    } else {
+      createPostMutation(data);
+    }
   }
 
   return (
@@ -349,7 +360,7 @@ export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
           name="is_featured"
           render={({ field }) => (
             <Switch
-              disabled={isSubmittingPost}
+              disabled={isCreatingPost || isUpdatingPost}
               checked={field.value}
               onBlur={field.onBlur}
               name={field.name}
@@ -447,8 +458,11 @@ export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
           )}
         />
       </div>
-      <Button disabled={!isValid || isSubmittingPost} type="submit">
-        {isSubmittingPost ? 'Submitting...' : 'Submit Post'}
+      <Button
+        disabled={!isValid || isCreatingPost || isUpdatingPost}
+        type="submit"
+      >
+        {isCreatingPost || isUpdatingPost ? 'Submitting...' : 'Submit Post'}
       </Button>
     </form>
   );
