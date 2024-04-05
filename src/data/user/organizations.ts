@@ -199,7 +199,7 @@ export const updateOrganizationTitle = async (
     throw error;
   }
 
-  revalidatePath(`/organization/${organizationId}`);
+  revalidatePath(`/organization/${organizationId}`, 'layout');
   return data;
 };
 
@@ -399,7 +399,7 @@ export async function setDefaultOrganization(organizationId: string) {
     throw updateError;
   }
 
-  revalidatePath(`/organization/${organizationId}`);
+  revalidatePath(`/organization/${organizationId}`, 'layout');
 }
 
 export async function deleteOrganization(
@@ -415,7 +415,7 @@ export async function deleteOrganization(
     return { status: 'error', message: error.message };
   }
 
-  revalidatePath(`/organization/${organizationId}`);
+  revalidatePath(`/organization/${organizationId}`, 'layout');
   return {
     status: 'success',
     data: `Organization ${organizationId} deleted successfully`,

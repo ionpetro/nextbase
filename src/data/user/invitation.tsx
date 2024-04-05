@@ -250,7 +250,7 @@ export async function acceptInvitationAction(
     },
   );
 
-  revalidatePath('/');
+  revalidatePath('/', 'layout');
   return invitationResponse.data.organization_id;
 }
 
@@ -272,7 +272,7 @@ export async function declineInvitationAction(invitationId: string) {
   if (invitationResponse.error) {
     throw invitationResponse.error;
   }
-  revalidatePath('/');
+  revalidatePath('/', 'layout');
   redirect('/dashboard');
 }
 
@@ -374,7 +374,7 @@ export async function revokeInvitation(invitationId: string) {
     throw invitationResponse.error;
   }
 
-  revalidatePath('/');
+  revalidatePath('/', 'layout');
 
   return invitationResponse.data;
 }
