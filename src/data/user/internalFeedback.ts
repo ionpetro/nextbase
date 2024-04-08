@@ -5,6 +5,7 @@ import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user
 import { Enum } from '@/types';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import { revalidatePath } from 'next/cache';
+import { createReceivedFeedbackNotification } from './notifications';
 
 export async function getAllInternalFeedbackForLoggedInUser() {
   const user = await serverGetLoggedInUser();
@@ -161,6 +162,16 @@ export async function createInternalFeedback(payload: {
   if (error) {
     throw error;
   }
+
+  const insertedFeedback = data[0];
+  if (!insertedFeedback) {
+    throw new Error('Failed to create feedback');
+  }
+
+  await createReceivedFeedbackNotification({
+    feedbackId: insertedFeedback.id,
+    feedbackTitle: insertedFeedback.title,
+  });
 
   revalidatePath('/feedback', 'layout');
   revalidatePath('/app_admin', 'layout');

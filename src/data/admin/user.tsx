@@ -1,10 +1,10 @@
 'use server';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 import { Table } from '@/types';
-import { ensureAppAdmin } from './security';
-import { renderAsync } from '@react-email/render';
 import { sendEmail } from '@/utils/api-routes/utils';
+import { renderAsync } from '@react-email/render';
 import SignInEmail from 'emails/SignInEmail';
+import { ensureAppAdmin } from './security';
 
 export const appAdminGetUserProfile = async (
   userId: string,

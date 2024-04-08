@@ -138,7 +138,10 @@ const TipTapWrapper = ({
             value={field.value}
             onChange={(editor: Editor) => {
               console.log(editor.getJSON());
+              // saving json should be enough.
               field.onChange(editor.getJSON());
+              // While this is duplicate. We are just trying to minimise
+              // breaking changes
               contentField.onChange(editor.getHTML());
             }}
             onBlur={field.onBlur}
