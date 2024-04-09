@@ -9614,9 +9614,9 @@ postcss@^8.4.20, postcss@^8.4.23:
     source-map-js "^1.2.0"
 
 posthog-js@^1.75.3:
-  version "1.120.2"
-  resolved "https://registry.yarnpkg.com/posthog-js/-/posthog-js-1.120.2.tgz#7fe9b91395def79e33000509ed660208fc721096"
-  integrity sha512-19LehjKgcmOzdj5OOicyzCXdxN4SVMX2IC1FvQR9gozxxxxhh6lCwWoe3y955S2KRLRP/8BjQ3zmMezV1ZCSQQ==
+  version "1.120.3"
+  resolved "https://registry.yarnpkg.com/posthog-js/-/posthog-js-1.120.3.tgz#2711ed4a90c068aee54a1f32f200e5f9794d15ad"
+  integrity sha512-J5o2aRNIrSCt6/kei+UN9RhTpZDa9bcRkwkauhjrtCz9Ne3yjCP9phfIlP5HJrJBpNGIzK/YlFuy8/57Tw+piQ==
   dependencies:
     fflate "^0.4.8"
     preact "^10.19.3"
@@ -9630,9 +9630,9 @@ posthog-node@^4.0.0:
     rusha "^0.8.14"
 
 preact@^10.19.3:
-  version "10.20.1"
-  resolved "https://registry.yarnpkg.com/preact/-/preact-10.20.1.tgz#1bc598ab630d8612978f7533da45809a8298542b"
-  integrity sha512-JIFjgFg9B2qnOoGiYMVBtrcFxHqn+dNXbq76bVmcaHYJFYR4lW67AOcXgAYQQTDYXDOg/kTZrKPNCdRgJ2UJmw==
+  version "10.20.2"
+  resolved "https://registry.yarnpkg.com/preact/-/preact-10.20.2.tgz#0b343299a8c020562311cc25db93b3d832ec5e71"
+  integrity sha512-S1d1ernz3KQ+Y2awUxKakpfOg2CEmJmwOP+6igPx6dgr6pgDvenqYviyokWso2rhHvGtTlWWnJDa7RaPbQerTg==
 
 prelude-ls@^1.2.1:
   version "1.2.1"
