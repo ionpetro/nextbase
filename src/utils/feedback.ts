@@ -18,6 +18,7 @@ export const formatFieldValue = (type: string) => {
   return type.replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase());
 };
 
+
 export const STATUS_OPTIONS: Array<Enum<'internal_feedback_thread_status'>> = [
   'open',
   'in_progress',

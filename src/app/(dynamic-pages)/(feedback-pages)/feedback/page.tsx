@@ -1,4 +1,3 @@
-import { getInternalFeedbackTotalPages } from '@/data/admin/internal-feedback';
 import { filtersSchema } from './schema';
 
 import { PageHeading } from '@/components/PageHeading';
@@ -6,6 +5,7 @@ import { Search } from '@/components/Search';
 import { Separator } from '@/components/ui/separator';
 
 import { FeedbackFacetedFilters } from './FeedbackFacetedFilters';
+import { FeedbackList } from './FeedbackList';
 
 
 export default async function FeedbackListPage({
@@ -14,8 +14,6 @@ export default async function FeedbackListPage({
     searchParams: unknown;
 }) {
     const validatedSearchParams = filtersSchema.parse(searchParams);
-    const totalPages = await getInternalFeedbackTotalPages(validatedSearchParams);
-    const suspenseKey = JSON.stringify(validatedSearchParams);
     return (
         <div className="space-y-4 max-w-[1296px] px-2 mx-auto py-4">
             <PageHeading
@@ -28,22 +26,15 @@ export default async function FeedbackListPage({
                         <Search placeholder="Search Feedback... " />
                         <FeedbackFacetedFilters />
                     </div>
-                    <div className='h-40 border rounded-md p-2 mt-4'>
-                        Feelback list
+                    <div className='mt-4'>
+                        <FeedbackList filters={validatedSearchParams} />
                     </div>
                 </div>
                 <Separator orientation="vertical" className='hidden md:block self-stretch' />
                 <div className='hidden md:flex flex-1 border rounded-lg p-4 h-80'>
-                    First Feedback
+                    First Feedback {/* render first feedback should only be displayed to larger screens,*/}
                 </div>
             </div>
         </div>
     );
 }
-
-
-{/* <Suspense key={suspenseKey} fallback={<FeedbackListFallback />}>
-              <FeedbackList filters={validatedSearchParams} />
-            </Suspense> 
-            <Pagination totalPages={totalPages} />
-            */}
