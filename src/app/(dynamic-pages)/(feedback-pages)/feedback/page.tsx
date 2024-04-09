@@ -22,8 +22,8 @@ export default async function FeedbackListPage({
                 title="Feedback"
                 subTitle="View all feedback your users have submitted."
             ></PageHeading>
-            <div className="flex h-[50vh] items-stretch space-x-4">
-                <div className='flex-1 flex flex-col gap-2'>
+            <div className="flex w-full h-[50vh] items-stretch space-x-4">
+                <div className='flex-1 md:max-w-[50%] flex flex-col gap-2'>
                     <div className='flex flex-col gap-2'>
                         <Search placeholder="Search Feedback... " />
                         <FeedbackFacetedFilters />
