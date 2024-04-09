@@ -1,8 +1,8 @@
 import { PageHeading } from '@/components/PageHeading';
 import { Pagination } from '@/components/Pagination';
 import { Search } from '@/components/Search';
-import { FeedbackDropdownFilters } from '../../app_admin/feedback/FeedbackDropdownFilters';
-import { FeedbackListPreview } from '../../app_admin/feedback/FeedbackListPreview';
+import { FeedbackDropdownFilters } from '../../app_admin/old_feedback/FeedbackDropdownFilters';
+import { FeedbackListPreview } from '../../app_admin/old_feedback/FeedbackListPreview';
 
 export default function FeedbackPreview() {
   return (
