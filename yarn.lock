@@ -3630,9 +3630,9 @@ agent-base@^7.1.0:
     debug "^4.3.4"
 
 ai@^3.0.0:
-  version "3.0.19"
-  resolved "https://registry.yarnpkg.com/ai/-/ai-3.0.19.tgz#bd01dd532f067ac91dcea86ae48df133c558847a"
-  integrity sha512-HV0MixfqMrxq2N/gVsEXoNfO9e0mWkgv7zdUH6UvdtI53Qd0UjoxjH0bwe/TsxoCqnK4gnWaGYiGKZrpy/Ldtw==
+  version "3.0.20"
+  resolved "https://registry.yarnpkg.com/ai/-/ai-3.0.20.tgz#47bfc0341ff944f46bd17da7f0d851c836f4465b"
+  integrity sha512-W5J7lNrqxBA5aQmWEV4V5AtEE3yGRMQ9l4kipIXeS3+RTds1V3cgmKjQwgASPS5Jn/9IgrUEER/Est0V1rU/NA==
   dependencies:
     "@types/json-schema" "7.0.15"
     eventsource-parser "1.1.2"
