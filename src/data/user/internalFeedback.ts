@@ -6,6 +6,126 @@ import { Enum } from '@/types';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import { revalidatePath } from 'next/cache';
 
+
+export async function getLoggedInUserFeedbackList({
+  query = '',
+  types = [],
+  statuses = [],
+  priorities = [],
+  page = 1,
+  limit = 10,
+  sort = 'desc',
+}: {
+  page?: number;
+  limit?: number;
+  query?: string;
+  types?: Array<Enum<'internal_feedback_thread_type'>>;
+  statuses?: Array<Enum<'internal_feedback_thread_status'>>;
+  priorities?: Array<Enum<'internal_feedback_thread_priority'>>;
+  sort?: 'asc' | 'desc';
+}) {
+  const zeroIndexedPage = page - 1;
+  const supabaseClient = createSupabaseUserServerComponentClient();
+  const userId = (await serverGetLoggedInUser()).id
+
+  let supabaseQuery = supabaseClient
+    .from('internal_feedback_threads')
+    .select('*')
+    .or(`user_id.eq.${userId},added_to_roadmap.eq.true,open_for_public_discussion.eq.true`)
+    .range(zeroIndexedPage * limit, (zeroIndexedPage + 1) * limit - 1);
+
+    if (query) {
+      supabaseQuery = supabaseQuery.ilike('title', `%${query}%`);
+    }
+  
+    if (types.length > 0) {
+      supabaseQuery = supabaseQuery.in('type', types);
+    }
+  
+    if (statuses.length > 0) {
+      supabaseQuery = supabaseQuery.in('status', statuses);
+    }
+  
+    if (priorities.length > 0) {
+      supabaseQuery = supabaseQuery.in('priority', priorities);
+    }
+  
+    if (sort === 'asc') {
+      supabaseQuery = supabaseQuery.order('created_at', { ascending: true });
+    } else {
+      supabaseQuery = supabaseQuery.order('created_at', { ascending: false });
+    }
+
+    const { data, error } = await supabaseQuery;
+    if (error) {
+      console.log({error})
+      throw error;
+    }
+
+  return data;
+}
+
+export async function getLoggedInUserFeedbackTotalPages({
+  query = '',
+  types = [],
+  statuses = [],
+  priorities = [],
+  page = 1,
+  limit = 10,
+  sort = 'desc',
+}: {
+  page?: number;
+  limit?: number;
+  query?: string;
+  types?: Array<Enum<'internal_feedback_thread_type'>>;
+  statuses?: Array<Enum<'internal_feedback_thread_status'>>;
+  priorities?: Array<Enum<'internal_feedback_thread_priority'>>;
+  sort?: 'asc' | 'desc';
+}) {
+  const zeroIndexedPage = page - 1;
+  const supabaseClient = createSupabaseUserServerComponentClient();
+  const userId = (await serverGetLoggedInUser()).id
+
+  let supabaseQuery = supabaseClient
+    .from('internal_feedback_threads')
+    .select('*')
+    .or(`user_id.eq.${userId},added_to_roadmap.eq.true,open_for_public_discussion.eq.true`)
+    .range(zeroIndexedPage * limit, (zeroIndexedPage + 1) * limit - 1);
+
+    if (query) {
+      supabaseQuery = supabaseQuery.ilike('title', `%${query}%`);
+    }
+  
+    if (types.length > 0) {
+      supabaseQuery = supabaseQuery.in('type', types);
+    }
+  
+    if (statuses.length > 0) {
+      supabaseQuery = supabaseQuery.in('status', statuses);
+    }
+  
+    if (priorities.length > 0) {
+      supabaseQuery = supabaseQuery.in('priority', priorities);
+    }
+  
+    if (sort === 'asc') {
+      supabaseQuery = supabaseQuery.order('created_at', { ascending: true });
+    } else {
+      supabaseQuery = supabaseQuery.order('created_at', { ascending: false });
+    }
+
+    const { count, error } = await supabaseQuery;
+    if (error) {
+      throw error;
+    }
+
+    if (!count) {
+      return 0;
+    }
+
+    return Math.ceil(count / limit);
+}
+
 export async function getAllInternalFeedbackForLoggedInUser() {
   const user = await serverGetLoggedInUser();
   const supabaseClient = createSupabaseUserServerComponentClient();
@@ -47,7 +167,7 @@ export async function getAllInternalFeedback({
   types: Array<Enum<'internal_feedback_thread_type'>>;
   statuses: Array<Enum<'internal_feedback_thread_status'>>;
   priorities: Array<Enum<'internal_feedback_thread_priority'>>;
-}) {
+}) { 
   const supabaseClient = createSupabaseUserServerComponentClient();
   let supabaseQuery = supabaseClient
     .from('internal_feedback_threads')
