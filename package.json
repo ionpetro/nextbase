@@ -161,7 +161,7 @@
     "@microflash/rehype-slugify": "^1.0.0",
     "@next/eslint-plugin-next": "^14.0.0",
     "@playwright/test": "^1.29.1",
-    "@testing-library/react": "^14.0.0",
+    "@testing-library/react": "^15.0.0",
     "@types/events": "^3.0.1",
     "@types/formidable": "^3.4.0",
     "@types/jsonwebtoken": "^9.0.5",
