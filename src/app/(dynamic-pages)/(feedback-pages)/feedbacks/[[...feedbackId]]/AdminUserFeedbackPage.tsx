@@ -35,7 +35,9 @@ async function AdminUserFeedbackPage({ filters, feedbackId }: { filters: Filters
                         <FeedbackItem key={feedback?.id} feedback={feedback} />
                     ))}
                 </div>
-                <Pagination totalPages={totalFeedbackPages} />
+                <div className="border-t py-2">
+                    <Pagination totalPages={totalFeedbackPages} />
+                </div>
             </div>
             <Separator orientation="vertical" className="hidden md:block" />
             <div className={clsx(!feedbackId && "hidden", "md:block flex-1 relative")}>
