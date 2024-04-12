@@ -7,6 +7,16 @@
   resolved "https://registry.yarnpkg.com/@aashutoshrathi/word-wrap/-/word-wrap-1.2.6.tgz#bd9154aec9983f77b3a034ecaa015c2e4201f6cf"
   integrity sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==
 
+"@ai-sdk/provider-utils@0.0.0":
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/@ai-sdk/provider-utils/-/provider-utils-0.0.0.tgz#b438d4525ff4dc6bf995ce4aed56f33c5a9dbcf1"
+  integrity sha512-A6gFv6EHimayd2c2ayWMpKwADgsRrJg4DYYFnvJ71TXaWuSom7vUoALIobcaggmZ76xuzi17cXPFYg2vVu04WA==
+  dependencies:
+    "@ai-sdk/provider" "0.0.0"
+    eventsource-parser "1.1.2"
+    nanoid "3.3.6"
+    secure-json-parse "2.7.0"
+
 "@ai-sdk/provider@0.0.0":
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/@ai-sdk/provider/-/provider-0.0.0.tgz#93bc85d261e821af3e8989ea5ba3b5326b8b2974"
@@ -3641,11 +3651,12 @@ agent-base@^7.1.0:
     debug "^4.3.4"
 
 ai@^3.0.0:
-  version "3.0.21"
-  resolved "https://registry.yarnpkg.com/ai/-/ai-3.0.21.tgz#e3ca47285117ba24d990e5bffaae1b561f33233f"
-  integrity sha512-ieWylO8pnrIO7tuGMEBUpa1rC+kFdnsdjM1qgO0nAi3INa+5lCB2iLJdTQSnhSZbmWQx3wDlnToaXSZRiZvc+Q==
+  version "3.0.22"
+  resolved "https://registry.yarnpkg.com/ai/-/ai-3.0.22.tgz#a186274d333508c74cbaf5352565ba9b37cc206a"
+  integrity sha512-VkObPBejjUA9mSJBurVtMpwdqDqzrzjKvsrrj1SsKsUOH/pbmzL6U2ym61Sz8pQXuPYJqcm3SpYOfqrIMRUH0Q==
   dependencies:
     "@ai-sdk/provider" "0.0.0"
+    "@ai-sdk/provider-utils" "0.0.0"
     eventsource-parser "1.1.2"
     json-schema "0.4.0"
     jsondiffpatch "0.6.0"
