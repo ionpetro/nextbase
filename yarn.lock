@@ -286,17 +286,10 @@
   dependencies:
     regenerator-runtime "^0.14.0"
 
-"@babel/runtime@^7.12.5":
+"@babel/runtime@^7.12.5", "@babel/runtime@^7.21.0", "@babel/runtime@^7.5.5", "@babel/runtime@^7.8.7":
   version "7.24.4"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.24.4.tgz#de795accd698007a66ba44add6cc86542aff1edd"
   integrity sha512-dkxf7+hn8mFBwKjs9bvBlArzLVxVbS8usaPUDd5p2a9JCL9tB8OaOVN1isD4+Xyk4ns89/xeOmbQvgdK7IIVdA==
-  dependencies:
-    regenerator-runtime "^0.14.0"
-
-"@babel/runtime@^7.21.0", "@babel/runtime@^7.5.5", "@babel/runtime@^7.8.7":
-  version "7.24.1"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.24.1.tgz#431f9a794d173b53720e69a6464abc6f0e2a5c57"
-  integrity sha512-+BIznRzyqBf+2wCTxcKE3wDjfGeCoVE61KSHGpkzqrLi8qxqFwBeUFyId2cxkTmm55fzDGnm0+yCxaxygrLUnQ==
   dependencies:
     regenerator-runtime "^0.14.0"
 
@@ -2776,9 +2769,9 @@
   integrity sha512-QngwR9ahodVfwqp/kXxJvuL3zNb6XZu+vCuWy8RJrGP8DA7SCI9t8t7iB6NfG4kSsRGxM+3DuLi+2xOZQUaEVQ==
 
 "@tremor/react@^3.6.5":
-  version "3.15.0"
-  resolved "https://registry.yarnpkg.com/@tremor/react/-/react-3.15.0.tgz#c0c3a08613cb4b9e0441e883731c332f1425991d"
-  integrity sha512-TNhLzlGV9ph0Bzd7uTFHaE7Je9diIDuqt7Khnm5XkqO7y0jTE+9aGT/gcV6qTZV/9dfkcv8Aw1J/NpxH+hynGQ==
+  version "3.15.1"
+  resolved "https://registry.yarnpkg.com/@tremor/react/-/react-3.15.1.tgz#a9c10887bd067ffe0e18ca763e425db057f3722f"
+  integrity sha512-vCUqgYo993VePn6yOs4102ibY2XYcDDp7I1ZV/+i5hdfp+XgsHyQvYeixQcETBMpcajwM8E8NOOO7k9ANLkrrw==
   dependencies:
     "@floating-ui/react" "^0.19.2"
     "@headlessui/react" "^1.7.18"
@@ -10200,9 +10193,9 @@ recharts-scale@^0.4.4:
     decimal.js-light "^2.4.1"
 
 recharts@^2.10.3:
-  version "2.12.3"
-  resolved "https://registry.yarnpkg.com/recharts/-/recharts-2.12.3.tgz#c059bd34eaf1c80d23fc2b953ad3abfa9474694a"
-  integrity sha512-vE/F7wTlokf5mtCqVDJlVKelCjliLSJ+DJxj79XlMREm7gpV7ljwbrwE3CfeaoDlOaLX+6iwHaVRn9587YkwIg==
+  version "2.12.5"
+  resolved "https://registry.yarnpkg.com/recharts/-/recharts-2.12.5.tgz#b335eb66173317dccb3e126fce1d7ac5b3cee1e9"
+  integrity sha512-Cy+BkqrFIYTHJCyKHJEPvbHE2kVQEP6PKbOHJ8ztRGTAhvHuUnCwDaKVb13OwRFZ0QNUk1QvGTDdgWSMbuMtKw==
   dependencies:
     clsx "^2.0.0"
     eventemitter3 "^4.0.1"
