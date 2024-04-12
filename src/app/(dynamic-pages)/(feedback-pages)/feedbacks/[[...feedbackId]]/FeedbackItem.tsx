@@ -20,7 +20,7 @@ export async function FeedbackItem({ feedback }: { feedback: Table<'internal_fee
     const userFullName = await getUserFullName(feedback?.user_id)
 
     return (
-        <div className="w-full p-4 rounded-lg shadow-md border">
+        <div className="w-full h-fit p-4 rounded-lg shadow-md border">
             <div className="flex gap-2 items-center">
                 <Badge variant="secondary" className="rounded-full shadow-inner">{x[feedback.type]} {feedback?.type}</Badge>
                 <h3 className="leading-none font-medium text-lg">{feedback?.title}</h3>
