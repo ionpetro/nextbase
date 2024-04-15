@@ -1,13 +1,14 @@
-import { SuspensedUserAvatarWithFullname } from "@/components/UserAvatar";
-import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { userRoles } from "@/config/userTypes";
 import { appAdminGetInternalFeedbackComments } from "@/data/admin/internal-feedback";
 import { getInternalFeedbackComments } from "@/data/user/internalFeedback";
 import { serverGetUserType } from "@/utils/server/serverGetUserType";
-import clsx from "clsx";
 
-import { format } from 'date-fns';
+
+import { SuspensedUserAvatarWithFullname } from "@/components/UserAvatar";
+import { Separator } from "@/components/ui/separator";
+import { clsx } from "clsx";
+import { format } from "date-fns";
 import { Suspense } from "react";
 
 function FeedbackCommentsFallback() {
@@ -26,13 +27,25 @@ function FeedbackCommentsFallback() {
     )
 }
 
-export function CommentTimeLineItem({ userId, comment, postedAt, lastComment = false }: { userId: string; comment: string; postedAt: string, lastComment?: boolean }) {
+export async function CommentTimeLineItem({
+    userId,
+    comment,
+    postedAt,
+    lastComment = false
+}: {
+    userId: string;
+    comment: string;
+    postedAt: string;
+    lastComment?: boolean
+}) {
     return (
         <li className={clsx(!lastComment && 'border-l', 'relative pl-6 py-6 px-2')}>
-            <div className='absolute -top-2 -left-[16px] flex space-x-2 items-center'>
-                <SuspensedUserAvatarWithFullname userId={userId} size={32} />
-                <Separator orientation='vertical' className='h-4' />
-                <time className="text-sm text-muted-foreground">{format(new Date(postedAt), 'do MMMM yyyy')}</time>
+            <div className='absolute -top-2 -left-[16px] flex w-full items-center justify-between'>
+                <div className="flex space-x-2 items-center">
+                    <SuspensedUserAvatarWithFullname userId={userId} size={32} />
+                    <Separator orientation='vertical' className='h-4' />
+                    <time className="text-sm text-muted-foreground">{format(new Date(postedAt), 'do MMMM yyyy')}</time>
+                </div>
             </div>
             <p className="mb-4 mt-2">
                 {comment}
@@ -47,7 +60,13 @@ export async function LoggedInUserFeedbackComments({ feedbackId }: { feedbackId:
     return (
         <ol>
             {feedbackComments?.map((comment, i) => (
-                <CommentTimeLineItem key={comment?.id} userId={comment?.user_id} postedAt={comment?.created_at} comment={comment?.content} lastComment={i == feedbackComments?.length - 1} />
+                <CommentTimeLineItem
+                    key={comment?.id}
+                    userId={comment?.user_id}
+                    postedAt={comment?.created_at}
+                    comment={comment?.content}
+                    lastComment={i == feedbackComments?.length - 1}
+                />
             ))}
         </ol>
     )
@@ -59,7 +78,12 @@ export async function AnonUserFeedbackComments({ feedbackId }: { feedbackId: str
     return (
         <ol>
             {feedbackComments?.map((comment, i) => (
-                <CommentTimeLineItem key={comment?.id} userId={comment?.user_id} postedAt={comment?.created_at} comment={comment?.content} lastComment={i == feedbackComments?.length - 1} />
+                <CommentTimeLineItem
+                    key={comment?.id}
+                    userId={comment?.user_id}
+                    postedAt={comment?.created_at}
+                    comment={comment?.content}
+                    lastComment={i == feedbackComments?.length - 1} />
             ))}
         </ol>
     )
@@ -72,7 +96,13 @@ export async function AdminFeedbackComments({ feedbackId }: { feedbackId: string
     return (
         <ol>
             {feedbackComments?.map((comment, i) => (
-                <CommentTimeLineItem key={comment?.id} userId={comment?.user_id} postedAt={comment?.created_at} comment={comment?.content} lastComment={i == feedbackComments?.length - 1} />
+                <CommentTimeLineItem
+                    key={comment?.id}
+                    userId={comment?.user_id}
+                    postedAt={comment?.created_at}
+                    comment={comment?.content}
+                    lastComment={i == feedbackComments?.length - 1}
+                />
             ))}
         </ol>
     )
@@ -86,9 +116,9 @@ export async function SuspendedFeedbackComments({ feedbackId }: { feedbackId: st
     return (
 
         <Suspense fallback={<FeedbackCommentsFallback />}>
-            {/* {userRoleType == userRoles.ANON && <AnonUserFeedbackdetail filters={filters} />} */}
+            {userRoleType == userRoles.ANON && <AnonUserFeedbackComments feedbackId={feedbackId} />}
             {userRoleType == userRoles.ADMIN && <AdminFeedbackComments feedbackId={feedbackId} />}
-            {/* {userRoleType == userRoles.USER && <UserFeedbackDetail filters={filters} />} */}
+            {userRoleType == userRoles.USER && <LoggedInUserFeedbackComments feedbackId={feedbackId} />}
         </Suspense>
 
     )

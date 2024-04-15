@@ -6,6 +6,7 @@ import { LightningBoltIcon } from "@radix-ui/react-icons";
 
 import { formatDistance } from 'date-fns';
 import { Bug, MessageSquareDotIcon } from "lucide-react";
+// import { useRouter } from 'next/navigation';
 
 
 const typeIcons = {
@@ -15,10 +16,9 @@ const typeIcons = {
 }
 
 
-import { useRouter } from 'next/navigation';
 
 export async function FeedbackItem({ feedback }: { feedback: Table<'internal_feedback_threads'> }) {
-    const router = useRouter();
+    // const router = useRouter();
 
     return (
         <div

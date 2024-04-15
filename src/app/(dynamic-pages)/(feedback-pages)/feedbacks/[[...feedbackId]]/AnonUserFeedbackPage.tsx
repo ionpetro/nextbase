@@ -1,19 +1,19 @@
-import { getInternalFeedbackTotalPages, getPaginatedInternalFeedbackList } from "@/data/admin/internal-feedback";
 import clsx from 'clsx';
 import { FiltersSchema } from "./schema";
 
 import { Pagination } from "@/components/Pagination";
 import { Search } from '@/components/Search';
 import { Separator } from "@/components/ui/separator";
+import { getAnonUserFeedbackList, getAnonUserFeedbackTotalPages } from "@/data/anon/internalFeedback";
 import FeedbackDetailWrapper from "./FeedbackDetail";
 import { FeedbackFacetedFilters } from "./FeedbackFacetedFilters";
 import { FeedbackItem } from "./FeedbackItem";
 
 
 
-async function AdminUserFeedbackPage({ filters, feedbackId }: { filters: FiltersSchema, feedbackId?: string }) {
-    const feedbacks = await getPaginatedInternalFeedbackList(filters);
-    const totalFeedbackPages = await getInternalFeedbackTotalPages(filters);
+async function AnonUserFeedbackPage({ filters, feedbackId }: { filters: FiltersSchema, feedbackId?: string }) {
+    const feedbacks = await getAnonUserFeedbackList(filters);
+    const totalFeedbackPages = await getAnonUserFeedbackTotalPages(filters);
 
     if (totalFeedbackPages == 0) {
         return (
@@ -30,7 +30,7 @@ async function AdminUserFeedbackPage({ filters, feedbackId }: { filters: Filters
                     <Search placeholder="Search Feedback... " />
                     <FeedbackFacetedFilters />
                 </div>
-                <div className="flex flex-col flex-1 overflow-y-auto gap-2 mb-4">
+                <div className="flex flex-col  flex-1 overflow-y-auto gap-2 mb-4">
                     {feedbacks?.map((feedback) => (
                         <FeedbackItem key={feedback?.id} feedback={feedback} />
                     ))}
@@ -48,4 +48,4 @@ async function AdminUserFeedbackPage({ filters, feedbackId }: { filters: Filters
 }
 
 
-export default AdminUserFeedbackPage;
+export default AnonUserFeedbackPage;

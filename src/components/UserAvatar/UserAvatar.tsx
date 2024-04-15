@@ -83,7 +83,7 @@ export async function UserAvatarWithFullname({ userId, size }: { userId: string,
             height={size}
           />
           : <div
-            className={'rounded-full select-none relative bg-gray-50 border border-gray-300 shadow-sm text-sm'}
+            className={'rounded-full select-none relative border bg-inherit shadow-sm text-sm'}
             style={{
               width: size,
               height: size,

@@ -2,6 +2,8 @@ import { userRoles } from "@/config/userTypes";
 import { serverGetUserType } from "@/utils/server/serverGetUserType";
 import { Suspense } from "react";
 import AdminUserFeedbackPage from "./AdminUserFeedbackPage";
+import AnonUserFeedbackPage from "./AnonUserFeedbackPage";
+import LoggedInUserFeedbackPage from "./LoggedInUserFeedbackPage";
 import { filtersSchema } from "./schema";
 
 
@@ -27,18 +29,11 @@ async function FeedbackPage({ params, searchParams }: {
 
     return (
         <Suspense key={JSON.stringify(suspenseKey)} fallback={<FeedbackPageFallback />}>
-            {/* {userRoleType == userRoles.ANON && <AnonUserFeedbackPage filters={validatedSearchParams} />}
-        {userRoleType == userRoles.USER && <UserFeedbackPage filters={validatedSearchParams} />}  */}
+            {userRoleType == userRoles.ANON && <AnonUserFeedbackPage feedbackId={params?.feedbackId} filters={validatedSearchParams} />}
+            {userRoleType == userRoles.USER && <LoggedInUserFeedbackPage feedbackId={params?.feedbackId} filters={validatedSearchParams} />}
             {userRoleType == userRoles.ADMIN && <AdminUserFeedbackPage feedbackId={params?.feedbackId} filters={validatedSearchParams} />}
         </Suspense>
     )
 }
 
 export default FeedbackPage;
-
-
-{/* <Suspense key={JSON.stringify(suspenseKey)} fallback={<FeedbackPageFallback />}>
- {userRoleType == userRoles.ANON && <AnonUserFeedbackPage filters={validatedSearchParams} />}
-{userRoleType == userRoles.ADMIN && <AdminUserFeedbackPage feedbackId={params?.feedbackId} filters={validatedSearchParams} />}
- {userRoleType == userRoles.USER && <UserFeedbackPage filters={validatedSearchParams} />} 
-</Suspense> */}

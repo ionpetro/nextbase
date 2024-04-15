@@ -1,19 +1,19 @@
-import { getInternalFeedbackTotalPages, getPaginatedInternalFeedbackList } from "@/data/admin/internal-feedback";
 import clsx from 'clsx';
 import { FiltersSchema } from "./schema";
 
 import { Pagination } from "@/components/Pagination";
 import { Search } from '@/components/Search';
 import { Separator } from "@/components/ui/separator";
+import { getLoggedInUserFeedbackList, getLoggedInUserFeedbackTotalPages } from "@/data/user/internalFeedback";
 import FeedbackDetailWrapper from "./FeedbackDetail";
 import { FeedbackFacetedFilters } from "./FeedbackFacetedFilters";
 import { FeedbackItem } from "./FeedbackItem";
 
 
 
-async function AdminUserFeedbackPage({ filters, feedbackId }: { filters: FiltersSchema, feedbackId?: string }) {
-    const feedbacks = await getPaginatedInternalFeedbackList(filters);
-    const totalFeedbackPages = await getInternalFeedbackTotalPages(filters);
+async function LoggedInUserFeedbackPage({ filters, feedbackId }: { filters: FiltersSchema, feedbackId?: string }) {
+    const feedbacks = await getLoggedInUserFeedbackList(filters);
+    const totalFeedbackPages = await getLoggedInUserFeedbackTotalPages(filters);
 
     if (totalFeedbackPages == 0) {
         return (
@@ -48,4 +48,4 @@ async function AdminUserFeedbackPage({ filters, feedbackId }: { filters: Filters
 }
 
 
-export default AdminUserFeedbackPage;
+export default LoggedInUserFeedbackPage;

@@ -1,25 +1,18 @@
 import { Separator } from "@/components/ui/separator";
 import { adminGetInternalFeedbackById } from "@/data/admin/internal-feedback";
 
-import { Button } from "@/components/ui/button";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuGroup,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu";
-import { DotsVerticalIcon } from "@radix-ui/react-icons";
 
 import { SuspensedUserAvatarWithFullname } from "@/components/UserAvatar";
 import { Badge } from "@/components/ui/badge";
-import { Textarea } from "@/components/ui/textarea";
+import { serverGetUserType } from "@/utils/server/serverGetUserType";
 import { format } from 'date-fns';
-import { Calendar, Send, VolumeX } from "lucide-react";
+import { Calendar } from "lucide-react";
+import AddComment from "./AddComment";
 import { CommentTimeLineItem, SuspendedFeedbackComments } from "./CommentTimeLine";
+import FeedbackActionsDropdown from "./FeedbackActionsDropdown";
 
 async function LoggedInUserFeedbackdetail({ feedbackId }) {
+    const userRoleType = await serverGetUserType();
     const feedback = await adminGetInternalFeedbackById(feedbackId)
 
     return (
@@ -32,19 +25,7 @@ async function LoggedInUserFeedbackdetail({ feedbackId }) {
                         <Calendar className="h-4 w-4 text-muted-foreground" />
                         <span className="text-muted-foreground">{format(new Date(feedback.created_at), 'do MMMM yyyy')}</span>
                     </div>
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon">
-                                <DotsVerticalIcon />
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent className="w-56">
-                            <DropdownMenuLabel>Thread Settings</DropdownMenuLabel>
-                            <DropdownMenuGroup>
-                                <DropdownMenuItem><VolumeX className="h-4 w-4 mr-2" /> Mute this thread</DropdownMenuItem>
-                            </DropdownMenuGroup>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                    <FeedbackActionsDropdown feedback={feedback} userRole={userRoleType} />
                 </div>
                 <h2 className="text-2xl font-medium my-4">{feedback?.title}</h2>
                 <div className="flex items-center my-4 space-x-4">
@@ -76,10 +57,7 @@ async function LoggedInUserFeedbackdetail({ feedbackId }) {
                 <SuspendedFeedbackComments feedbackId={feedback.id} />
             </div>
             <div className="border-t p-4">
-                <div className="grid w-full gap-2">
-                    <Textarea placeholder="Type your message here." />
-                    <Button><Send className="h-4 w-4 mr-2" /> Send message</Button>
-                </div>
+                <AddComment feedbackId={feedback.id} />
             </div>
         </div>
     )
