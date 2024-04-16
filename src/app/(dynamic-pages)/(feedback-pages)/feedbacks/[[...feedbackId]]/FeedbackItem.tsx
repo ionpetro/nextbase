@@ -22,7 +22,7 @@ export async function FeedbackItem({ feedback }: { feedback: Table<'internal_fee
 
     return (
         <div
-            className="w-full h-fit p-4 rounded-lg shadow-md border hover:border-gray-400 hover:cursor-pointer hover:shadow-lg"
+            className="w-full h-fit p-4 rounded-xl shadow-md border hover:border-gray-400 hover:cursor-pointer hover:shadow-lg"
         // onClick={() => router.push(`/feedbacks/${feedback.id}`)}
         >
             <div className="flex gap-2 items-center">

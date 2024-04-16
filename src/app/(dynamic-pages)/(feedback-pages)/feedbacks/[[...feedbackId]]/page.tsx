@@ -3,15 +3,10 @@ import { serverGetUserType } from "@/utils/server/serverGetUserType";
 import { Suspense } from "react";
 import AdminUserFeedbackPage from "./AdminUserFeedbackPage";
 import AnonUserFeedbackPage from "./AnonUserFeedbackPage";
+import FeedbackPageFallbackUI from "./FeedbackPageFallbackUI";
 import LoggedInUserFeedbackPage from "./LoggedInUserFeedbackPage";
 import { filtersSchema } from "./schema";
 
-
-function FeedbackPageFallback() {
-    return <div className="h-[50vh] grid place-content-center">
-        Loading...
-    </div>
-}
 
 
 
@@ -28,7 +23,7 @@ async function FeedbackPage({ params, searchParams }: {
     }
 
     return (
-        <Suspense key={JSON.stringify(suspenseKey)} fallback={<FeedbackPageFallback />}>
+        <Suspense key={JSON.stringify(suspenseKey)} fallback={<FeedbackPageFallbackUI feedbackId={params?.feedbackId} />}>
             {userRoleType == userRoles.ANON && <AnonUserFeedbackPage feedbackId={params?.feedbackId} filters={validatedSearchParams} />}
             {userRoleType == userRoles.USER && <LoggedInUserFeedbackPage feedbackId={params?.feedbackId} filters={validatedSearchParams} />}
             {userRoleType == userRoles.ADMIN && <AdminUserFeedbackPage feedbackId={params?.feedbackId} filters={validatedSearchParams} />}

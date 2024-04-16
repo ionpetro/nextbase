@@ -3,13 +3,9 @@ import { serverGetUserType } from "@/utils/server/serverGetUserType";
 import { Suspense } from "react";
 import AdminUserFeedbackdetail from "./AdminUserFeedbackdetail";
 import AnonUserFeedbackdetail from "./AnonUserFeedbackdetail";
+import { FeedbackDetailFallback } from "./FeedbackPageFallbackUI";
 import LoggedInUserFeedbackdetail from "./LoggedInUserFeedbackDetail";
 
-function FeedbackDetailFallback() {
-    return <div className="grid place-content-center">
-        loading feedback details...
-    </div>
-}
 
 async function FeedbackDetailWrapper({ feedbackId }) {
     const userRoleType = await serverGetUserType();
