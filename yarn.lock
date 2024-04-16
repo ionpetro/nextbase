@@ -7,10 +7,10 @@
   resolved "https://registry.yarnpkg.com/@aashutoshrathi/word-wrap/-/word-wrap-1.2.6.tgz#bd9154aec9983f77b3a034ecaa015c2e4201f6cf"
   integrity sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==
 
-"@ai-sdk/provider-utils@0.0.0":
-  version "0.0.0"
-  resolved "https://registry.yarnpkg.com/@ai-sdk/provider-utils/-/provider-utils-0.0.0.tgz#b438d4525ff4dc6bf995ce4aed56f33c5a9dbcf1"
-  integrity sha512-A6gFv6EHimayd2c2ayWMpKwADgsRrJg4DYYFnvJ71TXaWuSom7vUoALIobcaggmZ76xuzi17cXPFYg2vVu04WA==
+"@ai-sdk/provider-utils@0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@ai-sdk/provider-utils/-/provider-utils-0.0.1.tgz#66aa4d6acb2a9604f205c2e21f0cba683d02b7dd"
+  integrity sha512-DpD58qFYHoPffBcODPL5od/zAsFSLymwEdtP/QqNX8qE3oQcRG9GYHbj1fZTH5b9i7COwlnJ4wYzYSkXVyd3bA==
   dependencies:
     "@ai-sdk/provider" "0.0.0"
     eventsource-parser "1.1.2"
@@ -3651,12 +3651,12 @@ agent-base@^7.1.0:
     debug "^4.3.4"
 
 ai@^3.0.0:
-  version "3.0.22"
-  resolved "https://registry.yarnpkg.com/ai/-/ai-3.0.22.tgz#a186274d333508c74cbaf5352565ba9b37cc206a"
-  integrity sha512-VkObPBejjUA9mSJBurVtMpwdqDqzrzjKvsrrj1SsKsUOH/pbmzL6U2ym61Sz8pQXuPYJqcm3SpYOfqrIMRUH0Q==
+  version "3.0.23"
+  resolved "https://registry.yarnpkg.com/ai/-/ai-3.0.23.tgz#13f63e806f840a9876ed44ccfc9f307f816344d9"
+  integrity sha512-VL8Fx9euEtffzIu0BpLDZkACB+oU6zj4vHXSsSoT5VfwAzE009FJedOMPK1M4u60RpYw/DgwlD7OLN7XQfvSHw==
   dependencies:
     "@ai-sdk/provider" "0.0.0"
-    "@ai-sdk/provider-utils" "0.0.0"
+    "@ai-sdk/provider-utils" "0.0.1"
     eventsource-parser "1.1.2"
     json-schema "0.4.0"
     jsondiffpatch "0.6.0"
