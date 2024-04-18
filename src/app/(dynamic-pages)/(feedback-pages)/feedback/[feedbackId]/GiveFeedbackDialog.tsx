@@ -19,7 +19,7 @@ import {
 } from '@/components/ui/select';
 import { createInternalFeedback } from '@/data/user/internalFeedback';
 import { useToastMutation } from '@/hooks/useToastMutation';
-import { Enum } from '@/types';
+import type { Enum } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import FeedbackIcon from 'lucide-react/dist/esm/icons/message-square';
 import { useState } from 'react';
@@ -44,7 +44,13 @@ const feedbackSchema = z.object({
 
 type FeedbackFormType = z.infer<typeof feedbackSchema>;
 
-export const GiveFeedbackDialog = ({ isExpanded }: { isExpanded: boolean }) => {
+export const GiveFeedbackDialog = ({
+  isExpanded,
+  children,
+}: {
+  isExpanded: boolean;
+  children?: React.ReactNode;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const { control, handleSubmit, formState, reset } = useForm<FeedbackFormType>(
@@ -85,8 +91,8 @@ export const GiveFeedbackDialog = ({ isExpanded }: { isExpanded: boolean }) => {
         setIsOpen(newIsOpen);
       }}
     >
-      <DialogTrigger>
-        <Button variant="default">Give Feedback</Button>
+      <DialogTrigger className="w-full" asChild>
+        {children ? children : <Button variant="default">Give Feedback</Button>}
       </DialogTrigger>
 
       <DialogContent>
@@ -101,7 +107,11 @@ export const GiveFeedbackDialog = ({ isExpanded }: { isExpanded: boolean }) => {
             </DialogDescription>
           </div>
         </DialogHeader>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="space-y-4"
+          data-testid="give-feedback-form"
+        >
           <div className="space-y-1">
             <Label>Title</Label>
             <Controller
@@ -142,6 +152,7 @@ export const GiveFeedbackDialog = ({ isExpanded }: { isExpanded: boolean }) => {
           </div>
           <Button
             className="w-full mt-4"
+            data-testid="submit-feedback-button"
             disabled={!isValid || isCreatingInternalFeedback}
             type="submit"
           >

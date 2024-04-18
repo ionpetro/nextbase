@@ -2,10 +2,9 @@
 
 import { createSupabaseUserServerActionClient } from '@/supabase-clients/user/createSupabaseUserServerActionClient';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
-import { Enum } from '@/types';
+import type { Enum } from '@/types';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import { revalidatePath } from 'next/cache';
-
 
 export async function getLoggedInUserFeedbackList({
   query = '',
@@ -15,6 +14,7 @@ export async function getLoggedInUserFeedbackList({
   page = 1,
   limit = 10,
   sort = 'desc',
+  myFeedbacks = 'false',
 }: {
   page?: number;
   limit?: number;
@@ -23,44 +23,51 @@ export async function getLoggedInUserFeedbackList({
   statuses?: Array<Enum<'internal_feedback_thread_status'>>;
   priorities?: Array<Enum<'internal_feedback_thread_priority'>>;
   sort?: 'asc' | 'desc';
+  myFeedbacks?: string;
 }) {
+  console.log('myFeedbacks', myFeedbacks);
   const zeroIndexedPage = page - 1;
   const supabaseClient = createSupabaseUserServerComponentClient();
-  const userId = (await serverGetLoggedInUser()).id
+  const userId = (await serverGetLoggedInUser()).id;
 
   let supabaseQuery = supabaseClient
     .from('internal_feedback_threads')
     .select('*')
-    .or(`user_id.eq.${userId},added_to_roadmap.eq.true,open_for_public_discussion.eq.true`)
+    .or(
+      'added_to_roadmap.eq.true,open_for_public_discussion.eq.true,is_publicly_visible.eq.true',
+    )
     .range(zeroIndexedPage * limit, (zeroIndexedPage + 1) * limit - 1);
 
-    if (query) {
-      supabaseQuery = supabaseQuery.ilike('title', `%${query}%`);
-    }
-  
-    if (types.length > 0) {
-      supabaseQuery = supabaseQuery.in('type', types);
-    }
-  
-    if (statuses.length > 0) {
-      supabaseQuery = supabaseQuery.in('status', statuses);
-    }
-  
-    if (priorities.length > 0) {
-      supabaseQuery = supabaseQuery.in('priority', priorities);
-    }
-  
-    if (sort === 'asc') {
-      supabaseQuery = supabaseQuery.order('created_at', { ascending: true });
-    } else {
-      supabaseQuery = supabaseQuery.order('created_at', { ascending: false });
-    }
+  if (query) {
+    supabaseQuery = supabaseQuery.ilike('title', `%${query}%`);
+  }
 
-    const { data, error } = await supabaseQuery;
-    if (error) {
-      console.log({error})
-      throw error;
-    }
+  if (types.length > 0) {
+    supabaseQuery = supabaseQuery.in('type', types);
+  }
+
+  if (statuses.length > 0) {
+    supabaseQuery = supabaseQuery.in('status', statuses);
+  }
+
+  if (priorities.length > 0) {
+    supabaseQuery = supabaseQuery.in('priority', priorities);
+  }
+
+  if (sort === 'asc') {
+    supabaseQuery = supabaseQuery.order('created_at', { ascending: true });
+  } else {
+    supabaseQuery = supabaseQuery.order('created_at', { ascending: false });
+  }
+
+  if (myFeedbacks === 'true') {
+    supabaseQuery = supabaseQuery.eq('user_id', userId);
+  }
+
+  const { data, error } = await supabaseQuery;
+  if (error) {
+    throw error;
+  }
 
   return data;
 }
@@ -73,6 +80,7 @@ export async function getLoggedInUserFeedbackTotalPages({
   page = 1,
   limit = 10,
   sort = 'desc',
+  myFeedbacks = 'false',
 }: {
   page?: number;
   limit?: number;
@@ -81,49 +89,56 @@ export async function getLoggedInUserFeedbackTotalPages({
   statuses?: Array<Enum<'internal_feedback_thread_status'>>;
   priorities?: Array<Enum<'internal_feedback_thread_priority'>>;
   sort?: 'asc' | 'desc';
+  myFeedbacks?: string;
 }) {
   const zeroIndexedPage = page - 1;
   const supabaseClient = createSupabaseUserServerComponentClient();
-  const userId = (await serverGetLoggedInUser()).id
+  const userId = (await serverGetLoggedInUser()).id;
 
   let supabaseQuery = supabaseClient
     .from('internal_feedback_threads')
     .select('*')
-    .or(`user_id.eq.${userId},added_to_roadmap.eq.true,open_for_public_discussion.eq.true`)
+    .or(
+      'added_to_roadmap.eq.true,open_for_public_discussion.eq.true,is_publicly_visible.eq.true',
+    )
     .range(zeroIndexedPage * limit, (zeroIndexedPage + 1) * limit - 1);
 
-    if (query) {
-      supabaseQuery = supabaseQuery.ilike('title', `%${query}%`);
-    }
-  
-    if (types.length > 0) {
-      supabaseQuery = supabaseQuery.in('type', types);
-    }
-  
-    if (statuses.length > 0) {
-      supabaseQuery = supabaseQuery.in('status', statuses);
-    }
-  
-    if (priorities.length > 0) {
-      supabaseQuery = supabaseQuery.in('priority', priorities);
-    }
-  
-    if (sort === 'asc') {
-      supabaseQuery = supabaseQuery.order('created_at', { ascending: true });
-    } else {
-      supabaseQuery = supabaseQuery.order('created_at', { ascending: false });
-    }
+  if (query) {
+    supabaseQuery = supabaseQuery.ilike('title', `%${query}%`);
+  }
 
-    const { count, error } = await supabaseQuery;
-    if (error) {
-      throw error;
-    }
+  if (types.length > 0) {
+    supabaseQuery = supabaseQuery.in('type', types);
+  }
 
-    if (!count) {
-      return 0;
-    }
+  if (statuses.length > 0) {
+    supabaseQuery = supabaseQuery.in('status', statuses);
+  }
 
-    return Math.ceil(count / limit);
+  if (priorities.length > 0) {
+    supabaseQuery = supabaseQuery.in('priority', priorities);
+  }
+
+  if (sort === 'asc') {
+    supabaseQuery = supabaseQuery.order('created_at', { ascending: true });
+  } else {
+    supabaseQuery = supabaseQuery.order('created_at', { ascending: false });
+  }
+
+  if (myFeedbacks === 'true') {
+    supabaseQuery = supabaseQuery.eq('user_id', userId);
+  }
+
+  const { count, error } = await supabaseQuery;
+  if (error) {
+    throw error;
+  }
+
+  if (!count) {
+    return 0;
+  }
+
+  return Math.ceil(count / limit);
 }
 
 export async function getAllInternalFeedbackForLoggedInUser() {
@@ -167,7 +182,7 @@ export async function getAllInternalFeedback({
   types: Array<Enum<'internal_feedback_thread_type'>>;
   statuses: Array<Enum<'internal_feedback_thread_status'>>;
   priorities: Array<Enum<'internal_feedback_thread_priority'>>;
-}) { 
+}) {
   const supabaseClient = createSupabaseUserServerComponentClient();
   let supabaseQuery = supabaseClient
     .from('internal_feedback_threads')

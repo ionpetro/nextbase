@@ -1,14 +1,15 @@
-import { ZodTypeAny, z } from 'zod';
+import { z, type ZodTypeAny } from 'zod';
 
 const singleOrArray = <T extends ZodTypeAny>(schema: T) => {
   return z.preprocess((obj) => {
     if (Array.isArray(obj)) {
       return obj;
-    } else if (typeof obj === 'string') {
-      return obj.split(',');
-    } else {
-      return [];
     }
+
+    if (typeof obj === 'string') {
+      return obj.split(',');
+    }
+    return [];
   }, z.array(schema));
 };
 
@@ -43,7 +44,9 @@ export type FeedbackSortSchema = z.infer<typeof sortSchema>;
 
 export type FeedbackDropdownFiltersSchema = z.infer<
   typeof dropdownFiltersSchema
->;
+> & {
+  myFeedbacks: string;
+};
 
 export const filtersSchema = z
   .object({
@@ -51,6 +54,7 @@ export const filtersSchema = z
     query: z.string().optional(),
   })
   .merge(dropdownFiltersSchema)
-  .merge(z.object({ sort: sortSchema }));
+  .merge(z.object({ sort: sortSchema }))
+  .merge(z.object({ myFeedbacks: z.string().optional() }));
 
 export type FiltersSchema = z.infer<typeof filtersSchema>;

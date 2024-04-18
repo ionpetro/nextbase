@@ -314,6 +314,7 @@ export type Database = {
           content: string
           created_at: string
           id: string
+          is_publicly_visible: boolean
           open_for_public_discussion: boolean
           priority: Database["public"]["Enums"]["internal_feedback_thread_priority"]
           status: Database["public"]["Enums"]["internal_feedback_thread_status"]
@@ -327,6 +328,7 @@ export type Database = {
           content: string
           created_at?: string
           id?: string
+          is_publicly_visible?: boolean
           open_for_public_discussion?: boolean
           priority?: Database["public"]["Enums"]["internal_feedback_thread_priority"]
           status?: Database["public"]["Enums"]["internal_feedback_thread_status"]
@@ -340,6 +342,7 @@ export type Database = {
           content?: string
           created_at?: string
           id?: string
+          is_publicly_visible?: boolean
           open_for_public_discussion?: boolean
           priority?: Database["public"]["Enums"]["internal_feedback_thread_priority"]
           status?: Database["public"]["Enums"]["internal_feedback_thread_status"]

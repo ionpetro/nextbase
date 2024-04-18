@@ -1,8 +1,8 @@
 'use server';
 
 import { supabaseAnonClient } from '@/supabase-clients/anon/supabaseAnonClient';
-import { Enum } from '@/types';
- 
+import type { Enum } from '@/types';
+
 export async function getAnonUserFeedbackList({
   query = '',
   types = [],
@@ -25,39 +25,40 @@ export async function getAnonUserFeedbackList({
   let supabaseQuery = supabaseAnonClient
     .from('internal_feedback_threads')
     .select('*')
-    .or('added_to_roadmap.eq.true,open_for_public_discussion.eq.true')
+    .or(
+      'added_to_roadmap.eq.true,open_for_public_discussion.eq.true,is_publicly_visible.eq.true',
+    )
     .range(zeroIndexedPage * limit, (zeroIndexedPage + 1) * limit - 1);
 
-    if (query) {
-      supabaseQuery = supabaseQuery.ilike('title', `%${query}%`);
-    }
-  
-    if (types.length > 0) {
-      supabaseQuery = supabaseQuery.in('type', types);
-    }
-  
-    if (statuses.length > 0) {
-      supabaseQuery = supabaseQuery.in('status', statuses);
-    }
-  
-    if (priorities.length > 0) {
-      supabaseQuery = supabaseQuery.in('priority', priorities);
-    }
-  
-    if (sort === 'asc') {
-      supabaseQuery = supabaseQuery.order('created_at', { ascending: true });
-    } else {
-      supabaseQuery = supabaseQuery.order('created_at', { ascending: false });
-    }
+  if (query) {
+    supabaseQuery = supabaseQuery.ilike('title', `%${query}%`);
+  }
 
-    const { data, error } = await supabaseQuery;
-    if (error) {
-      throw error;
-    }
+  if (types.length > 0) {
+    supabaseQuery = supabaseQuery.in('type', types);
+  }
+
+  if (statuses.length > 0) {
+    supabaseQuery = supabaseQuery.in('status', statuses);
+  }
+
+  if (priorities.length > 0) {
+    supabaseQuery = supabaseQuery.in('priority', priorities);
+  }
+
+  if (sort === 'asc') {
+    supabaseQuery = supabaseQuery.order('created_at', { ascending: true });
+  } else {
+    supabaseQuery = supabaseQuery.order('created_at', { ascending: false });
+  }
+
+  const { data, error } = await supabaseQuery;
+  if (error) {
+    throw error;
+  }
 
   return data;
 }
-
 
 export async function getAnonUserFeedbackTotalPages({
   query = '',
@@ -81,41 +82,43 @@ export async function getAnonUserFeedbackTotalPages({
   let supabaseQuery = supabaseAnonClient
     .from('internal_feedback_threads')
     .select('*')
-    .or('added_to_roadmap.eq.true,open_for_public_discussion.eq.true')
+    .or(
+      'added_to_roadmap.eq.true,open_for_public_discussion.eq.true,is_publicly_visible.eq.true',
+    )
     .range(zeroIndexedPage * limit, (zeroIndexedPage + 1) * limit - 1);
 
-    if (query) {
-      supabaseQuery = supabaseQuery.ilike('title', `%${query}%`);
-    }
-  
-    if (types.length > 0) {
-      supabaseQuery = supabaseQuery.in('type', types);
-    }
-  
-    if (statuses.length > 0) {
-      supabaseQuery = supabaseQuery.in('status', statuses);
-    }
-  
-    if (priorities.length > 0) {
-      supabaseQuery = supabaseQuery.in('priority', priorities);
-    }
-  
-    if (sort === 'asc') {
-      supabaseQuery = supabaseQuery.order('created_at', { ascending: true });
-    } else {
-      supabaseQuery = supabaseQuery.order('created_at', { ascending: false });
-    }
+  if (query) {
+    supabaseQuery = supabaseQuery.ilike('title', `%${query}%`);
+  }
 
-    const { count, error } = await supabaseQuery;
-    if (error) {
-      throw error;
-    }
+  if (types.length > 0) {
+    supabaseQuery = supabaseQuery.in('type', types);
+  }
 
-    if (!count) {
-      return 0;
-    }
+  if (statuses.length > 0) {
+    supabaseQuery = supabaseQuery.in('status', statuses);
+  }
 
-    return Math.ceil(count / limit);
+  if (priorities.length > 0) {
+    supabaseQuery = supabaseQuery.in('priority', priorities);
+  }
+
+  if (sort === 'asc') {
+    supabaseQuery = supabaseQuery.order('created_at', { ascending: true });
+  } else {
+    supabaseQuery = supabaseQuery.order('created_at', { ascending: false });
+  }
+
+  const { count, error } = await supabaseQuery;
+  if (error) {
+    throw error;
+  }
+
+  if (!count) {
+    return 0;
+  }
+
+  return Math.ceil(count / limit);
 }
 
 export async function anonGetRoadmapFeedbackList() {
@@ -156,4 +159,3 @@ export const anonGetInProgressRoadmapFeedbackList = () =>
   getRoadmapFeedbackByStatus('in_progress');
 export const anonGetCompletedRoadmapFeedbackList = () =>
   getRoadmapFeedbackByStatus('completed');
- 
