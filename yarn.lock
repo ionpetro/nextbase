@@ -10083,9 +10083,9 @@ react-remove-scroll@2.5.5:
     use-sidecar "^1.1.2"
 
 react-resizable-panels@^2.0.4:
-  version "2.0.17"
-  resolved "https://registry.yarnpkg.com/react-resizable-panels/-/react-resizable-panels-2.0.17.tgz#2b32718a4cbf77d3be150043dc8904dc6e3107f2"
-  integrity sha512-MhnHUjYB6NCZ7rmTXuTg/8+IKaj0PkQP8dm+r3Riljd+lGPElqbTX+mfqr0HJBDWJF0JH30cwe6CnuiNG6RIIg==
+  version "2.0.18"
+  resolved "https://registry.yarnpkg.com/react-resizable-panels/-/react-resizable-panels-2.0.18.tgz#976d317a58dd1975edbd55197d9a7d849b63bbc5"
+  integrity sha512-rKagCW6C8tTjWRq5jNsASsi4TB2a+IixL9++0G1+kPgAgvULPVf7kE0VbHysC3wdvcGYMa70O46C9YpG7CCkeA==
 
 react-select@^5.7.3:
   version "5.8.0"
