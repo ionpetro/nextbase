@@ -11173,9 +11173,9 @@ sucrase@^3.32.0:
     ts-interface-checker "^0.1.9"
 
 supabase@^1.127.4:
-  version "1.161.0"
-  resolved "https://registry.yarnpkg.com/supabase/-/supabase-1.161.0.tgz#0850c323d6a062c2bb05d01cb6aa9ac773ac857b"
-  integrity sha512-h4IDu/6NwE+UMdP8R3RiCnR/hHYIiWuq2Qm6oH0391SZnErRcTCORRwk6+1OhOp8YEbj7kjj5Mt8LIG/HVtwxA==
+  version "1.162.4"
+  resolved "https://registry.yarnpkg.com/supabase/-/supabase-1.162.4.tgz#57f05749f13d6fed9444e82bd63ddce7a3c89962"
+  integrity sha512-oNTn2eyvDLcKr4wRDs/QxN9lVcO6hMzKUjMLtDMU700WuyOpBZ6YBsAZkPlFWyodwmH/jUX2jqTMpcHL2XRv0g==
   dependencies:
     bin-links "^4.0.3"
     https-proxy-agent "^7.0.2"
