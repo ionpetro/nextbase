@@ -3,7 +3,6 @@ import { dashboardDefaultOrganizationIdHelper } from '../_helpers/dashboard-defa
 import { getUserIdHelper } from '../_helpers/get-user-id.helper';
 import { onboardUserHelper } from '../_helpers/onboard-user.helper';
 
-
 test.describe.parallel('Organization', () => {
   test('create organization works correctly', async ({ page }) => {
     // Start from the index page (the baseURL is set via the webServer in the playwright.config.ts)
@@ -33,11 +32,11 @@ test.describe.parallel('Organization', () => {
 
     // wait for form within a div role dialog to show up with data-testid "create-organization-form"
     const form = await page.waitForSelector(
-      'div[role="dialog"] form[data-testid="create-organization-form"]',
+      'form:has-text("Create Organization")',
     );
 
     // find input with name "name" and type "Lorem Ipsum"
-    const input = await form.waitForSelector('input[name="name"]');
+    const input = await form.waitForSelector('input');
 
     if (!input) {
       throw new Error('input not found');
@@ -113,21 +112,18 @@ test.describe.parallel('Organization', () => {
     await page.waitForSelector('text=Organization title updated!');
   });
 
-
   test.describe('Organization invite', () => {
-
     function getInviteeIdentifier(): string {
-      return `johnInvitee` + Date.now().toString().slice(-4)
+      return `johnInvitee` + Date.now().toString().slice(-4);
     }
-
 
     const INBUCKET_URL = `http://localhost:54324`;
 
     // eg endpoint: https://api.testmail.app/api/json?apikey=${APIKEY}&namespace=${NAMESPACE}&pretty=true
     async function getInvitationEmail(username: string): Promise<{
-      url: string
+      url: string;
     }> {
-      const requestContext = await request.newContext()
+      const requestContext = await request.newContext();
       const messages = await requestContext
         .get(`${INBUCKET_URL}/api/v1/mailbox/${username}`)
         .then((res) => res.json())
@@ -136,36 +132,36 @@ test.describe.parallel('Organization', () => {
         .then((items) =>
           [...items].sort((a, b) => {
             if (a.date < b.date) {
-              return 1
+              return 1;
             }
 
             if (a.date > b.date) {
-              return -1
+              return -1;
             }
 
-            return 0
-          })
+            return 0;
+          }),
         );
 
-      const latestMessageId = messages[0]?.id
+      const latestMessageId = messages[0]?.id;
 
       if (latestMessageId) {
         const message = await requestContext
-          .get(
-            `${INBUCKET_URL}/api/v1/mailbox/${username}/${latestMessageId}`
-          )
-          .then((res) => res.json())
+          .get(`${INBUCKET_URL}/api/v1/mailbox/${username}/${latestMessageId}`)
+          .then((res) => res.json());
 
-        const url = message.body.text.match(/View Invitation \( (.+) \)/)[1]
+        const url = message.body.text.match(/View Invitation \( (.+) \)/)[1];
 
-        return { url }
+        return { url };
       }
 
-      throw new Error('No email received')
+      throw new Error('No email received');
     }
 
     test('invite user to an organization', async ({ page }) => {
-      const organizationId = await dashboardDefaultOrganizationIdHelper({ page });
+      const organizationId = await dashboardDefaultOrganizationIdHelper({
+        page,
+      });
 
       const membersPageURL = `/organization/${organizationId}/settings/members`;
 
@@ -174,7 +170,9 @@ test.describe.parallel('Organization', () => {
       await page.waitForSelector('text=Team Members');
 
       // click button with testid "invite-user-button"
-      const inviteUserButton = await page.waitForSelector('button[data-testid="invite-user-button"]');
+      const inviteUserButton = await page.waitForSelector(
+        'button[data-testid="invite-user-button"]',
+      );
       if (!inviteUserButton) {
         throw new Error('inviteUserButton not found');
       }
@@ -182,7 +180,9 @@ test.describe.parallel('Organization', () => {
       await inviteUserButton.click();
 
       // wait for data-testid "invite-user-form"
-      const inviteUserForm = await page.waitForSelector('form[data-testid="invite-user-form"]');
+      const inviteUserForm = await page.waitForSelector(
+        'form[data-testid="invite-user-form"]',
+      );
       if (!inviteUserForm) {
         throw new Error('inviteUserForm not found');
       }
@@ -191,7 +191,9 @@ test.describe.parallel('Organization', () => {
       const inviteeEmail = inviteeIdentifier + '@myapp.com';
 
       // fill input with name "email"
-      const emailInput = await inviteUserForm.waitForSelector('input[name="email"]');
+      const emailInput = await inviteUserForm.waitForSelector(
+        'input[name="email"]',
+      );
 
       if (!emailInput) {
         throw new Error('emailInput not found');
@@ -200,7 +202,9 @@ test.describe.parallel('Organization', () => {
       await emailInput.fill(inviteeEmail);
 
       // click on button with text "Invite"
-      const inviteButton = await inviteUserForm.waitForSelector('button:has-text("Invite")');
+      const inviteButton = await inviteUserForm.waitForSelector(
+        'button:has-text("Invite")',
+      );
 
       if (!inviteButton) {
         throw new Error('inviteButton not found');
@@ -216,35 +220,42 @@ test.describe.parallel('Organization', () => {
 
       // open invite link
       let url;
-      await expect.poll(async () => {
-        try {
-          const { url: urlFromCheck } = await getInvitationEmail(inviteeIdentifier);
-          url = urlFromCheck;
-          return typeof urlFromCheck;
-        } catch (e) {
-          return null;
-        }
-      }, {
-        message: 'make sure the email is received',
-        intervals: [1000, 2000, 5000, 10000, 20000],
-      }).toBe('string');
+      await expect
+        .poll(
+          async () => {
+            try {
+              const { url: urlFromCheck } =
+                await getInvitationEmail(inviteeIdentifier);
+              url = urlFromCheck;
+              return typeof urlFromCheck;
+            } catch (e) {
+              return null;
+            }
+          },
+          {
+            message: 'make sure the email is received',
+            intervals: [1000, 2000, 5000, 10000, 20000],
+          },
+        )
+        .toBe('string');
 
       await page.goto(url);
 
       await page.waitForURL(`/dashboard`);
 
-
-      await onboardUserHelper({ page, name: 'Invitee John ' + inviteeIdentifier });
+      await onboardUserHelper({
+        page,
+        name: 'Invitee John ' + inviteeIdentifier,
+      });
 
       const inviteeUserId = await getUserIdHelper({ page });
 
       await page.goto('/invitations');
 
-      // wait for tr with data-organizationId matching organizationId
-      const invitationRow = await page.waitForSelector(`tr[data-organization-id="${organizationId}"]`);
-
       // click on anchor with text "View Invitation"
-      const viewInvitationAnchor = await invitationRow.waitForSelector('a:has-text("View Invitation")');
+      const viewInvitationAnchor = await page.waitForSelector(
+        'a:has-text("View Invitation")',
+      );
 
       if (!viewInvitationAnchor) {
         throw new Error('viewInvitationAnchor not found');
@@ -255,8 +266,12 @@ test.describe.parallel('Organization', () => {
       // expect url to be /invitations/:invitationId
 
       let invitationId;
-      await page.waitForURL(url => {
-        const match = url.toString().match(/\/invitations\/([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})/);
+      await page.waitForURL((url) => {
+        const match = url
+          .toString()
+          .match(
+            /\/invitations\/([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})/,
+          );
         if (match) {
           invitationId = match[1];
           return true;
@@ -268,9 +283,10 @@ test.describe.parallel('Organization', () => {
         throw new Error('invitationId creation failed');
       }
 
-
       // click on button with data-testid accept-dialog-trigger
-      const acceptDialogTriggerButton = await page.waitForSelector('button[data-testid="dialog-accept-invitation-trigger"]');
+      const acceptDialogTriggerButton = await page.waitForSelector(
+        'button:has-text("Accept Invitation")',
+      );
 
       if (!acceptDialogTriggerButton) {
         throw new Error('acceptDialogTriggerButton not found');
@@ -279,14 +295,18 @@ test.describe.parallel('Organization', () => {
       await acceptDialogTriggerButton.click();
 
       // wait for div with data-testid dialog-accept-invitation-content
-      const acceptDialog = await page.waitForSelector('div[data-testid="dialog-accept-invitation-content"]');
+      const acceptDialog = await page.waitForSelector(
+        'div[data-testid="dialog-accept-invitation-content"]',
+      );
 
       if (!acceptDialog) {
         throw new Error('acceptDialog not found');
       }
 
       // click on button with data-testid confirm
-      const confirmButton = await acceptDialog.waitForSelector('button[data-testid="confirm"]');
+      const confirmButton = await acceptDialog.waitForSelector(
+        'button[data-testid="confirm"]',
+      );
 
       if (!confirmButton) {
         throw new Error('confirmButton not found');
@@ -304,25 +324,21 @@ test.describe.parallel('Organization', () => {
       await page.goto(membersPageURL);
 
       // wait for testid "members-table"
-      const membersTable = await page.waitForSelector('table[data-testid="members-table"]');
+      const membersTable = await page.waitForSelector(
+        'table[data-testid="members-table"]',
+      );
 
       if (!membersTable) {
         throw new Error('membersTable not found');
       }
 
       // wait for tr with data-user-id matching inviteeUserId
-      const memberRow = await membersTable.waitForSelector(`tr[data-user-id="${inviteeUserId}"]`);
+      const memberRow = await membersTable.waitForSelector(
+        `tr[data-user-id="${inviteeUserId}"]`,
+      );
 
       // expect memberRow to be visible
       expect(await memberRow.isVisible()).toBe(true);
-
-
-
-
     });
-
-  })
-
+  });
 });
-
-

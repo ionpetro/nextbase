@@ -7,6 +7,7 @@ import { useToastMutation } from '@/hooks/useToastMutation';
 
 import { Send } from 'lucide-react';
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 function AddComment({
   feedbackId,
@@ -29,19 +30,22 @@ function AddComment({
       errorMessage: 'Failed to add comment',
       onSuccess: () => {
         setContent('');
+        toast.success('Comment added');
       },
     },
   );
 
   return (
-    <div className="grid w-full gap-2">
+    <div className="grid w-full gap-2" data-testid="add-comment-form">
       <Textarea
+        name="comment-area"
         placeholder="Type your message here."
         value={content}
         disabled={isLoading || !isOpenToComments}
         onChange={(e) => setContent(e.target.value)}
       />
       <Button
+        name="add-comment-button"
         disabled={isLoading || content.length === 0}
         onClick={() => {
           if (content.length > 0) {

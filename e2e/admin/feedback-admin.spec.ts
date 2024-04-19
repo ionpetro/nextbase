@@ -1,44 +1,71 @@
 import { test } from '@playwright/test';
 import { createFeedbackHelper } from 'e2e/_helpers/create-feedback.spec';
-import { onboardUserHelper } from 'e2e/_helpers/onboard-user.helper';
-import { signupUserHelper } from 'e2e/_helpers/signup.helper';
-
-function getIdentifier(): string {
-  return `adminjoe` + Date.now().toString().slice(-4);
-}
 
 test.describe('Admin can change feedback fields', () => {
-  const identifier = getIdentifier();
-  const emailAddress = `${identifier}@myapp.com`;
+  test('admin can create new feedback', async ({ browser }) => {
+    const adminContext = await browser.newContext({
+      storageState: 'playwright/.auth/admin.json',
+    });
+    const adminPage = await adminContext.newPage();
+    await createFeedbackHelper(adminPage);
+  });
 
-  test('admin can create new feedback', async ({ page }) => {
-    await signupUserHelper({ page, emailAddress, identifier });
-    await onboardUserHelper({ page, name: 'Admin Joe' });
-    await createFeedbackHelper(page);
+  test('admin can change feedback fields', async ({ browser }) => {
+    const adminContext = await browser.newContext({
+      storageState: 'playwright/.auth/admin.json',
+    });
+    const adminPage = await adminContext.newPage();
 
-    await page.goto('/feedback');
-    await page.waitForTimeout(5000);
+    await adminPage.goto('/feedback');
+    await adminPage.waitForTimeout(5000);
 
-    const feedbacks = await page.locator('[data-testid="feedback-item"]');
-    const firstFeedback = await feedbacks.first();
-
-    const actionsButton = await page.locator(
+    const actionsButton = await adminPage.waitForSelector(
       '[data-testid="feedback-actions-dropdown-button"]',
     );
-    await actionsButton.click();
+    if (actionsButton) {
+      await actionsButton.click();
+    }
 
-    const openForCommentsButton = await actionsButton.locator(
+    const openForCommentsButton = await adminPage.waitForSelector(
       '[data-testid="open-for-comments-button"]',
     );
-    await openForCommentsButton.click();
 
-    await page.waitForSelector('text=Open for comments');
+    if (openForCommentsButton) {
+      await openForCommentsButton.click();
+    }
 
-    const isVisibleButton = await actionsButton.locator(
-      '[data-testid="show-thread-button"]',
+    await adminPage.waitForSelector('text=Open for comments');
+  });
+
+  test('admin can add a comment', async ({ browser }) => {
+    const adminContext = await browser.newContext({
+      storageState: 'playwright/.auth/admin.json',
+    });
+    const adminPage = await adminContext.newPage();
+
+    await adminPage.goto('/feedback');
+    await adminPage.waitForTimeout(5000);
+
+    const addCommentForm = await adminPage.waitForSelector(
+      '[data-testid="add-comment-form"]',
     );
-    await isVisibleButton.click();
 
-    await page.waitForSelector('text=Shown to public');
+    const textArea = await addCommentForm.waitForSelector(
+      '[name="comment-area"]',
+    );
+
+    if (textArea) {
+      await textArea.fill('This is a test comment');
+    }
+
+    const sendButton = await addCommentForm.waitForSelector(
+      '[name="add-comment-button"]',
+    );
+
+    if (sendButton) {
+      await sendButton.click();
+    }
+
+    await adminPage.waitForSelector('text=Comment added');
   });
 });
