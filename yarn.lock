@@ -2779,9 +2779,9 @@
   integrity sha512-QngwR9ahodVfwqp/kXxJvuL3zNb6XZu+vCuWy8RJrGP8DA7SCI9t8t7iB6NfG4kSsRGxM+3DuLi+2xOZQUaEVQ==
 
 "@tremor/react@^3.6.5":
-  version "3.16.0"
-  resolved "https://registry.yarnpkg.com/@tremor/react/-/react-3.16.0.tgz#6252bbd5a01c35da814104260f24e9e8700bfe4e"
-  integrity sha512-wKOGTMFwBbadYolFoOKYPjvwtgHZVB/1tS0QLaNpOpoBn3Tlx/Bb2RNsLPNGCmFTb9tNfOSGoOBwd8uukWA9xg==
+  version "3.16.1"
+  resolved "https://registry.yarnpkg.com/@tremor/react/-/react-3.16.1.tgz#390f1d9ec8fb2616d1876845aded6be65c00eb70"
+  integrity sha512-ablAsFL7twiUYf57gMAS2ar6YTajsQ7fs63vqlC2i9DpLuhFSrwEp69y1a6bxXP+KH0etYRMj6xxCvdCdiy8mQ==
   dependencies:
     "@floating-ui/react" "^0.19.2"
     "@headlessui/react" "^1.7.18"
