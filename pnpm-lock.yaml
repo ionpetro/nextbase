@@ -1,4 +1,4 @@
-lockfileVersion: '6.0'
+lockfileVersion: '9.0'
 
 settings:
   autoInstallPeers: true
@@ -902,10 +902,6 @@ packages:
     engines: { node: '>=6.9.0' }
     peerDependencies:
       '@babel/core': ^7.0.0-0
-    dependencies:
-      '@babel/core': 7.24.3
-      '@babel/helper-plugin-utils': 7.24.0
-    dev: false
 
   /@babel/plugin-transform-react-jsx-self@7.24.1(@babel/core@7.24.3):
     resolution:
@@ -915,10 +911,6 @@ packages:
     engines: { node: '>=6.9.0' }
     peerDependencies:
       '@babel/core': ^7.0.0-0
-    dependencies:
-      '@babel/core': 7.24.3
-      '@babel/helper-plugin-utils': 7.24.0
-    dev: true
 
   /@babel/plugin-transform-react-jsx-source@7.24.1(@babel/core@7.24.3):
     resolution:
@@ -928,10 +920,6 @@ packages:
     engines: { node: '>=6.9.0' }
     peerDependencies:
       '@babel/core': ^7.0.0-0
-    dependencies:
-      '@babel/core': 7.24.3
-      '@babel/helper-plugin-utils': 7.24.0
-    dev: true
 
   /@babel/plugin-transform-typescript@7.24.1(@babel/core@7.24.3):
     resolution:
@@ -1199,9 +1187,6 @@ packages:
       }
     peerDependencies:
       react: '>=16.8.0'
-    dependencies:
-      react: 18.2.0
-    dev: false
 
   /@emotion/utils@1.2.1:
     resolution:
@@ -1225,9 +1210,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [ppc64]
     os: [aix]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@esbuild/aix-ppc64@0.20.2:
     resolution:
@@ -1237,9 +1219,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [ppc64]
     os: [aix]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@esbuild/android-arm64@0.19.11:
     resolution:
@@ -1249,9 +1228,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [arm64]
     os: [android]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@esbuild/android-arm64@0.20.2:
     resolution:
@@ -1261,9 +1237,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [arm64]
     os: [android]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@esbuild/android-arm@0.19.11:
     resolution:
@@ -1273,9 +1246,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [arm]
     os: [android]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@esbuild/android-arm@0.20.2:
     resolution:
@@ -1285,9 +1255,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [arm]
     os: [android]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@esbuild/android-x64@0.19.11:
     resolution:
@@ -1297,9 +1264,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [x64]
     os: [android]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@esbuild/android-x64@0.20.2:
     resolution:
@@ -1309,9 +1273,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [x64]
     os: [android]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@esbuild/darwin-arm64@0.19.11:
     resolution:
@@ -1321,9 +1282,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [arm64]
     os: [darwin]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@esbuild/darwin-arm64@0.20.2:
     resolution:
@@ -1333,9 +1291,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [arm64]
     os: [darwin]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@esbuild/darwin-x64@0.19.11:
     resolution:
@@ -1345,9 +1300,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [x64]
     os: [darwin]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@esbuild/darwin-x64@0.20.2:
     resolution:
@@ -1357,9 +1309,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [x64]
     os: [darwin]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@esbuild/freebsd-arm64@0.19.11:
     resolution:
@@ -1369,9 +1318,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [arm64]
     os: [freebsd]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@esbuild/freebsd-arm64@0.20.2:
     resolution:
@@ -1381,9 +1327,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [arm64]
     os: [freebsd]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@esbuild/freebsd-x64@0.19.11:
     resolution:
@@ -1393,9 +1336,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [x64]
     os: [freebsd]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@esbuild/freebsd-x64@0.20.2:
     resolution:
@@ -1405,9 +1345,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [x64]
     os: [freebsd]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@esbuild/linux-arm64@0.19.11:
     resolution:
@@ -1417,9 +1354,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [arm64]
     os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@esbuild/linux-arm64@0.20.2:
     resolution:
@@ -1429,9 +1363,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [arm64]
     os: [linux]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@esbuild/linux-arm@0.19.11:
     resolution:
@@ -1441,9 +1372,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [arm]
     os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@esbuild/linux-arm@0.20.2:
     resolution:
@@ -1453,9 +1381,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [arm]
     os: [linux]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@esbuild/linux-ia32@0.19.11:
     resolution:
@@ -1465,9 +1390,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [ia32]
     os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@esbuild/linux-ia32@0.20.2:
     resolution:
@@ -1477,9 +1399,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [ia32]
     os: [linux]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@esbuild/linux-loong64@0.19.11:
     resolution:
@@ -1489,9 +1408,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [loong64]
     os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@esbuild/linux-loong64@0.20.2:
     resolution:
@@ -1501,9 +1417,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [loong64]
     os: [linux]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@esbuild/linux-mips64el@0.19.11:
     resolution:
@@ -1513,9 +1426,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [mips64el]
     os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@esbuild/linux-mips64el@0.20.2:
     resolution:
@@ -1525,9 +1435,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [mips64el]
     os: [linux]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@esbuild/linux-ppc64@0.19.11:
     resolution:
@@ -1537,9 +1444,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [ppc64]
     os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@esbuild/linux-ppc64@0.20.2:
     resolution:
@@ -1549,9 +1453,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [ppc64]
     os: [linux]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@esbuild/linux-riscv64@0.19.11:
     resolution:
@@ -1561,9 +1462,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [riscv64]
     os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@esbuild/linux-riscv64@0.20.2:
     resolution:
@@ -1573,9 +1471,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [riscv64]
     os: [linux]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@esbuild/linux-s390x@0.19.11:
     resolution:
@@ -1585,9 +1480,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [s390x]
     os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@esbuild/linux-s390x@0.20.2:
     resolution:
@@ -1597,9 +1489,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [s390x]
     os: [linux]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@esbuild/linux-x64@0.19.11:
     resolution:
@@ -1609,9 +1498,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [x64]
     os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@esbuild/linux-x64@0.20.2:
     resolution:
@@ -1621,9 +1507,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [x64]
     os: [linux]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@esbuild/netbsd-x64@0.19.11:
     resolution:
@@ -1633,9 +1516,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [x64]
     os: [netbsd]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@esbuild/netbsd-x64@0.20.2:
     resolution:
@@ -1645,9 +1525,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [x64]
     os: [netbsd]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@esbuild/openbsd-x64@0.19.11:
     resolution:
@@ -1657,9 +1534,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [x64]
     os: [openbsd]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@esbuild/openbsd-x64@0.20.2:
     resolution:
@@ -1669,9 +1543,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [x64]
     os: [openbsd]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@esbuild/sunos-x64@0.19.11:
     resolution:
@@ -1681,9 +1552,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [x64]
     os: [sunos]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@esbuild/sunos-x64@0.20.2:
     resolution:
@@ -1693,9 +1561,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [x64]
     os: [sunos]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@esbuild/win32-arm64@0.19.11:
     resolution:
@@ -1705,9 +1570,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [arm64]
     os: [win32]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@esbuild/win32-arm64@0.20.2:
     resolution:
@@ -1717,9 +1579,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [arm64]
     os: [win32]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@esbuild/win32-ia32@0.19.11:
     resolution:
@@ -1729,9 +1588,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [ia32]
     os: [win32]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@esbuild/win32-ia32@0.20.2:
     resolution:
@@ -1741,9 +1597,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [ia32]
     os: [win32]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@esbuild/win32-x64@0.19.11:
     resolution:
@@ -1753,9 +1606,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [x64]
     os: [win32]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@esbuild/win32-x64@0.20.2:
     resolution:
@@ -1765,9 +1615,6 @@ packages:
     engines: { node: '>=12' }
     cpu: [x64]
     os: [win32]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@eslint-community/eslint-utils@4.4.0(eslint@8.57.0):
     resolution:
@@ -1777,9 +1624,6 @@ packages:
     engines: { node: ^12.22.0 || ^14.17.0 || >=16.0.0 }
     peerDependencies:
       eslint: ^6.0.0 || ^7.0.0 || >=8.0.0
-    dependencies:
-      eslint: 8.57.0
-      eslint-visitor-keys: 3.4.3
 
   /@eslint-community/regexpp@4.10.0:
     resolution:
@@ -1841,11 +1685,6 @@ packages:
     peerDependencies:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
-    dependencies:
-      '@floating-ui/dom': 1.6.3
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-    dev: false
 
   /@floating-ui/react-dom@2.0.8(react-dom@18.2.0)(react@18.2.0):
     resolution:
@@ -1855,11 +1694,6 @@ packages:
     peerDependencies:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
-    dependencies:
-      '@floating-ui/dom': 1.6.3
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-    dev: false
 
   /@floating-ui/react@0.19.2(react-dom@18.2.0)(react@18.2.0):
     resolution:
@@ -1908,9 +1742,6 @@ packages:
     engines: { node: '>=10' }
     peerDependencies:
       tailwindcss: ^3.0
-    dependencies:
-      tailwindcss: 3.4.1
-    dev: false
 
   /@hookform/resolvers@3.3.4(react-hook-form@7.51.1):
     resolution:
@@ -1919,9 +1750,6 @@ packages:
       }
     peerDependencies:
       react-hook-form: ^7.0.0
-    dependencies:
-      react-hook-form: 7.51.1(react@18.2.0)
-    dev: false
 
   /@humanwhocodes/config-array@0.11.14:
     resolution:
@@ -1964,11 +1792,6 @@ packages:
       }
     cpu: [arm64]
     os: [darwin]
-    requiresBuild: true
-    optionalDependencies:
-      '@img/sharp-libvips-darwin-arm64': 1.0.1
-    dev: false
-    optional: true
 
   /@img/sharp-darwin-x64@0.33.2:
     resolution:
@@ -1985,11 +1808,6 @@ packages:
       }
     cpu: [x64]
     os: [darwin]
-    requiresBuild: true
-    optionalDependencies:
-      '@img/sharp-libvips-darwin-x64': 1.0.1
-    dev: false
-    optional: true
 
   /@img/sharp-libvips-darwin-arm64@1.0.1:
     resolution:
@@ -1999,9 +1817,6 @@ packages:
     engines: { macos: '>=11', npm: '>=9.6.5', pnpm: '>=7.1.0', yarn: '>=3.2.0' }
     cpu: [arm64]
     os: [darwin]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@img/sharp-libvips-darwin-x64@1.0.1:
     resolution:
@@ -2012,9 +1827,6 @@ packages:
       { macos: '>=10.13', npm: '>=9.6.5', pnpm: '>=7.1.0', yarn: '>=3.2.0' }
     cpu: [x64]
     os: [darwin]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@img/sharp-libvips-linux-arm64@1.0.1:
     resolution:
@@ -2025,9 +1837,6 @@ packages:
       { glibc: '>=2.26', npm: '>=9.6.5', pnpm: '>=7.1.0', yarn: '>=3.2.0' }
     cpu: [arm64]
     os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@img/sharp-libvips-linux-arm@1.0.1:
     resolution:
@@ -2038,9 +1847,6 @@ packages:
       { glibc: '>=2.28', npm: '>=9.6.5', pnpm: '>=7.1.0', yarn: '>=3.2.0' }
     cpu: [arm]
     os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@img/sharp-libvips-linux-s390x@1.0.1:
     resolution:
@@ -2051,9 +1857,6 @@ packages:
       { glibc: '>=2.28', npm: '>=9.6.5', pnpm: '>=7.1.0', yarn: '>=3.2.0' }
     cpu: [s390x]
     os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@img/sharp-libvips-linux-x64@1.0.1:
     resolution:
@@ -2064,9 +1867,6 @@ packages:
       { glibc: '>=2.26', npm: '>=9.6.5', pnpm: '>=7.1.0', yarn: '>=3.2.0' }
     cpu: [x64]
     os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@img/sharp-libvips-linuxmusl-arm64@1.0.1:
     resolution:
@@ -2077,9 +1877,6 @@ packages:
       { musl: '>=1.2.2', npm: '>=9.6.5', pnpm: '>=7.1.0', yarn: '>=3.2.0' }
     cpu: [arm64]
     os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@img/sharp-libvips-linuxmusl-x64@1.0.1:
     resolution:
@@ -2090,9 +1887,6 @@ packages:
       { musl: '>=1.2.2', npm: '>=9.6.5', pnpm: '>=7.1.0', yarn: '>=3.2.0' }
     cpu: [x64]
     os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@img/sharp-linux-arm64@0.33.2:
     resolution:
@@ -2109,11 +1903,6 @@ packages:
       }
     cpu: [arm64]
     os: [linux]
-    requiresBuild: true
-    optionalDependencies:
-      '@img/sharp-libvips-linux-arm64': 1.0.1
-    dev: false
-    optional: true
 
   /@img/sharp-linux-arm@0.33.2:
     resolution:
@@ -2130,11 +1919,6 @@ packages:
       }
     cpu: [arm]
     os: [linux]
-    requiresBuild: true
-    optionalDependencies:
-      '@img/sharp-libvips-linux-arm': 1.0.1
-    dev: false
-    optional: true
 
   /@img/sharp-linux-s390x@0.33.2:
     resolution:
@@ -2151,11 +1935,6 @@ packages:
       }
     cpu: [s390x]
     os: [linux]
-    requiresBuild: true
-    optionalDependencies:
-      '@img/sharp-libvips-linux-s390x': 1.0.1
-    dev: false
-    optional: true
 
   /@img/sharp-linux-x64@0.33.2:
     resolution:
@@ -2172,11 +1951,6 @@ packages:
       }
     cpu: [x64]
     os: [linux]
-    requiresBuild: true
-    optionalDependencies:
-      '@img/sharp-libvips-linux-x64': 1.0.1
-    dev: false
-    optional: true
 
   /@img/sharp-linuxmusl-arm64@0.33.2:
     resolution:
@@ -2193,11 +1967,6 @@ packages:
       }
     cpu: [arm64]
     os: [linux]
-    requiresBuild: true
-    optionalDependencies:
-      '@img/sharp-libvips-linuxmusl-arm64': 1.0.1
-    dev: false
-    optional: true
 
   /@img/sharp-linuxmusl-x64@0.33.2:
     resolution:
@@ -2214,11 +1983,6 @@ packages:
       }
     cpu: [x64]
     os: [linux]
-    requiresBuild: true
-    optionalDependencies:
-      '@img/sharp-libvips-linuxmusl-x64': 1.0.1
-    dev: false
-    optional: true
 
   /@img/sharp-wasm32@0.33.2:
     resolution:
@@ -2233,11 +1997,6 @@ packages:
         yarn: '>=3.2.0',
       }
     cpu: [wasm32]
-    requiresBuild: true
-    dependencies:
-      '@emnapi/runtime': 0.45.0
-    dev: false
-    optional: true
 
   /@img/sharp-win32-ia32@0.33.2:
     resolution:
@@ -2253,9 +2012,6 @@ packages:
       }
     cpu: [ia32]
     os: [win32]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@img/sharp-win32-x64@0.33.2:
     resolution:
@@ -2271,9 +2027,6 @@ packages:
       }
     cpu: [x64]
     os: [win32]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@isaacs/cliui@8.0.2:
     resolution:
@@ -2468,11 +2221,6 @@ packages:
       }
     peerDependencies:
       react: '>=16'
-    dependencies:
-      '@types/mdx': 2.0.11
-      '@types/react': 18.2.60
-      react: 18.2.0
-    dev: false
 
   /@mdx-js/react@3.0.1(@types/react@18.2.60)(react@18.2.0):
     resolution:
@@ -2482,11 +2230,6 @@ packages:
     peerDependencies:
       '@types/react': '>=16'
       react: '>=16'
-    dependencies:
-      '@types/mdx': 2.0.11
-      '@types/react': 18.2.60
-      react: 18.2.0
-    dev: false
 
   /@microflash/rehype-slugify@1.0.0:
     resolution:
@@ -2548,11 +2291,6 @@ packages:
         optional: true
       '@mdx-js/react':
         optional: true
-    dependencies:
-      '@mdx-js/loader': 3.0.1(webpack@5.91.0)
-      '@mdx-js/react': 3.0.1(@types/react@18.2.60)(react@18.2.0)
-      source-map: 0.7.4
-    dev: false
 
   /@next/swc-darwin-arm64@14.1.0:
     resolution:
@@ -2562,21 +2300,15 @@ packages:
     engines: { node: '>= 10' }
     cpu: [arm64]
     os: [darwin]
-    requiresBuild: true
-    dev: false
-    optional: true
 
-  /@next/swc-darwin-arm64@14.3.0-canary.18:
+  /@next/swc-darwin-arm64@14.1.4:
     resolution:
       {
-        integrity: sha512-UW9Ax478Q4TtZgz6Aa00W2ryc67yLZUOId0EeLLuzLYDCI3xZQ8R9o4GgMRKMrPecCyiHvMuLMhEgJu53QLbQA==,
+        integrity: sha512-ubmUkbmW65nIAOmoxT1IROZdmmJMmdYvXIe8211send9ZYJu+SqxSnJM4TrPj9wmL6g9Atvj0S/2cFmMSS99jg==,
       }
     engines: { node: '>= 10' }
     cpu: [arm64]
     os: [darwin]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@next/swc-darwin-x64@14.1.0:
     resolution:
@@ -2586,9 +2318,6 @@ packages:
     engines: { node: '>= 10' }
     cpu: [x64]
     os: [darwin]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@next/swc-darwin-x64@14.3.0-canary.18:
     resolution:
@@ -2598,9 +2327,6 @@ packages:
     engines: { node: '>= 10' }
     cpu: [x64]
     os: [darwin]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@next/swc-linux-arm64-gnu@14.1.0:
     resolution:
@@ -2610,9 +2336,6 @@ packages:
     engines: { node: '>= 10' }
     cpu: [arm64]
     os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@next/swc-linux-arm64-gnu@14.3.0-canary.18:
     resolution:
@@ -2622,9 +2345,6 @@ packages:
     engines: { node: '>= 10' }
     cpu: [arm64]
     os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@next/swc-linux-arm64-musl@14.1.0:
     resolution:
@@ -2634,9 +2354,6 @@ packages:
     engines: { node: '>= 10' }
     cpu: [arm64]
     os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@next/swc-linux-arm64-musl@14.3.0-canary.18:
     resolution:
@@ -2646,9 +2363,6 @@ packages:
     engines: { node: '>= 10' }
     cpu: [arm64]
     os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@next/swc-linux-x64-gnu@14.1.0:
     resolution:
@@ -2658,9 +2372,6 @@ packages:
     engines: { node: '>= 10' }
     cpu: [x64]
     os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@next/swc-linux-x64-gnu@14.3.0-canary.18:
     resolution:
@@ -2670,9 +2381,6 @@ packages:
     engines: { node: '>= 10' }
     cpu: [x64]
     os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@next/swc-linux-x64-musl@14.1.0:
     resolution:
@@ -2682,9 +2390,6 @@ packages:
     engines: { node: '>= 10' }
     cpu: [x64]
     os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@next/swc-linux-x64-musl@14.3.0-canary.18:
     resolution:
@@ -2694,9 +2399,6 @@ packages:
     engines: { node: '>= 10' }
     cpu: [x64]
     os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@next/swc-win32-arm64-msvc@14.1.0:
     resolution:
@@ -2706,9 +2408,6 @@ packages:
     engines: { node: '>= 10' }
     cpu: [arm64]
     os: [win32]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@next/swc-win32-arm64-msvc@14.3.0-canary.18:
     resolution:
@@ -2718,9 +2417,6 @@ packages:
     engines: { node: '>= 10' }
     cpu: [arm64]
     os: [win32]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@next/swc-win32-ia32-msvc@14.1.0:
     resolution:
@@ -2730,9 +2426,6 @@ packages:
     engines: { node: '>= 10' }
     cpu: [ia32]
     os: [win32]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@next/swc-win32-ia32-msvc@14.3.0-canary.18:
     resolution:
@@ -2742,9 +2435,6 @@ packages:
     engines: { node: '>= 10' }
     cpu: [ia32]
     os: [win32]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@next/swc-win32-x64-msvc@14.1.0:
     resolution:
@@ -2754,9 +2444,6 @@ packages:
     engines: { node: '>= 10' }
     cpu: [x64]
     os: [win32]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@next/swc-win32-x64-msvc@14.3.0-canary.18:
     resolution:
@@ -2766,9 +2453,6 @@ packages:
     engines: { node: '>= 10' }
     cpu: [x64]
     os: [win32]
-    requiresBuild: true
-    dev: false
-    optional: true
 
   /@nodelib/fs.scandir@2.1.5:
     resolution:
@@ -3110,10 +2794,6 @@ packages:
       }
     peerDependencies:
       react: ^16.8 || ^17.0 || ^18.0
-    dependencies:
-      '@babel/runtime': 7.24.1
-      react: 18.2.0
-    dev: false
 
   /@radix-ui/react-compose-refs@1.0.1(@types/react@18.2.60)(react@18.2.0):
     resolution:
@@ -3126,11 +2806,6 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
-    dependencies:
-      '@babel/runtime': 7.24.1
-      '@types/react': 18.2.60
-      react: 18.2.0
-    dev: false
 
   /@radix-ui/react-context-menu@2.1.5(@types/react-dom@18.2.22)(@types/react@18.2.60)(react-dom@18.2.0)(react@18.2.0):
     resolution:
@@ -3168,10 +2843,6 @@ packages:
       }
     peerDependencies:
       react: ^16.8 || ^17.0 || ^18.0
-    dependencies:
-      '@babel/runtime': 7.24.1
-      react: 18.2.0
-    dev: false
 
   /@radix-ui/react-context@1.0.1(@types/react@18.2.60)(react@18.2.0):
     resolution:
@@ -3184,11 +2855,6 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
-    dependencies:
-      '@babel/runtime': 7.24.1
-      '@types/react': 18.2.60
-      react: 18.2.0
-    dev: false
 
   /@radix-ui/react-dialog@1.0.0(@types/react@18.2.60)(react-dom@18.2.0)(react@18.2.0):
     resolution:
@@ -3268,11 +2934,6 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
-    dependencies:
-      '@babel/runtime': 7.24.1
-      '@types/react': 18.2.60
-      react: 18.2.0
-    dev: false
 
   /@radix-ui/react-dismissable-layer@1.0.0(react-dom@18.2.0)(react@18.2.0):
     resolution:
@@ -3386,10 +3047,6 @@ packages:
       }
     peerDependencies:
       react: ^16.8 || ^17.0 || ^18.0
-    dependencies:
-      '@babel/runtime': 7.24.1
-      react: 18.2.0
-    dev: false
 
   /@radix-ui/react-focus-guards@1.0.1(@types/react@18.2.60)(react@18.2.0):
     resolution:
@@ -3402,11 +3059,6 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
-    dependencies:
-      '@babel/runtime': 7.24.1
-      '@types/react': 18.2.60
-      react: 18.2.0
-    dev: false
 
   /@radix-ui/react-focus-scope@1.0.0(react-dom@18.2.0)(react@18.2.0):
     resolution:
@@ -3516,9 +3168,6 @@ packages:
       }
     peerDependencies:
       react: ^16.x || ^17.x || ^18.x
-    dependencies:
-      react: 18.2.0
-    dev: false
 
   /@radix-ui/react-id@1.0.0(react@18.2.0):
     resolution:
@@ -3527,11 +3176,6 @@ packages:
       }
     peerDependencies:
       react: ^16.8 || ^17.0 || ^18.0
-    dependencies:
-      '@babel/runtime': 7.24.1
-      '@radix-ui/react-use-layout-effect': 1.0.0(react@18.2.0)
-      react: 18.2.0
-    dev: false
 
   /@radix-ui/react-id@1.0.1(@types/react@18.2.60)(react@18.2.0):
     resolution:
@@ -4202,11 +3846,6 @@ packages:
       }
     peerDependencies:
       react: ^16.8 || ^17.0 || ^18.0
-    dependencies:
-      '@babel/runtime': 7.24.1
-      '@radix-ui/react-compose-refs': 1.0.0(react@18.2.0)
-      react: 18.2.0
-    dev: false
 
   /@radix-ui/react-slot@1.0.2(@types/react@18.2.60)(react@18.2.0):
     resolution:
@@ -4455,10 +4094,6 @@ packages:
       }
     peerDependencies:
       react: ^16.8 || ^17.0 || ^18.0
-    dependencies:
-      '@babel/runtime': 7.24.1
-      react: 18.2.0
-    dev: false
 
   /@radix-ui/react-use-callback-ref@1.0.1(@types/react@18.2.60)(react@18.2.0):
     resolution:
@@ -4471,11 +4106,6 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
-    dependencies:
-      '@babel/runtime': 7.24.1
-      '@types/react': 18.2.60
-      react: 18.2.0
-    dev: false
 
   /@radix-ui/react-use-controllable-state@1.0.0(react@18.2.0):
     resolution:
@@ -4484,11 +4114,6 @@ packages:
       }
     peerDependencies:
       react: ^16.8 || ^17.0 || ^18.0
-    dependencies:
-      '@babel/runtime': 7.24.1
-      '@radix-ui/react-use-callback-ref': 1.0.0(react@18.2.0)
-      react: 18.2.0
-    dev: false
 
   /@radix-ui/react-use-controllable-state@1.0.1(@types/react@18.2.60)(react@18.2.0):
     resolution:
@@ -4515,11 +4140,6 @@ packages:
       }
     peerDependencies:
       react: ^16.8 || ^17.0 || ^18.0
-    dependencies:
-      '@babel/runtime': 7.24.1
-      '@radix-ui/react-use-callback-ref': 1.0.0(react@18.2.0)
-      react: 18.2.0
-    dev: false
 
   /@radix-ui/react-use-escape-keydown@1.0.3(@types/react@18.2.60)(react@18.2.0):
     resolution:
@@ -4546,10 +4166,6 @@ packages:
       }
     peerDependencies:
       react: ^16.8 || ^17.0 || ^18.0
-    dependencies:
-      '@babel/runtime': 7.24.1
-      react: 18.2.0
-    dev: false
 
   /@radix-ui/react-use-layout-effect@1.0.1(@types/react@18.2.60)(react@18.2.0):
     resolution:
@@ -4562,11 +4178,6 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
-    dependencies:
-      '@babel/runtime': 7.24.1
-      '@types/react': 18.2.60
-      react: 18.2.0
-    dev: false
 
   /@radix-ui/react-use-previous@1.0.1(@types/react@18.2.60)(react@18.2.0):
     resolution:
@@ -4579,11 +4190,6 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
-    dependencies:
-      '@babel/runtime': 7.24.1
-      '@types/react': 18.2.60
-      react: 18.2.0
-    dev: false
 
   /@radix-ui/react-use-rect@1.0.1(@types/react@18.2.60)(react@18.2.0):
     resolution:
@@ -4661,9 +4267,6 @@ packages:
       }
     peerDependencies:
       react: 18.2.0
-    dependencies:
-      react: 18.2.0
-    dev: false
 
   /@react-email/button@0.0.14(react@18.2.0):
     resolution:
@@ -4673,9 +4276,6 @@ packages:
     engines: { node: '>=18.0.0' }
     peerDependencies:
       react: 18.2.0
-    dependencies:
-      react: 18.2.0
-    dev: false
 
   /@react-email/code-block@0.0.3(react@18.2.0):
     resolution:
@@ -4685,10 +4285,6 @@ packages:
     engines: { node: '>=18.0.0' }
     peerDependencies:
       react: 18.2.0
-    dependencies:
-      prismjs: 1.29.0
-      react: 18.2.0
-    dev: false
 
   /@react-email/code-inline@0.0.1(react@18.2.0):
     resolution:
@@ -4698,9 +4294,6 @@ packages:
     engines: { node: '>=18.0.0' }
     peerDependencies:
       react: 18.2.0
-    dependencies:
-      react: 18.2.0
-    dev: false
 
   /@react-email/column@0.0.9(react@18.2.0):
     resolution:
@@ -4710,9 +4303,6 @@ packages:
     engines: { node: '>=18.0.0' }
     peerDependencies:
       react: 18.2.0
-    dependencies:
-      react: 18.2.0
-    dev: false
 
   /@react-email/components@0.0.15(@types/react@18.2.60)(react-email@2.1.0)(react@18.2.0):
     resolution:
@@ -4757,9 +4347,6 @@ packages:
     engines: { node: '>=18.0.0' }
     peerDependencies:
       react: 18.2.0
-    dependencies:
-      react: 18.2.0
-    dev: false
 
   /@react-email/font@0.0.5(react@18.2.0):
     resolution:
@@ -4768,9 +4355,6 @@ packages:
       }
     peerDependencies:
       react: 18.2.0
-    dependencies:
-      react: 18.2.0
-    dev: false
 
   /@react-email/head@0.0.7(react@18.2.0):
     resolution:
@@ -4780,9 +4364,6 @@ packages:
     engines: { node: '>=18.0.0' }
     peerDependencies:
       react: 18.2.0
-    dependencies:
-      react: 18.2.0
-    dev: false
 
   /@react-email/heading@0.0.11(@types/react@18.2.60)(react@18.2.0):
     resolution:
@@ -4807,9 +4388,6 @@ packages:
     engines: { node: '>=18.0.0' }
     peerDependencies:
       react: 18.2.0
-    dependencies:
-      react: 18.2.0
-    dev: false
 
   /@react-email/html@0.0.7(react@18.2.0):
     resolution:
@@ -4819,9 +4397,6 @@ packages:
     engines: { node: '>=18.0.0' }
     peerDependencies:
       react: 18.2.0
-    dependencies:
-      react: 18.2.0
-    dev: false
 
   /@react-email/img@0.0.7(react@18.2.0):
     resolution:
@@ -4831,9 +4406,6 @@ packages:
     engines: { node: '>=18.0.0' }
     peerDependencies:
       react: 18.2.0
-    dependencies:
-      react: 18.2.0
-    dev: false
 
   /@react-email/link@0.0.7(react@18.2.0):
     resolution:
@@ -4843,9 +4415,6 @@ packages:
     engines: { node: '>=18.0.0' }
     peerDependencies:
       react: 18.2.0
-    dependencies:
-      react: 18.2.0
-    dev: false
 
   /@react-email/markdown@0.0.8(react-email@2.1.0)(react@18.2.0):
     resolution:
@@ -4870,9 +4439,6 @@ packages:
     engines: { node: '>=18.0.0' }
     peerDependencies:
       react: 18.2.0
-    dependencies:
-      react: 18.2.0
-    dev: false
 
   /@react-email/render@0.0.12:
     resolution:
@@ -4895,9 +4461,6 @@ packages:
     engines: { node: '>=18.0.0' }
     peerDependencies:
       react: 18.2.0
-    dependencies:
-      react: 18.2.0
-    dev: false
 
   /@react-email/section@0.0.11(react@18.2.0):
     resolution:
@@ -4907,9 +4470,6 @@ packages:
     engines: { node: '>=18.0.0' }
     peerDependencies:
       react: 18.2.0
-    dependencies:
-      react: 18.2.0
-    dev: false
 
   /@react-email/tailwind@0.0.14(react@18.2.0):
     resolution:
@@ -4919,9 +4479,6 @@ packages:
     engines: { node: '>=18.0.0' }
     peerDependencies:
       react: 18.2.0
-    dependencies:
-      react: 18.2.0
-    dev: false
 
   /@react-email/text@0.0.7(react@18.2.0):
     resolution:
@@ -4931,9 +4488,6 @@ packages:
     engines: { node: '>=18.0.0' }
     peerDependencies:
       react: 18.2.0
-    dependencies:
-      react: 18.2.0
-    dev: false
 
   /@remirror/core-constants@2.0.2:
     resolution:
@@ -4949,9 +4503,6 @@ packages:
       }
     peerDependencies:
       react: '>=18.2.0'
-    dependencies:
-      react: 18.2.0
-    dev: false
 
   /@rollup/plugin-commonjs@24.0.0(rollup@2.78.0):
     resolution:
@@ -4999,9 +4550,6 @@ packages:
       }
     cpu: [arm]
     os: [android]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@rollup/rollup-android-arm64@4.13.0:
     resolution:
@@ -5010,9 +4558,6 @@ packages:
       }
     cpu: [arm64]
     os: [android]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@rollup/rollup-darwin-arm64@4.13.0:
     resolution:
@@ -5021,9 +4566,6 @@ packages:
       }
     cpu: [arm64]
     os: [darwin]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@rollup/rollup-darwin-x64@4.13.0:
     resolution:
@@ -5032,9 +4574,6 @@ packages:
       }
     cpu: [x64]
     os: [darwin]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@rollup/rollup-linux-arm-gnueabihf@4.13.0:
     resolution:
@@ -5043,9 +4582,6 @@ packages:
       }
     cpu: [arm]
     os: [linux]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@rollup/rollup-linux-arm64-gnu@4.13.0:
     resolution:
@@ -5054,9 +4590,6 @@ packages:
       }
     cpu: [arm64]
     os: [linux]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@rollup/rollup-linux-arm64-musl@4.13.0:
     resolution:
@@ -5065,9 +4598,6 @@ packages:
       }
     cpu: [arm64]
     os: [linux]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@rollup/rollup-linux-riscv64-gnu@4.13.0:
     resolution:
@@ -5076,9 +4606,6 @@ packages:
       }
     cpu: [riscv64]
     os: [linux]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@rollup/rollup-linux-x64-gnu@4.13.0:
     resolution:
@@ -5087,9 +4614,6 @@ packages:
       }
     cpu: [x64]
     os: [linux]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@rollup/rollup-linux-x64-musl@4.13.0:
     resolution:
@@ -5098,9 +4622,6 @@ packages:
       }
     cpu: [x64]
     os: [linux]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@rollup/rollup-win32-arm64-msvc@4.13.0:
     resolution:
@@ -5109,9 +4630,6 @@ packages:
       }
     cpu: [arm64]
     os: [win32]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@rollup/rollup-win32-ia32-msvc@4.13.0:
     resolution:
@@ -5120,9 +4638,6 @@ packages:
       }
     cpu: [ia32]
     os: [win32]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@rollup/rollup-win32-x64-msvc@4.13.0:
     resolution:
@@ -5131,9 +4646,6 @@ packages:
       }
     cpu: [x64]
     os: [win32]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@selderee/plugin-htmlparser2@0.11.0:
     resolution:
@@ -5143,7 +4655,6 @@ packages:
     dependencies:
       domhandler: 5.0.3
       selderee: 0.11.0
-    dev: false
 
   /@sentry-internal/feedback@7.107.0:
     resolution:
@@ -5155,7 +4666,6 @@ packages:
       '@sentry/core': 7.107.0
       '@sentry/types': 7.107.0
       '@sentry/utils': 7.107.0
-    dev: false
 
   /@sentry-internal/replay-canvas@7.107.0:
     resolution:
@@ -5168,7 +4678,6 @@ packages:
       '@sentry/replay': 7.107.0
       '@sentry/types': 7.107.0
       '@sentry/utils': 7.107.0
-    dev: false
 
   /@sentry-internal/tracing@7.107.0:
     resolution:
@@ -5180,7 +4689,6 @@ packages:
       '@sentry/core': 7.107.0
       '@sentry/types': 7.107.0
       '@sentry/utils': 7.107.0
-    dev: false
 
   /@sentry/browser@7.107.0:
     resolution:
@@ -5196,7 +4704,6 @@ packages:
       '@sentry/replay': 7.107.0
       '@sentry/types': 7.107.0
       '@sentry/utils': 7.107.0
-    dev: false
 
   /@sentry/cli@1.77.3(encoding@0.1.13):
     resolution:
@@ -5215,7 +4722,6 @@ packages:
     transitivePeerDependencies:
       - encoding
       - supports-color
-    dev: false
 
   /@sentry/core@7.107.0:
     resolution:
@@ -5226,7 +4732,6 @@ packages:
     dependencies:
       '@sentry/types': 7.107.0
       '@sentry/utils': 7.107.0
-    dev: false
 
   /@sentry/integrations@7.107.0:
     resolution:
@@ -5239,7 +4744,6 @@ packages:
       '@sentry/types': 7.107.0
       '@sentry/utils': 7.107.0
       localforage: 1.10.0
-    dev: false
 
   /@sentry/nextjs@7.107.0(encoding@0.1.13)(next@14.3.0-canary.18)(react@18.2.0)(webpack@5.91.0):
     resolution:
@@ -5270,11 +4774,11 @@ packages:
       resolve: 1.22.8
       rollup: 2.78.0
       stacktrace-parser: 0.1.10
-      webpack: 5.91.0
+    optionalDependencies:
+      webpack: 5.91.0(@swc/core@1.3.101(@swc/helpers@0.5.2))(esbuild@0.19.11)
     transitivePeerDependencies:
       - encoding
       - supports-color
-    dev: false
 
   /@sentry/node@7.107.0:
     resolution:
@@ -5287,7 +4791,6 @@ packages:
       '@sentry/core': 7.107.0
       '@sentry/types': 7.107.0
       '@sentry/utils': 7.107.0
-    dev: false
 
   /@sentry/react@7.107.0(react@18.2.0):
     resolution:
@@ -5304,7 +4807,6 @@ packages:
       '@sentry/utils': 7.107.0
       hoist-non-react-statics: 3.3.2
       react: 18.2.0
-    dev: false
 
   /@sentry/replay@7.107.0:
     resolution:
@@ -5317,7 +4819,6 @@ packages:
       '@sentry/core': 7.107.0
       '@sentry/types': 7.107.0
       '@sentry/utils': 7.107.0
-    dev: false
 
   /@sentry/types@7.107.0:
     resolution:
@@ -5335,7 +4836,6 @@ packages:
     engines: { node: '>=8' }
     dependencies:
       '@sentry/types': 7.107.0
-    dev: false
 
   /@sentry/vercel-edge@7.107.0:
     resolution:
@@ -5348,7 +4848,6 @@ packages:
       '@sentry/core': 7.107.0
       '@sentry/types': 7.107.0
       '@sentry/utils': 7.107.0
-    dev: false
 
   /@sentry/webpack-plugin@1.21.0(encoding@0.1.13):
     resolution:
@@ -5362,7 +4861,6 @@ packages:
     transitivePeerDependencies:
       - encoding
       - supports-color
-    dev: false
 
   /@sinclair/typebox@0.27.8:
     resolution:
@@ -5397,7 +4895,6 @@ packages:
       '@supabase/auth-helpers-shared': 0.6.3(@supabase/supabase-js@2.39.8)
       '@supabase/supabase-js': 2.39.8
       set-cookie-parser: 2.6.0
-    dev: false
 
   /@supabase/auth-helpers-react@0.4.2(@supabase/supabase-js@2.39.8):
     resolution:
@@ -5408,7 +4905,6 @@ packages:
       '@supabase/supabase-js': ^2.19.0
     dependencies:
       '@supabase/supabase-js': 2.39.8
-    dev: false
 
   /@supabase/auth-helpers-shared@0.6.3(@supabase/supabase-js@2.39.8):
     resolution:
@@ -5420,7 +4916,6 @@ packages:
     dependencies:
       '@supabase/supabase-js': 2.39.8
       jose: 4.15.5
-    dev: false
 
   /@supabase/functions-js@2.1.5:
     resolution:
@@ -5429,7 +4924,6 @@ packages:
       }
     dependencies:
       '@supabase/node-fetch': 2.6.15
-    dev: false
 
   /@supabase/gotrue-js@2.62.2:
     resolution:
@@ -5438,7 +4932,6 @@ packages:
       }
     dependencies:
       '@supabase/node-fetch': 2.6.15
-    dev: false
 
   /@supabase/node-fetch@2.6.15:
     resolution:
@@ -5448,7 +4941,6 @@ packages:
     engines: { node: 4.x || >=6.0.0 }
     dependencies:
       whatwg-url: 5.0.0
-    dev: false
 
   /@supabase/postgrest-js@1.9.2:
     resolution:
@@ -5457,7 +4949,6 @@ packages:
       }
     dependencies:
       '@supabase/node-fetch': 2.6.15
-    dev: false
 
   /@supabase/realtime-js@2.9.3:
     resolution:
@@ -5472,7 +4963,6 @@ packages:
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
-    dev: false
 
   /@supabase/storage-js@2.5.5:
     resolution:
@@ -5481,7 +4971,6 @@ packages:
       }
     dependencies:
       '@supabase/node-fetch': 2.6.15
-    dev: false
 
   /@supabase/supabase-js@2.39.8:
     resolution:
@@ -5498,7 +4987,6 @@ packages:
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
-    dev: false
 
   /@swc/core-darwin-arm64@1.3.101:
     resolution:
@@ -5646,7 +5134,7 @@ packages:
       '@swc/core-win32-arm64-msvc': 1.3.101
       '@swc/core-win32-ia32-msvc': 1.3.101
       '@swc/core-win32-x64-msvc': 1.3.101
-    dev: false
+      '@swc/helpers': 0.5.2
 
   /@swc/counter@0.1.3:
     resolution:
@@ -5671,7 +5159,6 @@ packages:
       }
     dependencies:
       tslib: 2.6.2
-    dev: false
 
   /@swc/types@0.1.6:
     resolution:
@@ -5680,7 +5167,6 @@ packages:
       }
     dependencies:
       '@swc/counter': 0.1.3
-    dev: false
 
   /@tailwindcss/forms@0.5.7(tailwindcss@3.4.1):
     resolution:
@@ -5692,7 +5178,6 @@ packages:
     dependencies:
       mini-svg-data-uri: 1.4.4
       tailwindcss: 3.4.1
-    dev: false
 
   /@tailwindcss/typography@0.5.10(tailwindcss@3.4.1):
     resolution:
@@ -5707,7 +5192,6 @@ packages:
       lodash.merge: 4.6.2
       postcss-selector-parser: 6.0.10
       tailwindcss: 3.4.1
-    dev: false
 
   /@tanstack/query-core@4.36.1:
     resolution:
@@ -5733,9 +5217,9 @@ packages:
     dependencies:
       '@tanstack/query-core': 4.36.1
       react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
       use-sync-external-store: 1.2.0(react@18.2.0)
-    dev: false
+    optionalDependencies:
+      react-dom: 18.2.0(react@18.2.0)
 
   /@tanstack/react-virtual@3.2.0(react-dom@18.2.0)(react@18.2.0):
     resolution:
@@ -5749,7 +5233,6 @@ packages:
       '@tanstack/virtual-core': 3.2.0
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-    dev: false
 
   /@tanstack/virtual-core@3.2.0:
     resolution:
@@ -5773,7 +5256,6 @@ packages:
       dom-accessibility-api: 0.5.16
       lz-string: 1.5.0
       pretty-format: 27.5.1
-    dev: true
 
   /@testing-library/react@14.2.2(react-dom@18.2.0)(react@18.2.0):
     resolution:
@@ -5790,7 +5272,6 @@ packages:
       '@types/react-dom': 18.2.22
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-    dev: true
 
   /@tiptap/core@2.2.4(@tiptap/pm@2.2.4):
     resolution:
@@ -5801,7 +5282,6 @@ packages:
       '@tiptap/pm': ^2.0.0
     dependencies:
       '@tiptap/pm': 2.2.4
-    dev: false
 
   /@tiptap/extension-blockquote@2.2.4(@tiptap/core@2.2.4):
     resolution:
@@ -5812,7 +5292,6 @@ packages:
       '@tiptap/core': ^2.0.0
     dependencies:
       '@tiptap/core': 2.2.4(@tiptap/pm@2.2.4)
-    dev: false
 
   /@tiptap/extension-bold@2.2.4(@tiptap/core@2.2.4):
     resolution:
@@ -5823,7 +5302,6 @@ packages:
       '@tiptap/core': ^2.0.0
     dependencies:
       '@tiptap/core': 2.2.4(@tiptap/pm@2.2.4)
-    dev: false
 
   /@tiptap/extension-bubble-menu@2.2.4(@tiptap/core@2.2.4)(@tiptap/pm@2.2.4):
     resolution:
@@ -5837,7 +5315,6 @@ packages:
       '@tiptap/core': 2.2.4(@tiptap/pm@2.2.4)
       '@tiptap/pm': 2.2.4
       tippy.js: 6.3.7
-    dev: false
 
   /@tiptap/extension-bullet-list@2.3.0(@tiptap/core@2.2.4):
     resolution:
@@ -5848,7 +5325,6 @@ packages:
       '@tiptap/core': ^2.0.0
     dependencies:
       '@tiptap/core': 2.2.4(@tiptap/pm@2.2.4)
-    dev: false
 
   /@tiptap/extension-code-block@2.2.4(@tiptap/core@2.2.4)(@tiptap/pm@2.2.4):
     resolution:
@@ -5861,7 +5337,6 @@ packages:
     dependencies:
       '@tiptap/core': 2.2.4(@tiptap/pm@2.2.4)
       '@tiptap/pm': 2.2.4
-    dev: false
 
   /@tiptap/extension-code@2.2.4(@tiptap/core@2.2.4):
     resolution:
@@ -5872,7 +5347,6 @@ packages:
       '@tiptap/core': ^2.0.0
     dependencies:
       '@tiptap/core': 2.2.4(@tiptap/pm@2.2.4)
-    dev: false
 
   /@tiptap/extension-color@2.2.4(@tiptap/core@2.2.4)(@tiptap/extension-text-style@2.2.4):
     resolution:
@@ -5884,8 +5358,7 @@ packages:
       '@tiptap/extension-text-style': ^2.0.0
     dependencies:
       '@tiptap/core': 2.2.4(@tiptap/pm@2.2.4)
-      '@tiptap/extension-text-style': 2.2.4(@tiptap/core@2.2.4)
-    dev: false
+      '@tiptap/extension-text-style': 2.2.4(@tiptap/core@2.2.4(@tiptap/pm@2.2.4))
 
   /@tiptap/extension-document@2.2.4(@tiptap/core@2.2.4):
     resolution:
@@ -5896,7 +5369,6 @@ packages:
       '@tiptap/core': ^2.0.0
     dependencies:
       '@tiptap/core': 2.2.4(@tiptap/pm@2.2.4)
-    dev: false
 
   /@tiptap/extension-dropcursor@2.2.4(@tiptap/core@2.2.4)(@tiptap/pm@2.2.4):
     resolution:
@@ -5909,7 +5381,6 @@ packages:
     dependencies:
       '@tiptap/core': 2.2.4(@tiptap/pm@2.2.4)
       '@tiptap/pm': 2.2.4
-    dev: false
 
   /@tiptap/extension-floating-menu@2.2.4(@tiptap/core@2.2.4)(@tiptap/pm@2.2.4):
     resolution:
@@ -5923,7 +5394,6 @@ packages:
       '@tiptap/core': 2.2.4(@tiptap/pm@2.2.4)
       '@tiptap/pm': 2.2.4
       tippy.js: 6.3.7
-    dev: false
 
   /@tiptap/extension-gapcursor@2.2.4(@tiptap/core@2.2.4)(@tiptap/pm@2.2.4):
     resolution:
@@ -5936,7 +5406,6 @@ packages:
     dependencies:
       '@tiptap/core': 2.2.4(@tiptap/pm@2.2.4)
       '@tiptap/pm': 2.2.4
-    dev: false
 
   /@tiptap/extension-hard-break@2.2.4(@tiptap/core@2.2.4):
     resolution:
@@ -5947,7 +5416,6 @@ packages:
       '@tiptap/core': ^2.0.0
     dependencies:
       '@tiptap/core': 2.2.4(@tiptap/pm@2.2.4)
-    dev: false
 
   /@tiptap/extension-heading@2.2.4(@tiptap/core@2.2.4):
     resolution:
@@ -5958,7 +5426,6 @@ packages:
       '@tiptap/core': ^2.0.0
     dependencies:
       '@tiptap/core': 2.2.4(@tiptap/pm@2.2.4)
-    dev: false
 
   /@tiptap/extension-highlight@2.2.4(@tiptap/core@2.2.4):
     resolution:
@@ -5969,7 +5436,6 @@ packages:
       '@tiptap/core': ^2.0.0
     dependencies:
       '@tiptap/core': 2.2.4(@tiptap/pm@2.2.4)
-    dev: false
 
   /@tiptap/extension-history@2.2.4(@tiptap/core@2.2.4)(@tiptap/pm@2.2.4):
     resolution:
@@ -5982,7 +5448,6 @@ packages:
     dependencies:
       '@tiptap/core': 2.2.4(@tiptap/pm@2.2.4)
       '@tiptap/pm': 2.2.4
-    dev: false
 
   /@tiptap/extension-horizontal-rule@2.2.4(@tiptap/core@2.2.4)(@tiptap/pm@2.2.4):
     resolution:
@@ -5995,7 +5460,6 @@ packages:
     dependencies:
       '@tiptap/core': 2.2.4(@tiptap/pm@2.2.4)
       '@tiptap/pm': 2.2.4
-    dev: false
 
   /@tiptap/extension-image@2.2.4(@tiptap/core@2.2.4):
     resolution:
@@ -6006,7 +5470,6 @@ packages:
       '@tiptap/core': ^2.0.0
     dependencies:
       '@tiptap/core': 2.2.4(@tiptap/pm@2.2.4)
-    dev: false
 
   /@tiptap/extension-italic@2.2.4(@tiptap/core@2.2.4):
     resolution:
@@ -6017,7 +5480,6 @@ packages:
       '@tiptap/core': ^2.0.0
     dependencies:
       '@tiptap/core': 2.2.4(@tiptap/pm@2.2.4)
-    dev: false
 
   /@tiptap/extension-link@2.2.4(@tiptap/core@2.2.4)(@tiptap/pm@2.2.4):
     resolution:
@@ -6031,7 +5493,6 @@ packages:
       '@tiptap/core': 2.2.4(@tiptap/pm@2.2.4)
       '@tiptap/pm': 2.2.4
       linkifyjs: 4.1.3
-    dev: false
 
   /@tiptap/extension-list-item@2.2.4(@tiptap/core@2.2.4):
     resolution:
@@ -6042,7 +5503,6 @@ packages:
       '@tiptap/core': ^2.0.0
     dependencies:
       '@tiptap/core': 2.2.4(@tiptap/pm@2.2.4)
-    dev: false
 
   /@tiptap/extension-ordered-list@2.2.4(@tiptap/core@2.2.4):
     resolution:
@@ -6053,7 +5513,6 @@ packages:
       '@tiptap/core': ^2.0.0
     dependencies:
       '@tiptap/core': 2.2.4(@tiptap/pm@2.2.4)
-    dev: false
 
   /@tiptap/extension-paragraph@2.2.4(@tiptap/core@2.2.4):
     resolution:
@@ -6064,7 +5523,6 @@ packages:
       '@tiptap/core': ^2.0.0
     dependencies:
       '@tiptap/core': 2.2.4(@tiptap/pm@2.2.4)
-    dev: false
 
   /@tiptap/extension-placeholder@2.2.4(@tiptap/core@2.2.4)(@tiptap/pm@2.2.4):
     resolution:
@@ -6077,7 +5535,6 @@ packages:
     dependencies:
       '@tiptap/core': 2.2.4(@tiptap/pm@2.2.4)
       '@tiptap/pm': 2.2.4
-    dev: false
 
   /@tiptap/extension-strike@2.2.4(@tiptap/core@2.2.4):
     resolution:
@@ -6147,7 +5604,6 @@ packages:
     dependencies:
       '@tiptap/core': 2.2.4(@tiptap/pm@2.2.4)
       '@tiptap/pm': 2.2.4
-    dev: false
 
   /@tiptap/extension-task-list@2.2.4(@tiptap/core@2.2.4):
     resolution:
@@ -6169,7 +5625,7 @@ packages:
       '@tiptap/core': ^2.0.0
     dependencies:
       '@tiptap/core': 2.2.4(@tiptap/pm@2.2.4)
-    dev: false
+      '@tiptap/pm': 2.2.4
 
   /@tiptap/extension-text-style@2.2.4(@tiptap/core@2.2.4):
     resolution:
@@ -6180,7 +5636,6 @@ packages:
       '@tiptap/core': ^2.0.0
     dependencies:
       '@tiptap/core': 2.2.4(@tiptap/pm@2.2.4)
-    dev: false
 
   /@tiptap/extension-text@2.2.4(@tiptap/core@2.2.4):
     resolution:
@@ -6191,7 +5646,6 @@ packages:
       '@tiptap/core': ^2.0.0
     dependencies:
       '@tiptap/core': 2.2.4(@tiptap/pm@2.2.4)
-    dev: false
 
   /@tiptap/extension-underline@2.2.4(@tiptap/core@2.2.4):
     resolution:
@@ -6228,7 +5682,6 @@ packages:
       prosemirror-trailing-node: 2.0.8(prosemirror-model@1.19.4)(prosemirror-state@1.4.3)(prosemirror-view@1.33.2)
       prosemirror-transform: 1.8.0
       prosemirror-view: 1.33.2
-    dev: false
 
   /@tiptap/react@2.2.4(@tiptap/core@2.2.4)(@tiptap/pm@2.2.4)(react-dom@18.2.0)(react@18.2.0):
     resolution:
@@ -6242,12 +5695,11 @@ packages:
       react-dom: ^17.0.0 || ^18.0.0
     dependencies:
       '@tiptap/core': 2.2.4(@tiptap/pm@2.2.4)
-      '@tiptap/extension-bubble-menu': 2.2.4(@tiptap/core@2.2.4)(@tiptap/pm@2.2.4)
-      '@tiptap/extension-floating-menu': 2.2.4(@tiptap/core@2.2.4)(@tiptap/pm@2.2.4)
+      '@tiptap/extension-bubble-menu': 2.2.4(@tiptap/core@2.2.4(@tiptap/pm@2.2.4))(@tiptap/pm@2.2.4)
+      '@tiptap/extension-floating-menu': 2.2.4(@tiptap/core@2.2.4(@tiptap/pm@2.2.4))(@tiptap/pm@2.2.4)
       '@tiptap/pm': 2.2.4
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-    dev: false
 
   /@tiptap/starter-kit@2.2.4(@tiptap/pm@2.2.4):
     resolution:
@@ -6276,7 +5728,6 @@ packages:
       '@tiptap/extension-text': 2.2.4(@tiptap/core@2.2.4)
     transitivePeerDependencies:
       - '@tiptap/pm'
-    dev: false
 
   /@tiptap/suggestion@2.2.4(@tiptap/core@2.2.4)(@tiptap/pm@2.2.4):
     resolution:
@@ -6289,7 +5740,6 @@ packages:
     dependencies:
       '@tiptap/core': 2.2.4(@tiptap/pm@2.2.4)
       '@tiptap/pm': 2.2.4
-    dev: false
 
   /@tremor/react@3.14.1(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.4.1):
     resolution:
@@ -6300,19 +5750,18 @@ packages:
       react: ^18.0.0
       react-dom: '>=16.6.0'
     dependencies:
-      '@floating-ui/react': 0.19.2(react-dom@18.2.0)(react@18.2.0)
-      '@headlessui/react': 1.7.18(react-dom@18.2.0)(react@18.2.0)
+      '@floating-ui/react': 0.19.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@headlessui/react': 1.7.18(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@headlessui/tailwindcss': 0.2.0(tailwindcss@3.4.1)
       date-fns: 2.30.0
       react: 18.2.0
       react-day-picker: 8.10.0(date-fns@2.30.0)(react@18.2.0)
       react-dom: 18.2.0(react@18.2.0)
-      react-transition-state: 2.1.1(react-dom@18.2.0)(react@18.2.0)
-      recharts: 2.12.3(react-dom@18.2.0)(react@18.2.0)
+      react-transition-state: 2.1.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      recharts: 2.12.3(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       tailwind-merge: 1.14.0
     transitivePeerDependencies:
       - tailwindcss
-    dev: false
 
   /@ts-morph/common@0.19.0:
     resolution:
@@ -6324,7 +5773,6 @@ packages:
       minimatch: 7.4.6
       mkdirp: 2.1.6
       path-browserify: 1.0.1
-    dev: false
 
   /@types/acorn@4.0.6:
     resolution:
@@ -6333,7 +5781,6 @@ packages:
       }
     dependencies:
       '@types/estree': 1.0.5
-    dev: false
 
   /@types/aria-query@5.0.4:
     resolution:
@@ -6353,7 +5800,6 @@ packages:
       '@types/babel__generator': 7.6.8
       '@types/babel__template': 7.4.4
       '@types/babel__traverse': 7.20.5
-    dev: true
 
   /@types/babel__generator@7.6.8:
     resolution:
@@ -6362,7 +5808,6 @@ packages:
       }
     dependencies:
       '@babel/types': 7.24.0
-    dev: true
 
   /@types/babel__template@7.4.4:
     resolution:
@@ -6372,7 +5817,6 @@ packages:
     dependencies:
       '@babel/parser': 7.24.1
       '@babel/types': 7.24.0
-    dev: true
 
   /@types/babel__traverse@7.20.5:
     resolution:
@@ -6381,7 +5825,6 @@ packages:
       }
     dependencies:
       '@babel/types': 7.24.0
-    dev: true
 
   /@types/cookie@0.4.1:
     resolution:
@@ -6397,7 +5840,6 @@ packages:
       }
     dependencies:
       '@types/node': 20.11.30
-    dev: false
 
   /@types/d3-array@3.2.1:
     resolution:
@@ -6427,7 +5869,6 @@ packages:
       }
     dependencies:
       '@types/d3-color': 3.1.3
-    dev: false
 
   /@types/d3-path@3.1.0:
     resolution:
@@ -6443,7 +5884,6 @@ packages:
       }
     dependencies:
       '@types/d3-time': 3.0.3
-    dev: false
 
   /@types/d3-shape@3.1.6:
     resolution:
@@ -6452,7 +5892,6 @@ packages:
       }
     dependencies:
       '@types/d3-path': 3.1.0
-    dev: false
 
   /@types/d3-time@3.0.3:
     resolution:
@@ -6484,7 +5923,6 @@ packages:
     dependencies:
       '@types/eslint': 8.56.6
       '@types/estree': 1.0.5
-    dev: false
 
   /@types/eslint@8.56.6:
     resolution:
@@ -6494,7 +5932,6 @@ packages:
     dependencies:
       '@types/estree': 1.0.5
       '@types/json-schema': 7.0.15
-    dev: false
 
   /@types/estree-jsx@1.0.5:
     resolution:
@@ -6503,7 +5940,6 @@ packages:
       }
     dependencies:
       '@types/estree': 1.0.5
-    dev: false
 
   /@types/estree@1.0.5:
     resolution:
@@ -6525,7 +5961,6 @@ packages:
       }
     dependencies:
       '@types/node': 20.11.30
-    dev: true
 
   /@types/hast@2.3.10:
     resolution:
@@ -6563,7 +5998,6 @@ packages:
       }
     dependencies:
       '@types/node': 20.11.30
-    dev: true
 
   /@types/linkify-it@3.0.5:
     resolution:
@@ -6579,7 +6013,6 @@ packages:
       }
     dependencies:
       '@types/lodash': 4.17.0
-    dev: true
 
   /@types/lodash@4.17.0:
     resolution:
@@ -6596,7 +6029,6 @@ packages:
     dependencies:
       '@types/linkify-it': 3.0.5
       '@types/mdurl': 1.0.5
-    dev: false
 
   /@types/mdast@3.0.15:
     resolution:
@@ -6605,7 +6037,6 @@ packages:
       }
     dependencies:
       '@types/unist': 2.0.10
-    dev: false
 
   /@types/mdast@4.0.3:
     resolution:
@@ -6657,7 +6088,6 @@ packages:
       }
     dependencies:
       '@types/node': 20.11.30
-    dev: true
 
   /@types/normalize-package-data@2.4.4:
     resolution:
@@ -6705,7 +6135,6 @@ packages:
       }
     dependencies:
       '@types/react': 18.2.60
-    dev: true
 
   /@types/react-dom@18.2.22:
     resolution:
@@ -6722,7 +6151,6 @@ packages:
       }
     dependencies:
       '@types/react': 18.2.60
-    dev: false
 
   /@types/react@18.2.60:
     resolution:
@@ -6781,13 +6209,12 @@ packages:
     dependencies:
       '@types/node': 20.11.30
       tapable: 2.2.1
-      webpack: 5.91.0(@swc/core@1.3.101)(esbuild@0.19.11)
+      webpack: 5.91.0(@swc/core@1.3.101(@swc/helpers@0.5.2))(esbuild@0.19.11)
     transitivePeerDependencies:
       - '@swc/core'
       - esbuild
       - uglify-js
       - webpack-cli
-    dev: false
 
   /@types/ws@8.5.10:
     resolution:
@@ -6796,7 +6223,6 @@ packages:
       }
     dependencies:
       '@types/node': 20.11.30
-    dev: false
 
   /@typescript-eslint/eslint-plugin@7.3.1(@typescript-eslint/parser@7.3.1)(eslint@8.57.0)(typescript@5.4.3):
     resolution:
@@ -6825,10 +6251,10 @@ packages:
       natural-compare: 1.4.0
       semver: 7.6.0
       ts-api-utils: 1.3.0(typescript@5.4.3)
+    optionalDependencies:
       typescript: 5.4.3
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.4.3):
     resolution:
@@ -6849,10 +6275,10 @@ packages:
       '@typescript-eslint/visitor-keys': 6.21.0
       debug: 4.3.4
       eslint: 8.57.0
+    optionalDependencies:
       typescript: 5.4.3
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /@typescript-eslint/parser@7.3.1(eslint@8.57.0)(typescript@5.4.3):
     resolution:
@@ -6873,10 +6299,10 @@ packages:
       '@typescript-eslint/visitor-keys': 7.3.1
       debug: 4.3.4
       eslint: 8.57.0
+    optionalDependencies:
       typescript: 5.4.3
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /@typescript-eslint/scope-manager@6.21.0:
     resolution:
@@ -6887,7 +6313,6 @@ packages:
     dependencies:
       '@typescript-eslint/types': 6.21.0
       '@typescript-eslint/visitor-keys': 6.21.0
-    dev: true
 
   /@typescript-eslint/scope-manager@7.3.1:
     resolution:
@@ -6898,7 +6323,6 @@ packages:
     dependencies:
       '@typescript-eslint/types': 7.3.1
       '@typescript-eslint/visitor-keys': 7.3.1
-    dev: true
 
   /@typescript-eslint/type-utils@7.3.1(eslint@8.57.0)(typescript@5.4.3):
     resolution:
@@ -6918,10 +6342,10 @@ packages:
       debug: 4.3.4
       eslint: 8.57.0
       ts-api-utils: 1.3.0(typescript@5.4.3)
+    optionalDependencies:
       typescript: 5.4.3
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /@typescript-eslint/types@6.21.0:
     resolution:
@@ -6959,10 +6383,10 @@ packages:
       minimatch: 9.0.3
       semver: 7.6.0
       ts-api-utils: 1.3.0(typescript@5.4.3)
+    optionalDependencies:
       typescript: 5.4.3
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /@typescript-eslint/typescript-estree@7.3.1(typescript@5.4.3):
     resolution:
@@ -6984,10 +6408,10 @@ packages:
       minimatch: 9.0.3
       semver: 7.6.0
       ts-api-utils: 1.3.0(typescript@5.4.3)
+    optionalDependencies:
       typescript: 5.4.3
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /@typescript-eslint/utils@7.3.1(eslint@8.57.0)(typescript@5.4.3):
     resolution:
@@ -7009,7 +6433,6 @@ packages:
     transitivePeerDependencies:
       - supports-color
       - typescript
-    dev: true
 
   /@typescript-eslint/visitor-keys@6.21.0:
     resolution:
@@ -7020,7 +6443,6 @@ packages:
     dependencies:
       '@typescript-eslint/types': 6.21.0
       eslint-visitor-keys: 3.4.3
-    dev: true
 
   /@typescript-eslint/visitor-keys@7.3.1:
     resolution:
@@ -7031,7 +6453,6 @@ packages:
     dependencies:
       '@typescript-eslint/types': 7.3.1
       eslint-visitor-keys: 3.4.3
-    dev: true
 
   /@ungap/structured-clone@1.2.0:
     resolution:
@@ -7046,7 +6467,6 @@ packages:
       }
     dependencies:
       '@unkey/rbac': 0.1.11
-    dev: false
 
   /@unkey/nextjs@0.15.7:
     resolution:
@@ -7055,7 +6475,6 @@ packages:
       }
     dependencies:
       '@unkey/api': 0.19.4
-    dev: false
 
   /@unkey/rbac@0.1.11:
     resolution:
@@ -7065,7 +6484,6 @@ packages:
     dependencies:
       zod: 3.22.4
       zod-error: 1.5.0
-    dev: false
 
   /@vercel/analytics@1.2.2(next@14.3.0-canary.18)(react@18.2.0):
     resolution:
@@ -7084,7 +6502,9 @@ packages:
       next: 14.3.0-canary.18(@babel/core@7.24.3)(@playwright/test@1.42.1)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       server-only: 0.0.1
-    dev: false
+    optionalDependencies:
+      next: 14.1.4(@babel/core@7.24.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      react: 18.2.0
 
   /@vitejs/plugin-react@4.2.1(vite@5.2.2):
     resolution:
@@ -7100,10 +6520,9 @@ packages:
       '@babel/plugin-transform-react-jsx-source': 7.24.1(@babel/core@7.24.3)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.0
-      vite: 5.2.2(@types/node@20.11.30)
+      vite: 5.2.2(@types/node@20.11.30)(terser@5.29.2)
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /@vitest/expect@1.4.0:
     resolution:
@@ -7114,7 +6533,6 @@ packages:
       '@vitest/spy': 1.4.0
       '@vitest/utils': 1.4.0
       chai: 4.4.1
-    dev: true
 
   /@vitest/runner@1.4.0:
     resolution:
@@ -7125,7 +6543,6 @@ packages:
       '@vitest/utils': 1.4.0
       p-limit: 5.0.0
       pathe: 1.1.2
-    dev: true
 
   /@vitest/snapshot@1.4.0:
     resolution:
@@ -7136,7 +6553,6 @@ packages:
       magic-string: 0.30.8
       pathe: 1.1.2
       pretty-format: 29.7.0
-    dev: true
 
   /@vitest/spy@1.4.0:
     resolution:
@@ -7145,7 +6561,6 @@ packages:
       }
     dependencies:
       tinyspy: 2.2.1
-    dev: true
 
   /@vitest/utils@1.4.0:
     resolution:
@@ -7157,7 +6572,6 @@ packages:
       estree-walker: 3.0.3
       loupe: 2.3.7
       pretty-format: 29.7.0
-    dev: true
 
   /@vue/compiler-core@3.4.21:
     resolution:
@@ -7170,7 +6584,6 @@ packages:
       entities: 4.5.0
       estree-walker: 2.0.2
       source-map-js: 1.2.0
-    dev: false
 
   /@vue/compiler-dom@3.4.21:
     resolution:
@@ -7180,7 +6593,6 @@ packages:
     dependencies:
       '@vue/compiler-core': 3.4.21
       '@vue/shared': 3.4.21
-    dev: false
 
   /@vue/compiler-sfc@3.4.21:
     resolution:
@@ -7197,7 +6609,6 @@ packages:
       magic-string: 0.30.8
       postcss: 8.4.38
       source-map-js: 1.2.0
-    dev: false
 
   /@vue/compiler-ssr@3.4.21:
     resolution:
@@ -7207,7 +6618,6 @@ packages:
     dependencies:
       '@vue/compiler-dom': 3.4.21
       '@vue/shared': 3.4.21
-    dev: false
 
   /@vue/reactivity@3.4.21:
     resolution:
@@ -7216,7 +6626,6 @@ packages:
       }
     dependencies:
       '@vue/shared': 3.4.21
-    dev: false
 
   /@vue/runtime-core@3.4.21:
     resolution:
@@ -7226,7 +6635,6 @@ packages:
     dependencies:
       '@vue/reactivity': 3.4.21
       '@vue/shared': 3.4.21
-    dev: false
 
   /@vue/runtime-dom@3.4.21:
     resolution:
@@ -7237,7 +6645,6 @@ packages:
       '@vue/runtime-core': 3.4.21
       '@vue/shared': 3.4.21
       csstype: 3.1.3
-    dev: false
 
   /@vue/server-renderer@3.4.21(vue@3.4.21):
     resolution:
@@ -7250,7 +6657,6 @@ packages:
       '@vue/compiler-ssr': 3.4.21
       '@vue/shared': 3.4.21
       vue: 3.4.21(typescript@5.4.3)
-    dev: false
 
   /@vue/shared@3.4.21:
     resolution:
@@ -7267,7 +6673,6 @@ packages:
     dependencies:
       '@webassemblyjs/helper-numbers': 1.11.6
       '@webassemblyjs/helper-wasm-bytecode': 1.11.6
-    dev: false
 
   /@webassemblyjs/floating-point-hex-parser@1.11.6:
     resolution:
@@ -7299,7 +6704,6 @@ packages:
       '@webassemblyjs/floating-point-hex-parser': 1.11.6
       '@webassemblyjs/helper-api-error': 1.11.6
       '@xtuc/long': 4.2.2
-    dev: false
 
   /@webassemblyjs/helper-wasm-bytecode@1.11.6:
     resolution:
@@ -7318,7 +6722,6 @@ packages:
       '@webassemblyjs/helper-buffer': 1.12.1
       '@webassemblyjs/helper-wasm-bytecode': 1.11.6
       '@webassemblyjs/wasm-gen': 1.12.1
-    dev: false
 
   /@webassemblyjs/ieee754@1.11.6:
     resolution:
@@ -7327,7 +6730,6 @@ packages:
       }
     dependencies:
       '@xtuc/ieee754': 1.2.0
-    dev: false
 
   /@webassemblyjs/leb128@1.11.6:
     resolution:
@@ -7336,7 +6738,6 @@ packages:
       }
     dependencies:
       '@xtuc/long': 4.2.2
-    dev: false
 
   /@webassemblyjs/utf8@1.11.6:
     resolution:
@@ -7359,7 +6760,6 @@ packages:
       '@webassemblyjs/wasm-opt': 1.12.1
       '@webassemblyjs/wasm-parser': 1.12.1
       '@webassemblyjs/wast-printer': 1.12.1
-    dev: false
 
   /@webassemblyjs/wasm-gen@1.12.1:
     resolution:
@@ -7372,7 +6772,6 @@ packages:
       '@webassemblyjs/ieee754': 1.11.6
       '@webassemblyjs/leb128': 1.11.6
       '@webassemblyjs/utf8': 1.11.6
-    dev: false
 
   /@webassemblyjs/wasm-opt@1.12.1:
     resolution:
@@ -7384,7 +6783,6 @@ packages:
       '@webassemblyjs/helper-buffer': 1.12.1
       '@webassemblyjs/wasm-gen': 1.12.1
       '@webassemblyjs/wasm-parser': 1.12.1
-    dev: false
 
   /@webassemblyjs/wasm-parser@1.12.1:
     resolution:
@@ -7398,7 +6796,6 @@ packages:
       '@webassemblyjs/ieee754': 1.11.6
       '@webassemblyjs/leb128': 1.11.6
       '@webassemblyjs/utf8': 1.11.6
-    dev: false
 
   /@webassemblyjs/wast-printer@1.12.1:
     resolution:
@@ -7408,7 +6805,6 @@ packages:
     dependencies:
       '@webassemblyjs/ast': 1.12.1
       '@xtuc/long': 4.2.2
-    dev: false
 
   /@xtuc/ieee754@1.2.0:
     resolution:
@@ -7441,7 +6837,6 @@ packages:
     dependencies:
       mime-types: 2.1.35
       negotiator: 0.6.3
-    dev: false
 
   /acorn-import-assertions@1.9.0(acorn@8.11.3):
     resolution:
@@ -7452,7 +6847,6 @@ packages:
       acorn: ^8
     dependencies:
       acorn: 8.11.3
-    dev: false
 
   /acorn-jsx@5.3.2(acorn@8.11.3):
     resolution:
@@ -7473,7 +6867,6 @@ packages:
       acorn: 7.4.1
       acorn-walk: 7.2.0
       xtend: 4.0.2
-    dev: true
 
   /acorn-walk@7.2.0:
     resolution:
@@ -7515,7 +6908,6 @@ packages:
       debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /agent-base@7.1.0:
     resolution:
@@ -7551,16 +6943,16 @@ packages:
     dependencies:
       eventsource-parser: 1.0.0
       nanoid: 3.3.6
-      react: 18.2.0
-      solid-js: 1.8.16
       solid-swr-store: 0.10.7(solid-js@1.8.16)(swr-store@0.10.6)
       sswr: 2.0.0(svelte@4.2.12)
-      svelte: 4.2.12
       swr: 2.2.0(react@18.2.0)
       swr-store: 0.10.6
-      swrv: 1.0.4(vue@3.4.21)
+      swrv: 1.0.4(vue@3.4.21(typescript@5.4.3))
+    optionalDependencies:
+      react: 18.2.0
+      solid-js: 1.8.16
+      svelte: 4.2.12
       vue: 3.4.21(typescript@5.4.3)
-    dev: false
 
   /ajv-keywords@3.5.2(ajv@6.12.6):
     resolution:
@@ -7571,7 +6963,6 @@ packages:
       ajv: ^6.9.1
     dependencies:
       ajv: 6.12.6
-    dev: false
 
   /ajv@6.12.6:
     resolution:
@@ -7691,7 +7082,6 @@ packages:
     engines: { node: '>=10' }
     dependencies:
       tslib: 2.6.2
-    dev: false
 
   /aria-query@5.1.3:
     resolution:
@@ -7700,7 +7090,6 @@ packages:
       }
     dependencies:
       deep-equal: 2.2.3
-    dev: true
 
   /aria-query@5.3.0:
     resolution:
@@ -7709,7 +7098,6 @@ packages:
       }
     dependencies:
       dequal: 2.0.3
-    dev: false
 
   /array-buffer-byte-length@1.0.1:
     resolution:
@@ -7720,7 +7108,6 @@ packages:
     dependencies:
       call-bind: 1.0.7
       is-array-buffer: 3.0.4
-    dev: true
 
   /array-union@2.1.0:
     resolution:
@@ -7752,7 +7139,6 @@ packages:
       }
     dependencies:
       safer-buffer: 2.1.2
-    dev: false
 
   /assert-plus@1.0.0:
     resolution:
@@ -7817,7 +7203,6 @@ packages:
       picocolors: 1.0.0
       postcss: 8.4.35
       postcss-value-parser: 4.2.0
-    dev: false
 
   /autoprefixer@10.4.19(postcss@8.4.38):
     resolution:
@@ -7845,7 +7230,6 @@ packages:
     engines: { node: '>= 0.4' }
     dependencies:
       possible-typed-array-names: 1.0.0
-    dev: true
 
   /aws-sign2@0.7.0:
     resolution:
@@ -7872,7 +7256,6 @@ packages:
       proxy-from-env: 1.1.0
     transitivePeerDependencies:
       - debug
-    dev: false
 
   /axobject-query@4.0.0:
     resolution:
@@ -7881,7 +7264,6 @@ packages:
       }
     dependencies:
       dequal: 2.0.3
-    dev: false
 
   /babel-plugin-macros@3.1.0:
     resolution:
@@ -7893,7 +7275,6 @@ packages:
       '@babel/runtime': 7.24.1
       cosmiconfig: 7.1.0
       resolve: 1.22.8
-    dev: false
 
   /bail@2.0.2:
     resolution:
@@ -7935,7 +7316,6 @@ packages:
       }
     dependencies:
       tweetnacl: 0.14.5
-    dev: false
 
   /bin-links@4.0.3:
     resolution:
@@ -7948,7 +7328,6 @@ packages:
       npm-normalize-package-bin: 3.0.1
       read-cmd-shim: 4.0.0
       write-file-atomic: 5.0.1
-    dev: true
 
   /binary-extensions@2.3.0:
     resolution:
@@ -7976,7 +7355,6 @@ packages:
       buffer: 6.0.3
       inherits: 2.0.4
       readable-stream: 3.6.2
-    dev: false
 
   /bluebird@3.7.2:
     resolution:
@@ -8069,7 +7447,6 @@ packages:
     dependencies:
       base64-js: 1.5.1
       ieee754: 1.2.1
-    dev: false
 
   /busboy@1.6.0:
     resolution:
@@ -8079,7 +7456,6 @@ packages:
     engines: { node: '>=10.16.0' }
     dependencies:
       streamsearch: 1.1.0
-    dev: false
 
   /bytes@3.1.2:
     resolution:
@@ -8134,7 +7510,6 @@ packages:
       camelcase: 5.3.1
       map-obj: 4.3.0
       quick-lru: 4.0.1
-    dev: false
 
   /camelcase@5.3.1:
     resolution:
@@ -8177,7 +7552,6 @@ packages:
       loupe: 2.3.7
       pathval: 1.1.1
       type-detect: 4.0.8
-    dev: true
 
   /chalk@1.1.3:
     resolution:
@@ -8191,7 +7565,6 @@ packages:
       has-ansi: 2.0.0
       strip-ansi: 3.0.1
       supports-color: 2.0.0
-    dev: false
 
   /chalk@2.4.2:
     resolution:
@@ -8213,7 +7586,6 @@ packages:
     dependencies:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
-    dev: false
 
   /chalk@4.1.2:
     resolution:
@@ -8267,7 +7639,6 @@ packages:
       }
     dependencies:
       get-func-name: 2.0.2
-    dev: true
 
   /checkbox@0.0.1:
     resolution:
@@ -8276,7 +7647,6 @@ packages:
       }
     dependencies:
       angular: 1.8.3
-    dev: false
 
   /chokidar@3.5.3:
     resolution:
@@ -8294,7 +7664,6 @@ packages:
       readdirp: 3.6.0
     optionalDependencies:
       fsevents: 2.3.3
-    dev: false
 
   /chokidar@3.6.0:
     resolution:
@@ -8336,7 +7705,6 @@ packages:
       }
     dependencies:
       clsx: 2.0.0
-    dev: false
 
   /cli-cursor@3.1.0:
     resolution:
@@ -8355,7 +7723,6 @@ packages:
     engines: { node: ^12.20.0 || ^14.13.1 || >=16.0.0 }
     dependencies:
       restore-cursor: 4.0.0
-    dev: false
 
   /cli-spinner@0.2.10:
     resolution:
@@ -8388,7 +7755,6 @@ packages:
       string-width: 4.2.3
       strip-ansi: 6.0.1
       wrap-ansi: 7.0.0
-    dev: true
 
   /cliui@8.0.1:
     resolution:
@@ -8450,12 +7816,11 @@ packages:
       react: ^18.0.0
       react-dom: ^18.0.0
     dependencies:
-      '@radix-ui/react-dialog': 1.0.0(@types/react@18.2.60)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-dialog': 1.0.0(@types/react@18.2.60)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     transitivePeerDependencies:
       - '@types/react'
-    dev: false
 
   /code-block-writer@12.0.0:
     resolution:
@@ -8475,7 +7840,6 @@ packages:
       acorn: 8.11.3
       estree-walker: 3.0.3
       periscopic: 3.1.0
-    dev: false
 
   /collapse-white-space@2.1.0:
     resolution:
@@ -8622,7 +7986,6 @@ packages:
       supports-color: 8.1.1
       tree-kill: 1.2.2
       yargs: 17.7.2
-    dev: true
 
   /config-chain@1.1.13:
     resolution:
@@ -8632,7 +7995,6 @@ packages:
     dependencies:
       ini: 1.3.8
       proto-list: 1.2.4
-    dev: false
 
   /convert-source-map@1.9.0:
     resolution:
@@ -8662,7 +8024,6 @@ packages:
       }
     dependencies:
       toggle-selection: 1.0.6
-    dev: false
 
   /cors@2.8.5:
     resolution:
@@ -8673,7 +8034,6 @@ packages:
     dependencies:
       object-assign: 4.1.1
       vary: 1.1.2
-    dev: false
 
   /cosmiconfig@7.1.0:
     resolution:
@@ -8704,6 +8064,7 @@ packages:
       js-yaml: 4.1.0
       parse-json: 5.2.0
       path-type: 4.0.0
+    optionalDependencies:
       typescript: 5.4.3
 
   /crelt@1.0.6:
@@ -8721,7 +8082,6 @@ packages:
     engines: { node: '>=10.14', npm: '>=6', yarn: '>=1' }
     dependencies:
       cross-spawn: 7.0.3
-    dev: true
 
   /cross-spawn@7.0.3:
     resolution:
@@ -8757,7 +8117,6 @@ packages:
       '@babel/runtime': 7.24.1
       jss: 10.10.0
       jss-preset-default: 10.10.0
-    dev: false
 
   /css-selector-parser@3.0.5:
     resolution:
@@ -8775,7 +8134,6 @@ packages:
     dependencies:
       mdn-data: 2.0.30
       source-map-js: 1.2.0
-    dev: false
 
   /css-unit-converter@1.1.2:
     resolution:
@@ -8792,7 +8150,6 @@ packages:
     dependencies:
       '@babel/runtime': 7.24.1
       is-in-browser: 1.1.3
-    dev: false
 
   /cssesc@3.0.0:
     resolution:
@@ -8809,7 +8166,6 @@ packages:
     engines: { node: '>=18' }
     dependencies:
       rrweb-cssom: 0.6.0
-    dev: true
 
   /csstype@3.1.3:
     resolution:
@@ -8825,7 +8181,6 @@ packages:
     engines: { node: '>=12' }
     dependencies:
       internmap: 2.0.3
-    dev: false
 
   /d3-color@3.1.0:
     resolution:
@@ -8859,7 +8214,6 @@ packages:
     engines: { node: '>=12' }
     dependencies:
       d3-color: 3.1.0
-    dev: false
 
   /d3-path@3.1.0:
     resolution:
@@ -8881,7 +8235,6 @@ packages:
       d3-interpolate: 3.0.1
       d3-time: 3.1.0
       d3-time-format: 4.1.0
-    dev: false
 
   /d3-shape@3.2.0:
     resolution:
@@ -8891,7 +8244,6 @@ packages:
     engines: { node: '>=12' }
     dependencies:
       d3-path: 3.1.0
-    dev: false
 
   /d3-time-format@4.1.0:
     resolution:
@@ -8901,7 +8253,6 @@ packages:
     engines: { node: '>=12' }
     dependencies:
       d3-time: 3.1.0
-    dev: false
 
   /d3-time@3.1.0:
     resolution:
@@ -8911,7 +8262,6 @@ packages:
     engines: { node: '>=12' }
     dependencies:
       d3-array: 3.2.4
-    dev: false
 
   /d3-timer@3.0.1:
     resolution:
@@ -8929,7 +8279,6 @@ packages:
     engines: { node: '>=0.10' }
     dependencies:
       assert-plus: 1.0.0
-    dev: false
 
   /data-uri-to-buffer@4.0.1:
     resolution:
@@ -8947,7 +8296,6 @@ packages:
     dependencies:
       whatwg-mimetype: 4.0.0
       whatwg-url: 14.0.0
-    dev: true
 
   /date-fns@2.30.0:
     resolution:
@@ -9003,7 +8351,6 @@ packages:
     dependencies:
       decamelize: 1.2.0
       map-obj: 1.0.1
-    dev: false
 
   /decamelize@1.2.0:
     resolution:
@@ -9043,7 +8390,6 @@ packages:
     engines: { node: '>=6' }
     dependencies:
       type-detect: 4.0.8
-    dev: true
 
   /deep-equal@2.2.3:
     resolution:
@@ -9070,7 +8416,6 @@ packages:
       which-boxed-primitive: 1.0.2
       which-collection: 1.0.2
       which-typed-array: 1.1.15
-    dev: true
 
   /deep-is@0.1.4:
     resolution:
@@ -9115,7 +8460,6 @@ packages:
       define-data-property: 1.1.4
       has-property-descriptors: 1.0.2
       object-keys: 1.1.1
-    dev: true
 
   /defined@1.0.1:
     resolution:
@@ -9163,7 +8507,6 @@ packages:
       acorn-node: 1.8.2
       defined: 1.0.1
       minimist: 1.2.8
-    dev: true
 
   /devlop@1.1.0:
     resolution:
@@ -9181,7 +8524,6 @@ packages:
     dependencies:
       asap: 2.0.6
       wrappy: 1.0.2
-    dev: false
 
   /didyoumean@1.2.2:
     resolution:
@@ -9213,7 +8555,6 @@ packages:
     engines: { node: '>=8' }
     dependencies:
       path-type: 4.0.0
-    dev: true
 
   /direction@2.0.1:
     resolution:
@@ -9252,7 +8593,6 @@ packages:
     dependencies:
       '@babel/runtime': 7.24.1
       csstype: 3.1.3
-    dev: false
 
   /dom-serializer@2.0.0:
     resolution:
@@ -9263,7 +8603,6 @@ packages:
       domelementtype: 2.3.0
       domhandler: 5.0.3
       entities: 4.5.0
-    dev: false
 
   /domelementtype@2.3.0:
     resolution:
@@ -9280,7 +8619,6 @@ packages:
     engines: { node: '>= 4' }
     dependencies:
       domelementtype: 2.3.0
-    dev: false
 
   /domutils@3.1.0:
     resolution:
@@ -9291,7 +8629,6 @@ packages:
       dom-serializer: 2.0.0
       domelementtype: 2.3.0
       domhandler: 5.0.3
-    dev: false
 
   /dotenv@16.0.3:
     resolution:
@@ -9330,7 +8667,6 @@ packages:
     dependencies:
       jsbn: 0.1.1
       safer-buffer: 2.1.2
-    dev: false
 
   /ecdsa-sig-formatter@1.0.11:
     resolution:
@@ -9339,7 +8675,6 @@ packages:
       }
     dependencies:
       safe-buffer: 5.2.1
-    dev: false
 
   /editorconfig@1.0.4:
     resolution:
@@ -9352,7 +8687,6 @@ packages:
       commander: 10.0.1
       minimatch: 9.0.1
       semver: 7.6.0
-    dev: false
 
   /electron-to-chromium@1.4.715:
     resolution:
@@ -9371,7 +8705,6 @@ packages:
       embla-carousel: 8.0.0
       embla-carousel-reactive-utils: 8.0.0(embla-carousel@8.0.0)
       react: 18.2.0
-    dev: false
 
   /embla-carousel-reactive-utils@8.0.0(embla-carousel@8.0.0):
     resolution:
@@ -9382,7 +8715,6 @@ packages:
       embla-carousel: 8.0.0
     dependencies:
       embla-carousel: 8.0.0
-    dev: false
 
   /embla-carousel@8.0.0:
     resolution:
@@ -9418,7 +8750,6 @@ packages:
       }
     dependencies:
       iconv-lite: 0.6.3
-    dev: false
 
   /engine.io-client@6.5.3:
     resolution:
@@ -9435,7 +8766,6 @@ packages:
       - bufferutil
       - supports-color
       - utf-8-validate
-    dev: false
 
   /engine.io-parser@5.2.2:
     resolution:
@@ -9466,7 +8796,6 @@ packages:
       - bufferutil
       - supports-color
       - utf-8-validate
-    dev: false
 
   /enhanced-resolve@5.16.0:
     resolution:
@@ -9477,7 +8806,6 @@ packages:
     dependencies:
       graceful-fs: 4.2.11
       tapable: 2.2.1
-    dev: false
 
   /entities@4.5.0:
     resolution:
@@ -9495,7 +8823,6 @@ packages:
     dependencies:
       commander: 4.1.1
       cross-spawn: 7.0.3
-    dev: true
 
   /error-ex@1.3.2:
     resolution:
@@ -9536,7 +8863,6 @@ packages:
       is-string: 1.0.7
       isarray: 2.0.5
       stop-iteration-iterator: 1.0.0
-    dev: true
 
   /es-module-lexer@1.4.2:
     resolution:
@@ -9576,7 +8902,6 @@ packages:
       '@esbuild/win32-arm64': 0.19.11
       '@esbuild/win32-ia32': 0.19.11
       '@esbuild/win32-x64': 0.19.11
-    dev: false
 
   /esbuild@0.20.2:
     resolution:
@@ -9609,7 +8934,6 @@ packages:
       '@esbuild/win32-arm64': 0.20.2
       '@esbuild/win32-ia32': 0.20.2
       '@esbuild/win32-x64': 0.20.2
-    dev: true
 
   /escalade@3.1.2:
     resolution:
@@ -9649,7 +8973,6 @@ packages:
       eslint: '>=7.0.0'
     dependencies:
       eslint: 8.57.0
-    dev: false
 
   /eslint-config-prettier@9.1.0(eslint@8.57.0):
     resolution:
@@ -9661,7 +8984,6 @@ packages:
       eslint: '>=7.0.0'
     dependencies:
       eslint: 8.57.0
-    dev: true
 
   /eslint-config-turbo@1.10.12(eslint@8.57.0):
     resolution:
@@ -9673,7 +8995,6 @@ packages:
     dependencies:
       eslint: 8.57.0
       eslint-plugin-turbo: 1.10.12(eslint@8.57.0)
-    dev: false
 
   /eslint-plugin-prettier@5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.2.5):
     resolution:
@@ -9693,11 +9014,12 @@ packages:
         optional: true
     dependencies:
       eslint: 8.57.0
-      eslint-config-prettier: 9.1.0(eslint@8.57.0)
       prettier: 3.2.5
       prettier-linter-helpers: 1.0.0
       synckit: 0.8.8
-    dev: true
+    optionalDependencies:
+      '@types/eslint': 8.56.6
+      eslint-config-prettier: 9.1.0(eslint@8.57.0)
 
   /eslint-plugin-react-hooks@4.6.0(eslint@8.57.0):
     resolution:
@@ -9709,7 +9031,6 @@ packages:
       eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0
     dependencies:
       eslint: 8.57.0
-    dev: true
 
   /eslint-plugin-turbo@1.10.12(eslint@8.57.0):
     resolution:
@@ -9721,7 +9042,6 @@ packages:
     dependencies:
       dotenv: 16.0.3
       eslint: 8.57.0
-    dev: false
 
   /eslint-scope@5.1.1:
     resolution:
@@ -9732,7 +9052,6 @@ packages:
     dependencies:
       esrecurse: 4.3.0
       estraverse: 4.3.0
-    dev: false
 
   /eslint-scope@7.2.2:
     resolution:
@@ -9858,7 +9177,6 @@ packages:
       }
     dependencies:
       '@types/estree': 1.0.5
-    dev: false
 
   /estree-util-attach-comments@3.0.0:
     resolution:
@@ -9867,7 +9185,6 @@ packages:
       }
     dependencies:
       '@types/estree': 1.0.5
-    dev: false
 
   /estree-util-build-jsx@2.2.2:
     resolution:
@@ -9878,7 +9195,6 @@ packages:
       '@types/estree-jsx': 1.0.5
       estree-util-is-identifier-name: 2.1.0
       estree-walker: 3.0.3
-    dev: false
 
   /estree-util-build-jsx@3.0.1:
     resolution:
@@ -9890,7 +9206,6 @@ packages:
       devlop: 1.1.0
       estree-util-is-identifier-name: 3.0.0
       estree-walker: 3.0.3
-    dev: false
 
   /estree-util-is-identifier-name@2.1.0:
     resolution:
@@ -9915,7 +9230,6 @@ packages:
       '@types/estree-jsx': 1.0.5
       astring: 1.8.6
       source-map: 0.7.4
-    dev: false
 
   /estree-util-to-js@2.0.0:
     resolution:
@@ -9926,7 +9240,6 @@ packages:
       '@types/estree-jsx': 1.0.5
       astring: 1.8.6
       source-map: 0.7.4
-    dev: false
 
   /estree-util-value-to-estree@3.0.1:
     resolution:
@@ -9937,7 +9250,6 @@ packages:
     dependencies:
       '@types/estree': 1.0.5
       is-plain-obj: 4.1.0
-    dev: false
 
   /estree-util-visit@1.2.1:
     resolution:
@@ -9947,7 +9259,6 @@ packages:
     dependencies:
       '@types/estree-jsx': 1.0.5
       '@types/unist': 2.0.10
-    dev: false
 
   /estree-util-visit@2.0.0:
     resolution:
@@ -9957,7 +9268,6 @@ packages:
     dependencies:
       '@types/estree-jsx': 1.0.5
       '@types/unist': 3.0.2
-    dev: false
 
   /estree-walker@2.0.2:
     resolution:
@@ -10020,7 +9330,6 @@ packages:
       onetime: 6.0.0
       signal-exit: 3.0.7
       strip-final-newline: 3.0.0
-    dev: false
 
   /execa@8.0.1:
     resolution:
@@ -10038,7 +9347,6 @@ packages:
       onetime: 6.0.0
       signal-exit: 4.1.0
       strip-final-newline: 3.0.0
-    dev: true
 
   /extend@3.0.2:
     resolution:
@@ -10115,7 +9423,6 @@ packages:
       }
     dependencies:
       format: 0.2.2
-    dev: false
 
   /fetch-blob@3.2.0:
     resolution:
@@ -10151,7 +9458,6 @@ packages:
     engines: { node: '>= 12' }
     dependencies:
       tslib: 2.6.2
-    dev: false
 
   /fill-range@7.0.1:
     resolution:
@@ -10224,7 +9530,6 @@ packages:
       flow-parser: 0.156.0
       pirates: 3.0.2
       vlq: 0.2.3
-    dev: true
 
   /follow-redirects@1.15.6:
     resolution:
@@ -10246,7 +9551,6 @@ packages:
       }
     dependencies:
       is-callable: 1.2.7
-    dev: true
 
   /foreground-child@3.1.1:
     resolution:
@@ -10275,7 +9579,6 @@ packages:
       asynckit: 0.4.0
       combined-stream: 1.0.8
       mime-types: 2.1.35
-    dev: false
 
   /form-data@4.0.0:
     resolution:
@@ -10314,7 +9617,6 @@ packages:
       dezalgo: 1.0.4
       hexoid: 1.0.0
       once: 1.4.0
-    dev: false
 
   /fraction.js@4.3.7:
     resolution:
@@ -10336,8 +9638,6 @@ packages:
       react-dom:
         optional: true
     dependencies:
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
       tslib: 2.6.2
     optionalDependencies:
       '@emotion/is-prop-valid': 0.8.8
@@ -10360,10 +9660,11 @@ packages:
       react-dom:
         optional: true
     dependencies:
+      tslib: 2.6.2
+    optionalDependencies:
+      '@emotion/is-prop-valid': 0.8.8
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      tslib: 2.6.2
-    dev: false
 
   /fs-extra@10.1.0:
     resolution:
@@ -10375,7 +9676,6 @@ packages:
       graceful-fs: 4.2.11
       jsonfile: 6.1.0
       universalify: 2.0.1
-    dev: true
 
   /fs-extra@11.2.0:
     resolution:
@@ -10387,7 +9687,6 @@ packages:
       graceful-fs: 4.2.11
       jsonfile: 6.1.0
       universalify: 2.0.1
-    dev: false
 
   /fs-minipass@2.1.0:
     resolution:
@@ -10397,7 +9696,6 @@ packages:
     engines: { node: '>= 8' }
     dependencies:
       minipass: 3.3.6
-    dev: true
 
   /fs.realpath@1.0.0:
     resolution:
@@ -10438,7 +9736,7 @@ packages:
       }
     dev: true
 
-  /geist@1.2.2(next@14.3.0-canary.18):
+  /geist@1.2.2(next@14.1.4):
     resolution:
       {
         integrity: sha512-uRDrxhvdnPwWJmh+K5+/5LXSKwvJzaYCl9tDXgiBi4hj7hB4K7+n/WLcvJMFs5btvyn0r9OSwCd1s6CmqAsxEw==,
@@ -10515,7 +9813,6 @@ packages:
       }
     dependencies:
       assert-plus: 1.0.0
-    dev: false
 
   /github-slugger@2.0.0:
     resolution:
@@ -10574,7 +9871,6 @@ packages:
       minimatch: 9.0.3
       minipass: 7.0.4
       path-scurry: 1.10.1
-    dev: false
 
   /glob@7.2.3:
     resolution:
@@ -10601,7 +9897,6 @@ packages:
       inherits: 2.0.4
       minimatch: 5.1.6
       once: 1.4.0
-    dev: false
 
   /globals@11.12.0:
     resolution:
@@ -10632,7 +9927,6 @@ packages:
       ignore: 5.3.1
       merge2: 1.4.1
       slash: 3.0.0
-    dev: true
 
   /gopd@1.0.1:
     resolution:
@@ -10662,7 +9956,6 @@ packages:
     engines: { node: '>=10' }
     dependencies:
       duplexer: 0.1.2
-    dev: false
 
   /har-schema@2.0.0:
     resolution:
@@ -10682,7 +9975,6 @@ packages:
     dependencies:
       ajv: 6.12.6
       har-schema: 2.0.0
-    dev: false
 
   /hard-rejection@2.1.0:
     resolution:
@@ -10700,7 +9992,6 @@ packages:
     engines: { node: '>=0.10.0' }
     dependencies:
       ansi-regex: 2.1.1
-    dev: false
 
   /has-bigints@1.0.2:
     resolution:
@@ -10753,7 +10044,6 @@ packages:
     engines: { node: '>= 0.4' }
     dependencies:
       has-symbols: 1.0.3
-    dev: true
 
   /hasown@2.0.2:
     resolution:
@@ -10806,7 +10096,6 @@ packages:
       }
     dependencies:
       '@types/hast': 3.0.4
-    dev: false
 
   /hast-util-heading-rank@2.1.1:
     resolution:
@@ -10815,7 +10104,6 @@ packages:
       }
     dependencies:
       '@types/hast': 2.3.10
-    dev: true
 
   /hast-util-heading-rank@3.0.0:
     resolution:
@@ -10824,7 +10112,6 @@ packages:
       }
     dependencies:
       '@types/hast': 3.0.4
-    dev: true
 
   /hast-util-is-element@3.0.0:
     resolution:
@@ -10833,7 +10120,6 @@ packages:
       }
     dependencies:
       '@types/hast': 3.0.4
-    dev: true
 
   /hast-util-parse-selector@4.0.0:
     resolution:
@@ -10865,7 +10151,6 @@ packages:
       space-separated-tokens: 2.0.2
       unist-util-visit: 5.0.0
       zwitch: 2.0.4
-    dev: false
 
   /hast-util-to-estree@2.3.3:
     resolution:
@@ -10890,7 +10175,6 @@ packages:
       zwitch: 2.0.4
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /hast-util-to-estree@3.1.0:
     resolution:
@@ -10916,7 +10200,6 @@ packages:
       zwitch: 2.0.4
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /hast-util-to-jsx-runtime@2.3.0:
     resolution:
@@ -10941,7 +10224,6 @@ packages:
       vfile-message: 4.0.2
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /hast-util-to-string@2.0.0:
     resolution:
@@ -10950,7 +10232,6 @@ packages:
       }
     dependencies:
       '@types/hast': 2.3.10
-    dev: true
 
   /hast-util-to-string@3.0.0:
     resolution:
@@ -10974,7 +10255,6 @@ packages:
       }
     dependencies:
       '@types/hast': 3.0.4
-    dev: false
 
   /hastscript@8.0.0:
     resolution:
@@ -10999,7 +10279,6 @@ packages:
       hast-util-parse-selector: 4.0.0
       property-information: 6.4.1
       space-separated-tokens: 2.0.2
-    dev: false
 
   /hex-color-regex@1.1.0:
     resolution:
@@ -11023,7 +10302,6 @@ packages:
       }
     dependencies:
       react-is: 16.13.1
-    dev: false
 
   /hosted-git-info@2.8.9:
     resolution:
@@ -11053,7 +10331,6 @@ packages:
     engines: { node: '>=18' }
     dependencies:
       whatwg-encoding: 3.1.1
-    dev: true
 
   /html-escaper@2.0.2:
     resolution:
@@ -11082,7 +10359,6 @@ packages:
       dom-serializer: 2.0.0
       htmlparser2: 8.0.2
       selderee: 0.11.0
-    dev: false
 
   /htmlparser2@8.0.2:
     resolution:
@@ -11094,7 +10370,6 @@ packages:
       domhandler: 5.0.3
       domutils: 3.1.0
       entities: 4.5.0
-    dev: false
 
   /http-proxy-agent@7.0.2:
     resolution:
@@ -11107,7 +10382,6 @@ packages:
       debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /http-signature@1.2.0:
     resolution:
@@ -11119,7 +10393,6 @@ packages:
       assert-plus: 1.0.0
       jsprim: 1.4.2
       sshpk: 1.18.0
-    dev: false
 
   /https-proxy-agent@5.0.1:
     resolution:
@@ -11132,7 +10405,6 @@ packages:
       debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /https-proxy-agent@6.2.1:
     resolution:
@@ -11145,7 +10417,6 @@ packages:
       debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /https-proxy-agent@7.0.4:
     resolution:
@@ -11158,7 +10429,6 @@ packages:
       debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /human-signals@4.3.1:
     resolution:
@@ -11237,7 +10507,6 @@ packages:
     dependencies:
       request: 2.88.0
       request-promise-native: 1.0.5(request@2.88.0)
-    dev: false
 
   /indent-string@4.0.0:
     resolution:
@@ -11293,7 +10562,6 @@ packages:
       es-errors: 1.3.0
       hasown: 2.0.2
       side-channel: 1.0.6
-    dev: true
 
   /internmap@2.0.3:
     resolution:
@@ -11318,7 +10586,6 @@ packages:
       }
     dependencies:
       loose-envify: 1.4.0
-    dev: false
 
   /is-alphabetical@2.0.1:
     resolution:
@@ -11335,7 +10602,6 @@ packages:
     dependencies:
       is-alphabetical: 2.0.1
       is-decimal: 2.0.1
-    dev: false
 
   /is-arguments@1.1.1:
     resolution:
@@ -11346,7 +10612,6 @@ packages:
     dependencies:
       call-bind: 1.0.7
       has-tostringtag: 1.0.2
-    dev: true
 
   /is-array-buffer@3.0.4:
     resolution:
@@ -11357,7 +10622,6 @@ packages:
     dependencies:
       call-bind: 1.0.7
       get-intrinsic: 1.2.4
-    dev: true
 
   /is-arrayish@0.2.1:
     resolution:
@@ -11378,7 +10642,6 @@ packages:
       }
     dependencies:
       has-bigints: 1.0.2
-    dev: true
 
   /is-binary-path@2.1.0:
     resolution:
@@ -11398,7 +10661,6 @@ packages:
     dependencies:
       call-bind: 1.0.7
       has-tostringtag: 1.0.2
-    dev: true
 
   /is-buffer@2.0.5:
     resolution:
@@ -11428,7 +10690,6 @@ packages:
       hsla-regex: 1.0.0
       rgb-regex: 1.0.1
       rgba-regex: 1.0.0
-    dev: true
 
   /is-core-module@2.13.1:
     resolution:
@@ -11446,7 +10707,6 @@ packages:
     engines: { node: '>= 0.4' }
     dependencies:
       has-tostringtag: 1.0.2
-    dev: true
 
   /is-decimal@2.0.1:
     resolution:
@@ -11523,7 +10783,6 @@ packages:
     engines: { node: '>= 0.4' }
     dependencies:
       has-tostringtag: 1.0.2
-    dev: true
 
   /is-number@7.0.0:
     resolution:
@@ -11576,7 +10835,6 @@ packages:
       }
     dependencies:
       '@types/estree': 1.0.5
-    dev: false
 
   /is-reference@3.0.2:
     resolution:
@@ -11585,7 +10843,6 @@ packages:
       }
     dependencies:
       '@types/estree': 1.0.5
-    dev: false
 
   /is-regex@1.1.4:
     resolution:
@@ -11596,7 +10853,6 @@ packages:
     dependencies:
       call-bind: 1.0.7
       has-tostringtag: 1.0.2
-    dev: true
 
   /is-set@2.0.3:
     resolution:
@@ -11614,7 +10870,6 @@ packages:
     engines: { node: '>= 0.4' }
     dependencies:
       call-bind: 1.0.7
-    dev: true
 
   /is-stream@3.0.0:
     resolution:
@@ -11631,7 +10886,6 @@ packages:
     engines: { node: '>= 0.4' }
     dependencies:
       has-tostringtag: 1.0.2
-    dev: true
 
   /is-symbol@1.0.4:
     resolution:
@@ -11641,7 +10895,6 @@ packages:
     engines: { node: '>= 0.4' }
     dependencies:
       has-symbols: 1.0.3
-    dev: true
 
   /is-typedarray@1.0.0:
     resolution:
@@ -11682,7 +10935,6 @@ packages:
     dependencies:
       call-bind: 1.0.7
       get-intrinsic: 1.2.4
-    dev: true
 
   /isarray@2.0.5:
     resolution:
@@ -11725,7 +10977,6 @@ packages:
       '@types/node': 20.11.30
       merge-stream: 2.0.0
       supports-color: 8.1.1
-    dev: false
 
   /jiti@1.21.0:
     resolution:
@@ -11753,7 +11004,6 @@ packages:
       glob: 10.3.10
       js-cookie: 3.0.5
       nopt: 7.2.0
-    dev: false
 
   /js-cookie@3.0.5:
     resolution:
@@ -11828,7 +11078,6 @@ packages:
       - bufferutil
       - supports-color
       - utf-8-validate
-    dev: true
 
   /jsesc@2.5.2:
     resolution:
@@ -11916,7 +11165,6 @@ packages:
       lodash.once: 4.1.1
       ms: 2.1.3
       semver: 7.6.0
-    dev: false
 
   /jsprim@1.4.2:
     resolution:
@@ -11929,7 +11177,6 @@ packages:
       extsprintf: 1.3.0
       json-schema: 0.4.0
       verror: 1.10.0
-    dev: false
 
   /jss-plugin-camel-case@10.10.0:
     resolution:
@@ -11940,7 +11187,6 @@ packages:
       '@babel/runtime': 7.24.1
       hyphenate-style-name: 1.0.4
       jss: 10.10.0
-    dev: false
 
   /jss-plugin-compose@10.10.0:
     resolution:
@@ -11951,7 +11197,6 @@ packages:
       '@babel/runtime': 7.24.1
       jss: 10.10.0
       tiny-warning: 1.0.3
-    dev: false
 
   /jss-plugin-default-unit@10.10.0:
     resolution:
@@ -11961,7 +11206,6 @@ packages:
     dependencies:
       '@babel/runtime': 7.24.1
       jss: 10.10.0
-    dev: false
 
   /jss-plugin-expand@10.10.0:
     resolution:
@@ -11971,7 +11215,6 @@ packages:
     dependencies:
       '@babel/runtime': 7.24.1
       jss: 10.10.0
-    dev: false
 
   /jss-plugin-extend@10.10.0:
     resolution:
@@ -11982,7 +11225,6 @@ packages:
       '@babel/runtime': 7.24.1
       jss: 10.10.0
       tiny-warning: 1.0.3
-    dev: false
 
   /jss-plugin-global@10.10.0:
     resolution:
@@ -11992,7 +11234,6 @@ packages:
     dependencies:
       '@babel/runtime': 7.24.1
       jss: 10.10.0
-    dev: false
 
   /jss-plugin-nested@10.10.0:
     resolution:
@@ -12003,7 +11244,6 @@ packages:
       '@babel/runtime': 7.24.1
       jss: 10.10.0
       tiny-warning: 1.0.3
-    dev: false
 
   /jss-plugin-props-sort@10.10.0:
     resolution:
@@ -12013,7 +11253,6 @@ packages:
     dependencies:
       '@babel/runtime': 7.24.1
       jss: 10.10.0
-    dev: false
 
   /jss-plugin-rule-value-function@10.10.0:
     resolution:
@@ -12024,7 +11263,6 @@ packages:
       '@babel/runtime': 7.24.1
       jss: 10.10.0
       tiny-warning: 1.0.3
-    dev: false
 
   /jss-plugin-rule-value-observable@10.10.0:
     resolution:
@@ -12035,7 +11273,6 @@ packages:
       '@babel/runtime': 7.24.1
       jss: 10.10.0
       symbol-observable: 1.2.0
-    dev: false
 
   /jss-plugin-template@10.10.0:
     resolution:
@@ -12046,7 +11283,6 @@ packages:
       '@babel/runtime': 7.24.1
       jss: 10.10.0
       tiny-warning: 1.0.3
-    dev: false
 
   /jss-plugin-vendor-prefixer@10.10.0:
     resolution:
@@ -12057,7 +11293,6 @@ packages:
       '@babel/runtime': 7.24.1
       css-vendor: 2.0.8
       jss: 10.10.0
-    dev: false
 
   /jss-preset-default@10.10.0:
     resolution:
@@ -12079,7 +11314,6 @@ packages:
       jss-plugin-rule-value-observable: 10.10.0
       jss-plugin-template: 10.10.0
       jss-plugin-vendor-prefixer: 10.10.0
-    dev: false
 
   /jss@10.10.0:
     resolution:
@@ -12091,7 +11325,6 @@ packages:
       csstype: 3.1.3
       is-in-browser: 1.1.3
       tiny-warning: 1.0.3
-    dev: false
 
   /jwa@1.4.1:
     resolution:
@@ -12102,7 +11335,6 @@ packages:
       buffer-equal-constant-time: 1.0.1
       ecdsa-sig-formatter: 1.0.11
       safe-buffer: 5.2.1
-    dev: false
 
   /jws@3.2.2:
     resolution:
@@ -12112,7 +11344,6 @@ packages:
     dependencies:
       jwa: 1.4.1
       safe-buffer: 5.2.1
-    dev: false
 
   /keyv@4.5.4:
     resolution:
@@ -12170,7 +11401,6 @@ packages:
       }
     dependencies:
       immediate: 3.0.6
-    dev: false
 
   /lilconfig@2.1.0:
     resolution:
@@ -12200,7 +11430,6 @@ packages:
       }
     dependencies:
       uc.micro: 2.1.0
-    dev: false
 
   /linkifyjs@4.1.3:
     resolution:
@@ -12226,7 +11455,6 @@ packages:
     dependencies:
       mlly: 1.6.1
       pkg-types: 1.0.3
-    dev: true
 
   /localforage@1.10.0:
     resolution:
@@ -12235,7 +11463,6 @@ packages:
       }
     dependencies:
       lie: 3.1.1
-    dev: false
 
   /locate-character@3.0.0:
     resolution:
@@ -12346,7 +11573,6 @@ packages:
     dependencies:
       lodash._reinterpolate: 3.0.0
       lodash.templatesettings: 4.2.0
-    dev: false
 
   /lodash.templatesettings@4.2.0:
     resolution:
@@ -12355,7 +11581,6 @@ packages:
       }
     dependencies:
       lodash._reinterpolate: 3.0.0
-    dev: false
 
   /lodash.topath@4.5.2:
     resolution:
@@ -12396,7 +11621,6 @@ packages:
     dependencies:
       chalk: 5.2.0
       is-unicode-supported: 1.3.0
-    dev: false
 
   /longest-streak@3.1.0:
     resolution:
@@ -12419,7 +11643,6 @@ packages:
       }
     dependencies:
       get-func-name: 2.0.2
-    dev: true
 
   /lru-cache@10.2.0:
     resolution:
@@ -12454,7 +11677,6 @@ packages:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0
     dependencies:
       react: 18.2.0
-    dev: false
 
   /lz-string@1.5.0:
     resolution:
@@ -12471,7 +11693,6 @@ packages:
     engines: { node: '>=12' }
     dependencies:
       '@jridgewell/sourcemap-codec': 1.4.15
-    dev: false
 
   /magic-string@0.30.8:
     resolution:
@@ -12533,7 +11754,6 @@ packages:
       mdurl: 2.0.0
       punycode.js: 2.3.1
       uc.micro: 2.1.0
-    dev: false
 
   /markdown-table@3.0.3:
     resolution:
@@ -12541,18 +11761,6 @@ packages:
         integrity: sha512-Z1NL3Tb1M9wH4XESsCDEksWoKTdlUafKc4pt0GRwjUyXaCFZ+dc3g2erqB6zm3szA2IUSi7VnPI+o/9jnxh9hw==,
       }
     dev: true
-
-  /markdown-to-jsx@7.4.7(react@18.2.0):
-    resolution:
-      {
-        integrity: sha512-0+ls1IQZdU6cwM1yu0ZjjiVWYtkbExSyUIFU2ZeDIFuZM1W42Mh4OlJ4nb4apX4H8smxDHRdFaoIVJGwfv5hkg==,
-      }
-    engines: { node: '>= 10' }
-    peerDependencies:
-      react: '>= 0.14.0'
-    dependencies:
-      react: 18.2.0
-    dev: false
 
   /marked@7.0.4:
     resolution:
@@ -12573,8 +11781,7 @@ packages:
     dependencies:
       marked: 7.0.4
       react: 18.2.0
-      react-email: 2.1.0(@babel/core@7.24.3)(eslint@8.57.0)
-    dev: false
+      react-email: 2.1.0(@babel/core@7.24.3)(@swc/helpers@0.5.2)(eslint@8.57.0)
 
   /mdast-util-definitions@5.1.2:
     resolution:
@@ -12585,7 +11792,6 @@ packages:
       '@types/mdast': 3.0.15
       '@types/unist': 2.0.10
       unist-util-visit: 4.1.2
-    dev: false
 
   /mdast-util-find-and-replace@3.0.1:
     resolution:
@@ -12597,7 +11803,6 @@ packages:
       escape-string-regexp: 5.0.0
       unist-util-is: 6.0.0
       unist-util-visit-parents: 6.0.1
-    dev: true
 
   /mdast-util-from-markdown@1.3.1:
     resolution:
@@ -12619,7 +11824,6 @@ packages:
       uvu: 0.5.6
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /mdast-util-from-markdown@2.0.0:
     resolution:
@@ -12656,7 +11860,6 @@ packages:
       micromark-extension-frontmatter: 2.0.0
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /mdast-util-gfm-autolink-literal@2.0.0:
     resolution:
@@ -12669,7 +11872,6 @@ packages:
       devlop: 1.1.0
       mdast-util-find-and-replace: 3.0.1
       micromark-util-character: 2.1.0
-    dev: true
 
   /mdast-util-gfm-footnote@2.0.0:
     resolution:
@@ -12684,7 +11886,6 @@ packages:
       micromark-util-normalize-identifier: 2.0.0
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /mdast-util-gfm-strikethrough@2.0.0:
     resolution:
@@ -12697,7 +11898,6 @@ packages:
       mdast-util-to-markdown: 2.1.0
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /mdast-util-gfm-table@2.0.0:
     resolution:
@@ -12712,7 +11912,6 @@ packages:
       mdast-util-to-markdown: 2.1.0
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /mdast-util-gfm-task-list-item@2.0.0:
     resolution:
@@ -12726,7 +11925,6 @@ packages:
       mdast-util-to-markdown: 2.1.0
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /mdast-util-gfm@3.0.0:
     resolution:
@@ -12743,7 +11941,6 @@ packages:
       mdast-util-to-markdown: 2.1.0
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /mdast-util-mdx-expression@1.3.2:
     resolution:
@@ -12758,7 +11955,6 @@ packages:
       mdast-util-to-markdown: 1.5.0
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /mdast-util-mdx-expression@2.0.0:
     resolution:
@@ -12774,7 +11970,6 @@ packages:
       mdast-util-to-markdown: 2.1.0
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /mdast-util-mdx-jsx@2.1.4:
     resolution:
@@ -12796,7 +11991,6 @@ packages:
       vfile-message: 3.1.4
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /mdast-util-mdx-jsx@3.1.2:
     resolution:
@@ -12819,7 +12013,6 @@ packages:
       vfile-message: 4.0.2
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /mdast-util-mdx@2.0.1:
     resolution:
@@ -12834,7 +12027,6 @@ packages:
       mdast-util-to-markdown: 1.5.0
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /mdast-util-mdx@3.0.0:
     resolution:
@@ -12849,7 +12041,6 @@ packages:
       mdast-util-to-markdown: 2.1.0
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /mdast-util-mdxjs-esm@1.3.1:
     resolution:
@@ -12864,7 +12055,6 @@ packages:
       mdast-util-to-markdown: 1.5.0
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /mdast-util-mdxjs-esm@2.0.1:
     resolution:
@@ -12880,7 +12070,6 @@ packages:
       mdast-util-to-markdown: 2.1.0
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /mdast-util-phrasing@3.0.1:
     resolution:
@@ -12890,7 +12079,6 @@ packages:
     dependencies:
       '@types/mdast': 3.0.15
       unist-util-is: 5.2.1
-    dev: false
 
   /mdast-util-phrasing@4.1.0:
     resolution:
@@ -12915,7 +12103,6 @@ packages:
       unist-util-generated: 2.0.1
       unist-util-position: 4.0.4
       unist-util-visit: 4.1.2
-    dev: false
 
   /mdast-util-to-hast@13.1.0:
     resolution:
@@ -12932,7 +12119,6 @@ packages:
       unist-util-position: 5.0.0
       unist-util-visit: 5.0.0
       vfile: 6.0.1
-    dev: false
 
   /mdast-util-to-markdown@1.5.0:
     resolution:
@@ -12948,7 +12134,6 @@ packages:
       micromark-util-decode-string: 1.1.0
       unist-util-visit: 4.1.2
       zwitch: 2.0.4
-    dev: false
 
   /mdast-util-to-markdown@2.1.0:
     resolution:
@@ -12972,7 +12157,6 @@ packages:
       }
     dependencies:
       '@types/mdast': 3.0.15
-    dev: false
 
   /mdast-util-to-string@4.0.0:
     resolution:
@@ -12995,7 +12179,6 @@ packages:
       mdast-util-to-string: 4.0.0
       unist-util-is: 6.0.0
       unist-util-visit: 5.0.0
-    dev: true
 
   /mdn-data@2.0.30:
     resolution:
@@ -13036,7 +12219,6 @@ packages:
       trim-newlines: 3.0.1
       type-fest: 0.13.1
       yargs-parser: 18.1.3
-    dev: false
 
   /merge-stream@2.0.0:
     resolution:
@@ -13073,7 +12255,6 @@ packages:
       micromark-util-symbol: 1.1.0
       micromark-util-types: 1.1.0
       uvu: 0.5.6
-    dev: false
 
   /micromark-core-commonmark@2.0.0:
     resolution:
@@ -13108,7 +12289,6 @@ packages:
       micromark-util-character: 2.1.0
       micromark-util-symbol: 2.0.0
       micromark-util-types: 2.0.0
-    dev: false
 
   /micromark-extension-gfm-autolink-literal@2.0.0:
     resolution:
@@ -13120,7 +12300,6 @@ packages:
       micromark-util-sanitize-uri: 2.0.0
       micromark-util-symbol: 2.0.0
       micromark-util-types: 2.0.0
-    dev: true
 
   /micromark-extension-gfm-footnote@2.0.0:
     resolution:
@@ -13136,7 +12315,6 @@ packages:
       micromark-util-sanitize-uri: 2.0.0
       micromark-util-symbol: 2.0.0
       micromark-util-types: 2.0.0
-    dev: true
 
   /micromark-extension-gfm-strikethrough@2.0.0:
     resolution:
@@ -13150,7 +12328,6 @@ packages:
       micromark-util-resolve-all: 2.0.0
       micromark-util-symbol: 2.0.0
       micromark-util-types: 2.0.0
-    dev: true
 
   /micromark-extension-gfm-table@2.0.0:
     resolution:
@@ -13163,7 +12340,6 @@ packages:
       micromark-util-character: 2.1.0
       micromark-util-symbol: 2.0.0
       micromark-util-types: 2.0.0
-    dev: true
 
   /micromark-extension-gfm-tagfilter@2.0.0:
     resolution:
@@ -13172,7 +12348,6 @@ packages:
       }
     dependencies:
       micromark-util-types: 2.0.0
-    dev: true
 
   /micromark-extension-gfm-task-list-item@2.0.1:
     resolution:
@@ -13185,7 +12360,6 @@ packages:
       micromark-util-character: 2.1.0
       micromark-util-symbol: 2.0.0
       micromark-util-types: 2.0.0
-    dev: true
 
   /micromark-extension-gfm@3.0.0:
     resolution:
@@ -13201,7 +12375,6 @@ packages:
       micromark-extension-gfm-task-list-item: 2.0.1
       micromark-util-combine-extensions: 2.0.0
       micromark-util-types: 2.0.0
-    dev: true
 
   /micromark-extension-mdx-expression@1.0.8:
     resolution:
@@ -13217,7 +12390,6 @@ packages:
       micromark-util-symbol: 1.1.0
       micromark-util-types: 1.1.0
       uvu: 0.5.6
-    dev: false
 
   /micromark-extension-mdx-expression@3.0.0:
     resolution:
@@ -13233,7 +12405,6 @@ packages:
       micromark-util-events-to-acorn: 2.0.2
       micromark-util-symbol: 2.0.0
       micromark-util-types: 2.0.0
-    dev: false
 
   /micromark-extension-mdx-jsx@1.0.5:
     resolution:
@@ -13251,7 +12422,6 @@ packages:
       micromark-util-types: 1.1.0
       uvu: 0.5.6
       vfile-message: 3.1.4
-    dev: false
 
   /micromark-extension-mdx-jsx@3.0.0:
     resolution:
@@ -13269,7 +12439,6 @@ packages:
       micromark-util-symbol: 2.0.0
       micromark-util-types: 2.0.0
       vfile-message: 4.0.2
-    dev: false
 
   /micromark-extension-mdx-md@1.0.1:
     resolution:
@@ -13278,7 +12447,6 @@ packages:
       }
     dependencies:
       micromark-util-types: 1.1.0
-    dev: false
 
   /micromark-extension-mdx-md@2.0.0:
     resolution:
@@ -13287,7 +12455,6 @@ packages:
       }
     dependencies:
       micromark-util-types: 2.0.0
-    dev: false
 
   /micromark-extension-mdxjs-esm@1.0.5:
     resolution:
@@ -13304,7 +12471,6 @@ packages:
       unist-util-position-from-estree: 1.1.2
       uvu: 0.5.6
       vfile-message: 3.1.4
-    dev: false
 
   /micromark-extension-mdxjs-esm@3.0.0:
     resolution:
@@ -13321,7 +12487,6 @@ packages:
       micromark-util-types: 2.0.0
       unist-util-position-from-estree: 2.0.0
       vfile-message: 4.0.2
-    dev: false
 
   /micromark-extension-mdxjs@1.0.1:
     resolution:
@@ -13337,7 +12502,6 @@ packages:
       micromark-extension-mdxjs-esm: 1.0.5
       micromark-util-combine-extensions: 1.1.0
       micromark-util-types: 1.1.0
-    dev: false
 
   /micromark-extension-mdxjs@3.0.0:
     resolution:
@@ -13353,7 +12517,6 @@ packages:
       micromark-extension-mdxjs-esm: 3.0.0
       micromark-util-combine-extensions: 2.0.0
       micromark-util-types: 2.0.0
-    dev: false
 
   /micromark-factory-destination@1.1.0:
     resolution:
@@ -13364,7 +12527,6 @@ packages:
       micromark-util-character: 1.2.0
       micromark-util-symbol: 1.1.0
       micromark-util-types: 1.1.0
-    dev: false
 
   /micromark-factory-destination@2.0.0:
     resolution:
@@ -13386,7 +12548,6 @@ packages:
       micromark-util-symbol: 1.1.0
       micromark-util-types: 1.1.0
       uvu: 0.5.6
-    dev: false
 
   /micromark-factory-label@2.0.0:
     resolution:
@@ -13413,7 +12574,6 @@ packages:
       unist-util-position-from-estree: 1.1.2
       uvu: 0.5.6
       vfile-message: 3.1.4
-    dev: false
 
   /micromark-factory-mdx-expression@2.0.1:
     resolution:
@@ -13429,7 +12589,6 @@ packages:
       micromark-util-types: 2.0.0
       unist-util-position-from-estree: 2.0.0
       vfile-message: 4.0.2
-    dev: false
 
   /micromark-factory-space@1.1.0:
     resolution:
@@ -13439,7 +12598,6 @@ packages:
     dependencies:
       micromark-util-character: 1.2.0
       micromark-util-types: 1.1.0
-    dev: false
 
   /micromark-factory-space@2.0.0:
     resolution:
@@ -13460,7 +12618,6 @@ packages:
       micromark-util-character: 1.2.0
       micromark-util-symbol: 1.1.0
       micromark-util-types: 1.1.0
-    dev: false
 
   /micromark-factory-title@2.0.0:
     resolution:
@@ -13483,7 +12640,6 @@ packages:
       micromark-util-character: 1.2.0
       micromark-util-symbol: 1.1.0
       micromark-util-types: 1.1.0
-    dev: false
 
   /micromark-factory-whitespace@2.0.0:
     resolution:
@@ -13504,7 +12660,6 @@ packages:
     dependencies:
       micromark-util-symbol: 1.1.0
       micromark-util-types: 1.1.0
-    dev: false
 
   /micromark-util-character@2.1.0:
     resolution:
@@ -13522,7 +12677,6 @@ packages:
       }
     dependencies:
       micromark-util-symbol: 1.1.0
-    dev: false
 
   /micromark-util-chunked@2.0.0:
     resolution:
@@ -13541,7 +12695,6 @@ packages:
       micromark-util-character: 1.2.0
       micromark-util-symbol: 1.1.0
       micromark-util-types: 1.1.0
-    dev: false
 
   /micromark-util-classify-character@2.0.0:
     resolution:
@@ -13561,7 +12714,6 @@ packages:
     dependencies:
       micromark-util-chunked: 1.1.0
       micromark-util-types: 1.1.0
-    dev: false
 
   /micromark-util-combine-extensions@2.0.0:
     resolution:
@@ -13579,7 +12731,6 @@ packages:
       }
     dependencies:
       micromark-util-symbol: 1.1.0
-    dev: false
 
   /micromark-util-decode-numeric-character-reference@2.0.1:
     resolution:
@@ -13599,7 +12750,6 @@ packages:
       micromark-util-character: 1.2.0
       micromark-util-decode-numeric-character-reference: 1.1.0
       micromark-util-symbol: 1.1.0
-    dev: false
 
   /micromark-util-decode-string@2.0.0:
     resolution:
@@ -13639,7 +12789,6 @@ packages:
       micromark-util-types: 1.1.0
       uvu: 0.5.6
       vfile-message: 3.1.4
-    dev: false
 
   /micromark-util-events-to-acorn@2.0.2:
     resolution:
@@ -13655,7 +12804,6 @@ packages:
       micromark-util-symbol: 2.0.0
       micromark-util-types: 2.0.0
       vfile-message: 4.0.2
-    dev: false
 
   /micromark-util-html-tag-name@1.2.0:
     resolution:
@@ -13677,7 +12825,6 @@ packages:
       }
     dependencies:
       micromark-util-symbol: 1.1.0
-    dev: false
 
   /micromark-util-normalize-identifier@2.0.0:
     resolution:
@@ -13694,7 +12841,6 @@ packages:
       }
     dependencies:
       micromark-util-types: 1.1.0
-    dev: false
 
   /micromark-util-resolve-all@2.0.0:
     resolution:
@@ -13713,7 +12859,6 @@ packages:
       micromark-util-character: 1.2.0
       micromark-util-encode: 1.1.0
       micromark-util-symbol: 1.1.0
-    dev: false
 
   /micromark-util-sanitize-uri@2.0.0:
     resolution:
@@ -13735,7 +12880,6 @@ packages:
       micromark-util-symbol: 1.1.0
       micromark-util-types: 1.1.0
       uvu: 0.5.6
-    dev: false
 
   /micromark-util-subtokenize@2.0.0:
     resolution:
@@ -13799,7 +12943,6 @@ packages:
       uvu: 0.5.6
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /micromark@4.0.0:
     resolution:
@@ -13898,7 +13041,6 @@ packages:
     engines: { node: '>=10' }
     dependencies:
       brace-expansion: 2.0.1
-    dev: false
 
   /minimatch@7.4.6:
     resolution:
@@ -13908,7 +13050,6 @@ packages:
     engines: { node: '>=10' }
     dependencies:
       brace-expansion: 2.0.1
-    dev: false
 
   /minimatch@9.0.1:
     resolution:
@@ -13918,7 +13059,6 @@ packages:
     engines: { node: '>=16 || 14 >=14.17' }
     dependencies:
       brace-expansion: 2.0.1
-    dev: false
 
   /minimatch@9.0.3:
     resolution:
@@ -13939,7 +13079,6 @@ packages:
       arrify: 1.0.1
       is-plain-obj: 1.1.0
       kind-of: 6.0.3
-    dev: false
 
   /minimist@1.2.8:
     resolution:
@@ -13955,7 +13094,6 @@ packages:
     engines: { node: '>=8' }
     dependencies:
       yallist: 4.0.0
-    dev: true
 
   /minipass@5.0.0:
     resolution:
@@ -13981,7 +13119,6 @@ packages:
     dependencies:
       minipass: 3.3.6
       yallist: 4.0.0
-    dev: true
 
   /mkdirp@0.5.6:
     resolution:
@@ -14019,7 +13156,6 @@ packages:
       pathe: 1.1.2
       pkg-types: 1.0.3
       ufo: 1.5.3
-    dev: true
 
   /modern-normalize@1.1.0:
     resolution:
@@ -14130,7 +13266,6 @@ packages:
       vfile-matter: 3.0.1
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /next-nprogress-bar@2.3.5:
     resolution:
@@ -14139,9 +13274,8 @@ packages:
       }
     dependencies:
       nprogress: 0.2.0
-    dev: false
 
-  /next-themes@0.2.1(next@14.3.0-canary.18)(react-dom@18.2.0)(react@18.2.0):
+  /next-themes@0.2.1(next@14.1.4)(react-dom@18.2.0)(react@18.2.0):
     resolution:
       {
         integrity: sha512-B+AKNfYNIzh0vqQQKqQItTS8evEouKD7H5Hj3kmuPERwddR2TxvDSFZuTj6T7Jfn1oyeUyJMydPl1Bkxkh0W7A==,
@@ -14154,7 +13288,6 @@ packages:
       next: 14.3.0-canary.18(@babel/core@7.24.3)(@playwright/test@1.42.1)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-    dev: false
 
   /next@14.1.0(@babel/core@7.24.3)(react-dom@18.2.0)(react@18.2.0):
     resolution:
@@ -14196,25 +13329,21 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros
-    dev: false
 
-  /next@14.3.0-canary.18(@babel/core@7.24.3)(@playwright/test@1.42.1)(react-dom@18.2.0)(react@18.2.0):
+  /next@14.1.4(@babel/core@7.24.3)(react-dom@18.2.0)(react@18.2.0):
     resolution:
       {
-        integrity: sha512-N5Bm0HYMSqPR7y+o4oOUfn9NX7kmRwrDXiV4AZ8vYyIneoR816Qk1L2/JRnCKqf6ZvwZRXg2ZgsvTyitU9bKqQ==,
+        integrity: sha512-1WTaXeSrUwlz/XcnhGTY7+8eiaFvdet5z9u3V2jb+Ek1vFo0VhHKSAIJvDWfQpttWjnyw14kBeq28TPq7bTeEQ==,
       }
     engines: { node: '>=18.17.0' }
     hasBin: true
     peerDependencies:
       '@opentelemetry/api': ^1.1.0
-      '@playwright/test': ^1.41.2
       react: ^18.2.0
       react-dom: ^18.2.0
       sass: ^1.3.0
     peerDependenciesMeta:
       '@opentelemetry/api':
-        optional: true
-      '@playwright/test':
         optional: true
       sass:
         optional: true
@@ -14242,7 +13371,6 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros
-    dev: false
 
   /node-domexception@1.0.0:
     resolution:
@@ -14258,7 +13386,6 @@ packages:
       }
     dependencies:
       lodash: 4.17.21
-    dev: true
 
   /node-fetch@2.7.0(encoding@0.1.13):
     resolution:
@@ -14272,9 +13399,9 @@ packages:
       encoding:
         optional: true
     dependencies:
-      encoding: 0.1.13
       whatwg-url: 5.0.0
-    dev: false
+    optionalDependencies:
+      encoding: 0.1.13
 
   /node-fetch@3.3.2:
     resolution:
@@ -14324,7 +13451,6 @@ packages:
     engines: { node: ^14.17.0 || ^16.13.0 || >=18.0.0 }
     dependencies:
       abbrev: 2.0.0
-    dev: false
 
   /normalize-package-data@2.5.0:
     resolution:
@@ -14389,7 +13515,6 @@ packages:
       }
     dependencies:
       boolbase: 1.0.0
-    dev: false
 
   /nwsapi@2.2.7:
     resolution:
@@ -14444,7 +13569,6 @@ packages:
     dependencies:
       call-bind: 1.0.7
       define-properties: 1.2.1
-    dev: true
 
   /object-keys@1.1.1:
     resolution:
@@ -14465,7 +13589,6 @@ packages:
       define-properties: 1.2.1
       has-symbols: 1.0.3
       object-keys: 1.1.1
-    dev: true
 
   /once@1.4.0:
     resolution:
@@ -14547,7 +13670,6 @@ packages:
       stdin-discarder: 0.1.0
       strip-ansi: 7.1.0
       wcwidth: 1.0.1
-    dev: false
 
   /orderedmap@2.1.1:
     resolution:
@@ -14582,7 +13704,6 @@ packages:
     engines: { node: '>=18' }
     dependencies:
       yocto-queue: 1.0.0
-    dev: true
 
   /p-locate@4.1.0:
     resolution:
@@ -14611,7 +13732,6 @@ packages:
     dependencies:
       mimic-fn: 4.0.0
       type-fest: 3.13.1
-    dev: false
 
   /p-try@2.2.0:
     resolution:
@@ -14650,7 +13770,6 @@ packages:
       is-alphanumerical: 2.0.1
       is-decimal: 2.0.1
       is-hexadecimal: 2.0.1
-    dev: false
 
   /parse-json@5.2.0:
     resolution:
@@ -14687,7 +13806,6 @@ packages:
     dependencies:
       leac: 0.6.0
       peberminta: 0.9.0
-    dev: false
 
   /path-browserify@1.0.1:
     resolution:
@@ -14791,7 +13909,6 @@ packages:
       '@types/estree': 1.0.5
       estree-walker: 3.0.3
       is-reference: 3.0.2
-    dev: false
 
   /pg-cloudflare@1.1.1:
     resolution:
@@ -14826,7 +13943,6 @@ packages:
       pg: '>=8.0'
     dependencies:
       pg: 8.11.3
-    dev: true
 
   /pg-protocol@1.6.0:
     resolution:
@@ -14847,7 +13963,6 @@ packages:
       postgres-bytea: 1.0.0
       postgres-date: 1.0.7
       postgres-interval: 1.2.0
-    dev: true
 
   /pg@8.11.3:
     resolution:
@@ -14870,7 +13985,6 @@ packages:
       pgpass: 1.0.5
     optionalDependencies:
       pg-cloudflare: 1.1.1
-    dev: true
 
   /pgpass@1.0.5:
     resolution:
@@ -14879,7 +13993,6 @@ packages:
       }
     dependencies:
       split2: 4.2.0
-    dev: true
 
   /picocolors@1.0.0:
     resolution:
@@ -14910,7 +14023,6 @@ packages:
     engines: { node: '>= 4' }
     dependencies:
       node-modules-regexp: 1.0.0
-    dev: true
 
   /pirates@4.0.6:
     resolution:
@@ -14929,7 +14041,6 @@ packages:
       jsonc-parser: 3.2.1
       mlly: 1.6.1
       pathe: 1.1.2
-    dev: true
 
   /playwright-core@1.42.1:
     resolution:
@@ -14937,6 +14048,7 @@ packages:
         integrity: sha512-mxz6zclokgrke9p1vtdy/COWBH+eOZgYUVVU34C73M+4j4HLlQJHtfcqiqqxpP0o8HhMkflvfbquLX5dg6wlfA==,
       }
     engines: { node: '>=16' }
+    dev: true
 
   /playwright@1.42.1:
     resolution:
@@ -14970,7 +14082,6 @@ packages:
       postcss-value-parser: 4.2.0
       read-cache: 1.0.0
       resolve: 1.22.8
-    dev: false
 
   /postcss-js@3.0.3:
     resolution:
@@ -14981,7 +14092,6 @@ packages:
     dependencies:
       camelcase-css: 2.0.1
       postcss: 8.4.38
-    dev: true
 
   /postcss-js@4.0.1(postcss@8.4.38):
     resolution:
@@ -14994,7 +14104,6 @@ packages:
     dependencies:
       camelcase-css: 2.0.1
       postcss: 8.4.38
-    dev: false
 
   /postcss-load-config@3.1.4(postcss@8.4.38):
     resolution:
@@ -15012,9 +14121,9 @@ packages:
         optional: true
     dependencies:
       lilconfig: 2.1.0
-      postcss: 8.4.38
       yaml: 1.10.2
-    dev: true
+    optionalDependencies:
+      postcss: 8.4.38
 
   /postcss-load-config@4.0.2(postcss@8.4.38):
     resolution:
@@ -15032,9 +14141,9 @@ packages:
         optional: true
     dependencies:
       lilconfig: 3.1.1
-      postcss: 8.4.38
       yaml: 2.4.1
-    dev: false
+    optionalDependencies:
+      postcss: 8.4.38
 
   /postcss-nested@5.0.6(postcss@8.4.38):
     resolution:
@@ -15047,7 +14156,6 @@ packages:
     dependencies:
       postcss: 8.4.38
       postcss-selector-parser: 6.0.16
-    dev: true
 
   /postcss-nested@6.0.1(postcss@8.4.38):
     resolution:
@@ -15060,7 +14168,6 @@ packages:
     dependencies:
       postcss: 8.4.38
       postcss-selector-parser: 6.0.16
-    dev: false
 
   /postcss-selector-parser@6.0.10:
     resolution:
@@ -15071,7 +14178,6 @@ packages:
     dependencies:
       cssesc: 3.0.0
       util-deprecate: 1.0.2
-    dev: false
 
   /postcss-selector-parser@6.0.16:
     resolution:
@@ -15106,7 +14212,6 @@ packages:
       nanoid: 3.3.7
       picocolors: 1.0.0
       source-map-js: 1.2.0
-    dev: false
 
   /postcss@8.4.35:
     resolution:
@@ -15118,7 +14223,6 @@ packages:
       nanoid: 3.3.7
       picocolors: 1.0.0
       source-map-js: 1.0.2
-    dev: false
 
   /postcss@8.4.38:
     resolution:
@@ -15163,7 +14267,6 @@ packages:
     engines: { node: '>=0.10.0' }
     dependencies:
       xtend: 4.0.2
-    dev: true
 
   /posthog-js@1.116.3:
     resolution:
@@ -15173,7 +14276,6 @@ packages:
     dependencies:
       fflate: 0.4.8
       preact: 10.20.0
-    dev: false
 
   /posthog-node@3.6.3:
     resolution:
@@ -15186,7 +14288,6 @@ packages:
       rusha: 0.8.14
     transitivePeerDependencies:
       - debug
-    dev: false
 
   /preact@10.20.0:
     resolution:
@@ -15210,7 +14311,6 @@ packages:
     engines: { node: '>=6.0.0' }
     dependencies:
       fast-diff: 1.3.0
-    dev: true
 
   /prettier@3.2.5:
     resolution:
@@ -15230,7 +14330,6 @@ packages:
       ansi-regex: 5.0.1
       ansi-styles: 5.2.0
       react-is: 17.0.2
-    dev: true
 
   /pretty-format@29.7.0:
     resolution:
@@ -15242,7 +14341,6 @@ packages:
       '@jest/schemas': 29.6.3
       ansi-styles: 5.2.0
       react-is: 18.2.0
-    dev: true
 
   /pretty-hrtime@1.0.3:
     resolution:
@@ -15263,7 +14361,6 @@ packages:
       '@types/prismjs': 1.26.3
       clsx: 1.2.1
       react: 18.2.0
-    dev: false
 
   /prismjs@1.29.0:
     resolution:
@@ -15290,7 +14387,6 @@ packages:
     dependencies:
       kleur: 3.0.3
       sisteransi: 1.0.5
-    dev: false
 
   /prop-types@15.8.1:
     resolution:
@@ -15301,7 +14397,6 @@ packages:
       loose-envify: 1.4.0
       object-assign: 4.1.1
       react-is: 16.13.1
-    dev: false
 
   /property-information@6.4.1:
     resolution:
@@ -15316,7 +14411,6 @@ packages:
       }
     dependencies:
       prosemirror-transform: 1.8.0
-    dev: false
 
   /prosemirror-collab@1.3.1:
     resolution:
@@ -15325,7 +14419,6 @@ packages:
       }
     dependencies:
       prosemirror-state: 1.4.3
-    dev: false
 
   /prosemirror-commands@1.5.2:
     resolution:
@@ -15336,7 +14429,6 @@ packages:
       prosemirror-model: 1.19.4
       prosemirror-state: 1.4.3
       prosemirror-transform: 1.8.0
-    dev: false
 
   /prosemirror-dropcursor@1.8.1:
     resolution:
@@ -15347,7 +14439,6 @@ packages:
       prosemirror-state: 1.4.3
       prosemirror-transform: 1.8.0
       prosemirror-view: 1.33.2
-    dev: false
 
   /prosemirror-gapcursor@1.3.2:
     resolution:
@@ -15359,7 +14450,6 @@ packages:
       prosemirror-model: 1.19.4
       prosemirror-state: 1.4.3
       prosemirror-view: 1.33.2
-    dev: false
 
   /prosemirror-history@1.4.0:
     resolution:
@@ -15371,7 +14461,6 @@ packages:
       prosemirror-transform: 1.8.0
       prosemirror-view: 1.33.2
       rope-sequence: 1.3.4
-    dev: false
 
   /prosemirror-inputrules@1.4.0:
     resolution:
@@ -15381,7 +14470,6 @@ packages:
     dependencies:
       prosemirror-state: 1.4.3
       prosemirror-transform: 1.8.0
-    dev: false
 
   /prosemirror-keymap@1.2.2:
     resolution:
@@ -15391,7 +14479,6 @@ packages:
     dependencies:
       prosemirror-state: 1.4.3
       w3c-keyname: 2.2.8
-    dev: false
 
   /prosemirror-markdown@1.12.0:
     resolution:
@@ -15401,7 +14488,6 @@ packages:
     dependencies:
       markdown-it: 14.1.0
       prosemirror-model: 1.19.4
-    dev: false
 
   /prosemirror-menu@1.2.4:
     resolution:
@@ -15413,7 +14499,6 @@ packages:
       prosemirror-commands: 1.5.2
       prosemirror-history: 1.4.0
       prosemirror-state: 1.4.3
-    dev: false
 
   /prosemirror-model@1.19.4:
     resolution:
@@ -15422,7 +14507,6 @@ packages:
       }
     dependencies:
       orderedmap: 2.1.1
-    dev: false
 
   /prosemirror-schema-basic@1.2.2:
     resolution:
@@ -15431,7 +14515,6 @@ packages:
       }
     dependencies:
       prosemirror-model: 1.19.4
-    dev: false
 
   /prosemirror-schema-list@1.3.0:
     resolution:
@@ -15442,7 +14525,6 @@ packages:
       prosemirror-model: 1.19.4
       prosemirror-state: 1.4.3
       prosemirror-transform: 1.8.0
-    dev: false
 
   /prosemirror-state@1.4.3:
     resolution:
@@ -15453,7 +14535,6 @@ packages:
       prosemirror-model: 1.19.4
       prosemirror-transform: 1.8.0
       prosemirror-view: 1.33.2
-    dev: false
 
   /prosemirror-tables@1.3.7:
     resolution:
@@ -15466,7 +14547,6 @@ packages:
       prosemirror-state: 1.4.3
       prosemirror-transform: 1.8.0
       prosemirror-view: 1.33.2
-    dev: false
 
   /prosemirror-trailing-node@2.0.8(prosemirror-model@1.19.4)(prosemirror-state@1.4.3)(prosemirror-view@1.33.2):
     resolution:
@@ -15483,7 +14563,6 @@ packages:
       prosemirror-model: 1.19.4
       prosemirror-state: 1.4.3
       prosemirror-view: 1.33.2
-    dev: false
 
   /prosemirror-transform@1.8.0:
     resolution:
@@ -15492,7 +14571,6 @@ packages:
       }
     dependencies:
       prosemirror-model: 1.19.4
-    dev: false
 
   /prosemirror-view@1.33.2:
     resolution:
@@ -15503,7 +14581,6 @@ packages:
       prosemirror-model: 1.19.4
       prosemirror-state: 1.4.3
       prosemirror-transform: 1.8.0
-    dev: false
 
   /proto-list@1.2.4:
     resolution:
@@ -15557,7 +14634,6 @@ packages:
       glob: 7.2.3
       postcss: 8.4.38
       postcss-selector-parser: 6.0.16
-    dev: true
 
   /qs@6.12.0:
     resolution:
@@ -15567,7 +14643,6 @@ packages:
     engines: { node: '>=0.6' }
     dependencies:
       side-channel: 1.0.6
-    dev: false
 
   /qs@6.5.3:
     resolution:
@@ -15612,7 +14687,6 @@ packages:
       }
     dependencies:
       performance-now: 2.1.0
-    dev: false
 
   /randombytes@2.1.0:
     resolution:
@@ -15621,7 +14695,6 @@ packages:
       }
     dependencies:
       safe-buffer: 5.2.1
-    dev: false
 
   /react-confetti-explosion@2.1.2(react-dom@18.2.0)(react@18.2.0):
     resolution:
@@ -15636,7 +14709,6 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-jss: 10.10.0(react@18.2.0)
-    dev: false
 
   /react-confetti@6.1.0(react@18.2.0):
     resolution:
@@ -15649,7 +14721,6 @@ packages:
     dependencies:
       react: 18.2.0
       tween-functions: 1.2.0
-    dev: false
 
   /react-copy-to-clipboard@5.1.0(react@18.2.0):
     resolution:
@@ -15662,7 +14733,6 @@ packages:
       copy-to-clipboard: 3.3.3
       prop-types: 15.8.1
       react: 18.2.0
-    dev: false
 
   /react-day-picker@8.10.0(date-fns@2.30.0)(react@18.2.0):
     resolution:
@@ -15675,7 +14745,6 @@ packages:
     dependencies:
       date-fns: 2.30.0
       react: 18.2.0
-    dev: false
 
   /react-day-picker@8.10.0(date-fns@3.6.0)(react@18.2.0):
     resolution:
@@ -15688,7 +14757,6 @@ packages:
     dependencies:
       date-fns: 3.6.0
       react: 18.2.0
-    dev: false
 
   /react-display-name@0.2.5:
     resolution:
@@ -15722,7 +14790,6 @@ packages:
       file-selector: 0.6.0
       prop-types: 15.8.1
       react: 18.2.0
-    dev: false
 
   /react-email@2.1.0(@babel/core@7.24.3)(eslint@8.57.0):
     resolution:
@@ -15732,17 +14799,17 @@ packages:
     engines: { node: '>=18.0.0' }
     dependencies:
       '@radix-ui/colors': 1.0.1
-      '@radix-ui/react-collapsible': 1.0.3(@types/react-dom@18.2.22)(@types/react@18.2.60)(react-dom@18.2.0)(react@18.2.0)
-      '@radix-ui/react-popover': 1.0.6(@types/react-dom@18.2.22)(@types/react@18.2.60)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-collapsible': 1.0.3(@types/react-dom@18.2.22)(@types/react@18.2.60)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@radix-ui/react-popover': 1.0.6(@types/react-dom@18.2.22)(@types/react@18.2.60)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@radix-ui/react-slot': 1.0.2(@types/react@18.2.60)(react@18.2.0)
-      '@radix-ui/react-toggle-group': 1.0.4(@types/react-dom@18.2.22)(@types/react@18.2.60)(react-dom@18.2.0)(react@18.2.0)
-      '@radix-ui/react-tooltip': 1.0.6(@types/react-dom@18.2.22)(@types/react@18.2.60)(react-dom@18.2.0)(react@18.2.0)
-      '@react-email/components': 0.0.15(@types/react@18.2.60)(react-email@2.1.0)(react@18.2.0)
+      '@radix-ui/react-toggle-group': 1.0.4(@types/react-dom@18.2.22)(@types/react@18.2.60)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@radix-ui/react-tooltip': 1.0.6(@types/react-dom@18.2.22)(@types/react@18.2.60)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@react-email/components': 0.0.15(@types/react@18.2.60)(react-email@2.1.0(@babel/core@7.24.3)(@swc/helpers@0.5.2)(eslint@8.57.0))(react@18.2.0)
       '@react-email/render': 0.0.12
-      '@swc/core': 1.3.101
+      '@swc/core': 1.3.101(@swc/helpers@0.5.2)
       '@types/react': 18.2.60
       '@types/react-dom': 18.2.22
-      '@types/webpack': 5.28.5(@swc/core@1.3.101)(esbuild@0.19.11)
+      '@types/webpack': 5.28.5(@swc/core@1.3.101(@swc/helpers@0.5.2))(esbuild@0.19.11)
       autoprefixer: 10.4.14(postcss@8.4.35)
       chalk: 4.1.2
       chokidar: 3.5.3
@@ -15752,11 +14819,11 @@ packages:
       esbuild: 0.19.11
       eslint-config-prettier: 9.0.0(eslint@8.57.0)
       eslint-config-turbo: 1.10.12(eslint@8.57.0)
-      framer-motion: 10.17.4(react-dom@18.2.0)(react@18.2.0)
+      framer-motion: 10.17.4(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       glob: 10.3.4
       log-symbols: 4.1.0
       mime-types: 2.1.35
-      next: 14.1.0(@babel/core@7.24.3)(react-dom@18.2.0)(react@18.2.0)
+      next: 14.1.0(@babel/core@7.24.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       normalize-path: 3.0.0
       ora: 5.4.1
       postcss: 8.4.35
@@ -15766,7 +14833,7 @@ packages:
       shelljs: 0.8.5
       socket.io: 4.7.3
       socket.io-client: 4.7.3
-      sonner: 1.3.1(react-dom@18.2.0)(react@18.2.0)
+      sonner: 1.3.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       source-map-js: 1.0.2
       stacktrace-parser: 0.1.10
       tailwind-merge: 2.2.0
@@ -15805,7 +14872,6 @@ packages:
       react: ^16.8.0 || ^17 || ^18
     dependencies:
       react: 18.2.0
-    dev: false
 
   /react-is@16.13.1:
     resolution:
@@ -15848,7 +14914,6 @@ packages:
       shallow-equal: 1.2.1
       theming: 3.3.0(react@18.2.0)
       tiny-warning: 1.0.3
-    dev: false
 
   /react-refresh@0.14.0:
     resolution:
@@ -15871,7 +14936,6 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@types/react': 18.2.60
       react: 18.2.0
       react-style-singleton: 2.2.1(@types/react@18.2.60)(react@18.2.0)
       tslib: 2.6.2
@@ -15890,7 +14954,6 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@types/react': 18.2.60
       react: 18.2.0
       react-remove-scroll-bar: 2.3.6(@types/react@18.2.60)(react@18.2.0)
       react-style-singleton: 2.2.1(@types/react@18.2.60)(react@18.2.0)
@@ -15912,14 +14975,14 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@types/react': 18.2.60
       react: 18.2.0
       react-remove-scroll-bar: 2.3.6(@types/react@18.2.60)(react@18.2.0)
       react-style-singleton: 2.2.1(@types/react@18.2.60)(react@18.2.0)
       tslib: 2.6.2
       use-callback-ref: 1.3.2(@types/react@18.2.60)(react@18.2.0)
       use-sidecar: 1.1.2(@types/react@18.2.60)(react@18.2.0)
-    dev: false
+    optionalDependencies:
+      '@types/react': 18.2.60
 
   /react-resizable-panels@2.0.13(react-dom@18.2.0)(react@18.2.0):
     resolution:
@@ -15932,7 +14995,6 @@ packages:
     dependencies:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-    dev: false
 
   /react-select@5.8.0(@types/react@18.2.60)(react-dom@18.2.0)(react@18.2.0):
     resolution:
@@ -15952,11 +15014,10 @@ packages:
       prop-types: 15.8.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      react-transition-group: 4.4.5(react-dom@18.2.0)(react@18.2.0)
+      react-transition-group: 4.4.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       use-isomorphic-layout-effect: 1.1.2(@types/react@18.2.60)(react@18.2.0)
     transitivePeerDependencies:
       - '@types/react'
-    dev: false
 
   /react-smooth@4.0.1(react-dom@18.2.0)(react@18.2.0):
     resolution:
@@ -15971,8 +15032,7 @@ packages:
       prop-types: 15.8.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      react-transition-group: 4.4.5(react-dom@18.2.0)(react@18.2.0)
-    dev: false
+      react-transition-group: 4.4.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
 
   /react-style-singleton@2.2.1(@types/react@18.2.60)(react@18.2.0):
     resolution:
@@ -15987,12 +15047,12 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@types/react': 18.2.60
       get-nonce: 1.0.1
       invariant: 2.2.4
       react: 18.2.0
       tslib: 2.6.2
-    dev: false
+    optionalDependencies:
+      '@types/react': 18.2.60
 
   /react-transition-group@4.4.5(react-dom@18.2.0)(react@18.2.0):
     resolution:
@@ -16009,7 +15069,6 @@ packages:
       prop-types: 15.8.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-    dev: false
 
   /react-transition-state@2.1.1(react-dom@18.2.0)(react@18.2.0):
     resolution:
@@ -16022,7 +15081,6 @@ packages:
     dependencies:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-    dev: false
 
   /react@18.2.0:
     resolution:
@@ -16040,7 +15098,6 @@ packages:
       }
     dependencies:
       pify: 2.3.0
-    dev: false
 
   /read-cmd-shim@4.0.0:
     resolution:
@@ -16105,7 +15162,6 @@ packages:
       source-map: 0.6.1
       tiny-invariant: 1.3.3
       tslib: 2.6.2
-    dev: false
 
   /recharts-scale@0.4.5:
     resolution:
@@ -16114,7 +15170,6 @@ packages:
       }
     dependencies:
       decimal.js-light: 2.5.1
-    dev: false
 
   /recharts@2.12.3(react-dom@18.2.0)(react@18.2.0):
     resolution:
@@ -16132,11 +15187,10 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-is: 16.13.1
-      react-smooth: 4.0.1(react-dom@18.2.0)(react@18.2.0)
+      react-smooth: 4.0.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       recharts-scale: 0.4.5
       tiny-invariant: 1.3.3
       victory-vendor: 36.9.2
-    dev: false
 
   /rechoir@0.6.2:
     resolution:
@@ -16146,7 +15200,6 @@ packages:
     engines: { node: '>= 0.10' }
     dependencies:
       resolve: 1.22.8
-    dev: false
 
   /redent@3.0.0:
     resolution:
@@ -16157,7 +15210,6 @@ packages:
     dependencies:
       indent-string: 4.0.0
       strip-indent: 3.0.0
-    dev: false
 
   /reduce-css-calc@2.1.8:
     resolution:
@@ -16167,7 +15219,6 @@ packages:
     dependencies:
       css-unit-converter: 1.1.2
       postcss-value-parser: 3.3.1
-    dev: true
 
   /regenerator-runtime@0.14.1:
     resolution:
@@ -16186,7 +15237,6 @@ packages:
       define-properties: 1.2.1
       es-errors: 1.3.0
       set-function-name: 2.0.2
-    dev: true
 
   /rehype-autolink-headings@7.1.0:
     resolution:
@@ -16200,7 +15250,6 @@ packages:
       hast-util-is-element: 3.0.0
       unified: 11.0.4
       unist-util-visit: 5.0.0
-    dev: true
 
   /rehype-parse@9.0.0:
     resolution:
@@ -16228,7 +15277,6 @@ packages:
       shikiji: 0.10.2
       unified: 11.0.4
       unist-util-visit: 5.0.0
-    dev: false
 
   /rehype-slug@6.0.0:
     resolution:
@@ -16241,7 +15289,6 @@ packages:
       hast-util-heading-rank: 3.0.0
       hast-util-to-string: 3.0.0
       unist-util-visit: 5.0.0
-    dev: true
 
   /rehype-toc@3.0.2:
     resolution:
@@ -16251,7 +15298,6 @@ packages:
     engines: { node: '>=10' }
     dependencies:
       '@jsdevtools/rehype-toc': 3.0.2
-    dev: false
 
   /remark-frontmatter@5.0.0:
     resolution:
@@ -16265,7 +15311,6 @@ packages:
       unified: 11.0.4
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /remark-gfm@4.0.0:
     resolution:
@@ -16281,7 +15326,6 @@ packages:
       unified: 11.0.4
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /remark-mdx-frontmatter@4.0.0:
     resolution:
@@ -16295,7 +15339,6 @@ packages:
       toml: 3.0.0
       unified: 11.0.4
       yaml: 2.4.1
-    dev: false
 
   /remark-mdx@2.3.0:
     resolution:
@@ -16307,7 +15350,6 @@ packages:
       micromark-extension-mdxjs: 1.0.1
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /remark-mdx@3.0.1:
     resolution:
@@ -16319,7 +15361,6 @@ packages:
       micromark-extension-mdxjs: 3.0.0
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /remark-parse@10.0.2:
     resolution:
@@ -16332,7 +15373,6 @@ packages:
       unified: 10.1.2
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /remark-parse@11.0.0:
     resolution:
@@ -16357,7 +15397,6 @@ packages:
       '@types/mdast': 3.0.15
       mdast-util-to-hast: 12.3.0
       unified: 10.1.2
-    dev: false
 
   /remark-rehype@11.1.0:
     resolution:
@@ -16370,7 +15409,6 @@ packages:
       mdast-util-to-hast: 13.1.0
       unified: 11.0.4
       vfile: 6.0.1
-    dev: false
 
   /remark-stringify@11.0.0:
     resolution:
@@ -16381,7 +15419,6 @@ packages:
       '@types/mdast': 4.0.3
       mdast-util-to-markdown: 2.1.0
       unified: 11.0.4
-    dev: true
 
   /remark-toc@9.0.0:
     resolution:
@@ -16391,7 +15428,6 @@ packages:
     dependencies:
       '@types/mdast': 4.0.3
       mdast-util-toc: 7.0.0
-    dev: true
 
   /request-promise-core@1.1.1(request@2.88.0):
     resolution:
@@ -16404,7 +15440,6 @@ packages:
     dependencies:
       lodash: 4.17.21
       request: 2.88.0
-    dev: false
 
   /request-promise-native@1.0.5(request@2.88.0):
     resolution:
@@ -16420,7 +15455,6 @@ packages:
       request-promise-core: 1.1.1(request@2.88.0)
       stealthy-require: 1.1.1
       tough-cookie: 4.1.3
-    dev: false
 
   /request@2.88.0:
     resolution:
@@ -16450,7 +15484,6 @@ packages:
       tough-cookie: 2.4.3
       tunnel-agent: 0.6.0
       uuid: 3.4.0
-    dev: false
 
   /require-directory@2.1.1:
     resolution:
@@ -16474,7 +15507,6 @@ packages:
     engines: { node: '>=18' }
     dependencies:
       '@react-email/render': 0.0.12
-    dev: false
 
   /resolve-from@4.0.0:
     resolution:
@@ -16512,7 +15544,6 @@ packages:
     dependencies:
       onetime: 5.1.2
       signal-exit: 3.0.7
-    dev: false
 
   /reusify@1.0.4:
     resolution:
@@ -16551,7 +15582,6 @@ packages:
     engines: { node: '>=10.0.0' }
     optionalDependencies:
       fsevents: 2.3.3
-    dev: false
 
   /rollup@4.13.0:
     resolution:
@@ -16576,7 +15606,6 @@ packages:
       '@rollup/rollup-win32-ia32-msvc': 4.13.0
       '@rollup/rollup-win32-x64-msvc': 4.13.0
       fsevents: 2.3.3
-    dev: true
 
   /rooks@7.14.1(react-dom@18.2.0)(react@18.2.0):
     resolution:
@@ -16594,7 +15623,6 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       use-sync-external-store: 1.2.0(react@18.2.0)
-    dev: false
 
   /rope-sequence@1.3.4:
     resolution:
@@ -16632,7 +15660,6 @@ packages:
       }
     dependencies:
       tslib: 2.6.2
-    dev: true
 
   /sade@1.8.1:
     resolution:
@@ -16642,7 +15669,6 @@ packages:
     engines: { node: '>=6' }
     dependencies:
       mri: 1.2.0
-    dev: false
 
   /safe-buffer@5.2.1:
     resolution:
@@ -16664,7 +15690,6 @@ packages:
     engines: { node: '>=v12.22.7' }
     dependencies:
       xmlchars: 2.2.0
-    dev: true
 
   /scheduler@0.23.0:
     resolution:
@@ -16684,7 +15709,6 @@ packages:
       '@types/json-schema': 7.0.15
       ajv: 6.12.6
       ajv-keywords: 3.5.2(ajv@6.12.6)
-    dev: false
 
   /selderee@0.11.0:
     resolution:
@@ -16693,7 +15717,6 @@ packages:
       }
     dependencies:
       parseley: 0.12.1
-    dev: false
 
   /semver@5.7.2:
     resolution:
@@ -16723,7 +15746,6 @@ packages:
       }
     dependencies:
       randombytes: 2.1.0
-    dev: false
 
   /seroval-plugins@1.0.5(seroval@1.0.5):
     resolution:
@@ -16735,7 +15757,6 @@ packages:
       seroval: ^1.0
     dependencies:
       seroval: 1.0.5
-    dev: false
 
   /seroval@1.0.5:
     resolution:
@@ -16784,7 +15805,6 @@ packages:
       es-errors: 1.3.0
       functions-have-names: 1.2.3
       has-property-descriptors: 1.0.2
-    dev: true
 
   /shadcn-ui@0.8.0(typescript@5.4.3):
     resolution:
@@ -16815,7 +15835,6 @@ packages:
     transitivePeerDependencies:
       - supports-color
       - typescript
-    dev: false
 
   /shallow-equal@1.2.1:
     resolution:
@@ -16855,7 +15874,6 @@ packages:
       '@img/sharp-wasm32': 0.33.2
       '@img/sharp-win32-ia32': 0.33.2
       '@img/sharp-win32-x64': 0.33.2
-    dev: false
 
   /shebang-command@2.0.0:
     resolution:
@@ -16890,7 +15908,6 @@ packages:
       glob: 7.2.3
       interpret: 1.4.0
       rechoir: 0.6.2
-    dev: false
 
   /shikiji-core@0.10.2:
     resolution:
@@ -16906,7 +15923,6 @@ packages:
       }
     dependencies:
       shikiji-core: 0.10.2
-    dev: false
 
   /side-channel@1.0.6:
     resolution:
@@ -16951,7 +15967,6 @@ packages:
       debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /simple-swizzle@0.2.2:
     resolution:
@@ -16971,7 +15986,6 @@ packages:
       '@polka/url': 1.0.0-next.25
       mrmime: 2.0.0
       totalist: 3.0.1
-    dev: false
 
   /sisteransi@1.0.5:
     resolution:
@@ -17008,7 +16022,6 @@ packages:
       - bufferutil
       - supports-color
       - utf-8-validate
-    dev: false
 
   /socket.io-client@4.7.3:
     resolution:
@@ -17025,7 +16038,6 @@ packages:
       - bufferutil
       - supports-color
       - utf-8-validate
-    dev: false
 
   /socket.io-parser@4.2.4:
     resolution:
@@ -17038,7 +16050,6 @@ packages:
       debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /socket.io@4.7.3:
     resolution:
@@ -17058,7 +16069,6 @@ packages:
       - bufferutil
       - supports-color
       - utf-8-validate
-    dev: false
 
   /solid-js@1.8.16:
     resolution:
@@ -17069,7 +16079,6 @@ packages:
       csstype: 3.1.3
       seroval: 1.0.5
       seroval-plugins: 1.0.5(seroval@1.0.5)
-    dev: false
 
   /solid-swr-store@0.10.7(solid-js@1.8.16)(swr-store@0.10.6):
     resolution:
@@ -17083,7 +16092,6 @@ packages:
     dependencies:
       solid-js: 1.8.16
       swr-store: 0.10.6
-    dev: false
 
   /sonner@1.3.1(react-dom@18.2.0)(react@18.2.0):
     resolution:
@@ -17096,7 +16104,6 @@ packages:
     dependencies:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-    dev: false
 
   /sonner@1.4.41(react-dom@18.2.0)(react@18.2.0):
     resolution:
@@ -17109,7 +16116,6 @@ packages:
     dependencies:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-    dev: false
 
   /source-map-js@1.0.2:
     resolution:
@@ -17134,7 +16140,6 @@ packages:
     dependencies:
       buffer-from: 1.1.2
       source-map: 0.6.1
-    dev: false
 
   /source-map@0.5.7:
     resolution:
@@ -17228,7 +16233,6 @@ packages:
       jsbn: 0.1.1
       safer-buffer: 2.1.2
       tweetnacl: 0.14.5
-    dev: false
 
   /sswr@2.0.0(svelte@4.2.12):
     resolution:
@@ -17240,7 +16244,6 @@ packages:
     dependencies:
       svelte: 4.2.12
       swrev: 4.0.0
-    dev: false
 
   /stackback@0.0.2:
     resolution:
@@ -17257,7 +16260,6 @@ packages:
     engines: { node: '>=6' }
     dependencies:
       type-fest: 0.7.1
-    dev: false
 
   /std-env@3.7.0:
     resolution:
@@ -17274,7 +16276,6 @@ packages:
     engines: { node: ^12.20.0 || ^14.13.1 || >=16.0.0 }
     dependencies:
       bl: 5.1.0
-    dev: false
 
   /stealthy-require@1.1.1:
     resolution:
@@ -17292,7 +16293,6 @@ packages:
     engines: { node: '>= 0.4' }
     dependencies:
       internal-slot: 1.0.7
-    dev: true
 
   /streamsearch@1.1.0:
     resolution:
@@ -17340,7 +16340,6 @@ packages:
     dependencies:
       character-entities-html4: 2.1.0
       character-entities-legacy: 3.0.0
-    dev: false
 
   /strip-ansi@3.0.1:
     resolution:
@@ -17350,7 +16349,6 @@ packages:
     engines: { node: '>=0.10.0' }
     dependencies:
       ansi-regex: 2.1.1
-    dev: false
 
   /strip-ansi@6.0.1:
     resolution:
@@ -17393,7 +16391,6 @@ packages:
     engines: { node: '>=8' }
     dependencies:
       min-indent: 1.0.1
-    dev: false
 
   /strip-json-comments@3.1.1:
     resolution:
@@ -17409,18 +16406,16 @@ packages:
       }
     dependencies:
       js-tokens: 8.0.3
-    dev: true
 
-  /stripe@14.25.0:
+  /stripe@14.22.0:
     resolution:
       {
-        integrity: sha512-wQS3GNMofCXwH8TSje8E1SE8zr6ODiGtHQgPtO95p9Mb4FhKC9jvXR2NUTpZ9ZINlckJcFidCmaTFV4P6vsb9g==,
+        integrity: sha512-Pj8SAdTNjMq42UnWzBTTy8KMQ8qbQoVemPHbw3x+rHvwq1Psg9UFPT58j54F5os/SCgUAOZSEMcUedvzIDuqvw==,
       }
     engines: { node: '>=12.*' }
     dependencies:
       '@types/node': 20.11.30
       qs: 6.12.0
-    dev: false
 
   /style-to-object@0.4.4:
     resolution:
@@ -17429,7 +16424,6 @@ packages:
       }
     dependencies:
       inline-style-parser: 0.1.1
-    dev: false
 
   /style-to-object@1.0.5:
     resolution:
@@ -17438,7 +16432,6 @@ packages:
       }
     dependencies:
       inline-style-parser: 0.2.2
-    dev: false
 
   /styled-jsx@5.1.1(@babel/core@7.24.3)(react@18.2.0):
     resolution:
@@ -17456,10 +16449,10 @@ packages:
       babel-plugin-macros:
         optional: true
     dependencies:
-      '@babel/core': 7.24.3
       client-only: 0.0.1
       react: 18.2.0
-    dev: false
+    optionalDependencies:
+      '@babel/core': 7.24.3
 
   /stylis@4.2.0:
     resolution:
@@ -17482,7 +16475,6 @@ packages:
       mz: 2.7.0
       pirates: 4.0.6
       ts-interface-checker: 0.1.13
-    dev: false
 
   /supabase@1.150.0:
     resolution:
@@ -17499,7 +16491,6 @@ packages:
       tar: 6.2.0
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /supports-color@2.0.0:
     resolution:
@@ -17564,7 +16555,6 @@ packages:
       locate-character: 3.0.0
       magic-string: 0.30.8
       periscopic: 3.1.0
-    dev: false
 
   /swr-store@0.10.6:
     resolution:
@@ -17574,7 +16564,6 @@ packages:
     engines: { node: '>=10' }
     dependencies:
       dequal: 2.0.3
-    dev: false
 
   /swr@2.2.0(react@18.2.0):
     resolution:
@@ -17586,7 +16575,6 @@ packages:
     dependencies:
       react: 18.2.0
       use-sync-external-store: 1.2.0(react@18.2.0)
-    dev: false
 
   /swrev@4.0.0:
     resolution:
@@ -17604,7 +16592,6 @@ packages:
       vue: '>=3.2.26 < 4'
     dependencies:
       vue: 3.4.21(typescript@5.4.3)
-    dev: false
 
   /symbol-observable@1.2.0:
     resolution:
@@ -17630,7 +16617,6 @@ packages:
     dependencies:
       '@pkgr/core': 0.1.1
       tslib: 2.6.2
-    dev: true
 
   /tabbable@6.2.0:
     resolution:
@@ -17653,7 +16639,6 @@ packages:
       }
     dependencies:
       '@babel/runtime': 7.24.1
-    dev: false
 
   /tailwind-merge@2.2.2:
     resolution:
@@ -17662,7 +16647,6 @@ packages:
       }
     dependencies:
       '@babel/runtime': 7.24.1
-    dev: false
 
   /tailwindcss-animate@1.0.7(tailwindcss@3.4.1):
     resolution:
@@ -17673,7 +16657,6 @@ packages:
       tailwindcss: '>=3.0.0 || insiders'
     dependencies:
       tailwindcss: 3.4.1
-    dev: false
 
   /tailwindcss-cli@0.1.2:
     resolution:
@@ -17683,10 +16666,9 @@ packages:
     dependencies:
       autoprefixer: 10.4.19(postcss@8.4.38)
       postcss: 8.4.38
-      tailwindcss: 2.2.19(autoprefixer@10.4.19)(postcss@8.4.38)
+      tailwindcss: 2.2.19(autoprefixer@10.4.19(postcss@8.4.38))(postcss@8.4.38)
     transitivePeerDependencies:
       - ts-node
-    dev: true
 
   /tailwindcss@2.2.19(autoprefixer@10.4.19)(postcss@8.4.38):
     resolution:
@@ -17735,7 +16717,6 @@ packages:
       tmp: 0.2.3
     transitivePeerDependencies:
       - ts-node
-    dev: true
 
   /tailwindcss@3.4.0:
     resolution:
@@ -17768,7 +16749,6 @@ packages:
       sucrase: 3.35.0
     transitivePeerDependencies:
       - ts-node
-    dev: false
 
   /tailwindcss@3.4.1:
     resolution:
@@ -17801,7 +16781,6 @@ packages:
       sucrase: 3.35.0
     transitivePeerDependencies:
       - ts-node
-    dev: false
 
   /tapable@2.2.1:
     resolution:
@@ -17854,8 +16833,6 @@ packages:
         optional: true
     dependencies:
       '@jridgewell/trace-mapping': 0.3.25
-      '@swc/core': 1.3.101
-      esbuild: 0.19.11
       jest-worker: 27.5.1
       schema-utils: 3.3.0
       serialize-javascript: 6.0.2
@@ -17901,7 +16878,6 @@ packages:
       acorn: 8.11.3
       commander: 2.20.3
       source-map-support: 0.5.21
-    dev: false
 
   /text-table@0.2.0:
     resolution:
@@ -17923,7 +16899,6 @@ packages:
       react: 18.2.0
       react-display-name: 0.2.5
       tiny-warning: 1.0.3
-    dev: false
 
   /thenify-all@1.6.0:
     resolution:
@@ -17933,7 +16908,6 @@ packages:
     engines: { node: '>=0.8' }
     dependencies:
       thenify: 3.3.1
-    dev: false
 
   /thenify@3.3.1:
     resolution:
@@ -17942,7 +16916,6 @@ packages:
       }
     dependencies:
       any-promise: 1.3.0
-    dev: false
 
   /tiny-invariant@1.3.3:
     resolution:
@@ -17988,7 +16961,6 @@ packages:
       }
     dependencies:
       '@popperjs/core': 2.11.8
-    dev: false
 
   /tiptap-markdown@0.8.10(@tiptap/core@2.2.4):
     resolution:
@@ -18003,7 +16975,6 @@ packages:
       markdown-it: 14.1.0
       markdown-it-task-lists: 2.1.1
       prosemirror-markdown: 1.12.0
-    dev: false
 
   /tmp@0.2.3:
     resolution:
@@ -18060,7 +17031,6 @@ packages:
     dependencies:
       psl: 1.9.0
       punycode: 1.4.1
-    dev: false
 
   /tough-cookie@4.1.3:
     resolution:
@@ -18089,7 +17059,6 @@ packages:
     engines: { node: '>=18' }
     dependencies:
       punycode: 2.3.1
-    dev: true
 
   /tree-cli@0.6.7:
     resolution:
@@ -18144,7 +17113,6 @@ packages:
       typescript: '>=4.2.0'
     dependencies:
       typescript: 5.4.3
-    dev: true
 
   /ts-interface-checker@0.1.13:
     resolution:
@@ -18161,7 +17129,6 @@ packages:
     dependencies:
       '@ts-morph/common': 0.19.0
       code-block-writer: 12.0.0
-    dev: false
 
   /tsconfig-paths@4.2.0:
     resolution:
@@ -18173,7 +17140,6 @@ packages:
       json5: 2.2.3
       minimist: 1.2.8
       strip-bom: 3.0.0
-    dev: false
 
   /tslib@2.6.2:
     resolution:
@@ -18188,7 +17154,6 @@ packages:
       }
     dependencies:
       safe-buffer: 5.2.1
-    dev: false
 
   /tween-functions@1.2.0:
     resolution:
@@ -18314,7 +17279,6 @@ packages:
       is-plain-obj: 4.1.0
       trough: 2.2.0
       vfile: 5.3.7
-    dev: false
 
   /unified@11.0.4:
     resolution:
@@ -18357,7 +17321,6 @@ packages:
     transitivePeerDependencies:
       - eslint
       - supports-color
-    dev: true
 
   /unist-util-generated@2.0.1:
     resolution:
@@ -18389,7 +17352,6 @@ packages:
       }
     dependencies:
       '@types/unist': 2.0.10
-    dev: false
 
   /unist-util-position-from-estree@2.0.0:
     resolution:
@@ -18398,7 +17360,6 @@ packages:
       }
     dependencies:
       '@types/unist': 3.0.2
-    dev: false
 
   /unist-util-position@4.0.4:
     resolution:
@@ -18407,7 +17368,6 @@ packages:
       }
     dependencies:
       '@types/unist': 2.0.10
-    dev: false
 
   /unist-util-position@5.0.0:
     resolution:
@@ -18416,7 +17376,6 @@ packages:
       }
     dependencies:
       '@types/unist': 3.0.2
-    dev: false
 
   /unist-util-remove-position@4.0.2:
     resolution:
@@ -18426,7 +17385,6 @@ packages:
     dependencies:
       '@types/unist': 2.0.10
       unist-util-visit: 4.1.2
-    dev: false
 
   /unist-util-remove-position@5.0.0:
     resolution:
@@ -18436,7 +17394,6 @@ packages:
     dependencies:
       '@types/unist': 3.0.2
       unist-util-visit: 5.0.0
-    dev: false
 
   /unist-util-stringify-position@3.0.3:
     resolution:
@@ -18445,7 +17402,6 @@ packages:
       }
     dependencies:
       '@types/unist': 2.0.10
-    dev: false
 
   /unist-util-stringify-position@4.0.0:
     resolution:
@@ -18558,10 +17514,10 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@types/react': 18.2.60
       react: 18.2.0
       tslib: 2.6.2
-    dev: false
+    optionalDependencies:
+      '@types/react': 18.2.60
 
   /use-debounce@10.0.0(react@18.2.0):
     resolution:
@@ -18573,7 +17529,6 @@ packages:
       react: '>=16.8.0'
     dependencies:
       react: 18.2.0
-    dev: false
 
   /use-isomorphic-layout-effect@1.1.2(@types/react@18.2.60)(react@18.2.0):
     resolution:
@@ -18587,7 +17542,6 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@types/react': 18.2.60
       react: 18.2.0
     dev: false
 
@@ -18604,11 +17558,11 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@types/react': 18.2.60
       detect-node-es: 1.1.0
       react: 18.2.0
       tslib: 2.6.2
-    dev: false
+    optionalDependencies:
+      '@types/react': 18.2.60
 
   /use-sync-external-store@1.2.0(react@18.2.0):
     resolution:
@@ -18619,7 +17573,6 @@ packages:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
       react: 18.2.0
-    dev: false
 
   /util-deprecate@1.0.2:
     resolution:
@@ -18655,7 +17608,6 @@ packages:
       diff: 5.2.0
       kleur: 4.1.5
       sade: 1.8.1
-    dev: false
 
   /validate-npm-package-license@3.0.4:
     resolution:
@@ -18683,13 +17635,12 @@ packages:
       react: ^16.8 || ^17.0 || ^18.0
       react-dom: ^16.8 || ^17.0 || ^18.0
     dependencies:
-      '@radix-ui/react-dialog': 1.0.5(@types/react-dom@18.2.22)(@types/react@18.2.60)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-dialog': 1.0.5(@types/react-dom@18.2.22)(@types/react@18.2.60)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     transitivePeerDependencies:
       - '@types/react'
       - '@types/react-dom'
-    dev: false
 
   /verror@1.10.0:
     resolution:
@@ -18701,7 +17652,6 @@ packages:
       assert-plus: 1.0.0
       core-util-is: 1.0.2
       extsprintf: 1.3.0
-    dev: false
 
   /vfile-location@5.0.2:
     resolution:
@@ -18721,7 +17671,6 @@ packages:
       '@types/js-yaml': 4.0.9
       is-buffer: 2.0.5
       js-yaml: 4.1.0
-    dev: false
 
   /vfile-message@3.1.4:
     resolution:
@@ -18731,7 +17680,6 @@ packages:
     dependencies:
       '@types/unist': 2.0.10
       unist-util-stringify-position: 3.0.3
-    dev: false
 
   /vfile-message@4.0.2:
     resolution:
@@ -18752,7 +17700,6 @@ packages:
       is-buffer: 2.0.5
       unist-util-stringify-position: 3.0.3
       vfile-message: 3.1.4
-    dev: false
 
   /vfile@6.0.1:
     resolution:
@@ -18784,7 +17731,6 @@ packages:
       d3-shape: 3.2.0
       d3-time: 3.1.0
       d3-timer: 3.0.1
-    dev: false
 
   /vite-node@1.4.0(@types/node@20.11.30):
     resolution:
@@ -18797,7 +17743,7 @@ packages:
       debug: 4.3.4
       pathe: 1.1.2
       picocolors: 1.0.0
-      vite: 5.2.2(@types/node@20.11.30)
+      vite: 5.2.2(@types/node@20.11.30)(terser@5.29.2)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -18807,7 +17753,6 @@ packages:
       - sugarss
       - supports-color
       - terser
-    dev: true
 
   /vite@5.2.2(@types/node@20.11.30):
     resolution:
@@ -18840,13 +17785,13 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 20.11.30
       esbuild: 0.20.2
       postcss: 8.4.38
       rollup: 4.13.0
     optionalDependencies:
+      '@types/node': 20.11.30
       fsevents: 2.3.3
-    dev: true
+      terser: 5.29.2
 
   /vitest@1.4.0(@types/node@20.11.30)(jsdom@24.0.0):
     resolution:
@@ -18876,7 +17821,6 @@ packages:
       jsdom:
         optional: true
     dependencies:
-      '@types/node': 20.11.30
       '@vitest/expect': 1.4.0
       '@vitest/runner': 1.4.0
       '@vitest/snapshot': 1.4.0
@@ -18886,7 +17830,6 @@ packages:
       chai: 4.4.1
       debug: 4.3.4
       execa: 8.0.1
-      jsdom: 24.0.0
       local-pkg: 0.5.0
       magic-string: 0.30.8
       pathe: 1.1.2
@@ -18895,9 +17838,12 @@ packages:
       strip-literal: 2.0.0
       tinybench: 2.6.0
       tinypool: 0.8.2
-      vite: 5.2.2(@types/node@20.11.30)
-      vite-node: 1.4.0(@types/node@20.11.30)
+      vite: 5.2.2(@types/node@20.11.30)(terser@5.29.2)
+      vite-node: 1.4.0(@types/node@20.11.30)(terser@5.29.2)
       why-is-node-running: 2.2.2
+    optionalDependencies:
+      '@types/node': 20.11.30
+      jsdom: 24.0.0
     transitivePeerDependencies:
       - less
       - lightningcss
@@ -18929,10 +17875,10 @@ packages:
       '@vue/compiler-dom': 3.4.21
       '@vue/compiler-sfc': 3.4.21
       '@vue/runtime-dom': 3.4.21
-      '@vue/server-renderer': 3.4.21(vue@3.4.21)
+      '@vue/server-renderer': 3.4.21(vue@3.4.21(typescript@5.4.3))
       '@vue/shared': 3.4.21
+    optionalDependencies:
       typescript: 5.4.3
-    dev: false
 
   /w3c-keyname@2.2.8:
     resolution:
@@ -18949,7 +17895,6 @@ packages:
     engines: { node: '>=18' }
     dependencies:
       xml-name-validator: 5.0.0
-    dev: true
 
   /watchpack@2.4.1:
     resolution:
@@ -18960,7 +17905,6 @@ packages:
     dependencies:
       glob-to-regexp: 0.4.1
       graceful-fs: 4.2.11
-    dev: false
 
   /wcwidth@1.0.1:
     resolution:
@@ -19028,7 +17972,6 @@ packages:
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
-    dev: false
 
   /webpack-sources@3.2.3:
     resolution:
@@ -19072,7 +18015,7 @@ packages:
       neo-async: 2.6.2
       schema-utils: 3.3.0
       tapable: 2.2.1
-      terser-webpack-plugin: 5.3.10(webpack@5.91.0)
+      terser-webpack-plugin: 5.3.10(@swc/core@1.3.101(@swc/helpers@0.5.2))(esbuild@0.19.11)(webpack@5.91.0)
       watchpack: 2.4.1
       webpack-sources: 3.2.3
     transitivePeerDependencies:
@@ -19132,7 +18075,6 @@ packages:
     engines: { node: '>=18' }
     dependencies:
       iconv-lite: 0.6.3
-    dev: true
 
   /whatwg-mimetype@4.0.0:
     resolution:
@@ -19151,7 +18093,6 @@ packages:
     dependencies:
       tr46: 5.0.0
       webidl-conversions: 7.0.0
-    dev: true
 
   /whatwg-url@5.0.0:
     resolution:
@@ -19161,7 +18102,6 @@ packages:
     dependencies:
       tr46: 0.0.3
       webidl-conversions: 3.0.1
-    dev: false
 
   /which-boxed-primitive@1.0.2:
     resolution:
@@ -19174,7 +18114,6 @@ packages:
       is-number-object: 1.0.7
       is-string: 1.0.7
       is-symbol: 1.0.4
-    dev: true
 
   /which-collection@1.0.2:
     resolution:
@@ -19187,7 +18126,6 @@ packages:
       is-set: 2.0.3
       is-weakmap: 2.0.2
       is-weakset: 2.0.3
-    dev: true
 
   /which-typed-array@1.1.15:
     resolution:
@@ -19201,7 +18139,6 @@ packages:
       for-each: 0.3.3
       gopd: 1.0.1
       has-tostringtag: 1.0.2
-    dev: true
 
   /which@2.0.2:
     resolution:
@@ -19221,7 +18158,6 @@ packages:
     dependencies:
       siginfo: 2.0.0
       stackback: 0.0.2
-    dev: true
 
   /wrap-ansi@7.0.0:
     resolution:
@@ -19384,7 +18320,6 @@ packages:
     dependencies:
       camelcase: 5.3.1
       decamelize: 1.2.0
-    dev: false
 
   /yargs-parser@20.2.9:
     resolution:
@@ -19416,7 +18351,6 @@ packages:
       string-width: 4.2.3
       y18n: 5.0.8
       yargs-parser: 20.2.9
-    dev: true
 
   /yargs@17.7.2:
     resolution:
@@ -19432,7 +18366,6 @@ packages:
       string-width: 4.2.3
       y18n: 5.0.8
       yargs-parser: 21.1.1
-    dev: true
 
   /yocto-queue@0.1.0:
     resolution:
@@ -19456,7 +18389,6 @@ packages:
       }
     dependencies:
       zod: 3.22.4
-    dev: false
 
   /zod@3.22.4:
     resolution:

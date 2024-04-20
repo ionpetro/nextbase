@@ -17,7 +17,7 @@ import {
   Table as TableIcon,
   Underline,
 } from 'lucide-react';
-import { useCallback, useState, type FC } from 'react';
+import { type FC } from 'react';
 import { Input } from '../ui/input';
 import {
   Select,

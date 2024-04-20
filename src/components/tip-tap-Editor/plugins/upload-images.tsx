@@ -1,5 +1,5 @@
 import { uploadImage } from '@/data/user/user';
-import { Plugin, PluginKey, type EditorState } from '@tiptap/pm/state';
+import { type EditorState } from '@tiptap/pm/state';
 import { Decoration, DecorationSet, type EditorView } from '@tiptap/pm/view';
 import { toast } from 'sonner';
 

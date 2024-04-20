@@ -139,8 +139,6 @@ export const uploadPublicUserAvatar = async (
   return supabaseFileUrl;
 };
 
-
-
 export const updateUserProfileNameAndAvatar = async ({
   fullName,
   avatarUrl,

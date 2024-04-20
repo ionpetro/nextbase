@@ -1,17 +1,8 @@
-import { Editor } from '@tiptap/core';
-import { Check, Heading4, Heading5, Heading6 } from 'lucide-react';
-import { ChevronDown } from 'lucide-react';
-import { Heading1 } from 'lucide-react';
-import { Heading2 } from 'lucide-react';
-import { Heading3 } from 'lucide-react';
-import { QuoteIcon } from 'lucide-react';
-import { ListOrdered } from 'lucide-react';
-import { TextIcon } from 'lucide-react';
-import { Code } from 'lucide-react';
-import { CheckSquare } from 'lucide-react';
-import { Dispatch, FC, SetStateAction } from 'react';
+import type { Editor } from "@tiptap/core";
+import { Check, CheckSquare, ChevronDown, Code, Heading1, Heading2, Heading3, ListOrdered, QuoteIcon, TextIcon } from "lucide-react";
+import type { Dispatch, FC, SetStateAction } from "react";
 
-import { BubbleMenuItem } from './EditorBubbleMenu';
+import type { BubbleMenuItem } from "./EditorBubbleMenu";
 
 interface NodeSelectorProps {
   editor: Editor;
@@ -26,74 +17,74 @@ export const NodeSelector: FC<NodeSelectorProps> = ({
 }) => {
   const items: BubbleMenuItem[] = [
     {
-      name: 'Text',
+      name: "Text",
       icon: TextIcon,
       command: () =>
-        editor.chain().focus().toggleNode('paragraph', 'paragraph').run(),
+        editor.chain().focus().toggleNode("paragraph", "paragraph").run(),
       // I feel like there has to be a more efficient way to do this – feel free to PR if you know how!
       isActive: () =>
-        editor.isActive('paragraph') &&
-        !editor.isActive('bulletList') &&
-        !editor.isActive('orderedList'),
+        editor.isActive("paragraph") &&
+        !editor.isActive("bulletList") &&
+        !editor.isActive("orderedList"),
     },
     {
-      name: 'Heading 1',
+      name: "Heading 1",
       icon: Heading1,
       command: () => editor.chain().focus().toggleHeading({ level: 1 }).run(),
-      isActive: () => editor.isActive('heading', { level: 1 }),
+      isActive: () => editor.isActive("heading", { level: 1 }),
     },
     {
-      name: 'Heading 2',
+      name: "Heading 2",
       icon: Heading2,
       command: () => editor.chain().focus().toggleHeading({ level: 2 }).run(),
-      isActive: () => editor.isActive('heading', { level: 2 }),
+      isActive: () => editor.isActive("heading", { level: 2 }),
     },
     {
-      name: 'Heading 3',
+      name: "Heading 3",
       icon: Heading3,
       command: () => editor.chain().focus().toggleHeading({ level: 3 }).run(),
-      isActive: () => editor.isActive('heading', { level: 3 }),
+      isActive: () => editor.isActive("heading", { level: 3 }),
     },
     {
-      name: 'To-do List',
+      name: "To-do List",
       icon: CheckSquare,
       command: () => editor.chain().focus().toggleTaskList().run(),
-      isActive: () => editor.isActive('taskItem'),
+      isActive: () => editor.isActive("taskItem"),
     },
     {
-      name: 'Bullet List',
+      name: "Bullet List",
       icon: ListOrdered,
       command: () => editor.chain().focus().toggleBulletList().run(),
-      isActive: () => editor.isActive('bulletList'),
+      isActive: () => editor.isActive("bulletList"),
     },
     {
-      name: 'Numbered List',
+      name: "Numbered List",
       icon: ListOrdered,
       command: () => editor.chain().focus().toggleOrderedList().run(),
-      isActive: () => editor.isActive('orderedList'),
+      isActive: () => editor.isActive("orderedList"),
     },
     {
-      name: 'Quote',
+      name: "Quote",
       icon: QuoteIcon,
       command: () =>
         editor
           .chain()
           .focus()
-          .toggleNode('paragraph', 'paragraph')
+          .toggleNode("paragraph", "paragraph")
           .toggleBlockquote()
           .run(),
-      isActive: () => editor.isActive('blockquote'),
+      isActive: () => editor.isActive("blockquote"),
     },
     {
-      name: 'Code',
+      name: "Code",
       icon: Code,
       command: () => editor.chain().focus().toggleCodeBlock().run(),
-      isActive: () => editor.isActive('codeBlock'),
+      isActive: () => editor.isActive("codeBlock"),
     },
   ];
 
   const activeItem = items.filter((item) => item.isActive()).pop() ?? {
-    name: 'Multiple',
+    name: "Multiple",
   };
 
   return (

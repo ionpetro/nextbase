@@ -1,4 +1,4 @@
-import { EditorProps } from '@tiptap/pm/view';
+import type { EditorProps } from '@tiptap/pm/view';
 import { startImageUpload } from './plugins/upload-images';
 
 export const TiptapEditorProps: EditorProps = {

@@ -1,14 +1,15 @@
-import { BubbleMenu, BubbleMenuProps } from '@tiptap/react';
-import { FC, useState } from 'react';
-import { BoldIcon } from 'lucide-react';
-import { ItalicIcon } from 'lucide-react';
-import { UnderlineIcon } from 'lucide-react';
-import { StrikethroughIcon } from 'lucide-react';
-import { CodeIcon } from 'lucide-react';
-import { NodeSelector } from './node-selector';
-import { ColorSelector } from './color-selector';
-import { LinkSelector } from './link-selector';
-import { cn } from '@/lib/utils';
+import { BoldIcon, CodeIcon, ItalicIcon, StrikethroughIcon, UnderlineIcon } from "lucide-react"
+import { LinkSelector } from "./link-selector"
+import { cnlib } from /utils/
+import { BubbleMenuentype, BubbleMenuPropsBubbleMen } from / uPropsBubbleMen
+import {
+  type FC, useStateStateStatreact,
+  import
+} from { ColorSelector }
+import { NodeSelectordeSelecto, lnode } from -selectorlnode - selectorlnode - selectorlnode - selectorlnode - selectorlnode - selectorlnode - selectorlnode - selectorlnode - selectorlnode - selectorlnode - selectorlnode - selectorlnode - selectorlnode - selectorlnode - selectorlnode - selectorlnode - selectorlnode - selectorlnode - selectorrnode - selector / node - selector
+@tiptap/uPropsBubbleMen@tiptap/uPropsBubbleMen@tiptap/uPropsBubbleMen@tiptap/uPropsBubbleMen@tiptap/uPropsBubbleMen@tiptap/uPropsBubbleMen@tiptap/uPropsBubbleMen@tiptap/uPropsBubbleMen@tiptap/uPropsBubbleMen@tiptap/uPropsBubbleMen@tiptap/uPropsBubbleMen@tiptap/uPropsBubbleMen@tiptap/uPropsBubbleMen@tiptap/uPropsBubbleMen@tiptap/uPropsBubbleMen@tiptap/uPropsBubbleMen@tiptap/uPropsBubbleMen@tiptap/uPropsBubbleMen@tiptap/uProps } from "@tiptap/react";
+from "./color-selector";
+";
 
 export interface BubbleMenuItem {
   name: string;
@@ -17,8 +18,8 @@ export interface BubbleMenuItem {
   icon: typeof BoldIcon;
 }
 
-type EditorBubbleMenuProps = Omit<BubbleMenuProps, 'children' | 'editor'> & {
-  editor: NonNullable<BubbleMenuProps['editor']>;
+type EditorBubbleMenuProps = Omit<BubbleMenuProps, "children" | "editor"> & {
+  editor: NonNullable<BubbleMenuProps["editor"]>;
 };
 
 export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props) => {
@@ -26,32 +27,32 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props) => {
 
   const items: BubbleMenuItem[] = [
     {
-      name: 'bold',
-      isActive: () => editor.isActive('bold'),
+      name: "bold",
+      isActive: () => editor.isActive("bold"),
       command: () => editor.chain().focus().toggleBold().run(),
       icon: BoldIcon,
     },
     {
-      name: 'italic',
-      isActive: () => editor.isActive('italic'),
+      name: "italic",
+      isActive: () => editor.isActive("italic"),
       command: () => editor.chain().focus().toggleItalic().run(),
       icon: ItalicIcon,
     },
     {
-      name: 'underline',
-      isActive: () => editor.isActive('underline'),
+      name: "underline",
+      isActive: () => editor.isActive("underline"),
       command: () => editor.chain().focus().toggleUnderline().run(),
       icon: UnderlineIcon,
     },
     {
-      name: 'strike',
-      isActive: () => editor.isActive('strike'),
+      name: "strike",
+      isActive: () => editor.isActive("strike"),
       command: () => editor.chain().focus().toggleStrike().run(),
       icon: StrikethroughIcon,
     },
     {
-      name: 'code',
-      isActive: () => editor.isActive('code'),
+      name: "code",
+      isActive: () => editor.isActive("code"),
       command: () => editor.chain().focus().toggleCode().run(),
       icon: CodeIcon,
     },
@@ -61,13 +62,13 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props) => {
     ...props,
     shouldShow: ({ editor }) => {
       // don't show if image is selected
-      if (editor.isActive('image')) {
+      if (editor.isActive("image")) {
         return false;
       }
       return editor.view.state.selection.content().size > 0;
     },
     tippyOptions: {
-      moveTransition: 'transform 0.15s ease-out',
+      moveTransition: "transform 0.15s ease-out",
       onHidden: () => {
         setIsNodeSelectorOpen(false);
         setIsColorSelectorOpen(false);
@@ -112,8 +113,8 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props) => {
             className="p-2 text-muted-foreground hover:bg-muted  active:bg-muted "
           >
             <item.icon
-              className={cn('h-4 w-4', {
-                'text-blue-500': item.isActive(),
+              className={cn("h-4 w-4", {
+                "text-blue-500": item.isActive(),
               })}
             />
           </button>

@@ -16,13 +16,17 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useTheme } from 'next-themes';
 import { useEffect } from 'react';
 import {
-  type Control
+  Controller,
+  useController,
+  useForm,
+  type Control,
 } from 'react-hook-form';
 import ReactSelect from 'react-select';
 import slugify from 'slugify';
 
 import {
-  internalBlogPostSchema
+  internalBlogPostSchema,
+  type InternalBlogPostSchema,
 } from '@/utils/zod-schemas/internalBlog';
 import Trash from 'lucide-react/dist/esm/icons/trash';
 import Image from 'next/image';
