@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 type ChangeLogListCardProps = {
   date: string;
   title: string;

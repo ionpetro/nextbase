@@ -83,6 +83,10 @@ function FeedbackActionsDropdown({
                             feedbackId: feedback.id,
                             status: status.value,
                           });
+                          await adminToggleFeedbackFromRoadmap({
+                            feedbackId: feedback.id,
+                            isInRoadmap: true,
+                          });
                           toast.success(
                             `Status has been updated to ${status.label}`,
                           );

@@ -16,8 +16,6 @@ async function FeedbackPage({
   const userRoleType = await serverGetUserType();
   const suspenseKey = JSON.stringify(validatedSearchParams);
 
-  console.log('validatedSearchParams', validatedSearchParams);
-
   return (
     <>
       {userRoleType === userRoles.ANON && (

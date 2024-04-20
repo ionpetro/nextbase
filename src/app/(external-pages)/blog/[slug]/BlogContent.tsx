@@ -1,7 +1,7 @@
 'use client';
 
-import { TiptapExtensions } from '@/components/TipTapEditor/extensions';
-import { Table } from '@/types';
+import { getTipTapExtention } from '@/components/tip-tap-Editor/extensions';
+import type { Table } from '@/types';
 import { generateHTML } from '@tiptap/core';
 
 export function BlogContent({
@@ -18,8 +18,8 @@ export function BlogContent({
   return (
     <div
       dangerouslySetInnerHTML={{
-        __html: generateHTML(validContent, TiptapExtensions),
+        __html: generateHTML(validContent, getTipTapExtention({})),
       }}
-    ></div>
+    />
   );
 }

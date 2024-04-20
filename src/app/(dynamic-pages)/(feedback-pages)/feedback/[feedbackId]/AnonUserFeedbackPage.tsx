@@ -47,7 +47,9 @@ async function AnonUserFeedbackPage({
                     ? feedbackId
                     : filters.page === 1
                       ? feedbacks[0]?.id
-                      : feedbacks[0]?.id
+                      : filters.page === 1
+                        ? feedbacks[0]?.id
+                        : feedbacks[0]?.id
                 }
               />
             ))

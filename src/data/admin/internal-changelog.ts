@@ -1,23 +1,23 @@
 'use server';
+import type { ChangelogType } from '@/app/(dynamic-pages)/(changelog-pages)/changelog/_components/CreateChangelogForm';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
-import { ensureAppAdmin } from './security';
 import { revalidatePath } from 'next/cache';
+import { ensureAppAdmin } from './security';
 
 export const createChangelog = async ({
   title,
-  changes,
-}: {
-  title: string;
-  changes: string;
-}) => {
+  content,
+  changelog_image,
+}: ChangelogType) => {
   await ensureAppAdmin();
   const user = await serverGetLoggedInUser();
   const { error, data } = await supabaseAdminClient
     .from('internal_changelog')
     .insert({
       title,
-      changes,
+      changes: content,
+      cover_image: changelog_image.url,
       user_id: user.id,
     });
 

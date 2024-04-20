@@ -1,8 +1,24 @@
+'use server';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 import moment from 'moment';
 
+export type roadmapDataType = {
+  id: string;
+  title: string;
+  description: string;
+  status:
+    | 'open'
+    | 'under_review'
+    | 'planned'
+    | 'closed'
+    | 'in_progress'
+    | 'completed';
+  priority: 'low' | 'medium' | 'high';
+  tag: 'bug' | 'feature_request' | 'general';
+  date: string;
+};
+
 export const getRoadmap = async () => {
-  'use server';
   const roadmapItemsResponse = await supabaseAdminClient
     .from('internal_feedback_threads')
     .select('*')

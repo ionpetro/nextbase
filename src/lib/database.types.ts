@@ -234,6 +234,7 @@ export type Database = {
       internal_changelog: {
         Row: {
           changes: string
+          cover_image: string | null
           created_at: string | null
           id: string
           title: string
@@ -242,6 +243,7 @@ export type Database = {
         }
         Insert: {
           changes: string
+          cover_image?: string | null
           created_at?: string | null
           id?: string
           title: string
@@ -250,6 +252,7 @@ export type Database = {
         }
         Update: {
           changes?: string
+          cover_image?: string | null
           created_at?: string | null
           id?: string
           title?: string

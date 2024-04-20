@@ -26,14 +26,19 @@ export function PageHeading({
       className={cn(
         '',
         titleClassName,
-        isLoading ? '!text-slate-100 !dark:text-slate-800' : '',
+        isLoading ? '!text-slate-100 !dark:text-slate-800 text-2xl' : '',
       )}
     >
       {title}
     </T.H2>
   );
   const subTitleElement = (
-    <T.P className={cn('text-muted-foreground leading-6', subTitleClassName)}>
+    <T.P
+      className={cn(
+        'text-muted-foreground text-lg leading-6',
+        subTitleClassName,
+      )}
+    >
       {subTitle}
     </T.P>
   );
