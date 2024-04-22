@@ -21,7 +21,7 @@ import { Separator } from '@/components/ui/separator';
 
 import { cn } from '@/lib/utils';
 
-export default function FacetedFilter({
+export default function FacetedFilter<T extends string>({
   title,
   options,
   selectedValues,
@@ -30,10 +30,8 @@ export default function FacetedFilter({
   title: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   options: any;
-  selectedValues: Set<string>;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-
-  onSelectCb: (values: any) => void;
+  selectedValues: Set<T>;
+  onSelectCb: (values: T[]) => void;
 }) {
   return (
     <Popover>
