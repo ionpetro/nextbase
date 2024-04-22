@@ -22,7 +22,7 @@ export default async function Page() {
               features are added and bugs are fixed."
         />
         {userRoleType === userRoles.ADMIN && (
-          <Button asChild>
+          <Button asChild name="create-changelog-button">
             <Link href="/changelog/create">
               <Plus className="mr-2 size-4" />
               Create Changelog

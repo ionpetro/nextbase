@@ -1,4 +1,5 @@
 import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
 import type { Tables } from '@/lib/database.types';
 
 import { formatDistance } from 'date-fns';
@@ -15,7 +16,7 @@ export const ChangelogPosts = ({ changelogs }: Props) => {
       {changelogs.map((changelog, index) => (
         <div
           key={changelog.id}
-          className="grid-cols-5 grid gap-4 mx-auto md:p-8 max-w-4xl"
+          className="grid-cols-5 grid gap-4 mx-auto md:p-8 max-w-5xl"
         >
           <div className="flex flex-col mb-8 col-span-1 gap-2">
             <div className="md:flex items-center">
@@ -42,7 +43,7 @@ export const ChangelogPosts = ({ changelogs }: Props) => {
               />
             </div>
             <h1 className="text-2xl font-bold">{changelog.title}</h1>
-            <div>
+            <div className="p-4">
               <Markdown
                 options={{
                   overrides: {
@@ -150,7 +151,7 @@ export const ChangelogPosts = ({ changelogs }: Props) => {
                 {changelog.changes}
               </Markdown>
             </div>
-            <hr className="border-t border-gray-200 mb-8" />
+            <Separator />
           </div>
         </div>
       ))}
