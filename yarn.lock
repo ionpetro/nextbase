@@ -843,9 +843,9 @@
     wrap-ansi-cjs "npm:wrap-ansi@^7.0.0"
 
 "@isaacs/fs-minipass@^4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@isaacs/fs-minipass/-/fs-minipass-4.0.0.tgz#7c7246204f295bc8bb9a7dafb520d98dd9bdeccb"
-  integrity sha512-S00nN1Qt3z3dSP6Db45fj/mksrAq5XWNIJ/SWXGP8XPT2jrzEuYRCSEx08JpJwBcG2F1xgiOtBMGDU0AZHmxew==
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@isaacs/fs-minipass/-/fs-minipass-4.0.1.tgz#2d59ae3ab4b38fb4270bfa23d30f8e2e86c7fe32"
+  integrity sha512-wgm9Ehl2jpeqP3zw/7mo3kRHFp5MEDhqAdwy1fTGkHAwnkGOVsgpvQhL8B5n1qlb01jV3n/bI0ZfZp5lWA1k4w==
   dependencies:
     minipass "^7.0.4"
 
@@ -11171,9 +11171,9 @@ sucrase@^3.32.0:
     ts-interface-checker "^0.1.9"
 
 supabase@^1.127.4:
-  version "1.162.4"
-  resolved "https://registry.yarnpkg.com/supabase/-/supabase-1.162.4.tgz#57f05749f13d6fed9444e82bd63ddce7a3c89962"
-  integrity sha512-oNTn2eyvDLcKr4wRDs/QxN9lVcO6hMzKUjMLtDMU700WuyOpBZ6YBsAZkPlFWyodwmH/jUX2jqTMpcHL2XRv0g==
+  version "1.163.2"
+  resolved "https://registry.yarnpkg.com/supabase/-/supabase-1.163.2.tgz#437599a0bd0fa8e7c6995753bf1945c17852d8f5"
+  integrity sha512-mA/lhdNsEk9HEF72HbHzpm4EO39TKw2rChizcp8+dwFhaa2ex/jvkLHXujAuPjsZMXgQzRvUj4ltHsY0Z1cUlA==
   dependencies:
     bin-links "^4.0.3"
     https-proxy-agent "^7.0.2"
