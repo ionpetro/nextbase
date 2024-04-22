@@ -16,7 +16,7 @@ import { useToastMutation } from '@/hooks/useToastMutation';
 import { PenLine, Send } from 'lucide-react';
 import { useState } from 'react';
 
-async function EditComment({
+function EditComment({
   feedbackId,
   commentId,
   userId,
