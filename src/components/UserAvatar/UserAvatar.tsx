@@ -59,18 +59,24 @@ export async function FallbackImage({ size }: { size: number }) {
   );
 }
 
-export async function UserAvatarWithFullname({ userId, size }: { userId: string, size: number }) {
+export async function UserAvatarWithFullname({
+  userId,
+  size,
+}: {
+  userId: string;
+  size: number;
+}) {
   const [userFullName, userAvatarUrl] = await Promise.all([
     getUserFullName(userId),
     getUserAvatarUrl(userId),
   ]);
 
   return (
-    <div className='flex items-center gap-2'>
+    <div className="flex items-center gap-2">
       <div>
-        {userAvatarUrl ?
+        {userAvatarUrl ? (
           <Image
-            className='rounded-full border shadow-sm'
+            className="rounded-full border shadow-sm"
             placeholder="blur"
             blurDataURL={blurFallback}
             alt={`${userFullName} avatar`}
@@ -82,19 +88,26 @@ export async function UserAvatarWithFullname({ userId, size }: { userId: string,
             }}
             height={size}
           />
-          : <div
-            className={'rounded-full select-none relative border bg-inherit shadow-sm text-sm'}
+        ) : (
+          <div
+            className={
+              'rounded-full select-none relative border bg-inherit shadow-sm text-sm'
+            }
             style={{
               width: size,
               height: size,
-            }}>
-            <span className='absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2'>{userFullName?.[0].toUpperCase()}{(userFullName?.split(" ")?.[1])?.[0].toUpperCase()}</span>
+            }}
+          >
+            <span className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2">
+              {userFullName?.[0].toUpperCase()}
+              {userFullName?.split(' ')?.[1]?.[0].toUpperCase()}
+            </span>
           </div>
-        }
+        )}
       </div>
       <span>{userFullName}</span>
     </div>
-  )
+  );
 }
 function UserAvatarWithFullnameFallback({ size }: { size: number }) {
   return (
@@ -102,12 +115,18 @@ function UserAvatarWithFullnameFallback({ size }: { size: number }) {
       <Skeleton style={{ width: size, height: size, borderRadius: '100%' }} />
       <Skeleton style={{ width: 80, height: size - 10 }} />
     </div>
-  )
+  );
 }
-export async function SuspensedUserAvatarWithFullname({ userId, size }: { userId: string, size: number }) {
+export async function SuspensedUserAvatarWithFullname({
+  userId,
+  size,
+}: {
+  userId: string;
+  size: number;
+}) {
   return (
     <Suspense fallback={<UserAvatarWithFullnameFallback size={size} />}>
       <UserAvatarWithFullname userId={userId} size={size} />
     </Suspense>
-  )
+  );
 }

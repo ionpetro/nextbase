@@ -5,9 +5,9 @@ import {
   SelectItem,
   SelectLabel,
   SelectTrigger,
-} from "@/components/ui/select";
-import type { Editor } from "@tiptap/core";
-import type { FC } from "react";
+} from '@/components/ui/select';
+import type { Editor } from '@tiptap/core';
+import type { FC } from 'react';
 
 export interface BubbleColorMenuItem {
   name: string;
@@ -20,89 +20,89 @@ interface ColorSelectProps {
 
 const TEXT_COLORS: BubbleColorMenuItem[] = [
   {
-    name: "Default",
-    color: "var(--text-foreground)",
+    name: 'Default',
+    color: 'var(--text-foreground)',
   },
   {
-    name: "Purple",
-    color: "#9333EA",
+    name: 'Purple',
+    color: '#9333EA',
   },
   {
-    name: "Red",
-    color: "#E00000",
+    name: 'Red',
+    color: '#E00000',
   },
   {
-    name: "Yellow",
-    color: "#EAB308",
+    name: 'Yellow',
+    color: '#EAB308',
   },
   {
-    name: "Blue",
-    color: "#2563EB",
+    name: 'Blue',
+    color: '#2563EB',
   },
   {
-    name: "Green",
-    color: "#008A00",
+    name: 'Green',
+    color: '#008A00',
   },
   {
-    name: "Orange",
-    color: "#FFA500",
+    name: 'Orange',
+    color: '#FFA500',
   },
   {
-    name: "Pink",
-    color: "#BA4081",
+    name: 'Pink',
+    color: '#BA4081',
   },
   {
-    name: "Gray",
-    color: "#A8A29E",
+    name: 'Gray',
+    color: '#A8A29E',
   },
 ];
 
 const HIGHLIGHT_COLORS: BubbleColorMenuItem[] = [
   {
-    name: "Default",
-    color: "transparent",
+    name: 'Default',
+    color: 'transparent',
   },
   {
-    name: "Purple",
-    color: "var(--novel-highlight-purple)",
+    name: 'Purple',
+    color: 'var(--novel-highlight-purple)',
   },
   {
-    name: "Red",
-    color: "var(--novel-highlight-red)",
+    name: 'Red',
+    color: 'var(--novel-highlight-red)',
   },
   {
-    name: "Yellow",
-    color: "var(--novel-highlight-yellow)",
+    name: 'Yellow',
+    color: 'var(--novel-highlight-yellow)',
   },
   {
-    name: "Blue",
-    color: "var(--novel-highlight-blue)",
+    name: 'Blue',
+    color: 'var(--novel-highlight-blue)',
   },
   {
-    name: "Green",
-    color: "var(--novel-highlight-green)",
+    name: 'Green',
+    color: 'var(--novel-highlight-green)',
   },
   {
-    name: "Orange",
-    color: "var(--novel-highlight-orange)",
+    name: 'Orange',
+    color: 'var(--novel-highlight-orange)',
   },
   {
-    name: "Pink",
-    color: "var(--novel-highlight-pink)",
+    name: 'Pink',
+    color: 'var(--novel-highlight-pink)',
   },
   {
-    name: "Gray",
-    color: "var(--novel-highlight-gray)",
+    name: 'Gray',
+    color: 'var(--novel-highlight-gray)',
   },
 ];
 
 export const ColorSelect: FC<ColorSelectProps> = ({ editor }) => {
   const activeColorItem = TEXT_COLORS.find(({ color }) =>
-    editor.isActive("textStyle", { color }),
+    editor.isActive('textStyle', { color }),
   );
 
   const activeHighlightItem = HIGHLIGHT_COLORS.find(({ color }) =>
-    editor.isActive("highlight", { color }),
+    editor.isActive('highlight', { color }),
   );
 
   return (

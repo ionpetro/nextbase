@@ -206,7 +206,7 @@ export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
             ...restPayload,
             json_content:
               typeof restPayload.json_content === 'object' &&
-                restPayload.json_content !== null
+              restPayload.json_content !== null
                 ? restPayload.json_content
                 : JSON.parse(restPayload.json_content),
           },
@@ -254,7 +254,7 @@ export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
             ...restPayload,
             json_content:
               typeof restPayload.json_content === 'object' &&
-                restPayload.json_content !== null
+              restPayload.json_content !== null
                 ? restPayload.json_content
                 : JSON.parse(restPayload.json_content),
           },

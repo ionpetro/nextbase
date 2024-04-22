@@ -1,6 +1,6 @@
 import {
   fetchSlimOrganizations,
-  getDefaultOrganization
+  getDefaultOrganization,
 } from '@/data/user/organizations';
 import { notFound, redirect } from 'next/navigation';
 import { Suspense } from 'react';

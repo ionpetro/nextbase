@@ -1,35 +1,35 @@
-"use client";
+'use client';
 
-import { NotificationItem } from "@/components/NavigationMenu/NotificationItem";
-import { T } from "@/components/ui/Typography";
+import { NotificationItem } from '@/components/NavigationMenu/NotificationItem';
+import { T } from '@/components/ui/Typography';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
-import { useToastMutation } from "@/hooks/useToastMutation";
-import { supabaseUserClientComponentClient } from "@/supabase-clients/user/supabaseUserClientComponentClient";
-import type { Table } from "@/types";
-import { parseNotification } from "@/utils/parseNotification";
-import { useInfiniteQuery, useMutation, useQuery } from "@tanstack/react-query";
-import NotificationIcon from "lucide-react/dist/esm/icons/bell";
-import CheckIcon from "lucide-react/dist/esm/icons/check";
-import moment from "moment";
-import { useRouter } from "next/navigation";
-import { useCallback, useEffect } from "react";
-import { useDidMount } from "rooks";
-import { toast } from "sonner";
+} from '@/components/ui/popover';
+import { useToastMutation } from '@/hooks/useToastMutation';
+import { supabaseUserClientComponentClient } from '@/supabase-clients/user/supabaseUserClientComponentClient';
+import type { Table } from '@/types';
+import { parseNotification } from '@/utils/parseNotification';
+import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query';
+import NotificationIcon from 'lucide-react/dist/esm/icons/bell';
+import CheckIcon from 'lucide-react/dist/esm/icons/check';
+import moment from 'moment';
+import { useRouter } from 'next/navigation';
+import { useCallback, useEffect } from 'react';
+import { useDidMount } from 'rooks';
+import { toast } from 'sonner';
 import {
   getPaginatedNotifications,
   getUnseenNotificationIds,
   readAllNotifications,
   seeNotification,
-} from "./fetchClientNotifications";
+} from './fetchClientNotifications';
 
 const NOTIFICATIONS_PAGE_SIZE = 10;
 const useUnseenNotificationIds = (userId: string) => {
   const { data, refetch } = useQuery(
-    ["unseen-notification-ids", userId],
+    ['unseen-notification-ids', userId],
     async () => {
       return getUnseenNotificationIds(userId);
     },
@@ -43,24 +43,24 @@ const useUnseenNotificationIds = (userId: string) => {
     const channel = supabaseUserClientComponentClient
       .channel(channelId)
       .on(
-        "postgres_changes",
+        'postgres_changes',
         {
-          event: "INSERT",
-          schema: "public",
-          table: "user_notifications",
-          filter: "user_id=eq." + userId,
+          event: 'INSERT',
+          schema: 'public',
+          table: 'user_notifications',
+          filter: 'user_id=eq.' + userId,
         },
         () => {
           refetch();
         },
       )
       .on(
-        "postgres_changes",
+        'postgres_changes',
         {
-          event: "UPDATE",
-          schema: "public",
-          table: "user_notifications",
-          filter: "user_id=eq." + userId,
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'user_notifications',
+          filter: 'user_id=eq.' + userId,
         },
         (payload) => {
           console.log(payload);
@@ -79,7 +79,7 @@ const useUnseenNotificationIds = (userId: string) => {
 export const useNotifications = (userId: string) => {
   const { data, isFetchingNextPage, isLoading, fetchNextPage, hasNextPage } =
     useInfiniteQuery(
-      ["paginatedNotifications", userId],
+      ['paginatedNotifications', userId],
       async ({ pageParam }) => {
         return getPaginatedNotifications(
           userId,
@@ -125,14 +125,14 @@ function Notification({
   notification,
   isSeen,
 }: {
-  notification: Table<"user_notifications">;
+  notification: Table<'user_notifications'>;
   isSeen: boolean;
 }) {
   const router = useRouter();
   const notificationPayload = parseNotification(notification.payload);
   const handleNotificationClick = useCallback(() => {
-    if (notificationPayload.type === "welcome") {
-      toast("Welcome to Nextbase");
+    if (notificationPayload.type === 'welcome') {
+      toast('Welcome to Nextbase');
     }
   }, [notificationPayload]);
 
@@ -154,12 +154,12 @@ function Notification({
       description={notificationPayload.description}
       createdAt={moment(notification.created_at).fromNow()}
       href={
-        notificationPayload.actionType === "link"
+        notificationPayload.actionType === 'link'
           ? notificationPayload.href
           : undefined
       }
       onClick={
-        notificationPayload.actionType === "button"
+        notificationPayload.actionType === 'button'
           ? handleNotificationClick
           : undefined
       }
@@ -183,9 +183,9 @@ export const useReadAllNotifications = (userId: string) => {
       return readAllNotifications(userId);
     },
     {
-      loadingMessage: "Marking all notifications as read...",
-      successMessage: "All notifications marked as read",
-      errorMessage: "Failed to mark all notifications as read",
+      loadingMessage: 'Marking all notifications as read...',
+      successMessage: 'All notifications marked as read',
+      errorMessage: 'Failed to mark all notifications as read',
       onSuccess: () => {
         router.refresh();
       },
@@ -209,9 +209,9 @@ export const Notifications = ({ userId }: { userId: string }) => {
       return readAllNotifications(userId);
     },
     {
-      loadingMessage: "Marking all notifications as read...",
-      successMessage: "All notifications marked as read",
-      errorMessage: "Failed to mark all notifications as read",
+      loadingMessage: 'Marking all notifications as read...',
+      successMessage: 'All notifications marked as read',
+      errorMessage: 'Failed to mark all notifications as read',
       onSuccess: () => {
         router.refresh();
       },
@@ -238,7 +238,7 @@ export const Notifications = ({ userId }: { userId: string }) => {
               <div className="flex text-sm mt-2 space-x-1 group cursor-pointer font-medium">
                 {unseenNotificationCount ? (
                   <>
-                    <CheckIcon className="h-5 w-5 text-muted-foreground dark:group-hover:text-gray-400" />{" "}
+                    <CheckIcon className="h-5 w-5 text-muted-foreground dark:group-hover:text-gray-400" />{' '}
                     <span
                       onClick={() => {
                         mutate();

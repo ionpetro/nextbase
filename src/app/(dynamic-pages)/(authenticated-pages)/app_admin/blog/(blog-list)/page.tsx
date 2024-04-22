@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import {
   getAllAppAdmins,
   getAllAuthors,
-  getAllBlogTags
+  getAllBlogTags,
 } from '@/data/admin/internal-blog';
 import PenSquareIcon from 'lucide-react/dist/esm/icons/pen-tool';
 

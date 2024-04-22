@@ -1,8 +1,8 @@
-import { cn } from "@/lib/utils";
-import { Editor } from "@tiptap/core";
-import { Check } from "lucide-react";
-import { Trash } from "lucide-react";
-import { Dispatch, FC, SetStateAction, useEffect, useRef } from "react";
+import { cn } from '@/lib/utils';
+import { Editor } from '@tiptap/core';
+import { Check } from 'lucide-react';
+import { Trash } from 'lucide-react';
+import { Dispatch, FC, SetStateAction, useEffect, useRef } from 'react';
 
 interface LinkSelectorProps {
   editor: Editor;
@@ -33,8 +33,8 @@ export const LinkSelector: FC<LinkSelectorProps> = ({
       >
         <p className="text-base">↗</p>
         <p
-          className={cn("underline decoration-muted underline-offset-4", {
-            "text-primary-foreground": editor.isActive("link"),
+          className={cn('underline decoration-muted underline-offset-4', {
+            'text-primary-foreground': editor.isActive('link'),
           })}
         >
           Link
@@ -56,9 +56,9 @@ export const LinkSelector: FC<LinkSelectorProps> = ({
             type="url"
             placeholder="Paste a link"
             className="flex-1 bg-background p-1 text-sm outline-none"
-            defaultValue={editor.getAttributes("link").href || ""}
+            defaultValue={editor.getAttributes('link').href || ''}
           />
-          {editor.getAttributes("link").href ? (
+          {editor.getAttributes('link').href ? (
             <button
               type="button"
               className="flex items-center rounded-sm p-1 text-destructive-foreground transition-all hover:bg-destructive "
