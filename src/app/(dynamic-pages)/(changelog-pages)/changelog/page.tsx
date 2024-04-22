@@ -1,8 +1,8 @@
 import { PageHeading } from '@/components/PageHeading';
 import { Button } from '@/components/ui/button';
-import { userRoles } from '@/config/userTypes';
 import { getChangelogList } from '@/data/admin/internal-changelog';
 import { serverGetUserType } from '@/utils/server/serverGetUserType';
+import { userRoles } from '@/utils/userTypes';
 import { Plus } from 'lucide-react';
 import Link from 'next/link';
 import { Suspense } from 'react';

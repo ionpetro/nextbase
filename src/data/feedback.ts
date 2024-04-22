@@ -1,11 +1,11 @@
 'use server';
 
-import { userRoles } from '@/config/userTypes';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 import { supabaseClientBasedOnUserRole } from '@/supabase-clients/user-role-client';
 import type { Enum } from '@/types';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import { serverGetUserType } from '@/utils/server/serverGetUserType';
+import { userRoles } from '@/utils/userTypes';
 import { revalidatePath } from 'next/cache';
 
 export async function addCommentToInternalFeedbackThread({

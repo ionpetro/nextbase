@@ -1,7 +1,7 @@
 import { PageHeading } from '@/components/PageHeading';
-import { userRoles } from '@/config/userTypes';
 import { getRoadmap } from '@/data/admin/internal-roadmap';
 import { serverGetUserType } from '@/utils/server/serverGetUserType';
+import { userRoles } from '@/utils/userTypes';
 import { Suspense } from 'react';
 import { AppAdminRoadmap } from './AppAdminRoadmap';
 import { Roadmap } from './Roadmap';

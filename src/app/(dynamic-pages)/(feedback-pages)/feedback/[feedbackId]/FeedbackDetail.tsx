@@ -1,5 +1,5 @@
-import { userRoles } from '@/config/userTypes';
 import { serverGetUserType } from '@/utils/server/serverGetUserType';
+import { userRoles } from '@/utils/userTypes';
 import { Suspense } from 'react';
 import AdminUserFeedbackdetail from './AdminUserFeedbackdetail';
 import AnonUserFeedbackdetail from './AnonUserFeedbackdetail';

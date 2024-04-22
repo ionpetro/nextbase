@@ -33,7 +33,6 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 
-import { userRoles } from '@/config/userTypes';
 import {
   adminToggleFeedbackFromRoadmap,
   adminToggleFeedbackOpenForComments,
@@ -43,6 +42,7 @@ import {
   adminUpdateFeedbackType,
 } from '@/data/feedback';
 import type { Table } from '@/types';
+import { userRoles } from '@/utils/userTypes';
 
 function FeedbackActionsDropdown({
   feedback,

@@ -1,5 +1,5 @@
-import { userRoles } from '@/config/userTypes';
 import { serverGetUserType } from '@/utils/server/serverGetUserType';
+import { userRoles } from '@/utils/userTypes';
 import { redirect } from 'next/navigation';
 import { CreateChangelogForm } from '../_components/CreateChangelogForm';
 export default async function Page() {

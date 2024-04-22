@@ -1,5 +1,5 @@
-import { userRoles } from '@/config/userTypes';
 import { serverGetUserType } from '@/utils/server/serverGetUserType';
+import { userRoles } from '@/utils/userTypes';
 import AdminUserFeedbackPage from './[feedbackId]/AdminUserFeedbackPage';
 import AnonUserFeedbackPage from './[feedbackId]/AnonUserFeedbackPage';
 import LoggedInUserFeedbackPage from './[feedbackId]/LoggedInUserFeedbackPage';
