@@ -1,7 +1,6 @@
-import { Editor } from "@tiptap/core";
-import { CheckIcon } from "lucide-react";
-import { ChevronDown } from "lucide-react";
-import { Dispatch, FC, SetStateAction } from "react";
+import type { Editor } from '@tiptap/core';
+import { CheckIcon, ChevronDown } from 'lucide-react';
+import type { Dispatch, FC, SetStateAction } from 'react';
 
 export interface BubbleColorMenuItem {
   name: string;
@@ -16,79 +15,79 @@ interface ColorSelectorProps {
 
 const TEXT_COLORS: BubbleColorMenuItem[] = [
   {
-    name: "Default",
-    color: "var(--novel-black)",
+    name: 'Default',
+    color: 'var(--novel-black)',
   },
   {
-    name: "Purple",
-    color: "#9333EA",
+    name: 'Purple',
+    color: '#9333EA',
   },
   {
-    name: "Red",
-    color: "#E00000",
+    name: 'Red',
+    color: '#E00000',
   },
   {
-    name: "Yellow",
-    color: "#EAB308",
+    name: 'Yellow',
+    color: '#EAB308',
   },
   {
-    name: "Blue",
-    color: "#2563EB",
+    name: 'Blue',
+    color: '#2563EB',
   },
   {
-    name: "Green",
-    color: "#008A00",
+    name: 'Green',
+    color: '#008A00',
   },
   {
-    name: "Orange",
-    color: "#FFA500",
+    name: 'Orange',
+    color: '#FFA500',
   },
   {
-    name: "Pink",
-    color: "#BA4081",
+    name: 'Pink',
+    color: '#BA4081',
   },
   {
-    name: "Gray",
-    color: "#A8A29E",
+    name: 'Gray',
+    color: '#A8A29E',
   },
 ];
 
 const HIGHLIGHT_COLORS: BubbleColorMenuItem[] = [
   {
-    name: "Default",
-    color: "var(--novel-highlight-default)",
+    name: 'Default',
+    color: 'var(--novel-highlight-default)',
   },
   {
-    name: "Purple",
-    color: "var(--novel-highlight-purple)",
+    name: 'Purple',
+    color: 'var(--novel-highlight-purple)',
   },
   {
-    name: "Red",
-    color: "var(--novel-highlight-red)",
+    name: 'Red',
+    color: 'var(--novel-highlight-red)',
   },
   {
-    name: "Yellow",
-    color: "var(--novel-highlight-yellow)",
+    name: 'Yellow',
+    color: 'var(--novel-highlight-yellow)',
   },
   {
-    name: "Blue",
-    color: "var(--novel-highlight-blue)",
+    name: 'Blue',
+    color: 'var(--novel-highlight-blue)',
   },
   {
-    name: "Green",
-    color: "var(--novel-highlight-green)",
+    name: 'Green',
+    color: 'var(--novel-highlight-green)',
   },
   {
-    name: "Orange",
-    color: "var(--novel-highlight-orange)",
+    name: 'Orange',
+    color: 'var(--novel-highlight-orange)',
   },
   {
-    name: "Pink",
-    color: "var(--novel-highlight-pink)",
+    name: 'Pink',
+    color: 'var(--novel-highlight-pink)',
   },
   {
-    name: "Gray",
-    color: "var(--novel-highlight-gray)",
+    name: 'Gray',
+    color: 'var(--novel-highlight-gray)',
   },
 ];
 
@@ -98,11 +97,11 @@ export const ColorSelector: FC<ColorSelectorProps> = ({
   setIsOpen,
 }) => {
   const activeColorItem = TEXT_COLORS.find(({ color }) =>
-    editor.isActive("textStyle", { color })
+    editor.isActive('textStyle', { color }),
   );
 
   const activeHighlightItem = HIGHLIGHT_COLORS.find(({ color }) =>
-    editor.isActive("highlight", { color })
+    editor.isActive('highlight', { color }),
   );
 
   return (
@@ -131,11 +130,11 @@ export const ColorSelector: FC<ColorSelectorProps> = ({
           {TEXT_COLORS.map(({ name, color }, index) => (
             <button
               type="button"
-              key={index}
+              key={`${name}-text-color`}
               onClick={() => {
                 editor.commands.unsetColor();
-                name !== "Default" &&
-                  typeof color !== "undefined" &&
+                name !== 'Default' &&
+                  typeof color !== 'undefined' &&
                   color !== null &&
                   editor.chain().focus().setColor(color).run();
                 setIsOpen(false);
@@ -151,7 +150,7 @@ export const ColorSelector: FC<ColorSelectorProps> = ({
                 </div>
                 <span>{name}</span>
               </div>
-              {editor.isActive("textStyle", { color }) && (
+              {editor.isActive('textStyle', { color }) && (
                 <CheckIcon className="h-4 w-4" />
               )}
             </button>
@@ -164,11 +163,11 @@ export const ColorSelector: FC<ColorSelectorProps> = ({
           {HIGHLIGHT_COLORS.map(({ name, color }, index) => (
             <button
               type="button"
-              key={index}
+              key={`${name}-highlight`}
               onClick={() => {
                 editor.commands.unsetHighlight();
-                name !== "Default" &&
-                  typeof color !== "undefined" &&
+                name !== 'Default' &&
+                  typeof color !== 'undefined' &&
                   color !== null &&
                   editor.commands.setHighlight({ color: color });
                 setIsOpen(false);
@@ -184,7 +183,7 @@ export const ColorSelector: FC<ColorSelectorProps> = ({
                 </div>
                 <span>{name}</span>
               </div>
-              {editor.isActive("highlight", { color }) && (
+              {editor.isActive('highlight', { color }) && (
                 <CheckIcon className="h-4 w-4" />
               )}
             </button>
