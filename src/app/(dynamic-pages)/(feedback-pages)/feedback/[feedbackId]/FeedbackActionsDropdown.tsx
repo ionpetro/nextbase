@@ -31,7 +31,6 @@ import {
   Tags,
   VolumeX,
 } from 'lucide-react';
-import { toast } from 'sonner';
 
 import {
   adminToggleFeedbackFromRoadmap,
@@ -41,6 +40,8 @@ import {
   adminUpdateFeedbackStatus,
   adminUpdateFeedbackType,
 } from '@/data/feedback';
+import { useSAToastMutation } from '@/hooks/useSAToastMutation';
+import type { Tables } from '@/lib/database.types';
 import type { Table } from '@/types';
 import { userRoles } from '@/utils/userTypes';
 
@@ -54,6 +55,217 @@ function FeedbackActionsDropdown({
   if (userRole === userRoles.ANON) {
     return null;
   }
+
+  const updateFeedbackStatus = useSAToastMutation(
+    async ({
+      feedbackId,
+      status,
+    }: {
+      feedbackId: string;
+      status: Tables<'internal_feedback_threads'>['status'];
+    }) => {
+      await adminUpdateFeedbackStatus({ feedbackId, status });
+      return await adminToggleFeedbackFromRoadmap({
+        feedbackId,
+        isInRoadmap: true,
+      });
+    },
+    {
+      loadingMessage(variables) {
+        return `Updating status to ${variables.status}`;
+      },
+      successMessage(data, variables) {
+        return `Status updated to ${variables.status}`;
+      },
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to create post ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to create post';
+        }
+      },
+    },
+  );
+
+  const updateFeedbackType = useSAToastMutation(
+    async ({
+      feedbackId,
+      type,
+    }: {
+      feedbackId: string;
+      type: Tables<'internal_feedback_threads'>['type'];
+    }) => {
+      return await adminUpdateFeedbackType({ feedbackId, type });
+    },
+    {
+      loadingMessage(variables) {
+        return `Updating type to ${variables.type}`;
+      },
+      successMessage(data, variables) {
+        return `Type has been updated to ${variables.type}`;
+      },
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to update type ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to update type';
+        }
+      },
+    },
+  );
+
+  const updateFeedbackPriority = useSAToastMutation(
+    async ({
+      feedbackId,
+      priority,
+    }: {
+      feedbackId: string;
+      priority: Tables<'internal_feedback_threads'>['priority'];
+    }) => {
+      return await adminUpdateFeedbackPriority({ feedbackId, priority });
+    },
+    {
+      loadingMessage(variables) {
+        return `Updating priority to ${variables.priority}`;
+      },
+      successMessage(data, variables) {
+        return `Priority has been updated to ${variables.priority}`;
+      },
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to update priority ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to update priority';
+        }
+      },
+    },
+  );
+
+  const updateRoadmap = useSAToastMutation(
+    async ({
+      feedbackId,
+      isInRoadmap,
+    }: {
+      feedbackId: string;
+      isInRoadmap: boolean;
+    }) => {
+      return await adminToggleFeedbackFromRoadmap({
+        feedbackId,
+        isInRoadmap,
+      });
+    },
+    {
+      loadingMessage(variables) {
+        return variables.isInRoadmap
+          ? 'Adding to roadmap'
+          : 'Removing from roadmap';
+      },
+      successMessage(data, variables) {
+        return variables.isInRoadmap
+          ? 'Added to roadmap'
+          : 'Removed from roadmap';
+      },
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to update priority ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to update priority';
+        }
+      },
+    },
+  );
+
+  const updateOpenForComments = useSAToastMutation(
+    async ({
+      feedbackId,
+      isOpenForComments,
+    }: {
+      feedbackId: string;
+      isOpenForComments: boolean;
+    }) => {
+      return await adminToggleFeedbackOpenForComments({
+        feedbackId,
+        isOpenForComments,
+      });
+    },
+    {
+      loadingMessage(variables) {
+        return variables.isOpenForComments
+          ? 'Opening thread for comments'
+          : 'Closing thread for comments';
+      },
+      successMessage(data, variables) {
+        return variables.isOpenForComments
+          ? 'Thread is now open for comments'
+          : 'Thread is now closed for comments';
+      },
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to update open for comments ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to update open for comments';
+        }
+      },
+    },
+  );
+
+  const updateVisibility = useSAToastMutation(
+    async ({
+      feedbackId,
+      isPubliclyVisible,
+    }: {
+      feedbackId: string;
+      isPubliclyVisible: boolean;
+    }) => {
+      return await adminToggleFeedbackVisibility({
+        feedbackId,
+        isPubliclyVisible,
+      });
+    },
+    {
+      loadingMessage(variables) {
+        return variables.isPubliclyVisible
+          ? 'Showing thread from public'
+          : 'Hiding thread to public';
+      },
+      errorMessage(error, variables) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to update visibility ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to update visibility';
+        }
+      },
+      successMessage(data, variables) {
+        return variables.isPubliclyVisible
+          ? 'Thread is now publicly visible'
+          : 'Thread is now hidden from public';
+      },
+    },
+  );
 
   return (
     <DropdownMenu>
@@ -79,17 +291,10 @@ function FeedbackActionsDropdown({
                       <DropdownMenuItem
                         key={status.label}
                         onClick={async () => {
-                          await adminUpdateFeedbackStatus({
+                          updateFeedbackStatus.mutate({
                             feedbackId: feedback.id,
                             status: status.value,
                           });
-                          await adminToggleFeedbackFromRoadmap({
-                            feedbackId: feedback.id,
-                            isInRoadmap: true,
-                          });
-                          toast.success(
-                            `Status has been updated to ${status.label}`,
-                          );
                         }}
                       >
                         <status.icon className="h-4 w-4 mr-2" /> {status.label}
@@ -109,13 +314,10 @@ function FeedbackActionsDropdown({
                       <DropdownMenuItem
                         key={type.label}
                         onClick={async () => {
-                          await adminUpdateFeedbackType({
+                          updateFeedbackType.mutate({
                             feedbackId: feedback.id,
                             type: type.value,
                           });
-                          toast.success(
-                            `Type has been updated to ${type.label}`,
-                          );
                         }}
                       >
                         <type.icon className="h-4 w-4 mr-2" /> {type.label}
@@ -135,13 +337,10 @@ function FeedbackActionsDropdown({
                       <DropdownMenuItem
                         key={priority.label}
                         onClick={async () => {
-                          await adminUpdateFeedbackPriority({
+                          updateFeedbackPriority.mutate({
                             feedbackId: feedback.id,
                             priority: priority.value,
                           });
-                          toast.success(
-                            `Type has been updated to ${priority.label}`,
-                          );
                         }}
                       >
                         <priority.icon className="h-4 w-4 mr-2" />{' '}
@@ -171,15 +370,10 @@ function FeedbackActionsDropdown({
             <DropdownMenuLabel>Admin Settings</DropdownMenuLabel>
             <DropdownMenuItem
               onClick={async () => {
-                await adminToggleFeedbackFromRoadmap({
+                updateRoadmap.mutate({
                   feedbackId: feedback.id,
                   isInRoadmap: !feedback?.added_to_roadmap,
                 });
-                toast.success(
-                  feedback?.added_to_roadmap
-                    ? 'Removed from roadmap'
-                    : 'Added to roadmap',
-                );
               }}
             >
               {feedback?.added_to_roadmap ? (
@@ -196,15 +390,10 @@ function FeedbackActionsDropdown({
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={async () => {
-                await adminToggleFeedbackOpenForComments({
+                updateOpenForComments.mutate({
                   feedbackId: feedback.id,
                   isOpenForComments: !feedback?.open_for_public_discussion,
                 });
-                toast.success(
-                  feedback?.added_to_roadmap
-                    ? 'Open for comments'
-                    : 'Closed from comments',
-                );
               }}
             >
               {feedback?.open_for_public_discussion ? (
@@ -224,15 +413,10 @@ function FeedbackActionsDropdown({
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={async () => {
-                await adminToggleFeedbackVisibility({
+                updateVisibility.mutate({
                   feedbackId: feedback.id,
                   isPubliclyVisible: !feedback?.is_publicly_visible,
                 });
-                toast.success(
-                  feedback?.is_publicly_visible
-                    ? 'Hidden from public'
-                    : 'Shown to public',
-                );
               }}
             >
               {feedback?.is_publicly_visible ? (

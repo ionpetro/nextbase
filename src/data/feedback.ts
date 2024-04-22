@@ -2,7 +2,7 @@
 
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 import { supabaseClientBasedOnUserRole } from '@/supabase-clients/user-role-client';
-import type { Enum } from '@/types';
+import type { Enum, ValidSAPayload } from '@/types';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import { serverGetUserType } from '@/utils/server/serverGetUserType';
 import { userRoles } from '@/utils/userTypes';
@@ -133,52 +133,7 @@ export async function adminUpdateFeedbackType({
 }: {
   feedbackId: string;
   type: Enum<'internal_feedback_thread_type'>;
-}) {
-  const userRoleType = await serverGetUserType();
-
-  const { data } = await supabaseAdminClient
-    .from('internal_feedback_threads')
-    .update({ type })
-    .eq('id', feedbackId);
-
-  revalidatePath(`/feedback/${feedbackId}`, 'page');
-  return data;
-}
-
-export async function adminUpdateFeedbackPriority({
-  feedbackId,
-  priority,
-}: {
-  feedbackId: string;
-  priority: Enum<'internal_feedback_thread_priority'>;
-}) {
-  const userRoleType = await serverGetUserType();
-
-  if (userRoleType !== userRoles.ADMIN) {
-    throw new Error('You are unathorized to perform this action');
-  }
-
-  const { data, error } = await supabaseAdminClient
-    .from('internal_feedback_threads')
-    .update({ priority })
-    .eq('id', feedbackId);
-
-  if (error) {
-    throw error;
-  }
-
-  revalidatePath('/feedback', 'page');
-  revalidatePath(`/feedback/${feedbackId}`, 'page');
-  return data;
-}
-
-export async function adminToggleFeedbackFromRoadmap({
-  feedbackId,
-  isInRoadmap,
-}: {
-  feedbackId: string;
-  isInRoadmap: boolean;
-}) {
+}): Promise<ValidSAPayload> {
   const userRoleType = await serverGetUserType();
 
   if (userRoleType !== userRoles.ADMIN) {
@@ -187,11 +142,66 @@ export async function adminToggleFeedbackFromRoadmap({
 
   const { error } = await supabaseAdminClient
     .from('internal_feedback_threads')
+    .update({ type })
+    .eq('id', feedbackId);
+
+  if (error) {
+    return { status: 'error', message: error.message };
+  }
+
+  revalidatePath(`/feedback/${feedbackId}`, 'page');
+
+  return { status: 'success' };
+}
+
+export async function adminUpdateFeedbackPriority({
+  feedbackId,
+  priority,
+}: {
+  feedbackId: string;
+  priority: Enum<'internal_feedback_thread_priority'>;
+}): Promise<ValidSAPayload> {
+  const userRoleType = await serverGetUserType();
+
+  if (userRoleType !== userRoles.ADMIN) {
+    throw new Error('You are unathorized to perform this action');
+  }
+
+  const { error } = await supabaseAdminClient
+    .from('internal_feedback_threads')
+    .update({ priority })
+    .eq('id', feedbackId);
+
+  if (error) {
+    return { status: 'error', message: error.message };
+  }
+
+  revalidatePath('/feedback', 'page');
+  revalidatePath(`/feedback/${feedbackId}`, 'page');
+
+  return { status: 'success' };
+}
+
+export async function adminToggleFeedbackFromRoadmap({
+  feedbackId,
+  isInRoadmap,
+}: {
+  feedbackId: string;
+  isInRoadmap: boolean;
+}): Promise<ValidSAPayload> {
+  const userRoleType = await serverGetUserType();
+
+  if (userRoleType !== userRoles.ADMIN) {
+    throw new Error('You are unathorized to perform this action');
+  }
+
+  const { error, data: updatedFeedbackData } = await supabaseAdminClient
+    .from('internal_feedback_threads')
     .update({ added_to_roadmap: isInRoadmap })
     .eq('id', feedbackId);
 
   if (error) {
-    throw error;
+    return { status: 'error', message: error.message };
   }
 
   if (isInRoadmap) {
@@ -203,6 +213,8 @@ export async function adminToggleFeedbackFromRoadmap({
 
   revalidatePath('/feedback', 'page');
   revalidatePath(`/feedback/${feedbackId}`, 'page');
+
+  return { status: 'success' };
 }
 
 export async function adminToggleFeedbackOpenForComments({
@@ -211,20 +223,20 @@ export async function adminToggleFeedbackOpenForComments({
 }: {
   feedbackId: string;
   isOpenForComments: boolean;
-}) {
+}): Promise<ValidSAPayload> {
   const userRoleType = await serverGetUserType();
 
   if (userRoleType !== userRoles.ADMIN) {
     throw new Error('You are unathorized to perform this action');
   }
 
-  const { error: openForPublicDiscussionError } = await supabaseAdminClient
+  const { error } = await supabaseAdminClient
     .from('internal_feedback_threads')
     .update({ open_for_public_discussion: isOpenForComments })
     .eq('id', feedbackId);
 
-  if (openForPublicDiscussionError) {
-    throw openForPublicDiscussionError;
+  if (error) {
+    return { status: 'error', message: error.message };
   }
 
   if (isOpenForComments) {
@@ -236,6 +248,8 @@ export async function adminToggleFeedbackOpenForComments({
 
   revalidatePath('/feedback', 'page');
   revalidatePath(`/feedback/${feedbackId}`, 'page');
+
+  return { status: 'success' };
 }
 
 export async function adminToggleFeedbackVisibility({
@@ -244,7 +258,7 @@ export async function adminToggleFeedbackVisibility({
 }: {
   feedbackId: string;
   isPubliclyVisible: boolean;
-}) {
+}): Promise<ValidSAPayload> {
   const userRoleType = await serverGetUserType();
 
   if (userRoleType !== userRoles.ADMIN) {
@@ -257,9 +271,11 @@ export async function adminToggleFeedbackVisibility({
     .eq('id', feedbackId);
 
   if (error) {
-    throw error;
+    return { status: 'error', message: error.message };
   }
 
   revalidatePath('/feedback', 'page');
   revalidatePath(`/feedback/${feedbackId}`, 'page');
+
+  return { status: 'success' };
 }

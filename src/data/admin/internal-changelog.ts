@@ -12,6 +12,10 @@ export const createChangelog = async ({
 }: ChangelogType) => {
   await ensureAppAdmin();
   const user = await serverGetLoggedInUser();
+
+  // Introducing a delay of 3 seconds (3000 milliseconds) to test suspense
+  await new Promise((resolve) => setTimeout(resolve, 3000));
+
   const { error, data } = await supabaseAdminClient
     .from('internal_changelog')
     .insert({
@@ -26,18 +30,5 @@ export const createChangelog = async ({
   if (error) {
     throw error;
   }
-  return data;
-};
-
-export const getChangelogList = async () => {
-  const { data, error } = await supabaseAdminClient
-    .from('internal_changelog')
-    .select('*')
-    .order('created_at', { ascending: false });
-
-  if (error) {
-    throw error;
-  }
-
   return data;
 };

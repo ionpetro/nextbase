@@ -1,16 +1,17 @@
 import { PageHeading } from '@/components/PageHeading';
 import { Button } from '@/components/ui/button';
-import { getChangelogList } from '@/data/admin/internal-changelog';
+import { anonGetAllChangelogItems } from '@/data/anon/internalChangelog';
 import { serverGetUserType } from '@/utils/server/serverGetUserType';
 import { userRoles } from '@/utils/userTypes';
 import { Plus } from 'lucide-react';
 import Link from 'next/link';
 import { Suspense } from 'react';
-import { AppAdminChangelog } from './AppAdminChangelog';
+import { ChangelogPosts } from './AppAdminChangelog';
+import { ChangelogListSkeletonFallBack } from './_components/ChangelogSkeletonFallBack';
 
 export default async function Page() {
   const userRoleType = await serverGetUserType();
-  const changelogs = await getChangelogList();
+  const changelogs = await anonGetAllChangelogItems();
   return (
     <div className="space-y-10 max-w-[1296px] py-8">
       <div className="flex w-full justify-between items-center">
@@ -29,29 +30,9 @@ export default async function Page() {
           </Button>
         )}
       </div>
-      {userRoleType === userRoles.ADMIN ? (
-        <Suspense fallback={<div>Loading...</div>}>
-          {changelogs.map((changelog, index) => (
-            <AppAdminChangelog
-              key={changelog.id}
-              changelog={changelog}
-              isLastAdded={index === 0}
-            />
-          ))}
-        </Suspense>
-      ) : (
-        <Suspense fallback={<div>Loading...</div>}>
-          <div className="flex flex-col w-full justify-between items-center">
-            {changelogs.map((changelog, index) => (
-              <AppAdminChangelog
-                key={changelog.id}
-                changelog={changelog}
-                isLastAdded={index === 0}
-              />
-            ))}
-          </div>
-        </Suspense>
-      )}
+      <Suspense fallback={<ChangelogListSkeletonFallBack />}>
+        <ChangelogPosts changelogs={changelogs} />
+      </Suspense>
     </div>
   );
 }

@@ -43,13 +43,8 @@ async function AnonUserFeedbackPage({
                 feedback={feedback}
                 filters={filters}
                 feedbackId={
-                  feedbackId
-                    ? feedbackId
-                    : filters.page === 1
-                      ? feedbacks[0]?.id
-                      : filters.page === 1
-                        ? feedbacks[0]?.id
-                        : feedbacks[0]?.id
+                  // try to use feedbackId to highlight, if it's not present use the first item
+                  feedbackId || feedbacks[0].id
                 }
               />
             ))
