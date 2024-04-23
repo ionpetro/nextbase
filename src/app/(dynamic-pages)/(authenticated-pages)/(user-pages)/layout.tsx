@@ -1,17 +1,18 @@
 import { ApplicationLayoutShell } from '@/components/ApplicationLayoutShell';
 import { InternalNavbar } from '@/components/NavigationMenu/InternalNavbar';
 import { ReactNode, Suspense } from 'react';
-import { UserSidebar } from '../(application-pages)/_sidebar/UserSidebar';
 
 export default async function Layout({
   children,
   navbar,
+  sidebar,
 }: {
   children: ReactNode;
   navbar: ReactNode;
+  sidebar: ReactNode;
 }) {
   return (
-    <ApplicationLayoutShell sidebar={<UserSidebar />}>
+    <ApplicationLayoutShell sidebar={sidebar}>
       <div>
         <InternalNavbar>
           <div className="hidden lg:flex w-full justify-between items-center">
