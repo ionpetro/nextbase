@@ -1,20 +1,21 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { createChangelog } from "@/data/admin/internal-changelog";
-import { uploadImage } from "@/data/admin/user";
-import { useToastMutation } from "@/hooks/useToastMutation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import dynamic from "next/dynamic";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { Controller, useForm, type SubmitHandler } from "react-hook-form";
-import { z } from "zod";
+'use client';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { createChangelog } from '@/data/admin/internal-changelog';
+import { uploadImage } from '@/data/admin/user';
+import { useToastMutation } from '@/hooks/useToastMutation';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Loader } from 'lucide-react';
+import dynamic from 'next/dynamic';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { Controller, useForm, type SubmitHandler } from 'react-hook-form';
+import { z } from 'zod';
 
-const TipTap = dynamic(() => import("@/components/tip-tap-Editor/TipTap"), {
+const TipTap = dynamic(() => import('@/components/tip-tap-Editor/TipTap'), {
   ssr: false,
 });
 
@@ -26,7 +27,7 @@ export type ChangelogType = {
 
 const CreateChangelogFormSchema = z.object({
   changelog_image: z.object({ name: z.string(), url: z.string() }).optional(),
-  title: z.string().min(1, "Title is required"),
+  title: z.string().min(1, 'Title is required'),
   content: z.string().optional(),
 });
 
@@ -37,19 +38,19 @@ export const CreateChangelogForm = () => {
   const { mutate: upload } = useToastMutation(
     async (file: File) => {
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append('file', file);
       return await uploadImage(formData, file.name, {
         upsert: true,
       });
     },
     {
-      loadingMessage: "Uploading changelog banner image...",
-      errorMessage: "Failed to upload changelog banner image",
-      successMessage: "Changelog banner image uploaded!",
+      loadingMessage: 'Uploading changelog banner image...',
+      errorMessage: 'Failed to upload changelog banner image',
+      successMessage: 'Changelog banner image uploaded!',
       onSuccess: (data) => {
         setIsUploading(false);
-        setValue("changelog_image", {
-          name: "changelog_image",
+        setValue('changelog_image', {
+          name: 'changelog_image',
           url: data,
         });
       },
@@ -58,7 +59,7 @@ export const CreateChangelogForm = () => {
 
   const submit: SubmitHandler<ChangelogType> = async (data) => {
     await createChangelog(data);
-    router.push("/changelog");
+    router.push('/changelog');
   };
 
   const {
@@ -67,22 +68,22 @@ export const CreateChangelogForm = () => {
     watch,
     control,
     setValue,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<ChangelogType>({
     resolver: zodResolver(CreateChangelogFormSchema),
     defaultValues: {
-      title: "",
-      content: "",
+      title: '',
+      content: '',
       changelog_image: {
-        name: "fallback_image",
-        url: "https://images.unsplash.com/photo-1439792675105-701e6a4ab6f0?q=80&w=2073&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        name: 'fallback_image',
+        url: 'https://images.unsplash.com/photo-1439792675105-701e6a4ab6f0?q=80&w=2073&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       },
     },
   });
 
   return (
     <form
-      className="max-w-3xl space-y-4"
+      className="space-y-4 lg:col-span-4"
       onSubmit={handleSubmit(submit)}
       data-testid="create-changelog-form"
     >
@@ -97,7 +98,7 @@ export const CreateChangelogForm = () => {
               return (
                 <div
                   data-image={
-                    watch("changelog_image.name") === "fallback_image"
+                    watch('changelog_image.name') === 'fallback_image'
                   }
                   className="flex flex-col gap-4 mt-4 relative rounded-lg group min-h-64 items-center justify-center"
                 >
@@ -106,15 +107,15 @@ export const CreateChangelogForm = () => {
                     className="absolute w-fit inset-0 m-auto z-20 group-hover:flex hidden items-center justify-center gap-2 text-lg cursor-pointer"
                     onClick={(e) => {
                       e.preventDefault();
-                      document.getElementById("inputImages")?.click();
+                      document.getElementById('inputImages')?.click();
                     }}
                   >
                     Change Image
                   </Button>
 
                   <Image
-                    src={watch("changelog_image.url")}
-                    alt={""}
+                    src={watch('changelog_image.url')}
+                    alt={''}
                     className="w-full max-h-64 rounded-lg object-center group-hover:brightness-50 transition-all duration-200 ease-in-out object-cover border-2 cursor-pointer flex "
                     width={1920}
                     height={1080}
@@ -154,14 +155,15 @@ export const CreateChangelogForm = () => {
       <Input
         type="text"
         placeholder="Changelog Title"
-        {...register("title")}
+        {...register('title')}
         name="title"
+        className="w-1/2"
       />
       {errors.title && (
         <p className="text-red-400 text-sm">{errors.title.message}</p>
       )}
       <Label>Content</Label>
-      <Card>
+      <Card className="h-96 md:h-72 overflow-y-auto">
         <Controller
           name="content"
           control={control}
@@ -175,11 +177,21 @@ export const CreateChangelogForm = () => {
       )}
 
       <div className="w-full flex gap-4 self-end justify-end">
-        <Button variant={"outline"} onClick={() => router.push("/changelog")}>
+        <Button
+          variant={'outline'}
+          onClick={() => router.push('/changelog')}
+          disabled={isSubmitting}
+        >
           Cancel
         </Button>
-        <Button type="submit" name="submit-changelog">
-          Create
+        <Button type="submit" name="submit-changelog" disabled={isSubmitting}>
+          {isSubmitting ? (
+            <>
+              <Loader className="animate-spin size-4 mr-1" /> Creating
+            </>
+          ) : (
+            'Create changelog'
+          )}
         </Button>
       </div>
     </form>

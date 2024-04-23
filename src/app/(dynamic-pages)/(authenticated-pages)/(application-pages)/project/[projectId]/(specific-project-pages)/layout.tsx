@@ -1,10 +1,10 @@
-import { ApplicationLayoutShell } from "@/components/ApplicationLayoutShell";
-import { InternalNavbar } from "@/components/NavigationMenu/InternalNavbar";
-import { PageHeading } from "@/components/PageHeading";
-import { getProjectTitleById } from "@/data/user/projects";
-import { Suspense, type ReactNode } from "react";
-import { z } from "zod";
-import { ApprovalControls } from "./ApprovalControls";
+import { ApplicationLayoutShell } from '@/components/ApplicationLayoutShell';
+import { InternalNavbar } from '@/components/NavigationMenu/InternalNavbar';
+import { PageHeading } from '@/components/PageHeading';
+import { getProjectTitleById } from '@/data/user/projects';
+import { Suspense, type ReactNode } from 'react';
+import { z } from 'zod';
+import { ApprovalControls } from './ApprovalControls';
 
 const paramsSchema = z.object({
   projectId: z.string(),
@@ -29,12 +29,10 @@ export default async function ProjectLayout({
   children,
   navbar,
   sidebar,
-  sidebar,
 }: {
   children: ReactNode;
   params: unknown;
   navbar: ReactNode;
-  sidebar: ReactNode;
   sidebar: ReactNode;
 }) {
   const { projectId } = paramsSchema.parse(params);
