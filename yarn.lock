@@ -7,20 +7,20 @@
   resolved "https://registry.yarnpkg.com/@aashutoshrathi/word-wrap/-/word-wrap-1.2.6.tgz#bd9154aec9983f77b3a034ecaa015c2e4201f6cf"
   integrity sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==
 
-"@ai-sdk/provider-utils@0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@ai-sdk/provider-utils/-/provider-utils-0.0.1.tgz#66aa4d6acb2a9604f205c2e21f0cba683d02b7dd"
-  integrity sha512-DpD58qFYHoPffBcODPL5od/zAsFSLymwEdtP/QqNX8qE3oQcRG9GYHbj1fZTH5b9i7COwlnJ4wYzYSkXVyd3bA==
+"@ai-sdk/provider-utils@0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@ai-sdk/provider-utils/-/provider-utils-0.0.2.tgz#78eb6b34c34be9c4cb7ea4ceaea1ecfab931245d"
+  integrity sha512-du8NIqHo0+8tyoocmK1xvT6Sl15rDAEzMEo+Xy1jSegEfYZaU/txhZ84dGAx3Fgcopi0VsXg5l4AHRH5nwxLQg==
   dependencies:
-    "@ai-sdk/provider" "0.0.0"
+    "@ai-sdk/provider" "0.0.1"
     eventsource-parser "1.1.2"
     nanoid "3.3.6"
     secure-json-parse "2.7.0"
 
-"@ai-sdk/provider@0.0.0":
-  version "0.0.0"
-  resolved "https://registry.yarnpkg.com/@ai-sdk/provider/-/provider-0.0.0.tgz#93bc85d261e821af3e8989ea5ba3b5326b8b2974"
-  integrity sha512-Gbl9Ei8NPtM85gB/o8cY7s7CLGxK/U6QVheVaI3viFn7o6IpTfy1Ja389e2FXVMNJ4WHK2qYWSp5fAFDuKulTA==
+"@ai-sdk/provider@0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@ai-sdk/provider/-/provider-0.0.1.tgz#214829f6e26190c5c0fb3d4a5d7be0d822b4926c"
+  integrity sha512-pR96ARGQm1OeM0ng/wk1idgxPDDz+zWV8LhK+OPK7JnsWXqZMfUUH0ndxH6yw2kVr8kJ3iNCWHEVsoIvUrOMvA==
   dependencies:
     json-schema "0.4.0"
 
@@ -3651,12 +3651,12 @@ agent-base@^7.1.0:
     debug "^4.3.4"
 
 ai@^3.0.0:
-  version "3.0.26"
-  resolved "https://registry.yarnpkg.com/ai/-/ai-3.0.26.tgz#905cf10c4dc2131d7f99a27b185d2e8a66c15ddc"
-  integrity sha512-c3mcmfg5o378i4Hi352zZxApU0tnjlZ8yJsvqW0fSgg7Nk18yytkG+pTygJnIL8U6c9/3fuqHO6xY4Fgs5+bUA==
+  version "3.0.27"
+  resolved "https://registry.yarnpkg.com/ai/-/ai-3.0.27.tgz#696452aea38f782c95819caf159d1d395dcec8ac"
+  integrity sha512-H2CRCorYjoaAc9c8IEn5Y3egfRUFr4CPgTSmtgjwKahGLh9b4Yf28z+M5ZF52eR+CdUo4pWjhp+mkKibg6Jw7w==
   dependencies:
-    "@ai-sdk/provider" "0.0.0"
-    "@ai-sdk/provider-utils" "0.0.1"
+    "@ai-sdk/provider" "0.0.1"
+    "@ai-sdk/provider-utils" "0.0.2"
     eventsource-parser "1.1.2"
     json-schema "0.4.0"
     jsondiffpatch "0.6.0"
