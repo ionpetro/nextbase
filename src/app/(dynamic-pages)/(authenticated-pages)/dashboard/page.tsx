@@ -1,3 +1,4 @@
+import { T } from '@/components/ui/Typography';
 import {
   fetchSlimOrganizations,
   getDefaultOrganization,
@@ -33,7 +34,7 @@ async function RedirectToDefaultOrg() {
 export default async function DashboardPage() {
   return (
     <>
-      <Suspense fallback={'Please wait...'}>
+      <Suspense fallback={<T.Subtle className="m-0 px-4">Fetching details...</T.Subtle>}>
         <RedirectToDefaultOrg />
       </Suspense>
     </>

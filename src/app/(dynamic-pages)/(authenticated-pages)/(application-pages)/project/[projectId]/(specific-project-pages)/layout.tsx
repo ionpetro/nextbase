@@ -38,7 +38,9 @@ export default async function ProjectLayout({
   const { projectId } = paramsSchema.parse(params);
 
   return (
-    <ApplicationLayoutShell sidebar={sidebar}>
+    <ApplicationLayoutShell sidebar={<Suspense>
+      {sidebar}
+    </Suspense>}>
       <div className="">
         <InternalNavbar>
           <div className="flex w-full justify-between items-center">

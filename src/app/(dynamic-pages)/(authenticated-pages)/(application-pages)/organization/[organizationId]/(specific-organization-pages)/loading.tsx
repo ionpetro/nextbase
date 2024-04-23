@@ -1,5 +1,5 @@
-import { T } from '@/components/ui/Typography';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function Loading() {
-  return <T.Subtle>Loading...</T.Subtle>;
+  return <Skeleton className="w-16 h-6" />;
 }

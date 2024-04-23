@@ -12,7 +12,9 @@ export default async function Layout({
   sidebar: ReactNode;
 }) {
   return (
-    <ApplicationLayoutShell sidebar={sidebar}>
+    <ApplicationLayoutShell sidebar={<Suspense>
+      {sidebar}
+    </Suspense>}>
       <div>
         <InternalNavbar>
           <div className="hidden lg:flex w-full justify-between items-center">

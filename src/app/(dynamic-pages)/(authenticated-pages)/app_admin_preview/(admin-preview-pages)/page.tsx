@@ -1,6 +1,6 @@
 import { T } from '@/components/ui/Typography';
 import { Suspense } from 'react';
-import { SaaSMetrics } from '../app_admin/SaasMetrics';
+import { SaaSMetrics } from '../../app_admin/(admin-pages)/SaasMetrics';
 
 async function getCurrentMRR() {
   const mrr = 48975;

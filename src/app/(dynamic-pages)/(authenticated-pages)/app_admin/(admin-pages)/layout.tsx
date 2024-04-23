@@ -4,6 +4,7 @@ import { Alert } from '@/components/ui/alert';
 import { getIsAppAdmin } from '@/data/user/user';
 import { errors } from '@/utils/errors';
 import { redirect } from 'next/navigation';
+import { Suspense } from 'react';
 
 export const revalidate = 0;
 
@@ -27,7 +28,9 @@ export default async function Layout({
       return redirect('/dashboard');
     }
     return (
-      <ApplicationLayoutShell sidebar={sidebar}>
+      <ApplicationLayoutShell sidebar={<Suspense>
+        {sidebar}
+      </Suspense>}>
         <div className="h-full overflow-y-auto">
           <InternalNavbar>
             <div className="flex items-center justify-start w-full">
