@@ -352,8 +352,7 @@ export async function adminUpdateInternalFeedbackPriority({
   if (error) {
     throw error;
   }
-  revalidatePath('/feedback');
-  revalidatePath('/feedback');
+  revalidatePath('/feedback', 'layout');
   return data;
 }
 
@@ -374,8 +373,7 @@ export const adminUpdateInternalFeedbackAddedToRoadmap = async ({
     throw error;
   }
 
-  revalidatePath('/feedback');
-  revalidatePath('/feedback');
+  revalidatePath('/feedback', 'layout');
   return data;
 };
 
@@ -396,8 +394,7 @@ export const adminUpdateInternalFeedbackVisibility = async ({
     throw error;
   }
 
-  revalidatePath('/feedback');
-  revalidatePath('/feedback');
+  revalidatePath('/feedback', 'layout');
   return data;
 };
 

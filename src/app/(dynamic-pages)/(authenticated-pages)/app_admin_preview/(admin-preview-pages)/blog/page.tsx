@@ -1,7 +1,7 @@
 import { PageHeading } from '@/components/PageHeading';
 import { Button } from '@/components/ui/button';
 import PenSquareIcon from 'lucide-react/dist/esm/icons/pen-tool';
-import { BlogListPreview } from '../../app_admin/blog/(blog-list)/BlogListPreview';
+import { BlogListPreview } from '../../../app_admin/(admin-pages)/blog/(blog-list)/BlogListPreview';
 
 export default function AdminBlogList() {
   return (

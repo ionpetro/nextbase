@@ -65,7 +65,7 @@ export default async function OrganizationPage({
               </T.P>
             </div>
           </div>
-          <CreateProjectDialog organizationId={organizationId} teamId={null} />
+          <CreateProjectDialog organizationId={organizationId} />
         </div>
         <Suspense
           fallback={

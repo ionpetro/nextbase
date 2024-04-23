@@ -1,7 +1,7 @@
 import { PageHeading } from '@/components/PageHeading';
 import { Pagination } from '@/components/Pagination';
 import { Search } from '@/components/Search';
-import { OrganizationListPreview } from '../../app_admin/organizations/OrganizationListPreview';
+import { OrganizationListPreview } from '../../../app_admin/(admin-pages)/organizations/OrganizationListPreview';
 
 export default function UsersPage() {
   return (

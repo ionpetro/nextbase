@@ -1,5 +1,4 @@
-import { InputRule } from '@tiptap/core';
-import BulletList from '@tiptap/extension-bullet-list';
+import { BulletList } from '@tiptap/extension-bullet-list';
 import { Color } from '@tiptap/extension-color';
 import Highlight from '@tiptap/extension-highlight';
 import HorizontalRule from '@tiptap/extension-horizontal-rule';
@@ -17,6 +16,8 @@ import TextStyle from '@tiptap/extension-text-style';
 import TiptapUnderline from '@tiptap/extension-underline';
 import StarterKit from '@tiptap/starter-kit';
 import { Markdown } from 'tiptap-markdown';
+
+import { InputRule } from '@tiptap/core';
 import UploadImagesPlugin from '../plugins/upload-images';
 import SlashCommand from './slash-command';
 
@@ -29,7 +30,7 @@ const CustomImage = TiptapImage.extend({
 export const getTipTapExtention = ({
   placeholder,
 }: {
-  placeholder: string | undefined;
+  placeholder?: string | undefined;
 }) => {
   return [
     StarterKit.configure({

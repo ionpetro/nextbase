@@ -1,22 +1,22 @@
-"use server";
-import { supabaseAdminClient } from "@/supabase-clients/admin/supabaseAdminClient";
-import type { SupabaseFileUploadOptions, Table } from "@/types";
-import { sendEmail } from "@/utils/api-routes/utils";
-import { serverGetLoggedInUser } from "@/utils/server/serverGetLoggedInUser";
-import { renderAsync } from "@react-email/render";
-import SignInEmail from "emails/SignInEmail";
-import slugify from "slugify";
-import urlJoin from "url-join";
-import { ensureAppAdmin } from "./security";
+'use server';
+import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
+import type { SupabaseFileUploadOptions, Table } from '@/types';
+import { sendEmail } from '@/utils/api-routes/utils';
+import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
+import { renderAsync } from '@react-email/render';
+import SignInEmail from 'emails/SignInEmail';
+import slugify from 'slugify';
+import urlJoin from 'url-join';
+import { ensureAppAdmin } from './security';
 
 export const appAdminGetUserProfile = async (
   userId: string,
-): Promise<Table<"user_profiles">> => {
+): Promise<Table<'user_profiles'>> => {
   ensureAppAdmin();
   const { data, error } = await supabaseAdminClient
-    .from("user_profiles")
-    .select("*")
-    .eq("id", userId)
+    .from('user_profiles')
+    .select('*')
+    .eq('id', userId)
     .single();
 
   if (error) {
@@ -31,15 +31,15 @@ export const uploadImage = async (
   fileName: string,
   fileOptions?: SupabaseFileUploadOptions | undefined,
 ): Promise<string> => {
-  "use server";
-  const file = formData.get("file");
+  'use server';
+  const file = formData.get('file');
   if (!file) {
-    throw new Error("File is empty");
+    throw new Error('File is empty');
   }
   const slugifiedFilename = slugify(fileName, {
     lower: true,
     strict: true,
-    replacement: "-",
+    replacement: '-',
   });
 
   const user = await serverGetLoggedInUser();
@@ -47,7 +47,7 @@ export const uploadImage = async (
   const userImagesPath = `${userId}/images/${slugifiedFilename}`;
 
   const { data, error } = await supabaseAdminClient.storage
-    .from("changelog-assets")
+    .from('changelog-assets')
     .upload(userImagesPath, file, fileOptions);
 
   if (error) {
@@ -56,10 +56,10 @@ export const uploadImage = async (
 
   const { path } = data;
 
-  const filePath = path.split(",")[0];
+  const filePath = path.split(',')[0];
   const supabaseFileUrl = urlJoin(
     process.env.NEXT_PUBLIC_SUPABASE_URL,
-    "/storage/v1/object/public/changelog-assets",
+    '/storage/v1/object/public/changelog-assets',
     filePath,
   );
 
@@ -77,17 +77,17 @@ export async function appAdminGetUserImpersonationUrl(userId: string) {
   }
 
   if (!user?.user) {
-    throw new Error("user does not exist");
+    throw new Error('user does not exist');
   }
 
   if (!user.user.email) {
-    throw new Error("user does not have an email");
+    throw new Error('user does not have an email');
   }
 
   const generateLinkResponse =
     await supabaseAdminClient.auth.admin.generateLink({
       email: user.user.email,
-      type: "magiclink",
+      type: 'magiclink',
     });
 
   const { data: generateLinkData, error: generateLinkError } =
@@ -106,7 +106,7 @@ export async function appAdminGetUserImpersonationUrl(userId: string) {
     const tokenHash = hashed_token;
     const searchParams = new URLSearchParams({
       token_hash: tokenHash,
-      next: "/dashboard",
+      next: '/dashboard',
     });
 
     const checkAuthUrl = new URL(process.env.NEXT_PUBLIC_SITE_URL);
@@ -116,7 +116,7 @@ export async function appAdminGetUserImpersonationUrl(userId: string) {
     return checkAuthUrl;
   }
 
-  throw new Error("site url is undefined");
+  throw new Error('site url is undefined');
 }
 
 export async function createUserAction(email: string) {
@@ -134,14 +134,14 @@ export async function createUserAction(email: string) {
     // revalidatePath('/app_admin');
     return user;
   } else {
-    throw new Error("User not created");
+    throw new Error('User not created');
   }
 }
 
 export async function sendLoginLinkAction(email: string) {
   const response = await supabaseAdminClient.auth.admin.generateLink({
     email,
-    type: "magiclink",
+    type: 'magiclink',
   });
 
   if (response.error) {
@@ -161,7 +161,7 @@ export async function sendLoginLinkAction(email: string) {
       const tokenHash = hashed_token;
       const searchParams = new URLSearchParams({
         token_hash: tokenHash,
-        next: "/dashboard",
+        next: '/dashboard',
       });
 
       const url = new URL(process.env.NEXT_PUBLIC_SITE_URL);
@@ -173,7 +173,7 @@ export async function sendLoginLinkAction(email: string) {
         <SignInEmail signInUrl={url.toString()} />,
       );
 
-      if (process.env.NODE_ENV === "development") {
+      if (process.env.NODE_ENV === 'development') {
         // In development, we log the email to the console instead of sending it.
         console.log({
           link: url.toString(),
@@ -194,7 +194,7 @@ export async function sendLoginLinkAction(email: string) {
 }
 
 export const getPaginatedUserList = async ({
-  query = "",
+  query = '',
   page = 1,
   limit = 10,
 }: {
@@ -204,7 +204,7 @@ export const getPaginatedUserList = async ({
 }) => {
   ensureAppAdmin();
   const { data, error } = await supabaseAdminClient.rpc(
-    "app_admin_get_all_users",
+    'app_admin_get_all_users',
     {
       page: page,
       search_query: query,
@@ -220,7 +220,7 @@ export const getPaginatedUserList = async ({
 };
 
 export const getUsersTotalPages = async ({
-  query = "",
+  query = '',
   limit = 10,
 }: {
   limit?: number;
@@ -228,7 +228,7 @@ export const getUsersTotalPages = async ({
 }) => {
   ensureAppAdmin();
   const { data, error } = await supabaseAdminClient.rpc(
-    "app_admin_get_all_users_count",
+    'app_admin_get_all_users_count',
     {
       search_query: query,
     },

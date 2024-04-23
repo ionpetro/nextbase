@@ -148,7 +148,10 @@ const TipTapWrapper = ({
             value={field.value}
             onChange={(editor: Editor) => {
               console.log(editor.getJSON());
+              // saving json should be enough.
               field.onChange(editor.getJSON());
+              // While this is duplicate. We are just trying to minimise
+              // breaking changes
               contentField.onChange(editor.getHTML());
             }}
             onBlur={field.onBlur}
@@ -206,7 +209,7 @@ export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
             ...restPayload,
             json_content:
               typeof restPayload.json_content === 'object' &&
-                restPayload.json_content !== null
+              restPayload.json_content !== null
                 ? restPayload.json_content
                 : JSON.parse(restPayload.json_content),
           },
@@ -254,7 +257,7 @@ export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
             ...restPayload,
             json_content:
               typeof restPayload.json_content === 'object' &&
-                restPayload.json_content !== null
+              restPayload.json_content !== null
                 ? restPayload.json_content
                 : JSON.parse(restPayload.json_content),
           },
