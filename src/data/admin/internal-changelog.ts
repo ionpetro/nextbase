@@ -1,5 +1,6 @@
 'use server';
-import type { ChangelogType } from '@/app/(dynamic-pages)/(changelog-pages)/changelog/_components/CreateChangelogForm';
+
+import type { ChangelogType } from '@/components/changelog/CreateChangelogForm';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import { revalidatePath } from 'next/cache';

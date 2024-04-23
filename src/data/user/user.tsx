@@ -139,45 +139,7 @@ export const uploadPublicUserAvatar = async (
   return supabaseFileUrl;
 };
 
-export const uploadImage = async (
-  formData: FormData,
-  fileName: string,
-  fileOptions?: SupabaseFileUploadOptions | undefined,
-): Promise<string> => {
-  'use server';
-  const file = formData.get('file');
-  if (!file) {
-    throw new Error('File is empty');
-  }
-  const slugifiedFilename = slugify(fileName, {
-    lower: true,
-    strict: true,
-    replacement: '-',
-  });
-  const supabaseClient = createSupabaseUserServerActionClient();
-  const user = await serverGetLoggedInUser();
-  const userId = user.id;
-  const userImagesPath = `${userId}/images/${slugifiedFilename}`;
 
-  const { data, error } = await supabaseClient.storage
-    .from('changelog-assets')
-    .upload(userImagesPath, file, fileOptions);
-
-  if (error) {
-    throw new Error(error.message);
-  }
-
-  const { path } = data;
-
-  const filePath = path.split(',')[0];
-  const supabaseFileUrl = urlJoin(
-    process.env.NEXT_PUBLIC_SUPABASE_URL,
-    '/storage/v1/object/public/changelog-assets',
-    filePath,
-  );
-
-  return supabaseFileUrl;
-};
 
 export const updateUserProfileNameAndAvatar = async ({
   fullName,
