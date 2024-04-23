@@ -11,6 +11,7 @@ export default function OrganizationSettingsNavbar({
   const { organizationId } = organizationParamSchema.parse(params);
   return (
     <div className={cn('hidden ', 'relative flex gap-2 items-center')}>
+      Billing
       <Link
         className="flex gap-1.5 py-1.5 px-3 cursor-pointer items-center group rounded-md transition hover:cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-800"
         href={`/organization/${organizationId}`}
