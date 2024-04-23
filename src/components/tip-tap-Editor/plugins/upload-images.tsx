@@ -1,6 +1,6 @@
 import { uploadImage } from '@/data/admin/user';
-import { type EditorState } from '@tiptap/pm/state';
-import { Decoration, DecorationSet, type EditorView } from '@tiptap/pm/view';
+import { EditorState, Plugin, PluginKey } from '@tiptap/pm/state';
+import { Decoration, DecorationSet, EditorView } from '@tiptap/pm/view';
 import { toast } from 'sonner';
 
 const uploadKey = new PluginKey('upload-image');
@@ -15,7 +15,7 @@ const UploadImagesPlugin = () =>
       apply(tr, set) {
         set = set.map(tr.mapping, tr.doc);
         // See if the transaction adds or removes any placeholders
-        const action = tr.getMeta(this);
+        const action = tr.getMeta(uploadKey);
         if (action && action.add) {
           const { id, pos, src } = action.add;
 
@@ -55,7 +55,7 @@ export default UploadImagesPlugin;
 
 function findPlaceholder(state: EditorState, id: Record<string, never>) {
   const decos = uploadKey.getState(state);
-  const found = decos.find(null, null, (spec) => spec.id == id);
+  const found = decos.find(null, null, (spec: { id: any }) => spec.id == id);
   return found.length ? found[0].from : null;
 }
 
@@ -105,6 +105,7 @@ export function startImageUpload(file: File, view: EditorView, pos: number) {
     // When BLOB_READ_WRITE_TOKEN is not valid or unavailable, read
     // the image locally
     const imageSrc = typeof src === 'object' ? reader.result : src;
+    console.log('handleImageUpload imageSrc', imageSrc);
 
     const node = schema.nodes.image.create({ src: imageSrc });
     const transaction = view.state.tr
@@ -113,7 +114,6 @@ export function startImageUpload(file: File, view: EditorView, pos: number) {
     view.dispatch(transaction);
   });
 }
-
 export const handleImageUpload = async (file: File) => {
   // upload to Vercel Blob
   const formData = new FormData();

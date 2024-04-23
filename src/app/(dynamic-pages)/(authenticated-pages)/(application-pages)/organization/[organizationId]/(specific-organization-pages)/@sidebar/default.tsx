@@ -12,9 +12,9 @@ import UserIcon from 'lucide-react/dist/esm/icons/user-2';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 
-import { OrganizationSwitcher } from '@/app/(dynamic-pages)/(authenticated-pages)/(application-pages)/_sidebar/_components/OrganizationSwitcher';
-import { DesktopSidebarFallback } from '@/app/(dynamic-pages)/(authenticated-pages)/(application-pages)/_sidebar/_components/SidebarFallback';
-import { SidebarLogoAndToggle } from '@/app/(dynamic-pages)/(authenticated-pages)/(application-pages)/_sidebar/_components/SidebarLogo';
+import { OrganizationSwitcher } from '@/components/SidebarComponents/OrganizationSwitcher';
+import { DesktopSidebarFallback } from '@/components/SidebarComponents/SidebarFallback';
+import { SidebarLogoAndToggle } from '@/components/SidebarComponents/SidebarLogo';
 import { organizationParamSchema } from '@/utils/zod-schemas/params';
 
 async function OrganizationSidebarInternal({
