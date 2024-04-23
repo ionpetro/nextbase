@@ -15,7 +15,7 @@ export const RecentlyFeedbackCard = async ({ feedback }: Props) => {
   const user = await getUserProfile(feedback.user_id);
 
   return (
-    <Card className="p-4">
+    <Card className="p-4 w-full">
       <div className="flex items-center space-x-3">
         <Avatar>
           <AvatarImage

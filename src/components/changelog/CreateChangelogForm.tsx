@@ -163,7 +163,7 @@ export const CreateChangelogForm = () => {
         <p className="text-red-400 text-sm">{errors.title.message}</p>
       )}
       <Label>Content</Label>
-      <Card className="h-96 md:h-72 overflow-y-auto">
+      <Card className="h-fit max-h-96 overflow-y-auto">
         <Controller
           name="content"
           control={control}
