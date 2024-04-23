@@ -23,7 +23,7 @@ export default async function Page() {
         />
         {userRoleType === userRoles.ADMIN && (
           <Button asChild name="create-changelog-button">
-            <Link href="/changelog/create">
+            <Link href="/app_admin/changelog">
               <Plus className="mr-2 size-4" />
               Create Changelog
             </Link>

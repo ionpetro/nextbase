@@ -52,7 +52,11 @@ export function FeedbackFacetedFilters() {
     const params = new URLSearchParams(searchParams ?? undefined);
     for (const [key, value] of Object.entries(newFilters)) {
       if (key === 'myFeedbacks') {
-        params.set(key, newFilters.myFeedbacks.toString());
+        if (newFilters.myFeedbacks) {
+          params.set(key, newFilters.myFeedbacks.toString());
+        } else {
+          params.delete(key);
+        }
         continue;
       }
       if (Array.isArray(value) && value.length) {
@@ -133,7 +137,7 @@ export function FeedbackFacetedFilters() {
         onClick={() => {
           setFilters({
             ...filters,
-            myFeedbacks: !filters.myFeedbacks,
+            myFeedbacks: filters.myFeedbacks ? !filters.myFeedbacks : true,
           });
         }}
       >
@@ -143,22 +147,22 @@ export function FeedbackFacetedFilters() {
       {(Boolean(filters.statuses?.length) ||
         Boolean(filters.types?.length) ||
         Boolean(filters.priorities?.length)) && (
-        <Button
-          variant="ghost"
-          onClick={() => {
-            setFilters({
-              statuses: [],
-              types: [],
-              priorities: [],
-              myFeedbacks: false,
-            });
-          }}
-          className="h-8 px-2 lg:px-3"
-        >
-          Reset
-          <Cross2Icon className="ml-2 h-4 w-4" />
-        </Button>
-      )}
+          <Button
+            variant="ghost"
+            onClick={() => {
+              setFilters({
+                statuses: [],
+                types: [],
+                priorities: [],
+                myFeedbacks: false,
+              });
+            }}
+            className="h-8 px-2 lg:px-3"
+          >
+            Reset
+            <Cross2Icon className="ml-2 h-4 w-4" />
+          </Button>
+        )}
     </div>
   );
 }
