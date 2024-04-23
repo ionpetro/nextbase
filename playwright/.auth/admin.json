@@ -1,21 +1,21 @@
 {
   "cookies": [
     {
-      "name": "ph_NEXT_PUBLIC_POSTHOG_API_KEY_posthog",
-      "value": "%7B%22distinct_id%22%3A%22b8ed56c0-2fde-412a-b3cc-e992c64fdffc%22%2C%22%24sesid%22%3A%5B1712213871435%2C%22018ea7e6-3da8-7663-b461-ba20783f109f%22%2C1712213867944%5D%7D",
+      "name": "sb-localhost-auth-token",
+      "value": "%5B%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJtYWdpY2xpbmsiLCJ0aW1lc3RhbXAiOjE3MTM3OTg0Mjd9XSwiYXBwX21ldGFkYXRhIjp7InByb3ZpZGVyIjoiZW1haWwiLCJwcm92aWRlcnMiOlsiZW1haWwiXX0sImF1ZCI6ImF1dGhlbnRpY2F0ZWQiLCJlbWFpbCI6ImFkbWluam9lOTYyMUBteWFwcC5jb20iLCJleHAiOjE3MTM4MDIwMjcsImlhdCI6MTcxMzc5ODQyNywiaXNzIjoiaHR0cDovLzEyNy4wLjAuMTo1NDMyMS9hdXRoL3YxIiwicGhvbmUiOiIiLCJyb2xlIjoiYXV0aGVudGljYXRlZCIsInNlc3Npb25faWQiOiJhMGM3ODdlNy0zYjcwLTRjODMtYjMzZi01NTU2MTdiMWI0YWYiLCJzdWIiOiIyNjE4OGUzYi1lYjU1LTQxNTMtYjExMS0xZmQwYWQzMmYzNTEiLCJ1c2VyX21ldGFkYXRhIjp7fSwidXNlcl9yb2xlIjoiYWRtaW4ifQ.-_JfnA8IdTlSNHWlGV8w4a_ri12drqCfkBamLNpvx0s%22%2C%22gT4rEjmxDhVNQzmI6mXiDw%22%2Cnull%2Cnull%2Cnull%5D",
       "domain": "localhost",
       "path": "/",
-      "expires": 1743749871,
+      "expires": 1748358427.669956,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
     },
     {
-      "name": "sb-localhost-auth-token",
-      "value": "%5B%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJtYWdpY2xpbmsiLCJ0aW1lc3RhbXAiOjE3MTIyMTM4NzV9XSwiYXBwX21ldGFkYXRhIjp7InByb3ZpZGVyIjoiZW1haWwiLCJwcm92aWRlcnMiOlsiZW1haWwiXX0sImF1ZCI6ImF1dGhlbnRpY2F0ZWQiLCJlbWFpbCI6ImFkbWluam9lNjM3MkBteWFwcC5jb20iLCJleHAiOjE3MTIyMTc0NzUsImlhdCI6MTcxMjIxMzg3NSwiaXNzIjoiaHR0cDovLzEyNy4wLjAuMTo1NDMyMS9hdXRoL3YxIiwicGhvbmUiOiIiLCJyb2xlIjoiYXV0aGVudGljYXRlZCIsInNlc3Npb25faWQiOiI0MjYwYTRiMS0wNDAyLTQ0MjItYmJlZi1mYzg3MzA3MjUxNmQiLCJzdWIiOiJiOGVkNTZjMC0yZmRlLTQxMmEtYjNjYy1lOTkyYzY0ZmRmZmMiLCJ1c2VyX21ldGFkYXRhIjp7fSwidXNlcl9yb2xlIjoiYWRtaW4ifQ.AedUFpuK7b-tePwdifip7jxZY6kCK0TlfkJaU5SILdA%22%2C%22zcJDPhO4Di08WZLyRJbXWw%22%2Cnull%2Cnull%2Cnull%5D",
+      "name": "ph_NEXT_PUBLIC_POSTHOG_API_KEY_posthog",
+      "value": "%7B%22distinct_id%22%3A%2226188e3b-eb55-4153-b111-1fd0ad32f351%22%2C%22%24sesid%22%3A%5B1713798432147%2C%22018f0658-a1d9-758e-acf7-4269bea25eb6%22%2C1713798423001%5D%7D",
       "domain": "localhost",
       "path": "/",
-      "expires": 1746773875.143928,
+      "expires": 1745334432,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
@@ -27,7 +27,7 @@
       "localStorage": [
         {
           "name": "ph_NEXT_PUBLIC_POSTHOG_API_KEY_posthog",
-          "value": "{\"distinct_id\":\"b8ed56c0-2fde-412a-b3cc-e992c64fdffc\",\"$sesid\":[1712213875881,\"018ea7e6-3da8-7663-b461-ba20783f109f\",1712213867944],\"$device_id\":\"018ea7e6-3da2-7815-9582-5aae669be95c\",\"$user_state\":\"identified\",\"$user_id\":\"b8ed56c0-2fde-412a-b3cc-e992c64fdffc\",\"$stored_person_properties\":{\"email\":\"adminjoe6372@myapp.com\"},\"$client_session_props\":{\"sessionId\":\"018ea7e6-3da8-7663-b461-ba20783f109f\",\"props\":{\"initialPathName\":\"/dashboard\",\"referringDomain\":\"$direct\"}}}"
+          "value": "{\"distinct_id\":\"26188e3b-eb55-4153-b111-1fd0ad32f351\",\"$sesid\":[1713798432147,\"018f0658-a1d9-758e-acf7-4269bea25eb6\",1713798423001],\"$device_id\":\"018f0658-a1cc-781b-89ec-fb633b65e3fd\",\"$user_state\":\"identified\",\"$user_id\":\"26188e3b-eb55-4153-b111-1fd0ad32f351\",\"$stored_person_properties\":{\"email\":\"adminjoe9621@myapp.com\"},\"$client_session_props\":{\"sessionId\":\"018f0658-a1d9-758e-acf7-4269bea25eb6\",\"props\":{\"initialPathName\":\"/dashboard\",\"referringDomain\":\"$direct\"}}}"
         }
       ]
     }

@@ -67,6 +67,7 @@ const withMDX = createWithMdx({
 const nextConfig = {
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
   images: {
+    domains: ['localhost'],
     remotePatterns: [
       {
         protocol: 'https',
@@ -83,6 +84,12 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: '*.gravatar.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
         port: '',
         pathname: '/**',
       },

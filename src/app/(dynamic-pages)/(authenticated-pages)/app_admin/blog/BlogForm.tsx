@@ -11,27 +11,37 @@ import {
 } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
-import { Table } from '@/types';
+import type { Table } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTheme } from 'next-themes';
 import { useEffect } from 'react';
-import { Control, Controller, useController, useForm } from 'react-hook-form';
+import {
+  Controller,
+  useController,
+  useForm,
+  type Control,
+} from 'react-hook-form';
 import ReactSelect from 'react-select';
 import slugify from 'slugify';
 
 import {
   internalBlogPostSchema,
-  InternalBlogPostSchema,
+  type InternalBlogPostSchema,
 } from '@/utils/zod-schemas/internalBlog';
 import Trash from 'lucide-react/dist/esm/icons/trash';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { UploadBlogImage } from './post/UploadBlogImage';
 
-import { TipTapEditor } from '@/components/TipTapEditor';
+import { TipTapEditor } from '@/components/tip-tap-Editor';
 import { createBlogPost, updateBlogPost } from '@/data/admin/internal-blog';
 import { useSAToastMutation } from '@/hooks/useSAToastMutation';
-import { Editor } from '@tiptap/core';
+import type { Editor } from '@tiptap/core';
+import dynamic from 'next/dynamic';
+
+const TipTap = dynamic(() => import('@/components/tip-tap-Editor/TipTap'), {
+  ssr: false,
+});
 
 const defaultContent = {
   type: 'doc',
@@ -199,7 +209,7 @@ export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
             ...restPayload,
             json_content:
               typeof restPayload.json_content === 'object' &&
-                restPayload.json_content !== null
+              restPayload.json_content !== null
                 ? restPayload.json_content
                 : JSON.parse(restPayload.json_content),
           },
@@ -247,7 +257,7 @@ export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
             ...restPayload,
             json_content:
               typeof restPayload.json_content === 'object' &&
-                restPayload.json_content !== null
+              restPayload.json_content !== null
                 ? restPayload.json_content
                 : JSON.parse(restPayload.json_content),
           },

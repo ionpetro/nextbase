@@ -14,9 +14,9 @@ import {
   getTeamMembersInOrganization,
 } from '@/data/user/organizations';
 import { TeamMembersTableProps } from '@/types';
+import { organizationParamSchema } from '@/utils/zod-schemas/params';
 import moment from 'moment';
 import { Suspense } from 'react';
-import { z } from 'zod';
 import { InviteUser } from './InviteUser';
 import { RevokeInvitationDialog } from './RevokeInvitationDialog';
 
@@ -140,7 +140,7 @@ async function TeamInvitations({ organizationId }: { organizationId: string }) {
                     </span>
                   </TableCell>
                   {organizationRole === 'admin' ||
-                  organizationRole === 'owner' ? (
+                    organizationRole === 'owner' ? (
                     <TableCell>
                       <RevokeInvitationDialog invitationId={invitation.id} />
                     </TableCell>
@@ -155,16 +155,12 @@ async function TeamInvitations({ organizationId }: { organizationId: string }) {
   );
 }
 
-const paramsSchema = z.object({
-  organizationId: z.string(),
-});
-
 export default async function OrganizationPage({
   params,
 }: {
   params: unknown;
 }) {
-  const { organizationId } = paramsSchema.parse(params);
+  const { organizationId } = organizationParamSchema.parse(params);
   return (
     <div className="space-y-12">
       <Suspense fallback={<T.Subtle>Loading team members...</T.Subtle>}>

@@ -2,24 +2,26 @@
 import { T } from '@/components/ui/Typography';
 import { Badge } from '@/components/ui/badge';
 import { getOrganizationTitle } from '@/data/user/organizations';
+import { organizationParamSchema } from '@/utils/zod-schemas/params';
 import UsersIcon from 'lucide-react/dist/esm/icons/users-2';
 import Link from 'next/link';
 import { Suspense } from 'react';
-import { z } from 'zod';
-
-const paramsSchema = z.object({
-  organizationId: z.string(),
-});
 
 export async function generateMetadata({ params }: { params: unknown }) {
-  const parsedParams = paramsSchema.parse(params);
-  const { organizationId } = parsedParams;
-  const organizationTitle = await getOrganizationTitle(organizationId);
+  try {
+    const { organizationId } = organizationParamSchema.parse(params);
 
-  return {
-    title: `${organizationTitle} | Organization | Nextbase Ultimate`,
-    description: 'Organization title',
-  };
+    const organizationTitle = await getOrganizationTitle(organizationId);
+
+    return {
+      title: `${organizationTitle} | Organization | Nextbase Ultimate`,
+      description: 'Organization title',
+    };
+  } catch (error) {
+    return {
+      title: 'Not found',
+    };
+  }
 }
 
 async function Title({ organizationId }: { organizationId: string }) {
@@ -41,7 +43,7 @@ export default async function OrganizationNavbar({
 }: {
   params: unknown;
 }) {
-  const { organizationId } = paramsSchema.parse(params);
+  const { organizationId } = organizationParamSchema.parse(params);
   return (
     <div className="flex items-center">
       <Link href={`/organization/${organizationId}`}>

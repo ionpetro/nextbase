@@ -3,13 +3,10 @@ import {
   getLoggedInUserOrganizationRole,
   getNormalizedOrganizationSubscription,
 } from '@/data/user/organizations';
+import { organizationParamSchema } from '@/utils/zod-schemas/params';
 import { Suspense } from 'react';
-import { z } from 'zod';
-import { OrganizationSubscripionDetails } from './OrganizationSubscripionDetails';
 
-const paramsSchema = z.object({
-  organizationId: z.string(),
-});
+import { OrganizationSubscripionDetails } from './OrganizationSubscripionDetails';
 
 async function Subscription({ organizationId }: { organizationId: string }) {
   const normalizedSubscription =
@@ -30,7 +27,7 @@ export default async function OrganizationSettingsPage({
 }: {
   params: unknown;
 }) {
-  const { organizationId } = paramsSchema.parse(params);
+  const { organizationId } = organizationParamSchema.parse(params);
   return (
     <Suspense fallback={<T.Subtle>Loading billing details...</T.Subtle>}>
       <Subscription organizationId={organizationId} />

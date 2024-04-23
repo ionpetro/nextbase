@@ -234,6 +234,7 @@ export type Database = {
       internal_changelog: {
         Row: {
           changes: string
+          cover_image: string | null
           created_at: string | null
           id: string
           title: string
@@ -242,6 +243,7 @@ export type Database = {
         }
         Insert: {
           changes: string
+          cover_image?: string | null
           created_at?: string | null
           id?: string
           title: string
@@ -250,6 +252,7 @@ export type Database = {
         }
         Update: {
           changes?: string
+          cover_image?: string | null
           created_at?: string | null
           id?: string
           title?: string
@@ -314,6 +317,7 @@ export type Database = {
           content: string
           created_at: string
           id: string
+          is_publicly_visible: boolean
           open_for_public_discussion: boolean
           priority: Database["public"]["Enums"]["internal_feedback_thread_priority"]
           status: Database["public"]["Enums"]["internal_feedback_thread_status"]
@@ -327,6 +331,7 @@ export type Database = {
           content: string
           created_at?: string
           id?: string
+          is_publicly_visible?: boolean
           open_for_public_discussion?: boolean
           priority?: Database["public"]["Enums"]["internal_feedback_thread_priority"]
           status?: Database["public"]["Enums"]["internal_feedback_thread_status"]
@@ -340,6 +345,7 @@ export type Database = {
           content?: string
           created_at?: string
           id?: string
+          is_publicly_visible?: boolean
           open_for_public_discussion?: boolean
           priority?: Database["public"]["Enums"]["internal_feedback_thread_priority"]
           status?: Database["public"]["Enums"]["internal_feedback_thread_status"]

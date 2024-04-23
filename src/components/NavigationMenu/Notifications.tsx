@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/popover';
 import { useToastMutation } from '@/hooks/useToastMutation';
 import { supabaseUserClientComponentClient } from '@/supabase-clients/user/supabaseUserClientComponentClient';
-import { Table } from '@/types';
+import type { Table } from '@/types';
 import { parseNotification } from '@/utils/parseNotification';
 import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query';
 import NotificationIcon from 'lucide-react/dist/esm/icons/bell';
@@ -35,6 +35,7 @@ const useUnseenNotificationIds = (userId: string) => {
     },
     {
       initialData: [],
+      refetchOnWindowFocus: false,
     },
   );
   useEffect(() => {
@@ -98,6 +99,8 @@ export const useNotifications = (userId: string) => {
           pageParams: [0],
           pages: [[0, []]],
         },
+        // You can disable it here
+        refetchOnWindowFocus: false,
       },
     );
 

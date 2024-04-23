@@ -4,8 +4,6 @@ import { Alert } from '@/components/ui/alert';
 import { getIsAppAdmin } from '@/data/user/user';
 import { errors } from '@/utils/errors';
 import { redirect } from 'next/navigation';
-import { Suspense } from 'react';
-import { ApplicationAdminSidebar } from '../(application-pages)/_sidebar/ApplicationAdminSidebar';
 
 export const revalidate = 0;
 
@@ -17,8 +15,10 @@ async function fetchData() {
 
 export default async function Layout({
   children,
+  sidebar,
 }: {
   children: React.ReactNode;
+  sidebar: React.ReactNode;
 }) {
   try {
     const { isUserAppAdmin } = await fetchData();
@@ -27,13 +27,7 @@ export default async function Layout({
       return redirect('/dashboard');
     }
     return (
-      <ApplicationLayoutShell
-        sidebar={
-          <Suspense fallback={<p>Loading ...</p>}>
-            <ApplicationAdminSidebar />
-          </Suspense>
-        }
-      >
+      <ApplicationLayoutShell sidebar={sidebar}>
         <div className="h-full overflow-y-auto">
           <InternalNavbar>
             <div className="flex items-center justify-start w-full">

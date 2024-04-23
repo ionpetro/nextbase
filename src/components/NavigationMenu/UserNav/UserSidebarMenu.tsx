@@ -1,3 +1,4 @@
+import { GiveFeedbackDialog } from '@/app/(dynamic-pages)/(feedback-pages)/feedback/[feedbackId]/GiveFeedbackDialog';
 import { cn } from '@/utils/cn';
 import ComputerIcon from 'lucide-react/dist/esm/icons/computer';
 import SecurityIcon from 'lucide-react/dist/esm/icons/lock';
@@ -6,7 +7,7 @@ import MailIcon from 'lucide-react/dist/esm/icons/mail';
 import AccountsIcon from 'lucide-react/dist/esm/icons/user';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { FeatureViewModal } from './FeatureViewModal';
 
 export function UserSidebarMenu({
@@ -86,17 +87,19 @@ export function UserSidebarMenu({
       {appAdminSidebarLink}
       <div className="h-px bg-gray-200 dark:bg-gray-700  my-2" />
       <FeatureViewModal />
-      <Link
-        href="/feedback"
-        prefetch={false}
-        className={cn(
-          'hover:bg-gray-100 hover:text-gray-900 text-gray-700 rounded-sm dark:text-gray-400 dark:hover:bg-gray-700/50',
-          'flex gap-2 items-center py-2 text-sm',
-        )}
-      >
-        <MailIcon className="text-lg" />
-        Feedback
-      </Link>
+      <GiveFeedbackDialog isExpanded={false}>
+        <div
+          data-testid="feedback-link"
+          className={cn(
+            'hover:bg-gray-100 hover:text-gray-900 text-gray-700 rounded-sm dark:text-gray-400 dark:hover:bg-gray-700/50 w-full',
+            'flex gap-2 items-center py-2 text-sm cursor-pointer',
+          )}
+        >
+          <MailIcon className="text-lg" />
+          Feedback
+        </div>
+      </GiveFeedbackDialog>
+
       <div className="h-px bg-gray-200 dark:bg-gray-700  my-2" />
       <Link
         href="/logout"
