@@ -140,7 +140,7 @@ async function TeamInvitations({ organizationId }: { organizationId: string }) {
                     </span>
                   </TableCell>
                   {organizationRole === 'admin' ||
-                  organizationRole === 'owner' ? (
+                    organizationRole === 'owner' ? (
                     <TableCell>
                       <RevokeInvitationDialog invitationId={invitation.id} />
                     </TableCell>
