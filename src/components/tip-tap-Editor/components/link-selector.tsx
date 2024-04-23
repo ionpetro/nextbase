@@ -1,8 +1,13 @@
 import { cn } from "@/lib/utils";
-import { Editor } from "@tiptap/core";
-import { Check } from "lucide-react";
-import { Trash } from "lucide-react";
-import { Dispatch, FC, SetStateAction, useEffect, useRef } from "react";
+import type { Editor } from "@tiptap/core";
+import { Check, Trash } from "lucide-react";
+import {
+  useEffect,
+  useRef,
+  type Dispatch,
+  type FC,
+  type SetStateAction,
+} from "react";
 
 interface LinkSelectorProps {
   editor: Editor;
@@ -28,7 +33,8 @@ export const LinkSelector: FC<LinkSelectorProps> = ({
         type="button"
         className="flex h-full items-center space-x-2 px-3 py-1.5 text-sm font-medium text-muted-foreground hover:bg-muted active:bg-muted"
         onClick={() => {
-          setIsOpen(!isOpen);
+          ''
+					setIsOp'n(!isOpen);'''
         }}
       >
         <p className="text-base">↗</p>

@@ -19,12 +19,10 @@ import { useState } from 'react';
 
 type CreateProjectDialogProps = {
   organizationId: string;
-  teamId: number | null;
 };
 
 export function CreateProjectDialog({
   organizationId,
-  teamId,
 }: CreateProjectDialogProps) {
   const [projectTitle, setProjectTitle] = useState<string>('');
   const [open, setOpen] = useState(false);
@@ -43,7 +41,6 @@ export function CreateProjectDialog({
     e.preventDefault();
     createProjectMutation.mutate({
       organizationId,
-      teamId,
       name: projectTitle,
     });
   };

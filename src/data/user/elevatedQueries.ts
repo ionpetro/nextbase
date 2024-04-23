@@ -8,6 +8,7 @@
  * */
 'use server';
 
+import { Json } from '@/lib/database.types';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 
 /**
@@ -32,3 +33,37 @@ export async function getInvitationOrganizationDetails(organizationId: string) {
 
   return data;
 }
+
+/**
+ * [Elevated Query]
+ * create notification for all admins
+ * Reason: A user is not able to view the list of all admins. Hence, we run this query as application admin.
+ * This function is called createAdminNotificationForUserActivity because
+ * it is used to notify admins when a logged in user performs an activity.
+ * */
+export const createAdminNotificationForUserActivity = async (payload: Json) => {
+  async function getAllAdminUserIds() {
+    const { data, error } = await supabaseAdminClient
+      .from('user_roles')
+      .select('user_id')
+      .eq('role', 'admin');
+
+    if (error) {
+      throw error;
+    }
+
+    return data.map((row) => row.user_id);
+  }
+
+  const adminUserIds = await getAllAdminUserIds();
+  const { data: notification, error } = await supabaseAdminClient
+    .from('user_notifications')
+    .insert(
+      adminUserIds.map((userId) => ({
+        user_id: userId,
+        payload,
+      })),
+    );
+  if (error) throw error;
+  return notification;
+};

@@ -69,6 +69,8 @@ const Toolbar: FC<ToolbarProps> = ({ editor }) => {
     },
   ];
 
+  const [isColorSelectorOpen, setIsColorSelectorOpen] = useState(false);
+
   const [alignmentText, setAlignmentText] = useState('left');
 
   const setLink = useCallback(() => {
@@ -108,7 +110,7 @@ const Toolbar: FC<ToolbarProps> = ({ editor }) => {
           <SelectGroup>
             {headings.map((heading, index) => (
               <SelectItem key={heading.name} value={heading.name}>
-                {`${heading.name}heading`}
+                {heading.name}
               </SelectItem>
             ))}
           </SelectGroup>
@@ -319,36 +321,6 @@ const Toolbar: FC<ToolbarProps> = ({ editor }) => {
           //   }
           // };
           // input.click();
-        }}
-        onKeyDown={(event) => {
-          if (event.key === 'Enter') {
-            if (!editor) return;
-            const range = {
-              from: editor.view.state.selection.from,
-              to: editor.view.state.selection.to,
-            };
-            editor.chain().focus().deleteRange(range).run();
-            // upload image
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = 'image/*';
-            input.onchange = async () => {
-              if (input.files?.length) {
-                const file = input.files[0];
-                const pos = editor.view.state.selection.from;
-                startImageUpload(file, editor.view, pos);
-              }
-            };
-            input.click();
-            // input.multiple = true; // Allow multiple file selection
-            // input.onchange = async () => {
-            //   if (input.files?.length) {
-            //     const filesArray = Array.from(input.files);
-            //     setDescriptionImages(filesArray); // Pass the array of files to setDescriptionImages
-            //   }
-            // };
-            // input.click();
-          }
         }}
       >
         <ImageIcon size={16} />

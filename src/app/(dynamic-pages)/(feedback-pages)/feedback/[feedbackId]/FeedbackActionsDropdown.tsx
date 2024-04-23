@@ -421,7 +421,8 @@ function FeedbackActionsDropdown({
             >
               {feedback?.is_publicly_visible ? (
                 <>
-                  <EyeOffIcon className="h-4 w-4 mr-2" /> Hide this thread
+                  <EyeOffIcon className="h-4 w-4 mr-2" /> Make this thread
+                  private
                 </>
               ) : (
                 <>
@@ -429,7 +430,7 @@ function FeedbackActionsDropdown({
                     className="h-4 w-4 mr-2"
                     data-testid="show-thread-button"
                   />{' '}
-                  Show this thread
+                  Make this thread public
                 </>
               )}
             </DropdownMenuItem>

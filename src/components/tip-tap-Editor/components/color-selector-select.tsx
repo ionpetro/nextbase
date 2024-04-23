@@ -110,14 +110,14 @@ export const ColorSelect: FC<ColorSelectProps> = ({ editor }) => {
       <Select
         onValueChange={(value) => {
           const colorItem = TEXT_COLORS.find(({ name }) => name === value);
-          if (colorItem?.color) {
+          if (colorItem && colorItem.color) {
             editor.commands.unsetColor();
             editor.chain().focus().setColor(colorItem.color).run();
           }
           const highlightItem = HIGHLIGHT_COLORS.find(
             ({ name }) => name === value,
           );
-          if (highlightItem?.color) {
+          if (highlightItem && highlightItem.color) {
             editor.commands.unsetHighlight();
             editor.commands.setHighlight({ color: highlightItem.color });
           }
@@ -141,7 +141,7 @@ export const ColorSelect: FC<ColorSelectProps> = ({ editor }) => {
           <SelectGroup>
             <SelectLabel>Color</SelectLabel>
             {TEXT_COLORS.map(({ name, color }) => (
-              <SelectItem key={`${name}text-color`} value={name}>
+              <SelectItem key={name} value={name}>
                 <div className="flex items-center space-x-2">
                   <div
                     className="flex space-x-2 rounded-sm border px-1 py-px w-fit font-medium"
@@ -155,7 +155,7 @@ export const ColorSelect: FC<ColorSelectProps> = ({ editor }) => {
             ))}
             <SelectLabel>Background</SelectLabel>
             {HIGHLIGHT_COLORS.map(({ name, color }) => (
-              <SelectItem key={`${name}-highlight`} value={name}>
+              <SelectItem key={name} value={name}>
                 <div className="flex items-center space-x-2">
                   <div
                     className="rounded-sm border px-1 py-px w-fit font-medium"

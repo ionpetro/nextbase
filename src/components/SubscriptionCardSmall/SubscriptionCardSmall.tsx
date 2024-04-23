@@ -6,7 +6,6 @@ import {
   HoverCardTrigger,
 } from '@/components/ui/hover-card';
 import { getNormalizedOrganizationSubscription } from '@/data/user/organizations';
-import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
 import { formatNormalizedSubscription } from '@/utils/formatNormalizedSubscription';
 import ArrowUpRightIcon from 'lucide-react/dist/esm/icons/arrow-up-right';
 import Link from 'next/link';
@@ -16,7 +15,6 @@ export async function SubscriptionCardSmall({
 }: {
   organizationId: string;
 }) {
-  const supabaseClient = createSupabaseUserServerComponentClient();
   const normalizedSubscription =
     await getNormalizedOrganizationSubscription(organizationId);
 

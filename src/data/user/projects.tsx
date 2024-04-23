@@ -7,7 +7,6 @@ import { normalizeComment } from '@/utils/comments';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import { revalidatePath } from 'next/cache';
 import { Suspense } from 'react';
-import { customRevalidate } from '../anon/revalidate';
 
 export async function getSlimProjectById(projectId: string) {
   const supabaseClient = createSupabaseUserServerComponentClient();
@@ -51,11 +50,9 @@ export async function getProjectTitleById(projectId: string) {
 export const createProjectAction = async ({
   organizationId,
   name,
-  teamId,
 }: {
   organizationId: string;
   name: string;
-  teamId: number | null;
 }) => {
   'use server';
   const supabaseClient = createSupabaseUserServerActionClient();
@@ -63,7 +60,6 @@ export const createProjectAction = async ({
     .from('projects')
     .insert({
       organization_id: organizationId,
-      team_id: teamId,
       name,
     })
     .select('*')
@@ -73,11 +69,8 @@ export const createProjectAction = async ({
     throw error;
   }
 
-  if (teamId) {
-    revalidatePath(`/organization/${organizationId}/team/${teamId}`);
-  } else {
-    revalidatePath(`/organization/${organizationId}`);
-  }
+  revalidatePath(`/organization/${organizationId}`, 'layout');
+
   return project;
 };
 
@@ -137,7 +130,7 @@ export const approveProjectAction = async (projectId: string) => {
     throw error;
   }
 
-  revalidatePath(`/project/${projectId}`);
+  revalidatePath(`/project/${projectId}`, 'layout');
   return data;
 };
 
@@ -154,7 +147,7 @@ export const rejectProjectAction = async (projectId: string) => {
     throw error;
   }
 
-  revalidatePath(`/project/${projectId}`);
+  revalidatePath(`/project/${projectId}`, 'layout');
   return data;
 };
 
@@ -171,7 +164,7 @@ export const submitProjectForApprovalAction = async (projectId: string) => {
     throw error;
   }
 
-  revalidatePath(`/project/${projectId}`);
+  revalidatePath(`/project/${projectId}`, 'layout');
   return data;
 };
 
@@ -188,7 +181,7 @@ export const markProjectAsCompletedAction = async (projectId: string) => {
     throw error;
   }
 
-  revalidatePath(`/project/${projectId}`);
+  revalidatePath(`/project/${projectId}`, 'layout');
   return data;
 };
 

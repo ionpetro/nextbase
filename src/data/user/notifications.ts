@@ -1,6 +1,7 @@
 import { Json } from '@/lib/database.types';
-import { UserNotification } from '@/utils/zod-schemas/notifications';
 import { createSupabaseUserServerActionClient } from '@/supabase-clients/user/createSupabaseUserServerActionClient';
+import { UserNotification } from '@/utils/zod-schemas/notifications';
+import { createAdminNotificationForUserActivity } from './elevatedQueries';
 
 export const createNotification = async (userId: string, payload: Json) => {
   const supabaseClient = createSupabaseUserServerActionClient();
@@ -66,4 +67,25 @@ export const createInvitedToOrganizationNotification = async (
   };
 
   return await createNotification(userId, payload);
+};
+
+export const createReceivedFeedbackNotification = async ({
+  feedbackId,
+  feedbackTitle,
+}: {
+  feedbackId: string;
+  feedbackTitle: string;
+}) => {
+  const payload: Extract<
+    UserNotification,
+    {
+      type: 'receivedFeedback';
+    }
+  > = {
+    type: 'receivedFeedback',
+    feedbackId,
+    feedbackTitle,
+  };
+
+  return await createAdminNotificationForUserActivity(payload);
 };

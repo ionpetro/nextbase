@@ -1,14 +1,10 @@
-import { BubbleMenu, BubbleMenuProps } from "@tiptap/react";
-import { FC, useState } from "react";
-import { BoldIcon } from "lucide-react";
-import { ItalicIcon } from "lucide-react";
-import { UnderlineIcon } from "lucide-react";
-import { StrikethroughIcon } from "lucide-react";
-import { CodeIcon } from "lucide-react";
-import { NodeSelector } from "./node-selector";
+import { cn } from "@/lib/utils";
+import { BubbleMenu, type BubbleMenuProps } from "@tiptap/react";
+import { BoldIcon, CodeIcon, ItalicIcon, StrikethroughIcon, UnderlineIcon } from "lucide-react";
+import { useState, type FC } from "react";
 import { ColorSelector } from "./color-selector";
 import { LinkSelector } from "./link-selector";
-import { cn } from "@/lib/utils";
+import { NodeSelector } from "./node-selector";
 
 export interface BubbleMenuItem {
   name: string;
@@ -83,7 +79,7 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props) => {
   return (
     <BubbleMenu
       {...bubbleMenuProps}
-      className="flex w-fit divide-x divide-border  rounded border bg-background shadow-xl"
+      className="flex w-fit divide-x divide-stone-200 dark:divide-slate-800 rounded border dark:border-slate-700  bg-white dark:bg-slate-950 shadow-xl"
     >
       <NodeSelector
         editor={editor}

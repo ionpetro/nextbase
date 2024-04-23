@@ -45,7 +45,7 @@ export type FeedbackSortSchema = z.infer<typeof sortSchema>;
 export type FeedbackDropdownFiltersSchema = z.infer<
   typeof dropdownFiltersSchema
 > & {
-  myFeedbacks: string;
+  myFeedbacks: boolean;
 };
 
 export const filtersSchema = z

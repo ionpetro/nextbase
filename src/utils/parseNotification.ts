@@ -1,3 +1,4 @@
+import { PRODUCT_NAME } from '@/constants';
 import {
   UserNotification,
   userNotificationPayloadSchema,
@@ -9,14 +10,14 @@ type NormalizedNotification = {
   image: string;
   type: UserNotification['type'] | 'unknown';
 } & (
-  | {
+    | {
       actionType: 'link';
       href: string;
     }
-  | {
+    | {
       actionType: 'button';
     }
-);
+  );
 
 export const parseNotification = (
   notificationPayload: unknown,
@@ -51,6 +52,15 @@ export const parseNotification = (
             'Welcome to the Nextbase Ultimate. We are glad to see you here!',
           actionType: 'button',
           image: '/logos/logo-black.png',
+          type: notification.type,
+        };
+      case 'receivedFeedback':
+        return {
+          title: `${PRODUCT_NAME} received new feedback`,
+          description: `A user said: ${notification.feedbackTitle}`,
+          image: '/logos/logo-black.png',
+          actionType: 'link',
+          href: `/app_admin/feedback/${notification.feedbackId}`,
           type: notification.type,
         };
       default: {

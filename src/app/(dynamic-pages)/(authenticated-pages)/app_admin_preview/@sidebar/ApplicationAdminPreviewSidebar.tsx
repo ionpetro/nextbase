@@ -1,3 +1,4 @@
+import { SidebarLogoAndToggle } from '@/components/SidebarComponents/SidebarLogo';
 import { SidebarLink } from '@/components/SidebarLink';
 import { cn } from '@/utils/cn';
 import ActivityLogIcon from 'lucide-react/dist/esm/icons/book';
@@ -9,7 +10,6 @@ import RoadMapIcon from 'lucide-react/dist/esm/icons/map';
 import PenToolIcon from 'lucide-react/dist/esm/icons/pen-tool';
 import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
 import UsersIcon from 'lucide-react/dist/esm/icons/users';
-import { SidebarLogoAndToggle } from './_components/SidebarLogo';
 
 const links = [
   {
@@ -19,48 +19,48 @@ const links = [
   },
   {
     label: 'Admin Dashboard',
-    href: `/app_admin`,
+    href: `/app_admin_preview`,
     icon: <FileLineChart className="h-5 w-5" />,
   },
   {
     label: 'Users',
-    href: `/app_admin/users`,
+    href: `/app_admin_preview/users`,
     icon: <UsersIcon className="h-5 w-5" />,
   },
   {
     label: 'Organizations',
-    href: `/app_admin/organizations`,
+    href: `/app_admin_preview/organizations`,
     icon: <BriefcaseIcon className="h-5 w-5" />,
   },
   {
     label: 'Application Settings',
-    href: `/app_admin/settings`,
+    href: `/app_admin_preview/settings`,
     icon: <SettingsIcon className="h-5 w-5" />,
   },
   {
     label: 'Blog',
-    href: `/app_admin/blog`,
+    href: `/app_admin_preview/blog`,
     icon: <PenToolIcon className="h-5 w-5" />,
   },
   {
     label: 'Feedback List',
-    href: `/app_admin/feedback`,
+    href: `/app_admin_preview/feedback`,
     icon: <FeedbackIcon className="h-5 w-5" />,
   },
 
   {
     label: 'Changelog List',
-    href: `/app_admin/changelog`,
+    href: `/app_admin_preview/changelog`,
     icon: <ActivityLogIcon className="h-5 w-5" />,
   },
   {
     label: 'Roadmap',
-    href: `/app_admin/internal-roadmap`,
+    href: `/app_admin_preview/internal-roadmap`,
     icon: <RoadMapIcon className="h-5 w-5" />,
   },
 ];
 
-export function ApplicationAdminSidebar() {
+export function ApplicationAdminPreviewSidebar() {
   return (
     <div
       className={cn(

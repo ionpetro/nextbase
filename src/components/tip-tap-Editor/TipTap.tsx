@@ -47,18 +47,13 @@ export default function TipTap({
       </style>
       <div
         className="flex flex-col border-none justify-stretch"
-        onKeyUp={(e) => {
-          if (e.key === 'Enter') {
-            editor?.chain().focus().run();
-          }
-        }}
         onClick={() => {
           editor?.chain().focus().run();
         }}
       >
         {/* {editor && <EditorBubbleMenu editor={editor} />} */}
         <Toolbar editor={editor} />
-        <EditorContent editor={editor} className="px-4" />
+        <EditorContent editor={editor} />
       </div>
     </>
   );

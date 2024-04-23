@@ -25,6 +25,7 @@ import {
   feedbackPrioritiesSchema,
   feedbackStatusesSchema,
   feedbackTypesSchema,
+  sortSchema,
   type FeedbackDropdownFiltersSchema,
   type FeedbackSortSchema,
 } from './schema';
@@ -44,14 +45,14 @@ export function FeedbackFacetedFilters() {
     priorities: feedbackPrioritiesSchema.parse(
       searchParams?.get('priorities')?.split(',') || [],
     ),
-    myFeedbacks: searchParams?.get('myFeedbacks') || 'false',
+    myFeedbacks: Boolean(searchParams?.get('myFeedbacks')) || false,
   };
 
   const setFilters = (newFilters: FeedbackDropdownFiltersSchema) => {
     const params = new URLSearchParams(searchParams ?? undefined);
     for (const [key, value] of Object.entries(newFilters)) {
       if (key === 'myFeedbacks') {
-        params.set(key, value as string);
+        params.set(key, newFilters.myFeedbacks.toString());
         continue;
       }
       if (Array.isArray(value) && value.length) {
@@ -80,7 +81,8 @@ export function FeedbackFacetedFilters() {
     <div className="flex gap-2 flex-wrap">
       <Select
         onValueChange={(val) => {
-          setSort(val as FeedbackSortSchema);
+          const parsedValue = sortSchema.parse(val);
+          setSort(parsedValue);
         }}
       >
         <SelectTrigger className="w-fit h-8">
@@ -127,11 +129,11 @@ export function FeedbackFacetedFilters() {
       <Toggle
         variant={'outline'}
         className="h-8 px-2 flex gap-2 lg:px-3 rounded-md"
-        defaultPressed={filters.myFeedbacks === 'true'}
+        defaultPressed={filters.myFeedbacks}
         onClick={() => {
           setFilters({
             ...filters,
-            myFeedbacks: filters.myFeedbacks === 'true' ? 'false' : 'true',
+            myFeedbacks: !filters.myFeedbacks,
           });
         }}
       >
@@ -148,7 +150,7 @@ export function FeedbackFacetedFilters() {
                 statuses: [],
                 types: [],
                 priorities: [],
-                myFeedbacks: 'false',
+                myFeedbacks: false,
               });
             }}
             className="h-8 px-2 lg:px-3"

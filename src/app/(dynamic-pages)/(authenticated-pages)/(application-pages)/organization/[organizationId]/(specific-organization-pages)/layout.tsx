@@ -1,27 +1,18 @@
 import { ApplicationLayoutShell } from '@/components/ApplicationLayoutShell/ApplicationLayoutShell';
 import { InternalNavbar } from '@/components/NavigationMenu/InternalNavbar';
 import { ReactNode, Suspense } from 'react';
-import { z } from 'zod';
-import { OrganizationSidebar } from '../../../_sidebar/OrganizationSidebar';
-
-const paramsSchema = z.object({
-  organizationId: z.string(),
-});
 
 export default async function Layout({
   children,
-  params,
   navbar,
+  sidebar,
 }: {
   children: ReactNode;
-  params: unknown;
   navbar: ReactNode;
+  sidebar: ReactNode;
 }) {
-  const { organizationId } = paramsSchema.parse(params);
   return (
-    <ApplicationLayoutShell
-      sidebar={<OrganizationSidebar organizationId={organizationId} />}
-    >
+    <ApplicationLayoutShell sidebar={sidebar}>
       <div>
         <InternalNavbar>
           <div className="hidden lg:flex w-full justify-between items-center">

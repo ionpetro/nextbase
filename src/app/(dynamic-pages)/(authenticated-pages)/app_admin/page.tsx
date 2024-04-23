@@ -11,7 +11,7 @@ const StripeSaaSMetrics = dynamic(() =>
 
 export default async function AdminPanel() {
   if (
-    validateStripeKeys({
+    !validateStripeKeys({
       stripePublishableKey: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
       stripeSecretKey: process.env.STRIPE_SECRET_KEY,
       stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET,

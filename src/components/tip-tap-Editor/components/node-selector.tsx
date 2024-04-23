@@ -1,17 +1,8 @@
-import { Editor } from "@tiptap/core";
-import { Check, Heading4, Heading5, Heading6 } from "lucide-react";
-import { ChevronDown } from "lucide-react";
-import { Heading1 } from "lucide-react";
-import { Heading2 } from "lucide-react";
-import { Heading3 } from "lucide-react";
-import { QuoteIcon } from "lucide-react";
-import { ListOrdered } from "lucide-react";
-import { TextIcon } from "lucide-react";
-import { Code } from "lucide-react";
-import { CheckSquare } from "lucide-react";
-import { Dispatch, FC, SetStateAction } from "react";
+import type { Editor } from "@tiptap/core";
+import { Check, CheckSquare, ChevronDown, Code, Heading1, Heading2, Heading3, ListOrdered, QuoteIcon, TextIcon } from "lucide-react";
+import type { Dispatch, FC, SetStateAction } from "react";
 
-import { BubbleMenuItem } from "./EditorBubbleMenu";
+import type { BubbleMenuItem } from "./EditorBubbleMenu";
 
 interface NodeSelectorProps {
   editor: Editor;

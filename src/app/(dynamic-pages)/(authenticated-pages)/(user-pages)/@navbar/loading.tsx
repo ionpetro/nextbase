@@ -1,12 +1,10 @@
 import { T } from '@/components/ui/Typography';
 import { cn } from '@/utils/cn';
-export const metadata = {
-  title: 'My Feedback',
-};
-export default function FeedbackNavbar() {
+
+export default function NavbarLoading() {
   return (
     <div className={cn('hidden lg:block', 'relative ')}>
-      <T.P className="my-0">My Feedback</T.P>
+      <T.Subtle>Loading...</T.Subtle>
     </div>
   );
 }

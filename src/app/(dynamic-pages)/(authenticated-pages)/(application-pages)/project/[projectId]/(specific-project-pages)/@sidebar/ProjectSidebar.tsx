@@ -1,14 +1,15 @@
+import { OrganizationSwitcher } from '@/components/SidebarComponents/OrganizationSwitcher';
+import { DesktopSidebarFallback } from '@/components/SidebarComponents/SidebarFallback';
+import { SidebarLogoAndToggle } from '@/components/SidebarComponents/SidebarLogo';
 import { SidebarLink } from '@/components/SidebarLink';
 import { fetchSlimOrganizations } from '@/data/user/organizations';
 import { getSlimProjectById } from '@/data/user/projects';
 import { cn } from '@/utils/cn';
+import { projectParamSchema } from '@/utils/zod-schemas/params';
 import ArrowLeftIcon from 'lucide-react/dist/esm/icons/arrow-left';
 import ProjectIcon from 'lucide-react/dist/esm/icons/layers';
 import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
 import { Suspense } from 'react';
-import { OrganizationSwitcher } from './_components/OrganizationSwitcher';
-import { DesktopSidebarFallback } from './_components/SidebarFallback';
-import { SidebarLogoAndToggle } from './_components/SidebarLogo';
 
 async function ProjectSidebarInternal({ projectId }: { projectId: string }) {
   const [slimOrganizations, project] = await Promise.all([
@@ -59,7 +60,8 @@ async function ProjectSidebarInternal({ projectId }: { projectId: string }) {
   );
 }
 
-export async function ProjectSidebar({ projectId }: { projectId: string }) {
+export async function ProjectSidebar({ params }: { params: unknown }) {
+  const { projectId } = projectParamSchema.parse(params);
   return (
     <Suspense fallback={<DesktopSidebarFallback />}>
       <ProjectSidebarInternal projectId={projectId} />

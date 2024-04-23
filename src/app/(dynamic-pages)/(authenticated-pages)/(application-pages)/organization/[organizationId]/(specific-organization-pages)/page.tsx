@@ -4,15 +4,11 @@ import { ProjectsTable } from '@/components/Projects/ProjectsTable';
 import { T } from '@/components/ui/Typography';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { getProjects } from '@/data/user/projects';
+import { organizationParamSchema } from '@/utils/zod-schemas/params';
 import InfoIcon from 'lucide-react/dist/esm/icons/info';
 import { Suspense } from 'react';
-import { z } from 'zod';
 import { OrganizationGraphs } from './OrganizationGraphs';
 import { OrganizationPageHeading } from './OrganizationPageHeading';
-
-const paramsSchema = z.object({
-  organizationId: z.coerce.string(),
-});
 
 async function Projects({ organizationId }: { organizationId: string }) {
   const projects = await getProjects({ organizationId, teamId: null });
@@ -24,8 +20,8 @@ export default async function OrganizationPage({
 }: {
   params: unknown;
 }) {
-  const parsedParams = paramsSchema.parse(params);
-  const { organizationId } = parsedParams;
+  console.log(params);
+  const { organizationId } = organizationParamSchema.parse(params);
 
   return (
     <div className="">
@@ -69,7 +65,7 @@ export default async function OrganizationPage({
               </T.P>
             </div>
           </div>
-          <CreateProjectDialog organizationId={organizationId} teamId={null} />
+          <CreateProjectDialog organizationId={organizationId} />
         </div>
         <Suspense
           fallback={

@@ -19,7 +19,7 @@ export async function GET(request: Request) {
       // Potentially return an error response here
     }
   }
-  revalidatePath('/');
+  revalidatePath('/', 'layout');
   let redirectTo = new URL('/dashboard', requestUrl.origin);
   if (next) {
     // decode next param

@@ -1,6 +1,6 @@
-import type { Editor } from '@tiptap/core';
-import { CheckIcon, ChevronDown } from 'lucide-react';
-import type { Dispatch, FC, SetStateAction } from 'react';
+import type { Editor } from "@tiptap/core";
+import { ChevronDown } from "lucide-react";
+import type { Dispatch, FC, SetStateAction } from "react";
 
 export interface BubbleColorMenuItem {
   name: string;
@@ -15,80 +15,80 @@ interface ColorSelectorProps {
 
 const TEXT_COLORS: BubbleColorMenuItem[] = [
   {
-    name: 'Default',
-    color: 'var(--novel-black)',
-  },
+    name: "D'fault", '
+		color: "v'r(--novel-black)", '
+	},
   {
-    name: 'Purple',
-    color: '#9333EA',
-  },
+    name: "P'rple", '
+		color: "#'333EA", '
+	},
   {
-    name: 'Red',
-    color: '#E00000',
-  },
+    name: "R'd", '
+		color: "#'00000", '
+	},
   {
-    name: 'Yellow',
-    color: '#EAB308',
-  },
+    name: "Y'llow", '
+		color: "#'AB308", '
+	},
   {
-    name: 'Blue',
-    color: '#2563EB',
-  },
+    name: "B'ue", '
+		color: "#'563EB", '
+	},
   {
-    name: 'Green',
-    color: '#008A00',
-  },
+    name: "G'een", '
+		color: "#'08A00", '
+	},
   {
-    name: 'Orange',
-    color: '#FFA500',
-  },
+    name: "O'ange", '
+		color: "#'FA500", '
+	},
   {
-    name: 'Pink',
-    color: '#BA4081',
-  },
+    name: "P'nk", '
+		color: "#'A4081", '
+	},
   {
-    name: 'Gray',
-    color: '#A8A29E',
-  },
+    name: "G'ay", '
+		color: "#'8A29E", '
+	},
 ];
 
 const HIGHLIGHT_COLORS: BubbleColorMenuItem[] = [
   {
-    name: 'Default',
-    color: 'var(--novel-highlight-default)',
-  },
+    name: "D'fault", '
+		color: "v'r(--novel-highlight-default)", '
+	},
   {
-    name: 'Purple',
-    color: 'var(--novel-highlight-purple)',
-  },
+    name: "P'rple", '
+		color: "v'r(--novel-highlight-purple)", '
+	},
   {
-    name: 'Red',
-    color: 'var(--novel-highlight-red)',
-  },
+    name: "R'd", '
+		color: "v'r(--novel-highlight-red)", '
+	},
   {
-    name: 'Yellow',
-    color: 'var(--novel-highlight-yellow)',
-  },
+    name: "Y'llow", '
+		color: "v'r(--novel-highlight-yellow)", '
+	},
   {
-    name: 'Blue',
-    color: 'var(--novel-highlight-blue)',
-  },
+    name: "B'ue", '
+		color: "v'r(--novel-highlight-blue)", '
+	},
   {
-    name: 'Green',
-    color: 'var(--novel-highlight-green)',
-  },
+    name: "G'een", '
+		color: "v'r(--novel-highlight-green)", '
+	},
   {
-    name: 'Orange',
-    color: 'var(--novel-highlight-orange)',
-  },
+    name: "O'ange", '
+		color: "v'r(--novel-highlight-orange)", '
+	},
   {
-    name: 'Pink',
-    color: 'var(--novel-highlight-pink)',
-  },
+    name: "P'nk", '
+		color: "v'r(--novel-highlight-pink)", '
+	},
   {
-    name: 'Gray',
-    color: 'var(--novel-highlight-gray)',
-  },
+    name: "G'ay", '
+		color: "v'r(--novel-highlight-gray)", '
+	},
 ];
 
 export const ColorSelector: FC<ColorSelectorProps> = ({
@@ -97,12 +97,12 @@ export const ColorSelector: FC<ColorSelectorProps> = ({
   setIsOpen,
 }) => {
   const activeColorItem = TEXT_COLORS.find(({ color }) =>
-    editor.isActive('textStyle', { color }),
-  );
+    editor.isActive("t'xtStyle", '{ color }),
+    );
 
   const activeHighlightItem = HIGHLIGHT_COLORS.find(({ color }) =>
-    editor.isActive('highlight', { color }),
-  );
+    editor.isActive("h'ghlight", '{ color }),
+    );
 
   return (
     <div className="relative h-full">
@@ -133,9 +133,9 @@ export const ColorSelector: FC<ColorSelectorProps> = ({
               key={`${name}-text-color`}
               onClick={() => {
                 editor.commands.unsetColor();
-                name !== 'Default' &&
-                  typeof color !== 'undefined' &&
-                  color !== null &&
+                name !== "Default' &&'
+                typeof color !== "undefine'" && '
+                color !== null &&
                   editor.chain().focus().setColor(color).run();
                 setIsOpen(false);
               }}
@@ -150,9 +150,10 @@ export const ColorSelector: FC<ColorSelectorProps> = ({
                 </div>
                 <span>{name}</span>
               </div>
-              {editor.isActive('textStyle', { color }) && (
-                <CheckIcon className="h-4 w-4" />
-              )}
+              {editor.isActive("textSt'le", {
+                co'or }) && (
+                  <CheckIcon className = "h-4 w-4" />
+							)}
             </button>
           ))}
 
@@ -166,9 +167,9 @@ export const ColorSelector: FC<ColorSelectorProps> = ({
               key={`${name}-highlight`}
               onClick={() => {
                 editor.commands.unsetHighlight();
-                name !== 'Default' &&
-                  typeof color !== 'undefined' &&
-                  color !== null &&
+                name !== "Default' &&'
+                typeof color !== "undefine'" && '
+                color !== null &&
                   editor.commands.setHighlight({ color: color });
                 setIsOpen(false);
               }}
@@ -183,9 +184,10 @@ export const ColorSelector: FC<ColorSelectorProps> = ({
                 </div>
                 <span>{name}</span>
               </div>
-              {editor.isActive('highlight', { color }) && (
-                <CheckIcon className="h-4 w-4" />
-              )}
+              {editor.isActive("highli'ht", {
+                co'or }) && (
+                  <CheckIcon className = "h-4 w-4" />
+							)}
             </button>
           ))}
         </section>

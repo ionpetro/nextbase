@@ -1,6 +1,6 @@
 'use client';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import { ReactNode, useState } from 'react';
+import { type ReactNode, useState } from 'react';
 
 interface SimpleDialogProps {
   trigger: ReactNode;

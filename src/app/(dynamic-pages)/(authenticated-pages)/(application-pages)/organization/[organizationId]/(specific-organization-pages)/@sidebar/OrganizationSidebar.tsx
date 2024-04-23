@@ -1,18 +1,21 @@
 import { ProFeatureGateDialog } from '@/components/ProFeatureGateDialog';
 import { SidebarLink } from '@/components/SidebarLink';
-import { SubscriptionCardSmall } from '@/components/SubscriptionCardSmall';
-import { T } from '@/components/ui/Typography';
 import { fetchSlimOrganizations } from '@/data/user/organizations';
 import { cn } from '@/utils/cn';
+import { organizationParamSchema } from '@/utils/zod-schemas/params';
 import DollarIcon from 'lucide-react/dist/esm/icons/dollar-sign';
 import FileBoxIcon from 'lucide-react/dist/esm/icons/file-box';
 import HomeIcon from 'lucide-react/dist/esm/icons/home';
 import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
 import UserIcon from 'lucide-react/dist/esm/icons/user-2';
+import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
-import { OrganizationSwitcher } from './_components/OrganizationSwitcher';
-import { DesktopSidebarFallback } from './_components/SidebarFallback';
-import { SidebarLogoAndToggle } from './_components/SidebarLogo';
+
+import { OrganizationSwitcher } from '@/components/SidebarComponents/OrganizationSwitcher';
+import { DesktopSidebarFallback } from '@/components/SidebarComponents/SidebarFallback';
+import { SidebarLogoAndToggle } from '@/components/SidebarComponents/SidebarLogo';
+import { SubscriptionCardSmall } from '@/components/SubscriptionCardSmall';
+import { T } from '@/components/ui/Typography';
 
 async function OrganizationSidebarInternal({
   organizationId,
@@ -61,7 +64,6 @@ async function OrganizationSidebarInternal({
               />
             </Suspense>
           </div>
-          {/* <TeamsList organizationId={organizationId} /> */}
         </div>
       </div>
       <div className="flex flex-col gap-4">
@@ -83,14 +85,17 @@ async function OrganizationSidebarInternal({
   );
 }
 
-export async function OrganizationSidebar({
-  organizationId,
-}: {
-  organizationId: string;
-}) {
-  return (
-    <Suspense fallback={<DesktopSidebarFallback />}>
-      <OrganizationSidebarInternal organizationId={organizationId} />
-    </Suspense>
-  );
+export async function OrganizationSidebar({ params }: { params: unknown }) {
+  try {
+    console.log('params', params);
+    const { organizationId } = organizationParamSchema.parse(params);
+    console.log(organizationId);
+    return (
+      <Suspense fallback={<DesktopSidebarFallback />}>
+        <OrganizationSidebarInternal organizationId={organizationId} />
+      </Suspense>
+    );
+  } catch (e) {
+    return notFound();
+  }
 }

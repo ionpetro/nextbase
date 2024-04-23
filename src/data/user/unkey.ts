@@ -83,7 +83,7 @@ export async function revokeUnkeyToken(keyId: string) {
     throw error;
   }
 
-  revalidatePath('/');
+  revalidatePath('/', 'layout');
 
   return {
     ok: true,
