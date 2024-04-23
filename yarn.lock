@@ -3656,9 +3656,9 @@ agent-base@^7.1.0:
     debug "^4.3.4"
 
 ai@^3.0.0:
-  version "3.0.24"
-  resolved "https://registry.yarnpkg.com/ai/-/ai-3.0.24.tgz#b655e70405e5319e4a2a23bdcf2616830c14d8f9"
-  integrity sha512-x2enc2aIbOjsvC6N+xS8cTEiAPXGSzN1MjqNu4jo9YlBKmGR+83slScoXhgFZQnaHHeT9miPUVoMRqde11Bc8Q==
+  version "3.0.25"
+  resolved "https://registry.yarnpkg.com/ai/-/ai-3.0.25.tgz#399c775443c64cb12f3df91bdc450b8d07c9be07"
+  integrity sha512-hZ1xm8gXb+vk6yPi9yUojwlrIvlnEN2bdufd/7eY9ksUHOqRn+XRk4EOCHQlqflVO0vGpritEIOVWkDKLWR8IA==
   dependencies:
     "@ai-sdk/provider" "0.0.0"
     "@ai-sdk/provider-utils" "0.0.1"
