@@ -1,3 +1,4 @@
+import { SidebarLogoAndToggle } from '@/components/SidebarComponents/SidebarLogo';
 import { SidebarLink } from '@/components/SidebarLink';
 import { cn } from '@/utils/cn';
 import ActivityLogIcon from 'lucide-react/dist/esm/icons/book';
@@ -9,7 +10,6 @@ import RoadMapIcon from 'lucide-react/dist/esm/icons/map';
 import PenToolIcon from 'lucide-react/dist/esm/icons/pen-tool';
 import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
 import UsersIcon from 'lucide-react/dist/esm/icons/users';
-import { SidebarLogoAndToggle } from './_components/SidebarLogo';
 
 const links = [
   {
@@ -19,48 +19,48 @@ const links = [
   },
   {
     label: 'Admin Dashboard',
-    href: `/app_admin_preview`,
+    href: `/app_admin`,
     icon: <FileLineChart className="h-5 w-5" />,
   },
   {
     label: 'Users',
-    href: `/app_admin_preview/users`,
+    href: `/app_admin/users`,
     icon: <UsersIcon className="h-5 w-5" />,
   },
   {
     label: 'Organizations',
-    href: `/app_admin_preview/organizations`,
+    href: `/app_admin/organizations`,
     icon: <BriefcaseIcon className="h-5 w-5" />,
   },
   {
     label: 'Application Settings',
-    href: `/app_admin_preview/settings`,
+    href: `/app_admin/settings`,
     icon: <SettingsIcon className="h-5 w-5" />,
   },
   {
     label: 'Blog',
-    href: `/app_admin_preview/blog`,
+    href: `/app_admin/blog`,
     icon: <PenToolIcon className="h-5 w-5" />,
   },
   {
     label: 'Feedback List',
-    href: `/app_admin_preview/feedback`,
+    href: `/feedback`,
     icon: <FeedbackIcon className="h-5 w-5" />,
   },
 
   {
     label: 'Changelog List',
-    href: `/app_admin_preview/changelog`,
+    href: `/app_admin/changelog`,
     icon: <ActivityLogIcon className="h-5 w-5" />,
   },
   {
     label: 'Roadmap',
-    href: `/app_admin_preview/internal-roadmap`,
+    href: `/app_admin/internal-roadmap`,
     icon: <RoadMapIcon className="h-5 w-5" />,
   },
 ];
 
-export function ApplicationAdminPreviewSidebar() {
+export function ApplicationAdminSidebar() {
   return (
     <div
       className={cn(

@@ -1,3 +1,4 @@
+import { SidebarLogoAndToggle } from '@/components/SidebarComponents/SidebarLogo';
 import { SidebarLink } from '@/components/SidebarLink';
 import { cn } from '@/utils/cn';
 import DeveloperIcon from 'lucide-react/dist/esm/icons/code';
@@ -6,7 +7,6 @@ import HomeIcon from 'lucide-react/dist/esm/icons/home';
 import InvitationsIcon from 'lucide-react/dist/esm/icons/mail';
 import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
 import SecurityIcon from 'lucide-react/dist/esm/icons/shield';
-import { SidebarLogoAndToggle } from '../../(application-pages)/_sidebar/_components/SidebarLogo';
 
 export async function UserSidebar() {
   return (

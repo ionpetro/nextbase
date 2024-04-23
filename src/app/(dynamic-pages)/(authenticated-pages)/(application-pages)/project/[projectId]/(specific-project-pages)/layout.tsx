@@ -4,7 +4,6 @@ import { PageHeading } from '@/components/PageHeading';
 import { getProjectTitleById } from '@/data/user/projects';
 import { ReactNode, Suspense } from 'react';
 import { z } from 'zod';
-import { ProjectSidebar } from '../../../_sidebar/ProjectSidebar';
 import { ApprovalControls } from './ApprovalControls';
 
 const paramsSchema = z.object({
@@ -29,15 +28,17 @@ export default async function ProjectLayout({
   params,
   children,
   navbar,
+  sidebar,
 }: {
   children: ReactNode;
   params: unknown;
   navbar: ReactNode;
+  sidebar: ReactNode;
 }) {
   const { projectId } = paramsSchema.parse(params);
 
   return (
-    <ApplicationLayoutShell sidebar={<ProjectSidebar projectId={projectId} />}>
+    <ApplicationLayoutShell sidebar={sidebar}>
       <div className="">
         <InternalNavbar>
           <div className="flex w-full justify-between items-center">
