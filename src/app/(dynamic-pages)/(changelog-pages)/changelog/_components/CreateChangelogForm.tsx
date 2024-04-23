@@ -165,7 +165,9 @@ export const CreateChangelogForm = () => {
         <Controller
           name="content"
           control={control}
-          render={({ field }) => <TipTap {...field} />}
+          render={({ field }) => (
+            <TipTap {...field} placeholder="Write your changelog here..." />
+          )}
         />
       </Card>
       {errors.content && (

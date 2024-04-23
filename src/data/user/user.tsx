@@ -160,7 +160,7 @@ export const uploadImage = async (
   const userImagesPath = `${userId}/images/${slugifiedFilename}`;
 
   const { data, error } = await supabaseClient.storage
-    .from('public-user-assets')
+    .from('changelog-assets')
     .upload(userImagesPath, file, fileOptions);
 
   if (error) {
@@ -172,7 +172,7 @@ export const uploadImage = async (
   const filePath = path.split(',')[0];
   const supabaseFileUrl = urlJoin(
     process.env.NEXT_PUBLIC_SUPABASE_URL,
-    '/storage/v1/object/public/public-user-assets',
+    '/storage/v1/object/public/changelog-assets',
     filePath,
   );
 

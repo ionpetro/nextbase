@@ -1,6 +1,6 @@
+import { uploadImage } from '@/data/user/user';
 import { Plugin, PluginKey, type EditorState } from '@tiptap/pm/state';
 import { Decoration, DecorationSet, type EditorView } from '@tiptap/pm/view';
-import axios from 'axios';
 import { toast } from 'sonner';
 
 const uploadKey = new PluginKey('upload-image');
@@ -116,33 +116,12 @@ export function startImageUpload(file: File, view: EditorView, pos: number) {
   });
 }
 
-export const handleImageUpload = (file: File) => {
+export const handleImageUpload = async (file: File) => {
   // upload to Vercel Blob
   const formData = new FormData();
   formData.append('file', file);
-  console.log('image formData', formData);
-  return new Promise((resolve) => {
-    toast.promise(
-      axios
-        .post('/api/tasks/uploadImage', formData, {
-          withCredentials: true,
-        })
-        .then(async ({ data }) => {
-          const { publicUrl: url } = data as unknown as {
-            publicUrl: string;
-          };
-          // preload the image
-          const image = new Image();
-          image.src = url;
-          image.onload = () => {
-            resolve(url);
-          };
-        }),
-      {
-        loading: 'Uploading image...',
-        success: 'Image uploaded successfully.',
-        error: (e) => e.message,
-      },
-    );
+
+  return await uploadImage(formData, file.name, {
+    upsert: true,
   });
 };
