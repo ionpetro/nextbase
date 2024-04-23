@@ -6,4 +6,4 @@ export default function Loading() {
       <T.Subtle>Loading...</T.Subtle>
     </div>
   );
-
+}
