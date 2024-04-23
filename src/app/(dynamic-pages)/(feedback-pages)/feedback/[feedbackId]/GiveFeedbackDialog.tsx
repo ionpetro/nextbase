@@ -52,7 +52,6 @@ export const GiveFeedbackDialog = ({
   children?: React.ReactNode;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-
   const { control, handleSubmit, formState, reset } = useForm<FeedbackFormType>(
     {
       resolver: zodResolver(feedbackSchema),
