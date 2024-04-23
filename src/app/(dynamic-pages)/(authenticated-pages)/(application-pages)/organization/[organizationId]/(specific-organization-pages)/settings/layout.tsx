@@ -1,12 +1,8 @@
 import { TabsNavigation } from '@/components/TabsNavigation';
+import { organizationParamSchema } from '@/utils/zod-schemas/params';
 import DollarSignIcon from 'lucide-react/dist/esm/icons/dollar-sign';
 import EditIcon from 'lucide-react/dist/esm/icons/edit';
 import UserIcon from 'lucide-react/dist/esm/icons/user-2';
-import { z } from 'zod';
-
-const paramsSchema = z.object({
-  organizationId: z.string(),
-});
 
 export default function OrganizationSettingsLayout({
   children,
@@ -15,7 +11,7 @@ export default function OrganizationSettingsLayout({
   children: React.ReactNode;
   params: unknown;
 }) {
-  const { organizationId } = paramsSchema.parse(params);
+  const { organizationId } = organizationParamSchema.parse(params);
   const tabs = [
     {
       label: 'General',

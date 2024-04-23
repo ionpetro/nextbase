@@ -309,7 +309,7 @@ export async function adminUpdateInternalFeedbackType({
     throw error;
   }
   revalidatePath('/feedback');
-  revalidatePath('/app_admin/feedback');
+  revalidatePath('/feedback');
   return data;
 }
 
@@ -331,7 +331,7 @@ export async function adminUpdateInternalFeedbackStatus({
     throw error;
   }
   revalidatePath('/feedback');
-  revalidatePath('/app_admin/feedback');
+  revalidatePath('/feedback');
   return data;
 }
 
@@ -353,7 +353,7 @@ export async function adminUpdateInternalFeedbackPriority({
     throw error;
   }
   revalidatePath('/feedback');
-  revalidatePath('/app_admin/feedback');
+  revalidatePath('/feedback');
   return data;
 }
 
@@ -375,7 +375,7 @@ export const adminUpdateInternalFeedbackAddedToRoadmap = async ({
   }
 
   revalidatePath('/feedback');
-  revalidatePath('/app_admin/feedback');
+  revalidatePath('/feedback');
   return data;
 };
 
@@ -397,7 +397,7 @@ export const adminUpdateInternalFeedbackVisibility = async ({
   }
 
   revalidatePath('/feedback');
-  revalidatePath('/app_admin/feedback');
+  revalidatePath('/feedback');
   return data;
 };
 

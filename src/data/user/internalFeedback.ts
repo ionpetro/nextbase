@@ -529,6 +529,6 @@ export async function userUpdateInternalFeedbackType({
     throw error;
   }
   revalidatePath('/feedback');
-  revalidatePath('/app_admin/feedback');
+  revalidatePath('/feedback');
   return data;
 }

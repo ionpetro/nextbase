@@ -1,18 +1,14 @@
 import { cn } from '@/utils/cn';
+import { organizationParamSchema } from '@/utils/zod-schemas/params';
 import { ArrowLeftIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
-import { z } from 'zod';
-
-const paramsSchema = z.object({
-  organizationId: z.string(),
-});
 
 export default function OrganizationSettingsNavbar({
   params,
 }: {
   params: unknown;
 }) {
-  const { organizationId } = paramsSchema.parse(params);
+  const { organizationId } = organizationParamSchema.parse(params);
   return (
     <div className={cn('hidden ', 'relative flex gap-2 items-center')}>
       <Link

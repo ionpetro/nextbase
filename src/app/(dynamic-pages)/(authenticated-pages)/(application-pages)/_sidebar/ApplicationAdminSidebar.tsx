@@ -44,7 +44,7 @@ const links = [
   },
   {
     label: 'Feedback List',
-    href: `/app_admin/feedback`,
+    href: `/feedback`,
     icon: <FeedbackIcon className="h-5 w-5" />,
   },
 
