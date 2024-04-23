@@ -18,7 +18,10 @@ export function BlogContent({
   return (
     <div
       dangerouslySetInnerHTML={{
-        __html: generateHTML(validContent, getTipTapExtention({})),
+        __html: generateHTML(
+          validContent,
+          getTipTapExtention({ placeholder: 'Write your blog post...' }),
+        ),
       }}
     />
   );

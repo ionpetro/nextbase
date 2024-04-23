@@ -17,7 +17,7 @@ export function TipTapEditor({
   onBlur?: () => void;
 }) {
   const editor = useEditor({
-    extensions: getTipTapExtention({}),
+    extensions: getTipTapExtention({ placeholder: 'Write your blog post...' }),
     editorProps: TiptapEditorProps,
     onUpdate: (e) => {
       onChange(e.editor);
