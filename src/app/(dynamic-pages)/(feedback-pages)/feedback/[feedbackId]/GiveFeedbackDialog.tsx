@@ -18,7 +18,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { createInternalFeedback } from '@/data/user/internalFeedback';
-import { useToastMutation } from '@/hooks/useToastMutation';
+import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import type { Enum } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import FeedbackIcon from 'lucide-react/dist/esm/icons/message-square';
@@ -64,7 +64,7 @@ export const GiveFeedbackDialog = ({
   const {
     mutate: createInternalFeedbackMutation,
     isLoading: isCreatingInternalFeedback,
-  } = useToastMutation(
+  } = useSAToastMutation(
     async (data: FeedbackFormType) => {
       return await createInternalFeedback(data);
     },

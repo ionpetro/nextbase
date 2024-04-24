@@ -28,9 +28,7 @@ export default async function Layout({
       return redirect('/dashboard');
     }
     return (
-      <ApplicationLayoutShell sidebar={<Suspense>
-        {sidebar}
-      </Suspense>}>
+      <ApplicationLayoutShell sidebar={<Suspense>{sidebar}</Suspense>}>
         <div className="h-full overflow-y-auto">
           <InternalNavbar>
             <div className="flex items-center justify-start w-full">

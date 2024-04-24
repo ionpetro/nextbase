@@ -11,9 +11,7 @@ export default async function Layout({
   sidebar: React.ReactNode;
 }) {
   return (
-    <ApplicationLayoutShell sidebar={<Suspense>
-      {sidebar}
-    </Suspense>}>
+    <ApplicationLayoutShell sidebar={<Suspense>{sidebar}</Suspense>}>
       <div className="h-full overflow-y-auto">
         <InternalNavbar>Admin panel</InternalNavbar>
         <div className="relative flex-1 h-auto mt-8 w-full">

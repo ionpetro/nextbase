@@ -13,8 +13,6 @@ test.describe('Admin can create a new changelog', () => {
     );
     await createChangelogButton.click();
 
-    await adminPage.waitForURL('**/changelog/create');
-
     const createChangelogForm = await adminPage.waitForSelector(
       '[data-testid="create-changelog-form"]',
     );

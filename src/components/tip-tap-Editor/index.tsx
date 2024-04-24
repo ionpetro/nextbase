@@ -11,13 +11,15 @@ export function TipTapEditor({
   value,
   onChange,
   onBlur,
+  placeholder,
 }: {
   value: Record<string, unknown>;
   onChange: (editor: Editor) => void;
   onBlur?: () => void;
+  placeholder?: string;
 }) {
   const editor = useEditor({
-    extensions: getTipTapExtention({}),
+    extensions: getTipTapExtention({ placeholder }),
     editorProps: TiptapEditorProps,
     onUpdate: (e) => {
       onChange(e.editor);

@@ -1,6 +1,6 @@
-import { uploadImage } from '@/data/user/user';
-import { Plugin, PluginKey, type EditorState } from '@tiptap/pm/state';
-import { Decoration, DecorationSet, type EditorView } from '@tiptap/pm/view';
+import { uploadImage } from '@/data/admin/user';
+import { EditorState, Plugin, PluginKey } from '@tiptap/pm/state';
+import { Decoration, DecorationSet, EditorView } from '@tiptap/pm/view';
 import { toast } from 'sonner';
 
 const uploadKey = new PluginKey('upload-image');
@@ -55,7 +55,6 @@ export default UploadImagesPlugin;
 
 function findPlaceholder(state: EditorState, id: Record<string, never>) {
   const decos = uploadKey.getState(state);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const found = decos.find(null, null, (spec: { id: any }) => spec.id == id);
   return found.length ? found[0].from : null;
 }
@@ -115,12 +114,11 @@ export function startImageUpload(file: File, view: EditorView, pos: number) {
     view.dispatch(transaction);
   });
 }
-
 export const handleImageUpload = async (file: File) => {
   // upload to Vercel Blob
   const formData = new FormData();
   formData.append('file', file);
-
+  ('');
   return await uploadImage(formData, file.name, {
     upsert: true,
   });

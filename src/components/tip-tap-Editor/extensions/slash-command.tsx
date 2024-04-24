@@ -1,25 +1,30 @@
-import React, {
-  useState,
-  useEffect,
-  useCallback,
-  ReactNode,
-  useRef,
-  useLayoutEffect,
-} from 'react';
-import { Editor, Range, Extension } from '@tiptap/core';
-import Suggestion from '@tiptap/suggestion';
+'use client';
+import { Extension, type Editor, type Range } from '@tiptap/core';
 import { ReactRenderer } from '@tiptap/react';
+
+import Suggestion from '@tiptap/suggestion';
+import {
+  CheckSquare,
+  Code,
+  Heading1,
+  Heading2,
+  Heading3,
+  ImageIcon,
+  List,
+  ListOrdered,
+  QuoteIcon,
+  Text,
+} from 'lucide-react';
+
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type ReactNode,
+} from 'react';
 import tippy from 'tippy.js';
-import { Heading1 } from 'lucide-react';
-import { Heading2 } from 'lucide-react';
-import { Heading3 } from 'lucide-react';
-import { List } from 'lucide-react';
-import { ListOrdered } from 'lucide-react';
-import { Text } from 'lucide-react';
-import { QuoteIcon } from 'lucide-react';
-import { ImageIcon } from 'lucide-react';
-import { Code } from 'lucide-react';
-import { CheckSquare } from 'lucide-react';
 import { startImageUpload } from '../plugins/upload-images';
 
 interface CommandItemProps {
@@ -295,9 +300,8 @@ const CommandList = ({
       {items.map((item: CommandItemProps, index: number) => {
         return (
           <button
-            className={`flex w-full items-center space-x-2 rounded-md px-2 py-1 text-left text-sm text-stone-900 hover:bg-stone-100 ${
-              index === selectedIndex ? 'bg-stone-100 text-stone-900' : ''
-            }`}
+            className={`flex w-full items-center space-x-2 rounded-md px-2 py-1 text-left text-sm text-stone-900 hover:bg-stone-100 ${index === selectedIndex ? 'bg-stone-100 text-stone-900' : ''
+              }`}
             key={index}
             onClick={() => selectItem(index)}
           >
@@ -365,7 +369,6 @@ const renderItems = () => {
     },
   };
 };
-
 const SlashCommand = Command.configure({
   suggestion: {
     items: getSuggestionItems,
