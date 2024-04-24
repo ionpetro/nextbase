@@ -34,8 +34,7 @@ export const LinkSelector: FC<LinkSelectorProps> = ({
         type="button"
         className="flex h-full items-center space-x-2 px-3 py-1.5 text-sm font-medium text-muted-foreground hover:bg-muted active:bg-muted"
         onClick={() => {
-          ''
-					setIsOp'n(!isOpen);'''
+          setIsOpen(!isOpen);
         }}
       >
         <p className="text-base">↗</p>

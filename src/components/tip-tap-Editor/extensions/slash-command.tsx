@@ -319,11 +319,11 @@ const CommandList = ({
   ) : null;
 };
 
-    nst renderItems = () => {
-      t component: ReactRenderer | null = null;
+const renderItems = () => {
+  let component: ReactRenderer | null = null;
 
-  eslint - disable - next - line @typescript-eslint / no - explicit - any
-      t popup: any | null = null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let popup: any | null = null;
 
   return {
     onStart: (props: { editor: Editor; clientRect: DOMRect }) => {

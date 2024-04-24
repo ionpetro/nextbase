@@ -1,3 +1,4 @@
+"use client"
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -17,7 +18,7 @@ import { z } from 'zod';
 
 import { Textarea } from '@/components/ui/textarea';
 import { createBlogTag } from '@/data/admin/internal-blog';
-import { useToastMutation } from '@/hooks/useToastMutation';
+import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import TagsIcon from 'lucide-react/dist/esm/icons/tag';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
@@ -29,7 +30,7 @@ const blogTagSchema = z.object({
   slug: z.string(),
 });
 
-type BlogTagFormType = z.infer<typeof blogTagSchema>;
+export type BlogTagFormType = z.infer<typeof blogTagSchema>;
 
 export const AddBlogTagDialog = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -37,13 +38,24 @@ export const AddBlogTagDialog = () => {
   const { control, handleSubmit, watch, setValue, formState } =
     useForm<BlogTagFormType>({ resolver: zodResolver(blogTagSchema) });
 
+
   const { mutate: createBlogTagMutation, isLoading: isCreatingBlogTag } =
-    useToastMutation(
-      async (payload: BlogTagFormType) => createBlogTag(payload),
+    useSAToastMutation(
+      async (payload: BlogTagFormType) => await createBlogTag(payload),
       {
         loadingMessage: 'Creating blog tag...',
         successMessage: 'Blog tag created!',
-        errorMessage: 'Failed to create blog tag',
+        errorMessage(error, variables) {
+          try {
+            if (error instanceof Error) {
+              return String(error.message);
+            }
+            return `Failed to create blog tag ${String(error)}`;
+          } catch (_err) {
+            console.warn(_err);
+            return 'Failed to create blog tag';
+          }
+        },
         onSuccess: () => {
           router.refresh();
           setIsOpen(false);
@@ -66,6 +78,7 @@ export const AddBlogTagDialog = () => {
   }, [nameValue, setValue]);
 
   const onSubmit = (data: BlogTagFormType) => {
+    console.log(data);
     createBlogTagMutation(data);
   };
 
@@ -118,16 +131,16 @@ export const AddBlogTagDialog = () => {
               )}
             />
           </div>
+          <DialogFooter className="w-full">
+            <Button
+              disabled={!isValid || isCreatingBlogTag}
+              type="submit"
+              className="w-full"
+            >
+              {isCreatingBlogTag ? 'Submitting...' : 'Submit Tag'}
+            </Button>
+          </DialogFooter>
         </form>
-        <DialogFooter className="w-full">
-          <Button
-            disabled={!isValid || isCreatingBlogTag}
-            type="submit"
-            className="w-full"
-          >
-            {isCreatingBlogTag ? 'Submitting...' : 'Submit Tag'}
-          </Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

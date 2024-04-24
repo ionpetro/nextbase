@@ -1,21 +1,21 @@
-'use client';
+"use client";
 
-import { zodResolver } from '@hookform/resolvers/zod';
+import { zodResolver } from "@hookform/resolvers/zod";
 
-import { motion } from 'framer-motion';
-import { Settings } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useEffect, useRef, useState } from 'react';
-import { Controller, FormProvider, useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { TagsMultiInsert } from '../TagsMultiInsert/TagsMultiInsert';
-import TipTap from '../tip-tap-Editor/TipTap';
-import { T } from '../ui/Typography';
-import { Button } from '../ui/button';
-import { Card } from '../ui/card';
-import { Input } from '../ui/input';
-import { Label } from '../ui/label';
+import { motion } from "framer-motion";
+import { Settings } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import { Controller, FormProvider, useForm } from "react-hook-form";
+import { z } from "zod";
+import { TagsMultiInsert } from "../TagsMultiInsert/TagsMultiInsert";
+import TipTap from "../tip-tap-Editor/TipTap";
+import { T } from "../ui/Typography";
+import { Button } from "../ui/button";
+import { Card } from "../ui/card";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 import {
   Select,
   SelectContent,
@@ -23,9 +23,9 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '../ui/select';
-import { Switch } from '../ui/switch';
-import { Textarea } from '../ui/textarea';
+} from "../ui/select";
+import { Switch } from "../ui/switch";
+import { Textarea } from "../ui/textarea";
 
 export const blogSchema = z.object({
   title: z.string(),
@@ -34,21 +34,37 @@ export const blogSchema = z.object({
   isHighlighted: z.boolean(),
   image: z.string().url(),
   summary: z.string(),
-  tags: z.string().array(),
+  tags: z.object({
+    id: z.number(),
+    slug: z.string(),
+    name: z.string(),
+    description: z.string().optional().nullable(),
+  }).array(),
   author: z.string(),
 });
 
 export type blogSchemaType = z.infer<typeof blogSchema>;
 
-export const CreateBlogPostForm = () => {
+export type BlogTagType = {
+  id: number;
+  name: string;
+  slug: string;
+  description?: string | null;
+};
+
+type CreateBlogPostFormProps = {
+  tags: BlogTagType[];
+};
+
+export const CreateBlogPostForm = ({ tags }: CreateBlogPostFormProps) => {
   const methods = useForm<blogSchemaType>({
     resolver: zodResolver(blogSchema),
     defaultValues: {
-      content: 'Default content for blog post',
-      slug: 'default-slug',
+      content: "Default content for blog post",
+      slug: "default-slug",
       isHighlighted: false,
-      image: '/mockups/laptop.jpeg',
-      summary: 'Default summary for blog post',
+      image: "/mockups/laptop.jpeg",
+      summary: "Default summary for blog post",
       tags: [],
     },
   });
@@ -85,7 +101,7 @@ export const CreateBlogPostForm = () => {
     <div>
       <div className="col-span-4 flex w-full justify-between items-center py-2">
         <h1 className="text-xl font-medium">Create blog post</h1>
-        <Link href={'/app_admin/configure-domains'} replace>
+        <Link href={"/app_admin/configure-domains"} replace>
           <Button variant="outline" className="w-fit self-end flex gap-2">
             <Settings size={16} /> Configure Domains
           </Button>
@@ -93,22 +109,22 @@ export const CreateBlogPostForm = () => {
       </div>
       <FormProvider {...methods}>
         <form
-          className="grid grid-cols-5 gap-2"
+          className="grid grid-cols-1 xl:grid-cols-5 xl:gap-4"
           onSubmit={methods.handleSubmit(onSubmit)}
         >
-          <Card className="h-96 col-span-3">
+          <Card className="h-96 col-span-3  overflow-y-auto">
             <Controller
-              {...methods.register('content')}
+              {...methods.register("content")}
               control={methods.control}
               render={({ field }) => <TipTap {...field} />}
             />
           </Card>
 
-          <Card className="p-4 flex h-fit col-span-2 flex-col gap-4">
+          <Card className="p-4 flex h-fit col-span-2 flex-col gap-4 mt-4">
             <T.P className="mt-2">Blog post slug</T.P>
             <Input
               placeholder="this-is-the-blog-post"
-              {...methods.register('slug')}
+              {...methods.register("slug")}
             />
             <div className="flex w-full justify-between">
               <div>
@@ -155,12 +171,12 @@ export const CreateBlogPostForm = () => {
                 width={800}
                 height={600}
                 className="h-40 object-center object-cover w-full rounded-lg"
-                src={selectedImage ? selectedImage : '/mockups/laptop.jpeg'}
+                src={selectedImage ? selectedImage : "/mockups/laptop.jpeg"}
                 alt="avatarUrl"
               />
             </Label>
             <input
-              {...methods.register('image')}
+              {...methods.register("image")}
               disabled={isNewAvatarImageLoading}
               ref={fileInputRef}
               onChange={handleFileChange}
@@ -172,13 +188,13 @@ export const CreateBlogPostForm = () => {
             />
             <T.P>Summary</T.P>
             <Textarea
-              {...methods.register('summary')}
+              {...methods.register("summary")}
               className="resize-none"
               placeholder="A short summary of the blog post"
-              {...methods.register('summary')}
+              {...methods.register("summary")}
             />
             <T.P>Tags</T.P>
-            <TagsMultiInsert />
+            <TagsMultiInsert tags={tags} />
             <T.P>Author</T.P>
             <Controller
               control={methods.control}
@@ -200,7 +216,7 @@ export const CreateBlogPostForm = () => {
               }}
             />
             <div className="flex justify-between mt-8">
-              <Button variant={'outline'} type="button">
+              <Button variant={"outline"} type="button">
                 Save as Draft
               </Button>
               <Button type="submit">Publish Post</Button>

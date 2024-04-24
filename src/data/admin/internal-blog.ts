@@ -1,6 +1,6 @@
 'use server';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
-import {
+import type {
   Table,
   TableInsertPayload,
   TableUpdatePayload,
@@ -264,14 +264,20 @@ export const deleteAuthorProfile = async (userId: string) => {
 
 export const createBlogTag = async (
   payload: TableInsertPayload<'internal_blog_post_tags'>,
-) => {
+): Promise<ValidSAPayload> => {
   const { error, data } = await supabaseAdminClient
     .from('internal_blog_post_tags')
     .insert(payload);
 
   if (error) {
-    throw error;
+    return {
+      status: 'error',
+      message: error.message,
+    };
   }
+  return {
+    status: 'success',
+  };
 };
 
 export const updateBlogTag = async (

@@ -1,5 +1,5 @@
-'use client';
-import { Button } from '@/components/ui/button';
+"use client";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -7,21 +7,21 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
-import { deleteBlogTag } from '@/data/admin/internal-blog';
-import { useToastMutation } from '@/hooks/useToastMutation';
-import { Table } from '@/types';
-import TagsIcon from 'lucide-react/dist/esm/icons/tag';
-import Trash from 'lucide-react/dist/esm/icons/trash';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { AddBlogTagDialog } from './AddBlogTagDialog';
-import { EditBlogTagDialog } from './EditBlogTagDialog';
+} from "@/components/ui/dialog";
+import { deleteBlogTag } from "@/data/admin/internal-blog";
+import { useToastMutation } from "@/hooks/useToastMutation";
+import type { Table } from "@/types";
+import TagsIcon from "lucide-react/dist/esm/icons/tag";
+import Trash from "lucide-react/dist/esm/icons/trash";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { AddBlogTagDialog } from "./AddBlogTagDialog";
+import { EditBlogTagDialog } from "./EditBlogTagDialog";
 
 export const ManageBlogTagsDialog = ({
   blogTags,
 }: {
-  blogTags: Array<Table<'internal_blog_post_tags'>>;
+  blogTags: Array<Table<"internal_blog_post_tags">>;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
@@ -32,9 +32,9 @@ export const ManageBlogTagsDialog = ({
         return deleteBlogTag(slug);
       },
       {
-        loadingMessage: 'Deleting blog tag...',
-        successMessage: 'Blog tag deleted!',
-        errorMessage: 'Failed to delete blog tag',
+        loadingMessage: "Deleting blog tag...",
+        successMessage: "Blog tag deleted!",
+        errorMessage: "Failed to delete blog tag",
         onSuccess: () => {
           router.refresh();
         },
