@@ -1,8 +1,8 @@
 import { PageHeading } from '@/components/PageHeading';
 import { Pagination } from '@/components/Pagination';
 import { Search } from '@/components/Search';
-import { AppAdminCreateUserDialogPreview } from '../../app_admin/users/AppAdminCreateUserDialogPreview';
-import { UsersListPreview } from '../../app_admin/users/UsersListPreview';
+import { AppAdminCreateUserDialogPreview } from '../../../app_admin/(admin-pages)/users/AppAdminCreateUserDialogPreview';
+import { UsersListPreview } from '../../../app_admin/(admin-pages)/users/UsersListPreview';
 
 export default function UsersPage() {
   return (

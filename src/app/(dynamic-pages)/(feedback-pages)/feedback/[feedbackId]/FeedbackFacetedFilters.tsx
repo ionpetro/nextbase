@@ -52,7 +52,11 @@ export function FeedbackFacetedFilters() {
     const params = new URLSearchParams(searchParams ?? undefined);
     for (const [key, value] of Object.entries(newFilters)) {
       if (key === 'myFeedbacks') {
-        params.set(key, newFilters.myFeedbacks.toString());
+        if (newFilters.myFeedbacks) {
+          params.set(key, newFilters.myFeedbacks.toString());
+        } else {
+          params.delete(key);
+        }
         continue;
       }
       if (Array.isArray(value) && value.length) {
@@ -133,7 +137,7 @@ export function FeedbackFacetedFilters() {
         onClick={() => {
           setFilters({
             ...filters,
-            myFeedbacks: !filters.myFeedbacks,
+            myFeedbacks: filters.myFeedbacks ? !filters.myFeedbacks : true,
           });
         }}
       >

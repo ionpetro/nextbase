@@ -6,7 +6,7 @@ import {
   uploadPublicUserAvatar,
 } from '@/data/user/user';
 import { useToastMutation } from '@/hooks/useToastMutation';
-import { Table } from '@/types';
+import type { Table } from '@/types';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { ConfirmDeleteAccountDialog } from './ConfirmDeleteAccountDialog';

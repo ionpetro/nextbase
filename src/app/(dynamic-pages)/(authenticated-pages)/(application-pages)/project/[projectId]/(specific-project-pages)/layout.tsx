@@ -2,7 +2,7 @@ import { ApplicationLayoutShell } from '@/components/ApplicationLayoutShell';
 import { InternalNavbar } from '@/components/NavigationMenu/InternalNavbar';
 import { PageHeading } from '@/components/PageHeading';
 import { getProjectTitleById } from '@/data/user/projects';
-import { ReactNode, Suspense } from 'react';
+import { Suspense, type ReactNode } from 'react';
 import { z } from 'zod';
 import { ApprovalControls } from './ApprovalControls';
 

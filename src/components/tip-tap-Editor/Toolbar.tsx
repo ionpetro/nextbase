@@ -94,7 +94,7 @@ const Toolbar: FC<ToolbarProps> = ({ editor }) => {
   }, [editor]);
 
   return (
-    <div className="flex flex-wrap items-center px-2 py-1 space-x-2 border-b-2">
+    <div className="flex flex-wrap items-center px-2 py-1 space-x-2 border-b-2 sticky top-0 z-10 bg-background">
       <Select
         onValueChange={(value) => {
           const selectedHeading = headings.find(

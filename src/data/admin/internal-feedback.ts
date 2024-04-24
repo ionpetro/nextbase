@@ -308,8 +308,8 @@ export async function adminUpdateInternalFeedbackType({
   if (error) {
     throw error;
   }
-
-  revalidatePath('/feedback', 'layout');
+  revalidatePath('/feedback');
+  revalidatePath('/feedback');
   return data;
 }
 
@@ -330,8 +330,8 @@ export async function adminUpdateInternalFeedbackStatus({
   if (error) {
     throw error;
   }
-
-  revalidatePath('/feedback', 'layout');
+  revalidatePath('/feedback');
+  revalidatePath('/feedback');
   return data;
 }
 

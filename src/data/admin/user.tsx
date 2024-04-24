@@ -1,9 +1,12 @@
 'use server';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
-import { Table } from '@/types';
+import type { SupabaseFileUploadOptions, Table } from '@/types';
 import { sendEmail } from '@/utils/api-routes/utils';
+import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import { renderAsync } from '@react-email/render';
 import SignInEmail from 'emails/SignInEmail';
+import slugify from 'slugify';
+import urlJoin from 'url-join';
 import { ensureAppAdmin } from './security';
 
 export const appAdminGetUserProfile = async (
@@ -21,6 +24,46 @@ export const appAdminGetUserProfile = async (
   }
 
   return data;
+};
+
+export const uploadImage = async (
+  formData: FormData,
+  fileName: string,
+  fileOptions?: SupabaseFileUploadOptions | undefined,
+): Promise<string> => {
+  'use server';
+  const file = formData.get('file');
+  if (!file) {
+    throw new Error('File is empty');
+  }
+  const slugifiedFilename = slugify(fileName, {
+    lower: true,
+    strict: true,
+    replacement: '-',
+  });
+
+  const user = await serverGetLoggedInUser();
+  const userId = user.id;
+  const userImagesPath = `${userId}/images/${slugifiedFilename}`;
+
+  const { data, error } = await supabaseAdminClient.storage
+    .from('changelog-assets')
+    .upload(userImagesPath, file, fileOptions);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  const { path } = data;
+
+  const filePath = path.split(',')[0];
+  const supabaseFileUrl = urlJoin(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    '/storage/v1/object/public/changelog-assets',
+    filePath,
+  );
+
+  return supabaseFileUrl;
 };
 
 export async function appAdminGetUserImpersonationUrl(userId: string) {

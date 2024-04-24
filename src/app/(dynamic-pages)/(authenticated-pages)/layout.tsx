@@ -1,3 +1,4 @@
+import { Skeleton } from '@/components/ui/skeleton';
 import { SIDEBAR_VISIBILITY_COOKIE_KEY } from '@/constants';
 import { LoggedInUserProvider } from '@/contexts/LoggedInUserContext';
 import { SidebarVisibilityProvider } from '@/contexts/SidebarVisibilityContext';
@@ -11,7 +12,7 @@ import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user
 import { errors } from '@/utils/errors';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import type { ReactNode } from 'react';
+import { Suspense, type ReactNode } from 'react';
 import { ClientLayout } from './ClientLayout';
 
 function getSidebarVisibility() {
@@ -55,14 +56,12 @@ const getOnboardingConditions = async (userId: string) => {
   };
 };
 
-export default async function Layout({ children }: { children: ReactNode }) {
+async function AuthenticatedLayout({ children }: { children: ReactNode }) {
   const supabaseClient = createSupabaseUserServerComponentClient();
-  const { data, error } = await supabaseClient.auth.getUser(); // this will cause memory leak in client side
+  const { data, error } = await supabaseClient.auth.getUser();
   const { user } = data;
 
   if (!user) {
-    // This is unreachable because the user is authenticated
-    // But we need to check for it anyway for TypeScript.
     return redirect('/login');
   }
   if (error) {
@@ -71,7 +70,6 @@ export default async function Layout({ children }: { children: ReactNode }) {
 
   try {
     const sidebarVisibility = getSidebarVisibility();
-
     const onboardingConditions = await getOnboardingConditions(user.id);
 
     return (
@@ -87,4 +85,11 @@ export default async function Layout({ children }: { children: ReactNode }) {
     errors.add(fetchDataError);
     return <p>Error: An error occurred.</p>;
   }
+}
+export default async function Layout({ children }: { children: ReactNode }) {
+  return (
+    <Suspense fallback={<Skeleton className="w-16 h-6" />}>
+      <AuthenticatedLayout>{children}</AuthenticatedLayout>
+    </Suspense>
+  );
 }
