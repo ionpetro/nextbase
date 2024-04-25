@@ -15,7 +15,6 @@ import {
 import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
 import { createBlogPost, updateBlogPost } from '@/data/admin/internal-blog';
-import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import { useToastMutation } from '@/hooks/useToastMutation';
 import type { Table } from '@/types';
 import {
@@ -36,6 +35,7 @@ import ReactSelect from 'react-select';
 import slugify from 'slugify';
 
 import { uploadBlogImage } from '@/data/admin/user';
+import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import type { Editor } from '@tiptap/core';
 import { motion } from 'framer-motion';
 import { Settings } from 'lucide-react';
@@ -233,7 +233,6 @@ export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
           },
           tags.map((tag) => tag.id),
         );
-        router.push("/app_admin/blog/");
         return response;
       },
       {
@@ -250,13 +249,8 @@ export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
             return 'Failed to create post';
           }
         },
-        onSuccess: (response) => {
-          if ('data' in response && response.data) {
-            const data = response.data;
-            router.push(`/app_admin/blog/post/${data.id}/edit`);
-          } else {
-            throw new Error('Failed to create post');
-          }
+        onSuccess: () => {
+          router.push("/app_admin/blog/");
         },
       },
     );
@@ -264,12 +258,13 @@ export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
   const { mutate: upload, isLoading: isUploading } = useToastMutation(async (file: File) => {
     const formData = new FormData();
     formData.append('file', file);
-    return await uploadBlogImage(formData, file.name);
+    const response = await uploadBlogImage(formData, file.name);
+    return response;
   }, {
     loadingMessage: 'Uploading image...',
     successMessage: 'Image uploaded successfully',
     onSuccess(data) {
-      setValue('cover_image', data);
+      setValue('cover_image', data.status === 'success' ? data.data : "");
     },
     errorMessage() {
       return "Failed to upload image";
@@ -286,19 +281,23 @@ export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
         const json_content = JSON.stringify(
           restPayload.json_content instanceof Object ? restPayload.json_content : {}
         );
+
+        const payload = {
+          ...restPayload,
+          json_content,
+        }
+
         const response = await updateBlogPost(
           author_id,
           rest.postId,
-          {
-            ...restPayload,
-            json_content,
-          },
+          payload,
           tags.map((tag) => tag.id),
         );
 
         return response;
       },
       {
+        loadingMessage: 'Updating post...',
         successMessage: 'Post updated!',
         errorMessage(error) {
           try {
@@ -311,7 +310,10 @@ export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
             return 'Failed to update post';
           }
         },
-      },
+        onSuccess() {
+          router.push("/app_admin/blog/");
+        }
+      }
     );
 
   function onSubmit(data: InternalBlogPostSchema) {
@@ -503,13 +505,15 @@ export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
           />
           {formState.errors.tags && <T.P className="text-red-500 text-xs">{formState.errors.tags.message}</T.P>}
           <div className="flex justify-between mt-8">
-            <Button variant={"outline"} type="button" onClick={() => {
+            <Button variant={"outline"} type="button" onClick={(e) => {
+              e.preventDefault();
               setValue("status", "draft");
               handleSubmit(onSubmit)();
             }}>
               Save as Draft
             </Button>
-            <Button onClick={() => {
+            <Button type="button" onClick={(e) => {
+              e.preventDefault();
               setValue("status", "published");
               handleSubmit(onSubmit)();
             }}>Publish Post</Button>

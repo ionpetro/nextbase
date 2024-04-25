@@ -1,7 +1,6 @@
 'use server';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 import type {
-  Table,
   TableInsertPayload,
   TableUpdatePayload,
   ValidSAPayload,
@@ -88,21 +87,19 @@ export const getAllBlogPosts = async ({
 
 export async function getBlogPostsTotalPages({
   query = '',
-  keywords = [],
   page = 1,
-  limit = 10,
+  limit = 5,
   sort = 'desc',
 }: {
   page?: number;
   limit?: number;
   query?: string;
-  keywords?: string[];
   sort?: 'asc' | 'desc';
 }) {
   const zeroIndexedPage = page - 1;
   let supabaseQuery = supabaseAdminClient
     .from('internal_blog_posts')
-    .select('id')
+    .select('id', { count: 'exact', head: true })
     .range(zeroIndexedPage * limit, (zeroIndexedPage + 1) * limit - 1);
 
   if (query) {
@@ -114,37 +111,17 @@ export async function getBlogPostsTotalPages({
     supabaseQuery = supabaseQuery.order('created_at', { ascending: false });
   }
 
-  const { data, error } = await supabaseQuery;
+  const { count, error } = await supabaseQuery;
 
   if (error) {
     throw error;
   }
 
-  let dataFormatted = await Promise.all(
-    data.map(async (post) => {
-      const author = await getAuthor(post.id);
-      const tags = await getBlogPostTags(post.id);
-      return {
-        ...post,
-        author,
-        tags,
-      };
-    }),
-  );
-
-  if (keywords.length > 0) {
-    dataFormatted = dataFormatted.filter((post) =>
-      keywords.some((keyword) =>
-        post.tags.map((tag) => tag.name).includes(keyword),
-      ),
-    );
-  }
-
-  if (!data) {
+  if (!count) {
     return 0;
   }
 
-  return Math.ceil(data.length / limit) ?? 0;
+  return Math.ceil(count / limit) ?? 0;
 }
 
 export const getAuthor = async (postId: string) => {
@@ -187,7 +164,7 @@ export const createBlogPost = async (
   authorId: string | undefined,
   payload: TableInsertPayload<'internal_blog_posts'>,
   tagIds: number[],
-): Promise<ValidSAPayload<Table<'internal_blog_posts'>>> => {
+): Promise<ValidSAPayload> => {
   const { data, error } = await supabaseAdminClient
     .from('internal_blog_posts')
     .insert(payload)
@@ -212,9 +189,9 @@ export const createBlogPost = async (
   await updateBlogTagRelationships(data.id, tagIds);
   revalidatePath(`/app_admin/blog/post/${data.id}/edit`, 'layout');
   revalidatePath('/app_admin/blog', 'layout');
+
   return {
     status: 'success',
-    data,
   };
 };
 
@@ -313,7 +290,7 @@ export const updateBlogPost = async (
   postId: string,
   payload: Partial<TableUpdatePayload<'internal_blog_posts'>>,
   tagIds: number[],
-): Promise<ValidSAPayload<Table<'internal_blog_posts'>>> => {
+): Promise<ValidSAPayload> => {
   const { data, error } = await supabaseAdminClient
     .from('internal_blog_posts')
     .update(payload)
@@ -332,8 +309,12 @@ export const updateBlogPost = async (
     .from('internal_blog_author_posts')
     .select('*')
     .eq('post_id', postId);
+
   if (oldAuthorsError) {
-    throw oldAuthorsError;
+    return {
+      status: 'error',
+      message: oldAuthorsError.message,
+    };
   }
 
   for (const oldAuthor of oldAuthors) {
@@ -342,8 +323,12 @@ export const updateBlogPost = async (
       .delete()
       .eq('author_id', oldAuthor.author_id)
       .eq('post_id', postId);
+
     if (deleteError) {
-      throw deleteError;
+      return {
+        status: 'error',
+        message: deleteError.message,
+      };
     }
   }
 
@@ -351,11 +336,13 @@ export const updateBlogPost = async (
   if (authorId) {
     await assignBlogPostToAuthor(authorId, postId);
   }
+
   await updateBlogTagRelationships(data.id, tagIds);
+
   revalidatePath(`/app_admin/blog/post/${data.id}/edit`, 'layout');
+
   return {
     status: 'success',
-    data,
   };
 };
 
@@ -439,6 +426,7 @@ export const createBlogTag = async (
       message: error.message,
     };
   }
+
   return {
     status: 'success',
   };

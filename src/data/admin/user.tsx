@@ -1,6 +1,6 @@
 'use server';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
-import type { SupabaseFileUploadOptions, Table } from '@/types';
+import type { SupabaseFileUploadOptions, Table, ValidSAPayload } from '@/types';
 import { sendEmail } from '@/utils/api-routes/utils';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import { renderAsync } from '@react-email/render';
@@ -245,7 +245,7 @@ export const uploadBlogImage = async (
   formData: FormData,
   fileName: string,
   fileOptions?: SupabaseFileUploadOptions | undefined,
-): Promise<string> => {
+): Promise<ValidSAPayload<string>> => {
   'use server';
   const file = formData.get('file');
   if (!file) {
@@ -268,8 +268,9 @@ export const uploadBlogImage = async (
       upsert: true,
     });
 
+
   if (error) {
-    throw new Error(error.message);
+    return { status: 'error', message: error.message };
   }
 
   const { path } = data;
@@ -281,5 +282,5 @@ export const uploadBlogImage = async (
     filePath,
   );
 
-  return supabaseFileUrl;
+  return { status: 'success', data: supabaseFileUrl };
 };

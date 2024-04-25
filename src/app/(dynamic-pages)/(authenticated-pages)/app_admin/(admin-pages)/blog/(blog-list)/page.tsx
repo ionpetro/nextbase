@@ -72,8 +72,7 @@ export default async function BlogListPage({ searchParams }: { searchParams: unk
   const tags = await getAllBlogTags();
   const totalPages = await getBlogPostsTotalPages(filters);
 
-  const draftedList = await getAllBlogPosts({ status: "draft" });
-  const recentlyList = await getAllBlogPosts({ page: 1, sort: "desc" });
+
   return (
     <div className="space-y-4 w-full grid grid-cols-1 lg:grid-cols-6 gap-12">
       <div className="space-y-2 lg:row-start-1 row-start-2 lg:col-span-4 col-span-1">
@@ -94,26 +93,31 @@ export default async function BlogListPage({ searchParams }: { searchParams: unk
           <Pagination totalPages={totalPages} />
         </div>
       </div>
-      <Suspense fallback={<T.P>Loading...</T.P>}>
-        <div className="space-y-8 col-span-1 lg:col-span-2 row-start-1">
-          <div className="space-y-4">
-            <Label className="text-md">Blog settings</Label>
-            <ActionButtons />
-          </div>
-          <div className="hidden lg:block">
-            {recentlyList.length > 0 && <div className="space-y-4">
-              <Label className="text-md">Recently published</Label>
-              <SmallBlogPostList blogs={recentlyList} />
-            </div>}
-            {draftedList.length > 0 && <div className="space-y-4">
-              <Label className="text-md">Drafted posts</Label>
-              <SmallBlogPostList blogs={draftedList} />
-            </div>}
-          </div>
 
+      <div className="space-y-8 col-span-1 lg:col-span-2 row-start-1">
+        <div className="space-y-4">
+          <Label className="text-md">Blog settings</Label>
+          <Suspense fallback={<T.P>Loading...</T.P>}>
+            <ActionButtons />
+          </Suspense>
+        </div>
+        <div className="hidden lg:flex flex-col gap-4">
+          <div className="space-y-4">
+            <Label className="text-md">Recently published</Label>
+            <Suspense fallback={<T.P>Loading...</T.P>}>
+              <SmallBlogPostList typeList={"published"} />
+            </Suspense>
+          </div>
+          <div className="space-y-4">
+            <Label className="text-md">Drafted posts</Label>
+            <Suspense fallback={<T.P>Loading...</T.P>}>
+              <SmallBlogPostList typeList={"draft"} />
+            </Suspense>
+          </div>
         </div>
 
-      </Suspense>
+      </div>
+
     </div>
 
   );
