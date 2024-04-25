@@ -26,7 +26,8 @@ test.describe.serial('authentication group', () => {
   test('update password should work', async ({ page }) => {
     // Start from the index page (the baseURL is set via the webServer in the playwright.config.ts)
     await page.goto('/dashboard');
-    // wait for the url to change to `/organization/<organizationUUID>`
+
+    await page.waitForTimeout(5000);
 
     await page.goto(`/settings/security`);
 
