@@ -1,6 +1,6 @@
 'use server';
 import { supabaseAnonClient } from '@/supabase-clients/anon/supabaseAnonClient';
-import { AppSupabaseClient } from '@/types';
+import type { AppSupabaseClient } from '@/types';
 
 export const anonGetBlogPostById = async (postId: string) => {
   const { data, error } = await supabaseAnonClient

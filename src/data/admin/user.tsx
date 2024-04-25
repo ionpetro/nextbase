@@ -1,6 +1,6 @@
 'use server';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
-import type { SupabaseFileUploadOptions, Table } from '@/types';
+import type { SupabaseFileUploadOptions, Table, ValidSAPayload } from '@/types';
 import { sendEmail } from '@/utils/api-routes/utils';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import { renderAsync } from '@react-email/render';
@@ -239,4 +239,48 @@ export const getUsersTotalPages = async ({
   }
 
   return Math.ceil(data / limit);
+};
+
+export const uploadBlogImage = async (
+  formData: FormData,
+  fileName: string,
+  fileOptions?: SupabaseFileUploadOptions | undefined,
+): Promise<ValidSAPayload<string>> => {
+  'use server';
+  const file = formData.get('file');
+  if (!file) {
+    throw new Error('File is empty');
+  }
+  const slugifiedFilename = slugify(fileName, {
+    lower: true,
+    strict: true,
+    replacement: '-',
+  });
+
+  const user = await serverGetLoggedInUser();
+  const userId = user.id;
+  const userImagesPath = `${userId}/images/${slugifiedFilename}`;
+
+  const { data, error } = await supabaseAdminClient.storage
+    .from('admin-blog')
+    .upload(userImagesPath, file, {
+      cacheControl: '3600',
+      upsert: true,
+    });
+
+
+  if (error) {
+    return { status: 'error', message: error.message };
+  }
+
+  const { path } = data;
+
+  const filePath = path.split(',')[0];
+  const supabaseFileUrl = urlJoin(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    '/storage/v1/object/public/admin-blog',
+    filePath,
+  );
+
+  return { status: 'success', data: supabaseFileUrl };
 };

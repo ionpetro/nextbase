@@ -1,6 +1,6 @@
-'use client';
-import { T } from '@/components/ui/Typography';
-import { Button } from '@/components/ui/button';
+"use client";
+import { T } from "@/components/ui/Typography";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -9,25 +9,25 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
-import { deleteAuthorProfile } from '@/data/admin/internal-blog';
-import { useToastMutation } from '@/hooks/useToastMutation';
-import { Table } from '@/types';
-import Trash from 'lucide-react/dist/esm/icons/trash';
-import UsersIcon from 'lucide-react/dist/esm/icons/users';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { AddAuthorProfileDialog } from './AddAuthorProfileDialog';
-import { EditAuthorProfileDialog } from './EditAuthorProfileDialog';
+} from "@/components/ui/dialog";
+import { deleteAuthorProfile } from "@/data/admin/internal-blog";
+import { useToastMutation } from "@/hooks/useToastMutation";
+import type { Table } from "@/types";
+import Trash from "lucide-react/dist/esm/icons/trash";
+import UsersIcon from "lucide-react/dist/esm/icons/users";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { AddAuthorProfileDialog } from "./AddAuthorProfileDialog";
+import { EditAuthorProfileDialog } from "./EditAuthorProfileDialog";
 
-type AuthorProfile = Table<'internal_blog_author_profiles'>;
+type AuthorProfile = Table<"internal_blog_author_profiles">;
 
 export const ManageAuthorsDialog = ({
   appAdmins,
   authorProfiles,
 }: {
-  appAdmins: Array<Table<'user_profiles'>>;
-  authorProfiles: Array<Table<'internal_blog_author_profiles'>>;
+  appAdmins: Array<Table<"user_profiles">>;
+  authorProfiles: Array<Table<"internal_blog_author_profiles">>;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
@@ -40,9 +40,9 @@ export const ManageAuthorsDialog = ({
       return deleteAuthorProfile(id);
     },
     {
-      loadingMessage: 'Deleting author profile...',
-      successMessage: 'Author profile deleted!',
-      errorMessage: 'Failed to delete author profile',
+      loadingMessage: "Deleting author profile...",
+      successMessage: "Author profile deleted!",
+      errorMessage: "Failed to delete author profile",
       onSuccess: () => {
         router.refresh();
       },
@@ -52,8 +52,8 @@ export const ManageAuthorsDialog = ({
   return (
     <Dialog open={isOpen} onOpenChange={(newIsOpen) => setIsOpen(newIsOpen)}>
       <DialogTrigger asChild>
-        <Button variant="link">
-          <UsersIcon className="mr-2 w-5 h-5" />
+        <Button variant="outline" className="justify-start">
+          <UsersIcon className="mr-2 size-4" />
           Manage author profiles
         </Button>
       </DialogTrigger>
@@ -82,7 +82,7 @@ export const ManageAuthorsDialog = ({
                 <div className="flex gap-3 items-center">
                   <div className="h-10 w-10 rounded-full bg-gray-300/50 border dark:bg-gray-700/40 flex items-center justify-center">
                     <T.P className="font-semibold text-gray-800 dark:text-gray-400 uppercase">
-                      {profile.display_name ? profile.display_name[0] : ''}
+                      {profile.display_name ? profile.display_name[0] : ""}
                     </T.P>
                   </div>
 
