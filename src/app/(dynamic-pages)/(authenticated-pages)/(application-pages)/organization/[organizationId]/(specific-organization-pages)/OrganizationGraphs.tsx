@@ -6,7 +6,6 @@ import { PageHeading } from "@/components/PageHeading";
 import { Button } from "@/components/ui/button";
 import { AreaChart, BarChart, DonutChart, Legend } from "@tremor/react";
 import Link from "next/link";
-import { TeamMembers, type OrganizationDetails } from "./TeamMembers";
 
 const chartDataForMonth = [
   {
@@ -80,20 +79,52 @@ const chartDataForWeek = [
 
 const chartDataForYears = [
   {
-    year: 2018,
-    "Time Spent": 2890,
+    Month: "January",
+    "Time Spent": 1500,
   },
   {
-    year: 2019,
-    "Time Spent": 2756,
+    Month: "February",
+    "Time Spent": 4000,
   },
   {
-    year: 2020,
-    "Time Spent": 3322,
+    Month: "March",
+    "Time Spent": 2800,
   },
   {
-    year: 2021,
-    "Time Spent": 4302,
+    Month: "April",
+    "Time Spent": 2500,
+  },
+  {
+    Month: "May",
+    "Time Spent": 3400,
+  },
+  {
+    Month: "June",
+    "Time Spent": 3200,
+  },
+  {
+    Month: "July",
+    "Time Spent": 2300,
+  },
+  {
+    Month: "August",
+    "Time Spent": 2500,
+  },
+  {
+    Month: "September",
+    "Time Spent": 2800,
+  },
+  {
+    Month: "October",
+    "Time Spent": 3000,
+  },
+  {
+    Month: "November",
+    "Time Spent": 4200,
+  },
+  {
+    Month: "December",
+    "Time Spent": 4800,
   },
 ];
 
@@ -122,12 +153,11 @@ const valueFormatter = (number: number) =>
   `$ ${Intl.NumberFormat("us").format(number).toString()}`;
 
 type Props = {
-  organizations: OrganizationDetails[];
   organizationId: string;
+  children: React.ReactNode;
 };
 
-export function OrganizationGraphs({ organizations, organizationId }: Props) {
-
+export function OrganizationGraphs({ organizationId, children }: Props) {
   return (
     <>
       <div className="mt-10 pb-16 flex flex-col gap-6">
@@ -135,21 +165,21 @@ export function OrganizationGraphs({ organizations, organizationId }: Props) {
 
         <GraphContainer
           title="Revenue per year"
-          subTitle="Detailed analysis on revenue per year"
+          subTitle="Detailed analysis on time spent in a month"
           badgeValue={badgeValueForYear}
         >
           <AreaChart
             className="h-72 mt-8"
             data={chartDataForYears}
-            index="date"
+            index="Month"
             categories={["Time Spent"]}
             colors={["blue-700"]}
             curveType="natural"
             customTooltip={customTooltip}
             showAnimation={true}
-            showGridLines={false}
-            showXAxis={false}
             showYAxis={false}
+
+            yAxisWidth={100}
           />
 
         </GraphContainer>
@@ -202,7 +232,7 @@ export function OrganizationGraphs({ organizations, organizationId }: Props) {
               <Button variant={"ghost"} asChild className="self-end border border-muted-foreground">
                 <Link href={`/organization/${organizationId}/settings/members`}>View all</Link>
               </Button>
-              <TeamMembers organizations={organizations} />
+              {children}
             </div>
 
           </GraphContainer>

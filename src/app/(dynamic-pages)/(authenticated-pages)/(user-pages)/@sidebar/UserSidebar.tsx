@@ -1,4 +1,4 @@
-import { SidebarLogoAndToggle } from '@/components/SidebarComponents/SidebarLogo';
+import { SwitcherAndToggle } from '@/components/SidebarComponents/SidebarLogo';
 import { SidebarLink } from '@/components/SidebarLink';
 import { cn } from '@/utils/cn';
 import DeveloperIcon from 'lucide-react/dist/esm/icons/code';
@@ -18,7 +18,7 @@ export async function UserSidebar() {
     >
       <div>
         <div className="flex justify-between items-center">
-          <SidebarLogoAndToggle />
+          <SwitcherAndToggle />
         </div>
         <div className="">
           <SidebarLink

@@ -28,10 +28,10 @@ export const ProjectsCardList = ({
     );
   }
   return (
-    <div className="mt-6 flex w-full overflow-x-auto gap-4">
+    <div className="mt-6 flex w-full overflow-x-auto gap-4 p-2">
       {projects.slice(0, 5).map((project) => (
-        <Link href={`/project/${project.id}`} className="min-w-72">
-          <Card key={project.id} className="p-4 flex flex-col gap-4 hover:bg-secondary transition-colors duration-3000 ease-in-out">
+        <Link href={`/project/${project.id}`} className="min-w-72 hover:shadow-md shadow-black transition-shadow duration-300 ease-in-out rounded-lg">
+          <Card key={project.id} className="p-4 flex flex-col gap-4">
             <ProjectBadge variant={project.project_status} className="w-fit ">{ProjectStatus[project.project_status]}</ProjectBadge>
             <h2 className="text-xl font-bold">{project.name}</h2>
             <div className="flex items-center gap-2 text-muted-foreground text-sm">

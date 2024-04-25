@@ -1,8 +1,9 @@
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import type { Tables } from "@/lib/database.types";
-import { AvatarImage } from "@radix-ui/react-avatar";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { getAllOrganizationsForUser } from "@/data/user/organizations";
+import type { Tables } from "@/lib/database.types";
+import { serverGetLoggedInUser } from "@/utils/server/serverGetLoggedInUser";
 
 export type OrganizationDetails = {
   created_at: string;
@@ -16,13 +17,9 @@ export type OrganizationDetails = {
   }[]
 }
 
-export const TeamMembers = ({
-  organizations,
-
-}: {
-  organizations: OrganizationDetails[];
-
-}) => {
+export const TeamMembers = async () => {
+  const user = await serverGetLoggedInUser()
+  const organizations = await getAllOrganizationsForUser(user.id)
   const organizationsMembers = organizations.flatMap(organization => organization.organization_members)
   return (
     <div className='flex flex-col overflow-y-auto'>

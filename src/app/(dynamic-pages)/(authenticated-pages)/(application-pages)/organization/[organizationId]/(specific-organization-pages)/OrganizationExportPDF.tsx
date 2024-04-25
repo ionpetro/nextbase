@@ -10,17 +10,18 @@ export const OrganizationExportPDF = () => {
   const exportPDF = () => {
     const input = document.getElementById("export-container");
     if (input) {
-      html2canvas(input, { scale: 2 }) // Use the ref here
+      html2canvas(input, { scale: 2 })
         .then((canvas) => {
           const imgData = canvas.toDataURL("image/png");
           const pdf = new jsPDF({
             orientation: "portrait",
+            format: "a4",
           });
           const imgProps = pdf.getImageProperties(imgData);
           const pdfWidth = pdf.internal.pageSize.getWidth();
           const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
           pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-          pdf.save("download.pdf");
+          pdf.save("organization.pdf");
         });
     }
   };

@@ -87,7 +87,7 @@ async function OrganizationSidebarInternal({
 
 export async function OrganizationSidebar({ params }: { params: unknown }) {
   try {
-    console.log('params', params);
+
     const { organizationId } = organizationParamSchema.parse(params);
     console.log(organizationId);
     return (

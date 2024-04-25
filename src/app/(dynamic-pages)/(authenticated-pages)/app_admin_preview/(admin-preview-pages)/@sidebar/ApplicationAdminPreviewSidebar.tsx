@@ -1,4 +1,4 @@
-import { SidebarLogoAndToggle } from '@/components/SidebarComponents/SidebarLogo';
+import { SwitcherAndToggle } from '@/components/SidebarComponents/SidebarLogo';
 import { SidebarLink } from '@/components/SidebarLink';
 import { cn } from '@/utils/cn';
 import ActivityLogIcon from 'lucide-react/dist/esm/icons/book';
@@ -68,7 +68,7 @@ export function ApplicationAdminPreviewSidebar() {
         'lg:px-3 lg:py-4 lg:pt-2.5 ',
       )}
     >
-      <SidebarLogoAndToggle />
+      <SwitcherAndToggle />
       <div className="h-full">
         {links.map((link) => {
           return (
