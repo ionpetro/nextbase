@@ -1,6 +1,6 @@
 import { OrganizationSwitcher } from '@/components/SidebarComponents/OrganizationSwitcher';
 import { DesktopSidebarFallback } from '@/components/SidebarComponents/SidebarFallback';
-import { SidebarLogoAndToggle } from '@/components/SidebarComponents/SidebarLogo';
+import { SwitcherAndToggle } from '@/components/SidebarComponents/SidebarLogo';
 import { SidebarLink } from '@/components/SidebarLink';
 import { fetchSlimOrganizations } from '@/data/user/organizations';
 import { getSlimProjectById } from '@/data/user/projects';
@@ -26,7 +26,7 @@ async function ProjectSidebarInternal({ projectId }: { projectId: string }) {
       )}
     >
       <div>
-        <SidebarLogoAndToggle />
+        <SwitcherAndToggle organizationId={organizationId} slimOrganizations={slimOrganizations} />
         <div className="flex flex-col">
           <SidebarLink
             label="Back to organization"

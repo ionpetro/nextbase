@@ -1,16 +1,16 @@
-import { cn } from '@/utils/cn';
-import { ReactNode, Suspense } from 'react';
-import { AppAdminLink } from './AppAdminLink/AppAdminLink';
-import { PendingInvitationCounter } from './PendingInvitationCounter';
-import { SidebarOpen } from './SidebarOpen';
-import { UserNav } from './UserNav';
+import { cn } from "@/utils/cn";
+import { Suspense, type ReactNode } from "react";
+import { AppAdminLink } from "./AppAdminLink/AppAdminLink";
+import { PendingInvitationCounter } from "./PendingInvitationCounter";
+import { SidebarOpen } from "./SidebarOpen";
+import { UserNav } from "./UserNav";
 
 export async function InternalNavbar({ children }: { children: ReactNode }) {
   return (
-    <header className="sticky top-0 w-full z-10 backdrop-blur">
+    <header className="sticky top-0 w-full z-10 backdrop-blur bg-background">
       <div
         className={cn(
-          'h-full  text-sm font-medium flex gap-2 mx-auto pl-6 pr-6 border-b dark:border-gray-700/50 py-3 w-full justify-between items-center',
+          "h-full  text-sm font-medium flex gap-2 mx-auto pl-6 pr-6 border-b dark:border-gray-700/50 py-3 w-full justify-between items-center",
         )}
       >
         <SidebarOpen />

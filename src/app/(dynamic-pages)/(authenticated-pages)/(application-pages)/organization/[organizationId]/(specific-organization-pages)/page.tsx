@@ -1,27 +1,50 @@
-import { CreateProjectDialog } from '@/components/CreateProjectDialog';
-import { PageHeading } from '@/components/PageHeading';
-import { ProjectsTable } from '@/components/Projects/ProjectsTable';
-import { T } from '@/components/ui/Typography';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import { getProjects } from '@/data/user/projects';
-import { organizationParamSchema } from '@/utils/zod-schemas/params';
-import InfoIcon from 'lucide-react/dist/esm/icons/info';
-import { Suspense } from 'react';
-import { OrganizationGraphs } from './OrganizationGraphs';
-import { OrganizationPageHeading } from './OrganizationPageHeading';
+import { CreateProjectDialog } from "@/components/CreateProjectDialog";
+import { PageHeading } from "@/components/PageHeading";
+import { ProjectsCardList } from "@/components/Projects/ProjectsCardList";
+import { Search } from "@/components/Search";
+import { T } from "@/components/ui/Typography";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { getAllOrganizationsForUser } from "@/data/user/organizations";
+import { getProjects } from "@/data/user/projects";
+import { serverGetLoggedInUser } from "@/utils/server/serverGetLoggedInUser";
+import {
+  organizationParamSchema,
+  projectsfilterSchema,
+} from "@/utils/zod-schemas/params";
+import { Layers } from "lucide-react";
+import InfoIcon from "lucide-react/dist/esm/icons/info";
+import Link from "next/link";
+import { Suspense } from "react";
+import type { z } from "zod";
+import { OrganizationExportPDF } from "./OrganizationExportPDF";
+import { OrganizationGraphs } from "./OrganizationGraphs";
+import { OrganizationPageHeading } from "./OrganizationPageHeading";
 
-async function Projects({ organizationId }: { organizationId: string }) {
-  const projects = await getProjects({ organizationId, teamId: null });
-  return <ProjectsTable projects={projects} />;
+async function Projects({
+  organizationId,
+  filters,
+}: { organizationId: string; filters: z.infer<typeof projectsfilterSchema> }) {
+  const projects = await getProjects({
+    organizationId,
+    ...filters,
+  });
+  return <ProjectsCardList projects={projects} />;
 }
 
 export default async function OrganizationPage({
   params,
+  searchParams,
 }: {
   params: unknown;
+  searchParams: unknown;
 }) {
-  console.log(params);
+  const user = await serverGetLoggedInUser()
   const { organizationId } = organizationParamSchema.parse(params);
+  const validatedSearchParams = projectsfilterSchema.parse(searchParams);
+  const organizationsForUser = await getAllOrganizationsForUser(user.id)
+
+
 
   return (
     <div className="">
@@ -29,7 +52,7 @@ export default async function OrganizationPage({
         <Suspense
           fallback={
             <PageHeading
-              title={'Loading...'}
+              title={"Loading..."}
               isLoading
               titleHref={`/organization/${organizationId}`}
             />
@@ -43,7 +66,7 @@ export default async function OrganizationPage({
           <div className="flex gap-2 justify-start items-center">
             <div>
               <div className="flex gap-3 items-center">
-                <T.H3 className="mt-0">Projects</T.H3>{' '}
+                <T.H3 className="mt-0">Projects</T.H3>{" "}
                 <Dialog>
                   <DialogTrigger asChild>
                     <InfoIcon className="h-4 w-4 text-gray-500 hover:text-gray-700 dark:text-slate-400 dark:hover:text-slate-200" />
@@ -65,7 +88,10 @@ export default async function OrganizationPage({
               </T.P>
             </div>
           </div>
-          <CreateProjectDialog organizationId={organizationId} />
+          <div className="flex gap-4">
+            <OrganizationExportPDF />
+            <CreateProjectDialog organizationId={organizationId} />
+          </div>
         </div>
         <Suspense
           fallback={
@@ -74,12 +100,38 @@ export default async function OrganizationPage({
             </div>
           }
         >
-          <Projects organizationId={organizationId} />
+          <div className="flex flex-col mt-16">
+            <div className="flex justify-between items-center">
+              <h2 className="text-xl font-semibold">Recent Projects</h2>
+              <div className="flex gap-4">
+                <Search placeholder="Search projects" />
+                <Button
+                  variant={"outline"}
+                  asChild
+                  className="self-end flex gap-2"
+                >
+                  <Link href={`/organization/${organizationId}/projects`}>
+                    <Layers className="h-4 w-4" />
+                    View all projects
+                  </Link>
+                </Button>
+              </div>
+
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <Projects
+                organizationId={organizationId}
+                filters={validatedSearchParams}
+              />
+              {validatedSearchParams.query && <p className="text-sm ml-2">Searching for <span className="font-bold">{validatedSearchParams.query}</span></p>}
+            </div>
+          </div>
         </Suspense>
       </div>
       <div>
         <Suspense>
-          <OrganizationGraphs />
+          <OrganizationGraphs organizations={organizationsForUser} organizationId={organizationId} />
         </Suspense>
       </div>
     </div>

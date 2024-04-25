@@ -11,11 +11,11 @@ import UserIcon from 'lucide-react/dist/esm/icons/user-2';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 
-import { OrganizationSwitcher } from '@/components/SidebarComponents/OrganizationSwitcher';
 import { DesktopSidebarFallback } from '@/components/SidebarComponents/SidebarFallback';
-import { SidebarLogoAndToggle } from '@/components/SidebarComponents/SidebarLogo';
+import { SwitcherAndToggle } from '@/components/SidebarComponents/SidebarLogo';
 import { SubscriptionCardSmall } from '@/components/SubscriptionCardSmall';
 import { T } from '@/components/ui/Typography';
+import { LayersIcon } from 'lucide-react';
 
 async function OrganizationSidebarInternal({
   organizationId,
@@ -31,8 +31,9 @@ async function OrganizationSidebarInternal({
       )}
     >
       <div>
+
         <div className="flex justify-between items-center">
-          <SidebarLogoAndToggle />
+          <SwitcherAndToggle organizationId={organizationId} slimOrganizations={slimOrganizations} />
         </div>
         <div className="flex flex-col gap-6 h-full overflow-y-auto">
           <div>
@@ -45,6 +46,11 @@ async function OrganizationSidebarInternal({
               label="Settings"
               href={`/organization/${organizationId}/settings`}
               icon={<SettingsIcon className="h-5 w-5" />}
+            />
+            <SidebarLink
+              label="Projects"
+              href={`/organization/${organizationId}/projects`}
+              icon={<LayersIcon className="h-5 w-5" />}
             />
             <SidebarLink
               label="Members"
@@ -68,18 +74,12 @@ async function OrganizationSidebarInternal({
       </div>
       <div className="flex flex-col gap-4">
         <Suspense fallback={<T.P>Loading subscription details...</T.P>}>
-          <SubscriptionCardSmall organizationId={organizationId} />
+          <div>
+            <SubscriptionCardSmall organizationId={organizationId} />
+          </div>
         </Suspense>
 
-        <div className="flex flex-col gap-1">
-          <p className="text-sm font-normal text-gray-500 dark:text-slate-400">
-            Select organization
-          </p>
-          <OrganizationSwitcher
-            currentOrganizationId={organizationId}
-            slimOrganizations={slimOrganizations}
-          />
-        </div>
+
       </div>
     </div>
   );

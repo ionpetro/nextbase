@@ -1,8 +1,8 @@
 import { T } from '@/components/ui/Typography';
-import { CommentInput } from './CommentInput';
 import LayersIcon from 'lucide-react/dist/esm/icons/layers';
-import { z } from 'zod';
 import { Suspense } from 'react';
+import { z } from 'zod';
+import { CommentInput } from './CommentInput';
 import { ProjectComments } from './ProjectComments';
 
 const paramsSchema = z.object({
@@ -36,7 +36,7 @@ export default function ProjectPage({ params }: { params: unknown }) {
           <T.H4>Comments</T.H4>
           <div className="space-y-2 mb-10">
             <div className="space-y-4 mt-4 mb-10">
-              <CommentInput projectId={projectId}></CommentInput>
+              <CommentInput projectId={projectId} />
               <Suspense>
                 <ProjectComments projectId={projectId} />
               </Suspense>

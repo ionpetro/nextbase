@@ -14,8 +14,9 @@ import { Suspense } from 'react';
 
 import { OrganizationSwitcher } from '@/components/SidebarComponents/OrganizationSwitcher';
 import { DesktopSidebarFallback } from '@/components/SidebarComponents/SidebarFallback';
-import { SidebarLogoAndToggle } from '@/components/SidebarComponents/SidebarLogo';
+import { SwitcherAndToggle } from '@/components/SidebarComponents/SidebarLogo';
 import { organizationParamSchema } from '@/utils/zod-schemas/params';
+import { LayersIcon } from 'lucide-react';
 
 async function OrganizationSidebarInternal({
   organizationId,
@@ -32,7 +33,7 @@ async function OrganizationSidebarInternal({
     >
       <div>
         <div className="flex justify-between items-center">
-          <SidebarLogoAndToggle />
+          <SwitcherAndToggle organizationId={organizationId} slimOrganizations={slimOrganizations} />
         </div>
         <div className="flex flex-col gap-6 h-full overflow-y-auto">
           <div>
@@ -40,6 +41,11 @@ async function OrganizationSidebarInternal({
               label="Home"
               href={`/organization/${organizationId}`}
               icon={<HomeIcon className="h-5 w-5" />}
+            />
+            <SidebarLink
+              label="Projects"
+              href={`/organization/${organizationId}/projects`}
+              icon={<LayersIcon className="h-5 w-5" />}
             />
             <SidebarLink
               label="Settings"
@@ -63,6 +69,7 @@ async function OrganizationSidebarInternal({
                 icon={<FileBoxIcon className="h-5 w-5" />}
               />
             </Suspense>
+
           </div>
           {/* <TeamsList organizationId={organizationId} /> */}
         </div>
