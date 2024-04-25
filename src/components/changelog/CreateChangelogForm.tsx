@@ -1,6 +1,5 @@
 'use client';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { createChangelog } from '@/data/admin/internal-changelog';
@@ -8,16 +7,13 @@ import { uploadImage } from '@/data/admin/user';
 import { useToastMutation } from '@/hooks/useToastMutation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader } from 'lucide-react';
-import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Controller, useForm, type SubmitHandler } from 'react-hook-form';
 import { z } from 'zod';
+import { TipTapEditor } from '../tip-tap-Editor';
 
-const TipTap = dynamic(() => import('@/components/tip-tap-Editor/TipTap'), {
-  ssr: false,
-});
 
 export type ChangelogType = {
   changelog_image: { name: string; url: string };
@@ -163,15 +159,22 @@ export const CreateChangelogForm = () => {
         <p className="text-red-400 text-sm">{errors.title.message}</p>
       )}
       <Label>Content</Label>
-      <Card className="h-fit max-h-96 overflow-y-auto">
+      <div>
+
+
         <Controller
           name="content"
           control={control}
-          render={({ field }) => (
-            <TipTap {...field} placeholder="Write your changelog here..." />
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TipTapEditor
+              value={value}
+              onChange={(editor) => onChange(editor)}
+              onBlur={onBlur}
+              placeholder="Write your changelog here..."
+            />
           )}
         />
-      </Card>
+      </div>
       {errors.content && (
         <p className="text-red-400 text-sm">{errors.content.message}</p>
       )}

@@ -1,37 +1,34 @@
 'use client';
 
-import { EditorContent, generateJSON, useEditor } from '@tiptap/react';
+import type { Editor } from '@tiptap/core';
+import { EditorContent, useEditor } from '@tiptap/react';
+
 import Toolbar from './Toolbar';
 import { getTipTapExtention } from './extensions';
 import { TiptapEditorProps } from './props';
 
-interface TipTapProps {
-  value: string;
-  onChange: (value: string) => void;
-  onBlur?: () => void;
-  placeholder?: string;
-}
-
-export default function TipTap({
+export function TipTap({
   value,
   onChange,
   onBlur,
   placeholder,
-}: TipTapProps) {
-  const TiptapExtensions = getTipTapExtention({
-    placeholder: placeholder || undefined,
-  });
-
+}: {
+  value: Record<string, unknown>;
+  onChange: (editor: Editor | string) => void;
+  onBlur?: () => void;
+  placeholder?: string;
+}) {
   const editor = useEditor({
-    extensions: TiptapExtensions,
-    content: generateJSON(value, TiptapExtensions),
+    extensions: getTipTapExtention({ placeholder }),
     editorProps: TiptapEditorProps,
-    autofocus: 'end',
-    onUpdate(e) {
-      onChange(e.editor.getHTML());
+    onUpdate: (e) => {
+      onChange(e.editor);
     },
+    autofocus: 'end',
+    content: value,
     onBlur,
   });
+
   return (
     <>
       <style>

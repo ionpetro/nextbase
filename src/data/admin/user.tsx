@@ -240,3 +240,46 @@ export const getUsersTotalPages = async ({
 
   return Math.ceil(data / limit);
 };
+
+export const uploadBlogImage = async (
+  formData: FormData,
+  fileName: string,
+  fileOptions?: SupabaseFileUploadOptions | undefined,
+): Promise<string> => {
+  'use server';
+  const file = formData.get('file');
+  if (!file) {
+    throw new Error('File is empty');
+  }
+  const slugifiedFilename = slugify(fileName, {
+    lower: true,
+    strict: true,
+    replacement: '-',
+  });
+
+  const user = await serverGetLoggedInUser();
+  const userId = user.id;
+  const userImagesPath = `${userId}/images/${slugifiedFilename}`;
+
+  const { data, error } = await supabaseAdminClient.storage
+    .from('admin-blog')
+    .upload(userImagesPath, file, {
+      cacheControl: '3600',
+      upsert: true,
+    });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  const { path } = data;
+
+  const filePath = path.split(',')[0];
+  const supabaseFileUrl = urlJoin(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    '/storage/v1/object/public/admin-blog',
+    filePath,
+  );
+
+  return supabaseFileUrl;
+};

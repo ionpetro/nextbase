@@ -22,17 +22,153 @@ export const deleteBlogPost = async (blogPostId: string) => {
   revalidatePath('/', 'layout');
 };
 
-export const getAllBlogPosts = async () => {
-  const { data, error } = await supabaseAdminClient
+export const getAllBlogPosts = async ({
+  query = '',
+  keywords = [],
+  page = 1,
+  limit = 5,
+  sort = 'desc',
+  status = 'published',
+}: {
+  query?: string;
+  keywords?: string[];
+  page?: number;
+  limit?: number;
+  sort?: 'asc' | 'desc';
+  status?: 'draft' | 'published';
+}) => {
+  const zeroIndexedPage = page - 1;
+  let supabaseQuery = supabaseAdminClient
     .from('internal_blog_posts')
     .select('*')
-    .order('created_at', { ascending: false });
+    .range(zeroIndexedPage * limit, (zeroIndexedPage + 1) * limit - 1);
+
+  if (query) {
+    supabaseQuery = supabaseQuery.ilike('title', `%${query}%`);
+  }
+  if (sort === 'asc') {
+    supabaseQuery = supabaseQuery.order('created_at', { ascending: true });
+  } else {
+    supabaseQuery = supabaseQuery.order('created_at', { ascending: false });
+  }
+
+  if (status) {
+    supabaseQuery = supabaseQuery.eq('status', status);
+  }
+
+  const { data, error } = await supabaseQuery;
 
   if (error) {
     throw error;
   }
-  console.log({ data });
-  return data;
+
+  let dataFormatted = await Promise.all(
+    data.map(async (post) => {
+      const author = await getAuthor(post.id);
+      const tags = await getBlogPostTags(post.id);
+
+      return {
+        ...post,
+        author,
+        tags,
+      };
+    }),
+  );
+
+  if (keywords.length > 0) {
+    dataFormatted = dataFormatted.filter((post) =>
+      keywords.some((keyword) =>
+        post.tags.map((tag) => tag.name).includes(keyword),
+      ),
+    );
+  }
+
+  return dataFormatted;
+};
+
+export async function getBlogPostsTotalPages({
+  query = '',
+  keywords = [],
+  page = 1,
+  limit = 10,
+  sort = 'desc',
+}: {
+  page?: number;
+  limit?: number;
+  query?: string;
+  keywords?: string[];
+  sort?: 'asc' | 'desc';
+}) {
+  const zeroIndexedPage = page - 1;
+  let supabaseQuery = supabaseAdminClient
+    .from('internal_blog_posts')
+    .select('id')
+    .range(zeroIndexedPage * limit, (zeroIndexedPage + 1) * limit - 1);
+
+  if (query) {
+    supabaseQuery = supabaseQuery.ilike('title', `%${query}%`);
+  }
+  if (sort === 'asc') {
+    supabaseQuery = supabaseQuery.order('created_at', { ascending: true });
+  } else {
+    supabaseQuery = supabaseQuery.order('created_at', { ascending: false });
+  }
+
+  const { data, error } = await supabaseQuery;
+
+  if (error) {
+    throw error;
+  }
+
+  let dataFormatted = await Promise.all(
+    data.map(async (post) => {
+      const author = await getAuthor(post.id);
+      const tags = await getBlogPostTags(post.id);
+      return {
+        ...post,
+        author,
+        tags,
+      };
+    }),
+  );
+
+  if (keywords.length > 0) {
+    dataFormatted = dataFormatted.filter((post) =>
+      keywords.some((keyword) =>
+        post.tags.map((tag) => tag.name).includes(keyword),
+      ),
+    );
+  }
+
+  if (!data) {
+    return 0;
+  }
+
+  return Math.ceil(data.length / limit) ?? 0;
+}
+
+export const getAuthor = async (postId: string) => {
+  const { data, error } = await supabaseAdminClient
+    .from('internal_blog_author_posts')
+    .select('*')
+    .eq('post_id', postId)
+    .maybeSingle();
+
+  if (error) {
+    console.log('error', error);
+    throw error;
+  }
+  if (!data) {
+    return null;
+  }
+
+  const { data: authorData } = await supabaseAdminClient
+    .from('internal_blog_author_profiles')
+    .select('*')
+    .eq('user_id', data.author_id)
+    .single();
+
+  return authorData;
 };
 
 export const createAuthorProfile = async (
@@ -52,7 +188,6 @@ export const createBlogPost = async (
   payload: TableInsertPayload<'internal_blog_posts'>,
   tagIds: number[],
 ): Promise<ValidSAPayload<Table<'internal_blog_posts'>>> => {
-  'use server';
   const { data, error } = await supabaseAdminClient
     .from('internal_blog_posts')
     .insert(payload)
@@ -75,7 +210,8 @@ export const createBlogPost = async (
   }
 
   await updateBlogTagRelationships(data.id, tagIds);
-  revalidatePath('/', 'layout');
+  revalidatePath(`/app_admin/blog/post/${data.id}/edit`, 'layout');
+  revalidatePath('/app_admin/blog', 'layout');
   return {
     status: 'success',
     data,
@@ -125,6 +261,35 @@ export const getBlogPostsByAuthorId = async (authorId: string) => {
   }
 
   return data;
+};
+
+export const getBlogPostTags = async (postId: string) => {
+  const { data, error } = await supabaseAdminClient
+    .from('internal_blog_post_tags_relationship')
+    .select('*')
+    .eq('blog_post_id', postId);
+
+  if (error) {
+    throw error;
+  }
+
+  const tags = await Promise.all(
+    data.map(async (tag) => {
+      const { data: tagData, error: tagError } = await supabaseAdminClient
+        .from('internal_blog_post_tags')
+        .select('*')
+        .eq('id', tag.tag_id)
+        .single();
+
+      if (tagError) {
+        throw tagError;
+      }
+
+      return tagData ?? [];
+    }),
+  );
+
+  return tags;
 };
 
 export const updateAuthorProfile = async (
@@ -187,8 +352,7 @@ export const updateBlogPost = async (
     await assignBlogPostToAuthor(authorId, postId);
   }
   await updateBlogTagRelationships(data.id, tagIds);
-  revalidatePath('/', 'layout');
-
+  revalidatePath(`/app_admin/blog/post/${data.id}/edit`, 'layout');
   return {
     status: 'success',
     data,

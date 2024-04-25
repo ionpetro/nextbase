@@ -1,14 +1,14 @@
 import {
   anonGetPublishedBlogPostBySlug,
   anonGetPublishedBlogPosts,
-} from '@/data/anon/internalBlog';
+} from "@/data/anon/internalBlog";
 
-import { T } from '@/components/ui/Typography';
-import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
-import { z } from 'zod';
-import AuthorCard from '../AuthorCard';
-import { BlogContentWrapper } from './BlogContentWrapper';
+import { T } from "@/components/ui/Typography";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { z } from "zod";
+import AuthorCard from "../AuthorCard";
+import { BlogContentWrapper } from "./BlogContentWrapper";
 
 const paramsSchema = z.object({
   slug: z.string(),
@@ -32,20 +32,22 @@ export async function generateMetadata({
   const { slug } = paramsSchema.parse(params);
   const post = await anonGetPublishedBlogPostBySlug(slug);
 
+  console.log(post)
+
   return {
     title: `${post.title} | Blog | Nextbase Boilerplate`,
     description: post.summary,
     openGraph: {
       title: `${post.title} | Blog | Nextbase Boilerplate`,
       description: post.summary,
-      type: 'website',
+      type: "website",
       images: post.cover_image ? [post.cover_image] : undefined,
     },
     twitter: {
       images: post.cover_image ? [post.cover_image] : undefined,
       title: `${post.title} | Blog | Nextbase Boilerplate`,
-      card: 'summary_large_image',
-      site: '@usenextbase',
+      card: "summary_large_image",
+      site: "@usenextbase",
       description: post.summary,
     },
   };

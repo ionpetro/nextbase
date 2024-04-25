@@ -44,7 +44,7 @@ export const ManageBlogTagsDialog = ({
   return (
     <Dialog open={isOpen} onOpenChange={(newIsOpen) => setIsOpen(newIsOpen)}>
       <DialogTrigger asChild>
-        <Button variant="link">
+        <Button variant="outline" className="text-start justify-start">
           <TagsIcon className="mr-2 w-5 h-5" />
           Manage blog tags
         </Button>
@@ -53,7 +53,7 @@ export const ManageBlogTagsDialog = ({
       <DialogContent>
         <DialogHeader>
           <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 rounded-lg">
-            <TagsIcon className="w-6 h-6" />
+            <TagsIcon className="size-4" />
           </div>
           <div className="p-1 mb-4">
             <DialogTitle className="text-lg">Manage blog tags</DialogTitle>
