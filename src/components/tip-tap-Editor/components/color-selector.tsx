@@ -130,7 +130,7 @@ export const ColorSelector: FC<ColorSelectorProps> = ({
           {TEXT_COLORS.map(({ name, color }, index) => (
             <button
               type="button"
-              key={index}
+              key={`${name}-text-color`}
               onClick={() => {
                 editor.commands.unsetColor();
                 name !== 'Default' &&
@@ -163,7 +163,7 @@ export const ColorSelector: FC<ColorSelectorProps> = ({
           {HIGHLIGHT_COLORS.map(({ name, color }, index) => (
             <button
               type="button"
-              key={index}
+              key={`${name}-highlight`}
               onClick={() => {
                 editor.commands.unsetHighlight();
                 name !== 'Default' &&

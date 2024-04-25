@@ -1,5 +1,5 @@
-'use client';
-import { Button } from '@/components/ui/button';
+"use client";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -8,40 +8,40 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
-import { createAuthorProfile } from '@/data/admin/internal-blog';
-import { useToastMutation } from '@/hooks/useToastMutation';
-import { Table } from '@/types';
-import { authorProfileSchema } from '@/utils/zod-schemas/internalBlog';
-import { zodResolver } from '@hookform/resolvers/zod';
-import UserIcon from 'lucide-react/dist/esm/icons/user-plus';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import { toast } from 'sonner';
-import { z } from 'zod';
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { createAuthorProfile } from "@/data/admin/internal-blog";
+import { useToastMutation } from "@/hooks/useToastMutation";
+import type { Table } from "@/types";
+import { authorProfileSchema } from "@/utils/zod-schemas/internalBlog";
+import { zodResolver } from "@hookform/resolvers/zod";
+import UserIcon from "lucide-react/dist/esm/icons/user-plus";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { toast } from "sonner";
+import type { z } from "zod";
 
 type AuthorProfileFormType = z.infer<typeof authorProfileSchema>;
 type CreateAuthorPayload = Omit<
-  Table<'internal_blog_author_profiles'>,
-  'created_at' | 'updated_at'
+  Table<"internal_blog_author_profiles">,
+  "created_at" | "updated_at"
 >;
 export const AddAuthorProfileDialog = ({
   appAdmins,
   authorProfiles,
 }: {
-  appAdmins: Array<Table<'user_profiles'>>;
-  authorProfiles: Array<Table<'internal_blog_author_profiles'>>;
+  appAdmins: Array<Table<"user_profiles">>;
+  authorProfiles: Array<Table<"internal_blog_author_profiles">>;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
@@ -60,12 +60,12 @@ export const AddAuthorProfileDialog = ({
     {
       onSuccess: () => {
         router.refresh();
-        toast.success('Successfully created author profile');
+        toast.success("Successfully created author profile");
         setIsOpen(false);
         reset();
       },
       onError: () => {
-        toast.error('Failed to create author profile');
+        toast.error("Failed to create author profile");
       },
     },
   );
@@ -231,8 +231,8 @@ export const AddAuthorProfileDialog = ({
               className="w-full"
             >
               {isLoading || isCreatingAuthorProfile
-                ? 'Submitting...'
-                : 'Submit Profile'}
+                ? "Submitting..."
+                : "Submit Profile"}
             </Button>
           </DialogFooter>
         </form>

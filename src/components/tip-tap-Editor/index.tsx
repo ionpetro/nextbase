@@ -1,9 +1,8 @@
 'use client';
 
-import type { Editor } from '@tiptap/core';
 import { EditorContent, useEditor } from '@tiptap/react';
 
-import { EditorBubbleMenu } from './components/EditorBubbleMenu';
+import Toolbar from './Toolbar';
 import { getTipTapExtention } from './extensions';
 import { TiptapEditorProps } from './props';
 
@@ -13,8 +12,8 @@ export function TipTapEditor({
   onBlur,
   placeholder,
 }: {
-  value: Record<string, unknown>;
-  onChange: (editor: Editor) => void;
+  value: string;
+  onChange: (value: string) => void;
   onBlur?: () => void;
   placeholder?: string;
 }) {
@@ -22,7 +21,7 @@ export function TipTapEditor({
     extensions: getTipTapExtention({ placeholder }),
     editorProps: TiptapEditorProps,
     onUpdate: (e) => {
-      onChange(e.editor);
+      onChange(e.editor.getHTML());
     },
     autofocus: 'end',
     content: value,
@@ -36,7 +35,8 @@ export function TipTapEditor({
       }}
       className="relative min-h-[500px] w-full max-w-screen-lg border bg-white dark:bg-slate-950 p-12 px-8 sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:px-12 sm:shadow-lg"
     >
-      {editor && <EditorBubbleMenu editor={editor} />}
+      {/* {editor && <EditorBubbleMenu editor={editor} />} */}
+      <Toolbar editor={editor} />
       <EditorContent editor={editor} />
     </div>
   );

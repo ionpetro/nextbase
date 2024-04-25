@@ -1,5 +1,8 @@
 'use client';
+import { TipTap } from '@/components/tip-tap-Editor/TipTap';
+import { T } from '@/components/ui/Typography';
 import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
@@ -11,61 +14,33 @@ import {
 } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
+import { createBlogPost, updateBlogPost } from '@/data/admin/internal-blog';
+import { useToastMutation } from '@/hooks/useToastMutation';
 import type { Table } from '@/types';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useTheme } from 'next-themes';
-import { useEffect } from 'react';
-import {
-  Controller,
-  useController,
-  useForm,
-  type Control,
-} from 'react-hook-form';
-import ReactSelect from 'react-select';
-import slugify from 'slugify';
-
 import {
   internalBlogPostSchema,
   type InternalBlogPostSchema,
 } from '@/utils/zod-schemas/internalBlog';
-import Trash from 'lucide-react/dist/esm/icons/trash';
+import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { UploadBlogImage } from './post/UploadBlogImage';
+import { useEffect, useState } from 'react';
+import {
+  Controller,
+  useController,
+  useForm,
+  type Control
+} from 'react-hook-form';
+import ReactSelect from 'react-select';
+import slugify from 'slugify';
 
-import { TipTapEditor } from '@/components/tip-tap-Editor';
-import { createBlogPost, updateBlogPost } from '@/data/admin/internal-blog';
+import { uploadBlogImage } from '@/data/admin/user';
 import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import type { Editor } from '@tiptap/core';
-import dynamic from 'next/dynamic';
-
-const TipTap = dynamic(() => import('@/components/tip-tap-Editor/TipTap'), {
-  ssr: false,
-});
-
-const defaultContent = {
-  type: 'doc',
-  content: [
-    {
-      type: 'paragraph',
-      content: [
-        {
-          type: 'text',
-          text: 'Example ',
-        },
-        {
-          type: 'text',
-          marks: [
-            {
-              type: 'bold',
-            },
-          ],
-          text: 'Text',
-        },
-      ],
-    },
-  ],
-};
+import { motion } from 'framer-motion';
+import { Settings } from 'lucide-react';
+import { useTheme } from 'next-themes';
+import Link from 'next/link';
 
 const darkThemeStyles = {
   control: (styles) => ({
@@ -116,12 +91,39 @@ const darkThemeStyles = {
   }),
 };
 
+const defaultContent = {
+  type: 'doc',
+  content: [
+    {
+      type: 'paragraph',
+      content: [
+        {
+          type: 'text',
+          text: 'Example ',
+        },
+        {
+          type: 'text',
+          marks: [
+            {
+              type: 'bold',
+            },
+          ],
+          text: 'Text',
+        },
+      ],
+    },
+  ],
+};
+
+
 const baseDefaultValues: Partial<InternalBlogPostSchema> = {
   status: 'draft',
   is_featured: false,
   title: '',
+  slug: '',
   json_content: defaultContent,
-  tag_ids: [],
+  cover_image: "https://images.unsplash.com/photo-1439792675105-701e6a4ab6f0?q=80&w=2073&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  tags: [],
 };
 
 type CreateBlogFormProps = {
@@ -138,16 +140,17 @@ const TipTapWrapper = ({
     control,
   });
 
+
+
   return (
     <Controller
       control={control}
       name="json_content"
       render={({ field }) => {
         return (
-          <TipTapEditor
+          <TipTap
             value={field.value}
             onChange={(editor: Editor) => {
-              console.log(editor.getJSON());
               // saving json should be enough.
               field.onChange(editor.getJSON());
               // While this is duplicate. We are just trying to minimise
@@ -162,6 +165,9 @@ const TipTapWrapper = ({
   );
 };
 
+
+
+
 export type EditBlogFormProps = {
   mode: 'update';
   initialBlogPost: Partial<InternalBlogPostSchema>;
@@ -174,19 +180,33 @@ type BlogFormProps = {
 } & (CreateBlogFormProps | EditBlogFormProps);
 
 export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
-  const { theme } = useTheme(); // Get the current theme
+  const MotionImage = motion(Image);
+  const [isNewCoverImageLoading, setIsNewCoverImageLoading] = useState(false);
+
   const initialBlogPost = 'initialBlogPost' in rest ? rest.initialBlogPost : {};
+
   const defaultValues = Object.assign({}, baseDefaultValues, initialBlogPost);
+
   const router = useRouter();
-  const { control, handleSubmit, formState, watch, setValue } =
+
+  const { theme } = useTheme()
+
+  const {
+    control,
+    handleSubmit,
+    register,
+    watch,
+    setValue,
+    formState,
+    getValues
+  } =
     useForm<InternalBlogPostSchema>({
       resolver: zodResolver(internalBlogPostSchema),
       defaultValues,
     });
-  const { isValid } = formState;
+
   const titleValue = watch('title');
   useEffect(() => {
-    // remove special characters including spaces and question marks
     const slug = slugify(titleValue, {
       lower: true,
       strict: true,
@@ -198,24 +218,21 @@ export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
   const { mutate: createPostMutation, isLoading: isCreatingPost } =
     useSAToastMutation(
       async (data: InternalBlogPostSchema) => {
-        const { author_id, tag_ids, ...restPayload } = data;
-        console.log(restPayload.json_content);
+        const { author_id, tags, ...restPayload } = data;
         if (rest.mode !== 'create') {
           throw new Error('Invalid mode');
         }
+        const json_content = JSON.stringify(
+          restPayload.json_content instanceof Object ? restPayload.json_content : {}
+        );
         const response = await createBlogPost(
           author_id,
           {
             ...restPayload,
-            json_content:
-              typeof restPayload.json_content === 'object' &&
-              restPayload.json_content !== null
-                ? restPayload.json_content
-                : JSON.parse(restPayload.json_content),
+            json_content,
           },
-          tag_ids,
+          tags.map((tag) => tag.id),
         );
-        router.refresh();
         return response;
       },
       {
@@ -232,38 +249,51 @@ export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
             return 'Failed to create post';
           }
         },
-        onSuccess: (response) => {
-          if ('data' in response && response.data) {
-            const data = response.data;
-            router.push(`/app_admin/blog/post/${data.id}/edit`);
-          } else {
-            throw new Error('Failed to create post');
-          }
+        onSuccess: () => {
+          router.push("/app_admin/blog/");
         },
       },
     );
 
+  const { mutate: upload, isLoading: isUploading } = useToastMutation(async (file: File) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    const response = await uploadBlogImage(formData, file.name);
+    return response;
+  }, {
+    loadingMessage: 'Uploading image...',
+    successMessage: 'Image uploaded successfully',
+    onSuccess(data) {
+      setValue('cover_image', data.status === 'success' ? data.data : "");
+    },
+    errorMessage() {
+      return "Failed to upload image";
+    }
+  })
+
   const { mutate: updatePostMutation, isLoading: isUpdatingPost } =
     useSAToastMutation(
       async (data: InternalBlogPostSchema) => {
-        const { author_id, tag_ids, ...restPayload } = data;
+        const { author_id, tags, ...restPayload } = data;
         if (rest.mode !== 'update') {
           throw new Error('Invalid mode');
         }
+        const json_content = JSON.stringify(
+          restPayload.json_content instanceof Object ? restPayload.json_content : {}
+        );
+
+        const payload = {
+          ...restPayload,
+          json_content,
+        }
+
         const response = await updateBlogPost(
           author_id,
           rest.postId,
-          {
-            ...restPayload,
-            json_content:
-              typeof restPayload.json_content === 'object' &&
-              restPayload.json_content !== null
-                ? restPayload.json_content
-                : JSON.parse(restPayload.json_content),
-          },
-          tag_ids,
+          payload,
+          tags.map((tag) => tag.id),
         );
-        router.refresh();
+
         return response;
       },
       {
@@ -280,12 +310,15 @@ export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
             return 'Failed to update post';
           }
         },
-      },
+        onSuccess() {
+          router.push("/app_admin/blog/");
+        }
+      }
     );
 
   function onSubmit(data: InternalBlogPostSchema) {
     if (!data.author_id) {
-      delete data.author_id;
+      data.author_id = undefined;
     }
     if (rest.mode === 'update') {
       updatePostMutation(data);
@@ -294,189 +327,199 @@ export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
     }
   }
 
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 max-w-2xl">
-      <div className="space-y-2">
-        <Label>Cover Image </Label>
-        {/* <Controller
-          control={control}
-          name="cover_image"
-          render={({ field }) => (
-            <Input {...field} placeholder="Cover Image URL" />
-          )}
-        />
-         */}
-        <Controller
-          control={control}
-          name="cover_image"
-          render={({ field }) => {
-            return (
-              <>
-                {field.value ? (
-                  <div className="relative">
-                    <div className="relative rounded-lg overflow-hidden h-72 bg-gray-900 dark:bg-slate-950">
-                      <Image
-                        src={field.value}
-                        fill
-                        alt="Cover Image"
-                        style={{
-                          objectFit: 'contain',
-                        }}
-                      />
-                    </div>
-
-                    <Button
-                      variant="destructive"
-                      className="absolute top-2 right-2 "
-                      onClick={() => {
-                        field.onChange(null);
-                      }}
-                    >
-                      <Trash></Trash>
-                    </Button>
-                  </div>
-                ) : (
-                  <UploadBlogImage onUpload={(path) => field.onChange(path)} />
-                )}
-              </>
-            );
-          }}
-        />
+    <div>
+      <div className="col-span-4 flex w-full justify-between items-center py-2">
+        <h1 className="text-xl font-medium">Create blog post</h1>
+        {formState.errors.content && <T.P className="text-red-500 text-xs">{formState.errors.content.message}</T.P>}
+        <Link href={"/app_admin/configure-domains"} replace>
+          <Button variant="outline" className="w-fit self-end flex gap-2">
+            <Settings size={16} /> Configure Domains
+          </Button>
+        </Link>
       </div>
-      <div className="space-y-2">
-        <Label>Title</Label>
-        <Controller
-          control={control}
-          name="title"
-          render={({ field }) => {
-            return <Input {...field} placeholder="Title" />;
-          }}
-        />
-      </div>
-
-      <div className="space-y-2">
-        <Label>Content</Label>
-        <TipTapWrapper control={control} />
-      </div>
-      <div className="space-y-2">
-        <Label>Summary</Label>
-        <Controller
-          control={control}
-          name="summary"
-          render={({ field }) => <Textarea {...field} placeholder="Summary" />}
-        />
-      </div>
-      <div className="flex items-end space-x-2">
-        <Label>Is Featured</Label>
-        <Controller
-          control={control}
-          name="is_featured"
-          render={({ field }) => (
-            <Switch
-              disabled={isCreatingPost || isUpdatingPost}
-              checked={field.value}
-              onBlur={field.onBlur}
-              name={field.name}
-              ref={field.ref}
-              onCheckedChange={(checked) => field.onChange(checked)}
-            />
-          )}
-        />
-      </div>
-      <div className="space-y-2">
-        <Label>Status</Label>
-        <Controller
-          control={control}
-          name="status"
-          render={({ field }) => (
-            <Select value={field.value} onValueChange={field.onChange}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="draft">Draft</SelectItem>
-                <SelectItem value="published">Published</SelectItem>
-              </SelectContent>
-            </Select>
-          )}
-        />
-      </div>
-      <div className="space-y-2">
-        <Label>Author</Label>
-        <Controller
-          control={control}
-          name="author_id"
-          render={({ field }) => (
-            <Select value={field.value} onValueChange={field.onChange}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select author" />
-              </SelectTrigger>
-              <SelectContent>
-                {authors.map((admin) => (
-                  <SelectItem key={admin.user_id} value={admin.user_id}>
-                    {admin.display_name || `User ${admin.user_id}`}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          )}
-        />
-      </div>
-      <div className="space-y-2">
-        <Label>Tags</Label>
-        <Controller
-          control={control}
-          name="tag_ids"
-          render={({ field }) => (
-            // <Select value={field.value} onValueChange={field.onChange}>
-            //   <SelectTrigger>
-            //     <SelectValue placeholder="Select author" />
-            //   </SelectTrigger>
-            //   <SelectContent>
-            //     {authors.map((admin) => (
-            //       <SelectItem key={admin.user_id} value={admin.user_id}>
-            //         {admin.display_name || `User ${admin.user_id}`}
-            //       </SelectItem>
-            //     ))}
-            //   </SelectContent>
-            // </Select>
-            <ReactSelect
-              closeMenuOnSelect={false}
-              value={field.value.map((tagId) => ({
-                label: tags.find((tag) => tag.id === tagId)?.name ?? '',
-                value: tagId,
-              }))}
-              isMulti
-              name={field.name}
-              onBlur={field.onBlur}
-              onChange={(values) => {
-                field.onChange(values.map((value) => value.value));
-              }}
-              options={tags.map((tag) => ({
-                label: tag.name,
-                value: tag.id,
-              }))}
-              styles={theme === 'dark' ? darkThemeStyles : {}} // Apply the dark theme styles only if the current theme is 'dark'
-            />
-          )}
-        />
-      </div>
-      <div className="space-y-2">
-        <Label>Slug</Label>
-        <Controller
-          control={control}
-          name="slug"
-          render={({ field }) => (
-            <Input disabled {...field} placeholder="Slug" />
-          )}
-        />
-      </div>
-      <Button
-        disabled={!isValid || isCreatingPost || isUpdatingPost}
-        type="submit"
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="grid grid-cols-1 xl:grid-cols-6 xl:gap-4"
       >
-        {isCreatingPost || isUpdatingPost ? 'Submitting...' : 'Submit Post'}
-      </Button>
-    </form>
+        <div className='col-span-4 self-start place-self-start'>
+          <TipTapWrapper control={control} />
+        </div>
+
+        <Card className="p-4 flex h-fit col-span-2 flex-col gap-4">
+          <Label>Title</Label>
+          <Controller
+            control={control}
+            name="title"
+            render={({ field }) => {
+              return <Input {...field} placeholder="Title" />;
+            }}
+          />
+          {formState.errors.title && <T.P className="text-red-500 text-xs">{formState.errors.title.message}</T.P>}
+          <T.P className="mt-2">Blog post slug</T.P>
+          <Input
+            placeholder="this-is-the-blog-post"
+            {...register("slug")}
+          />
+          <div className="flex w-full justify-between">
+            <div>
+              <T.P>Feature blog post</T.P>
+              <T.Small className="text-muted-foreground">
+                Highlights your article for increased visibility
+              </T.Small>
+            </div>
+
+            <Controller
+              control={control}
+              name="is_featured"
+              render={({ field }) => (
+                <Switch
+                  disabled={isCreatingPost || isUpdatingPost}
+                  checked={field.value}
+                  onBlur={field.onBlur}
+                  name={field.name}
+                  ref={field.ref}
+                  onCheckedChange={(checked) => field.onChange(checked)}
+                />
+              )}
+            />
+
+          </div>
+          <T.P>Cover Image</T.P>
+          <Label
+            className="inline p-0 m-0 cursor-pointer text-muted-foreground"
+            htmlFor="file-input"
+          >
+            <MotionImage
+              animate={{
+                opacity: isNewCoverImageLoading ? [0.5, 1, 0.5] : 1,
+              }}
+              transition={
+                /* eslint-disable */
+                isNewCoverImageLoading
+                  ? {
+                    duration: 1,
+                    repeat: Number.POSITIVE_INFINITY,
+                    repeatType: "reverse",
+                  }
+                  : undefined
+                /* eslint-enable */
+              }
+              onLoad={(file) => {
+                setIsNewCoverImageLoading(false);
+              }}
+              onError={() => {
+                setIsNewCoverImageLoading(false);
+              }}
+              loading="eager"
+              width={800}
+              height={600}
+              className="h-40 object-center object-cover w-full rounded-lg"
+              src={watch('cover_image') ?? "/mockups/laptop.jpeg"}
+              alt="avatarUrl"
+            />
+          </Label>
+          <input
+            {...register("cover_image")}
+            disabled={isNewCoverImageLoading}
+            onChange={(event) => {
+              const file = event.target.files?.[0];
+              if (file) {
+                upload?.(file);
+              }
+            }}
+            type="file"
+            hidden
+            name="file-input"
+            id="file-input"
+            accept="image/*"
+          />
+          {formState.errors.cover_image && <T.P className="text-red-500 text-xs">{formState.errors.cover_image.message}</T.P>}
+
+
+          <Label>Summary</Label>
+          <Textarea
+            {...register("summary")}
+            className="resize-none"
+            placeholder="A short summary of the blog post"
+          />
+          {formState.errors.summary && <T.P className="text-red-500 text-xs">{formState.errors.summary.message}</T.P>}
+
+          <Label>Author</Label>
+          <Controller
+            control={control}
+            name="author_id"
+            render={({ field }) => (
+              <Select value={field.value} onValueChange={field.onChange}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select author" />
+                </SelectTrigger>
+                <SelectContent>
+                  {authors.map((admin) => (
+                    <SelectItem key={admin.user_id} value={admin.user_id}>
+                      {admin.display_name || `User ${admin.user_id}`}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
+          />
+          {formState.errors.author_id && <T.P className="text-red-500 text-xs">{formState.errors.author_id.message}</T.P>}
+
+          <Label>Tags</Label>
+          <Controller
+            control={control}
+            name="tags"
+            render={({ field }) => (
+              <ReactSelect
+                closeMenuOnSelect={false}
+                value={field.value.map((tagId) => ({
+                  label: tags.find((tag) => tag.id === tagId.id)?.name ?? '',
+                  value: tagId.id,
+                }))}
+                isMulti
+                name={field.name}
+                onBlur={field.onBlur}
+                onChange={(values) => {
+                  if (values.length === 0) {
+                    setValue("tags", []);
+                    field.onChange([]);
+                    return;
+                  }
+                  let tags = getValues("tags");
+                  values.map((value) => {
+                    tags = tags.filter((tag) => tag.id !== value.value);
+                    tags.push({
+                      id: value.value,
+                      name: value.label,
+                    });
+                  });
+                  setValue("tags", tags);
+                  field.onChange(tags);
+                }}
+                options={tags.map(tag => ({ label: tag.name, value: tag.id }))}
+                styles={theme === 'dark' ? darkThemeStyles : {}} // Apply the dark theme styles only if the current theme is 'dark'
+              />
+            )}
+          />
+          {formState.errors.tags && <T.P className="text-red-500 text-xs">{formState.errors.tags.message}</T.P>}
+          <div className="flex justify-between mt-8">
+            <Button variant={"outline"} type="button" onClick={(e) => {
+              e.preventDefault();
+              setValue("status", "draft");
+              handleSubmit(onSubmit)();
+            }}>
+              Save as Draft
+            </Button>
+            <Button type="button" onClick={(e) => {
+              e.preventDefault();
+              setValue("status", "published");
+              handleSubmit(onSubmit)();
+            }}>Publish Post</Button>
+          </div>
+        </Card>
+      </form>
+    </div>
   );
 };

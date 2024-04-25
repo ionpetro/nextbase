@@ -1,17 +1,17 @@
-import Overline from '@/components/Text/Overline';
-import { T } from '@/components/ui/Typography';
+import Overline from "@/components/Text/Overline";
+import { T } from "@/components/ui/Typography";
 import {
   getAllAuthors,
   getAllBlogTags,
   getBlogPostById,
   getBlogTagRelationships,
-} from '@/data/admin/internal-blog';
-import ChevronLeft from 'lucide-react/dist/esm/icons/chevron-left';
-import Link from 'next/link';
-import { notFound } from 'next/navigation';
-import { Suspense } from 'react';
-import { z } from 'zod';
-import { BlogForm, EditBlogFormProps } from '../../../BlogForm';
+} from "@/data/admin/internal-blog";
+import ChevronLeft from "lucide-react/dist/esm/icons/chevron-left";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { Suspense } from "react";
+import { z } from "zod";
+import { BlogForm, type EditBlogFormProps } from "../../../BlogForm";
 
 const paramsSchema = z.object({
   postId: z.string(),
@@ -30,7 +30,7 @@ async function BlogFormWrapper({ postId }: { postId: string }) {
     ? post.internal_blog_author_posts[0]
     : post.internal_blog_author_posts;
   if (!authorBlogPosts) {
-    console.log('Linked author not found');
+    console.log("Linked author not found");
   } else {
     postAuthorId = authorBlogPosts?.author_id ?? undefined;
   }
@@ -50,7 +50,7 @@ async function BlogFormWrapper({ postId }: { postId: string }) {
         : typeof post.json_content === 'object' && post.json_content !== null
           ? post.json_content
           : {},
-    tag_ids: blogTagRelationships.map((relationship) => relationship.tag_id),
+    tags: tags,
   };
 
   return (
