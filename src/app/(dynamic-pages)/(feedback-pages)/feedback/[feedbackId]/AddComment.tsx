@@ -39,6 +39,7 @@ function AddComment({
     <div className="grid w-full gap-2" data-testid="add-comment-form">
       <Textarea
         name="comment-area"
+        className='resize-none'
         placeholder="Type your message here."
         value={content}
         disabled={isLoading || !isOpenToComments}

@@ -35,7 +35,7 @@ async function AdminUserFeedbackdetail({ feedbackId }) {
             </div>
 
           </div>
-          <div className='flex items-center'>
+          <div className='flex items-center gap-2'>
             {feedback.is_publicly_visible ? (
               <Badge variant="outline" className="px-2 rounded-full flex gap-2 items-center border-green-300 text-green-500">
                 <EyeIcon className="w-4 h-4" /> <p>Public</p>

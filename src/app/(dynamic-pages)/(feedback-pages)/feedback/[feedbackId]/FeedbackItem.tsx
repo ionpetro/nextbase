@@ -40,7 +40,7 @@ export async function FeedbackItem({
       <div
         data-testid="feedback-item"
         data-feedback={feedbackId === feedback.id}
-        className="w-full h-fit p-6 rounded-xl shadow-md border hover:bg-muted transition-colors duration-200 ease-in data-[feedback=true]:bg-muted hover:cursor-pointer hover:shadow-lg flex flex-col justify-between group gap-4 min-h-44"
+        className="w-full h-fit p-6 rounded-xl shadow-md border hover:bg-muted transition-colors duration-200 ease-in data-[feedback=true]:bg-muted hover:cursor-pointer hover:shadow-lg flex flex-col justify-between group gap-4 min-h-52"
       >
         <div className="flex flex-col gap-4">
           <div className='flex justify-between'>
