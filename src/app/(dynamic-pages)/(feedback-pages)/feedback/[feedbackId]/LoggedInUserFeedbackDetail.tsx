@@ -38,27 +38,19 @@ async function LoggedInUserFeedbackdetail({ feedbackId }) {
           />
         </div>
         <h2 className="text-2xl font-medium my-4">{feedback?.title}</h2>
-        <div className="flex items-center my-4 space-x-4">
-          <label>
-            Status:
-            <Badge variant="secondary" className="ml-2">
-              {feedback.status}
-            </Badge>
-          </label>
-          <Separator orientation="vertical" className="h-4" />
-          <label>
-            Type:
-            <Badge variant="secondary" className="ml-2">
-              {feedback.type}
-            </Badge>
-          </label>
-          <Separator orientation="vertical" className="h-4" />
-          <label>
-            Priority:
-            <Badge variant="secondary" className="ml-2">
-              {feedback.priority}
-            </Badge>
-          </label>
+        <div className="flex items-center gap-4">
+          <Badge variant="outline" className="px-3 py-2 capitalize w-fit">
+            Status: {feedback.status}
+          </Badge>
+
+          <Badge variant="outline" className="px-3 py-2 capitalize w-fit">
+            Type: {feedback.type}
+          </Badge>
+
+          <Badge variant="outline" className="px-3 py-2 capitalize w-fit">
+            Priority: {feedback.priority}
+          </Badge>
+
         </div>
       </div>
       <Separator orientation="horizontal" />

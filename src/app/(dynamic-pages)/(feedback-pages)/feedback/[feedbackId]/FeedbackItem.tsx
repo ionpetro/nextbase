@@ -9,10 +9,16 @@ import { Bug, MessageSquareDotIcon } from 'lucide-react';
 import type { FiltersSchema } from './schema';
 
 const typeIcons = {
-  bug: <Bug className="h-4 w-4 mr-1" />,
-  feature_request: <LightningBoltIcon className="h-4 w-4 mr-1" />,
-  general: <MessageSquareDotIcon className="h-4 w-4 mr-1" />,
+  bug: <Bug className="h-4 w-4 mr-1 text-red-400" />,
+  feature_request: <LightningBoltIcon className="h-4 w-4 mr-1 text-blue-400" />,
+  general: <MessageSquareDotIcon className="h-4 w-4 mr-1 text-green-400" />,
 };
+
+enum TAGS {
+  bug = 'Bug',
+  feature_request = 'Feature Request',
+  general = 'General',
+}
 
 export async function FeedbackItem({
   feedback,
@@ -34,29 +40,35 @@ export async function FeedbackItem({
       <div
         data-testid="feedback-item"
         data-feedback={feedbackId === feedback.id}
-        className="w-full h-fit p-4 rounded-xl shadow-md border hover:border-gray-400 data-[feedback=true]:border-foreground hover:cursor-pointer hover:shadow-lg"
+        className="w-full h-fit p-6 rounded-xl shadow-md border hover:bg-muted transition-colors duration-200 ease-in data-[feedback=true]:bg-muted hover:cursor-pointer hover:shadow-lg flex flex-col justify-between group gap-4 min-h-52"
       >
-        <div className="flex gap-2 items-center">
-          <Badge variant="secondary" className="rounded-full shadow-inner">
-            {typeIcons[feedback.type]} {feedback?.type}
-          </Badge>
-          <h3 className="leading-none font-medium text-lg">
-            {feedback?.title}
-          </h3>
+        <div className="flex flex-col gap-4">
+          <div className='flex justify-between'>
+            <SuspensedUserAvatarWithFullname
+              userId={feedback?.user_id}
+              size={32}
+            />
+            <span className="text-muted-foreground text-sm">
+              {formatDistance(new Date(feedback?.created_at), new Date(), {
+                addSuffix: true,
+              })}
+            </span>
+          </div>
+          <div>
+            <h3 className="leading-none font-semibold text-lg">
+              {feedback?.title}
+            </h3>
+            <p className="text-ellipsis line-clamp-2 overflow-hidden text-muted-foreground">
+              {feedback?.content}
+            </p>
+          </div>
+
         </div>
-        <p className="my-4 text-ellipsis line-clamp-2 overflow-hidden text-muted-foreground">
-          {feedback?.content}
-        </p>
+
         <div className="flex items-center justify-between">
-          <SuspensedUserAvatarWithFullname
-            userId={feedback?.user_id}
-            size={32}
-          />
-          <span className="text-muted-foreground text-sm">
-            {formatDistance(new Date(feedback?.created_at), new Date(), {
-              addSuffix: true,
-            })}
-          </span>
+          <Badge variant="outline" className="rounded-full group-hover:bg-background ">
+            {typeIcons[feedback.type]} {TAGS[feedback?.type]}
+          </Badge>
         </div>
       </div>
     </Link>
