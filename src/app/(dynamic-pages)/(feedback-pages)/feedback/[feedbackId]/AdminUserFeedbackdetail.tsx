@@ -5,7 +5,7 @@ import { SuspensedUserAvatarWithFullname } from '@/components/UserAvatar';
 import { Badge } from '@/components/ui/badge';
 import { serverGetUserType } from '@/utils/server/serverGetUserType';
 import { format } from 'date-fns';
-import { Calendar } from 'lucide-react';
+import { Calendar, EyeIcon, EyeOffIcon } from 'lucide-react';
 import AddComment from './AddComment';
 import {
   CommentTimeLineItem,
@@ -21,56 +21,52 @@ async function AdminUserFeedbackdetail({ feedbackId }) {
     <div className="h-full py-2 flex flex-col">
       <div className="p-6">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2">
+          <div className="flex flex-col lg:items-center lg:flex-row gap-2">
             <SuspensedUserAvatarWithFullname
               userId={feedback?.user_id}
               size={32}
             />
-            <Separator orientation="vertical" className="h-5" />
-            <Calendar className="h-4 w-4 text-muted-foreground" />
-            <span className="text-muted-foreground">
-              {format(new Date(feedback.created_at), 'do MMMM yyyy')}
-            </span>
+            <Separator className='h-6 hidden lg:block' orientation='vertical' />
+            <div className='flex gap-2 items-center ml-2'>
+              <Calendar className="h-4 w-4 text-muted-foreground" />
+              <span className="text-muted-foreground text-sm lg:text-base">
+                {format(new Date(feedback.created_at), 'do MMMM yyyy')}
+              </span>
+            </div>
+
           </div>
-          <FeedbackActionsDropdown
-            feedback={feedback}
-            userRole={userRoleType}
-          />
-        </div>
-        <h2 className="text-2xl font-medium my-4">{feedback?.title}</h2>
-        <div className="flex items-center my-4 space-x-4">
-          <label>
-            Status:
-            <Badge variant="secondary" className="ml-2">
-              {feedback.status}
-            </Badge>
-          </label>
-          <Separator orientation="vertical" className="h-4" />
-          <label>
-            Type:
-            <Badge variant="secondary" className="ml-2">
-              {feedback.type}
-            </Badge>
-          </label>
-          <Separator orientation="vertical" className="h-4" />
-          <label>
-            Priority:
-            <Badge variant="secondary" className="ml-2">
-              {feedback.priority}
-            </Badge>
-          </label>
-          <label>
-            Is visible:
+          <div className='flex items-center'>
             {feedback.is_publicly_visible ? (
-              <Badge variant="default" className="ml-2 bg-green-400">
-                Yes
+              <Badge variant="outline" className="px-2 rounded-full flex gap-2 items-center border-green-300 text-green-500">
+                <EyeIcon className="w-4 h-4" /> <p>Public</p>
               </Badge>
             ) : (
-              <Badge variant="secondary" className="ml-2 bg-red-400">
-                No
+              <Badge variant="outline" className="px-2 rounded-full flex gap-2 items-center">
+                <EyeOffIcon className="w-4 h-4" /> <p>Hidden</p>
               </Badge>
             )}
-          </label>
+
+            <FeedbackActionsDropdown
+              feedback={feedback}
+              userRole={userRoleType}
+            />
+          </div>
+
+        </div>
+        <h2 className="text-2xl font-medium my-4">{feedback?.title}</h2>
+        <div className="flex gap-4 items-center">
+
+          <Badge variant="outline" className="px-3 py-2 capitalize w-fit">
+            Status: {feedback.status}
+          </Badge>
+
+          <Badge variant="outline" className="px-3 py-2 capitalize w-fit">
+            Type: {feedback.type}
+          </Badge>
+
+          <Badge variant="outline" className="px-3 py-2 capitalize w-fit">
+            Priority: {feedback.priority}
+          </Badge>
         </div>
       </div>
       <Separator orientation="horizontal" />

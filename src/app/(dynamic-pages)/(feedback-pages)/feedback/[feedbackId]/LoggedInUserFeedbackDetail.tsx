@@ -41,7 +41,7 @@ async function LoggedInUserFeedbackdetail({ feedbackId }) {
         <div className="flex items-center my-4 space-x-4">
           <label>
             Status:
-            <Badge variant="secondary" className="ml-2">
+            <Badge variant="secondary" className="ml-2 p-4">
               {feedback.status}
             </Badge>
           </label>
