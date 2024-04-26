@@ -34,7 +34,7 @@ export function ForgotPassword() {
       successMessage: 'Password reset link sent!',
       onSuccess: () => {
         setSuccessMessage(
-          'A  password reset link has been sent to your email!',
+          'A password reset link has been sent to your email!',
         );
       },
     },

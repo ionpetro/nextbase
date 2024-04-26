@@ -2,12 +2,15 @@ import { expect, type Page } from '@playwright/test';
 
 export async function createFeedbackHelper(page: Page) {
   await page.goto('/dashboard');
-  await page.waitForTimeout(5000);
 
-  const avatar = page.locator('[data-testid="user-nav-avatar"]');
+  const userNavAvatar = await page.waitForSelector(
+    'div[data-testid="user-nav-avatar"]',
+  );
 
-  if (avatar) {
-    await avatar.click();
+  await page.waitForTimeout(12000);
+
+  if (userNavAvatar) {
+    await userNavAvatar.click();
   }
 
   const feedbackLink = page.locator('[data-testid="feedback-link"]');
