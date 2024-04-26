@@ -44,12 +44,3 @@ ALTER TABLE public.user_private_info
 ADD CONSTRAINT user_private_info_default_organization_fkey FOREIGN KEY (default_organization) REFERENCES public.organizations(id) ON DELETE
 SET NULL;
 
-ALTER TABLE "public"."organizations" DROP constraint "organizations_created_by_fkey";
-
-ALTER TABLE "public"."organizations" ALTER column "created_by" DROP NOT NULL;
-
-ALTER TABLE "public"."organizations" ADD CONSTRAINT "public_organizations_created_by_fkey" FOREIGN KEY (created_by) REFERENCES user_profiles(id) ON DELETE SET NULL NOT valid;
-
-ALTER TABLE "public"."organizations" validate CONSTRAINT "public_organizations_created_by_fkey";
-
-
