@@ -3,32 +3,40 @@ import { Button } from '@/components/ui/button';
 import html2canvas from 'html2canvas';
 import jsPDF from "jspdf";
 import { Upload } from 'lucide-react';
-
-
+import { useTheme } from 'next-themes';
+import { useState } from 'react';
 export const OrganizationExportPDF = () => {
+  const [loading, setLoading] = useState(false);
+
+  const { theme } = useTheme()
 
   const exportPDF = () => {
     const input = document.getElementById("export-container");
     if (input) {
-      html2canvas(input, { scale: 2 })
+      html2canvas(input, {
+        scale: 2, backgroundColor: theme === "dark" ? "#020817" : "#fff",
+      })
         .then((canvas) => {
           const imgData = canvas.toDataURL("image/png");
           const pdf = new jsPDF({
             orientation: "portrait",
-            format: "a4",
+
           });
           const imgProps = pdf.getImageProperties(imgData);
           const pdfWidth = pdf.internal.pageSize.getWidth();
           const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
           pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
           pdf.save("organization.pdf");
-        });
+        })
+        .finally(() => setLoading(false));
+    } else {
+      setLoading(false);
     }
   };
   return (
-    <Button variant={"outline"} onClick={exportPDF} className="mb-4 flex gap-4 items-center">
+    <Button variant={"outline"} onClick={exportPDF} className="mb-4 flex gap-4 items-center" disabled={loading}>
       <Upload className='size-4' />
-      Export PDF
+      {loading ? "Exporting..." : "Export PDF"}
     </Button>
   )
 }
