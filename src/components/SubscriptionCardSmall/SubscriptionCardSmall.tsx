@@ -9,6 +9,7 @@ import { getNormalizedOrganizationSubscription } from '@/data/user/organizations
 import { formatNormalizedSubscription } from '@/utils/formatNormalizedSubscription';
 import ArrowUpRightIcon from 'lucide-react/dist/esm/icons/arrow-up-right';
 import Link from 'next/link';
+import { Card } from '../ui/card';
 
 export async function SubscriptionCardSmall({
   organizationId,
@@ -40,22 +41,19 @@ export async function SubscriptionCardSmall({
         <HoverCardContent className="w-60">{description}</HoverCardContent>
       </HoverCard>
     );
-  } else {
-    return (
-      <HoverCard>
-        <HoverCardTrigger asChild>
-          <Link
-            className="w-full cursor-pointer flex mr-2 gap-2 items-center mt-1 rounded-lg"
-            href={`/organization/${organizationId}/settings/billing`}
-          >
-            <Button variant="default" className="w-full">
-              <ArrowUpRightIcon className="h-5 w-5 mr-2 " />
-              {sidenote}
-            </Button>
-          </Link>
-        </HoverCardTrigger>
-        <HoverCardContent className="w-60">{description}</HoverCardContent>
-      </HoverCard>
-    );
   }
+  return (
+    <Card className='p-6 bg-secondary flex flex-col gap-4'>
+      <p>{description}</p>
+      <Link
+        className="w-full cursor-pointer flex mr-2 gap-2 items-center mt-1 rounded-lg"
+        href={`/organization/${organizationId}/settings/billing`}
+      >
+        <Button variant="default" className="w-full">
+          <ArrowUpRightIcon className="h-5 w-5 mr-2 " />
+          {sidenote}
+        </Button>
+      </Link>
+    </Card >
+  );
 }

@@ -1,15 +1,25 @@
-import { T } from '@/components/ui/Typography';
-import { cn } from '@/utils/cn';
+import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 import darkLogo from 'public/logos/nextbase-dark-logo.png';
 import lightLogo from 'public/logos/nextbase-light-logo.png';
+import { T } from '../ui/Typography';
+import { OrganizationSwitcher } from './OrganizationSwitcher';
 import { SidebarClose } from './SidebarClose';
+type Props = {
+  organizationId?: string;
+  slimOrganizations?: { id: string, title: string }[];
+};
 
-export function SidebarLogoAndToggle() {
+export function SwitcherAndToggle({ organizationId, slimOrganizations }: Props) {
   return (
-    <div className="flex justify-between items-center w-full mb-5">
-      <Link
+    <div className="flex items-center w-full mb-20 gap-4 justify-between">
+      {organizationId && slimOrganizations ? (
+        <OrganizationSwitcher
+          currentOrganizationId={organizationId}
+          slimOrganizations={slimOrganizations}
+        />
+      ) : <Link
         href="/dashboard"
         className="ml-2 cursor-pointer flex items-center gap-1 w-full"
       >
@@ -31,12 +41,10 @@ export function SidebarLogoAndToggle() {
             '-ml-2 ',
           )}
         />
-
         <T.P className="text-sm font-medium text-neutral-600 dark:text-slate-300">
           Nextbase
         </T.P>
-      </Link>
-
+      </Link>}
       <SidebarClose />
     </div>
   );

@@ -26,9 +26,14 @@ test.describe.serial('authentication group', () => {
   test('update password should work', async ({ page }) => {
     // Start from the index page (the baseURL is set via the webServer in the playwright.config.ts)
     await page.goto('/dashboard');
-    // wait for the url to change to `/organization/<organizationUUID>`
+
+    // wait for the page to load completely
+    await page.waitForTimeout(12000);
 
     await page.goto(`/settings/security`);
+
+    // wait for the page to load completely
+    await page.waitForTimeout(12000);
 
     // read email value in the input field
     const emailInput = page.locator('input[name="email"]');
@@ -101,7 +106,10 @@ test.describe.serial('authentication group', () => {
     // Start from the index page (the baseURL is set via the webServer in the playwright.config.ts)
     await dashboardDefaultOrganizationIdHelper({ page });
 
-    await page.goto(`/settings/security`, { waitUntil: 'networkidle' });
+    await page.goto(`/settings/security`);
+
+    // wait for the page to load completely
+    await page.waitForTimeout(12000);
 
     // read email value in the input field
     const emailInput = page.locator('input[name="email"]');
@@ -122,7 +130,7 @@ test.describe.serial('authentication group', () => {
     await page.click('button:has-text("Reset password")');
 
     await page.waitForSelector(
-      'text=A password reset link has been sent to your email!',
+      'text="A password reset link has been sent to your email!"',
     );
 
     const identifier = email.split('@')[0];

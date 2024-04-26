@@ -1,6 +1,6 @@
-import { ApplicationLayoutShell } from '@/components/ApplicationLayoutShell';
-import { InternalNavbar } from '@/components/NavigationMenu/InternalNavbar';
-import { ReactNode, Suspense } from 'react';
+import { ApplicationLayoutShell } from "@/components/ApplicationLayoutShell";
+import { InternalNavbar } from "@/components/NavigationMenu/InternalNavbar";
+import { Suspense, type ReactNode } from "react";
 
 export default async function Layout({
   children,

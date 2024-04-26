@@ -1,25 +1,28 @@
-import { Page, expect, request } from "@playwright/test";
+import { expect, request, type Page } from '@playwright/test';
 
 const INBUCKET_URL = `http://localhost:54324`;
-
 
 // eg endpoint: https://api.testmail.app/api/json?apikey=${APIKEY}&namespace=${NAMESPACE}&pretty=true
 async function getConfirmEmail(username: string): Promise<{
   token: string;
-  url: string
+  url: string;
 }> {
   console.log(username);
-  const requestContext = await request.newContext()
+  const requestContext = await request.newContext();
   const now = new Date().getTime();
   const messages = await requestContext
     .get(`${INBUCKET_URL}/api/v1/mailbox/${username}`)
     .then((res) => res.json())
     .then((items) =>
-      items.filter((item) => {
-        const itemDate = new Date(item.date).getTime();
+      items
+        .filter((item) => {
+          const itemDate = new Date(item.date).getTime();
 
-        return Math.abs(now - itemDate) < 10000; // Filter out emails received within the last 20 seconds
-      }).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+          return Math.abs(now - itemDate) < 10000; // Filter out emails received within the last 20 seconds
+        })
+        .sort(
+          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+        ),
     );
 
   const latestMessage = messages[0];
@@ -44,12 +47,11 @@ async function getConfirmEmail(username: string): Promise<{
 
 export async function loginUserHelper({
   page,
-  emailAddress
+  emailAddress,
 }: {
-  page: Page,
-  emailAddress: string
+  page: Page;
+  emailAddress: string;
 }) {
-
   await page.goto(`/login`);
 
   const magicLinkButton = page.locator('button:has-text("Magic Link")');
@@ -67,18 +69,23 @@ export async function loginUserHelper({
   await page.waitForSelector('text=A magic link has been sent to your email!');
   const identifier = emailAddress.split('@')[0];
   let url;
-  await expect.poll(async () => {
-    try {
-      const { url: urlFromCheck } = await getConfirmEmail(identifier);
-      url = urlFromCheck;
-      return typeof urlFromCheck;
-    } catch (e) {
-      return null;
-    }
-  }, {
-    message: 'make sure the email is received',
-    intervals: [1000, 2000, 5000, 10000, 20000],
-  }).toBe('string')
+  await expect
+    .poll(
+      async () => {
+        try {
+          const { url: urlFromCheck } = await getConfirmEmail(identifier);
+          url = urlFromCheck;
+          return typeof urlFromCheck;
+        } catch (e) {
+          return null;
+        }
+      },
+      {
+        message: 'make sure the email is received',
+        intervals: [1000, 2000, 5000, 10000, 20000],
+      },
+    )
+    .toBe('string');
 
   await page.goto(url);
   await page.waitForURL('/dashboard');

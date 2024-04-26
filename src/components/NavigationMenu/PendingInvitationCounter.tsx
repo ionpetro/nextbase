@@ -11,9 +11,10 @@ export async function PendingInvitationCounter() {
     return (
       <Link href="/invitations">
         <Badge
+
           size="lg"
           className="px-3 w-max h-fit rounded-md py-2"
-          variant="default"
+          variant="secondary"
         >
           <FeedbackIcon className="h-4 w-4 mr-2" />
           {count} pending invites
