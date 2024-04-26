@@ -1,4 +1,5 @@
 'use client';
+import ConfirmationPendingCard from '@/components/Auth/ConfirmationPendingCard';
 import { Email } from '@/components/Auth/Email';
 import { EmailAndPassword } from '@/components/Auth/EmailAndPassword';
 import { RenderProviders } from '@/components/Auth/RenderProviders';
@@ -28,6 +29,28 @@ export function SignUp({
 }) {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
+  const [resendData, setResendData] = useState<{
+    email: string;
+    password: string;
+  } | null>(null);
+
+  const resendMutation = useSAToastMutation(
+    async () => {
+      if (!resendData) {
+        throw new Error('No resend data');
+      }
+      return await signUp(resendData.email, resendData.password);
+    },
+    {
+      onSuccess: () => {
+        setSuccessMessage('A confirmation link has been sent to your email!');
+      },
+      loadingMessage: 'Resending confirmation link...',
+      errorMessage: 'Failed to resend confirmation link',
+      successMessage: 'Confirmation link sent!',
+    },
+  );
+
   const magicLinkMutation = useSAToastMutation(
     async (email: string) => {
       // since we can't use the onSuccess callback here to redirect from here
@@ -56,6 +79,7 @@ export function SignUp({
   );
   const passwordMutation = useSAToastMutation(
     async ({ email, password }: { email: string; password: string }) => {
+      setResendData({ email, password });
       return await signUp(email, password);
     },
     {
@@ -96,9 +120,15 @@ export function SignUp({
       className="container data-[success]:flex items-center data-[success]:justify-center text-left max-w-lg mx-auto overflow-auto data-[success]:h-full min-h-[470px]"
     >
       {successMessage ? (
-        <Card className="p-8">
-          <p className="text-blue-500 text-sm">{successMessage}</p>
-        </Card>
+        <ConfirmationPendingCard
+          type={'sign-up'}
+          heading={"Confirmation Link Sent"}
+          message={successMessage}
+          resetSuccessMessage={setSuccessMessage}
+          resendEmail={() => {
+            resendMutation.mutate();
+          }}
+        />
       ) : (
         <div className="space-y-8 bg-background p-6 rounded-lg shadow dark:border">
           <Tabs defaultValue="password" className="md:min-w-[400px]">

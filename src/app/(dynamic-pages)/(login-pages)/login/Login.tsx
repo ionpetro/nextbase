@@ -1,4 +1,5 @@
 'use client';
+import ConfirmationPendingCard from '@/components/Auth/ConfirmationPendingCard';
 import { Email } from '@/components/Auth/Email';
 import { EmailAndPassword } from '@/components/Auth/EmailAndPassword';
 import { RenderProviders } from '@/components/Auth/RenderProviders';
@@ -99,9 +100,12 @@ export function Login({
       className="container data-[success]:flex items-center data-[success]:justify-center text-left max-w-lg mx-auto overflow-auto data-[success]:h-full min-h-[470px]"
     >
       {successMessage ? (
-        <Card className="p-8">
-          <p className="text-blue-500 text-sm">{successMessage}</p>
-        </Card>
+        <ConfirmationPendingCard
+          type={'login'}
+          heading={"Confirmation Link Sent"}
+          message={successMessage}
+          resetSuccessMessage={setSuccessMessage}
+        />
       ) : (
         <div className="space-y-8 bg-background p-6 rounded-lg shadow dark:border">
           <Tabs defaultValue="password" className="md:min-w-[400px]">

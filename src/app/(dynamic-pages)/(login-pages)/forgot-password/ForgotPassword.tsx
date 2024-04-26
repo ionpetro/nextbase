@@ -1,13 +1,7 @@
 'use client';
+import ConfirmationPendingCard from '@/components/Auth/ConfirmationPendingCard';
 import { Email } from '@/components/Auth/Email';
 import { T } from '@/components/ui/Typography';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
 import { resetPassword } from '@/data/auth/auth';
 import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import { useState } from 'react';
@@ -41,29 +35,31 @@ export function ForgotPassword() {
   );
 
   return (
-    <div className="container h-full grid items-center text-left max-w-lg mx-auto overflow-auto">
-      <div className="space-y-8 ">
-        {successMessage ? (
-          <T.P className="text-blue-500 text-sm">{successMessage}</T.P>
-        ) : null}
-        <Card>
-          <CardHeader>
-            <CardTitle>Forgot Password</CardTitle>
-            <CardDescription>
-              <T.P className="text-muted-foreground">
-                Enter your email to recieve a Magic Link to reset your password.
-              </T.P>
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
+    <>
+      {successMessage ? (
+        <ConfirmationPendingCard
+          message={successMessage}
+          heading="Reset password link sent"
+          type="reset-password"
+          resetSuccessMessage={setSuccessMessage}
+        />
+      ) : (
+        <div className="container h-full grid items-center text-left max-w-lg mx-auto overflow-auto">
+          <div className="space-y-4">
+            {/* <Auth providers={['twitter']} supabaseClient={supabase} /> */}
+            <T.H4>Forgot Password</T.H4>
+            <T.P className="text-muted-foreground">
+              Enter your email to recieve a Magic Link to reset your password.
+            </T.P>
+
             <Email
               onSubmit={(email) => magicLinkMutation.mutate(email)}
               isLoading={magicLinkMutation.isLoading}
               view="forgot-password"
             />
-          </CardContent>
-        </Card>
-      </div>
-    </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
