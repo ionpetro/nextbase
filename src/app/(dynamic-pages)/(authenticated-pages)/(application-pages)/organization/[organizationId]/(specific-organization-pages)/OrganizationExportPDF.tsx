@@ -12,11 +12,14 @@ export const OrganizationExportPDF = () => {
 
   const exportPDF = () => {
     const input = document.getElementById("export-container");
+
     if (input) {
+      setLoading(true);
       html2canvas(input, {
         scale: 2, backgroundColor: theme === "dark" ? "#020817" : "#fff",
       })
         .then((canvas) => {
+
           const imgData = canvas.toDataURL("image/png");
           const pdf = new jsPDF({
             orientation: "portrait",
