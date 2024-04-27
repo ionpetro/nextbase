@@ -6,22 +6,21 @@ import { userRoles } from '@/utils/userTypes';
 // make sure to return one of UserRoles
 export async function serverGetUserType(): Promise<UserRole> {
   const supabase = createSupabaseUserServerComponentClient();
-  const {
-    data: { session },
-    error: sessionError,
-  } = await supabase.auth.getSession();
+
+  const { data: { user }, error: sessionError, } = await supabase.auth.getUser()
+
 
   if (sessionError) {
     throw sessionError;
   }
 
-  if (!session?.user) {
+  if (!user) {
     return userRoles.ANON;
   }
 
   if (
-    'user_role' in session.user &&
-    session.user.user_role == userRoles.ADMIN
+    'user_role' in user &&
+    user.user_role == userRoles.ADMIN
   ) {
     return userRoles.ADMIN;
   }
