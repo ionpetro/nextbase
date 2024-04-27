@@ -3,6 +3,8 @@
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
 import * as Sentry from '@sentry/nextjs';
+import { SupabaseIntegration } from "@supabase/sentry-js-integration";
+import { SupabaseClient } from "@supabase/supabase-js";
 
 const SENTRY_DSN = process.env.NEXT_PUBLIC_SENTRY_DSN;
 
@@ -23,10 +25,20 @@ Sentry.init({
   enabled: process.env.NODE_ENV !== 'development',
 
   integrations: [
-    new Sentry.Replay({
+    Sentry.replayIntegration({
       // Additional SDK configuration goes in here, for example:
       maskAllText: true,
       blockAllMedia: true,
+    }),
+    new SupabaseIntegration(SupabaseClient, {
+      tracing: true,
+      breadcrumbs: true,
+      errors: true,
+    }),
+    Sentry.browserTracingIntegration({
+      shouldCreateSpanForRequest: (url) => {
+        return !url.startsWith(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest`);
+      },
     }),
   ],
 });
