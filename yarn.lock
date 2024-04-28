@@ -7593,9 +7593,9 @@ loupe@^2.3.6, loupe@^2.3.7:
     get-func-name "^2.0.1"
 
 lru-cache@^10.2.0:
-  version "10.2.0"
-  resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-10.2.0.tgz#0bd445ca57363465900f4d1f9bd8db343a4d95c3"
-  integrity sha512-2bIM8x+VAf6JT4bKAljS1qUWgMsqZRPGJS6FSahIMPVvctcNhyVp7AJu7quxOW9jwkryBReKZY5tY5JYv2n/7Q==
+  version "10.2.1"
+  resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-10.2.1.tgz#e8d901141f22937968e45a6533d52824070151e4"
+  integrity sha512-tS24spDe/zXhWbNPErCHs/AGOzbKGHT+ybSBqmdLm8WZ1xXLWvH8Qn71QPAlqVhd0qUTWjy+Kl9JmISgDdEjsA==
 
 lru-cache@^5.1.1:
   version "5.1.1"
@@ -11192,9 +11192,9 @@ sucrase@^3.32.0:
     ts-interface-checker "^0.1.9"
 
 supabase@^1.127.4:
-  version "1.163.2"
-  resolved "https://registry.yarnpkg.com/supabase/-/supabase-1.163.2.tgz#437599a0bd0fa8e7c6995753bf1945c17852d8f5"
-  integrity sha512-mA/lhdNsEk9HEF72HbHzpm4EO39TKw2rChizcp8+dwFhaa2ex/jvkLHXujAuPjsZMXgQzRvUj4ltHsY0Z1cUlA==
+  version "1.163.6"
+  resolved "https://registry.yarnpkg.com/supabase/-/supabase-1.163.6.tgz#c863b220a99fdbc0280fcb3cf00672e045a0cd05"
+  integrity sha512-GuanZQdIEGXCWz1UYIMPDmIsAdqD8IiqnATqfNSqlWMYK4y4X912HxyGW1sjYZjQar/10RSkSwPAsRLwDTAxrw==
   dependencies:
     bin-links "^4.0.3"
     https-proxy-agent "^7.0.2"
