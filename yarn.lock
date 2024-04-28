@@ -7,20 +7,20 @@
   resolved "https://registry.yarnpkg.com/@aashutoshrathi/word-wrap/-/word-wrap-1.2.6.tgz#bd9154aec9983f77b3a034ecaa015c2e4201f6cf"
   integrity sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==
 
-"@ai-sdk/provider-utils@0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@ai-sdk/provider-utils/-/provider-utils-0.0.3.tgz#f524be2d0fa7c78dcb4ce19c3e981822a5cdecf4"
-  integrity sha512-13+4v62ylduGvwz8966SdnT1aoQRO4QkWzZJyVswdgmYeX2vrXuU4bssK578+FXIXc1jwi2hLZO8lqgLPT/xDA==
+"@ai-sdk/provider-utils@0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@ai-sdk/provider-utils/-/provider-utils-0.0.5.tgz#3fb0f4fac88b36ad2f14efe5bb7ecae22aba3ca4"
+  integrity sha512-VVy9eQS+vS2j6cqTEQ9htMHz2nW/HFAkDXLvNFPoi1pZkviknJZEzb+DZUna6Od+jBf/TVA0HZwYnyGDaeI9cQ==
   dependencies:
-    "@ai-sdk/provider" "0.0.2"
+    "@ai-sdk/provider" "0.0.3"
     eventsource-parser "1.1.2"
     nanoid "3.3.6"
     secure-json-parse "2.7.0"
 
-"@ai-sdk/provider@0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@ai-sdk/provider/-/provider-0.0.2.tgz#6c55135edf2c1960c13e79afe89bad85184d5425"
-  integrity sha512-LDRx7TFWjuuW1V8bGCMvOk4ap5gNGeSxa6w65Y+pHskiLRk/nn+Z2xzMy1JjCTksUblu0i/plai4bOLgqkxJHA==
+"@ai-sdk/provider@0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@ai-sdk/provider/-/provider-0.0.3.tgz#3b0cce48cfe183d306d6b085583a77c464d42491"
+  integrity sha512-0B8P6VZpJ6F9yS9BpmJBYSqIaIfeRtL5tD5SP+qgR8y0pPwalIbRMUFiLz9YUT6g70MJsCLpm/2/fX3cfAYCJw==
   dependencies:
     json-schema "0.4.0"
 
@@ -3656,12 +3656,12 @@ agent-base@^7.1.0:
     debug "^4.3.4"
 
 ai@^3.0.0:
-  version "3.0.30"
-  resolved "https://registry.yarnpkg.com/ai/-/ai-3.0.30.tgz#48a0b374dca3268f048004d02c6b85ff23ce5dc4"
-  integrity sha512-JlrXnStOAtPGKgJHEEdkcOemUJfH4CijYVMEQPPquv3CCi2//8f/0BN3ZJRUrfw4jUxt0yw54MKmDzwK9Ig0YQ==
+  version "3.0.35"
+  resolved "https://registry.yarnpkg.com/ai/-/ai-3.0.35.tgz#a1d9437459c4ed44ff10a3ab56c61767a7a75885"
+  integrity sha512-VMgpGw5p+oa4uKL9r+le1xpGPdmuIMLDU+bj4fyE8BTr9kvuIdWNcgHWqmKkhVBDysFqMIItUs3wC/E/CnkzWA==
   dependencies:
-    "@ai-sdk/provider" "0.0.2"
-    "@ai-sdk/provider-utils" "0.0.3"
+    "@ai-sdk/provider" "0.0.3"
+    "@ai-sdk/provider-utils" "0.0.5"
     eventsource-parser "1.1.2"
     json-schema "0.4.0"
     jsondiffpatch "0.6.0"
@@ -11987,9 +11987,9 @@ use-sidecar@^1.1.2:
     tslib "^2.0.0"
 
 use-sync-external-store@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/use-sync-external-store/-/use-sync-external-store-1.2.0.tgz#7dbefd6ef3fe4e767a0cf5d7287aacfb5846928a"
-  integrity sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/use-sync-external-store/-/use-sync-external-store-1.2.2.tgz#c3b6390f3a30eba13200d2302dcdf1e7b57b2ef9"
+  integrity sha512-PElTlVMwpblvbNqQ82d2n6RjStvdSoNe9FG28kNfz3WiXilJm4DdNkEzRhCZuIDwY8U08WVihhGR5iRqAwfDiw==
 
 util-deprecate@^1.0.1, util-deprecate@^1.0.2:
   version "1.0.2"
