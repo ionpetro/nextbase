@@ -1,6 +1,6 @@
 import { cn } from "@/utils/cn";
 
-export async function UserSidebar() {
+export default function LoadingUserSidebar() {
   return (
     <div
       className={cn(
