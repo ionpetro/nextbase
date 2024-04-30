@@ -1,22 +1,7 @@
 'use client';
 
+import { LucideIcon } from '@/components/LucideIcon';
 import type { Editor } from '@tiptap/react';
-
-import {
-  AlignCenter,
-  AlignLeft,
-  AlignRight,
-  Bold,
-  Code,
-  ImageIcon,
-  Italic,
-  List,
-  ListOrdered,
-  PaintBucket,
-  Strikethrough,
-  Table as TableIcon,
-  Underline,
-} from 'lucide-react';
 import { useCallback, useState, type FC } from 'react';
 import { Input } from '../ui/input';
 import {
@@ -122,7 +107,7 @@ const Toolbar: FC<ToolbarProps> = ({ editor }) => {
         pressed={editor.isActive('bold')}
         onPressedChange={() => editor.chain().focus().toggleBold().run()}
       >
-        <Bold size={16} />
+        <LucideIcon name="Bold" size={16} />
       </Toggle>
 
       <Toggle
@@ -130,7 +115,7 @@ const Toolbar: FC<ToolbarProps> = ({ editor }) => {
         pressed={editor.isActive('italic')}
         onPressedChange={() => editor.chain().focus().toggleItalic().run()}
       >
-        <Italic size={16} />
+        <LucideIcon name="Italic" size={16} />
       </Toggle>
 
       <Toggle
@@ -138,28 +123,28 @@ const Toolbar: FC<ToolbarProps> = ({ editor }) => {
         pressed={editor.isActive('underline')}
         onPressedChange={() => editor.commands.toggleUnderline()}
       >
-        <Underline size={16} />
+        <LucideIcon name="Underline" size={16} />
       </Toggle>
       <Toggle
         size="sm"
         pressed={editor.isActive('strike')}
         onPressedChange={() => editor.commands.toggleStrike()}
       >
-        <Strikethrough size={16} />
+        <LucideIcon name="Strikethrough" size={16} />
       </Toggle>
       <Toggle
         size="sm"
         pressed={editor.isActive('code')}
         onPressedChange={() => editor.chain().focus().toggleCode().run()}
       >
-        <Code size={16} />
+        <LucideIcon name="Code" size={16} />
       </Toggle>
 
       <ColorSelect editor={editor} />
 
       <Toggle size="sm">
         <div className="relative">
-          <PaintBucket size={16} />
+          <LucideIcon name="PaintBucket" size={16} />
           <Input
             type="color"
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -182,23 +167,23 @@ const Toolbar: FC<ToolbarProps> = ({ editor }) => {
       >
         <SelectTrigger className="flex items-center border-none gap-1 p-2 px-2 h-fit focus:ring-0 text-sm font-medium rounded-md text-foreground hover:bg-muted active:bg-muted w-fit">
           {alignmentText === 'left' ? (
-            <AlignLeft size={16} />
+            <LucideIcon name="AlignLeft" size={16} />
           ) : alignmentText === 'center' ? (
-            <AlignCenter size={16} />
+            <LucideIcon name="AlignCenter" size={16} />
           ) : (
-            <AlignRight size={16} />
+            <LucideIcon name="AlignRight" size={16} />
           )}
         </SelectTrigger>
         <SelectContent className="">
           <SelectGroup>
             <SelectItem value="left">
-              <AlignLeft size={16} />
+              <LucideIcon name="AlignLeft" size={16} />
             </SelectItem>
             <SelectItem value="center">
-              <AlignCenter size={16} />
+              <LucideIcon name="AlignCenter" size={16} />
             </SelectItem>
             <SelectItem value="right">
-              <AlignRight size={16} />
+              <LucideIcon name="AlignRight" size={16} />
             </SelectItem>
           </SelectGroup>
         </SelectContent>
@@ -249,14 +234,14 @@ const Toolbar: FC<ToolbarProps> = ({ editor }) => {
         pressed={editor.isActive('bulletList')}
         onPressedChange={() => editor.commands.toggleBulletList()}
       >
-        <List size={16} />
+        <LucideIcon name="List" size={16} />
       </Toggle>
       <Toggle
         size="sm"
         pressed={editor.isActive('orderedList')}
         onPressedChange={() => editor.commands.toggleOrderedList()}
       >
-        <ListOrdered size={16} />
+        <LucideIcon name="ListOrdered" size={16} />
       </Toggle>
       <Separator orientation="vertical" className="h-8" />
       <Toggle
@@ -287,7 +272,7 @@ const Toolbar: FC<ToolbarProps> = ({ editor }) => {
             .run()
         }
       >
-        <TableIcon size={16} />
+        <LucideIcon name="Table" size={16} />
       </Toggle>
 
       <div
@@ -351,7 +336,7 @@ const Toolbar: FC<ToolbarProps> = ({ editor }) => {
           }
         }}
       >
-        <ImageIcon size={16} />
+        <LucideIcon name="Image" size={16} />
       </div>
 
       {/* <Toggle

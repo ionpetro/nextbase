@@ -116,6 +116,7 @@ const nextConfig = {
     // for more information.
     hideSourceMaps: true,
   },
+  optimizePackageImports: true,
 };
 
 export default withBundleAnalyzer(withSentryConfig(withMDX(nextConfig)));

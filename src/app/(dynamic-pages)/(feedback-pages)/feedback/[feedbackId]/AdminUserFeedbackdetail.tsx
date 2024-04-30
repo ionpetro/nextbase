@@ -1,11 +1,11 @@
 import { Separator } from '@/components/ui/separator';
 import { adminGetInternalFeedbackById } from '@/data/admin/internal-feedback';
 
+import { LucideIcon } from '@/components/LucideIcon';
 import { SuspensedUserAvatarWithFullname } from '@/components/UserAvatar';
 import { Badge } from '@/components/ui/badge';
 import { serverGetUserType } from '@/utils/server/serverGetUserType';
 import { format } from 'date-fns';
-import { Calendar, EyeIcon, EyeOffIcon } from 'lucide-react';
 import AddComment from './AddComment';
 import {
   CommentTimeLineItem,
@@ -28,7 +28,7 @@ async function AdminUserFeedbackdetail({ feedbackId }) {
             />
             <Separator className='h-6 hidden lg:block' orientation='vertical' />
             <div className='flex gap-2 items-center ml-2'>
-              <Calendar className="h-4 w-4 text-muted-foreground" />
+              <LucideIcon name="Calendar" className="h-4 w-4 text-muted-foreground" />
               <span className="text-muted-foreground text-sm lg:text-base">
                 {format(new Date(feedback.created_at), 'do MMMM yyyy')}
               </span>
@@ -38,11 +38,11 @@ async function AdminUserFeedbackdetail({ feedbackId }) {
           <div className='flex items-center gap-2'>
             {feedback.is_publicly_visible ? (
               <Badge variant="outline" className="px-2 rounded-full flex gap-2 items-center border-green-300 text-green-500">
-                <EyeIcon className="w-4 h-4" /> <p>Public</p>
+                <LucideIcon name="Eye" className="w-4 h-4" /> <p>Public</p>
               </Badge>
             ) : (
               <Badge variant="outline" className="px-2 rounded-full flex gap-2 items-center">
-                <EyeOffIcon className="w-4 h-4" /> <p>Hidden</p>
+                <LucideIcon name="EyeOff" className="w-4 h-4" /> <p>Hidden</p>
               </Badge>
             )}
 

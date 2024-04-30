@@ -12,7 +12,6 @@ import { Search } from "@/components/Search";
 import BlogViews from "@/components/blog/BlogViews";
 import { Label } from "@/components/ui/label";
 import type { Tables } from "@/lib/database.types";
-import { PenSquareIcon } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
 import { BlogFacetedFilters } from "./BlogFilters";
@@ -22,6 +21,7 @@ import { ManageBlogTagsDialog } from "./ManageBlogTagsDialog";
 import { z } from "zod";
 import { sortSchema } from "./schema";
 
+import { LucideIcon } from "@/components/LucideIcon";
 import { Pagination } from '@/components/Pagination';
 import { SmallBlogPostList } from "./RecentlyList";
 
@@ -42,7 +42,7 @@ async function ActionButtons() {
       {/* {authors.length ? ( */}
       <Link href="/app_admin/blog/post/create">
         <Button variant="default" className="w-full justify-start">
-          <PenSquareIcon className="size-4 mr-2" /> Create blog post
+          <LucideIcon name="Pen" className="size-4 mr-2" /> Create blog post
         </Button>
       </Link>
       {/* ) : null} */}

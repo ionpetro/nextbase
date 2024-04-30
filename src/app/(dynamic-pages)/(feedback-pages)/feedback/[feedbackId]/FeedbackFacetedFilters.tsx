@@ -14,13 +14,13 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
+import { LucideIcon } from '@/components/LucideIcon';
 import { Toggle } from '@/components/ui/toggle';
 import {
   NEW_PRIORITY_OPTIONS,
   NEW_STATUS_OPTIONS,
   NEW_TYPE_OPTIONS,
 } from '@/utils/feedback';
-import { CircleUser } from 'lucide-react';
 import {
   feedbackPrioritiesSchema,
   feedbackStatusesSchema,
@@ -141,7 +141,7 @@ export function FeedbackFacetedFilters() {
           });
         }}
       >
-        <CircleUser className="h-4 w-4" />
+        <LucideIcon name="CircleUser" className="h-4 w-4" />
         My feedbacks
       </Toggle>
       {(Boolean(filters.statuses?.length) ||

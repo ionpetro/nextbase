@@ -1,10 +1,10 @@
 import { Separator } from '@/components/ui/separator';
 import { adminGetInternalFeedbackById } from '@/data/admin/internal-feedback';
 
+import { LucideIcon } from '@/components/LucideIcon';
 import { SuspensedUserAvatarWithFullname } from '@/components/UserAvatar';
 import { Badge } from '@/components/ui/badge';
 import { format } from 'date-fns';
-import { Calendar } from 'lucide-react';
 import {
   CommentTimeLineItem,
   SuspendedFeedbackComments,
@@ -23,7 +23,7 @@ async function AnonUserFeedbackdetail({ feedbackId }) {
               size={32}
             />
             <Separator orientation="vertical" className="h-5" />
-            <Calendar className="h-4 w-4 text-muted-foreground" />
+            <LucideIcon name="Calendar" className="h-4 w-4 text-muted-foreground" />
             <span className="text-muted-foreground">
               {format(new Date(feedback.created_at), 'do MMMM yyyy')}
             </span>

@@ -1,17 +1,7 @@
+import { LucideIconProps } from '@/components/LucideIcon';
 import type { BadgeProps } from '@/components/ui/badge';
 import type { Enum } from '@/types';
-import {
-  ArrowDownIcon,
-  ArrowRightIcon,
-  ArrowUpIcon,
-  CalendarIcon,
-  CheckCircledIcon,
-  LightningBoltIcon,
-  QuestionMarkCircledIcon,
-  ReaderIcon,
-  StopwatchIcon,
-} from '@radix-ui/react-icons';
-import { Bug, MessageSquareDotIcon, XCircle } from 'lucide-react';
+
 
 export const formatFieldValue = (type: string) => {
   // feature_request to Feature request
@@ -29,83 +19,83 @@ export const STATUS_OPTIONS: Array<Enum<'internal_feedback_thread_status'>> = [
 export const NEW_STATUS_OPTIONS: Array<{
   value: Enum<'internal_feedback_thread_status'>;
   label: string;
-  icon: React.ElementType;
+  icon: LucideIconProps['name'];
 }> = [
-  {
-    label: 'Open',
-    value: 'open',
-    icon: QuestionMarkCircledIcon,
-  },
-  {
-    label: 'In Progress',
-    value: 'in_progress',
-    icon: StopwatchIcon,
-  },
-  {
-    label: 'Closed',
-    value: 'closed',
-    icon: XCircle,
-  },
-  {
-    label: 'Planned',
-    value: 'planned',
-    icon: CalendarIcon,
-  },
-  {
-    label: 'Under Review',
-    value: 'under_review',
-    icon: ReaderIcon,
-  },
-  {
-    label: 'Completed',
-    value: 'completed',
-    icon: CheckCircledIcon,
-  },
-];
+    {
+      label: 'Open',
+      value: 'open',
+      icon: 'MessageCircleQuestion',
+    },
+    {
+      label: 'In Progress',
+      value: 'in_progress',
+      icon: 'Timer',
+    },
+    {
+      label: 'Closed',
+      value: 'closed',
+      icon: 'XCircle',
+    },
+    {
+      label: 'Planned',
+      value: 'planned',
+      icon: 'Calendar',
+    },
+    {
+      label: 'Under Review',
+      value: 'under_review',
+      icon: 'Glasses',
+    },
+    {
+      label: 'Completed',
+      value: 'completed',
+      icon: 'CheckCircle',
+    },
+  ];
 
 export const NEW_PRIORITY_OPTIONS: Array<{
   value: Enum<'internal_feedback_thread_priority'>;
   label: string;
-  icon: React.ElementType;
+  icon: LucideIconProps['name'];
 }> = [
-  {
-    label: 'Low',
-    value: 'low',
-    icon: ArrowDownIcon,
-  },
-  {
-    label: 'Medium',
-    value: 'medium',
-    icon: ArrowRightIcon,
-  },
-  {
-    label: 'High',
-    value: 'high',
-    icon: ArrowUpIcon,
-  },
-];
+    {
+      label: 'Low',
+      value: 'low',
+      icon: 'ArrowDown',
+    },
+    {
+      label: 'Medium',
+      value: 'medium',
+      icon: 'ArrowRight',
+    },
+    {
+      label: 'High',
+      value: 'high',
+      icon: 'ArrowUp',
+    },
+  ];
 
 export const NEW_TYPE_OPTIONS: Array<{
   value: Enum<'internal_feedback_thread_type'>;
   label: string;
-  icon: React.ElementType;
+  icon: LucideIconProps['name'];
 }> = [
-  {
-    label: 'Bug',
-    value: 'bug',
-    icon: Bug,
-  },
-  {
-    label: 'Feature Request',
-    value: 'feature_request',
-    icon: LightningBoltIcon,
-  },
-  {
-    label: 'General',
-    value: 'general',
-    icon: MessageSquareDotIcon,
-  },
-];
+    {
+      label: 'Bug',
+      value: 'bug',
+      icon: 'Bug',
+    },
+    {
+      label: 'Feature Request',
+      value: 'feature_request',
+      icon: 'Zap',
+    },
+    {
+      label: 'General',
+      value: 'general',
+      icon: 'MessageSquare',
+    },
+  ];
 
 export const PRIORITY_OPTIONS: Array<
   Enum<'internal_feedback_thread_priority'>

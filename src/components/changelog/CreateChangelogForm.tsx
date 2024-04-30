@@ -6,12 +6,12 @@ import { createChangelog } from '@/data/admin/internal-changelog';
 import { uploadImage } from '@/data/admin/user';
 import { useToastMutation } from '@/hooks/useToastMutation';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Loader } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Controller, useForm, type SubmitHandler } from 'react-hook-form';
 import { z } from 'zod';
+import { LucideIcon } from '../LucideIcon';
 import { TipTapEditor } from '../tip-tap-Editor';
 
 
@@ -190,7 +190,7 @@ export const CreateChangelogForm = () => {
         <Button type="submit" name="submit-changelog" disabled={isSubmitting}>
           {isSubmitting ? (
             <>
-              <Loader className="animate-spin size-4 mr-1" /> Creating
+              <LucideIcon name="Loader" className="animate-spin size-4 mr-1" /> Creating
             </>
           ) : (
             'Create changelog'

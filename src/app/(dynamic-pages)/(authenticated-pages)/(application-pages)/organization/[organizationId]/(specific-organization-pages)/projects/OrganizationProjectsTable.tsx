@@ -1,4 +1,5 @@
 "use client";
+import { LucideIcon } from '@/components/LucideIcon';
 import { ProjectStatus } from '@/components/Projects/ProjectsCardList';
 import { T } from '@/components/ui/Typography';
 import { ProjectBadge } from '@/components/ui/badge-project';
@@ -24,7 +25,6 @@ import {
   type SortingState,
 } from '@tanstack/react-table';
 import { format } from 'date-fns';
-import { ChevronsUpDown } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 
@@ -52,7 +52,7 @@ export function OrganizationProjectsTable({ projects }: Props) {
         >
           <div className="capitalize items-center flex gap-2">
             Project Name
-            <ChevronsUpDown className="size-4" />
+            <LucideIcon name="ChevronsUpDown" className="size-4" />
           </div>
         </Button>
       ),
@@ -83,7 +83,7 @@ export function OrganizationProjectsTable({ projects }: Props) {
         >
           <div className="capitalize flex gap-2 items-center">
             Created On
-            <ChevronsUpDown className="size-4" />
+            <LucideIcon name="ChevronsUpDown" className="size-4" />
           </div>
         </Button>
       ),

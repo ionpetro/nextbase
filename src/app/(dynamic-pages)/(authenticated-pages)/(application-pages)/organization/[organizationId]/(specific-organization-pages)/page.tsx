@@ -1,4 +1,5 @@
 import { CreateProjectDialog } from "@/components/CreateProjectDialog";
+import { LucideIcon } from "@/components/LucideIcon";
 import { PageHeading } from "@/components/PageHeading";
 import { ProjectsCardList } from "@/components/Projects/ProjectsCardList";
 import { Search } from "@/components/Search";
@@ -8,7 +9,6 @@ import {
   organizationParamSchema,
   projectsfilterSchema,
 } from "@/utils/zod-schemas/params";
-import { Layers } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
 import type { z } from "zod";
@@ -76,7 +76,7 @@ export default async function OrganizationPage({
                 className="self-end flex gap-2"
               >
                 <Link href={`/organization/${organizationId}/projects`}>
-                  <Layers className="h-4 w-4" />
+                  <LucideIcon name="Layers" className="h-4 w-4" />
                   View all projects
                 </Link>
               </Button>

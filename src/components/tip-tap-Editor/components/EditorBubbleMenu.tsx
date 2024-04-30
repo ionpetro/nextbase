@@ -1,14 +1,8 @@
 'use client';
 
+import { LucideIcon, LucideIconProps } from '@/components/LucideIcon';
 import { cn } from '@/utils/cn';
 import { BubbleMenu, type BubbleMenuProps } from '@tiptap/react';
-import {
-  BoldIcon,
-  CodeIcon,
-  ItalicIcon,
-  StrikethroughIcon,
-  UnderlineIcon,
-} from 'lucide-react';
 import { useState, type FC } from 'react';
 import { ColorSelector } from './color-selector';
 import { LinkSelector } from './link-selector';
@@ -18,7 +12,7 @@ export interface BubbleMenuItem {
   name: string;
   isActive: () => boolean;
   command: () => void;
-  icon: typeof BoldIcon;
+  icon: LucideIconProps['name'];
 }
 
 type EditorBubbleMenuProps = Omit<BubbleMenuProps, 'children' | 'editor'> & {
@@ -33,31 +27,31 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props) => {
       name: 'bold',
       isActive: () => editor.isActive('bold'),
       command: () => editor.chain().focus().toggleBold().run(),
-      icon: BoldIcon,
+      icon: 'Bold',
     },
     {
       name: 'italic',
       isActive: () => editor.isActive('italic'),
       command: () => editor.chain().focus().toggleItalic().run(),
-      icon: ItalicIcon,
+      icon: 'Italic',
     },
     {
       name: 'underline',
       isActive: () => editor.isActive('underline'),
       command: () => editor.chain().focus().toggleUnderline().run(),
-      icon: UnderlineIcon,
+      icon: 'Underline',
     },
     {
       name: 'strike',
       isActive: () => editor.isActive('strike'),
       command: () => editor.chain().focus().toggleStrike().run(),
-      icon: StrikethroughIcon,
+      icon: 'Strikethrough',
     },
     {
       name: 'code',
       isActive: () => editor.isActive('code'),
       command: () => editor.chain().focus().toggleCode().run(),
-      icon: CodeIcon,
+      icon: 'Code',
     },
   ];
 
@@ -115,7 +109,8 @@ export const EditorBubbleMenu: FC<EditorBubbleMenuProps> = (props) => {
             onClick={item.command}
             className="p-2 text-muted-foreground hover:bg-muted  active:bg-muted "
           >
-            <item.icon
+            <LucideIcon
+              name={item.icon}
               className={cn('h-4 w-4', {
                 'text-blue-500': item.isActive(),
               })}

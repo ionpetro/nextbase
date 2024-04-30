@@ -1,10 +1,10 @@
 import { Button } from '@/components/Button';
+import { LucideIcon } from '@/components/LucideIcon';
 import { CreateChangelogForm } from '@/components/changelog/CreateChangelogForm';
 import { RecentlyFeedbackCard } from '@/components/changelog/RecentlyFeedbackCard';
 import { getAllInternalFeedback } from '@/data/user/internalFeedback';
 import { serverGetUserType } from '@/utils/server/serverGetUserType';
 import { userRoles } from '@/utils/userTypes';
-import { MessagesSquare } from 'lucide-react';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
@@ -40,7 +40,7 @@ export default async function Page() {
                 target="_blank"
                 className="flex gap-2"
               >
-                <MessagesSquare className="size-4" /> View all completed
+                <LucideIcon name="MessagesSquare" className="size-4" /> View all completed
                 feedback
               </Link>
             </Button>

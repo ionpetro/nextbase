@@ -1,5 +1,5 @@
+import { LucideIcon } from '@/components/LucideIcon';
 import type { Editor } from '@tiptap/core';
-import { CheckIcon, ChevronDown } from 'lucide-react';
 import type { Dispatch, FC, SetStateAction } from 'react';
 
 export interface BubbleColorMenuItem {
@@ -121,7 +121,7 @@ export const ColorSelector: FC<ColorSelectorProps> = ({
           A
         </span>
 
-        <ChevronDown className="h-4 w-4" />
+        <LucideIcon name="ChevronDown" className="h-4 w-4" />
       </button>
 
       {isOpen && (
@@ -151,7 +151,7 @@ export const ColorSelector: FC<ColorSelectorProps> = ({
                 <span>{name}</span>
               </div>
               {editor.isActive('textStyle', { color }) && (
-                <CheckIcon className="h-4 w-4" />
+                <LucideIcon name="Check" className="h-4 w-4" />
               )}
             </button>
           ))}
@@ -184,7 +184,7 @@ export const ColorSelector: FC<ColorSelectorProps> = ({
                 <span>{name}</span>
               </div>
               {editor.isActive('highlight', { color }) && (
-                <CheckIcon className="h-4 w-4" />
+                <LucideIcon name="Check" className="h-4 w-4" />
               )}
             </button>
           ))}
