@@ -17,18 +17,18 @@ import { Textarea } from '@/components/ui/textarea';
 import { createBlogPost, updateBlogPost } from '@/data/admin/internal-blog';
 import type { Table } from '@/types';
 import {
-  internalBlogPostSchema,
   type InternalBlogPostSchema,
+  internalBlogPostSchema,
 } from '@/utils/zod-schemas/internalBlog';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import {
+  type Control,
   Controller,
   useController,
-  useForm,
-  type Control
+  useForm
 } from 'react-hook-form';
 import ReactSelect from 'react-select';
 import slugify from 'slugify';
@@ -37,9 +37,7 @@ import { uploadBlogImage } from '@/data/admin/user';
 import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import type { Editor } from '@tiptap/core';
 import { motion } from 'framer-motion';
-import { Settings } from 'lucide-react';
 import { useTheme } from 'next-themes';
-import Link from 'next/link';
 
 const darkThemeStyles = {
   control: (styles) => ({
@@ -329,15 +327,6 @@ export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
 
   return (
     <div>
-      <div className="col-span-4 flex w-full justify-between items-center py-2">
-        <span />
-        {formState.errors.content && <T.P className="text-red-500 text-xs">{formState.errors.content.message}</T.P>}
-        <Link href={"/app_admin/configure-domains"} replace>
-          <Button variant="outline" className="w-fit self-end flex gap-2">
-            <Settings size={16} /> Configure Domains
-          </Button>
-        </Link>
-      </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="grid grid-cols-1 xl:grid-cols-6 xl:gap-4"
