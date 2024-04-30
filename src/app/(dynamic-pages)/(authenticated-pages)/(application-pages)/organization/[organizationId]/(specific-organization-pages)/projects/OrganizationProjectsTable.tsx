@@ -1,7 +1,9 @@
 "use client";
 import { ProjectStatus } from '@/components/Projects/ProjectsCardList';
+import { T } from '@/components/ui/Typography';
 import { ProjectBadge } from '@/components/ui/badge-project';
 import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 import {
   Table,
   TableBody,
@@ -32,14 +34,14 @@ type Props = {
 
 export function OrganizationProjectsTable({ projects }: Props) {
 
-  const columns: ColumnDef<(typeof projects)[0]>[] = [
+  const columns: ColumnDef<Tables<'projects'>>[] = [
     {
       accessorKey: 'name',
-      cell: ({ row }) => (
-        <Link href={`/project/${row.getValue('id')}`} className='hover:underline'>
+      cell: ({ row }) => {
+        return <Link href={`/project/${row.original.id}`} className='hover:underline'>
           {row.getValue('name')}
         </Link>
-      ),
+      },
       header: ({ column }) => (
         <Button
           className="p-0 bg-transparent hover:bg-transparent"
@@ -102,6 +104,16 @@ export function OrganizationProjectsTable({ projects }: Props) {
       sorting,
     },
   });
+
+  if (projects.length === 0) {
+
+    return <Card>
+      <div className='flex justify-center w-full  items-center h-[180px]'>
+        <T.Subtle>No projects found</T.Subtle>
+      </div>
+    </Card>
+
+  }
 
   return (
     <div className="w-full">

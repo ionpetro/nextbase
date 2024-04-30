@@ -89,7 +89,6 @@ export async function OrganizationSidebar({ params }: { params: unknown }) {
   try {
 
     const { organizationId } = organizationParamSchema.parse(params);
-    console.log(organizationId);
     return (
       <Suspense fallback={<DesktopSidebarFallback />}>
         <OrganizationSidebarInternal organizationId={organizationId} />

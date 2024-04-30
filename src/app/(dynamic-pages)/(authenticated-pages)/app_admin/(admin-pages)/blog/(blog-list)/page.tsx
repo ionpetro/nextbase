@@ -89,9 +89,7 @@ export default async function BlogListPage({ searchParams }: { searchParams: unk
 
           {blogs.length > 0 ? <BlogViews blogs={blogs} /> : <T.Subtle>No blog posts yet!</T.Subtle>}
         </Suspense>
-        {totalPages > 1 ? <div className="border-t py-2">
-          <Pagination totalPages={totalPages} />
-        </div> : null}
+        <Pagination totalPages={totalPages} />
       </div>
 
       <div className="space-y-8 col-span-1 lg:col-span-2 row-start-1">

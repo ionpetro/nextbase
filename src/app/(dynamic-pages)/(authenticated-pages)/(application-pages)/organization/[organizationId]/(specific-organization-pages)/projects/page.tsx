@@ -12,8 +12,10 @@ import { OrganizationProjectsTable } from "./OrganizationProjectsTable";
 export default async function Page({ params, searchParams }: { params: unknown; searchParams: unknown }) {
   const { organizationId } = organizationParamSchema.parse(params);
   const filters = projectsfilterSchema.parse(searchParams);
-  const projects = await getProjects({ ...filters, organizationId })
-  const totalPages = await getProjectsTotalCount({ ...filters, organizationId });
+  const [projects, totalPages] = await Promise.all([
+    getProjects({ ...filters, organizationId }),
+    getProjectsTotalCount({ ...filters, organizationId })
+  ]);
 
   return (
     <div className="flex flex-col gap-4 w-full">
@@ -28,13 +30,12 @@ export default async function Page({ params, searchParams }: { params: unknown; 
       </div>
       {
         <Suspense fallback={<T.P className="text-muted-foreground my-6">
-          🔍 No matching projects found.
+          Loading projects...
         </T.P>}>
           <OrganizationProjectsTable projects={projects} />
           <Pagination totalPages={totalPages} />
         </Suspense>
       }
-
     </div>
 
   )

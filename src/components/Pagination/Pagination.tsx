@@ -51,7 +51,9 @@ export function Pagination({ totalPages }: { totalPages: number }) {
 
   const allPages = generatePagination(currentPage, totalPages);
 
-
+  if (totalPages < 2) {
+    return null;
+  }
 
   return (
     <div className="inline-flex justify-between w-full">
