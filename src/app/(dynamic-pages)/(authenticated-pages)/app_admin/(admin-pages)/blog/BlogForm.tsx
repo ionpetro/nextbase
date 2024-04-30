@@ -331,7 +331,7 @@ export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
   return (
     <div>
       <div className="col-span-4 flex w-full justify-between items-center py-2">
-        <h1 className="text-xl font-medium">Create blog post</h1>
+        <span />
         {formState.errors.content && <T.P className="text-red-500 text-xs">{formState.errors.content.message}</T.P>}
         <Link href={"/app_admin/configure-domains"} replace>
           <Button variant="outline" className="w-fit self-end flex gap-2">

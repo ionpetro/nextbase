@@ -51,6 +51,8 @@ export function Pagination({ totalPages }: { totalPages: number }) {
 
   const allPages = generatePagination(currentPage, totalPages);
 
+
+
   return (
     <div className="inline-flex justify-between w-full">
       <PaginationArrow
