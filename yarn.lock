@@ -3374,7 +3374,7 @@
   resolved "https://registry.yarnpkg.com/@ungap/structured-clone/-/structured-clone-1.2.0.tgz#756641adb587851b5ccb3e095daf27ae581c8406"
   integrity sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==
 
-"@unkey/api@^0.19.0", "@unkey/api@^0.19.4":
+"@unkey/api@^0.19.0", "@unkey/api@^0.19.5":
   version "0.19.5"
   resolved "https://registry.yarnpkg.com/@unkey/api/-/api-0.19.5.tgz#e5a9ab345356b2ce0e940fab0fe034df6257c885"
   integrity sha512-eGER+FWFpZcyTUuVVNG6YyTLQSzuqwrU2vS2nA5l1Jfpv3E5+eJQ4DSQZI3aBBAjWVnx5DkL0pvb4QKv+34VgQ==
@@ -3382,11 +3382,11 @@
     "@unkey/rbac" "^0.1.11"
 
 "@unkey/nextjs@^0.15.0":
-  version "0.15.7"
-  resolved "https://registry.yarnpkg.com/@unkey/nextjs/-/nextjs-0.15.7.tgz#25c4971f39df30fc7fe7b410da4fce596d5bf5c1"
-  integrity sha512-IUop8UvJLph2hP4e+pzwbQE3A2geLdhOyB1jHOJAVhSnxz/8aKGSZTtCo1OQyY0ya/ud04sSGJ60njiweYvjWA==
+  version "0.15.8"
+  resolved "https://registry.yarnpkg.com/@unkey/nextjs/-/nextjs-0.15.8.tgz#5c45e6f2596008f3d94b213b4a0dc767cc42443f"
+  integrity sha512-yJ9FbR1UkC7Jc6rh40hiGsUY8BI1gFV4Rcavji3uT02CHfWcSXtpkNEq0qx1Fn4eNdKh+NjFraX6DCfXPh1HOQ==
   dependencies:
-    "@unkey/api" "^0.19.4"
+    "@unkey/api" "^0.19.5"
 
 "@unkey/rbac@^0.1.11":
   version "0.1.11"
