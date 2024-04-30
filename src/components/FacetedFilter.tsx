@@ -1,5 +1,4 @@
 'use client';
-import { CheckIcon, PlusCircledIcon } from '@radix-ui/react-icons';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -20,6 +19,7 @@ import {
 import { Separator } from '@/components/ui/separator';
 
 import { cn } from '@/lib/utils';
+import { LucideIcon } from './LucideIcon';
 
 export default function FacetedFilter<T extends string>({
   title,
@@ -37,7 +37,7 @@ export default function FacetedFilter<T extends string>({
     <Popover>
       <PopoverTrigger asChild>
         <Button variant="outline" size="sm" className="h-8 border-dashed">
-          <PlusCircledIcon className="mr-2 h-4 w-4" />
+          <LucideIcon name="PlusCircle" className="mr-2 h-4 w-4" />
           {title}
           {selectedValues?.size > 0 && (
             <>
@@ -103,7 +103,7 @@ export default function FacetedFilter<T extends string>({
                           : 'opacity-50 [&_svg]:invisible',
                       )}
                     >
-                      <CheckIcon className={cn('h-4 w-4')} />
+                      <LucideIcon name="Check" className={cn('h-4 w-4')} />
                     </div>
                     {option.icon && (
                       <option.icon className="mr-2 h-4 w-4 text-muted-foreground" />

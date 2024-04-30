@@ -50,7 +50,7 @@ async function OrganizationSidebarInternal({
             <SidebarLink
               label="Members"
               href={`/organization/${organizationId}/settings/members`}
-              icon={<LucideIcon name="User2" className="h-5 w-5" />}
+              icon={<LucideIcon name="Users" className="h-5 w-5" />}
             />
             <SidebarLink
               label="Billing"

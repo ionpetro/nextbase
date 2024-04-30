@@ -1,6 +1,6 @@
+import { LucideIcon } from '@/components/LucideIcon';
 import { T } from '@/components/ui/Typography';
 import { cn } from '@/utils/cn';
-import { ArrowLeftIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 
 export default function InvitationsNavbar() {
@@ -9,7 +9,7 @@ export default function InvitationsNavbar() {
       <T.P className="my-0">
         <Link href="/invitations">
           <span className="space-x-2 flex items-center">
-            <ArrowLeftIcon />
+            <LucideIcon name="ArrowLeft" />
             <span>Back to Invitations</span>
           </span>
         </Link>

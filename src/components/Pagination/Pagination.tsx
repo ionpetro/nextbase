@@ -1,9 +1,9 @@
 'use client';
 
-import { ArrowLeftIcon, ArrowRightIcon } from '@radix-ui/react-icons';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
+import { LucideIcon } from '../LucideIcon';
 
 export const generatePagination = (currentPage: number, totalPages: number) => {
   // If the total number of pages is 7 or less,
@@ -146,9 +146,9 @@ function PaginationArrow({
 
   const icon =
     direction === 'left' ? (
-      <ArrowLeftIcon className="w-4" />
+      <LucideIcon name="ArrowLeft" className="w-4" />
     ) : (
-      <ArrowRightIcon className="w-4" />
+      <LucideIcon name="ArrowRight" className="w-4" />
     );
 
   return isDisabled ? (

@@ -2,7 +2,6 @@
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-import { Cross2Icon } from '@radix-ui/react-icons';
 
 import FacetedFilter from '@/components/FacetedFilter';
 import { Button } from '@/components/ui/button';
@@ -160,7 +159,7 @@ export function FeedbackFacetedFilters() {
             className="h-8 px-2 lg:px-3"
           >
             Reset
-            <Cross2Icon className="ml-2 h-4 w-4" />
+            <LucideIcon name="X" className="ml-2 h-4 w-4" />
           </Button>
         )}
     </div>

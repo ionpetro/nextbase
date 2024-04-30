@@ -1,7 +1,7 @@
+import { LucideIcon } from '@/components/LucideIcon';
 import { T } from '@/components/ui/Typography';
 import { cn } from '@/utils/cn';
 import { organizationParamSchema } from '@/utils/zod-schemas/params';
-import { ArrowLeftIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 
 export default function OrganizationSettingsNavbar({
@@ -16,7 +16,7 @@ export default function OrganizationSettingsNavbar({
       <T.P className="my-0">
         <Link href={`/organization/${organizationId}`}>
           <span className="space-x-2 flex items-center">
-            <ArrowLeftIcon />
+            <LucideIcon name="ArrowLeft" />
             <span>Back to Organization catch all</span>
           </span>
         </Link>

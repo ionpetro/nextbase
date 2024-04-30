@@ -20,7 +20,6 @@ import {
   NEW_STATUS_OPTIONS,
   NEW_TYPE_OPTIONS,
 } from '@/utils/feedback';
-import { DotsVerticalIcon } from '@radix-ui/react-icons';
 
 
 import { LucideIcon } from '@/components/LucideIcon';
@@ -263,7 +262,7 @@ function FeedbackActionsDropdown({
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon">
-          <DotsVerticalIcon data-testid="feedback-actions-dropdown-button" />
+          <LucideIcon name="Menu" data-testid="feedback-actions-dropdown-button" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
@@ -274,7 +273,7 @@ function FeedbackActionsDropdown({
             <DropdownMenuGroup>
               <DropdownMenuSub>
                 <DropdownMenuSubTrigger>
-                  <Tags className="h-4 w-4 mr-2" />
+                  <LucideIcon name="Tags" className="h-4 w-4 mr-2" />
                   Apply status
                 </DropdownMenuSubTrigger>
                 <DropdownMenuPortal>
@@ -289,7 +288,7 @@ function FeedbackActionsDropdown({
                           });
                         }}
                       >
-                        <status.icon className="h-4 w-4 mr-2" /> {status.label}
+                        <LucideIcon name={status.icon} className="h-4 w-4 mr-2" /> {status.label}
                       </DropdownMenuItem>
                     ))}
                   </DropdownMenuSubContent>
@@ -297,7 +296,7 @@ function FeedbackActionsDropdown({
               </DropdownMenuSub>
               <DropdownMenuSub>
                 <DropdownMenuSubTrigger>
-                  <Tags className="h-4 w-4 mr-2" />
+                  <LucideIcon name="Tags" className="h-4 w-4 mr-2" />
                   Apply type
                 </DropdownMenuSubTrigger>
                 <DropdownMenuPortal>
@@ -312,7 +311,7 @@ function FeedbackActionsDropdown({
                           });
                         }}
                       >
-                        <type.icon className="h-4 w-4 mr-2" /> {type.label}
+                        <LucideIcon name={type.icon} className="h-4 w-4 mr-2" /> {type.label}
                       </DropdownMenuItem>
                     ))}
                   </DropdownMenuSubContent>
@@ -320,7 +319,7 @@ function FeedbackActionsDropdown({
               </DropdownMenuSub>
               <DropdownMenuSub>
                 <DropdownMenuSubTrigger>
-                  <Tags className="h-4 w-4 mr-2" />
+                  <LucideIcon name="Tags" className="h-4 w-4 mr-2" />
                   Apply priority
                 </DropdownMenuSubTrigger>
                 <DropdownMenuPortal>
@@ -335,7 +334,7 @@ function FeedbackActionsDropdown({
                           });
                         }}
                       >
-                        <priority.icon className="h-4 w-4 mr-2" />{' '}
+                        <LucideIcon name={priority.icon} className="h-4 w-4 mr-2" />{' '}
                         {priority.label}
                       </DropdownMenuItem>
                     ))}
@@ -351,7 +350,7 @@ function FeedbackActionsDropdown({
             <DropdownMenuLabel>Thread Settings</DropdownMenuLabel>
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <VolumeX className="h-4 w-4 mr-2" /> Mute this thread
+                <LucideIcon name="VolumeX" className="h-4 w-4 mr-2" /> Mute this thread
               </DropdownMenuItem>
             </DropdownMenuGroup>
           </>
