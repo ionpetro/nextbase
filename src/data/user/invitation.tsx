@@ -279,29 +279,35 @@ export async function declineInvitationAction(invitationId: string) {
 export async function getPendingInvitationsOfUser() {
   const supabaseClient = createSupabaseUserServerComponentClient();
   const user = await serverGetLoggedInUser();
-  const { data, error } = await supabaseClient
-    .from('organization_join_invitations')
-    .select(
-      '*, inviter:user_profiles!inviter_user_id(*), invitee:user_profiles!invitee_user_id(*), organization:organizations(*)',
-    )
-    .eq('invitee_user_id', user.id)
-    .eq('status', 'active');
 
-  if (error) {
-    throw error;
+  async function idInvitations(userId: string) {
+    const { data, error } = await supabaseClient
+      .from('organization_join_invitations')
+      .select(
+        '*, inviter:user_profiles!inviter_user_id(*), invitee:user_profiles!invitee_user_id(*), organization:organizations(*)',
+      )
+      .eq('invitee_user_id', userId)
+      .eq('status', 'active');
+
+    if (error) {
+      throw error;
+    }
+
+    const organizationId = data[0].organization_id;
+
+    const organization = await getInvitationOrganizationDetails(organizationId);
+
+    return data.map((invitation) => {
+      return {
+        ...invitation,
+        organization: organization,
+      };
+    });
   }
 
-  const invitationListPromise = data.map(async (invitation) => {
-    const organization = await getInvitationOrganizationDetails(invitation.organization_id);
-    return {
-      ...invitation,
-      organization
-    };
-  });
+  const idInvitationsData = await idInvitations(user.id);
 
-  return Promise.all(invitationListPromise);
-
-
+  return idInvitationsData;
 }
 
 export const getInvitationById = async (invitationId: string) => {
@@ -313,21 +319,22 @@ export const getInvitationById = async (invitationId: string) => {
       '*, inviter:user_profiles!inviter_user_id(*), invitee:user_profiles!invitee_user_id(*), organization:organizations(*)',
     )
     .eq('id', invitationId)
-    .eq('status', 'active')
-    .single();
+    .eq('status', 'active');
 
   if (error) {
     throw error;
   }
 
-  const organizationId = data.organization_id;
+  const organizationId = data[0].organization_id;
 
   const organization = await getInvitationOrganizationDetails(organizationId);
 
-  return {
-    ...data,
-    organization
-  }
+  return data.map((invitation) => {
+    return {
+      ...invitation,
+      organization: organization,
+    };
+  })[0];
 };
 
 export async function getPendingInvitationCountOfUser() {
