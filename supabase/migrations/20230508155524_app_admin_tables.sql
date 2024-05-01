@@ -144,7 +144,9 @@ SELECT USING (
       OR STATUS = 'completed'
     )
     AND added_to_roadmap = TRUE
-    OR user_id = auth.uid()
+    OR user_id = (
+      SELECT auth.uid()
+    )
     OR open_for_public_discussion = TRUE
   );
 
@@ -152,18 +154,34 @@ CREATE POLICY "Feedback Threads Create Policy" ON internal_feedback_threads FOR
 INSERT TO authenticated WITH CHECK (TRUE);
 
 CREATE POLICY "Feedback Threads Owner Update Policy" ON internal_feedback_threads FOR
-UPDATE TO authenticated USING (user_id = auth.uid());
+UPDATE TO authenticated USING (
+    user_id = (
+      SELECT auth.uid()
+    )
+  );
 
-CREATE POLICY "Feedback Threads Owner Delete Policy" ON internal_feedback_threads FOR DELETE TO authenticated USING (user_id = auth.uid());
+CREATE POLICY "Feedback Threads Owner Delete Policy" ON internal_feedback_threads FOR DELETE TO authenticated USING (
+  user_id = (
+    SELECT auth.uid()
+  )
+);
 
 -- Feedback Comments policies
 CREATE POLICY "Feedback Comments Create Policy" ON internal_feedback_comments FOR
 INSERT TO authenticated WITH CHECK (TRUE);
 
 CREATE POLICY "Feedback Comments Owner Update Policy" ON internal_feedback_comments FOR
-UPDATE TO authenticated USING (user_id = auth.uid());
+UPDATE TO authenticated USING (
+    user_id = (
+      SELECT auth.uid()
+    )
+  );
 
-CREATE POLICY "Feedback Comments Owner Delete Policy" ON internal_feedback_comments FOR DELETE TO authenticated USING (user_id = auth.uid());
+CREATE POLICY "Feedback Comments Owner Delete Policy" ON internal_feedback_comments FOR DELETE TO authenticated USING (
+  user_id = (
+    SELECT auth.uid()
+  )
+);
 
 CREATE POLICY "Feedback Comments View Policy" ON internal_feedback_comments FOR
 SELECT TO authenticated USING (TRUE);

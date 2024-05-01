@@ -17,7 +17,15 @@ CREATE policy Only_user_can_read_their_own_notification ON user_notifications AS
 SELECT TO authenticated USING ((auth.uid () = user_id));
 
 CREATE policy Only_user_can_update_their_notification ON user_notifications AS permissive FOR
-UPDATE TO authenticated USING (auth.uid() = user_id);
-CREATE policy Only_user_can_delete_their_notification ON user_notifications AS permissive FOR DELETE TO authenticated USING (auth.uid() = user_id);
+UPDATE TO authenticated USING (
+    (
+      SELECT auth.uid()
+    ) = user_id
+  );
+CREATE policy Only_user_can_delete_their_notification ON user_notifications AS permissive FOR DELETE TO authenticated USING (
+  (
+    SELECT auth.uid()
+  ) = user_id
+);
 CREATE policy Any_user_can_create_notification ON user_notifications AS permissive FOR
 INSERT TO authenticated WITH CHECK (TRUE);

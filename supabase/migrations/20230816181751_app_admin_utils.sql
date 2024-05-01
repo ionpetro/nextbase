@@ -24,7 +24,7 @@ REVOKE ALL ON FUNCTION public.app_admin_get_user_id_by_email(text)
 FROM AUTHENTICATED;
 
 
-CREATE OR REPLACE FUNCTION public.check_if_authenticated_user_owns_email(email character varying) RETURNS boolean LANGUAGE plpgsql SECURITY DEFINER AS $function$ BEGIN -- Check if the email exists in the auth.users table and if the id column matches the auth.uid() function
+CREATE OR REPLACE FUNCTION public.check_if_authenticated_user_owns_email(email character varying) RETURNS boolean LANGUAGE plpgsql SECURITY DEFINER AS $function$ BEGIN -- Check if the email exists in the auth.users table and if the id column matches the (select auth.uid()) function
   IF EXISTS (
     SELECT *
     FROM auth.users
@@ -32,7 +32,9 @@ CREATE OR REPLACE FUNCTION public.check_if_authenticated_user_owns_email(email c
         auth.users.email = $1
         OR LOWER(auth.users.email) = LOWER($1)
       )
-      AND id = auth.uid()
+      AND id = (
+        SELECT auth.uid()
+      )
   ) THEN RETURN TRUE;
 ELSE RETURN false;
 END IF;

@@ -22,7 +22,13 @@ SELECT TO authenticated USING (
     (
       (bucket_id = 'user-assets'::text)
       AND (
-        (auth.uid())::text = (STORAGE.foldername(name)) [1]
+        (
+          (
+            SELECT (
+                SELECT auth.uid()
+              )
+          )
+        )::text = (STORAGE.foldername(name)) [1]
       )
     )
   );
@@ -33,7 +39,11 @@ INSERT TO authenticated WITH CHECK (
     (
       (bucket_id = 'user-assets'::text)
       AND (
-        (auth.uid())::text = (STORAGE.foldername(name)) [1]
+        (
+          (
+            SELECT auth.uid()
+          )
+        )::text = (STORAGE.foldername(name)) [1]
       )
     )
   );
@@ -44,7 +54,11 @@ UPDATE TO authenticated USING (
     (
       (bucket_id = 'user-assets'::text)
       AND (
-        (auth.uid())::text = (STORAGE.foldername(name)) [1]
+        (
+          (
+            SELECT auth.uid()
+          )
+        )::text = (STORAGE.foldername(name)) [1]
       )
     )
   );
@@ -54,7 +68,11 @@ CREATE policy "Give users access to own folder 10fq7k5_3" ON "storage"."objects"
   (
     (bucket_id = 'user-assets'::text)
     AND (
-      (auth.uid())::text = (STORAGE.foldername(name)) [1]
+      (
+        (
+          SELECT auth.uid()
+        )
+      )::text = (STORAGE.foldername(name)) [1]
     )
   )
 );
@@ -69,7 +87,11 @@ INSERT TO public WITH CHECK (
     (
       (bucket_id = 'public-user-assets'::text)
       AND (
-        (auth.uid())::text = (STORAGE.foldername(name)) [1]
+        (
+          (
+            SELECT auth.uid()
+          )
+        )::text = (STORAGE.foldername(name)) [1]
       )
     )
   );
@@ -80,7 +102,11 @@ UPDATE TO public USING (
     (
       (bucket_id = 'public-user-assets'::text)
       AND (
-        (auth.uid())::text = (STORAGE.foldername(name)) [1]
+        (
+          (
+            SELECT auth.uid()
+          )
+        )::text = (STORAGE.foldername(name)) [1]
       )
     )
   );
@@ -90,7 +116,11 @@ CREATE policy "Give users access to own folder 1plzjhd_3" ON "storage"."objects"
   (
     (bucket_id = 'public-user-assets'::text)
     AND (
-      (auth.uid())::text = (STORAGE.foldername(name)) [1]
+      (
+        (
+          SELECT auth.uid()
+        )
+      )::text = (STORAGE.foldername(name)) [1]
     )
   )
 );

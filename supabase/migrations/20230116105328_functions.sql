@@ -9,7 +9,11 @@ CREATE OR REPLACE FUNCTION public.check_if_authenticated_user_owns_email(email c
         auth.users.email = $1
         OR auth.users.email ilike concat('%', $1, '%')
       )
-      AND id = auth.uid()
+      AND id = (
+        SELECT (
+            SELECT auth.uid()
+          )
+      )
   ) THEN RETURN TRUE;
 ELSE RETURN false;
 END IF;
