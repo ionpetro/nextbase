@@ -9,7 +9,7 @@ import {
 } from '@/data/user/organizations';
 import { getAcceptedTermsOfService, getUserProfile } from '@/data/user/user';
 import { errors } from '@/utils/errors';
-import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
+import { verifySession } from '@/utils/server/verifySession';
 import { cookies } from 'next/headers';
 import { Suspense, type ReactNode } from 'react';
 import { ClientLayout } from './ClientLayout';
@@ -58,7 +58,7 @@ const getOnboardingConditions = async (userId: string) => {
 };
 
 async function AuthenticatedLayout({ children }: { children: ReactNode }) {
-  const user = await serverGetLoggedInUser();
+  const user = await verifySession();
   console.log('---------------')
   console.log('AuthenticatedLayout')
   console.log('---------------');

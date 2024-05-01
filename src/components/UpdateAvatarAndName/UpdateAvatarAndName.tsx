@@ -2,7 +2,6 @@ import { useRef, useState } from 'react';
 
 import { T } from '@/components/ui/Typography';
 import { Label } from '@/components/ui/label';
-import { useLoggedInUserEmail } from '@/hooks/useLoggedInUserEmail';
 import { getUserAvatarUrl } from '@/utils/helpers';
 import { motion } from 'framer-motion';
 import CameraIcon from 'lucide-react/dist/esm/icons/camera';
@@ -20,6 +19,8 @@ export function UpdateAvatarAndNameBody({
   profileFullname,
   isNewAvatarImageLoading,
   setIsNewAvatarImageLoading,
+  userEmail,
+  userId
 }: {
   profileAvatarUrl: string | undefined;
   isUploading: boolean;
@@ -29,13 +30,14 @@ export function UpdateAvatarAndNameBody({
   profileFullname: string | undefined;
   isNewAvatarImageLoading: boolean;
   setIsNewAvatarImageLoading: (value: boolean) => void;
+  userEmail: string | undefined;
+  userId: string;
 }) {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const email = useLoggedInUserEmail();
-  const [fullName, setFullName] = useState(profileFullname ?? email);
+  const [fullName, setFullName] = useState(profileFullname ?? userEmail ?? `User ${userId}`);
   const avatarURL = getUserAvatarUrl({
     profileAvatarUrl,
-    email,
+    email: userEmail,
   });
   return (
     <div className="space-y-6 max-w-sm">
@@ -67,10 +69,10 @@ export function UpdateAvatarAndNameBody({
                     /* eslint-disable */
                     isNewAvatarImageLoading
                       ? {
-                          duration: 1,
-                          repeat: Infinity,
-                          repeatType: 'reverse',
-                        }
+                        duration: 1,
+                        repeat: Infinity,
+                        repeatType: 'reverse',
+                      }
                       : undefined
                     /* eslint-enable */
                   }

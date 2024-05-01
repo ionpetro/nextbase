@@ -13,8 +13,10 @@ import { ConfirmDeleteAccountDialog } from './ConfirmDeleteAccountDialog';
 
 export function AccountSettings({
   userProfile,
+  userEmail
 }: {
   userProfile: Table<'user_profiles'>;
+  userEmail: string | undefined;
 }) {
   const router = useRouter();
   const { mutate, isLoading } = useToastMutation(
@@ -82,6 +84,8 @@ export function AccountSettings({
           onFileUpload={(file: File) => {
             upload(file);
           }}
+          userId={userProfile.id}
+          userEmail={userEmail}
           isNewAvatarImageLoading={isNewAvatarImageLoading}
           setIsNewAvatarImageLoading={setIsNewAvatarImageLoading}
           isUploading={isUploading}
