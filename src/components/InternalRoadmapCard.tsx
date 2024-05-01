@@ -1,9 +1,16 @@
 import { Button } from '@/components/ui/button';
 import type { Enum } from '@/types';
 import { formatFieldValue } from '@/utils/feedback';
+import { EyeIcon } from 'lucide-react';
+import {
+  Bug as BugIcon,
+  Calendar as CalendarIcon,
+  Pencil as EditIcon,
+  Command as FeatureIcon,
+  Info as InfoIcon,
+} from 'lucide-react/dist/esm/icons';
 import Link from 'next/link';
 import type { HtmlHTMLAttributes } from 'react';
-import { LucideIcon } from './LucideIcon';
 import { Badge, type BadgeProps } from './ui/badge';
 
 type InternalRoadmapCardProps = {
@@ -19,11 +26,11 @@ type InternalRoadmapCardProps = {
 const getIconVariantForTag = (tag: Enum<'internal_feedback_thread_type'>) => {
   switch (tag) {
     case 'bug':
-      return <LucideIcon name="Bug" className="mr-2 h-4 w-4" />;
+      return <BugIcon className="mr-2 h-4 w-4" />;
     case 'general':
-      return <LucideIcon name="Info" className="mr-2 h-4 w-4" />;
+      return <InfoIcon className="mr-2 h-4 w-4" />;
     case 'feature_request':
-      return <LucideIcon name="Command" className="mr-2 h-4 w-4" />;
+      return <FeatureIcon className="mr-2 h-4 w-4" />;
     default:
       return null;
   }
@@ -77,7 +84,7 @@ export default function InternalRoadmapCard({
           </div>
 
           <div className="flex text-sm text-muted-foreground items-center">
-            <LucideIcon name="Calendar" className="mr-2 h-4 w-4" />
+            <CalendarIcon className="mr-2 h-4 w-4" />
             <span className="font-semibold">{date}</span>
           </div>
         </div>
@@ -86,9 +93,9 @@ export default function InternalRoadmapCard({
       <Link href={`/feedback/${feedbackItemId}`} className="mt-1">
         <Button variant={'ghost'} size="icon">
           {isAdmin ? (
-            <LucideIcon name="Pencil" className="h-4 w-4" />
+            <EditIcon className="h-4 w-4" />
           ) : (
-            <LucideIcon name="Eye" className="h-4 w-4" />
+            <EyeIcon className="h-4 w-4" />
           )}
         </Button>
       </Link>

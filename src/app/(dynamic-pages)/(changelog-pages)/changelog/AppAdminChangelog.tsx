@@ -1,9 +1,9 @@
-import { LucideIcon } from '@/components/LucideIcon';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import type { Tables } from '@/lib/database.types';
 
 import { formatDistance } from 'date-fns';
+import { CalendarDaysIcon } from 'lucide-react';
 import Markdown from 'markdown-to-jsx';
 import Image from 'next/image';
 type Props = {
@@ -20,7 +20,7 @@ export const ChangelogPosts = ({ changelogs }: Props) => {
         >
           <div className="flex flex-col mb-8 col-span-1 gap-2">
             <div className="md:flex items-center">
-              <LucideIcon name="CalendarDays" className="text-muted-foreground mr-2" />
+              <CalendarDaysIcon className="text-muted-foreground mr-2" />
               <span className="text-sm text-muted-foreground w-fit">
                 {formatDistance(
                   new Date(changelog.created_at as string),

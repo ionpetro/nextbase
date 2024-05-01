@@ -1,7 +1,6 @@
 'use client';
 
 import { Button } from '@/components/Button';
-import { LucideIcon } from '@/components/LucideIcon';
 import {
   Dialog,
   DialogContent,
@@ -14,6 +13,7 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { ownerUpdateFeedbackComment } from '@/data/feedback';
 import { useToastMutation } from '@/hooks/useToastMutation';
+import { PenLine, Send } from 'lucide-react';
 import { useState } from 'react';
 
 function EditComment({
@@ -51,7 +51,7 @@ function EditComment({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
-        <LucideIcon name="PenLine" className="ml-auto h-4 w-4" />
+        <PenLine className="ml-auto h-4 w-4" />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -76,7 +76,7 @@ function EditComment({
               }
             }}
           >
-            <LucideIcon name="Send" className="h-4 w-4 mr-2" />
+            <Send className="h-4 w-4 mr-2" />
             Update message
           </Button>
         </DialogFooter>

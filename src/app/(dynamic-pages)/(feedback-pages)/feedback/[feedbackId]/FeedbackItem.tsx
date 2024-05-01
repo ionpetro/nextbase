@@ -1,16 +1,17 @@
 import { SuspensedUserAvatarWithFullname } from '@/components/UserAvatar';
 import { Badge } from '@/components/ui/badge';
 import type { Table } from '@/types';
+import { LightningBoltIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 
-import { LucideIcon } from '@/components/LucideIcon';
 import { formatDistance } from 'date-fns';
+import { Bug, MessageSquareDotIcon } from 'lucide-react';
 import type { FiltersSchema } from './schema';
 
 const typeIcons = {
-  bug: <LucideIcon name="Bug" className="h-4 w-4 mr-1 text-red-400" />,
-  feature_request: <LucideIcon name="CloudLightning" className="h-4 w-4 mr-1 text-blue-400" />,
-  general: <LucideIcon name="MessageSquareDot" className="h-4 w-4 mr-1 text-green-400" />,
+  bug: <Bug className="h-4 w-4 mr-1 text-red-400" />,
+  feature_request: <LightningBoltIcon className="h-4 w-4 mr-1 text-blue-400" />,
+  general: <MessageSquareDotIcon className="h-4 w-4 mr-1 text-green-400" />,
 };
 
 enum TAGS {

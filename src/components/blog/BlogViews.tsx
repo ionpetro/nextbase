@@ -3,11 +3,11 @@
 import type { BlogPostWithTags } from "@/app/(dynamic-pages)/(authenticated-pages)/app_admin/(admin-pages)/blog/(blog-list)/page";
 import { TabsList } from "@radix-ui/react-tabs";
 import { format } from "date-fns";
+import { CalendarDays, Grid2X2, List, MoveUpRight, SquarePen } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useWindowSize } from "rooks";
-import { LucideIcon } from "../LucideIcon";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
@@ -34,12 +34,12 @@ const BlogViews = ({ blogs }: Props) => {
       <TabsList className="rounded-md bg-muted flex p-2 w-fit self-end justify-self-end col-start-5">
         <TabsTrigger value="list">
           <div className="flex gap-2 items-center">
-            <LucideIcon name="List" className="size-4" /> <p>List</p>
+            <List className="size-4" /> <p>List</p>
           </div>
         </TabsTrigger>
         <TabsTrigger value="grid" className="hidden md:flex">
           <div className="flex gap-2 items-center">
-            <LucideIcon name="Grid2x2" className="size-4" /> <p>Grid</p>
+            <Grid2X2 className="size-4" /> <p>Grid</p>
           </div>
         </TabsTrigger>
       </TabsList>
@@ -60,7 +60,7 @@ const BlogViews = ({ blogs }: Props) => {
                   <p>{blog.author?.display_name}</p>
                   <Separator className="w-8 rotate-90" />
                   <div className="flex items-center gap-2">
-                    <LucideIcon name="CalendarDays" className="size-4" />
+                    <CalendarDays className="size-4" />
                     <p className="text-sm md:text-base">{format(new Date(blog.created_at), "do MMMM yyyy")}</p>
                   </div>
                 </div>
@@ -86,12 +86,12 @@ const BlogViews = ({ blogs }: Props) => {
               <div className="flex gap-8 items-center self-end md:self-center">
                 <Button variant="outline" className="rounded-full p-4 h-fit bg-accent hover:bg-background group-hover:bg-background border-transparent hover:border-input" asChild>
                   <Link href={`/app_admin/blog/post/${blog.id}/edit`}>
-                    <LucideIcon name="SquarePen" className="size-4" />
+                    <SquarePen className="size-4" />
                   </Link>
                 </Button>
                 <Button variant="outline" className="rounded-full p-4 h-fit bg-accent hover:bg-background group-hover:bg-background border-transparent hover:border-input" asChild>
                   <Link href={`/blog/${blog.slug}`}>
-                    <LucideIcon name="MoveUpRight" className="size-4" />
+                    <MoveUpRight className="size-4" />
                   </Link>
                 </Button>
                 <div className="relative h-32 w-32 hidden md:flex rounded-lg">
@@ -138,7 +138,7 @@ const BlogViews = ({ blogs }: Props) => {
                     </p>
                   </div>
                   <div className="flex gap-2">
-                    <LucideIcon name="MoveUpRight" className="size-4" />
+                    <MoveUpRight className="size-4" />
                   </div>
                 </div>
 

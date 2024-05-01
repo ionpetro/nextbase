@@ -21,9 +21,17 @@ import {
   NEW_TYPE_OPTIONS,
 } from '@/utils/feedback';
 import { DotsVerticalIcon } from '@radix-ui/react-icons';
+import {
+  ArrowDown,
+  ArrowUpRight,
+  EyeIcon,
+  EyeOffIcon,
+  MessageSquare,
+  MessageSquareOff,
+  Tags,
+  VolumeX,
+} from 'lucide-react';
 
-
-import { LucideIcon } from '@/components/LucideIcon';
 import {
   adminToggleFeedbackFromRoadmap,
   adminToggleFeedbackOpenForComments,
@@ -370,12 +378,12 @@ function FeedbackActionsDropdown({
             >
               {feedback?.added_to_roadmap ? (
                 <>
-                  <LucideIcon name="ArrowDown" className="h-4 w-4 mr-2" />
+                  <ArrowDown className="h-4 w-4 mr-2" />
                   Remove from roadmap
                 </>
               ) : (
                 <>
-                  <LucideIcon name="ArrowUpRight" className="h-4 w-4 mr-2" />
+                  <ArrowUpRight className="h-4 w-4 mr-2" />
                   Add to roadmap
                 </>
               )}
@@ -390,12 +398,12 @@ function FeedbackActionsDropdown({
             >
               {feedback?.open_for_public_discussion ? (
                 <>
-                  <LucideIcon name="MessageSquareOff" className="h-4 w-4 mr-2" /> Close for
+                  <MessageSquareOff className="h-4 w-4 mr-2" /> Close for
                   comments
                 </>
               ) : (
                 <>
-                  <LucideIcon name="MessageSquare"
+                  <MessageSquare
                     className="h-4 w-4 mr-2"
                     data-testid="open-for-comments-button"
                   />
@@ -413,12 +421,12 @@ function FeedbackActionsDropdown({
             >
               {feedback?.is_publicly_visible ? (
                 <>
-                  <LucideIcon name="EyeOff" className="h-4 w-4 mr-2" /> Make this thread
+                  <EyeOffIcon className="h-4 w-4 mr-2" /> Make this thread
                   private
                 </>
               ) : (
                 <>
-                  <LucideIcon name="Eye"
+                  <EyeIcon
                     className="h-4 w-4 mr-2"
                     data-testid="show-thread-button"
                   />{' '}
