@@ -8,10 +8,9 @@ import {
   setDefaultOrganization,
 } from '@/data/user/organizations';
 import { getAcceptedTermsOfService, getUserProfile } from '@/data/user/user';
-import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
 import { errors } from '@/utils/errors';
+import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
 import { Suspense, type ReactNode } from 'react';
 import { ClientLayout } from './ClientLayout';
 
@@ -45,9 +44,11 @@ async function getDefaultOrganizationOrSet(): Promise<string | null> {
 }
 
 const getOnboardingConditions = async (userId: string) => {
-  const userProfile = await getUserProfile(userId);
-  const defaultOrganizationId = await getDefaultOrganizationOrSet();
-  const acceptedTerms = await getAcceptedTermsOfService(userId);
+  const [userProfile, defaultOrganizationId, acceptedTerms] = await Promise.all([
+    getUserProfile(userId),
+    getDefaultOrganizationOrSet(),
+    getAcceptedTermsOfService(userId),
+  ]);
 
   return {
     userProfile,
@@ -57,17 +58,10 @@ const getOnboardingConditions = async (userId: string) => {
 };
 
 async function AuthenticatedLayout({ children }: { children: ReactNode }) {
-  const supabaseClient = createSupabaseUserServerComponentClient();
-  const { data, error } = await supabaseClient.auth.getUser();
-  const { user } = data;
-
-  if (!user) {
-    return redirect('/login');
-  }
-  if (error) {
-    return <p>Error: An error occurred.</p>;
-  }
-
+  const user = await serverGetLoggedInUser();
+  console.log('---------------')
+  console.log('AuthenticatedLayout')
+  console.log('---------------');
   try {
     const sidebarVisibility = getSidebarVisibility();
     const onboardingConditions = await getOnboardingConditions(user.id);

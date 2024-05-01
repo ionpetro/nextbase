@@ -1,10 +1,10 @@
 'use server';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
-import { UserRole } from '@/types/userTypes';
 import { userRoles } from '@/utils/userTypes';
+import { cache } from 'react';
 
 // make sure to return one of UserRoles
-export async function serverGetUserType(): Promise<UserRole> {
+export const serverGetUserType = cache(async () => {
   const supabase = createSupabaseUserServerComponentClient();
   const {
     data: { session },
@@ -28,3 +28,4 @@ export async function serverGetUserType(): Promise<UserRole> {
 
   return userRoles.USER;
 }
+)
