@@ -21,6 +21,7 @@ const protectedPagePrefixes = [
   `/settings(/.*)?`,
   `/invitations`,
   `/app_admin_preview(/.*)?`,
+  `/render/(.*)?`,
 ];
 
 function isProtectedPage(pathname: string) {

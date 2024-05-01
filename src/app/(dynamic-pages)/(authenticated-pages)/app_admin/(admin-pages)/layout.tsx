@@ -3,9 +3,6 @@ import { InternalNavbar } from '@/components/NavigationMenu/InternalNavbar';
 import { Alert } from '@/components/ui/alert';
 import { Suspense } from 'react';
 
-export const revalidate = 0;
-
-
 
 export default async function Layout({
   children,
