@@ -2,8 +2,8 @@
 import { T } from "@/components/ui/Typography";
 import type { Table } from "@/types";
 import { format } from "date-fns";
+import { CalendarDays } from "lucide-react";
 import Link from "next/link";
-import { LucideIcon } from "../LucideIcon";
 import { ProjectBadge } from "../ui/badge-project";
 import { Card } from "../ui/card";
 
@@ -35,7 +35,7 @@ export const ProjectsCardList = ({
             <ProjectBadge variant={project.project_status} className="w-fit ">{ProjectStatus[project.project_status]}</ProjectBadge>
             <h2 className="text-xl font-bold">{project.name}</h2>
             <div className="flex items-center gap-2 text-muted-foreground text-sm">
-              <LucideIcon name="CalendarDays" className="size-4" />
+              <CalendarDays className="size-4" />
               <span>{format(new Date(project.created_at), "dd MMMM, yyyy")}</span>
             </div>
           </Card>
