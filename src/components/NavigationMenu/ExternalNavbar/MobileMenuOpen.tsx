@@ -1,15 +1,15 @@
 'use client';
 
-import MenuIcon from 'lucide-react/dist/esm/icons/menu';
+import { LucideIcon } from '@/components/LucideIcon';
 import { useContext } from 'react';
 import { MobileMenuContext } from './MobileMenuContext';
 
 export function MobileMenuOpen() {
   const { setMobileMenuOpen } = useContext(MobileMenuContext);
   return (
-    <MenuIcon
+    <LucideIcon name="Menu"
       onClick={() => setMobileMenuOpen((prev) => !prev)}
-      className="hover:cursor-pointer lg:hidden -mr-2"
+      className="lg:hidden -mr-2 hover:cursor-pointer"
     />
   );
 }

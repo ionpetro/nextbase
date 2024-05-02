@@ -1,4 +1,5 @@
 'use client';
+import { LucideIcon } from '@/components/LucideIcon';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -8,8 +9,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import CopyIcon from 'lucide-react/dist/esm/icons/copy';
-import CopyCheckedIcon from 'lucide-react/dist/esm/icons/copy-check';
 import { useState } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
@@ -24,7 +23,7 @@ export const ViewApiKeyDialog = ({ apiKey, onCompleted }: Props) => {
 
   return (
     <Dialog open={open}>
-      <DialogContent className="sm:max-w-[425px] [&>.dialog-close]:hidden ">
+      <DialogContent className="[&>.dialog-close]:hidden sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>API Key</DialogTitle>
           <DialogDescription>
@@ -32,16 +31,16 @@ export const ViewApiKeyDialog = ({ apiKey, onCompleted }: Props) => {
             place.
           </DialogDescription>
         </DialogHeader>
-        <div className="grid gap-4">
+        <div className="gap-4 grid">
           <CopyToClipboard text={apiKey} onCopy={() => setIsCopied(true)}>
             <div className="flex items-center space-x-2">
               <input
                 type="text"
                 readOnly
                 value={apiKey}
-                className="border rounded p-2 flex-grow cursor-pointer"
+                className="flex-grow p-2 border rounded cursor-pointer"
               />
-              {isCopied ? <CopyCheckedIcon /> : <CopyIcon />}
+              {isCopied ? <LucideIcon name="CopyCheck" /> : <LucideIcon name="Copy" />}
             </div>
           </CopyToClipboard>
           {isCopied && <span>Copied to clipboard!</span>}

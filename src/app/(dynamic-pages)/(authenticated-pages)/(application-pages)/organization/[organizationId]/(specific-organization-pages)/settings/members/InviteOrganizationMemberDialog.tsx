@@ -1,4 +1,5 @@
 'use client';
+import { LucideIcon } from '@/components/LucideIcon';
 import { OrganizationMemberRoleSelect } from '@/components/OrganizationMemberRoleSelect';
 import { Button } from '@/components/ui/button';
 import {
@@ -13,7 +14,6 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Enum } from '@/types';
-import AddUserIcon from 'lucide-react/dist/esm/icons/user-plus';
 import { useState } from 'react';
 
 type Props = {
@@ -37,18 +37,18 @@ export const InviteOrganizationMemberDialog = ({
           data-testid="invite-user-button"
           size="default"
         >
-          <AddUserIcon className="mr-2 w-5 h-5" />
+          <LucideIcon name="UserPlus" className="mr-2 w-5 h-5" />
           Invite user
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 mb-2 rounded-lg">
-            <AddUserIcon className=" w-6 h-6" />
+          <div className="bg-gray-200/50 dark:bg-gray-700/40 mb-2 p-3 rounded-lg w-fit">
+            <LucideIcon name="UserPlus" className="w-6 h-6" />
           </div>
           <div className="p-1">
             <DialogTitle className="text-lg">Invite user</DialogTitle>
-            <DialogDescription className="text-base mt-0">
+            <DialogDescription className="mt-0 text-base">
               Invite a user to your organization.
             </DialogDescription>
           </div>
@@ -63,7 +63,7 @@ export const InviteOrganizationMemberDialog = ({
           }}
         >
           <div className="mb-8">
-            <div className="flex flex-col space-y-2 justify-start w-full mb-4">
+            <div className="flex flex-col justify-start space-y-2 mb-4 w-full">
               <Label className="text-muted-foreground">Select a role</Label>
               <OrganizationMemberRoleSelect
                 value={role}
@@ -72,7 +72,7 @@ export const InviteOrganizationMemberDialog = ({
             </div>
             <Label className="text-muted-foreground">Enter Email</Label>
             <Input
-              className="mt-1.5 shadow appearance-none border h-11 rounded-lg w-full py-2 px-3 focus:ring-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-base"
+              className="shadow focus:shadow-outline mt-1.5 px-3 py-2 border rounded-lg w-full h-11 text-gray-700 appearance-none focus:ring-0 leading-tight focus:outline-none text-base"
               id="email"
               value={email}
               name="email"

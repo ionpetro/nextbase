@@ -1,10 +1,6 @@
 import { GiveFeedbackDialog } from '@/app/(dynamic-pages)/(feedback-pages)/feedback/[feedbackId]/GiveFeedbackDialog';
+import { LucideIcon } from '@/components/LucideIcon';
 import { cn } from '@/utils/cn';
-import ComputerIcon from 'lucide-react/dist/esm/icons/computer';
-import SecurityIcon from 'lucide-react/dist/esm/icons/lock';
-import LogoutIcon from 'lucide-react/dist/esm/icons/log-out';
-import MailIcon from 'lucide-react/dist/esm/icons/mail';
-import AccountsIcon from 'lucide-react/dist/esm/icons/user';
 import Image from 'next/image';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
@@ -22,14 +18,14 @@ export function UserSidebarMenu({
   appAdminSidebarLink: ReactNode;
 }) {
   return (
-    <div className="dark:bg-black ">
+    <div className="dark:bg-black">
       <div
-        className="grid items-start mt-1 gap-2 mb-2 overflow-hidden"
+        className="items-start gap-2 grid mt-1 mb-2 overflow-hidden"
         style={{
           gridTemplateColumns: 'min-content 1fr',
         }}
       >
-        <div className="h-[28px] mt-1 w-[28px] rounded-full border">
+        <div className="mt-1 border rounded-full w-[28px] h-[28px]">
           <Image
             src={userAvatarUrl}
             width={28}
@@ -39,7 +35,7 @@ export function UserSidebarMenu({
             quality={100}
             sizes="100vw"
             alt="User avatar"
-            className="h-full w-full"
+            className="w-full h-full"
             objectFit="cover"
             style={{
               borderRadius: '50%',
@@ -47,15 +43,15 @@ export function UserSidebarMenu({
           />
         </div>
         <div className="mb-1 overflow-hidden">
-          <div className="text-sm font-medium text-gray-900 dark:text-white truncate w-full text-ellipsis">
+          <div className="w-full font-medium text-ellipsis text-gray-900 text-sm dark:text-white truncate">
             {userFullName}
           </div>
-          <div className="text-xs text-gray-500 dark:text-gray-400 truncate w-full text-ellipsis">
+          <div className="w-full text-ellipsis text-gray-500 text-xs dark:text-gray-400 truncate">
             {userEmail}
           </div>
         </div>
       </div>
-      <div className="h-px bg-gray-200 dark:bg-gray-700  my-2" />
+      <div className="bg-gray-200 dark:bg-gray-700 my-2 h-px" />
       <Link
         href="/settings"
         className={cn(
@@ -63,7 +59,7 @@ export function UserSidebarMenu({
           'flex gap-2 items-center py-2 text-sm',
         )}
       >
-        <AccountsIcon className="text-lg" /> Account settings
+        <LucideIcon name="User" className="text-lg" />Account settings
       </Link>
       <Link
         href="/settings/developer"
@@ -72,7 +68,7 @@ export function UserSidebarMenu({
           'flex gap-2 items-center py-2 text-sm',
         )}
       >
-        <ComputerIcon className="text-lg" /> Developer Settings
+        <LucideIcon name="Computer" className="text-lg" /> Developer Settings
       </Link>
       <Link
         href="/settings/security"
@@ -81,11 +77,11 @@ export function UserSidebarMenu({
           'flex gap-2 items-center py-2 text-sm',
         )}
       >
-        <SecurityIcon className="text-lg" /> Security Settings
+        <LucideIcon name="Lock" className="text-lg" /> Security Settings
       </Link>
 
       {appAdminSidebarLink}
-      <div className="h-px bg-gray-200 dark:bg-gray-700  my-2" />
+      <div className="bg-gray-200 dark:bg-gray-700 my-2 h-px" />
       <FeatureViewModal />
       <GiveFeedbackDialog isExpanded={false}>
         <div
@@ -95,12 +91,12 @@ export function UserSidebarMenu({
             'flex gap-2 items-center py-2 text-sm cursor-pointer',
           )}
         >
-          <MailIcon className="text-lg" />
+          <LucideIcon name="Mail" className="text-lg" />
           Feedback
         </div>
       </GiveFeedbackDialog>
 
-      <div className="h-px bg-gray-200 dark:bg-gray-700  my-2" />
+      <div className="bg-gray-200 dark:bg-gray-700 my-2 h-px" />
       <Link
         href="/logout"
         prefetch={false}
@@ -109,7 +105,7 @@ export function UserSidebarMenu({
           'flex gap-2 items-center py-2 text-sm',
         )}
       >
-        <LogoutIcon className="text-lg" />
+        <LucideIcon name="LogOut" className="text-lg" />
         Log out
       </Link>
     </div>

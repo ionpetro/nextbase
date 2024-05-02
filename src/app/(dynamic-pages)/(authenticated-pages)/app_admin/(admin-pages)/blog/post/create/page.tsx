@@ -1,10 +1,10 @@
+import { LucideIcon } from '@/components/LucideIcon';
 import Overline from '@/components/Text/Overline';
 import { T } from '@/components/ui/Typography';
 import {
   getAllAuthors,
   getAllBlogTags
 } from '@/data/admin/internal-blog';
-import ChevronLeft from 'lucide-react/dist/esm/icons/chevron-left';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { BlogForm } from '../../BlogForm';
@@ -27,9 +27,9 @@ export default async function CreateBlogPostPage() {
   return (
     <div className="space-y-4">
       <Link href="/app_admin/blog">
-        <div className="flex space-x-2 items-center group">
-          <ChevronLeft className="relative text-gray-500 h-4 w-4 hover:-translate-x-10 group-hover:text-gray-800 group-hover:dark:text-gray-400 dark:text-gray-600" />
-          <Overline className="text-gray-500 group-hover:text-gray-800 dark:text-gray-600 group-hover:dark:text-gray-400">
+        <div className="flex items-center space-x-2 group">
+          <LucideIcon name="ChevronLeft" className="group-hover:text-gray-800 group-hover:dark:text-gray-400 relative w-4 h-4 text-gray-500 dark:text-gray-600 hover:-translate-x-10" />
+          <Overline className="group-hover:text-gray-800 group-hover:dark:text-gray-400 text-gray-500 dark:text-gray-600">
             Back to blog
           </Overline>
         </div>

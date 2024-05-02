@@ -1,3 +1,4 @@
+import { LucideIcon } from '@/components/LucideIcon';
 import { OrganizationSwitcher } from '@/components/SidebarComponents/OrganizationSwitcher';
 import { DesktopSidebarFallback } from '@/components/SidebarComponents/SidebarFallback';
 import { SwitcherAndToggle } from '@/components/SidebarComponents/SidebarLogo';
@@ -6,9 +7,6 @@ import { fetchSlimOrganizations } from '@/data/user/organizations';
 import { getSlimProjectById } from '@/data/user/projects';
 import { cn } from '@/utils/cn';
 import { projectParamSchema } from '@/utils/zod-schemas/params';
-import ArrowLeftIcon from 'lucide-react/dist/esm/icons/arrow-left';
-import ProjectIcon from 'lucide-react/dist/esm/icons/layers';
-import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
 import { Suspense } from 'react';
 
 async function ProjectSidebarInternal({ projectId }: { projectId: string }) {
@@ -31,24 +29,24 @@ async function ProjectSidebarInternal({ projectId }: { projectId: string }) {
           <SidebarLink
             label="Back to organization"
             href={`/organization/${organizationId}`}
-            icon={<ArrowLeftIcon className="h-5 w-5" />}
+            icon={<LucideIcon name="ArrowLeft" className="w-5 h-5" />}
           />
           {project.team_id && (
             <SidebarLink
               label="Back to team"
               href={`/organization/${organizationId}/team/${project.team_id}`}
-              icon={<ArrowLeftIcon className="h-5 w-5" />}
+              icon={<LucideIcon name="ArrowLeft" className="w-5 h-5" />}
             />
           )}
           <SidebarLink
             label="Project Home"
             href={`/project/${projectId}`}
-            icon={<ProjectIcon className="h-5 w-5" />}
+            icon={<LucideIcon name="Layers" className="w-5 h-5" />}
           />
           <SidebarLink
             label="Project Settings"
             href={`/project/${projectId}/settings`}
-            icon={<SettingsIcon className="h-5 w-5" />}
+            icon={<LucideIcon name="Settings" className="w-5 h-5" />}
           />
         </div>
       </div>

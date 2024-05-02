@@ -1,6 +1,6 @@
 'use client';
+import { LucideIcon } from '@/components/LucideIcon';
 import { classNames } from '@/utils/classNames';
-import ServerIcon from 'lucide-react/dist/esm/icons/server';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { match } from 'path-to-regexp';
@@ -27,7 +27,7 @@ export function AppAdminPreviewLink() {
             : ' text-gray-500 dark:text-slate-400 group-hover:text-gray-700 dark:group-hover:text-slate-300',
         )}
       >
-        <ServerIcon className="h-4 w-4 text-gray-500 dark:text-slate-400 group-hover:text-gray-700 dark:group-hover:text-slate-300" />
+        <LucideIcon name="Server" className="group-hover:text-gray-700 dark:group-hover:text-slate-300 w-4 h-4 text-gray-500 dark:text-slate-400" />
       </span>
 
       <span

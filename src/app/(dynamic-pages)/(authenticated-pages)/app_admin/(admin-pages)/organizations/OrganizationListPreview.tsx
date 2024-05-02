@@ -1,3 +1,4 @@
+import { LucideIcon } from '@/components/LucideIcon';
 import {
   Table as ShadcnTable,
   TableBody,
@@ -7,7 +8,6 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { format } from 'date-fns';
-import MailIcon from 'lucide-react/dist/esm/icons/mail';
 import Link from 'next/link';
 
 export function OrganizationListPreview() {
@@ -22,7 +22,7 @@ export function OrganizationListPreview() {
   }));
 
   return (
-    <div className="rounded-lg overflow-hidden border [&_a]:pointer-events-none">
+    <div className="border rounded-lg overflow-hidden [&_a]:pointer-events-none">
       <ShadcnTable>
         <TableHeader>
           <TableRow>
@@ -52,7 +52,7 @@ export function OrganizationListPreview() {
                     href={`mailto:${organization.owner_email}`}
                     target="_blank"
                   >
-                    <MailIcon className="w-5 h-5" />
+                    <LucideIcon name="Mail" className="w-5 h-5" />
                   </Link>
                 </span>
               </TableCell>

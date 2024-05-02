@@ -2,8 +2,8 @@
 
 import { Badge } from '@/components/ui/badge';
 import { getPendingInvitationCountOfUser } from '@/data/user/invitation';
-import FeedbackIcon from 'lucide-react/dist/esm/icons/mail';
 import Link from 'next/link';
+import { LucideIcon } from '../LucideIcon';
 
 export async function PendingInvitationCounter() {
   const count = await getPendingInvitationCountOfUser();
@@ -13,10 +13,10 @@ export async function PendingInvitationCounter() {
         <Badge
 
           size="lg"
-          className="px-3 w-max h-fit rounded-md py-2"
+          className="px-3 py-2 rounded-md w-max h-fit"
           variant="secondary"
         >
-          <FeedbackIcon className="h-4 w-4 mr-2" />
+          <LucideIcon name="MessageSquare" className="w-6 h-6" />
           {count} pending invites
         </Badge>
       </Link>

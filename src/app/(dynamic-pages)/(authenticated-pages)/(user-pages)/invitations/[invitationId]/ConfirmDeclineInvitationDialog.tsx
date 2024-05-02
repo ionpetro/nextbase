@@ -1,4 +1,5 @@
 'use client';
+import { LucideIcon } from '@/components/LucideIcon';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -11,7 +12,6 @@ import {
 } from '@/components/ui/dialog';
 import { declineInvitationAction } from '@/data/user/invitation';
 import { useToastMutation } from '@/hooks/useToastMutation';
-import X from 'lucide-react/dist/esm/icons/x';
 import { useState } from 'react';
 
 export const ConfirmDeclineInvitationDialog = ({
@@ -29,13 +29,13 @@ export const ConfirmDeclineInvitationDialog = ({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button data-testid="decline" variant="outline" size="default">
-          <X className="mr-2 h-5 w-5" /> Decline Invitation
+          <LucideIcon name="X" className="mr-2 w-5 h-5" />Decline Invitation
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 rounded-lg">
-            <X className="w-6 h-6" />
+          <div className="bg-gray-200/50 dark:bg-gray-700/40 p-3 rounded-lg w-fit">
+            <LucideIcon name='X' className="w-6 h-6" />
           </div>
           <div className="p-1">
             <DialogTitle className="text-lg">Decline Invitation</DialogTitle>

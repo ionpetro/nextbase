@@ -1,4 +1,5 @@
 'use server';
+import { LucideIcon } from '@/components/LucideIcon';
 import {
   Table as ShadcnTable,
   TableBody,
@@ -9,7 +10,6 @@ import {
 } from '@/components/ui/table';
 import { getPaginatedOrganizationList } from '@/data/admin/organizations';
 import { format } from 'date-fns';
-import MailIcon from 'lucide-react/dist/esm/icons/mail';
 import Link from 'next/link';
 import { AppAdminOrganizationsFiltersSchema } from './schema';
 
@@ -20,7 +20,7 @@ export async function OrganizationList({
 }) {
   const organizations = await getPaginatedOrganizationList(filters);
   return (
-    <div className="rounded-lg overflow-hidden border">
+    <div className="border rounded-lg overflow-hidden">
       <ShadcnTable>
         <TableHeader>
           <TableRow>
@@ -50,7 +50,7 @@ export async function OrganizationList({
                     href={`mailto:${organization.owner_email}`}
                     target="_blank"
                   >
-                    <MailIcon className="w-5 h-5" />
+                    <LucideIcon name="Mail" className="w-5 h-5" />
                   </Link>
                 </span>
               </TableCell>

@@ -17,11 +17,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@radix-ui/react-popover';
-import CheckIcon from 'lucide-react/dist/esm/icons/check';
-import ChevronUpDown from 'lucide-react/dist/esm/icons/chevrons-up-down';
-import UsersIcon from 'lucide-react/dist/esm/icons/users-2';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { LucideIcon } from '../LucideIcon';
 
 export function OrganizationSwitcher({
   slimOrganizations,
@@ -73,19 +71,19 @@ export function OrganizationSwitcher({
           size="sm"
           data-testid="organization-switcher"
           role="combobox"
-          className="mx-0 px-2 py-5 border hover:border-neutral-700 dark:hover:border-gray-500 hover:bg-transparent rounded-sm font-normal text-gray-500 dark:text-gray-300 text-sm justify-between truncate w-full "
+          className="justify-between hover:border-neutral-700 dark:hover:border-gray-500 hover:bg-transparent mx-0 px-2 py-5 border rounded-sm w-full font-normal text-gray-500 text-sm dark:text-gray-300 truncate"
         >
           <div className="flex items-center gap-1">
-            <UsersIcon className="mr-2 h-4 w-4 mt-0.5" />
+            <LucideIcon name="UsersRound" className="mt-0.5 mr-2 w-4 h-4" />
             {currentOrganization?.title ?? 'Select Organization'}
           </div>
-          <ChevronUpDown className=" h-4 w-4 shrink-0 opacity-50" />
+          <LucideIcon name="ChevronsUpDown" className="opacity-50 w-4 h-4 shrink-0" />
         </Button>
       </PopoverTrigger>
       <PopoverContent
         side="bottom"
         align="end"
-        className="w-[238px] border -ml-1 my-2 rounded-lg p-0 "
+        className="my-2 -ml-1 p-0 border rounded-lg w-[238px]"
       >
         <Command>
           <CommandList>
@@ -98,11 +96,11 @@ export function OrganizationSwitcher({
                     setIsPopoverOpen(false);
                     router.push(`/organization/${organization.id}`);
                   }}
-                  className="text-sm flex items-start"
+                  className="flex items-start text-sm"
                 >
-                  {/* <UsersIcon className="mr-2 h-4 w-4 mt-0.5" /> */}
+                  {/* <LucideIcon name="UsersRound" className="mt-0.5 mr-2 w-4 h-4" /> */}
                   {organization.title}
-                  <CheckIcon
+                  <LucideIcon name="Check"
                     className={cn(
                       'ml-auto h-4 w-4',
                       organization.id === currentOrganizationId
@@ -123,7 +121,7 @@ export function OrganizationSwitcher({
                   isLoading={isLoading}
                   onConfirm={onConfirm}
                   variant="ghost"
-                  className="p-0 py-0 focus:ring-0 dark:focus:ring-0 hover:bg-transparent w-full"
+                  className="py-0 p-0 focus:ring-0 dark:focus:ring-0 hover:bg-transparent w-full"
                   isDialogOpen={isDialogOpen}
                   setIsDialogOpen={(isCurrentOpen) => {
                     setIsDialogOpen(isCurrentOpen);

@@ -1,5 +1,6 @@
 'use client';
 
+import { LucideIcon } from '@/components/LucideIcon';
 import { Button } from '@/components/ui/button';
 import { T } from '@/components/ui/Typography';
 import { useToastMutation } from '@/hooks/useToastMutation';
@@ -13,7 +14,6 @@ import {
   manageSubscription,
   startTrial,
 } from '@/lib/payments/paymentUtilsServer';
-import ExternalLinkIcon from 'lucide-react/dist/esm/icons/external-link';
 
 export function CreateSubscriptionButton({
   organizationId,
@@ -106,9 +106,9 @@ export function ManageSubscriptionButton({
         }}
       >
         <span>{isLoading ? 'Loading...' : 'Manage Subscription'} </span>
-        <ExternalLinkIcon aria-hidden="true" className="ml-2 w-5 h-5" />{' '}
+        <LucideIcon name='ExternalLink' aria-hidden="true" className="ml-2 w-5 h-5" />{' '}
       </Button>
-      <T.P className="text-gray-500 dark:text-slate-400 text-sm">
+      <T.P className="text-gray-500 text-sm dark:text-slate-400">
         Manage your subscription. You can modify, upgrade or cancel your
         membership from here.
       </T.P>

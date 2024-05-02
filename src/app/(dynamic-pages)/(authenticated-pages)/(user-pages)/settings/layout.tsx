@@ -1,9 +1,7 @@
 'use client';
+import { LucideIcon } from '@/components/LucideIcon';
 import { PageHeading } from '@/components/PageHeading';
 import { TabsNavigation } from '@/components/TabsNavigation';
-import ComputerIcon from 'lucide-react/dist/esm/icons/computer';
-import LockIcon from 'lucide-react/dist/esm/icons/lock';
-import UserIcon from 'lucide-react/dist/esm/icons/user';
 import { useMemo } from 'react';
 
 export default function UserSettingsClientLayout({
@@ -16,17 +14,17 @@ export default function UserSettingsClientLayout({
       {
         label: 'Account Settings',
         href: `/settings`,
-        icon: <UserIcon />,
+        icon: <LucideIcon name='User' />
       },
       {
         label: 'Developer Settings',
         href: `/settings/developer`,
-        icon: <ComputerIcon />,
+        icon: <LucideIcon name='Computer' />,
       },
       {
         label: 'Security',
         href: `/settings/security`,
-        icon: <LockIcon />,
+        icon: <LucideIcon name='Lock' />,
       },
     ];
   }, []);

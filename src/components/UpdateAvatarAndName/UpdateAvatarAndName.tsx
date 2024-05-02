@@ -4,9 +4,9 @@ import { T } from '@/components/ui/Typography';
 import { Label } from '@/components/ui/label';
 import { getUserAvatarUrl } from '@/utils/helpers';
 import { motion } from 'framer-motion';
-import CameraIcon from 'lucide-react/dist/esm/icons/camera';
 import Image from 'next/image';
 import { Button } from '../Button';
+import { LucideIcon } from '../LucideIcon';
 import { PageHeading } from '../PageHeading';
 const MotionImage = motion(Image);
 
@@ -56,9 +56,9 @@ export function UpdateAvatarAndNameBody({
         <div className="space-y-4">
           <div className="space-y-2">
             <T.P>Avatar</T.P>
-            <div className="relative p-0 m-0 group">
+            <div className="relative m-0 p-0 group">
               <Label
-                className="inline p-0 m-0 cursor-pointer text-muted-foreground"
+                className="inline m-0 p-0 text-muted-foreground cursor-pointer"
                 htmlFor="file-input"
               >
                 <MotionImage
@@ -85,7 +85,7 @@ export function UpdateAvatarAndNameBody({
                   loading="eager"
                   width={64}
                   height={64}
-                  className="h-16 object-center object-cover w-16 border-2 border-gray-200 rounded-full"
+                  className="border-2 border-gray-200 rounded-full w-16 h-16 object-center object-cover"
                   src={avatarURL}
                   alt="avatarUrl"
                 />
@@ -104,8 +104,8 @@ export function UpdateAvatarAndNameBody({
                   hidden
                   accept="image/*"
                 />
-                <div className="bg-gray-900 group-hover:bg-gray-800  absolute -bottom-[calc(100%-64px)] right-[calc(100%-64px)]  border border-muted-foreground rounded-full p-1">
-                  <CameraIcon className="h-4 w-4 group-hover:fill-white/30 text-white" />
+                <div className="group-hover:bg-gray-800 right-[calc(100%-64px)] -bottom-[calc(100%-64px)] absolute border-muted-foreground bg-gray-900 p-1 border rounded-full">
+                  <LucideIcon name="Camera" className="group-hover:fill-white/30 w-4 h-4 text-white" />
                 </div>
               </Label>
             </div>
@@ -114,10 +114,10 @@ export function UpdateAvatarAndNameBody({
             <Label htmlFor="name" className="text-muted-foreground">
               Name
             </Label>
-            <div className="flex space-x-2 ">
+            <div className="flex space-x-2">
               <input
                 disabled={isLoading}
-                className="block w-full appearance-none rounded-md border bg-gray-50/10 dark:bg-gray-800/20 h-10 px-3 py-3 placeholder-muted-foreground shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                className="block bg-gray-50/10 dark:bg-gray-800/20 shadow-sm px-3 py-3 border focus:border-blue-500 rounded-md w-full h-10 sm:text-sm appearance-none placeholder-muted-foreground focus:outline-none focus:ring-blue-500"
                 id="name"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}

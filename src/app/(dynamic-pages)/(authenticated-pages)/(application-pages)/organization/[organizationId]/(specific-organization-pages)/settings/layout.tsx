@@ -1,8 +1,8 @@
+import { LucideIcon } from '@/components/LucideIcon';
 import { TabsNavigation } from '@/components/TabsNavigation';
 import { organizationParamSchema } from '@/utils/zod-schemas/params';
-import DollarSignIcon from 'lucide-react/dist/esm/icons/dollar-sign';
-import EditIcon from 'lucide-react/dist/esm/icons/edit';
-import UserIcon from 'lucide-react/dist/esm/icons/user-2';
+import { EditIcon } from 'lucide-react';
+
 
 export default function OrganizationSettingsLayout({
   children,
@@ -21,12 +21,12 @@ export default function OrganizationSettingsLayout({
     {
       label: 'Organization Members',
       href: `/organization/${organizationId}/settings/members`,
-      icon: <UserIcon />,
+      icon: <LucideIcon name="User" />,
     },
     {
       label: 'Billing',
       href: `/organization/${organizationId}/settings/billing`,
-      icon: <DollarSignIcon />,
+      icon: <LucideIcon name="DollarSign" />,
     },
   ];
 

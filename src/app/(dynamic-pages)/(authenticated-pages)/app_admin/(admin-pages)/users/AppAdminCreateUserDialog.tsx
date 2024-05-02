@@ -1,4 +1,5 @@
 'use client';
+import { LucideIcon } from '@/components/LucideIcon';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -15,13 +16,11 @@ import { createUserAction } from '@/data/admin/user';
 import { useToastMutation } from '@/hooks/useToastMutation';
 import { getErrorMessage } from '@/utils/getErrorMessage';
 import { User } from '@supabase/supabase-js';
-import Plus from 'lucide-react/dist/esm/icons/plus';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useInput } from 'rooks';
 import { toast } from 'sonner';
 import { z } from 'zod';
-
 export const AppAdminCreateUserDialog = () => {
   const emailInput = useInput('');
   const [open, setOpen] = useState(false);
@@ -48,13 +47,14 @@ export const AppAdminCreateUserDialog = () => {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="default">
-          <Plus className="mr-2" /> Create User
+
+          <LucideIcon name="Plus" className="mr-2" /> Create User
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 rounded-lg">
-            <Plus className="w-6 h-6" />
+          <div className="bg-gray-200/50 dark:bg-gray-700/40 p-3 rounded-lg w-fit">
+            <LucideIcon name="Plus" className="w-6 h-6" />
           </div>
           <div className="p-1">
             <DialogTitle className="text-lg">Create User</DialogTitle>
@@ -63,7 +63,7 @@ export const AppAdminCreateUserDialog = () => {
             </DialogDescription>
           </div>
         </DialogHeader>
-        <div className="grid gap-4">
+        <div className="gap-4 grid">
           <Label className="space-y-2">
             <span>Email</span>
             <Input type="email" name="email" {...emailInput} />

@@ -1,4 +1,5 @@
 "use client";
+import { LucideIcon } from "@/components/LucideIcon";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -24,7 +25,6 @@ import { useToastMutation } from "@/hooks/useToastMutation";
 import type { Table } from "@/types";
 import { authorProfileSchema } from "@/utils/zod-schemas/internalBlog";
 import { zodResolver } from "@hookform/resolvers/zod";
-import UserIcon from "lucide-react/dist/esm/icons/user-plus";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -96,18 +96,18 @@ export const AddAuthorProfileDialog = ({
 
       <DialogContent>
         <DialogHeader>
-          <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 rounded-lg">
-            <UserIcon className="w-6 h-6" />
+          <div className="bg-gray-200/50 dark:bg-gray-700/40 p-3 rounded-lg w-fit">
+            <LucideIcon name="UserPlus" className="w-6 h-6" />
           </div>
-          <div className="p-1 mb-4">
+          <div className="mb-4 p-1">
             <DialogTitle className="text-lg">Add Author Profile</DialogTitle>
             <DialogDescription className="text-base">
               Fill in the details for the new author profile.
             </DialogDescription>
           </div>
         </DialogHeader>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 ">
-          <div className="fields space-y-4 max-h-96 px-1 overflow-auto">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <div className="space-y-4 px-1 max-h-96 overflow-auto fields">
             <div className="space-y-2">
               <Label>User ID</Label>
               <Controller

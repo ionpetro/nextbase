@@ -16,10 +16,10 @@ import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import { LucideIcon } from '@/components/LucideIcon';
 import { Textarea } from '@/components/ui/textarea';
 import { createBlogTag } from '@/data/admin/internal-blog';
 import { useSAToastMutation } from '@/hooks/useSAToastMutation';
-import TagsIcon from 'lucide-react/dist/esm/icons/tag';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import slugify from 'slugify';
@@ -92,10 +92,10 @@ export const AddBlogTagDialog = () => {
 
       <DialogContent>
         <DialogHeader>
-          <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 rounded-lg">
-            <TagsIcon className="w-6 h-6" />
+          <div className="bg-gray-200/50 dark:bg-gray-700/40 p-3 rounded-lg w-fit">
+            <LucideIcon name="Tag" className="w-6 h-6" />
           </div>
-          <div className="p-1 mb-4">
+          <div className="mb-4 p-1">
             <DialogTitle className="text-lg">Add blog tag</DialogTitle>
             <DialogDescription className="text-base">
               Fill in the details for the new blog tag.

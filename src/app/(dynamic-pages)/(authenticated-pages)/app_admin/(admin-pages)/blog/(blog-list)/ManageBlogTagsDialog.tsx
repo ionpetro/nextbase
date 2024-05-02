@@ -1,4 +1,5 @@
 "use client";
+import { LucideIcon } from "@/components/LucideIcon";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -11,8 +12,6 @@ import {
 import { deleteBlogTag } from "@/data/admin/internal-blog";
 import { useToastMutation } from "@/hooks/useToastMutation";
 import type { Table } from "@/types";
-import TagsIcon from "lucide-react/dist/esm/icons/tag";
-import Trash from "lucide-react/dist/esm/icons/trash";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { AddBlogTagDialog } from "./AddBlogTagDialog";
@@ -44,18 +43,18 @@ export const ManageBlogTagsDialog = ({
   return (
     <Dialog open={isOpen} onOpenChange={(newIsOpen) => setIsOpen(newIsOpen)}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="text-start justify-start">
-          <TagsIcon className="mr-2 w-5 h-5" />
+        <Button variant="outline" className="justify-start text-start">
+          <LucideIcon name="Tag" className="mr-2 w-5 h-5" />
           Manage blog tags
         </Button>
       </DialogTrigger>
 
       <DialogContent>
         <DialogHeader>
-          <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 rounded-lg">
-            <TagsIcon className="size-4" />
+          <div className="bg-gray-200/50 dark:bg-gray-700/40 p-3 rounded-lg w-fit">
+            <LucideIcon name="Tag" className="size-4" />
           </div>
-          <div className="p-1 mb-4">
+          <div className="mb-4 p-1">
             <DialogTitle className="text-lg">Manage blog tags</DialogTitle>
             <DialogDescription className="text-base">
               View, edit, or delete blog tags.
@@ -66,7 +65,7 @@ export const ManageBlogTagsDialog = ({
           <div className="space-y-1">
             {blogTags.map((tag) => (
               <div
-                className="flex space-x-1 items-center justify-between"
+                className="flex justify-between items-center space-x-1"
                 key={tag.slug}
               >
                 <p>{tag.name}</p>
@@ -75,13 +74,13 @@ export const ManageBlogTagsDialog = ({
                   <Button
                     variant="ghost"
                     disabled={isDeletingBlogTag}
-                    className="text-red-600 dark:text-red-400 hover:text-red-600  shadow-none hover:bg-red-100/50 dark:hover:bg-red-900/20"
+                    className="hover:bg-red-100/50 dark:hover:bg-red-900/20 shadow-none text-red-600 hover:text-red-600 dark:text-red-400"
                     onClick={() => {
                       deleteBlogTagMutation(tag.id);
                       setIsOpen(false);
                     }}
                   >
-                    <Trash className="h-5 w-5" />
+                    <LucideIcon name="Trash" className="w-5 h-5" />
                   </Button>
                 </div>
               </div>

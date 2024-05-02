@@ -1,9 +1,9 @@
 'use client';
+import { LucideIcon } from '@/components/LucideIcon';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import lightLogo from '@public/logos/acme-logo-dark.png';
 import darkLogo from '@public/logos/acme-logo-light.png';
-import SidebarIcon from 'lucide-react/dist/esm/icons/sidebar';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -59,27 +59,27 @@ export function DocsMobileNavigation() {
           className="relative md:hidden"
           aria-label="Open navigation"
         >
-          <SidebarIcon className="h-6 w-6 stroke-muted-foreground" />
+          <LucideIcon name="PanelLeft" className="w-6 h-6 stroke-muted-foreground" />
         </button>
       </SheetTrigger>
       <SheetContent
         side="left"
-        className="min-h-full w-full max-w-xs bg-white px-6 pb-12 pt-5 dark:bg-gray-900 sm:px-6"
+        className="bg-white dark:bg-gray-900 px-6 sm:px-6 pt-5 pb-12 w-full max-w-xs min-h-full"
       >
         <div className="flex items-center">
           <Link href={'/'} className="font-bold text-xl">
-            <div className="relative flex space-x-2 items-center text-black dark:text-white dark:-ml-4">
+            <div className="relative flex items-center space-x-2 dark:-ml-4 text-black dark:text-white">
               <Image
                 src={lightLogo}
                 alt="logo"
-                className="dark:hidden block h-10 w-10"
+                className="block dark:hidden w-10 h-10"
               />
               <Image
                 src={darkLogo}
                 alt="logo"
-                className="hidden dark:block h-10 w-10"
+                className="dark:block hidden w-10 h-10"
               />
-              <span className="hidden font-bold sm:inline-block">nextbase</span>
+              <span className="sm:inline-block hidden font-bold">nextbase</span>
             </div>
           </Link>
         </div>
