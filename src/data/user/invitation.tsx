@@ -330,6 +330,7 @@ export const getInvitationById = async (invitationId: string) => {
   }
 };
 
+
 export async function getPendingInvitationCountOfUser() {
   const supabaseClient = createSupabaseUserServerComponentClient();
   const user = await serverGetLoggedInUser();

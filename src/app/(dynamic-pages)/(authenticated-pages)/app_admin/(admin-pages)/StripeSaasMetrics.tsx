@@ -4,7 +4,7 @@ import { T } from '@/components/ui/Typography';
 import { getMRR, getSubscriptions } from '@/lib/payments/paymentUtilsServer';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 import { Suspense } from 'react';
-import { SaaSMetrics } from './SaasMetrics';
+import { SaaSMetricsContainer } from './SaasMetricsContainer';
 
 async function getCurrentMRR() {
   const startOfMonth = new Date();
@@ -210,7 +210,7 @@ async function Metrics() {
   ]);
 
   return (
-    <SaaSMetrics
+    <SaaSMetricsContainer
       mrrData={mrr}
       churnRateData={churnRate}
       organizationCountByMonth={organizationCountByMonth}

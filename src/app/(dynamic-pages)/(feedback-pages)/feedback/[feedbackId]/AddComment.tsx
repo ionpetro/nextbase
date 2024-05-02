@@ -1,11 +1,11 @@
 'use client';
 
-import { LucideIcon } from '@/components/LucideIcon';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { addCommentToInternalFeedbackThread } from '@/data/feedback';
 import { useToastMutation } from '@/hooks/useToastMutation';
 
+import { Send } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
@@ -54,7 +54,7 @@ function AddComment({
           }
         }}
       >
-        <LucideIcon name="Send" className="h-4 w-4 mr-2" />
+        <Send className="h-4 w-4 mr-2" />
         Add Comment
       </Button>
     </div>

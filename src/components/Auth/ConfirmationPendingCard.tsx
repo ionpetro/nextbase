@@ -1,9 +1,9 @@
 "use client";
+import { ArrowLeftIcon, Fingerprint, MailIcon } from "lucide-react";
 
 import type React from "react";
 
 import { useRouter } from "next/navigation";
-import { LucideIcon } from "../LucideIcon";
 import { Button } from "../ui/button";
 import {
   Card,
@@ -34,9 +34,9 @@ export default function ConfirmationPendingCard({
       <Card className="w-full md:min-w-[440px] mx-auto mt-10 items-center">
         <CardHeader>
           {type === "reset-password" ? (
-            <LucideIcon name="Fingerprint" className="size-10 mx-auto mb-4" />
+            <Fingerprint className="size-10 mx-auto mb-4" />
           ) : (
-            <LucideIcon name="Mail" className="size-10 mx-auto mb-4" />
+            <MailIcon className="size-10 mx-auto mb-4" />
           )}
           <CardTitle className="text-center">{heading}</CardTitle>
           <CardDescription className="text-center">{message}</CardDescription>
@@ -55,7 +55,7 @@ export default function ConfirmationPendingCard({
               );
             }}
           >
-            <LucideIcon name="ArrowLeft" className="w-4 h-4 mr-2" />
+            <ArrowLeftIcon className="w-4 h-4 mr-2" />
             {type === "sign-up" ? "Back to sign up" : "Back to login"}
           </Button>
         </CardFooter>

@@ -1,10 +1,11 @@
 "use client"
-import { LucideIcon } from '@/components/LucideIcon';
 import { Button } from '@/components/ui/button';
 import html2canvas from 'html2canvas';
 import jsPDF from "jspdf";
+import { Upload } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { useState } from 'react';
+
 export const OrganizationExportPDF = () => {
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(false);
@@ -44,7 +45,7 @@ export const OrganizationExportPDF = () => {
   };
   return (
     <Button variant={"outline"} onClick={exportPDF} className="mb-4 flex gap-4 items-center" disabled={disabled}>
-      <LucideIcon name="Upload" className='size-4' />
+      <Upload className='size-4' />
       {loading ? "Exporting..." : "Export PDF"}
     </Button>
   )

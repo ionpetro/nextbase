@@ -1,10 +1,8 @@
-import { T } from '@/components/ui/Typography';
 import {
   fetchSlimOrganizations,
   getDefaultOrganization,
 } from '@/data/user/organizations';
 import { notFound, redirect } from 'next/navigation';
-import { Suspense } from 'react';
 
 async function getOrganizationToRedirectTo(): Promise<string> {
   const [slimOrganizations, defaultOrganizationId] = await Promise.all([
@@ -33,10 +31,7 @@ async function RedirectToDefaultOrg() {
 
 export default async function DashboardPage() {
   return (
-    <>
-      <Suspense fallback={<T.Subtle className="m-0 px-4">Fetching details...</T.Subtle>}>
-        <RedirectToDefaultOrg />
-      </Suspense>
-    </>
+    <RedirectToDefaultOrg />
+
   );
 }

@@ -1,5 +1,4 @@
 import { CreateProjectDialog } from "@/components/CreateProjectDialog";
-import { LucideIcon } from "@/components/LucideIcon";
 import { PageHeading } from "@/components/PageHeading";
 import { ProjectsCardList } from "@/components/Projects/ProjectsCardList";
 import { Search } from "@/components/Search";
@@ -9,14 +8,15 @@ import {
   organizationParamSchema,
   projectsfilterSchema,
 } from "@/utils/zod-schemas/params";
+import { Layers } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
 import type { z } from "zod";
-import { OrganizationExportPDF } from "./OrganizationExportPDF";
-import { OrganizationGraphs } from "./OrganizationGraphs";
 import { OrganizationPageHeading } from "./OrganizationPageHeading";
 import ProjectsLoadingFallback from "./ProjectsLoadingFallback";
 import { TeamMembers } from "./TeamMembers";
+import { ExportPDF } from "./_exportPdf/ExportPdf";
+import { GraphContainer } from "./_graphs/GraphContainer";
 
 async function Projects({
   organizationId,
@@ -62,7 +62,7 @@ export default async function OrganizationPage({
           <div className="flex justify-between w-full mb-6">
             <h1 className="text-2xl font-semibold">Dashboard</h1>
             <div className="flex gap-4">
-              <OrganizationExportPDF />
+              <ExportPDF />
               <CreateProjectDialog organizationId={organizationId} />
             </div>
           </div>
@@ -76,7 +76,7 @@ export default async function OrganizationPage({
                 className="self-end flex gap-2"
               >
                 <Link href={`/organization/${organizationId}/projects`}>
-                  <LucideIcon name="Layers" className="h-4 w-4" />
+                  <Layers className="h-4 w-4" />
                   View all projects
                 </Link>
               </Button>
@@ -96,11 +96,11 @@ export default async function OrganizationPage({
         </div>
       </div>
       <div>
-        <OrganizationGraphs organizationId={organizationId} >
+        <GraphContainer organizationId={organizationId} >
           <Suspense fallback={<div>Loading...</div>}>
             <TeamMembers />
           </Suspense>
-        </OrganizationGraphs>
+        </GraphContainer>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
-import { LucideIcon } from '@/components/LucideIcon';
 import { T } from '@/components/ui/Typography';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { validateStripeKeys } from '@/utils/stripe';
+import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
 import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
 
@@ -22,7 +22,7 @@ export default async function AdminPanel() {
         <T.H2 className="text-2xl mt-10 mb-2 font-bold">Quick Stats</T.H2>
         <div className="max-w-xl">
           <Alert variant="destructive">
-            <LucideIcon name="AlertTriangle" className="w-4 h-4" />
+            <ExclamationTriangleIcon className="w-4 h-4" />
             <AlertTitle>Check your Stripe keys</AlertTitle>
             <AlertDescription>
               Please set the STRIPE_SECRET_KEY,

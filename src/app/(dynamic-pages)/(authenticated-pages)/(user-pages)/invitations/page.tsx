@@ -3,7 +3,7 @@ import { T } from '@/components/ui/Typography';
 import { Suspense } from 'react';
 import { PendingInvitationsList } from './PendingInvitationsList';
 
-export default async function InvitationsPage() {
+export default async function DashboardPage() {
   return (
     <div className="space-y-4">
       <PageHeading

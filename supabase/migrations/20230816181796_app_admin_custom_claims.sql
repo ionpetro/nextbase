@@ -12,7 +12,8 @@ COMMENT ON TABLE public.user_roles IS 'Application roles for each user.';
 
 -- enable row level security
 ALTER TABLE public.user_roles ENABLE ROW LEVEL SECURITY;
-
+-- covering index
+CREATE INDEX ON public.user_roles (user_id);
 
 -- remove view
 DROP VIEW IF EXISTS public.app_admin_all_users;

@@ -73,3 +73,6 @@ ALTER TABLE public.user_private_info DROP CONSTRAINT IF EXISTS user_private_info
 ALTER TABLE public.user_private_info
 ADD CONSTRAINT user_private_info_default_organization_fkey FOREIGN KEY (default_organization) REFERENCES public.organizations(id) ON DELETE
 SET NULL;
+
+-- covering index for user_private_info
+CREATE INDEX ON user_private_info (default_organization);

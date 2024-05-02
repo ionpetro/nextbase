@@ -1,9 +1,9 @@
-import { LucideIcon } from '@/components/LucideIcon';
 import { PageHeading } from '@/components/PageHeading';
 import { Button } from '@/components/ui/button';
 import { anonGetAllChangelogItems } from '@/data/anon/internalChangelog';
 import { serverGetUserType } from '@/utils/server/serverGetUserType';
 import { userRoles } from '@/utils/userTypes';
+import { Plus } from 'lucide-react';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { ChangelogPosts } from './AppAdminChangelog';
@@ -24,7 +24,7 @@ export default async function Page() {
         {userRoleType === userRoles.ADMIN && (
           <Button asChild name="create-changelog-button">
             <Link href="/app_admin/changelog">
-              <LucideIcon name="Plus" className="mr-2 size-4" />
+              <Plus className="mr-2 size-4" />
               Create Changelog
             </Link>
           </Button>

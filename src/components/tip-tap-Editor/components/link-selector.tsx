@@ -1,7 +1,7 @@
 'use client';
-import { LucideIcon } from '@/components/LucideIcon';
 import { cn } from '@/lib/utils';
 import type { Editor } from '@tiptap/core';
+import { Check, Trash } from 'lucide-react';
 import {
   useEffect,
   useRef,
@@ -73,14 +73,14 @@ export const LinkSelector: FC<LinkSelectorProps> = ({
                 setIsOpen(false);
               }}
             >
-              <LucideIcon name="Trash" className="h-4 w-4" />
+              <Trash className="h-4 w-4" />
             </button>
           ) : (
             <button
               type="button"
               className="flex items-center rounded-sm p-1 text-muted-foreground transition-all hover:bg-muted"
             >
-              <LucideIcon name="Check" className="h-4 w-4" />
+              <Check className="h-4 w-4" />
             </button>
           )}
         </form>

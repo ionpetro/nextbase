@@ -4,14 +4,19 @@ import { SubscriptionCardSmall } from '@/components/SubscriptionCardSmall';
 import { T } from '@/components/ui/Typography';
 import { fetchSlimOrganizations } from '@/data/user/organizations';
 import { cn } from '@/utils/cn';
+import DollarIcon from 'lucide-react/dist/esm/icons/dollar-sign';
+import FileBoxIcon from 'lucide-react/dist/esm/icons/file-box';
+import HomeIcon from 'lucide-react/dist/esm/icons/home';
+import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
+import UserIcon from 'lucide-react/dist/esm/icons/user-2';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 
-import { LucideIcon } from '@/components/LucideIcon';
 import { OrganizationSwitcher } from '@/components/SidebarComponents/OrganizationSwitcher';
 import { DesktopSidebarFallback } from '@/components/SidebarComponents/SidebarFallback';
 import { SwitcherAndToggle } from '@/components/SidebarComponents/SidebarLogo';
 import { organizationParamSchema } from '@/utils/zod-schemas/params';
+import { LayersIcon } from 'lucide-react';
 
 async function OrganizationSidebarInternal({
   organizationId,
@@ -35,43 +40,44 @@ async function OrganizationSidebarInternal({
             <SidebarLink
               label="Home"
               href={`/organization/${organizationId}`}
-              icon={<LucideIcon name="Home" className="h-5 w-5" />}
+              icon={<HomeIcon className="h-5 w-5" />}
             />
             <SidebarLink
               label="Projects"
               href={`/organization/${organizationId}/projects`}
-              icon={<LucideIcon name="Layers" className="h-5 w-5" />}
+              icon={<LayersIcon className="h-5 w-5" />}
             />
             <SidebarLink
               label="Settings"
               href={`/organization/${organizationId}/settings`}
-              icon={<LucideIcon name="Settings" className="h-5 w-5" />}
+              icon={<SettingsIcon className="h-5 w-5" />}
             />
             <SidebarLink
               label="Members"
               href={`/organization/${organizationId}/settings/members`}
-              icon={<LucideIcon name="Users" className="h-5 w-5" />}
+              icon={<UserIcon className="h-5 w-5" />}
             />
             <SidebarLink
               label="Billing"
               href={`/organization/${organizationId}/settings/billing`}
-              icon={<LucideIcon name="DollarSign" className="h-5 w-5" />}
+              icon={<DollarIcon className="h-5 w-5" />}
             />
             <Suspense>
               <ProFeatureGateDialog
                 organizationId={organizationId}
                 label="Feature Pro"
-                icon={<LucideIcon name="FileBox" className="h-5 w-5" />}
+                icon={<FileBoxIcon className="h-5 w-5" />}
               />
             </Suspense>
+
           </div>
+          {/* <TeamsList organizationId={organizationId} /> */}
         </div>
       </div>
       <div className="flex flex-col gap-4">
         <Suspense fallback={<T.P>Loading subscription details...</T.P>}>
           <SubscriptionCardSmall organizationId={organizationId} />
         </Suspense>
-
 
         <div className="flex flex-col gap-1">
           <p className="text-sm font-normal text-gray-500 dark:text-slate-400">

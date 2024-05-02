@@ -3,14 +3,26 @@ import { Extension, type Editor, type Range } from '@tiptap/core';
 import { ReactRenderer } from '@tiptap/react';
 
 import Suggestion from '@tiptap/suggestion';
+import {
+  CheckSquare,
+  Code,
+  Heading1,
+  Heading2,
+  Heading3,
+  ImageIcon,
+  List,
+  ListOrdered,
+  QuoteIcon,
+  Text,
+} from 'lucide-react';
 
-import { LucideIcon, LucideIconProps } from '@/components/LucideIcon';
 import {
   useCallback,
   useEffect,
   useLayoutEffect,
   useRef,
-  useState
+  useState,
+  type ReactNode,
 } from 'react';
 import tippy from 'tippy.js';
 import { startImageUpload } from '../plugins/upload-images';
@@ -18,7 +30,7 @@ import { startImageUpload } from '../plugins/upload-images';
 interface CommandItemProps {
   title: string;
   description: string;
-  icon: LucideIconProps['name'];
+  icon: ReactNode;
 }
 
 export interface CommandProps {
@@ -63,7 +75,7 @@ const getSuggestionItems = ({ query }: { query: string }) => {
       title: 'Text',
       description: 'Just start typing with plain text.',
       searchTerms: ['p', 'paragraph'],
-      icon: 'Text',
+      icon: <Text size={18} />,
       command: ({ editor, range }: CommandProps) => {
         editor
           .chain()
@@ -77,7 +89,7 @@ const getSuggestionItems = ({ query }: { query: string }) => {
       title: 'To-do List',
       description: 'Track tasks with a to-do list.',
       searchTerms: ['todo', 'task', 'list', 'check', 'checkbox'],
-      icon: 'CheckSquare',
+      icon: <CheckSquare size={18} />,
       command: ({ editor, range }: CommandProps) => {
         editor.chain().focus().deleteRange(range).toggleTaskList().run();
       },
@@ -86,7 +98,7 @@ const getSuggestionItems = ({ query }: { query: string }) => {
       title: 'Heading 1',
       description: 'Big section heading.',
       searchTerms: ['title', 'big', 'large'],
-      icon: 'Heading1',
+      icon: <Heading1 size={18} />,
       command: ({ editor, range }: CommandProps) => {
         editor
           .chain()
@@ -100,7 +112,7 @@ const getSuggestionItems = ({ query }: { query: string }) => {
       title: 'Heading 2',
       description: 'Medium section heading.',
       searchTerms: ['subtitle', 'medium'],
-      icon: 'Heading2',
+      icon: <Heading2 size={18} />,
       command: ({ editor, range }: CommandProps) => {
         editor
           .chain()
@@ -114,7 +126,7 @@ const getSuggestionItems = ({ query }: { query: string }) => {
       title: 'Heading 3',
       description: 'Small section heading.',
       searchTerms: ['subtitle', 'small'],
-      icon: 'Heading3',
+      icon: <Heading3 size={18} />,
       command: ({ editor, range }: CommandProps) => {
         editor
           .chain()
@@ -128,7 +140,7 @@ const getSuggestionItems = ({ query }: { query: string }) => {
       title: 'Bullet List',
       description: 'Create a simple bullet list.',
       searchTerms: ['unordered', 'point'],
-      icon: 'List',
+      icon: <List size={18} />,
       command: ({ editor, range }: CommandProps) => {
         editor.chain().focus().deleteRange(range).toggleBulletList().run();
       },
@@ -137,7 +149,7 @@ const getSuggestionItems = ({ query }: { query: string }) => {
       title: 'Numbered List',
       description: 'Create a list with numbering.',
       searchTerms: ['ordered'],
-      icon: 'ListOrdered',
+      icon: <ListOrdered size={18} />,
       command: ({ editor, range }: CommandProps) => {
         editor.chain().focus().deleteRange(range).toggleOrderedList().run();
       },
@@ -146,7 +158,7 @@ const getSuggestionItems = ({ query }: { query: string }) => {
       title: 'Quote',
       description: 'Capture a quote.',
       searchTerms: ['blockquote'],
-      icon: 'Quote',
+      icon: <QuoteIcon size={18} />,
       command: ({ editor, range }: CommandProps) =>
         editor
           .chain()
@@ -160,7 +172,7 @@ const getSuggestionItems = ({ query }: { query: string }) => {
       title: 'Code',
       description: 'Capture a code snippet.',
       searchTerms: ['codeblock'],
-      icon: 'Code',
+      icon: <Code size={18} />,
       command: ({ editor, range }: CommandProps) =>
         editor.chain().focus().deleteRange(range).toggleCodeBlock().run(),
     },
@@ -168,7 +180,7 @@ const getSuggestionItems = ({ query }: { query: string }) => {
       title: 'Image',
       description: 'Upload an image from your computer.',
       searchTerms: ['photo', 'picture', 'media'],
-      icon: 'Image',
+      icon: <ImageIcon size={18} />,
       command: ({ editor, range }: CommandProps) => {
         editor.chain().focus().deleteRange(range).run();
         // upload image
@@ -294,7 +306,7 @@ const CommandList = ({
             onClick={() => selectItem(index)}
           >
             <div className="flex h-10 w-10 items-center justify-center rounded-md border border-stone-200 bg-white">
-              <LucideIcon name={item.icon} className="h-3 w-3" />
+              {item.icon}
             </div>
             <div>
               <p className="font-medium">{item.title}</p>

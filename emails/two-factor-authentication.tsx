@@ -1,50 +1,43 @@
+import { Body } from '@react-email/body';
+import { Container } from '@react-email/container';
+import { Head } from '@react-email/head';
+import { Heading } from '@react-email/heading';
+import { Hr } from '@react-email/hr';
+import { Html } from '@react-email/html';
+import { Link } from '@react-email/link';
+import { Text } from '@react-email/text';
 import React from "react";
-import {
-  Head,
-  Html,
-  Heading,
-  Text,
-  Body,
-  Tailwind,
-  Hr,
-  Container,
-  Link,
-} from "@react-email/components";
 
-interface twoFactorAuthenticaitonProps {
-  userName:string;
-  appName:string;
-  supportEmail:string;
+interface TwoFactorAuthenticationProps {
+  userName: string;
+  appName: string;
+  supportEmail: string;
 }
 
-const TwoFactorAuthenticaiton = ({ userName, appName, supportEmail }:twoFactorAuthenticaitonProps) => {
+const TwoFactorAuthentication = ({ userName, appName, supportEmail }: TwoFactorAuthenticationProps) => {
   return (
     <Html>
       <Head />
-      <Tailwind>
-        <Body className="bg-gray-200 font-sans font-light">
-          <Container className="bg-white px-12 py-5 mx-auto">
-            <Heading>Two factor authentication added</Heading>
-            <Hr className="my-5" />
-            <Text className="text-base">Dear {userName}John,</Text>
-            <Text className="text-base">
-              Two-Factor Authentication (2FA) has been enabled on your Acme{" "}
-              {appName} account, providing an additional layer of security.
-            </Text>
-            <Hr className="my-5" />
-            <Text className="text-base">
-              If you did not initiate this change, or if you have any queries,
-              please contact our support team immediately at{" "}
-              <Link href={supportEmail}>support@acme.co.in</Link>.
-            </Text>
-            <Text className="text-base">
-              Thank you for securing your account with 2FA.
-            </Text>
-            <Text className="text-base">{appName} Acme team</Text>
-          </Container>
-        </Body>
-      </Tailwind>
+      <Body style={{ backgroundColor: '#f0f0f0', fontFamily: 'Arial, sans-serif', fontWeight: 'lighter' }}>
+        <Container style={{ backgroundColor: '#ffffff', padding: '20px', margin: '0 auto', maxWidth: '600px' }}>
+          <Heading>Two factor authentication added</Heading>
+          <Hr style={{ margin: '20px 0' }} />
+          <Text style={{ fontSize: '16px' }}>Dear {userName},</Text>
+          <Text style={{ fontSize: '16px' }}>
+            Two-Factor Authentication (2FA) has been enabled on your {appName} account, providing an additional layer of security.
+          </Text>
+          <Hr style={{ margin: '20px 0' }} />
+          <Text style={{ fontSize: '16px' }}>
+            If you did not initiate this change, or if you have any queries, please contact our support team immediately at <Link href={`mailto:${supportEmail}`}>{supportEmail}</Link>.
+          </Text>
+          <Text style={{ fontSize: '16px' }}>
+            Thank you for securing your account with 2FA.
+          </Text>
+          <Text style={{ fontSize: '16px' }}>{appName} team</Text>
+        </Container>
+      </Body>
     </Html>
   );
 };
-export default TwoFactorAuthenticaiton;
+
+export default TwoFactorAuthentication;

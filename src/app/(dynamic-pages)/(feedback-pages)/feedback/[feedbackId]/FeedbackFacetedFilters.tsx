@@ -2,6 +2,7 @@
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
+import { Cross2Icon } from '@radix-ui/react-icons';
 
 import FacetedFilter from '@/components/FacetedFilter';
 import { Button } from '@/components/ui/button';
@@ -13,13 +14,13 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-import { LucideIcon } from '@/components/LucideIcon';
 import { Toggle } from '@/components/ui/toggle';
 import {
   NEW_PRIORITY_OPTIONS,
   NEW_STATUS_OPTIONS,
   NEW_TYPE_OPTIONS,
 } from '@/utils/feedback';
+import { CircleUser } from 'lucide-react';
 import {
   feedbackPrioritiesSchema,
   feedbackStatusesSchema,
@@ -140,7 +141,7 @@ export function FeedbackFacetedFilters() {
           });
         }}
       >
-        <LucideIcon name="CircleUser" className="h-4 w-4" />
+        <CircleUser className="h-4 w-4" />
         My feedbacks
       </Toggle>
       {(Boolean(filters.statuses?.length) ||
@@ -159,7 +160,7 @@ export function FeedbackFacetedFilters() {
             className="h-8 px-2 lg:px-3"
           >
             Reset
-            <LucideIcon name="X" className="ml-2 h-4 w-4" />
+            <Cross2Icon className="ml-2 h-4 w-4" />
           </Button>
         )}
     </div>

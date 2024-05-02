@@ -1,9 +1,9 @@
 // https://github.com/vercel/next.js/issues/58272
-import { LucideIcon } from '@/components/LucideIcon';
 import { T } from '@/components/ui/Typography';
 import { Badge } from '@/components/ui/badge';
 import { getOrganizationTitle } from '@/data/user/organizations';
 import { organizationParamSchema } from '@/utils/zod-schemas/params';
+import UsersIcon from 'lucide-react/dist/esm/icons/users-2';
 import Link from 'next/link';
 import { Suspense } from 'react';
 
@@ -29,7 +29,7 @@ async function Title({ organizationId }: { organizationId: string }) {
 
   return (
     <div className="flex items-center gap-2">
-      <LucideIcon name="Users" className="w-4 h-4" />
+      <UsersIcon className="w-4 h-4" />
       <T.P>{title}</T.P>
       <Badge variant="outline" className="hidden lg:inline-flex">
         Organization
