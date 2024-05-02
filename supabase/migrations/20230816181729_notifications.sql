@@ -12,6 +12,7 @@ ALTER TABLE "public"."user_notifications" ENABLE ROW LEVEL SECURITY;
 ALTER PUBLICATION supabase_realtime
 ADD TABLE user_notifications;
 
+CREATE INDEX ON user_notifications (user_id);
 
 CREATE policy Only_user_can_read_their_own_notification ON user_notifications AS permissive FOR
 SELECT TO authenticated USING ((auth.uid () = user_id));

@@ -41,8 +41,8 @@ export async function middleware(req: NextRequest) {
   const supabase = createMiddlewareClient<Database>({ req, res });
   const sessionResponse = await supabase.auth.getSession();
   const maybeUser = sessionResponse?.data.session?.user
+
   if (isProtectedPage(req.nextUrl.pathname) && !maybeUser) {
-    console.log('isProtectedPage and no user')
     return NextResponse.redirect(toSiteURL('/login'));
   }
   if (!req.nextUrl.pathname.startsWith(`/app_admin_preview`) && req.nextUrl.pathname.startsWith('/app_admin')) {
