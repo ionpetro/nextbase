@@ -1,18 +1,14 @@
+import { Body } from '@react-email/body';
+import { Button } from '@react-email/button';
+import { Container } from '@react-email/container';
+import { Head } from '@react-email/head';
+import { Heading } from '@react-email/heading';
+import { Hr } from '@react-email/hr';
+import { Html } from '@react-email/html';
+import { Text } from '@react-email/text';
 import React from "react";
-import {
-  Head,
-  Heading,
-  Body,
-  Tailwind,
-  Text,
-  Html,
-  Container,
-  Button,
-  Hr,
-  Link,
-} from "@react-email/components";
 
-interface recenLoginProps {
+interface recentLoginProps {
   userName: string;
   appName: string;
   deviceType: string;
@@ -27,60 +23,52 @@ const RecentlyLogedinDevices = ({
   deviceType,
   timeOfLogin,
   dayOfLogin,
-}: recenLoginProps) => {
+}: recentLoginProps) => {
   return (
     <Html>
       <Head />
-      <Tailwind>
-        <Body className="bg-gray-200 font-sans font-light">
-          <Container className="bg-white px-12 py-5 mx-auto">
-            <Heading>New login device detected</Heading>
-            <Hr className="my-5" />
-            <Text className="text-base">Dear John, {userName}</Text>
-            <Text className="font-base">
-              We noticed a recent login to your Acme {appName} account from a
-              new device.
-              <br />
-              We're sending this email to make sure that was you.
-            </Text>
+      <Body style={{ backgroundColor: '#E5E7EB', fontFamily: 'sans-serif', fontWeight: 300 }}>
+        <Container style={{ backgroundColor: 'white', padding: '48px', margin: 'auto' }}>
+          <Heading>New login device detected</Heading>
+          <Hr style={{ margin: '20px 0' }} />
+          <Text style={{ fontSize: '16px' }}>Dear {userName},</Text>
+          <Text style={{ fontSize: '16px' }}>
+            We noticed a recent login to your {appName} account from a
+            new device.
+            <br />
+            We're sending this email to make sure that was you.
+          </Text>
 
-            <Text className=" text-base">
-              <>
-                <b>Device:</b> Samsung Galaxy M12 {deviceType}
-                <br />
-                <b>Time:</b> 2:30am {timeOfLogin}
-                <br />
-                <b>Day:</b> Monday {dayOfLogin}
-              </>
-            </Text>
-            <Hr className="my-5" />
-            <Text className=" text-base">
-              If this wasn't you, we highly recommend you secure your account
-              immediately. You can change your password by clicking the
-              following button
-            </Text>
-            <Button
-              className="text-base bg-black font-semibold text-white px-10 py-3 rounded"
-              href=""
-            >
-              Change my Password
-            </Button>
-            <Hr className="my-5" />
-            {/* <Text className="text-base">
-              Keeping your account secure is our top priority. If you need
-              further assistance, don't hesitate to contact our support team at{" "}
-              <Link href={supportEmail}>support@acme.co.in</Link>.
-            </Text> */}
-            <Text className="text-base">
-              Thank you for using {appName} Acme.
-            </Text>
-            <Text className="text-base">Best Regards,</Text>
-            <Text className="text-base">{appName} Acme team</Text>
-          </Container>
-        </Body>
-      </Tailwind>
+          <Text style={{ fontSize: '16px' }}>
+            <>
+              <b>Device:</b> {deviceType}
+              <br />
+              <b>Time:</b> {timeOfLogin.toLocaleTimeString()}
+              <br />
+              <b>Day:</b> {dayOfLogin}
+            </>
+          </Text>
+          <Hr style={{ margin: '20px 0' }} />
+          <Text style={{ fontSize: '16px' }}>
+            If this wasn't you, we highly recommend you secure your account
+            immediately. You can change your password by clicking the
+            following button
+          </Text>
+          <Button
+            style={{ fontSize: '16px', backgroundColor: 'black', fontWeight: 600, color: 'white', padding: '12px 40px', borderRadius: '4px' }}
+            href=""
+          >
+            Change my Password
+          </Button>
+          <Hr style={{ margin: '20px 0' }} />
+          <Text style={{ fontSize: '16px' }}>
+            Thank you for using {appName}.
+          </Text>
+          <Text style={{ fontSize: '16px' }}>Best Regards,</Text>
+          <Text style={{ fontSize: '16px' }}>{appName} team</Text>
+        </Container>
+      </Body>
     </Html>
   );
 };
-
 export default RecentlyLogedinDevices;

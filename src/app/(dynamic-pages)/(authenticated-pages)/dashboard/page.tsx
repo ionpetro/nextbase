@@ -1,4 +1,4 @@
-import { T } from '@/components/ui/Typography';
+import { Skeleton } from '@/components/ui/skeleton';
 import {
   fetchSlimOrganizations,
   getDefaultOrganization,
@@ -34,7 +34,14 @@ async function RedirectToDefaultOrg() {
 export default async function DashboardPage() {
   return (
     <>
-      <Suspense fallback={<T.Subtle className="m-0 px-4">Fetching details...</T.Subtle>}>
+      <Suspense fallback={
+        <div className="space-y-4 p-4">
+          <Skeleton className="h-12 w-full" />
+          <Skeleton className="h-12 w-full" />
+          <Skeleton className="h-12 w-full" />
+          <Skeleton className="h-12 w-full" />
+        </div>
+      }>
         <RedirectToDefaultOrg />
       </Suspense>
     </>

@@ -1,5 +1,8 @@
-import * as React from 'react';
-import { Button, Html, Section, Column, Text } from '@react-email/components';
+import { Button } from '@react-email/button';
+import { Column } from '@react-email/column';
+import { Html } from '@react-email/html';
+import { Section } from '@react-email/section';
+import { Text } from '@react-email/text';
 
 type SignInEmailProps = {
   signInUrl: string;

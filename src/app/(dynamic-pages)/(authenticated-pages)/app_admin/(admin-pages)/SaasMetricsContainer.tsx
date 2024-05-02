@@ -8,7 +8,7 @@ const SaaSMetricsGraphs = dynamic(
   },
 );
 
-export function SaaSMetrics(props: {
+export function SaaSMetricsContainer(props: {
   churnRateData: Array<{
     month: string;
     churnRate: string;

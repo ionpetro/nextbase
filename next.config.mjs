@@ -10,7 +10,8 @@ import rehypeToc from 'rehype-toc';
 
 const withBundleAnalyzer = createWithBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
-  openAnalyzer: process.env.ANALYZE === 'true',
+  openAnalyzer:
+    process.env.ANALYZE === 'true' && process.env.OPEN_ANALYZER === 'true',
 });
 
 function rehypeWrapMainContent() {
