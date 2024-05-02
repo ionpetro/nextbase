@@ -1,5 +1,10 @@
 import { Skeleton } from '@/components/ui/skeleton';
 
 export default function Loading() {
-  return <Skeleton className="w-16 h-6" />;
+  return <div className="space-y-4 p-4">
+    <Skeleton className="h-12 w-full" />
+    <Skeleton className="h-12 w-full" />
+    <Skeleton className="h-12 w-full" />
+    <Skeleton className="h-12 w-full" />
+  </div>
 }

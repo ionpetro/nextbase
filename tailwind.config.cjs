@@ -196,6 +196,6 @@ module.exports = {
     require('tailwindcss-animate'),
     require('@tailwindcss/typography'),
     require('@headlessui/tailwindcss'),
-    require('@tailwindcss/forms'),
+    // require('@tailwindcss/forms'),
   ],
 };
