@@ -171,6 +171,7 @@
   },
   "scripts": {
     "dev": "next dev",
+    "dev:debug": "NODE_OPTIONS='--inspect' next dev",
     "email:dev": "email dev",
     "start": "next start",
     "generate:types": "supabase gen types typescript --linked --schema public > src/lib/database.types.ts",
