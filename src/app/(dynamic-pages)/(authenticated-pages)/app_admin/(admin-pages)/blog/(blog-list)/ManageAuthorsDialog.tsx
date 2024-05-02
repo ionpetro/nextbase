@@ -1,5 +1,4 @@
 "use client";
-import { LucideIcon } from "@/components/LucideIcon";
 import { T } from "@/components/ui/Typography";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,6 +13,8 @@ import {
 import { deleteAuthorProfile } from "@/data/admin/internal-blog";
 import { useToastMutation } from "@/hooks/useToastMutation";
 import type { Table } from "@/types";
+import Trash from "lucide-react/dist/esm/icons/trash";
+import UsersIcon from "lucide-react/dist/esm/icons/users";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { AddAuthorProfileDialog } from "./AddAuthorProfileDialog";
@@ -52,17 +53,17 @@ export const ManageAuthorsDialog = ({
     <Dialog open={isOpen} onOpenChange={(newIsOpen) => setIsOpen(newIsOpen)}>
       <DialogTrigger asChild>
         <Button variant="outline" className="justify-start">
-          <LucideIcon name="Users" className="mr-2 size-4" />
+          <UsersIcon className="mr-2 size-4" />
           Manage author profiles
         </Button>
       </DialogTrigger>
 
       <DialogContent>
         <DialogHeader>
-          <div className="bg-gray-200/50 dark:bg-gray-700/40 p-3 rounded-lg w-fit">
-            <LucideIcon name="Users" className="w-6 h-6" />
+          <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 rounded-lg">
+            <UsersIcon className="w-6 h-6" />
           </div>
-          <div className="mb-4 p-1">
+          <div className="p-1 mb-4">
             <DialogTitle className="text-lg">
               Manage author profiles
             </DialogTitle>
@@ -75,11 +76,11 @@ export const ManageAuthorsDialog = ({
           <div className="space-y-2 mb-4">
             {authorProfiles.map((profile) => (
               <div
-                className="flex justify-between items-center space-x-1"
+                className="flex space-x-1 items-center justify-between"
                 key={profile.user_id}
               >
-                <div className="flex items-center gap-3">
-                  <div className="flex justify-center items-center bg-gray-300/50 dark:bg-gray-700/40 border rounded-full w-10 h-10">
+                <div className="flex gap-3 items-center">
+                  <div className="h-10 w-10 rounded-full bg-gray-300/50 border dark:bg-gray-700/40 flex items-center justify-center">
                     <T.P className="font-semibold text-gray-800 dark:text-gray-400 uppercase">
                       {profile.display_name ? profile.display_name[0] : ""}
                     </T.P>
@@ -95,12 +96,12 @@ export const ManageAuthorsDialog = ({
                   />
                   <Button
                     variant="ghost"
-                    className="hover:bg-red-100/50 dark:hover:bg-red-900/20 shadow-none text-red-600 hover:text-red-600 dark:text-red-400"
+                    className="text-red-600 dark:text-red-400 hover:text-red-600  shadow-none hover:bg-red-100/50 dark:hover:bg-red-900/20"
                     onClick={() => {
                       deleteAuthorProfileMutation(profile.user_id);
                     }}
                   >
-                    <LucideIcon name="Trash" className="w-5 h-5" />
+                    <Trash className="h-5 w-5" />
                   </Button>
                 </div>
               </div>

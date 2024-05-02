@@ -1,4 +1,3 @@
-import { LucideIcon } from '@/components/LucideIcon';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -9,6 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import Check from 'lucide-react/dist/esm/icons/check';
 import { useState } from 'react';
 
 type Props = {
@@ -22,13 +22,13 @@ export const SubmitProjectForApprovalDialog = ({ onSubmit }: Props) => {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="default" size="default">
-          <LucideIcon name="Check" className="mr-2 w-5 h-5" />Submit for Approval
+          <Check className="mr-2 h-5 w-5" /> Submit for Approval
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <div className="bg-gray-200/50 dark:bg-gray-700/40 p-3 rounded-lg w-fit">
-            <LucideIcon name="Check" className="w-6 h-6" />
+          <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 rounded-lg">
+            <Check className="w-6 h-6" />
           </div>
           <div className="p-1">
             <DialogTitle className="text-lg">

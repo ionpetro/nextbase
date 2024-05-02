@@ -1,54 +1,62 @@
-import { LucideIcon } from '@/components/LucideIcon';
 import { SwitcherAndToggle } from '@/components/SidebarComponents/SidebarLogo';
 import { SidebarLink } from '@/components/SidebarLink';
 import { cn } from '@/utils/cn';
+import ActivityLogIcon from 'lucide-react/dist/esm/icons/book';
+import BriefcaseIcon from 'lucide-react/dist/esm/icons/briefcase';
+import FileLineChart from 'lucide-react/dist/esm/icons/file-line-chart';
+import FeedbackIcon from 'lucide-react/dist/esm/icons/help-circle';
+import HomeIcon from 'lucide-react/dist/esm/icons/home';
+import RoadMapIcon from 'lucide-react/dist/esm/icons/map';
+import PenToolIcon from 'lucide-react/dist/esm/icons/pen-tool';
+import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
+import UsersIcon from 'lucide-react/dist/esm/icons/users';
 
 const links = [
   {
     label: 'Home',
     href: `/dashboard`,
-    icon: <LucideIcon name="Home" />,
+    icon: <HomeIcon className="h-5 w-5" />,
   },
   {
     label: 'Admin Dashboard',
     href: `/app_admin`,
-    icon: <LucideIcon name="Home" />,
+    icon: <FileLineChart className="h-5 w-5" />,
   },
   {
     label: 'Users',
     href: `/app_admin/users`,
-    icon: <LucideIcon name="FileLineChart" />,
+    icon: <UsersIcon className="h-5 w-5" />,
   },
   {
     label: 'Organizations',
     href: `/app_admin/organizations`,
-    icon: <LucideIcon name="Briefcase" />,
+    icon: <BriefcaseIcon className="h-5 w-5" />,
   },
   {
     label: 'Application Settings',
     href: `/app_admin/settings`,
-    icon: <LucideIcon name="Settings" />,
+    icon: <SettingsIcon className="h-5 w-5" />,
   },
   {
     label: 'Blog',
     href: `/app_admin/blog`,
-    icon: <LucideIcon name="PenTool" />,
+    icon: <PenToolIcon className="h-5 w-5" />,
   },
   {
     label: 'Feedback List',
     href: `/feedback`,
-    icon: <LucideIcon name="HelpCircle" />,
+    icon: <FeedbackIcon className="h-5 w-5" />,
   },
 
   {
     label: 'Changelog List',
     href: `/app_admin/changelog`,
-    icon: <LucideIcon name="Book" />,
+    icon: <ActivityLogIcon className="h-5 w-5" />,
   },
   {
     label: 'Roadmap',
     href: `/app_admin/internal-roadmap`,
-    icon: <LucideIcon name="Map" />,
+    icon: <RoadMapIcon className="h-5 w-5" />,
   },
 ];
 

@@ -1,5 +1,5 @@
-import { LucideIcon } from '@/components/LucideIcon';
 import { T } from '@/components/ui/Typography';
+import LayersIcon from 'lucide-react/dist/esm/icons/layers';
 import { Suspense } from 'react';
 import { z } from 'zod';
 import { CommentInput } from './CommentInput';
@@ -15,18 +15,18 @@ export default function ProjectPage({ params }: { params: unknown }) {
     <div className="space-y-6">
       <div className="mb-10">
         <div
-          className="flex justify-center items-center border-gray-400/50 dark:border-gray-600/50 bg-gray-200/20 dark:dotted-bg-dark dark:bg-slate-950/40 p-10 border rounded-xl h-[400px] dotted-bg"
+          className="border dotted-bg dark:dotted-bg-dark p-10 border-gray-400/50 dark:border-gray-600/50 rounded-xl bg-gray-200/20 dark:bg-slate-950/40 h-[400px] flex justify-center items-center"
           style={{}}
         >
-          <div className="flex items-center space-x-3 border-gray-300 dark:border-gray-600/50 bg-white dark:bg-slate-900 shadow-sm px-4 py-2 pl-2 border rounded-xl">
-            <div className="bg-gray-200/50 dark:bg-slate-700/40 p-3 rounded-lg w-fit">
-              <LucideIcon name="Layers" className="w-6 h-6" />
+          <div className="bg-white dark:bg-slate-900 items-center px-4 pl-2 flex space-x-3 py-2 shadow-sm border border-gray-300 dark:border-gray-600/50 rounded-xl">
+            <div className="p-3 w-fit bg-gray-200/50 dark:bg-slate-700/40 rounded-lg">
+              <LayersIcon className=" w-6 h-6" />
             </div>
             <div className="flex flex-col justify-center space-y-1.5">
-              <T.Small className="m-0 leading-none">
+              <T.Small className=" leading-none m-0">
                 Build something cool here!
               </T.Small>
-              <T.Small className="m-0 text-muted-foreground leading-none">
+              <T.Small className="text-muted-foreground leading-none m-0">
                 Your business logic goes here.
               </T.Small>
             </div>

@@ -1,11 +1,12 @@
 'use server';
-import { LucideIcon } from '@/components/LucideIcon';
 import { PageHeading } from '@/components/PageHeading';
 import { T } from '@/components/ui/Typography';
 import { getActiveProductsWithPrices } from '@/data/user/organizations';
 import type { Enum, NormalizedSubscription, UnwrapPromise } from '@/types';
 import { cn } from '@/utils/cn';
 import { formatNormalizedSubscription } from '@/utils/formatNormalizedSubscription';
+import CheckIcon from 'lucide-react/dist/esm/icons/check';
+import XIcon from 'lucide-react/dist/esm/icons/x';
 import {
   CreateSubscriptionButton,
   ManageSubscriptionButton,
@@ -54,9 +55,9 @@ async function ChoosePricingTable({
   const productsSortedByPrice = getProductsSortedByPrice(activeProducts);
 
   return (
-    <div className="space-y-4 max-w-7xl">
+    <div className="max-w-7xl space-y-4">
       {/* <Overline>Pricing table</Overline> */}
-      {/* <H3 className='mt-3 mb-0 border-none'>Pricing table</H3> */}
+      {/* <H3 className='border-none mt-3 mb-0'>Pricing table</H3> */}
       <div className="space-y-2">
         {/* <PricingModeToggle mode={pricingMode} onChange={setPricingMode} /> */}
         <div className="flex space-x-6 w-full">
@@ -88,7 +89,7 @@ async function ChoosePricingTable({
                   )}
                 >
                   <div>
-                    <div className="flex items-center mb-6 p-7 pt-6 border-b">
+                    <div className="mb-6 p-7 pt-6 flex items-center border-b">
                       <div>
                         <T.H4 className="mt-0 mb-4 dark:text-slate-300">
                           {' '}
@@ -98,7 +99,7 @@ async function ChoosePricingTable({
                           <T.H1 className="dark:text-slate-50" key={priceId}>
                             {' '}
                             {product.priceString}
-                            <span className="font-medium text-base text-muted-foreground tracking-normal">
+                            <span className="text-base tracking-normal text-muted-foreground font-medium">
                               {' '}
                               per {product.price.interval}
                             </span>
@@ -107,31 +108,31 @@ async function ChoosePricingTable({
                       </div>
                     </div>
 
-                    <div className="mb-8 px-5 pt-0 pl-6">
+                    <div className="px-5 pl-6 pt-0 mb-8">
                       <ul className="font-medium text-muted-foreground">
-                        <li className="items-start gap-0 grid grid-cols-[24px,1fr] mb-2 text-md">
-                          <LucideIcon name="Check" className="w-6 h-6 text-green-600" />
-                          <T.P className="ml-3 leading-6">
+                        <li className="grid grid-cols-[24px,1fr] gap-0 text-md items-start mb-2">
+                          <CheckIcon className="text-green-600 w-6 h-6" />
+                          <T.P className="leading-6 ml-3">
                             {product.description}
                           </T.P>
                         </li>
-                        <li className="items-start gap-0 grid grid-cols-[24px,1fr] mb-2 text-md">
-                          <LucideIcon name="Check" className="w-6 h-6 text-green-600" />
-                          <T.P className="ml-3 leading-6">A nice feature</T.P>
+                        <li className="grid grid-cols-[24px,1fr] gap-0 text-md items-start mb-2">
+                          <CheckIcon className="text-green-600 w-6 h-6" />
+                          <T.P className="leading-6 ml-3">A nice feature</T.P>
                         </li>
-                        <li className="items-start gap-0 grid grid-cols-[24px,1fr] mb-2 text-md">
-                          <LucideIcon name="Check" className="w-6 h-6 text-green-600" />
-                          <T.P className="ml-3 leading-6">
+                        <li className="grid grid-cols-[24px,1fr] gap-0 text-md items-start mb-2">
+                          <CheckIcon className="text-green-600 w-6 h-6" />
+                          <T.P className="leading-6 ml-3">
                             Another nice feature
                           </T.P>
                         </li>
-                        <li className="items-start gap-0 grid grid-cols-[24px,1fr] mb-2 text-md">
+                        <li className="grid grid-cols-[24px,1fr] gap-0 text-md items-start mb-2">
                           {product.price.unit_amount > 0 ? (
-                            <LucideIcon name="Check" className="w-6 h-6 text-green-600" />
+                            <CheckIcon className="text-green-600 w-6 h-6" />
                           ) : (
-                            <LucideIcon name="X" className="text-red-500" />
+                            <XIcon className="text-red-500" />
                           )}
-                          <T.P className="ml-3 leading-6">
+                          <T.P className="leading-6 ml-3">
                             A premium feature
                           </T.P>
                         </li>
@@ -139,7 +140,7 @@ async function ChoosePricingTable({
                     </div>
                   </div>
 
-                  <div className="space-y-2 mx-5 mt-4 mb-5 py-1 rounded-xl text-center text-white text-xl">
+                  <div className="rounded-xl py-1 mb-5 mx-5 mt-4 text-center text-white text-xl space-y-2">
                     {isOrganizationAdmin ? (
                       <>
                         <StartFreeTrialButton
@@ -152,7 +153,7 @@ async function ChoosePricingTable({
                         />
                       </>
                     ) : (
-                      <T.P className="bg-gray-100 dark:bg-slate-400/20 px-4 py-2 rounded-lg text-gray-900 text-sm dark:text-slate-100">
+                      <T.P className=" py-2 px-4 bg-gray-100 dark:bg-slate-400/20 text-sm text-gray-900 dark:text-slate-100 rounded-lg">
                         Contact your administrator to upgrade plan
                       </T.P>
                     )}
@@ -204,7 +205,7 @@ export async function OrganizationSubscripionDetails({
   return (
     <div className="space-y-4">
       <div className="space-y-1">
-        <T.H3 className="text-gray-900 dark:text-slate-100">Subscription</T.H3>
+        <T.H3 className="text-gray-900 dark:text-slate-100 ">Subscription</T.H3>
         <T.P className="text-muted-foreground">
           You are currently on the{' '}
           <span className="text-blue-500 dark:text-blue-400">
@@ -218,7 +219,7 @@ export async function OrganizationSubscripionDetails({
       {isOrganizationAdmin ? (
         <ManageSubscriptionButton organizationId={organizationId} />
       ) : (
-        <T.P className="bg-gray-100 dark:bg-slate-400/20 px-4 py-2 rounded-lg text-gray-900 text-sm dark:text-slate-100">
+        <T.P className=" py-2 px-4 bg-gray-100 dark:bg-slate-400/20 text-sm text-gray-900 dark:text-slate-100 rounded-lg">
           Contact your administrator to upgrade plan.
         </T.P>
       )}

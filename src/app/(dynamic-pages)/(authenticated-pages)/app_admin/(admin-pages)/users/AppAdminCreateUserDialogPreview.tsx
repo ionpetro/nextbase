@@ -1,5 +1,4 @@
 'use client';
-import { LucideIcon } from '@/components/LucideIcon';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -13,6 +12,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToastMutation } from '@/hooks/useToastMutation';
+import Plus from 'lucide-react/dist/esm/icons/plus';
 import { useState } from 'react';
 
 export const AppAdminCreateUserDialogPreview = () => {
@@ -43,13 +43,13 @@ export const AppAdminCreateUserDialogPreview = () => {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="default">
-          <LucideIcon name="Plus" className="mr-2" /> Create User
+          <Plus className="mr-2" /> Create User
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <div className="bg-gray-200/50 dark:bg-gray-700/40 p-3 rounded-lg w-fit">
-            <LucideIcon name="Plus" className="w-6 h-6" />
+          <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 rounded-lg">
+            <Plus className="w-6 h-6" />
           </div>
           <div className="p-1">
             <DialogTitle className="text-lg">Create User</DialogTitle>
@@ -58,7 +58,7 @@ export const AppAdminCreateUserDialogPreview = () => {
             </DialogDescription>
           </div>
         </DialogHeader>
-        <div className="gap-4 grid">
+        <div className="grid gap-4">
           <Label className="space-y-2">
             <span>Email</span>
             <Input

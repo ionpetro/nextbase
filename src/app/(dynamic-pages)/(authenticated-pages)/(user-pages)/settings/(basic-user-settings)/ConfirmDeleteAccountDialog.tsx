@@ -1,6 +1,5 @@
 'use client';
 
-import { LucideIcon } from '@/components/LucideIcon';
 import { T } from '@/components/ui/Typography';
 import { Button } from '@/components/ui/button';
 import {
@@ -15,6 +14,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { requestAccountDeletion } from '@/data/user/user';
 import { useSAToastMutation } from '@/hooks/useSAToastMutation';
+import TrashIcon from 'lucide-react/dist/esm/icons/trash';
 import { useState } from 'react';
 import { ConfirmDeletionViaEmailDialog } from './ConfirmDeletionViaEmailDialog';
 
@@ -56,7 +56,7 @@ export const ConfirmDeleteAccountDialog = () => {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button className="w-full" variant="destructive">
-            <LucideIcon name="Trash" className="mr-2 w-5 h-5" />Delete Account
+            <TrashIcon className="mr-2 h-5 w-5" /> Delete Account
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">

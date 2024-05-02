@@ -1,5 +1,4 @@
 'use client';
-import { LucideIcon } from '@/components/LucideIcon';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -12,6 +11,7 @@ import {
 } from '@/components/ui/dialog';
 import { appAdminGetUserImpersonationUrl } from '@/data/admin/user';
 import { useToastMutation } from '@/hooks/useToastMutation';
+import GetLinkIcon from 'lucide-react/dist/esm/icons/link';
 import { useState } from 'react';
 
 export const GetLoginLinkDialog = ({ userId }: { userId: string }) => {
@@ -38,12 +38,12 @@ export const GetLoginLinkDialog = ({ userId }: { userId: string }) => {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <div className="bg-gray-200/50 dark:bg-gray-700/40 mb-2 p-3 rounded-lg w-fit">
-            <LucideIcon name="Link" className="w-6 h-6" />
+          <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 mb-2 rounded-lg">
+            <GetLinkIcon className=" w-6 h-6" />
           </div>
           <div className="p-1">
             <DialogTitle className="text-lg">Get Login Link</DialogTitle>
-            <DialogDescription className="mt-0 text-base">
+            <DialogDescription className="text-base mt-0">
               Are you sure you want to generate a login link for the user?
             </DialogDescription>
           </div>

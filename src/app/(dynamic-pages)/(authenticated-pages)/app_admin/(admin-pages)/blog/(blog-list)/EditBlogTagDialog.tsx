@@ -15,11 +15,11 @@ import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { LucideIcon } from '@/components/LucideIcon';
 import { Textarea } from '@/components/ui/textarea';
 import { updateBlogTag } from '@/data/admin/internal-blog';
 import { useToastMutation } from '@/hooks/useToastMutation';
 import { Table } from '@/types';
+import Edit from 'lucide-react/dist/esm/icons/edit';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import slugify from 'slugify';
@@ -85,7 +85,7 @@ export const EditBlogTagDialog = ({
     <Dialog open={isOpen} onOpenChange={(newIsOpen) => setIsOpen(newIsOpen)}>
       <DialogTrigger asChild>
         <Button variant="ghost" className="shadow-none hover:none">
-          <LucideIcon name="SquarePen" className="w-5 h-5" />
+          <Edit className="h-5 w-5" />
         </Button>
       </DialogTrigger>
 

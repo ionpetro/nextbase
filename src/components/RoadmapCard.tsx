@@ -1,17 +1,22 @@
 import { Enum } from '@/types';
 import { formatFieldValue } from '@/utils/feedback';
 
-import { LucideIcon } from './LucideIcon';
+import {
+  Bug as BugIcon,
+  Calendar as CalendarIcon,
+  Command as FeatureIcon,
+  Info as InfoIcon,
+} from 'lucide-react/dist/esm/icons';
 import { Badge, BadgeProps } from './ui/badge';
 
 const getIconVariantForTag = (tag: Enum<'internal_feedback_thread_type'>) => {
   switch (tag) {
     case 'bug':
-      return <LucideIcon name="Bug" className="mr-2 w-4 h-4" />;
+      return <BugIcon className="mr-2 h-4 w-4" />;
     case 'general':
-      return <LucideIcon name="Info" className="mr-2 w-4 h-4" />;
+      return <InfoIcon className="mr-2 h-4 w-4" />;
     case 'feature_request':
-      return <LucideIcon name="Command" className="mr-2 w-4 h-4" />;
+      return <FeatureIcon className="mr-2 h-4 w-4" />;
     default:
       return null;
   }
@@ -63,10 +68,10 @@ export default function RoadmapCard({
   priority,
 }: RoadmapCardProps) {
   return (
-    <div className="items-start p-4 border rounded">
+    <div className="border items-start p-4 rounded">
       <div className="space-y-4">
         <div className="space-y-1">
-          <p className="font-semibold text-lg">{title}</p>
+          <p className="text-lg font-semibold  ">{title}</p>
           <p className="text-base text-muted-foreground">{description}</p>
         </div>
       </div>
@@ -80,8 +85,8 @@ export default function RoadmapCard({
           <Badge variant="outline">{formatFieldValue(priority)}</Badge>
         </div>
 
-        <div className="flex items-center text-muted-foreground text-sm">
-          <LucideIcon name="Calendar" className="mr-2 w-4 h-4" />;
+        <div className="flex text-sm text-muted-foreground items-center">
+          <CalendarIcon className="mr-2 h-4 w-4" />
           <span className="font-semibold">{date}</span>
         </div>
       </div>

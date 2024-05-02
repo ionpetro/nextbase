@@ -10,9 +10,9 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import OrganizationIcon from 'lucide-react/dist/esm/icons/network';
 import { redirect } from 'next/navigation';
 import { useState } from 'react';
-import { LucideIcon } from './LucideIcon';
 
 type CreateOrganizationDialogProps = {
   onConfirm: (organizationTitle: string) => void;
@@ -39,12 +39,12 @@ export function CreateOrganizationForm({
       <Dialog open={isDialogOpen} data-testid="create-organization-form">
         <DialogContent>
           <DialogHeader>
-            <div className="bg-gray-200/50 dark:bg-gray-700/40 mb-2 p-3 rounded-lg w-fit">
-              <LucideIcon name="Network" className="w-6 h-6" />
+            <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 mb-2 rounded-lg">
+              <OrganizationIcon className=" w-6 h-6" />
             </div>
             <div className="p-1">
               <DialogTitle className="text-lg">Create Organization</DialogTitle>
-              <DialogDescription className="mt-0 text-base">
+              <DialogDescription className="text-base mt-0">
                 Create a new organization and get started.
               </DialogDescription>
             </div>
@@ -58,7 +58,7 @@ export function CreateOrganizationForm({
                   setOrganizationTitle(event.target.value);
                 }}
                 required
-                className="shadow focus:shadow-outline mt-1.5 px-3 py-2 border rounded-lg w-full h-11 text-gray-700 appearance-none focus:ring-0 leading-tight focus:outline-none text-base"
+                className="mt-1.5 shadow appearance-none border h-11 rounded-lg w-full py-2 px-3 focus:ring-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-base"
                 id="name"
                 name="name"
                 type="text"

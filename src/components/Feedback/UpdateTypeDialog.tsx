@@ -10,8 +10,8 @@ import {
 } from '@/components/ui/dialog';
 import { Enum } from '@/types';
 import { formatFieldValue } from '@/utils/feedback';
+import FeedbackIcon from 'lucide-react/dist/esm/icons/message-square';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { LucideIcon } from '../LucideIcon';
 import { FeedbackThreadTypeSelect } from './FeedbackThreadTypeSelect';
 
 export function UpdateTypeDialog({
@@ -41,10 +41,10 @@ export function UpdateTypeDialog({
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <div className="bg-gray-200/50 dark:bg-gray-700/40 p-3 rounded-lg w-fit">
-            <LucideIcon name="MessageSquare" className="w-6 h-6" />
+          <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 rounded-lg">
+            <FeedbackIcon className="w-6 h-6" />
           </div>
-          <div className="mb-4 p-1">
+          <div className="p-1 mb-4">
             <DialogTitle className="text-lg">Update Feedback Type</DialogTitle>
             <DialogDescription className="text-base">
               Update the type of this feedback thread.

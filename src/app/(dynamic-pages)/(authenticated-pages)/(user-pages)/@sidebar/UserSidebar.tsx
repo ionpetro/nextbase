@@ -1,7 +1,12 @@
-import { LucideIcon } from '@/components/LucideIcon';
 import { SwitcherAndToggle } from '@/components/SidebarComponents/SidebarLogo';
 import { SidebarLink } from '@/components/SidebarLink';
 import { cn } from '@/utils/cn';
+import DeveloperIcon from 'lucide-react/dist/esm/icons/code';
+import FeedbackIcon from 'lucide-react/dist/esm/icons/file-question';
+import HomeIcon from 'lucide-react/dist/esm/icons/home';
+import InvitationsIcon from 'lucide-react/dist/esm/icons/mail';
+import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
+import SecurityIcon from 'lucide-react/dist/esm/icons/shield';
 
 export async function UserSidebar() {
   return (
@@ -19,32 +24,32 @@ export async function UserSidebar() {
           <SidebarLink
             label="Dashboard"
             href="/dashboard"
-            icon={<LucideIcon name="Home" className="w-5 h-5" />}
+            icon={<HomeIcon className="h-5 w-5" />}
           />
           <SidebarLink
             label="Account Settings"
             href="/settings"
-            icon={<LucideIcon name="Settings" className="w-5 h-5" />}
+            icon={<SettingsIcon className="h-5 w-5" />}
           />
           <SidebarLink
             label="Security Settings"
             href="/settings/security"
-            icon={<LucideIcon name="Shield" className="w-5 h-5" />}
+            icon={<SecurityIcon className="h-5 w-5" />}
           />
           <SidebarLink
             label="Developer Settings"
             href="/settings/developer"
-            icon={<LucideIcon name="Code" className="w-5 h-5" />}
+            icon={<DeveloperIcon className="h-5 w-5" />}
           />
           <SidebarLink
             label="Invitations"
             href="/invitations"
-            icon={<LucideIcon name="Mail" className="w-5 h-5" />}
+            icon={<InvitationsIcon className="h-5 w-5" />}
           />
           <SidebarLink
             label="My Feedback"
             href="/feedback"
-            icon={<LucideIcon name="FileQuestion" className="w-5 h-5" />}
+            icon={<FeedbackIcon className="h-5 w-5" />}
           />
         </div>
       </div>

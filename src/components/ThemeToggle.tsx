@@ -9,7 +9,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { LucideIcon } from './LucideIcon';
+import LaptopIcon from 'lucide-react/dist/esm/icons/laptop';
+import MoonIcon from 'lucide-react/dist/esm/icons/moon';
+import LightIcon from 'lucide-react/dist/esm/icons/sun';
 
 export function ThemeToggle() {
   const { setTheme } = useTheme();
@@ -23,25 +25,24 @@ export function ThemeToggle() {
         <Button
           variant="ghost"
           size="sm"
-          className="px-0 w-5 h-5 text-muted-foreground focus:ring-0"
+          className="h-5 w-5 px-0 text-muted-foreground focus:ring-0"
         >
-          <LucideIcon name="Sun" className="hover:text-black transition-all rotate-0 scale-100 dark:-rotate-90 dark:scale-0" />
-          <LucideIcon name="Moon" className="absolute dark:hover:text-white transition-all rotate-90 scale-0 dark:rotate-0 dark:scale-100" />
-
+          <LightIcon className="rotate-0 scale-100 transition-all dark:-rotate-90 hover:text-black dark:scale-0" />
+          <MoonIcon className="absolute rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 dark:hover:text-white" />
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="dark:bg-black">
         <DropdownMenuItem onClick={() => setTheme('light')}>
-          <LucideIcon name="Sun" className="mr-2 w-4 h-4" />
+          <LightIcon className="mr-2 h-4 w-4" />
           <span>Light</span>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme('dark')}>
-          <LucideIcon name="Moon" className="mr-2 w-4 h-4" />
+          <MoonIcon className="mr-2 h-4 w-4" />
           <span>Dark</span>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme('system')}>
-          <LucideIcon name="Laptop" className="mr-2 w-4 h-4" />
+          <LaptopIcon className="mr-2 h-4 w-4" />
           <span>System</span>
         </DropdownMenuItem>
       </DropdownMenuContent>

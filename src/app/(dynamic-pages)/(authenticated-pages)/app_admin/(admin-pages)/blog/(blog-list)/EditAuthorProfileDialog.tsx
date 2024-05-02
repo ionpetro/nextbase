@@ -1,4 +1,3 @@
-import { LucideIcon } from '@/components/LucideIcon';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -23,6 +22,7 @@ import { useToastMutation } from '@/hooks/useToastMutation';
 import { Table } from '@/types';
 import { authorProfileSchema } from '@/utils/zod-schemas/internalBlog';
 import { zodResolver } from '@hookform/resolvers/zod';
+import Edit from 'lucide-react/dist/esm/icons/edit';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -91,7 +91,7 @@ export const EditAuthorProfileDialog = ({
     <Dialog open={isOpen} onOpenChange={(newIsOpen) => setIsOpen(newIsOpen)}>
       <DialogTrigger asChild>
         <Button variant="ghost" className="shadow-none hover:none">
-          <LucideIcon name="SquarePen" className="w-5 h-5" />
+          <Edit className="h-5 w-5" />
         </Button>
       </DialogTrigger>
 
@@ -103,7 +103,7 @@ export const EditAuthorProfileDialog = ({
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <div className="space-y-4 px-1 max-h-96 overflow-auto fields">
+          <div className="fields space-y-4 max-h-96 px-1 overflow-auto">
             <div className="space-y-2">
               <Label>User ID</Label>
               <Controller

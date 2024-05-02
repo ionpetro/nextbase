@@ -1,4 +1,3 @@
-import { LucideIcon } from '@/components/LucideIcon';
 import { T } from '@/components/ui/Typography';
 import { Button } from '@/components/ui/button';
 import {
@@ -16,6 +15,9 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { format } from 'date-fns';
+import CheckIcon from 'lucide-react/dist/esm/icons/check';
+import MailIcon from 'lucide-react/dist/esm/icons/mail';
+import CloseIcon from 'lucide-react/dist/esm/icons/x';
 export const UsersListPreview = () => {
   const users = Array.from({ length: 10 }, (_, i) => ({
     id: i + 1,
@@ -28,7 +30,7 @@ export const UsersListPreview = () => {
 
   return (
     <div
-      className="space-y-2 border rounded-lg [&_a]:pointer-events-none"
+      className="space-y-2 rounded-lg border [&_a]:pointer-events-none"
       style={{ overflowX: 'auto' }}
     >
       <ShadcnTable>
@@ -51,31 +53,31 @@ export const UsersListPreview = () => {
               <TableCell>{user.email}</TableCell>
               <TableCell>
                 {user.is_app_admin ? (
-                  <LucideIcon name="Check" className="text-green-500 dark:text-green-400" />
+                  <CheckIcon className="text-green-500 dark:text-green-400" />
                 ) : (
-                  <LucideIcon name='X' className="text-red-500 dark:text-red-400" />
+                  <CloseIcon className="text-red-500 dark:text-red-400" />
                 )}
               </TableCell>
               <TableCell>{format(new Date(user.created_at), 'PPpp')}</TableCell>
               <TableCell>
                 {' '}
                 {user.is_confirmed ? (
-                  <LucideIcon name="Check" className="text-green-500 dark:text-green-400" />
+                  <CheckIcon className="text-green-500 dark:text-green-400" />
                 ) : (
-                  <LucideIcon name='X' className="text-red-500 dark:text-red-400" />
+                  <CloseIcon className="text-red-500 dark:text-red-400" />
                 )}
               </TableCell>
               <TableCell>
                 <span className="flex items-center space-x-4">
                   <a
                     title="Contact User by email"
-                    className="flex items-center"
+                    className="flex items-center "
                     href={`mailto:${user.email}`}
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <LucideIcon name="Mail" className="mr-2 w-5 h-5" />{' '}
-                    <T.Small className="font-medium underline underline-offset-4">
+                    <MailIcon className="h-5 w-5 mr-2 " />{' '}
+                    <T.Small className=" font-medium underline underline-offset-4 ">
                       Contact User by email
                     </T.Small>
                   </a>
@@ -84,7 +86,7 @@ export const UsersListPreview = () => {
               <TableCell>
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Button className="font-medium text-sm underline underline-offset-4">
+                    <Button className="text-sm font-medium underline underline-offset-4 ">
                       Send login link
                     </Button>
                   </DialogTrigger>
@@ -109,7 +111,7 @@ export const UsersListPreview = () => {
               <TableCell>
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Button className="font-medium text-sm underline underline-offset-4">
+                    <Button className="text-sm font-medium underline underline-offset-4 ">
                       Get login link
                     </Button>
                   </DialogTrigger>

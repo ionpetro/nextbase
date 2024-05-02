@@ -7,8 +7,8 @@ import {
 } from '@/components/ui/hover-card';
 import { getNormalizedOrganizationSubscription } from '@/data/user/organizations';
 import { formatNormalizedSubscription } from '@/utils/formatNormalizedSubscription';
+import ArrowUpRightIcon from 'lucide-react/dist/esm/icons/arrow-up-right';
 import Link from 'next/link';
-import { LucideIcon } from '../LucideIcon';
 import { Card } from '../ui/card';
 
 export async function SubscriptionCardSmall({
@@ -28,10 +28,10 @@ export async function SubscriptionCardSmall({
       <HoverCard>
         <HoverCardTrigger asChild>
           <Link href={`/organization/${organizationId}/settings/billing`}>
-            <div className="flex flex-col items-start gap-1 py-2 p-2 pb-3 border rounded-lg w-full cursor-pointer group">
-              <T.P className="font-semibold">{title} Pro</T.P>
+            <div className="group cursor-pointer flex flex-col gap-1 items-start p-2 py-2 pb-3 border     w-full rounded-lg">
+              <T.P className="font-semibold ">{title} Pro</T.P>
               {sidenote ? (
-                <T.Small className="font-normal underline-offset-4 group-hover:underline">
+                <T.Small className=" font-normal  group-hover:underline underline-offset-4">
                   {sidenote}
                 </T.Small>
               ) : null}
@@ -43,14 +43,14 @@ export async function SubscriptionCardSmall({
     );
   }
   return (
-    <Card className='flex flex-col gap-4 bg-secondary p-6'>
+    <Card className='p-6 bg-secondary flex flex-col gap-4'>
       <p>{description}</p>
       <Link
-        className="flex items-center gap-2 mt-1 mr-2 rounded-lg w-full cursor-pointer"
+        className="w-full cursor-pointer flex mr-2 gap-2 items-center mt-1 rounded-lg"
         href={`/organization/${organizationId}/settings/billing`}
       >
         <Button variant="default" className="w-full">
-          <LucideIcon name="ArrowUpRight" className="mr-2 w-5 h-5" />
+          <ArrowUpRightIcon className="h-5 w-5 mr-2 " />
           {sidenote}
         </Button>
       </Link>

@@ -13,9 +13,9 @@ import { useLoggedInUser } from '@/hooks/useLoggedInUser';
 import { useLoggedInUserEmail } from '@/hooks/useLoggedInUserEmail';
 import { getUserAvatarUrl } from '@/utils/helpers';
 import { motion } from 'framer-motion';
+import AddUserIcon from 'lucide-react/dist/esm/icons/user-plus';
 import Image from 'next/image';
 import { useRef, useState } from 'react';
-import { LucideIcon } from '../LucideIcon';
 
 const MotionImage = motion(Image);
 
@@ -48,12 +48,12 @@ export const UserOnboardingDialog = ({
     <Dialog open={isOpen}>
       <DialogContent>
         <DialogHeader>
-          <div className="bg-gray-200/50 dark:bg-gray-700/40 mb-2 p-3 rounded-lg w-fit">
-            <LucideIcon name="UserPlus" className="w-6 h-6" />
+          <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 mb-2 rounded-lg">
+            <AddUserIcon className=" w-6 h-6" />
           </div>
           <div className="p-1">
             <DialogTitle className="text-lg">Create new profile</DialogTitle>
-            <DialogDescription className="mt-0 text-base">
+            <DialogDescription className="text-base mt-0">
               Please fill in your details.
             </DialogDescription>
           </div>
@@ -69,7 +69,7 @@ export const UserOnboardingDialog = ({
           <div className="space-y-4">
             <div className="space-y-2">
               <Label className="text-muted-foreground">Avatar</Label>
-              <div className="sm:col-span-2 mt-1 sm:mt-0">
+              <div className="mt-1 sm:col-span-2 sm:mt-0">
                 <div className="flex items-center space-x-2">
                   <MotionImage
                     animate={{
@@ -79,10 +79,10 @@ export const UserOnboardingDialog = ({
                       hasImageLoaded
                         ? undefined
                         : {
-                          duration: 0.5,
-                          repeat: Infinity,
-                          repeatType: 'reverse',
-                        }
+                            duration: 0.5,
+                            repeat: Infinity,
+                            repeatType: 'reverse',
+                          }
                     }
                     onLoad={() => {
                       setHasImageLoaded(true);
@@ -95,7 +95,7 @@ export const UserOnboardingDialog = ({
                     loading="eager"
                     width={24}
                     height={24}
-                    className="rounded-full w-12 h-12"
+                    className="h-12 w-12 rounded-full"
                     src={avatarURL}
                     alt="avatarUrl"
                   />

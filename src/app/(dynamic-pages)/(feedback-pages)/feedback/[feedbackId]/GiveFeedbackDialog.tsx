@@ -1,5 +1,4 @@
 'use client';
-import { LucideIcon } from '@/components/LucideIcon';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -22,6 +21,7 @@ import { createInternalFeedback } from '@/data/user/internalFeedback';
 import { useToastMutation } from '@/hooks/useToastMutation';
 import type { Enum } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
+import FeedbackIcon from 'lucide-react/dist/esm/icons/message-square';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -96,10 +96,10 @@ export const GiveFeedbackDialog = ({
 
       <DialogContent>
         <DialogHeader>
-          <div className="bg-gray-200/50 dark:bg-gray-700/40 p-3 rounded-lg w-fit">
-            <LucideIcon name='MessageSquare' className="w-6 h-6" />
+          <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 rounded-lg">
+            <FeedbackIcon className="w-6 h-6" />
           </div>
-          <div className="mb-4 p-1">
+          <div className="p-1 mb-4">
             <DialogTitle className="text-lg">Give Feedback</DialogTitle>
             <DialogDescription className="text-base">
               Help us improve by sharing feedback or just drop by and say Hi!
@@ -150,7 +150,7 @@ export const GiveFeedbackDialog = ({
             />
           </div>
           <Button
-            className="mt-4 w-full"
+            className="w-full mt-4"
             data-testid="submit-feedback-button"
             disabled={!isValid || isCreatingInternalFeedback}
             type="submit"

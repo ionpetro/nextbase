@@ -3,12 +3,13 @@ import { SidebarVisibilityContext } from '@/contexts/SidebarVisibilityContext';
 import { setSidebarVisibility } from '@/data/user/ui';
 import { cn } from '@/utils/cn';
 import { useMutation } from '@tanstack/react-query';
+import HambugerMenu from 'lucide-react/dist/esm/icons/menu';
+import PanelLeftOpen from 'lucide-react/dist/esm/icons/panel-left-open';
 import Image from 'next/image';
 import darkLogo from 'public/logos/nextbase-dark-logo.png';
 import lightLogo from 'public/logos/nextbase-light-logo.png';
 import { useContext } from 'react';
 import { toast } from 'sonner';
-import { LucideIcon } from '../LucideIcon';
 
 export function SidebarOpen() {
   const { setVisibility: setVisibilityContextValue, isVisible } = useContext(
@@ -33,14 +34,14 @@ export function SidebarOpen() {
           isVisible ? 'hidden ' : 'hidden lg:flex',
         )}
       >
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 ">
           <div
             className={cn(
               'flex group cursor-pointer border items-center p-1.5 h-[30px] hover:bg-neutral-50 dark:hover:bg-white/5 rounded-md',
             )}
             onClick={openSidebar}
           >
-            <LucideIcon name="PanelLeftOpen" className="group-hover:text-neutral-700 group-hover:dark:text-slate-300 w-4 h-4 text-neutral-500 dark:text-slate-400" />
+            <PanelLeftOpen className="h-4 w-4 text-neutral-500 group-hover:text-neutral-700 dark:text-slate-400 group-hover:dark:text-slate-300" />
           </div>
           <Image
             width={32}
@@ -60,16 +61,16 @@ export function SidebarOpen() {
             )}
           />
         </div>
-        <div className="bg-gray-300 dark:bg-slate-700 mr-4 ml-2 w-px h-5" />
+        <div className="w-px h-5 ml-2 mr-4 bg-gray-300 dark:bg-slate-700" />
       </div>
       {/* xs to md */}
-      <div className="flex items-center lg:hidden w-fit">
+      <div className="flex lg:hidden items-center w-fit">
         <div className="flex items-center gap-2 w-20">
           <div
-            className="flex items-center hover:bg-neutral-50 dark:hover:bg-white/5 p-1.5 border rounded-md h-[30px] cursor-pointer group"
+            className="group cursor-pointer border flex items-center p-1.5 h-[30px] hover:bg-neutral-50 dark:hover:bg-white/5 rounded-md"
             onClick={openSidebar}
           >
-            <LucideIcon name="Menu" className="group-hover:text-neutral-700 group-hover:dark:text-slate-300 w-4 h-4 text-neutral-500 dark:text-slate-400" />
+            <HambugerMenu className="h-4 w-4 text-neutral-500 group-hover:text-neutral-700 dark:text-slate-400 group-hover:dark:text-slate-300" />
           </div>
         </div>
       </div>

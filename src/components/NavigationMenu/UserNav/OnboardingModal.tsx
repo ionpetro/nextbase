@@ -1,5 +1,4 @@
 'use client';
-import { LucideIcon } from '@/components/LucideIcon';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Button } from '@/components/ui/button';
 import {
@@ -9,6 +8,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { cn } from '@/utils/cn';
+import GuideIcon from 'lucide-react/dist/esm/icons/help-circle';
 import Image from 'next/image';
 import { ReactNode, useState } from 'react';
 
@@ -52,24 +52,24 @@ export function OnboardingModal({
             'flex gap-2 items-center py-2 text-sm',
           )}
         >
-          <LucideIcon name="HelpCircle" />
+          <GuideIcon />
           Help
         </div>
       </DialogTrigger>
       <DialogContent className="p-8">
-        <div className="object-fit">
-          <p className="mb-4 font-bold text-base text-muted-foreground">
+        <div className="object-fit ">
+          <p className="text-base text-muted-foreground font-bold mb-4">
             {currentFeatureIndex + 1} / {featureList.length}
           </p>
           <AspectRatio ratio={16 / 9}>
             <Image
               src={currentFeature.image}
               alt="feature"
-              className="border rounded-lg object-cover"
+              className="rounded-lg object-cover border"
               layout="fill"
             />
           </AspectRatio>
-          <p className="mt-6 font-bold text-2xl">{currentFeature.title}</p>
+          <p className=" mt-6 text-2xl font-bold">{currentFeature.title}</p>
           <div className="mt-2 text-base text-muted-foreground">
             {currentFeature.description}
           </div>

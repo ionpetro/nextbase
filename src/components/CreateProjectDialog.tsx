@@ -13,9 +13,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { createProjectAction } from '@/data/user/projects';
 import { useToastMutation } from '@/hooks/useToastMutation';
+import LayersIcon from 'lucide-react/dist/esm/icons/layers';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { LucideIcon } from './LucideIcon';
 
 type CreateProjectDialogProps = {
   organizationId: string;
@@ -50,18 +50,18 @@ export function CreateProjectDialog({
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button variant="default" size="default">
-            <LucideIcon name="Layers" className="mr-2 w-5 h-5" />
+            <LayersIcon className="mr-2 w-5 h-5" />
             Create Project
           </Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <div className="bg-gray-200/50 dark:bg-gray-700/40 mb-2 p-3 rounded-lg w-fit">
-              <LucideIcon name="Layers" className="w-6 h-6" />
+            <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 mb-2 rounded-lg">
+              <LayersIcon className=" w-6 h-6" />
             </div>
             <div className="p-1">
               <DialogTitle className="text-lg">Create Project</DialogTitle>
-              <DialogDescription className="mt-0 text-base">
+              <DialogDescription className="text-base mt-0">
                 Create a new project and get started.
               </DialogDescription>
             </div>
@@ -75,7 +75,7 @@ export function CreateProjectDialog({
                   setProjectTitle(event.target.value);
                 }}
                 required
-                className="shadow focus:shadow-outline mt-1.5 px-3 py-2 border rounded-lg w-full h-11 text-base text-gray-700 leading-tight appearance-none focus:ring-0 dark:text-gray-400 focus:outline-none"
+                className="mt-1.5 shadow appearance-none border h-11 rounded-lg w-full py-2 px-3 focus:ring-0 text-gray-700 dark:text-gray-400 leading-tight focus:outline-none focus:shadow-outline text-base"
                 id="name"
                 type="text"
                 placeholder="Project Name"

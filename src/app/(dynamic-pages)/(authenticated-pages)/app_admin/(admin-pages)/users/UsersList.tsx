@@ -1,6 +1,5 @@
 'use server';
 
-import { LucideIcon } from '@/components/LucideIcon';
 import { T } from '@/components/ui/Typography';
 import {
   Table as ShadcnTable,
@@ -12,6 +11,9 @@ import {
 } from '@/components/ui/table';
 import { getPaginatedUserList } from '@/data/admin/user';
 import { format } from 'date-fns';
+import CheckIcon from 'lucide-react/dist/esm/icons/check';
+import MailIcon from 'lucide-react/dist/esm/icons/mail';
+import CloseIcon from 'lucide-react/dist/esm/icons/x';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { ConfirmSendLoginLinkDialog } from './ConfirmSendLoginLinkDialog';
@@ -47,30 +49,30 @@ export async function UserList({
               </TableCell>
               <TableCell>
                 {user.is_app_admin ? (
-                  <LucideIcon name="Check" className="text-green-500 dark:text-green-400" />
+                  <CheckIcon className="text-green-500 dark:text-green-400" />
                 ) : (
-                  <LucideIcon name='X' className="text-red-500 dark:text-red-400" />
+                  <CloseIcon className="text-red-500 dark:text-red-400" />
                 )}
               </TableCell>
               <TableCell>{format(new Date(user.created_at), 'PPpp')}</TableCell>
               <TableCell>
                 {user.is_confirmed ? (
-                  <LucideIcon name="Check" className="text-green-500 dark:text-green-400" />
+                  <CheckIcon className="text-green-500 dark:text-green-400" />
                 ) : (
-                  <LucideIcon name='X' className="text-red-500 dark:text-red-400" />
+                  <CloseIcon className="text-red-500 dark:text-red-400" />
                 )}
               </TableCell>
               <TableCell>
                 <span className="flex items-center space-x-4">
                   <a
                     title="Contact User by email"
-                    className="flex items-center"
+                    className="flex items-center "
                     href={`mailto:${user.email}`}
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <LucideIcon name="Mail" className="mr-2 w-5 h-5" />{' '}
-                    <T.Small className="font-medium underline underline-offset-4">
+                    <MailIcon className="h-5 w-5 mr-2 " />{' '}
+                    <T.Small className=" font-medium underline underline-offset-4 ">
                       Contact User by email
                     </T.Small>
                   </a>

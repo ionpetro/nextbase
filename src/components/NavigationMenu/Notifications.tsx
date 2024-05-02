@@ -12,12 +12,13 @@ import { supabaseUserClientComponentClient } from '@/supabase-clients/user/supab
 import type { Table } from '@/types';
 import { parseNotification } from '@/utils/parseNotification';
 import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query';
+import NotificationIcon from 'lucide-react/dist/esm/icons/bell';
+import CheckIcon from 'lucide-react/dist/esm/icons/check';
 import moment from 'moment';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect } from 'react';
 import { useDidMount } from 'rooks';
 import { toast } from 'sonner';
-import { LucideIcon } from '../LucideIcon';
 import {
   getPaginatedNotifications,
   getUnseenNotificationIds,
@@ -219,30 +220,30 @@ export const Notifications = ({ userId }: { userId: string }) => {
   return (
     <Popover>
       <PopoverTrigger className="relative focus:ring-none">
-        <LucideIcon name="Bell" className="px-0 w-5 h-5 text-muted-foreground hover:text-black dark:hover:text-white" />
+        <NotificationIcon className="h-5 w-5 px-0 text-muted-foreground hover:text-black dark:hover:text-white" />
         {unseenNotificationCount > 0 && (
-          <span className="-top-1.5 -right-2 absolute bg-red-500 px-1.5 rounded-full font-bold text-white text-xs">
+          <span className="absolute -top-1.5 -right-2 bg-red-500  text-white text-xs font-bold px-1.5 rounded-full">
             {unseenNotificationCount}
           </span>
         )}
       </PopoverTrigger>
 
       {notifications.length ? (
-        <PopoverContent className="bg-white dark:bg-slate-950 mr-12 p-0 rounded-xl w-[560px] overflow-hidden">
-          <div className="shadow-lg px-6 pb-2 border-b-2">
-            <div className="flex justify-between mt-7 mb-3">
-              <T.H3 className="mt-0 dark:text-white leading-7">
+        <PopoverContent className="mr-12 w-[560px] p-0 rounded-xl overflow-hidden bg-white dark:bg-slate-950">
+          <div className="border-b-2 px-6 pb-2 shadow-lg">
+            <div className="mt-7 mb-3 flex justify-between">
+              <T.H3 className="leading-7 mt-0 dark:text-white ">
                 Notifications
               </T.H3>
-              <div className="flex space-x-1 mt-2 font-medium text-sm cursor-pointer group">
+              <div className="flex text-sm mt-2 space-x-1 group cursor-pointer font-medium">
                 {unseenNotificationCount ? (
                   <>
-                    <LucideIcon name="Check" className="dark:group-hover:text-gray-400 w-5 h-5 text-muted-foreground" />{' '}
+                    <CheckIcon className="h-5 w-5 text-muted-foreground dark:group-hover:text-gray-400" />{' '}
                     <span
                       onClick={() => {
                         mutate();
                       }}
-                      className="dark:group-hover:text-gray-400 text-muted-foreground underline underline-offset-4"
+                      className="underline underline-offset-4 text-muted-foreground dark:group-hover:text-gray-400 "
                     >
                       Mark as all read
                     </span>
@@ -282,7 +283,7 @@ export const Notifications = ({ userId }: { userId: string }) => {
         </PopoverContent>
       ) : (
         <PopoverContent className="mr-12 p-0 rounded-xl overflow-hidden">
-          <div className="shadow-lg px-6 py-4">
+          <div className="px-6 py-4 shadow-lg">
             <T.P className="text-muted-foreground">No notifications yet.</T.P>
           </div>
         </PopoverContent>

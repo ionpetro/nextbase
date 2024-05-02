@@ -1,5 +1,4 @@
 'use client';
-import { LucideIcon } from '@/components/LucideIcon';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -12,6 +11,7 @@ import {
 } from '@/components/ui/dialog';
 import { sendLoginLinkAction } from '@/data/admin/user';
 import { useToastMutation } from '@/hooks/useToastMutation';
+import SendLinkIcon from 'lucide-react/dist/esm/icons/send';
 import { useState } from 'react';
 
 export const ConfirmSendLoginLinkDialog = ({
@@ -39,12 +39,12 @@ export const ConfirmSendLoginLinkDialog = ({
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <div className="bg-gray-200/50 dark:bg-gray-700/40 mb-2 p-3 rounded-lg w-fit">
-            <LucideIcon name='Send' className="w-6 h-6" />
+          <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 mb-2 rounded-lg">
+            <SendLinkIcon className=" w-6 h-6" />
           </div>
           <div className="p-1">
             <DialogTitle className="text-lg">Send Login Link</DialogTitle>
-            <DialogDescription className="mt-0 text-base">
+            <DialogDescription className="text-base mt-0">
               Are you sure you want to send a login link to the user?
             </DialogDescription>
           </div>
