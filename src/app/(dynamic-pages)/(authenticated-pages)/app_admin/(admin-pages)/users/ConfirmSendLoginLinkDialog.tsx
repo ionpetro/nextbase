@@ -10,7 +10,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { sendLoginLinkAction } from '@/data/admin/user';
-import { useToastMutation } from '@/hooks/useToastMutation';
+import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import SendLinkIcon from 'lucide-react/dist/esm/icons/send';
 import { useState } from 'react';
 
@@ -20,9 +20,9 @@ export const ConfirmSendLoginLinkDialog = ({
   userEmail: string;
 }) => {
   const [open, setOpen] = useState(false);
-  const { mutate: onConfirm, isLoading } = useToastMutation(
+  const { mutate: onConfirm, isLoading } = useSAToastMutation(
     async () => {
-      await sendLoginLinkAction(userEmail);
+      return await sendLoginLinkAction(userEmail);
     },
     {
       loadingMessage: 'Sending login link...',

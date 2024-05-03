@@ -15,7 +15,6 @@ import {
 import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
 import { createBlogPost, updateBlogPost } from '@/data/admin/internal-blog';
-import { useToastMutation } from '@/hooks/useToastMutation';
 import type { Table } from '@/types';
 import {
   internalBlogPostSchema,
@@ -249,13 +248,10 @@ export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
             return 'Failed to create post';
           }
         },
-        onSuccess: () => {
-          router.push("/app_admin/blog/");
-        },
       },
     );
 
-  const { mutate: upload, isLoading: isUploading } = useToastMutation(async (file: File) => {
+  const { mutate: upload, isLoading: isUploading } = useSAToastMutation(async (file: File) => {
     const formData = new FormData();
     formData.append('file', file);
     const response = await uploadBlogImage(formData, file.name);
@@ -266,9 +262,17 @@ export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
     onSuccess(data) {
       setValue('cover_image', data.status === 'success' ? data.data : "");
     },
-    errorMessage() {
-      return "Failed to upload image";
-    }
+    errorMessage(error) {
+      try {
+        if (error instanceof Error) {
+          return String(error.message);
+        }
+        return `Failed to upload image ${String(error)}`;
+      } catch (_err) {
+        console.warn(_err);
+        return 'Failed to upload image';
+      }
+    },
   })
 
   const { mutate: updatePostMutation, isLoading: isUpdatingPost } =
@@ -287,14 +291,12 @@ export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
           json_content,
         }
 
-        const response = await updateBlogPost(
+        return await updateBlogPost(
           author_id,
           rest.postId,
           payload,
           tags.map((tag) => tag.id),
         );
-
-        return response;
       },
       {
         loadingMessage: 'Updating post...',
@@ -310,9 +312,6 @@ export const BlogForm = ({ authors, tags, ...rest }: BlogFormProps) => {
             return 'Failed to update post';
           }
         },
-        onSuccess() {
-          router.push("/app_admin/blog/");
-        }
       }
     );
 

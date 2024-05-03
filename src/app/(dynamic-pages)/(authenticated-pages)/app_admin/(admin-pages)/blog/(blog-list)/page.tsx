@@ -68,7 +68,7 @@ export type BlogFiltersSchema = z.infer<typeof blogFiltersSchema>;
 
 export default async function BlogListPage({ searchParams }: { searchParams: unknown }) {
   const filters = blogFiltersSchema.parse(searchParams);
-  const blogs: BlogPostWithTags[] = await getAllBlogPosts(filters);
+  const blogs: BlogPostWithTags[] = await getAllBlogPosts({ ...filters, page: 1 });
   const tags = await getAllBlogTags();
   const totalPages = await getBlogPostsTotalPages(filters);
 

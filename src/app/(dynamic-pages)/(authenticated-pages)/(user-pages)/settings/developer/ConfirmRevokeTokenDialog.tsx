@@ -10,7 +10,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { revokeUnkeyToken } from '@/data/user/unkey';
-import { useToastMutation } from '@/hooks/useToastMutation';
+import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import { useState } from 'react';
 
 type Props = {
@@ -19,13 +19,25 @@ type Props = {
 
 export const ConfirmRevokeTokenDialog = ({ keyId }: Props) => {
   const [open, setOpen] = useState(false);
-  const { mutate, isLoading } = useToastMutation(revokeUnkeyToken, {
+  const { mutate, isLoading } = useSAToastMutation(async (keyId: string) => {
+    return await revokeUnkeyToken(keyId);
+  }, {
     onSettled: () => {
       setOpen(false);
     },
     loadingMessage: 'Revoking API Key...',
     successMessage: 'API Key revoked!',
-    errorMessage: 'Unable to revoke API Key.',
+    errorMessage(error) {
+      try {
+        if (error instanceof Error) {
+          return String(error.message);
+        }
+        return `Failed to revoke API Key ${String(error)}`;
+      } catch (_err) {
+        console.warn(_err);
+        return 'Failed to revoke API Key';
+      }
+    },
   });
 
   return (

@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -7,22 +7,22 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import { z } from 'zod';
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { z } from "zod";
 
-import { Textarea } from '@/components/ui/textarea';
-import { updateBlogTag } from '@/data/admin/internal-blog';
-import { useToastMutation } from '@/hooks/useToastMutation';
-import { Table } from '@/types';
-import Edit from 'lucide-react/dist/esm/icons/edit';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
-import slugify from 'slugify';
+import { Textarea } from "@/components/ui/textarea";
+import { updateBlogTag } from "@/data/admin/internal-blog";
+import { useSAToastMutation } from "@/hooks/useSAToastMutation";
+import type { Table } from "@/types";
+import Edit from "lucide-react/dist/esm/icons/edit";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import slugify from "slugify";
 
 const blogTagSchema = z.object({
   name: z.string(),
@@ -35,7 +35,7 @@ type BlogTagFormType = z.infer<typeof blogTagSchema>;
 export const EditBlogTagDialog = ({
   tag,
 }: {
-  tag: Table<'internal_blog_post_tags'>;
+  tag: Table<"internal_blog_post_tags">;
 }) => {
   const router = useRouter();
 
@@ -46,18 +46,28 @@ export const EditBlogTagDialog = ({
       resolver: zodResolver(blogTagSchema),
       defaultValues: {
         name: tag.name,
-        description: tag.description ?? '',
+        description: tag.description ?? "",
         slug: tag.slug,
       },
     });
 
   const { mutate: updateBlogTagMutation, isLoading: isUpdatingBlogTag } =
-    useToastMutation(
+    useSAToastMutation(
       async (payload: BlogTagFormType) => updateBlogTag(tag.id, payload),
       {
-        loadingMessage: 'Updating blog tag...',
-        successMessage: 'Blog tag updated!',
-        errorMessage: 'Failed to update blog tag',
+        loadingMessage: "Updating blog tag...",
+        successMessage: "Blog tag updated!",
+        errorMessage(error) {
+          try {
+            if (error instanceof Error) {
+              return String(error.message);
+            }
+            return `Failed to update blog tag ${String(error)}`;
+          } catch (_err) {
+            console.warn(_err);
+            return "Failed to update blog tag";
+          }
+        },
         onSuccess: () => {
           router.refresh();
           setIsOpen(false);
@@ -66,15 +76,15 @@ export const EditBlogTagDialog = ({
     );
 
   const { isValid } = formState;
-  const nameValue = watch('name');
+  const nameValue = watch("name");
 
   useEffect(() => {
     const slug = slugify(nameValue, {
       lower: true,
       strict: true,
-      replacement: '-',
+      replacement: "-",
     });
-    setValue('slug', slug);
+    setValue("slug", slug);
   }, [nameValue, setValue]);
 
   const onSubmit = (data: BlogTagFormType) => {
@@ -132,7 +142,7 @@ export const EditBlogTagDialog = ({
             type="submit"
             className="w-full"
           >
-            {isUpdatingBlogTag ? 'Updating...' : 'Update Tag'}
+            {isUpdatingBlogTag ? "Updating..." : "Update Tag"}
           </Button>
         </DialogFooter>
       </DialogContent>

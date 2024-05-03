@@ -1,7 +1,7 @@
 'use client';
-import { Button } from '@/components/ui/button';
 import { T } from '@/components/ui/Typography';
-import { useToastMutation } from '@/hooks/useToastMutation';
+import { Button } from '@/components/ui/button';
+import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import ArrowUpRightIcon from 'lucide-react/dist/esm/icons/arrow-up-right';
 import CalendarIcon from 'lucide-react/dist/esm/icons/calendar';
 import PencilIcon from 'lucide-react/dist/esm/icons/pencil';
@@ -10,7 +10,7 @@ import moment from 'moment';
 import Link from 'next/link';
 
 function DeleteBlogPostPreview({ blogPostId }: { blogPostId: string }) {
-  const { mutate, isLoading } = useToastMutation(
+  const { mutate, isLoading } = useSAToastMutation(
     async () => {
       // Simulate a delay to mimic the deletion process
       return new Promise((resolve) => setTimeout(resolve, 1000));

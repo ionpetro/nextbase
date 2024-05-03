@@ -13,7 +13,7 @@ import {
   updateUserProfileNameAndAvatar,
   uploadPublicUserAvatar,
 } from '@/data/user/user';
-import { useToastMutation } from '@/hooks/useToastMutation';
+import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import { useState } from 'react';
 import type { onBoardProps } from './ClientLayout';
 
@@ -25,7 +25,6 @@ export function UserOnboardingFlow({
   onSuccess: () => void;
 }) {
   const { userProfile, defaultOrganizationId, terms } = onboardingConditions;
-
   const [avatarUrl, setAvatarUrl] = useState<string | undefined>(
     userProfile.avatar_url ?? undefined,
   );
@@ -33,10 +32,10 @@ export function UserOnboardingFlow({
   // terms mutation
   const {
     mutate: acceptTerms,
-    data: termsData = terms,
+    data: termsData = { status: "success", data: { accepted_terms: terms?.accepted_terms } },
     error: termsError,
     isLoading: isAcceptingTerms,
-  } = useToastMutation(
+  } = useSAToastMutation(
     async () => {
       return await acceptTermsOfService(true);
     },
@@ -44,11 +43,15 @@ export function UserOnboardingFlow({
       loadingMessage: 'Accepting terms...',
       successMessage: 'Terms accepted!',
       errorMessage(error) {
-        if (error instanceof Error) {
-          return `Failed to accept terms: ${error.message}`;
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to accept terms ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to accept terms';
         }
-
-        return 'Failed to accept terms';
       },
     },
   );
@@ -56,9 +59,9 @@ export function UserOnboardingFlow({
   // profile mutation
   const {
     mutate: updateProfile,
-    data: profileData = userProfile,
+    data: profileData = { status: "success", data: userProfile },
     isLoading: isUpdatingProfile,
-  } = useToastMutation(
+  } = useSAToastMutation(
     async ({
       fullName,
       avatarUrl,
@@ -71,18 +74,22 @@ export function UserOnboardingFlow({
     {
       loadingMessage: 'Updating profile...',
       successMessage: 'Profile updated!',
-      errorMessage(error, variables) {
-        if (error instanceof Error) {
-          return `Failed to update profile: ${error.message}`;
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to update profile ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to update profile';
         }
-
-        return 'Failed to update profile';
       },
     },
   );
 
   // avatar mutation
-  const { mutate: uploadFile, isLoading: isUploading } = useToastMutation(
+  const { mutate: uploadFile, isLoading: isUploading } = useSAToastMutation(
     async (file: File) => {
       const formData = new FormData();
       formData.append('file', file);
@@ -94,40 +101,58 @@ export function UserOnboardingFlow({
     {
       loadingMessage: 'Uploading avatar...',
       successMessage: 'Avatar uploaded!',
-      errorMessage: 'Error uploading avatar',
-      onSuccess: (newAvatarURL) => {
-        setAvatarUrl(newAvatarURL);
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to upload avatar ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to upload avatar';
+        }
+      },
+      onSuccess: (response) => {
+        if (response.status === "success") {
+          setAvatarUrl(response.data);
+        }
       },
     },
   );
 
   // organization mutation
-  const { mutate: createOrg, isLoading } = useToastMutation(
+  const { mutate: createOrg, isLoading } = useSAToastMutation(
     async (organizationTitle: string) => {
-      const orgId = await createOrganization(organizationTitle);
-      await setDefaultOrganization(orgId);
-      return orgId;
+      return await createOrganization(organizationTitle);
     },
     {
       loadingMessage: 'Creating organization...',
       errorMessage(error) {
-        if (error instanceof Error) {
-          return `Failed to create organization: ${error.message}`;
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to create organization ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to create organization';
         }
-
-        return 'Failed to create organization';
       },
       successMessage: 'Organization created!',
-      onSuccess: () => {
+      onSuccess: (response) => {
+        response.status === "success" && response.data ? setDefaultOrganization(response.data) : null;
         onSuccess();
       },
     },
   );
 
+  const isTermsAccepted = termsData?.status === "success" && termsData?.data?.accepted_terms;
+  const isProfileSet = profileData?.status === "success" && profileData?.data?.full_name;
+
   return (
     <>
       <TermsOnboardingDialog
-        isOpen={termsData.length === 0}
+        isOpen={!isTermsAccepted}
         isLoading={isAcceptingTerms}
         onSubmit={() => {
           acceptTerms();
@@ -135,7 +160,7 @@ export function UserOnboardingFlow({
       />
 
       <UserOnboardingDialog
-        isOpen={!profileData?.full_name && termsData.length > 0}
+        isOpen={!isProfileSet && !!isTermsAccepted}
         onSubmit={(fullName: string) => {
           updateProfile({
             fullName,
@@ -153,8 +178,8 @@ export function UserOnboardingFlow({
       <CreateOrganizationForm
         isDialogOpen={
           !defaultOrganizationId &&
-          !!profileData?.full_name &&
-          termsData.length > 0
+          !!isProfileSet &&
+          !!isTermsAccepted
         }
         onConfirm={(organizationTitle: string) => {
           createOrg(organizationTitle);

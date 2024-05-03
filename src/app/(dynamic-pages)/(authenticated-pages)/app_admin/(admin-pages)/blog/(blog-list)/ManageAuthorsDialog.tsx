@@ -11,7 +11,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { deleteAuthorProfile } from "@/data/admin/internal-blog";
-import { useToastMutation } from "@/hooks/useToastMutation";
+import { useSAToastMutation } from "@/hooks/useSAToastMutation";
 import type { Table } from "@/types";
 import Trash from "lucide-react/dist/esm/icons/trash";
 import UsersIcon from "lucide-react/dist/esm/icons/users";
@@ -35,14 +35,24 @@ export const ManageAuthorsDialog = ({
   const {
     mutate: deleteAuthorProfileMutation,
     isLoading: isDeletingAuthorProfile,
-  } = useToastMutation<void, unknown, string>(
-    async (id) => {
-      return deleteAuthorProfile(id);
+  } = useSAToastMutation(
+    async (id: string) => {
+      return await deleteAuthorProfile(id);
     },
     {
       loadingMessage: "Deleting author profile...",
       successMessage: "Author profile deleted!",
-      errorMessage: "Failed to delete author profile",
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to delete author profile ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to delete author profile';
+        }
+      },
       onSuccess: () => {
         router.refresh();
       },

@@ -8,19 +8,29 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { updatePasswordAction } from '@/data/user/security';
-import { useToastMutation } from '@/hooks/useToastMutation';
+import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import { useRouter } from 'next/navigation';
 
 export function UpdatePassword() {
   const router = useRouter();
-  const updatePasswordMutation = useToastMutation(
+  const updatePasswordMutation = useSAToastMutation(
     async (password: string) => {
       return await updatePasswordAction(password);
     },
     {
       loadingMessage: 'Updating password...',
       successMessage: 'Password updated!',
-      errorMessage: 'Failed to update password',
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to update password ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to update password';
+        }
+      },
       onSuccess: () => {
         router.push('/auth/callback');
       },

@@ -1,5 +1,5 @@
-'use client';
-import { Button } from '@/components/ui/button';
+"use client";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -8,31 +8,43 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { useToastMutation } from '@/hooks/useToastMutation';
-import Plus from 'lucide-react/dist/esm/icons/plus';
-import { useState } from 'react';
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useSAToastMutation } from "@/hooks/useSAToastMutation";
+import type { ValidSAPayload } from "@/types";
+import Plus from "lucide-react/dist/esm/icons/plus";
+import { useState } from "react";
 
 export const AppAdminCreateUserDialogPreview = () => {
   const [open, setOpen] = useState(false);
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
 
-  const { mutate: createUser, isLoading } = useToastMutation<
-    string,
-    unknown,
-    string
-  >(
-    async (email) => {
+  const { mutate: createUser, isLoading } = useSAToastMutation(
+    async (email: string): Promise<ValidSAPayload<{ email: string }>> => {
       // Simulate a delay
       await new Promise((resolve) => setTimeout(resolve, 2000));
-      return email;
+      return {
+        status: "success",
+        data: {
+          email,
+        },
+      };
     },
     {
-      loadingMessage: 'Creating user...',
-      successMessage: 'User created!',
-      errorMessage: 'Failed to create user',
+      loadingMessage: "Creating user...",
+      successMessage: "User created!",
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to create user ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return "Failed to create user";
+        }
+      },
       onSuccess: () => {
         setOpen(false);
       },
@@ -80,7 +92,7 @@ export const AppAdminCreateUserDialogPreview = () => {
             type="button"
             className="w-full"
           >
-            {isLoading ? 'Loading...' : 'Create User'}
+            {isLoading ? "Loading..." : "Create User"}
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -28,6 +28,8 @@ async function getDefaultOrganizationOrSet(): Promise<string | null> {
     fetchSlimOrganizations(),
     getDefaultOrganization(),
   ]);
+
+
   const firstOrganization = slimOrganizations[0];
 
   if (defaultOrganizationId) {
@@ -57,6 +59,7 @@ const getOnboardingConditions = async (userId: string) => {
   };
 };
 
+
 async function AuthenticatedLayout({ children }: { children: ReactNode }) {
   const user = await verifySession();
   console.log('---------------')
@@ -64,8 +67,8 @@ async function AuthenticatedLayout({ children }: { children: ReactNode }) {
   console.log('---------------');
   try {
     const sidebarVisibility = getSidebarVisibility();
-    const onboardingConditions = await getOnboardingConditions(user.id);
 
+    const onboardingConditions = await getOnboardingConditions(user.id);
     return (
       <SidebarVisibilityProvider initialValue={sidebarVisibility}>
         <LoggedInUserProvider user={user}>
