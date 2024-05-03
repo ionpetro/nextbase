@@ -1,5 +1,6 @@
 import { T } from '@/components/ui/Typography';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Skeleton } from '@/components/ui/skeleton';
 import { validateStripeKeys } from '@/utils/stripe';
 import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
 import dynamic from 'next/dynamic';
@@ -19,7 +20,7 @@ export default async function AdminPanel() {
   ) {
     return (
       <div className="space-y-4">
-        <T.H2 className="text-2xl mt-10 mb-2 font-bold">Quick Stats</T.H2>
+        <T.H2 className="mt-10 mb-2 font-bold text-2xl">Quick Stats</T.H2>
         <div className="max-w-xl">
           <Alert variant="destructive">
             <ExclamationTriangleIcon className="w-4 h-4" />
@@ -36,7 +37,7 @@ export default async function AdminPanel() {
   }
 
   return (
-    <Suspense fallback={<T.Subtle>Loading...</T.Subtle>}>
+    <Suspense fallback={<Skeleton className="w-16 h-6" />}>
       {<StripeSaaSMetrics />}
     </Suspense>
   );

@@ -1,5 +1,6 @@
 import { PageHeading } from '@/components/PageHeading';
 import { T } from '@/components/ui/Typography';
+import { Skeleton } from '@/components/ui/skeleton';
 import { getActiveDeveloperKeyCount } from '@/data/user/unkey';
 import { Suspense } from 'react';
 import { ActiveApiKeyList } from './ActiveApiKeyList';
@@ -17,7 +18,7 @@ export default async function DeveloperSettings() {
         subTitle="Manage your developer settings here."
       />
       <div className="space-y-2">
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<Skeleton className="w-16 h-6" />}>
           <ActiveApiKeyList />
         </Suspense>
         {activeDeveloperKeyCount < 3 ? (
@@ -26,7 +27,7 @@ export default async function DeveloperSettings() {
           <T.Subtle>You have reached API Key Limit.</T.Subtle>
         )}
       </div>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Skeleton className="w-16 h-6" />}>
         <RevokedApiKeyList />
       </Suspense>
     </div>

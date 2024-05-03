@@ -1,4 +1,4 @@
-import { T } from '@/components/ui/Typography';
+import { Skeleton } from '@/components/ui/skeleton';
 import {
   getLoggedInUserOrganizationRole,
   getOrganizationTitle,
@@ -55,10 +55,10 @@ export default async function EditOrganizationPage({
 
   return (
     <div className="space-y-4">
-      <Suspense fallback={<T.Subtle>Loading...</T.Subtle>}>
+      <Suspense fallback={<Skeleton className="w-full h-8" />}>
         <EditOrganization organizationId={organizationId} />
       </Suspense>
-      <Suspense fallback={<T.Subtle>Loading...</T.Subtle>}>
+      <Suspense fallback={<Skeleton className="w-full h-8" />}>
         <SetDefaultOrganizationPreference organizationId={organizationId} />
       </Suspense>
       <Suspense fallback={null}>

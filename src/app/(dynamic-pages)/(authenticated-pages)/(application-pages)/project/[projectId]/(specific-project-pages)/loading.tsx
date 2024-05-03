@@ -1,9 +1,10 @@
-import { T } from '@/components/ui/Typography';
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Loading() {
-  return (
-    <div className="flex overflow-y-auto flex-col h-full w-full">
-      <T.Subtle>Loading...</T.Subtle>
-    </div>
-  );
+  return <div className="space-y-4 p-4">
+    <Skeleton className="w-full h-12" />
+    <Skeleton className="w-full h-12" />
+    <Skeleton className="w-full h-12" />
+    <Skeleton className="w-full h-12" />
+  </div>
 }

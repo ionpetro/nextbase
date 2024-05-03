@@ -3,6 +3,7 @@ import { PageHeading } from "@/components/PageHeading";
 import { ProjectsCardList } from "@/components/Projects/ProjectsCardList";
 import { Search } from "@/components/Search";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { getProjects } from "@/data/user/projects";
 import {
   organizationParamSchema,
@@ -43,7 +44,7 @@ export default async function OrganizationPage({
 
   return (
     <div>
-      <div className="space-y-0 block lg:hidden">
+      <div className="block space-y-0 lg:hidden">
         <Suspense
           fallback={
             <PageHeading
@@ -56,27 +57,27 @@ export default async function OrganizationPage({
           <OrganizationPageHeading organizationId={organizationId} />
         </Suspense>
       </div>
-      <div className="w-full mt-8">
+      <div className="mt-8 w-full">
 
         <div className="flex flex-col">
-          <div className="flex justify-between w-full mb-6">
-            <h1 className="text-2xl font-semibold">Dashboard</h1>
+          <div className="flex justify-between mb-6 w-full">
+            <h1 className="font-semibold text-2xl">Dashboard</h1>
             <div className="flex gap-4">
               <ExportPDF />
               <CreateProjectDialog organizationId={organizationId} />
             </div>
           </div>
           <div className="flex justify-between items-center">
-            <h2 className="text-xl font-semibold">Recent Projects</h2>
+            <h2 className="font-semibold text-xl">Recent Projects</h2>
             <div className="flex gap-4">
               <Search placeholder="Search projects" />
               <Button
                 variant={"outline"}
                 asChild
-                className="self-end flex gap-2"
+                className="flex gap-2 self-end"
               >
                 <Link href={`/organization/${organizationId}/projects`}>
-                  <Layers className="h-4 w-4" />
+                  <Layers className="w-4 h-4" />
                   View all projects
                 </Link>
               </Button>
@@ -91,13 +92,13 @@ export default async function OrganizationPage({
                 filters={validatedSearchParams}
               />
             </Suspense>
-            {validatedSearchParams.query && <p className="text-sm ml-2 mt-4">Searching for <span className="font-bold">{validatedSearchParams.query}</span></p>}
+            {validatedSearchParams.query && <p className="mt-4 ml-2 text-sm">Searching for <span className="font-bold">{validatedSearchParams.query}</span></p>}
           </div>
         </div>
       </div>
       <div>
         <GraphContainer organizationId={organizationId} >
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Skeleton className="w-full h-6" />}>
             <TeamMembers />
           </Suspense>
         </GraphContainer>

@@ -1,6 +1,7 @@
 import { PageHeading } from '@/components/PageHeading';
 import { Pagination } from '@/components/Pagination';
 import { Search } from '@/components/Search';
+import { Skeleton } from '@/components/ui/skeleton';
 import { getOrganizationsTotalPages } from '@/data/admin/organizations';
 import { Suspense } from 'react';
 import { OrganizationList } from './OrganizationList';
@@ -26,11 +27,11 @@ export default async function AdminOrganizationsList({
         title="Organizations"
         subTitle="View all organizations created by users in your app."
       ></PageHeading>
-      <div className="flex space-x-3  justify-between">
+      <div className="flex justify-between space-x-3">
         <Search placeholder="Search Organizations... " />
         <div />
       </div>
-      <Suspense key={suspenseKey} fallback={<div>Loading...</div>}>
+      <Suspense key={suspenseKey} fallback={<Skeleton className="w-full h-6" />}>
         <OrganizationList filters={validatedSearchParams} />
         <div />
       </Suspense>
