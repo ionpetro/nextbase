@@ -55,10 +55,10 @@ export default async function EditOrganizationPage({
 
   return (
     <div className="space-y-4">
-      <Suspense fallback={<Skeleton className="w-full h-8" />}>
+      <Suspense fallback={<Skeleton className="w-2/3 h-8" />}>
         <EditOrganization organizationId={organizationId} />
       </Suspense>
-      <Suspense fallback={<Skeleton className="w-full h-8" />}>
+      <Suspense fallback={<Skeleton className="w-2/3 h-8" />}>
         <SetDefaultOrganizationPreference organizationId={organizationId} />
       </Suspense>
       <Suspense fallback={null}>
