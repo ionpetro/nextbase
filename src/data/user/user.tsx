@@ -6,10 +6,12 @@ import type { SupabaseFileUploadOptions, Table, ValidSAPayload } from "@/types";
 import { sendEmail } from "@/utils/api-routes/utils";
 import { toSiteURL } from "@/utils/helpers";
 import { serverGetLoggedInUser } from "@/utils/server/serverGetLoggedInUser";
+import type { AuthUserMetadata } from "@/utils/zod-schemas/authUserMetadata";
 import { renderAsync } from "@react-email/render";
 import ConfirmAccountDeletionEmail from "emails/account-deletion-request";
 import slugify from "slugify";
 import urlJoin from "url-join";
+import { refreshSessionAction } from "./session";
 
 export async function getIsAppAdmin(): Promise<boolean> {
   const user = await serverGetLoggedInUser();
@@ -19,9 +21,7 @@ export async function getIsAppAdmin(): Promise<boolean> {
   return false;
 }
 
-export const getUserProfile = async (
-  userId: string,
-) => {
+export const getUserProfile = async (userId: string) => {
   const supabase = createSupabaseUserServerComponentClient();
   const { data, error } = await supabase
     .from("user_profiles")
@@ -139,13 +139,20 @@ export const uploadPublicUserAvatar = async (
   return { status: "success", data: supabaseFileUrl };
 };
 
-export const updateUserProfileNameAndAvatar = async ({
-  fullName,
-  avatarUrl,
-}: {
-  fullName?: string;
-  avatarUrl?: string;
-}): Promise<ValidSAPayload<Table<"user_profiles">>> => {
+export const updateUserProfileNameAndAvatar = async (
+  {
+    fullName,
+    avatarUrl,
+  }: {
+    fullName?: string;
+    avatarUrl?: string;
+  },
+  {
+    isOnboardingFlow = false,
+  }: {
+    isOnboardingFlow?: boolean;
+  } = {},
+): Promise<ValidSAPayload<Table<"user_profiles">>> => {
   "use server";
   const supabaseClient = createSupabaseUserServerActionClient();
   const user = await serverGetLoggedInUser();
@@ -160,51 +167,69 @@ export const updateUserProfileNameAndAvatar = async ({
     .single();
 
   if (error) {
-    return { status: "error", message: error.message };
+    return {
+      status: "error",
+      message: error.message,
+    };
   }
 
-  return { status: "success", data };
+  if (isOnboardingFlow) {
+    const updateUserMetadataPayload: Partial<AuthUserMetadata> = {
+      onboardingHasCompletedProfile: true,
+    };
+
+    const updateUserMetadataResponse = await supabaseClient.auth.updateUser({
+      data: updateUserMetadataPayload,
+    });
+
+    if (updateUserMetadataResponse.error) {
+      return {
+        status: "error",
+        message: updateUserMetadataResponse.error.message,
+      };
+    }
+
+    const refreshSessionResponse = await refreshSessionAction();
+    if (refreshSessionResponse.status === "error") {
+      return refreshSessionResponse;
+    }
+  }
+
+  return {
+    status: "success",
+    data,
+  };
 };
 
 export const acceptTermsOfService = async (
   accepted: boolean,
-): Promise<ValidSAPayload<{ accepted_terms: boolean }>> => {
+): Promise<ValidSAPayload<boolean>> => {
   const supabaseClient = createSupabaseUserServerComponentClient();
 
-  const userId = (await serverGetLoggedInUser()).id;
+  const updateUserMetadataPayload: Partial<AuthUserMetadata> = {
+    onboardingHasAcceptedTerms: true,
+  };
 
-  const { data, error } = await supabaseClient
-    .from("user_onboarding")
-    .upsert(
-      {
-        user_id: userId,
-        accepted_terms: accepted,
-      },
-      { onConflict: "user_id" },
-    )
-    .select()
-    .single();
+  const updateUserMetadataResponse = await supabaseClient.auth.updateUser({
+    data: updateUserMetadataPayload,
+  });
 
-  if (error) {
-    return { status: "error", message: error.message };
+  if (updateUserMetadataResponse.error) {
+    return {
+      status: "error",
+      message: updateUserMetadataResponse.error.message,
+    };
   }
 
-  return { status: "success", data: { accepted_terms: data.accepted_terms } };
-};
-
-export const getAcceptedTermsOfService = async (userId: string) => {
-  const supabaseClient = createSupabaseUserServerActionClient();
-  const { data, error } = await supabaseClient
-    .from("user_onboarding")
-    .select("accepted_terms")
-    .eq("user_id", userId)
-    .maybeSingle();
-
-  if (error) {
-    throw error;
+  const refreshSessionResponse = await refreshSessionAction();
+  if (refreshSessionResponse.status === "error") {
+    return refreshSessionResponse;
   }
 
-  return data;
+  return {
+    status: "success",
+    data: true,
+  };
 };
 
 export async function requestAccountDeletion(): Promise<
@@ -248,5 +273,42 @@ export async function requestAccountDeletion(): Promise<
   return {
     status: "success",
     data,
+  };
+}
+
+export async function setOnboardingStatus(): Promise<
+  ValidSAPayload<undefined>
+> {
+  const user = await serverGetLoggedInUser();
+  const userId = user.id;
+  const supabaseClient = createSupabaseUserServerActionClient();
+
+  const updateAuthUser = await supabaseClient.auth.updateUser({
+    data: {
+      onboarding_status: "nah",
+    },
+  });
+
+  if (updateAuthUser.error) {
+    return {
+      status: "error",
+      message: updateAuthUser.error.message,
+    };
+  }
+
+  const refreshSessionResponse = await supabaseClient.auth.refreshSession();
+
+  if (refreshSessionResponse.error) {
+    return {
+      status: "error",
+      message: refreshSessionResponse.error.message,
+    };
+  }
+
+  console.log("setOnboardStatus complete", user.user_metadata);
+
+  return {
+    status: "success",
+    data: undefined,
   };
 }

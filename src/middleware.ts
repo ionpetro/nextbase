@@ -1,12 +1,14 @@
-import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs';
+import { User, createMiddlewareClient } from '@supabase/auth-helpers-nextjs';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import { Database } from './lib/database.types';
 import { toSiteURL } from './utils/helpers';
 // const matchAppAdmin = match('/app_admin_preview/(.*)?');
 import { match } from 'path-to-regexp';
+import { authUserMetadataSchema } from './utils/zod-schemas/authUserMetadata';
 
 
+const onboardingPaths = `/onboarding/(.*)?`;
 // Using a middleware to protect pages from unauthorized access
 // may seem repetitive however it massively increases the security
 // and performance of your application. This is because the middleware
@@ -22,6 +24,7 @@ const protectedPagePrefixes = [
   `/invitations`,
   `/app_admin_preview(/.*)?`,
   `/render/(.*)?`,
+  onboardingPaths
 ];
 
 function isProtectedPage(pathname: string) {
@@ -33,6 +36,20 @@ function isProtectedPage(pathname: string) {
   });
 }
 
+function shouldOnboardUser(pathname: string, user: User | undefined) {
+  const matchOnboarding = match(onboardingPaths);
+  const isOnboardingRoute = matchOnboarding(pathname);
+  if (isProtectedPage(pathname) && user && !isOnboardingRoute) {
+    const userMetadata = authUserMetadataSchema.parse(user.user_metadata);
+    const { onboardingHasAcceptedTerms, onboardingHasCompletedProfile, onboardingHasCreatedOrganization } = userMetadata;
+    if (!onboardingHasAcceptedTerms || !onboardingHasCompletedProfile || !onboardingHasCreatedOrganization) {
+      return true;
+    }
+  }
+  return false;
+}
+
+
 
 // this middleware refreshes the user's session and must be run
 // for any Server Component route that uses `createServerComponentSupabaseClient`
@@ -41,7 +58,10 @@ export async function middleware(req: NextRequest) {
   const supabase = createMiddlewareClient<Database>({ req, res });
   const sessionResponse = await supabase.auth.getSession();
   const maybeUser = sessionResponse?.data.session?.user
-
+  if (shouldOnboardUser(req.nextUrl.pathname, maybeUser)) {
+    console.log('redirecting to onboarding')
+    return NextResponse.redirect(toSiteURL('/onboarding'));
+  }
   if (isProtectedPage(req.nextUrl.pathname) && !maybeUser) {
     return NextResponse.redirect(toSiteURL('/login'));
   }
