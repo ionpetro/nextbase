@@ -3,7 +3,6 @@ import { PageHeading } from "@/components/PageHeading";
 import { ProjectsCardList } from "@/components/Projects/ProjectsCardList";
 import { Search } from "@/components/Search";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
 import { getProjects } from "@/data/user/projects";
 import {
   organizationParamSchema,
@@ -18,6 +17,7 @@ import ProjectsLoadingFallback from "./ProjectsLoadingFallback";
 import { TeamMembers } from "./TeamMembers";
 import { ExportPDF } from "./_exportPdf/ExportPdf";
 import { GraphContainer } from "./_graphs/GraphContainer";
+
 
 async function Projects({
   organizationId,
@@ -41,7 +41,7 @@ export default async function OrganizationPage({
 }) {
   const { organizationId } = organizationParamSchema.parse(params);
   const validatedSearchParams = projectsfilterSchema.parse(searchParams);
-
+  new Promise(() => setTimeout(() => { }, 20000));
   return (
     <div>
       <div className="block space-y-0 lg:hidden">
@@ -98,7 +98,7 @@ export default async function OrganizationPage({
       </div>
       <div>
         <GraphContainer organizationId={organizationId} >
-          <Suspense fallback={<Skeleton className="w-full h-6" />}>
+          <Suspense>
             <TeamMembers />
           </Suspense>
         </GraphContainer>

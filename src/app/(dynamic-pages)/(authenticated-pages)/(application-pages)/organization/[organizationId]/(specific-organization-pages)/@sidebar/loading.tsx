@@ -1,8 +1,10 @@
 import { Skeleton } from '@/components/ui/skeleton';
-import { cn } from '@/utils/cn';
 
 export default function NavbarLoading() {
-  return (
-    <Skeleton className={cn('w-16 h-6', 'flex items-center justify-center')} />
-  );
+  return <div className="space-y-4 p-4">
+    <Skeleton className="w-full h-12" />
+    <Skeleton className="w-full h-12" />
+    <Skeleton className="w-full h-12" />
+    <Skeleton className="w-full h-12" />
+  </div>
 }
