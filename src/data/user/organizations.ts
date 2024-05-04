@@ -10,26 +10,31 @@ import type {
   ValidSAPayload,
 } from '@/types';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
+import { AuthUserMetadata } from '@/utils/zod-schemas/authUserMetadata';
 import { revalidatePath } from 'next/cache';
 import { v4 as uuid } from 'uuid';
+import { refreshSessionAction } from './session';
 
-export const createOrganization = async (name: string) => {
-  const supabase = createSupabaseUserServerComponentClient();
+export const createOrganization = async (name: string, {
+  isOnboardingFlow = false
+}: {
+  isOnboardingFlow?: boolean;
+} = {}): Promise<ValidSAPayload<string>> => {
+  const supabaseClient = createSupabaseUserServerActionClient();
   const user = await serverGetLoggedInUser();
 
   const organizationId = uuid();
 
-  const { error } = await supabase.from('organizations').insert({
+  const { error } = await supabaseClient.from('organizations').insert({
     title: name,
     id: organizationId,
   });
 
   if (error) {
-    console.log('HERE', error);
-    throw error;
+    return { status: 'error', message: error.message };
   }
 
-  const { data: orgMemberData, error: orgMemberErrors } =
+  const { error: orgMemberErrors } =
     await supabaseAdminClient.from('organization_members').insert([
       {
         member_id: user.id,
@@ -39,10 +44,46 @@ export const createOrganization = async (name: string) => {
     ]);
 
   if (orgMemberErrors) {
-    throw orgMemberErrors;
+    return { status: 'error', message: orgMemberErrors.message };
   }
 
-  return organizationId;
+  if (isOnboardingFlow) {
+    const { error: updateError } = await supabaseClient
+      .from('user_private_info')
+      .update({ default_organization: organizationId })
+      .eq('id', user.id);
+
+    if (updateError) {
+      return { status: 'error', message: updateError.message };
+    }
+
+    const updateUserMetadataPayload: Partial<AuthUserMetadata> = {
+      onboardingHasCreatedOrganization: true,
+    };
+
+    const updateUserMetadataResponse = await supabaseClient.auth.updateUser({
+      data: updateUserMetadataPayload,
+    });
+
+    if (updateUserMetadataResponse.error) {
+      return {
+        status: 'error',
+        message: updateUserMetadataResponse.error.message,
+      };
+    }
+
+    const refreshSessionResponse = await refreshSessionAction();
+    if (refreshSessionResponse.status === 'error') {
+      return refreshSessionResponse;
+    }
+
+
+  }
+
+  return {
+    status: 'success',
+    data: organizationId,
+  };
 };
 
 export async function fetchSlimOrganizations() {
