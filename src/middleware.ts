@@ -7,7 +7,6 @@ import { toSiteURL } from './utils/helpers';
 import { match } from 'path-to-regexp';
 import { authUserMetadataSchema } from './utils/zod-schemas/authUserMetadata';
 
-
 const onboardingPaths = `/onboarding/(.*)?`;
 // Using a middleware to protect pages from unauthorized access
 // may seem repetitive however it massively increases the security
@@ -24,7 +23,7 @@ const protectedPagePrefixes = [
   `/invitations`,
   `/app_admin_preview(/.*)?`,
   `/render/(.*)?`,
-  onboardingPaths
+  onboardingPaths,
 ];
 
 function isProtectedPage(pathname: string) {
@@ -41,15 +40,21 @@ function shouldOnboardUser(pathname: string, user: User | undefined) {
   const isOnboardingRoute = matchOnboarding(pathname);
   if (isProtectedPage(pathname) && user && !isOnboardingRoute) {
     const userMetadata = authUserMetadataSchema.parse(user.user_metadata);
-    const { onboardingHasAcceptedTerms, onboardingHasCompletedProfile, onboardingHasCreatedOrganization } = userMetadata;
-    if (!onboardingHasAcceptedTerms || !onboardingHasCompletedProfile || !onboardingHasCreatedOrganization) {
+    const {
+      onboardingHasAcceptedTerms,
+      onboardingHasCompletedProfile,
+      onboardingHasCreatedOrganization,
+    } = userMetadata;
+    if (
+      !onboardingHasAcceptedTerms ||
+      !onboardingHasCompletedProfile ||
+      !onboardingHasCreatedOrganization
+    ) {
       return true;
     }
   }
   return false;
 }
-
-
 
 // this middleware refreshes the user's session and must be run
 // for any Server Component route that uses `createServerComponentSupabaseClient`
@@ -57,24 +62,37 @@ export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
   const supabase = createMiddlewareClient<Database>({ req, res });
   const sessionResponse = await supabase.auth.getSession();
-  const maybeUser = sessionResponse?.data.session?.user
+  const maybeUser = sessionResponse?.data.session?.user;
   if (shouldOnboardUser(req.nextUrl.pathname, maybeUser)) {
-    console.log('redirecting to onboarding')
+    console.log('redirecting to onboarding');
     return NextResponse.redirect(toSiteURL('/onboarding'));
+  }
+  if (isProtectedPage(req.nextUrl.pathname) && maybeUser) {
+    // user is possibly logged in, but lets validate session
+    const user = await supabase.auth.getUser();
+    if (user.error) {
+      return NextResponse.redirect(toSiteURL('/login'));
+    }
   }
   if (isProtectedPage(req.nextUrl.pathname) && !maybeUser) {
     return NextResponse.redirect(toSiteURL('/login'));
   }
-  if (!req.nextUrl.pathname.startsWith(`/app_admin_preview`) && req.nextUrl.pathname.startsWith('/app_admin')) {
-    if (!(maybeUser &&
-      'user_role' in maybeUser &&
-      maybeUser.user_role === 'admin')) {
+  if (
+    !req.nextUrl.pathname.startsWith(`/app_admin_preview`) &&
+    req.nextUrl.pathname.startsWith('/app_admin')
+  ) {
+    if (
+      !(
+        maybeUser &&
+        'user_role' in maybeUser &&
+        maybeUser.user_role === 'admin'
+      )
+    ) {
       return NextResponse.redirect(toSiteURL('/dashboard'));
     }
   }
   return res;
 }
-
 
 export const config = {
   matcher: [
@@ -87,4 +105,4 @@ export const config = {
      */
     '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],
-}
+};
