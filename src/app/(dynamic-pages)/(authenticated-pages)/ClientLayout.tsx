@@ -1,18 +1,12 @@
 'use client';
 
 import PostHogProvider from '@/contexts/PostHogProvider';
-import type { Table } from '@/types';
 import dynamic from 'next/dynamic';
 
 import { useState } from 'react';
 import { useWindowSize } from 'rooks';
 
 
-export type onBoardProps = {
-  userProfile: Table<'user_profiles'>;
-  defaultOrganizationId: string | null;
-  terms: { accepted_terms: boolean } | null;
-};
 const Confetti = dynamic(
   () => import('react-confetti').then((mod) => mod.default),
   { ssr: false },
