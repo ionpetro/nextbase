@@ -19,7 +19,6 @@ import {
   uploadPublicUserAvatar,
 } from "@/data/user/user";
 import { useSAToastMutation } from "@/hooks/useSAToastMutation";
-import { useToastMutation } from "@/hooks/useToastMutation";
 import type { Table } from "@/types";
 import { getUserAvatarUrl } from "@/utils/helpers";
 import type { AuthUserMetadata } from "@/utils/zod-schemas/authUserMetadata";
@@ -270,7 +269,7 @@ const createOrganizationSchema = z.object({
 type CreateOrganizationSchema = z.infer<typeof createOrganizationSchema>;
 
 export function OrganizationCreation({ onSuccess }: OrganizationCreationProps) {
-  const { mutate: createOrg, isLoading: isCreatingOrg } = useToastMutation(
+  const { mutate: createOrg, isLoading: isCreatingOrg } = useSAToastMutation(
     async (organizationTitle: string) => {
       const orgId = await createOrganization(organizationTitle, {
         isOnboardingFlow: true,
