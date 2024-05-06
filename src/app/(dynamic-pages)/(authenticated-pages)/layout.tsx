@@ -5,7 +5,7 @@ import { SidebarVisibilityProvider } from '@/contexts/SidebarVisibilityContext';
 import { errors } from '@/utils/errors';
 import { verifySession } from '@/utils/server/verifySession';
 import { cookies } from 'next/headers';
-import { Suspense, type ReactNode } from 'react';
+import { type ReactNode, Suspense } from 'react';
 import { ClientLayout } from './ClientLayout';
 
 function getSidebarVisibility() {

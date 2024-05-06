@@ -10,13 +10,13 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { appAdminGetUserImpersonationUrl } from '@/data/admin/user';
-import { useToastMutation } from '@/hooks/useToastMutation';
+import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import GetLinkIcon from 'lucide-react/dist/esm/icons/link';
 import { useState } from 'react';
 
 export const GetLoginLinkDialog = ({ userId }: { userId: string }) => {
   const [open, setOpen] = useState(false);
-  const { mutate: onConfirm, isLoading } = useToastMutation<URL>(
+  const { mutate: onConfirm, isLoading } = useSAToastMutation(
     async () => {
       return await appAdminGetUserImpersonationUrl(userId);
     },
@@ -25,8 +25,17 @@ export const GetLoginLinkDialog = ({ userId }: { userId: string }) => {
         navigator.clipboard.writeText(url.toString());
       },
       loadingMessage: 'Generating login link...',
-      successMessage: 'Login link copied to clipboard!',
-      errorMessage: 'Failed to generate login link',
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to generate login link ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to generate login link';
+        }
+      },
     },
   );
   return (

@@ -1,17 +1,17 @@
-'use client';
-import { ConfirmApproveProjectDialog } from './ConfirmApproveProjectDialog';
-import { ConfirmMarkProjectAsCompleteDialog } from './ConfirmMarkProjectAsCompleteDialog';
-import { ConfirmRejectProjectDialog } from './ConfirmRejectProjectDialog';
-import { SubmitProjectForApprovalDialog } from './SubmitProjectForApprovalDialog';
-import { T } from '@/components/ui/Typography';
+"use client";
+import { T } from "@/components/ui/Typography";
 import {
   approveProjectAction,
   markProjectAsCompletedAction,
   rejectProjectAction,
   submitProjectForApprovalAction,
-} from '@/data/user/projects';
-import { useToastMutation } from '@/hooks/useToastMutation';
-import { Enum } from '@/types';
+} from "@/data/user/projects";
+import { useSAToastMutation } from "@/hooks/useSAToastMutation";
+import type { Enum } from "@/types";
+import { ConfirmApproveProjectDialog } from "./ConfirmApproveProjectDialog";
+import { ConfirmMarkProjectAsCompleteDialog } from "./ConfirmMarkProjectAsCompleteDialog";
+import { ConfirmRejectProjectDialog } from "./ConfirmRejectProjectDialog";
+import { SubmitProjectForApprovalDialog } from "./SubmitProjectForApprovalDialog";
 
 export function ApprovalControlActions({
   projectId,
@@ -22,52 +22,92 @@ export function ApprovalControlActions({
   projectId: string;
   canManage: boolean;
   canOnlyEdit: boolean;
-  projectStatus: Enum<'project_status'>;
+  projectStatus: Enum<"project_status">;
 }) {
-  const { mutate: submitProjectForApproval } = useToastMutation(
+  const { mutate: submitProjectForApproval } = useSAToastMutation(
     async () => {
-      await submitProjectForApprovalAction(projectId);
+      return await submitProjectForApprovalAction(projectId);
     },
     {
-      loadingMessage: 'Submitting project for approval...',
-      errorMessage: 'Failed to submit project for approval',
-      successMessage: 'Project submitted for approval!',
+      loadingMessage: "Submitting project for approval...",
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to submit project for approval ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to submit project for approval';
+        }
+      },
+      successMessage: "Project submitted for approval!",
     },
   );
-  const { mutate: markProjectAsCompleted } = useToastMutation(
+  const { mutate: markProjectAsCompleted } = useSAToastMutation(
     async () => {
-      await markProjectAsCompletedAction(projectId);
+      return await markProjectAsCompletedAction(projectId);
     },
     {
-      loadingMessage: 'Marking project as complete...',
-      errorMessage: 'Failed to mark project as complete',
-      successMessage: 'Project marked as complete!',
+      loadingMessage: "Marking project as complete...",
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to mark project as complete ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to mark project as complete';
+        }
+      },
+      successMessage: "Project marked as complete!",
     },
   );
-  const { mutate: approveProject } = useToastMutation(
+  const { mutate: approveProject } = useSAToastMutation(
     async () => {
-      await approveProjectAction(projectId);
+      return await approveProjectAction(projectId);
     },
     {
-      loadingMessage: 'Approving project...',
-      errorMessage: 'Failed to approve project',
-      successMessage: 'Project approved!',
+      loadingMessage: "Approving project...",
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to approve project ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to approve project';
+        }
+      },
+      successMessage: "Project approved!",
     },
   );
-  const { mutate: rejectProject } = useToastMutation(
+  const { mutate: rejectProject } = useSAToastMutation(
     async () => {
-      await rejectProjectAction(projectId);
+      return await rejectProjectAction(projectId);
     },
     {
-      loadingMessage: 'Rejecting project...',
-      errorMessage: 'Failed to reject project',
-      successMessage: 'Project rejected!',
+      loadingMessage: "Rejecting project...",
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to reject project ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to reject project';
+        }
+      },
+      successMessage: "Project rejected!",
     },
   );
 
   return (
     <>
-      {projectStatus === 'draft' ? (
+      {projectStatus === "draft" ? (
         canManage ? (
           <ConfirmMarkProjectAsCompleteDialog
             onConfirm={markProjectAsCompleted}
@@ -80,16 +120,16 @@ export function ApprovalControlActions({
           </>
         ) : null
       ) : null}
-      {!canManage && projectStatus === 'pending_approval' ? (
+      {!canManage && projectStatus === "pending_approval" ? (
         <T.P className="text-green-600 italic text-xs">Awaiting approval</T.P>
       ) : null}
-      {canManage && projectStatus === 'pending_approval' && (
+      {canManage && projectStatus === "pending_approval" && (
         <>
           <ConfirmApproveProjectDialog onConfirm={approveProject} />
           <ConfirmRejectProjectDialog onConfirm={rejectProject} />
         </>
       )}
-      {projectStatus === 'approved' && canManage ? (
+      {projectStatus === "approved" && canManage ? (
         <ConfirmMarkProjectAsCompleteDialog
           onConfirm={markProjectAsCompleted}
         />

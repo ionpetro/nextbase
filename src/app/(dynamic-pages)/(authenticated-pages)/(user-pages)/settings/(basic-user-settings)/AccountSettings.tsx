@@ -5,7 +5,7 @@ import {
   updateUserProfileNameAndAvatar,
   uploadPublicUserAvatar,
 } from '@/data/user/user';
-import { useToastMutation } from '@/hooks/useToastMutation';
+import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import type { Table } from '@/types';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -19,7 +19,7 @@ export function AccountSettings({
   userEmail: string | undefined;
 }) {
   const router = useRouter();
-  const { mutate, isLoading } = useToastMutation(
+  const { mutate, isLoading } = useSAToastMutation(
     async ({
       fullName,
       avatarUrl,
@@ -34,7 +34,17 @@ export function AccountSettings({
     },
     {
       loadingMessage: 'Updating profile...',
-      errorMessage: 'Failed to update profile',
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to update profile ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to update profile';
+        }
+      },
       successMessage: 'Profile updated!',
     },
   );
@@ -48,7 +58,7 @@ export function AccountSettings({
     userProfile.avatar_url ?? undefined,
   );
 
-  const { mutate: upload, isLoading: isUploading } = useToastMutation(
+  const { mutate: upload, isLoading: isUploading } = useSAToastMutation(
     async (file: File) => {
       const formData = new FormData();
       formData.append('file', file);
@@ -58,12 +68,24 @@ export function AccountSettings({
     },
     {
       loadingMessage: 'Uploading avatar...',
-      errorMessage: 'Failed to upload avatar',
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to upload avatar ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to upload avatar';
+        }
+      },
       successMessage: 'Avatar uploaded!',
-      onSuccess: (newAvatarURL) => {
-        router.refresh();
-        setAvatarUrl(newAvatarURL);
-        setIsNewAvatarImageLoading(true);
+      onSuccess: (response) => {
+        if (response.status === 'success' && response.data) {
+          router.refresh();
+          setAvatarUrl(response.data);
+          setIsNewAvatarImageLoading(true);
+        }
       },
       onError: (error) => {
         console.log(String(error));

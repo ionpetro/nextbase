@@ -3,11 +3,10 @@
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { addCommentToInternalFeedbackThread } from '@/data/feedback';
-import { useToastMutation } from '@/hooks/useToastMutation';
+import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 
 import { Send } from 'lucide-react';
 import { useState } from 'react';
-import { toast } from 'sonner';
 
 function AddComment({
   feedbackId,
@@ -20,17 +19,26 @@ function AddComment({
 }) {
   const [content, setContent] = useState(defaultValue);
 
-  const { mutate, isLoading } = useToastMutation(
+  const { mutate, isLoading } = useSAToastMutation(
     async () => {
       return addCommentToInternalFeedbackThread({ feedbackId, content });
     },
     {
       loadingMessage: 'Adding Comment',
       successMessage: 'Successfully added your comment',
-      errorMessage: 'Failed to add comment',
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to add comment ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to add comment';
+        }
+      },
       onSuccess: () => {
         setContent('');
-        toast.success('Comment added');
       },
     },
   );

@@ -10,7 +10,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { revokeInvitation } from '@/data/user/invitation';
-import { useToastMutation } from '@/hooks/useToastMutation';
+import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import { useState } from 'react';
 
 type Props = {
@@ -19,13 +19,26 @@ type Props = {
 
 export const RevokeInvitationDialog = ({ invitationId }: Props) => {
   const [open, setOpen] = useState(false);
-  const { mutate, isLoading } = useToastMutation(revokeInvitation, {
+  const { mutate, isLoading } = useSAToastMutation(
+    async (invitationId: string) => {
+      return await revokeInvitation(invitationId);
+    }, {
     onSettled: () => {
       setOpen(false);
     },
     loadingMessage: 'Revoking Invitation...',
     successMessage: 'Invitation revoked!',
-    errorMessage: 'Unable to revoke Invitation.',
+    errorMessage(error) {
+      try {
+        if (error instanceof Error) {
+          return String(error.message);
+        }
+        return `Failed to revoke invitation ${String(error)}`;
+      } catch (_err) {
+        console.warn(_err);
+        return 'Failed to revoke invitation';
+      }
+    },
   });
 
   return (

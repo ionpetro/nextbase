@@ -1,21 +1,22 @@
-'use server';
-import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
-import { createSupabaseUserServerActionClient } from '@/supabase-clients/user/createSupabaseUserServerActionClient';
-import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
-import type { Enum } from '@/types';
-import { sendEmail } from '@/utils/api-routes/utils';
-import { toSiteURL } from '@/utils/helpers';
-import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
-import { renderAsync } from '@react-email/render';
-import TeamInvitationEmail from 'emails/TeamInvitation';
-import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
-import { getInvitationOrganizationDetails } from './elevatedQueries';
+"use server";
+import type { Tables } from "@/lib/database.types";
+import { supabaseAdminClient } from "@/supabase-clients/admin/supabaseAdminClient";
+import { createSupabaseUserServerActionClient } from "@/supabase-clients/user/createSupabaseUserServerActionClient";
+import { createSupabaseUserServerComponentClient } from "@/supabase-clients/user/createSupabaseUserServerComponentClient";
+import type { Enum, ValidSAPayload } from "@/types";
+import { sendEmail } from "@/utils/api-routes/utils";
+import { toSiteURL } from "@/utils/helpers";
+import { serverGetLoggedInUser } from "@/utils/server/serverGetLoggedInUser";
+import { renderAsync } from "@react-email/render";
+import TeamInvitationEmail from "emails/TeamInvitation";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+import { getInvitationOrganizationDetails } from "./elevatedQueries";
 import {
   createAcceptedOrgInvitationNotification,
   createNotification,
-} from './notifications';
-import { getUserProfile } from './user';
+} from "./notifications";
+import { getUserProfile } from "./user";
 
 // This function allows an application admin with service_role
 // to check if a user with a given email exists in the auth.users table
@@ -23,7 +24,7 @@ export const appAdminGetUserIdByEmail = async (
   email: string,
 ): Promise<string | null> => {
   const { data, error } = await supabaseAdminClient.rpc(
-    'app_admin_get_user_id_by_email',
+    "app_admin_get_user_id_by_email",
     {
       emailarg: email,
     },
@@ -37,7 +38,7 @@ export const appAdminGetUserIdByEmail = async (
 };
 
 async function setupInviteeUserDetails(email: string): Promise<{
-  type: 'USER_CREATED' | 'USER_EXISTS';
+  type: "USER_CREATED" | "USER_EXISTS";
   userId: string;
 }> {
   const inviteeUserId = await appAdminGetUserIdByEmail(email);
@@ -49,13 +50,13 @@ async function setupInviteeUserDetails(email: string): Promise<{
       throw error;
     }
     return {
-      type: 'USER_CREATED',
+      type: "USER_CREATED",
       userId: data.user.id,
     };
   }
 
   return {
-    type: 'USER_EXISTS',
+    type: "USER_EXISTS",
     userId: inviteeUserId,
   };
 }
@@ -63,7 +64,7 @@ async function setupInviteeUserDetails(email: string): Promise<{
 async function getMagicLink(email: string): Promise<string> {
   const response = await supabaseAdminClient.auth.admin.generateLink({
     email,
-    type: 'magiclink',
+    type: "magiclink",
   });
 
   if (response.error) {
@@ -83,7 +84,7 @@ async function getMagicLink(email: string): Promise<string> {
       const tokenHash = hashed_token;
       const searchParams = new URLSearchParams({
         token_hash: tokenHash,
-        next: '/dashboard',
+        next: "/dashboard",
       });
 
       const url = new URL(process.env.NEXT_PUBLIC_SITE_URL);
@@ -92,27 +93,27 @@ async function getMagicLink(email: string): Promise<string> {
 
       return url.toString();
     } else {
-      throw new Error('Site URL is not defined');
+      throw new Error("Site URL is not defined");
     }
   } else {
-    throw new Error('No data returned');
+    throw new Error("No data returned");
   }
 }
 
 async function getViewInvitationUrl(
   invitationId: string,
   inviteeDetails: {
-    type: 'USER_CREATED' | 'USER_EXISTS';
+    type: "USER_CREATED" | "USER_EXISTS";
     userId: string;
   },
   email: string,
 ): Promise<string> {
-  if (inviteeDetails.type === 'USER_CREATED') {
+  if (inviteeDetails.type === "USER_CREATED") {
     const magicLink = await getMagicLink(email);
     return magicLink;
   }
 
-  return toSiteURL('/api/invitations/view/' + invitationId);
+  return toSiteURL("/api/invitations/view/" + invitationId);
 }
 
 export async function createInvitationHandler({
@@ -122,53 +123,53 @@ export async function createInvitationHandler({
 }: {
   organizationId: string;
   email: string;
-  role: Enum<'organization_member_role'>;
-}) {
-  'use server';
+  role: Enum<"organization_member_role">;
+}): Promise<ValidSAPayload<Tables<"organization_join_invitations">>> {
+  "use server";
   const supabaseClient = createSupabaseUserServerActionClient();
   const user = await serverGetLoggedInUser();
   // check if organization exists
   const organizationResponse = await supabaseClient
-    .from('organizations')
-    .select('*')
-    .eq('id', organizationId)
+    .from("organizations")
+    .select("*")
+    .eq("id", organizationId)
     .single();
 
   if (organizationResponse.error) {
-    throw organizationResponse.error;
+    return { status: 'error', message: organizationResponse.error.message };
   }
 
   const inviteeUserDetails = await setupInviteeUserDetails(email);
   // check if already invited
   const existingInvitationResponse = await supabaseClient
-    .from('organization_join_invitations')
-    .select('*')
-    .eq('invitee_user_id', inviteeUserDetails.userId)
-    .eq('inviter_user_id', user.id)
-    .eq('status', 'active')
-    .eq('organization_id', organizationId);
+    .from("organization_join_invitations")
+    .select("*")
+    .eq("invitee_user_id", inviteeUserDetails.userId)
+    .eq("inviter_user_id", user.id)
+    .eq("status", "active")
+    .eq("organization_id", organizationId);
 
   if (existingInvitationResponse.error) {
-    throw existingInvitationResponse.error;
-  } else if (existingInvitationResponse.data.length > 0) {
-    throw new Error('User already invited');
+    return { status: 'error', message: existingInvitationResponse.error.message };
+  } if (existingInvitationResponse.data.length > 0) {
+    return { status: 'error', message: 'User already invited' };
   }
 
   const invitationResponse = await supabaseClient
-    .from('organization_join_invitations')
+    .from("organization_join_invitations")
     .insert({
       invitee_user_email: email,
       invitee_user_id: inviteeUserDetails.userId,
       inviter_user_id: user.id,
-      status: 'active',
+      status: "active",
       organization_id: organizationId,
       invitee_organization_role: role,
     })
-    .select('*')
+    .select("*")
     .single();
 
   if (invitationResponse.error) {
-    throw invitationResponse.error;
+    return { status: 'error', message: invitationResponse.error.message };
   }
 
   const viewInvitationUrl = await getViewInvitationUrl(
@@ -178,13 +179,13 @@ export async function createInvitationHandler({
   );
 
   const userProfileData = await supabaseClient
-    .from('user_profiles')
-    .select('*')
-    .eq('id', user.id)
+    .from("user_profiles")
+    .select("*")
+    .eq("id", user.id)
     .single();
 
   if (userProfileData.error) {
-    throw userProfileData.error;
+    return { status: 'error', message: userProfileData.error.message };
   }
 
   const inviterName = userProfileData.data?.full_name || `User [${user.email}]`;
@@ -194,7 +195,7 @@ export async function createInvitationHandler({
     <TeamInvitationEmail
       viewInvitationUrl={viewInvitationUrl}
       inviterName={`${inviterName}`}
-      isNewUser={inviteeUserDetails.type === 'USER_CREATED'}
+      isNewUser={inviteeUserDetails.type === "USER_CREATED"}
       organizationName={organizationResponse.data.title}
     />,
   );
@@ -214,30 +215,30 @@ export async function createInvitationHandler({
     invitationId: invitationResponse.data.id,
   });
 
-  revalidatePath('/organization/[organizationId]');
+  revalidatePath("/organization/[organizationId]");
 
-  return invitationResponse.data;
+  return { status: 'success', data: invitationResponse.data };
 }
 
 export async function acceptInvitationAction(
   invitationId: string,
-): Promise<string> {
-  'use server';
+): Promise<ValidSAPayload<string>> {
+  "use server";
   const supabaseClient = createSupabaseUserServerActionClient();
   const user = await serverGetLoggedInUser();
 
   const invitationResponse = await supabaseClient
-    .from('organization_join_invitations')
+    .from("organization_join_invitations")
     .update({
-      status: 'finished_accepted',
+      status: "finished_accepted",
       invitee_user_id: user.id, // Add this information here, so that our database function can add this id to the team members table
     })
-    .eq('id', invitationId)
-    .select('*')
+    .eq("id", invitationId)
+    .select("*")
     .single();
 
   if (invitationResponse.error) {
-    throw invitationResponse.error;
+    return { status: 'error', message: invitationResponse.error.message };
   }
 
   const userProfile = await getUserProfile(user.id);
@@ -250,70 +251,71 @@ export async function acceptInvitationAction(
     },
   );
 
-  revalidatePath('/', 'layout');
-  return invitationResponse.data.organization_id;
+  revalidatePath("/", "layout");
+  return { status: 'success', data: invitationResponse.data.organization_id };
 }
 
-export async function declineInvitationAction(invitationId: string) {
-  'use server';
+export async function declineInvitationAction(invitationId: string): Promise<ValidSAPayload> {
+  "use server";
   const supabaseClient = createSupabaseUserServerActionClient();
   const user = await serverGetLoggedInUser();
 
   const invitationResponse = await supabaseClient
-    .from('organization_join_invitations')
+    .from("organization_join_invitations")
     .update({
-      status: 'finished_declined',
+      status: "finished_declined",
       invitee_user_id: user.id, // Add this information here, so that our database function can add this id to the team members table
     })
-    .eq('id', invitationId)
-    .select('*')
+    .eq("id", invitationId)
+    .select("*")
     .single();
 
   if (invitationResponse.error) {
-    throw invitationResponse.error;
+    return { status: 'error', message: invitationResponse.error.message };
   }
-  revalidatePath('/', 'layout');
-  redirect('/dashboard');
+
+  revalidatePath("/", "layout");
+  redirect("/dashboard");
 }
 
 export async function getPendingInvitationsOfUser() {
   const supabaseClient = createSupabaseUserServerComponentClient();
   const user = await serverGetLoggedInUser();
   const { data, error } = await supabaseClient
-    .from('organization_join_invitations')
+    .from("organization_join_invitations")
     .select(
-      '*, inviter:user_profiles!inviter_user_id(*), invitee:user_profiles!invitee_user_id(*), organization:organizations(*)',
+      "*, inviter:user_profiles!inviter_user_id(*), invitee:user_profiles!invitee_user_id(*), organization:organizations(*)",
     )
-    .eq('invitee_user_id', user.id)
-    .eq('status', 'active');
+    .eq("invitee_user_id", user.id)
+    .eq("status", "active");
 
   if (error) {
     throw error;
   }
 
   const invitationListPromise = data.map(async (invitation) => {
-    const organization = await getInvitationOrganizationDetails(invitation.organization_id);
+    const organization = await getInvitationOrganizationDetails(
+      invitation.organization_id,
+    );
     return {
       ...invitation,
-      organization
+      organization,
     };
   });
 
   return Promise.all(invitationListPromise);
-
-
 }
 
 export const getInvitationById = async (invitationId: string) => {
   const supabaseClient = createSupabaseUserServerComponentClient();
 
   const { data, error } = await supabaseClient
-    .from('organization_join_invitations')
+    .from("organization_join_invitations")
     .select(
-      '*, inviter:user_profiles!inviter_user_id(*), invitee:user_profiles!invitee_user_id(*), organization:organizations(*)',
+      "*, inviter:user_profiles!inviter_user_id(*), invitee:user_profiles!invitee_user_id(*), organization:organizations(*)",
     )
-    .eq('id', invitationId)
-    .eq('status', 'active')
+    .eq("id", invitationId)
+    .eq("status", "active")
     .single();
 
   if (error) {
@@ -326,10 +328,9 @@ export const getInvitationById = async (invitationId: string) => {
 
   return {
     ...data,
-    organization
-  }
+    organization,
+  };
 };
-
 
 export async function getPendingInvitationCountOfUser() {
   const supabaseClient = createSupabaseUserServerComponentClient();
@@ -337,10 +338,10 @@ export async function getPendingInvitationCountOfUser() {
 
   async function idInvitations(userId: string) {
     const { count, error } = await supabaseClient
-      .from('organization_join_invitations')
-      .select('id', { count: 'exact', head: true })
-      .eq('invitee_user_id', userId)
-      .eq('status', 'active');
+      .from("organization_join_invitations")
+      .select("id", { count: "exact", head: true })
+      .eq("invitee_user_id", userId)
+      .eq("status", "active");
 
     if (error) {
       throw error;
@@ -354,21 +355,21 @@ export async function getPendingInvitationCountOfUser() {
   return idInvitationsCount;
 }
 
-export async function revokeInvitation(invitationId: string) {
-  'use server';
+export async function revokeInvitation(invitationId: string): Promise<ValidSAPayload<Tables<"organization_join_invitations">>> {
+  "use server";
   const supabaseClient = createSupabaseUserServerActionClient();
 
   const invitationResponse = await supabaseClient
-    .from('organization_join_invitations')
+    .from("organization_join_invitations")
     .delete()
-    .eq('id', invitationId)
+    .eq("id", invitationId)
     .single();
 
   if (invitationResponse.error) {
-    throw invitationResponse.error;
+    return { status: 'error', message: invitationResponse.error.message };
   }
 
-  revalidatePath('/', 'layout');
+  revalidatePath("/", "layout");
 
-  return invitationResponse.data;
+  return { status: 'success', data: invitationResponse.data };
 }

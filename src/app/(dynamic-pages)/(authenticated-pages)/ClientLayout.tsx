@@ -11,7 +11,7 @@ import { useWindowSize } from 'rooks';
 export type onBoardProps = {
   userProfile: Table<'user_profiles'>;
   defaultOrganizationId: string | null;
-  terms: { accepted_terms: boolean }[];
+  terms: { accepted_terms: boolean } | null;
 };
 const Confetti = dynamic(
   () => import('react-confetti').then((mod) => mod.default),

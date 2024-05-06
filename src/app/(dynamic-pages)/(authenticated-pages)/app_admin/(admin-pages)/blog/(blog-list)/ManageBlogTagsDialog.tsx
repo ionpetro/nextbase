@@ -9,7 +9,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { deleteBlogTag } from "@/data/admin/internal-blog";
-import { useToastMutation } from "@/hooks/useToastMutation";
+import { useSAToastMutation } from "@/hooks/useSAToastMutation";
 import type { Table } from "@/types";
 import TagsIcon from "lucide-react/dist/esm/icons/tag";
 import Trash from "lucide-react/dist/esm/icons/trash";
@@ -27,14 +27,24 @@ export const ManageBlogTagsDialog = ({
   const router = useRouter();
 
   const { mutate: deleteBlogTagMutation, isLoading: isDeletingBlogTag } =
-    useToastMutation<void, unknown, number>(
-      async (slug) => {
-        return deleteBlogTag(slug);
+    useSAToastMutation(
+      async (slug: number) => {
+        return await deleteBlogTag(slug);
       },
       {
         loadingMessage: "Deleting blog tag...",
         successMessage: "Blog tag deleted!",
-        errorMessage: "Failed to delete blog tag",
+        errorMessage(error) {
+          try {
+            if (error instanceof Error) {
+              return String(error.message);
+            }
+            return `Failed to delete blog tag ${String(error)}`;
+          } catch (_err) {
+            console.warn(_err);
+            return 'Failed to delete blog tag';
+          }
+        },
         onSuccess: () => {
           router.refresh();
         },

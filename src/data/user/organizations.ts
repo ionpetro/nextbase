@@ -10,16 +10,19 @@ import type {
   ValidSAPayload,
 } from '@/types';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
-import { AuthUserMetadata } from '@/utils/zod-schemas/authUserMetadata';
+import type { AuthUserMetadata } from '@/utils/zod-schemas/authUserMetadata';
 import { revalidatePath } from 'next/cache';
 import { v4 as uuid } from 'uuid';
 import { refreshSessionAction } from './session';
 
-export const createOrganization = async (name: string, {
-  isOnboardingFlow = false
-}: {
-  isOnboardingFlow?: boolean;
-} = {}): Promise<ValidSAPayload<string>> => {
+export const createOrganization = async (
+  name: string,
+  {
+    isOnboardingFlow = false,
+  }: {
+    isOnboardingFlow?: boolean;
+  } = {},
+): Promise<ValidSAPayload<string>> => {
   const supabaseClient = createSupabaseUserServerActionClient();
   const user = await serverGetLoggedInUser();
 
@@ -34,8 +37,9 @@ export const createOrganization = async (name: string, {
     return { status: 'error', message: error.message };
   }
 
-  const { error: orgMemberErrors } =
-    await supabaseAdminClient.from('organization_members').insert([
+  const { error: orgMemberErrors } = await supabaseAdminClient
+    .from('organization_members')
+    .insert([
       {
         member_id: user.id,
         organization_id: organizationId,
@@ -76,8 +80,6 @@ export const createOrganization = async (name: string, {
     if (refreshSessionResponse.status === 'error') {
       return refreshSessionResponse;
     }
-
-
   }
 
   return {
@@ -224,7 +226,7 @@ export const getLoggedInUserOrganizationRole = async (
 export const updateOrganizationTitle = async (
   organizationId: string,
   title: string,
-): Promise<Table<'organizations'>> => {
+): Promise<ValidSAPayload<Table<'organizations'>>> => {
   'use server';
   const supabase = createSupabaseUserServerActionClient();
   const { data, error } = await supabase
@@ -237,11 +239,11 @@ export const updateOrganizationTitle = async (
     .single();
 
   if (error) {
-    throw error;
+    return { status: 'error', message: error.message };
   }
 
   revalidatePath(`/organization/${organizationId}`, 'layout');
-  return data;
+  return { status: 'success', data };
 };
 
 export const getNormalizedOrganizationSubscription = async (
@@ -428,19 +430,23 @@ export const getDefaultOrganizationId = async () => {
   return data.default_organization;
 };
 
-export async function setDefaultOrganization(organizationId: string) {
+export async function setDefaultOrganization(
+  organizationId: string,
+): Promise<ValidSAPayload> {
   const supabaseClient = createSupabaseUserServerComponentClient();
   const user = await serverGetLoggedInUser();
+
   const { error: updateError } = await supabaseClient
     .from('user_private_info')
     .update({ default_organization: organizationId })
     .eq('id', user.id);
 
   if (updateError) {
-    throw updateError;
+    return { status: 'error', message: updateError.message };
   }
 
   revalidatePath(`/organization/${organizationId}`, 'layout');
+  return { status: 'success' };
 }
 
 export async function deleteOrganization(

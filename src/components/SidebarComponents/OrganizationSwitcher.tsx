@@ -10,7 +10,7 @@ import {
   CommandSeparator,
 } from '@/components/ui/command';
 import { createOrganization } from '@/data/user/organizations';
-import { useToastMutation } from '@/hooks/useToastMutation';
+import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import { cn } from '@/utils/cn';
 import {
   Popover,
@@ -39,13 +39,23 @@ export function OrganizationSwitcher({
   const currentOrganization = slimOrganizations.find(
     (organization) => organization.id === currentOrganizationId,
   );
-  const { mutate, isLoading } = useToastMutation(
+  const { mutate, isLoading } = useSAToastMutation(
     async (organizationTitle: string) => {
       return await createOrganization(organizationTitle);
     },
     {
       loadingMessage: 'Creating organization...',
-      errorMessage: 'Failed to create organization',
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to create organization ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to create organization';
+        }
+      },
       successMessage: 'Organization created!',
       onSuccess: (organization) => {
         router.push(`/organization/${organization}`);

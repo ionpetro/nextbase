@@ -12,7 +12,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { createProjectAction } from '@/data/user/projects';
-import { useToastMutation } from '@/hooks/useToastMutation';
+import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import LayersIcon from 'lucide-react/dist/esm/icons/layers';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -27,15 +27,20 @@ export function CreateProjectDialog({
   const [projectTitle, setProjectTitle] = useState<string>('');
   const [open, setOpen] = useState(false);
   const router = useRouter();
-  const createProjectMutation = useToastMutation(createProjectAction, {
-    loadingMessage: 'Creating project...',
-    successMessage: 'Project created!',
-    errorMessage: 'Failed to create project',
-    onSuccess: (data) => {
-      setOpen(false);
-      router.push(`/project/${data.id}`);
-    },
-  });
+  const createProjectMutation = useSAToastMutation(
+    async ({ organizationId, name }: { organizationId: string; name: string }) =>
+      await createProjectAction({ organizationId, name }),
+    {
+      loadingMessage: 'Creating project...',
+      successMessage: 'Project created!',
+      errorMessage: 'Failed to create project',
+      onSuccess: (response) => {
+        setOpen(false);
+        if (response.status === 'success' && response.data) {
+          router.push(`/project/${response.data.id}`);
+        }
+      },
+    });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

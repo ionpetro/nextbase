@@ -4,7 +4,7 @@
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { updateEmailAction } from '@/data/user/security';
-import { useToastMutation } from '@/hooks/useToastMutation';
+import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import { classNames } from '@/utils/classNames';
 import { useInput } from 'rooks';
 
@@ -15,14 +15,24 @@ export const UpdateEmail = ({
 }) => {
   const emailInput = useInput(initialEmail ?? '');
 
-  const { mutate: updateEmail, isLoading } = useToastMutation(
+  const { mutate: updateEmail, isLoading } = useSAToastMutation(
     async () => {
-      await updateEmailAction(emailInput.value);
+      return await updateEmailAction(emailInput.value);
     },
     {
       loadingMessage: 'Updating email...',
       successMessage: 'Email updated!',
-      errorMessage: 'Failed to update email',
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to update email ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to update email';
+        }
+      },
     },
   );
 

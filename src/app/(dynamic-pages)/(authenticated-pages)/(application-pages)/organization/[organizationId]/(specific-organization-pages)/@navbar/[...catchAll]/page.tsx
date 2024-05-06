@@ -11,6 +11,8 @@ export async function generateMetadata({ params }: { params: unknown }) {
   try {
     const { organizationId } = organizationParamSchema.parse(params);
 
+    console.log('organizationId', organizationId);
+
     const organizationTitle = await getOrganizationTitle(organizationId);
 
     return {
@@ -43,7 +45,10 @@ export default async function OrganizationProjectsNavbar({
 }: {
   params: unknown;
 }) {
+  console.log('PARAMS', params);
   const { organizationId } = organizationParamSchema.parse(params);
+
+
   return (
     <div className="flex items-center">
       <Link href={`/organization/${organizationId}`}>

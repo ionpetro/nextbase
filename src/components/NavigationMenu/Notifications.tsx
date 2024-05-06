@@ -7,7 +7,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { useToastMutation } from '@/hooks/useToastMutation';
+import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import { supabaseUserClientComponentClient } from '@/supabase-clients/user/supabaseUserClientComponentClient';
 import type { Table } from '@/types';
 import { parseNotification } from '@/utils/parseNotification';
@@ -178,14 +178,24 @@ function Notification({
 
 export const useReadAllNotifications = (userId: string) => {
   const router = useRouter();
-  return useToastMutation(
+  return useSAToastMutation(
     async () => {
       return readAllNotifications(userId);
     },
     {
       loadingMessage: 'Marking all notifications as read...',
       successMessage: 'All notifications marked as read',
-      errorMessage: 'Failed to mark all notifications as read',
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to mark all notifications as read ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to mark all notifications as read';
+        }
+      },
       onSuccess: () => {
         router.refresh();
       },
@@ -204,14 +214,24 @@ export const Notifications = ({ userId }: { userId: string }) => {
     isFetchingNextPage,
     isLoading,
   } = useNotifications(userId);
-  const { mutate } = useToastMutation(
+  const { mutate } = useSAToastMutation(
     async () => {
       return readAllNotifications(userId);
     },
     {
       loadingMessage: 'Marking all notifications as read...',
       successMessage: 'All notifications marked as read',
-      errorMessage: 'Failed to mark all notifications as read',
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to mark all notifications as read ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to mark all notifications as read';
+        }
+      },
       onSuccess: () => {
         router.refresh();
       },
@@ -242,6 +262,11 @@ export const Notifications = ({ userId }: { userId: string }) => {
                     <span
                       onClick={() => {
                         mutate();
+                      }}
+                      onKeyUp={(e) => {
+                        if (e.key === 'Enter') {
+                          mutate();
+                        }
                       }}
                       className="underline underline-offset-4 text-muted-foreground dark:group-hover:text-gray-400 "
                     >
