@@ -1,38 +1,45 @@
-'use client';
-import { T } from '@/components/ui/Typography';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Skeleton } from '@/components/ui/skeleton';
-import { createOrganization } from '@/data/user/organizations';
-import { acceptTermsOfService, updateUserProfileNameAndAvatar, uploadPublicUserAvatar } from '@/data/user/user';
-import { useSAToastMutation } from '@/hooks/useSAToastMutation';
-import { useToastMutation } from '@/hooks/useToastMutation';
-import { Table } from '@/types';
-import { getUserAvatarUrl } from '@/utils/helpers';
-import { AuthUserMetadata } from '@/utils/zod-schemas/authUserMetadata';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { motion } from 'framer-motion';
-import { UserPlus as AddUserIcon } from 'lucide-react';
-import dynamic from 'next/dynamic';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-const TermsDetailDialog = dynamic(() => import('./TermsDetailDialog').then(
-  (mod) => mod.TermsDetailDialog
-
-), {
-  ssr: false,
-  loading: () => <Skeleton className="w-12 h-4" />
-});
-
+"use client";
+import { T } from "@/components/ui/Typography";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Skeleton } from "@/components/ui/skeleton";
+import { createOrganization } from "@/data/user/organizations";
+import {
+  acceptTermsOfService,
+  updateUserProfileNameAndAvatar,
+  uploadPublicUserAvatar,
+} from "@/data/user/user";
+import { useSAToastMutation } from "@/hooks/useSAToastMutation";
+import type { Table } from "@/types";
+import { getUserAvatarUrl } from "@/utils/helpers";
+import type { AuthUserMetadata } from "@/utils/zod-schemas/authUserMetadata";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { motion } from "framer-motion";
+import { UserPlus as AddUserIcon } from "lucide-react";
+import dynamic from "next/dynamic";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+const TermsDetailDialog = dynamic(
+  () => import("./TermsDetailDialog").then((mod) => mod.TermsDetailDialog),
+  {
+    ssr: false,
+    loading: () => <Skeleton className="w-12 h-4" />,
+  },
+);
 
 const MotionImage = motion(Image);
-
-
 
 type TermsAcceptanceProps = {
   onSuccess: () => void;
@@ -44,35 +51,32 @@ function TermsAcceptance({ onSuccess }: TermsAcceptanceProps) {
       return acceptTermsOfService(true);
     },
     {
-      successMessage: 'Terms accepted!',
-      errorMessage: 'Failed to accept terms',
+      successMessage: "Terms accepted!",
+      errorMessage: "Failed to accept terms",
       onSuccess,
-    }
+    },
   );
 
   return (
     <Card className="max-w-[400px]" data-testid="accept-terms-onboarding">
       <CardHeader>
-        <CardTitle>
-          🎉 Welcome Aboard!
-        </CardTitle>
+        <CardTitle>🎉 Welcome Aboard!</CardTitle>
         <CardDescription>
-          Before diving into Nextbase Ultimate starter kit, please take a
-          moment to go through our updated Terms of Service.
+          Before diving into Nextbase Ultimate starter kit, please take a moment
+          to go through our updated Terms of Service.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <div className=" space-y-2">
           <T.Small>
-            These terms and conditions govern the use of Nextbase starter
-            kit’s products and services. They're designed to ensure a smooth
-            and secure experience for you.
+            These terms and conditions govern the use of Nextbase starter kit’s
+            products and services. They're designed to ensure a smooth and
+            secure experience for you.
           </T.Small>
 
           <T.Subtle>
             Last updated : <strong>24th April 2024</strong>
           </T.Subtle>
-
         </div>
       </CardContent>
       <CardFooter>
@@ -82,16 +86,21 @@ function TermsAcceptance({ onSuccess }: TermsAcceptanceProps) {
   );
 }
 
-
 type ProfileUpdateProps = {
-  userProfile: Table<'user_profiles'>;
+  userProfile: Table<"user_profiles">;
   onSuccess: () => void;
   userEmail: string | undefined;
 };
 
-export function ProfileUpdate({ userProfile, onSuccess, userEmail }: ProfileUpdateProps) {
+export function ProfileUpdate({
+  userProfile,
+  onSuccess,
+  userEmail,
+}: ProfileUpdateProps) {
   const [fullName, setFullName] = useState(userProfile.full_name ?? "");
-  const [avatarUrl, setAvatarUrl] = useState(userProfile.avatar_url ?? undefined);
+  const [avatarUrl, setAvatarUrl] = useState(
+    userProfile.avatar_url ?? undefined,
+  );
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [hasImageLoaded, setHasImageLoaded] = useState(false);
@@ -101,35 +110,45 @@ export function ProfileUpdate({ userProfile, onSuccess, userEmail }: ProfileUpda
     email: userEmail,
   });
 
-  const { mutate: updateProfile, isLoading: isUpdatingProfile } = useSAToastMutation(
-    async () => {
-      return await updateUserProfileNameAndAvatar({ fullName, avatarUrl }, {
-        isOnboardingFlow: true,
-      });
-    },
-    {
-      successMessage: 'Profile updated!',
-      errorMessage: 'Failed to update profile',
-      onSuccess
-    }
-  );
+  const { mutate: updateProfile, isLoading: isUpdatingProfile } =
+    useSAToastMutation(
+      async () => {
+        return await updateUserProfileNameAndAvatar(
+          { fullName, avatarUrl },
+          {
+            isOnboardingFlow: true,
+          },
+        );
+      },
+      {
+        successMessage: "Profile updated!",
+        errorMessage: "Failed to update profile",
+        onSuccess,
+      },
+    );
 
-  const { mutate: uploadAvatar } = useToastMutation(
+  const { mutate: uploadAvatar } = useSAToastMutation(
     async (file: File) => {
       setIsUploading(true);
       const formData = new FormData();
-      formData.append('file', file);
+      formData.append("file", file);
 
       const newAvatarUrl = await uploadPublicUserAvatar(formData, file.name, {
         upsert: true,
       });
-      setAvatarUrl(newAvatarUrl);
+
       setIsUploading(false);
+      return newAvatarUrl;
     },
     {
-      successMessage: 'Avatar uploaded!',
-      errorMessage: 'Error uploading avatar',
-    }
+      successMessage: "Avatar uploaded!",
+      errorMessage: "Error uploading avatar",
+      onSuccess: (response) => {
+        if (response.status === "success") {
+          setAvatarUrl(response.data);
+        }
+      },
+    },
   );
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -141,10 +160,12 @@ export function ProfileUpdate({ userProfile, onSuccess, userEmail }: ProfileUpda
 
   return (
     <Card className="w-full max-w-[400px]">
-      <form onSubmit={(e) => {
-        e.preventDefault();
-        updateProfile();
-      }}>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          updateProfile();
+        }}
+      >
         <CardHeader>
           <div className="space-y-0">
             <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 mb-2 rounded-lg">
@@ -152,9 +173,7 @@ export function ProfileUpdate({ userProfile, onSuccess, userEmail }: ProfileUpda
             </div>
             <div className="p-1">
               <CardTitle>Create new profile</CardTitle>
-              <CardDescription>
-                Please fill in your details.
-              </CardDescription>
+              <CardDescription>Please fill in your details.</CardDescription>
             </div>
           </div>
         </CardHeader>
@@ -173,8 +192,8 @@ export function ProfileUpdate({ userProfile, onSuccess, userEmail }: ProfileUpda
                         ? undefined
                         : {
                           duration: 0.5,
-                          repeat: Infinity,
-                          repeatType: 'reverse',
+                          repeat: Number.POSITIVE_INFINITY,
+                          repeatType: "reverse",
                         }
                     }
                     onLoad={() => {
@@ -209,7 +228,7 @@ export function ProfileUpdate({ userProfile, onSuccess, userEmail }: ProfileUpda
                     }}
                     disabled={isUploading}
                   >
-                    {isUploading ? 'Please wait...' : 'Change'}
+                    {isUploading ? "Please wait..." : "Change"}
                   </Button>
                 </div>
               </div>
@@ -231,14 +250,13 @@ export function ProfileUpdate({ userProfile, onSuccess, userEmail }: ProfileUpda
         </CardContent>
         <CardFooter>
           <Button type="submit" disabled={isUpdatingProfile || isUploading}>
-            {isUpdatingProfile ? 'Saving...' : 'Save Profile'}
+            {isUpdatingProfile ? "Saving..." : "Save Profile"}
           </Button>
         </CardFooter>
       </form>
     </Card>
   );
 }
-
 
 type OrganizationCreationProps = {
   onSuccess: () => void;
@@ -251,7 +269,7 @@ const createOrganizationSchema = z.object({
 type CreateOrganizationSchema = z.infer<typeof createOrganizationSchema>;
 
 export function OrganizationCreation({ onSuccess }: OrganizationCreationProps) {
-  const { mutate: createOrg, isLoading: isCreatingOrg } = useToastMutation(
+  const { mutate: createOrg, isLoading: isCreatingOrg } = useSAToastMutation(
     async (organizationTitle: string) => {
       const orgId = await createOrganization(organizationTitle, {
         isOnboardingFlow: true,
@@ -259,40 +277,39 @@ export function OrganizationCreation({ onSuccess }: OrganizationCreationProps) {
       return orgId;
     },
     {
-      successMessage: 'Organization created!',
-      errorMessage: 'Failed to create organization',
-      onSuccess
-    }
+      successMessage: "Organization created!",
+      errorMessage: "Failed to create organization",
+      onSuccess,
+    },
   );
 
   const onSubmit = (data: CreateOrganizationSchema) => {
     createOrg(data.organizationTitle);
   };
 
-  const { register, formState, handleSubmit } = useForm<CreateOrganizationSchema>({
-    resolver: zodResolver(createOrganizationSchema),
-    defaultValues: {
-      organizationTitle: '',
-    }
-  });
+  const { register, formState, handleSubmit } =
+    useForm<CreateOrganizationSchema>({
+      resolver: zodResolver(createOrganizationSchema),
+      defaultValues: {
+        organizationTitle: "",
+      },
+    });
 
   return (
     <Card>
       <form onSubmit={handleSubmit(onSubmit)}>
         <CardHeader>
-          <CardTitle>
-            Create Organization
-          </CardTitle>
+          <CardTitle>Create Organization</CardTitle>
           <CardDescription>
             Please provide a name for your first organization.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-2">
-            <Label htmlFor='organizationTitle'>Organization Name</Label>
+            <Label htmlFor="organizationTitle">Organization Name</Label>
             <Input
               id="organizationTitle"
-              {...register('organizationTitle')}
+              {...register("organizationTitle")}
               required
               placeholder="Organization Name"
               disabled={isCreatingOrg}
@@ -301,7 +318,7 @@ export function OrganizationCreation({ onSuccess }: OrganizationCreationProps) {
         </CardContent>
         <CardFooter>
           <Button type="submit" disabled={isCreatingOrg || !formState.isValid}>
-            {isCreatingOrg ? 'Creating...' : 'Create Organization'}
+            {isCreatingOrg ? "Creating..." : "Create Organization"}
           </Button>
         </CardFooter>
       </form>
@@ -309,80 +326,105 @@ export function OrganizationCreation({ onSuccess }: OrganizationCreationProps) {
   );
 }
 
-
-type FLOW_STATE = 'TERMS' | 'PROFILE' | 'ORGANIZATION' | 'COMPLETE';
+type FLOW_STATE = "TERMS" | "PROFILE" | "ORGANIZATION" | "COMPLETE";
 
 type UserOnboardingFlowProps = {
-  userProfile: Table<'user_profiles'>;
+  userProfile: Table<"user_profiles">;
   onboardingStatus: AuthUserMetadata;
   userEmail: string | undefined;
 };
 
+function getInitialFlowState(
+  flowStates: FLOW_STATE[],
+  onboardingStatus: AuthUserMetadata,
+): FLOW_STATE {
+  const {
+    onboardingHasAcceptedTerms,
+    onboardingHasCompletedProfile,
+    onboardingHasCreatedOrganization,
+  } = onboardingStatus;
 
-function getInitialFlowState(flowStates: FLOW_STATE[], onboardingStatus: AuthUserMetadata): FLOW_STATE {
-  const { onboardingHasAcceptedTerms, onboardingHasCompletedProfile, onboardingHasCreatedOrganization } = onboardingStatus;
-
-  if (!onboardingHasAcceptedTerms && flowStates.includes('TERMS')) {
-    return 'TERMS';
+  if (!onboardingHasAcceptedTerms && flowStates.includes("TERMS")) {
+    return "TERMS";
   }
 
-  if (!onboardingHasCompletedProfile && flowStates.includes('PROFILE')) {
-    return 'PROFILE';
+  if (!onboardingHasCompletedProfile && flowStates.includes("PROFILE")) {
+    return "PROFILE";
   }
 
-  if (!onboardingHasCreatedOrganization && flowStates.includes('ORGANIZATION')) {
-    return 'ORGANIZATION';
+  if (
+    !onboardingHasCreatedOrganization &&
+    flowStates.includes("ORGANIZATION")
+  ) {
+    return "ORGANIZATION";
   }
 
-  return 'COMPLETE';
+  return "COMPLETE";
 }
 
 function getAllFlowStates(onboardingStatus: AuthUserMetadata): FLOW_STATE[] {
-  const { onboardingHasAcceptedTerms, onboardingHasCompletedProfile, onboardingHasCreatedOrganization } = onboardingStatus;
+  const {
+    onboardingHasAcceptedTerms,
+    onboardingHasCompletedProfile,
+    onboardingHasCreatedOrganization,
+  } = onboardingStatus;
   const flowStates: FLOW_STATE[] = [];
   if (!onboardingHasAcceptedTerms) {
-    flowStates.push('TERMS');
+    flowStates.push("TERMS");
   }
   if (!onboardingHasCompletedProfile) {
-    flowStates.push('PROFILE');
+    flowStates.push("PROFILE");
   }
   if (!onboardingHasCreatedOrganization) {
-    flowStates.push('ORGANIZATION');
+    flowStates.push("ORGANIZATION");
   }
-  flowStates.push('COMPLETE');
+  flowStates.push("COMPLETE");
   return flowStates;
 }
 
 export function UserOnboardingFlow({
   userProfile,
   onboardingStatus,
-  userEmail
+  userEmail,
 }: UserOnboardingFlowProps) {
-  const flowStates = useMemo(() => getAllFlowStates(onboardingStatus), [onboardingStatus]);
-  const initialStep = useMemo(() => getInitialFlowState(flowStates, onboardingStatus), [flowStates, onboardingStatus]);
+  const flowStates = useMemo(
+    () => getAllFlowStates(onboardingStatus),
+    [onboardingStatus],
+  );
+  const initialStep = useMemo(
+    () => getInitialFlowState(flowStates, onboardingStatus),
+    [flowStates, onboardingStatus],
+  );
   const [currentStep, setCurrentStep] = useState<FLOW_STATE>(initialStep);
   const nextStep = useCallback(() => {
     const currentIndex = flowStates.indexOf(currentStep);
     if (currentIndex < flowStates.length - 1) {
       setCurrentStep(flowStates[currentIndex + 1]);
     }
-  }, [currentStep, flowStates])
-
+  }, [currentStep, flowStates]);
 
   const { replace } = useRouter();
 
   useEffect(() => {
-    if (currentStep === 'COMPLETE') {
+    if (currentStep === "COMPLETE") {
       // Redirect to dashboard
-      replace('/dashboard');
+      replace("/dashboard");
     }
-  }, [currentStep])
+  }, [currentStep]);
 
   return (
     <>
-      {currentStep === 'TERMS' && <TermsAcceptance onSuccess={nextStep} />}
-      {currentStep === 'PROFILE' && <ProfileUpdate userEmail={userEmail} userProfile={userProfile} onSuccess={nextStep} />}
-      {currentStep === 'ORGANIZATION' && <OrganizationCreation onSuccess={nextStep} />}
+      {currentStep === "TERMS" && <TermsAcceptance onSuccess={nextStep} />}
+      {currentStep === "PROFILE" && (
+        <ProfileUpdate
+          userEmail={userEmail}
+          userProfile={userProfile}
+          onSuccess={nextStep}
+        />
+      )}
+      {currentStep === "ORGANIZATION" && (
+        <OrganizationCreation onSuccess={nextStep} />
+      )}
     </>
   );
 }
