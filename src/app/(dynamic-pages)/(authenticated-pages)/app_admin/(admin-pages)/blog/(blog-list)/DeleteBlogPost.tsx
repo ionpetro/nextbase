@@ -2,7 +2,7 @@
 import { Button } from '@/components/ui/button';
 import { deleteBlogPost } from '@/data/admin/internal-blog';
 import { useSAToastMutation } from '@/hooks/useSAToastMutation';
-import TrashIcon from 'lucide-react/dist/esm/icons/trash-2';
+import { Trash2 } from 'lucide-react';
 
 export function DeleteBlogPost({ blogPostId }: { blogPostId: string }) {
   const { mutate, isLoading } = useSAToastMutation(
@@ -36,7 +36,7 @@ export function DeleteBlogPost({ blogPostId }: { blogPostId: string }) {
       variant="ghost"
       aria-disabled={isLoading}
     >
-      <TrashIcon className="h-6 w-6" />
+      <Trash2 className="h-6 w-6" />
     </Button>
   );
 }

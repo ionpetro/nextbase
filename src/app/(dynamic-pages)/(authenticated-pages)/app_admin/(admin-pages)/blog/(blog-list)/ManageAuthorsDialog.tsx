@@ -13,8 +13,7 @@ import {
 import { deleteAuthorProfile } from "@/data/admin/internal-blog";
 import { useSAToastMutation } from "@/hooks/useSAToastMutation";
 import type { Table } from "@/types";
-import Trash from "lucide-react/dist/esm/icons/trash";
-import UsersIcon from "lucide-react/dist/esm/icons/users";
+import { Trash, Users } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { AddAuthorProfileDialog } from "./AddAuthorProfileDialog";
@@ -63,7 +62,7 @@ export const ManageAuthorsDialog = ({
     <Dialog open={isOpen} onOpenChange={(newIsOpen) => setIsOpen(newIsOpen)}>
       <DialogTrigger asChild>
         <Button variant="outline" className="justify-start">
-          <UsersIcon className="mr-2 size-4" />
+          <Users className="mr-2 size-4" />
           Manage author profiles
         </Button>
       </DialogTrigger>
@@ -71,7 +70,7 @@ export const ManageAuthorsDialog = ({
       <DialogContent>
         <DialogHeader>
           <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 rounded-lg">
-            <UsersIcon className="w-6 h-6" />
+            <Users className="w-6 h-6" />
           </div>
           <div className="p-1 mb-4">
             <DialogTitle className="text-lg">

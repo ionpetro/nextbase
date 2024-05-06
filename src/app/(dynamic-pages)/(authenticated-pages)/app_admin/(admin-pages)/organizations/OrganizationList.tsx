@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/table';
 import { getPaginatedOrganizationList } from '@/data/admin/organizations';
 import { format } from 'date-fns';
-import MailIcon from 'lucide-react/dist/esm/icons/mail';
+import { Mail } from 'lucide-react';
 import Link from 'next/link';
 import { AppAdminOrganizationsFiltersSchema } from './schema';
 
@@ -50,7 +50,7 @@ export async function OrganizationList({
                     href={`mailto:${organization.owner_email}`}
                     target="_blank"
                   >
-                    <MailIcon className="w-5 h-5" />
+                    <Mail className="w-5 h-5" />
                   </Link>
                 </span>
               </TableCell>

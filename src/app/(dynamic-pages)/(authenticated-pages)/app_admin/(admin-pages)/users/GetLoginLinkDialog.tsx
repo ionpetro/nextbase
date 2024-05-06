@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/dialog';
 import { appAdminGetUserImpersonationUrl } from '@/data/admin/user';
 import { useSAToastMutation } from '@/hooks/useSAToastMutation';
-import GetLinkIcon from 'lucide-react/dist/esm/icons/link';
+import { Link } from 'lucide-react';
 import { useState } from 'react';
 
 export const GetLoginLinkDialog = ({ userId }: { userId: string }) => {
@@ -48,7 +48,7 @@ export const GetLoginLinkDialog = ({ userId }: { userId: string }) => {
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 mb-2 rounded-lg">
-            <GetLinkIcon className=" w-6 h-6" />
+            <Link className=" w-6 h-6" />
           </div>
           <div className="p-1">
             <DialogTitle className="text-lg">Get Login Link</DialogTitle>

@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/dialog';
 import { Enum } from '@/types';
 import { formatFieldValue } from '@/utils/feedback';
-import FeedbackIcon from 'lucide-react/dist/esm/icons/message-square';
+import { MessageSquare } from 'lucide-react';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { FeedbackThreadStatusSelect } from './FeedbackThreadStatusSelect';
 
@@ -45,7 +45,7 @@ export function UpdateStatusDialog({
       <DialogContent>
         <DialogHeader>
           <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 rounded-lg">
-            <FeedbackIcon className="w-6 h-6" />
+            <MessageSquare className="w-6 h-6" />
           </div>
           <div className="p-1 mb-4">
             <DialogTitle className="text-lg">

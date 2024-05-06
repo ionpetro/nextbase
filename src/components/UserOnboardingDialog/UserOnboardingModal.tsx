@@ -13,7 +13,7 @@ import { useLoggedInUser } from '@/hooks/useLoggedInUser';
 import { useLoggedInUserEmail } from '@/hooks/useLoggedInUserEmail';
 import { getUserAvatarUrl } from '@/utils/helpers';
 import { motion } from 'framer-motion';
-import AddUserIcon from 'lucide-react/dist/esm/icons/user-plus';
+import { UserPlus } from 'lucide-react';
 import Image from 'next/image';
 import { useRef, useState } from 'react';
 
@@ -49,7 +49,7 @@ export const UserOnboardingDialog = ({
       <DialogContent>
         <DialogHeader>
           <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 mb-2 rounded-lg">
-            <AddUserIcon className=" w-6 h-6" />
+            <UserPlus className=" w-6 h-6" />
           </div>
           <div className="p-1">
             <DialogTitle className="text-lg">Create new profile</DialogTitle>
@@ -79,10 +79,10 @@ export const UserOnboardingDialog = ({
                       hasImageLoaded
                         ? undefined
                         : {
-                            duration: 0.5,
-                            repeat: Infinity,
-                            repeatType: 'reverse',
-                          }
+                          duration: 0.5,
+                          repeat: Infinity,
+                          repeatType: 'reverse',
+                        }
                     }
                     onLoad={() => {
                       setHasImageLoaded(true);

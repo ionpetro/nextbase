@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useSAToastMutation } from "@/hooks/useSAToastMutation";
 import type { ValidSAPayload } from "@/types";
-import Plus from "lucide-react/dist/esm/icons/plus";
+import { Plus } from "lucide-react";
 import { useState } from "react";
 
 export const AppAdminCreateUserDialogPreview = () => {

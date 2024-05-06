@@ -12,8 +12,7 @@ import { supabaseUserClientComponentClient } from '@/supabase-clients/user/supab
 import type { Table } from '@/types';
 import { parseNotification } from '@/utils/parseNotification';
 import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query';
-import NotificationIcon from 'lucide-react/dist/esm/icons/bell';
-import CheckIcon from 'lucide-react/dist/esm/icons/check';
+import { Bell, Check } from 'lucide-react';
 import moment from 'moment';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect } from 'react';
@@ -240,7 +239,7 @@ export const Notifications = ({ userId }: { userId: string }) => {
   return (
     <Popover>
       <PopoverTrigger className="relative focus:ring-none">
-        <NotificationIcon className="h-5 w-5 px-0 text-muted-foreground hover:text-black dark:hover:text-white" />
+        <Bell className="h-5 w-5 px-0 text-muted-foreground hover:text-black dark:hover:text-white" />
         {unseenNotificationCount > 0 && (
           <span className="absolute -top-1.5 -right-2 bg-red-500  text-white text-xs font-bold px-1.5 rounded-full">
             {unseenNotificationCount}
@@ -258,7 +257,7 @@ export const Notifications = ({ userId }: { userId: string }) => {
               <div className="flex text-sm mt-2 space-x-1 group cursor-pointer font-medium">
                 {unseenNotificationCount ? (
                   <>
-                    <CheckIcon className="h-5 w-5 text-muted-foreground dark:group-hover:text-gray-400" />{' '}
+                    <Check className="h-5 w-5 text-muted-foreground dark:group-hover:text-gray-400" />{' '}
                     <span
                       onClick={() => {
                         mutate();

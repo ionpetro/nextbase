@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/dialog';
 import { declineInvitationAction } from '@/data/user/invitation';
 import { useSAToastMutation } from '@/hooks/useSAToastMutation';
-import X from 'lucide-react/dist/esm/icons/x';
+import { X } from 'lucide-react';
 import { useState } from 'react';
 
 export const ConfirmDeclineInvitationDialog = ({

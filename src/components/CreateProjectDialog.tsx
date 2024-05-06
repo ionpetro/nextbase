@@ -13,7 +13,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { createProjectAction } from '@/data/user/projects';
 import { useSAToastMutation } from '@/hooks/useSAToastMutation';
-import LayersIcon from 'lucide-react/dist/esm/icons/layers';
+import { Layers } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -55,14 +55,14 @@ export function CreateProjectDialog({
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button variant="default" size="default">
-            <LayersIcon className="mr-2 w-5 h-5" />
+            <Layers className="mr-2 w-5 h-5" />
             Create Project
           </Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
             <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 mb-2 rounded-lg">
-              <LayersIcon className=" w-6 h-6" />
+              <Layers className=" w-6 h-6" />
             </div>
             <div className="p-1">
               <DialogTitle className="text-lg">Create Project</DialogTitle>

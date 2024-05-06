@@ -14,7 +14,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { requestAccountDeletion } from '@/data/user/user';
 import { useSAToastMutation } from '@/hooks/useSAToastMutation';
-import TrashIcon from 'lucide-react/dist/esm/icons/trash';
+import { Trash } from 'lucide-react';
 import { useState } from 'react';
 import { ConfirmDeletionViaEmailDialog } from './ConfirmDeletionViaEmailDialog';
 
@@ -56,7 +56,7 @@ export const ConfirmDeleteAccountDialog = () => {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button className="w-full" variant="destructive">
-            <TrashIcon className="mr-2 h-5 w-5" /> Delete Account
+            <Trash className="mr-2 h-5 w-5" /> Delete Account
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
