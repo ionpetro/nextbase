@@ -12,7 +12,9 @@ DROP POLICY IF EXISTS "All organization members can update organizations" ON "pu
 -- Recreate the policy without the maintenance mode condition
 CREATE POLICY "All organization members can update organizations" ON "public"."organizations" FOR
 UPDATE TO "authenticated" USING (
-    "auth"."uid"() IN (
+    (
+      SELECT auth.uid()
+    ) IN (
       SELECT "public"."get_organization_member_ids"("organizations"."id")
     )
   );
@@ -23,7 +25,9 @@ DROP POLICY IF EXISTS "Only organization admins can invite other users" ON "publ
 -- Recreate the policy without the maintenance mode condition
 CREATE POLICY "Only organization admins can invite other users" ON "public"."organization_join_invitations" FOR
 INSERT TO "authenticated" WITH CHECK (
-    "auth"."uid"() IN (
+    (
+      SELECT auth.uid()
+    ) IN (
       SELECT "public"."get_organization_admin_ids"(
           "organization_join_invitations"."organization_id"
         )
@@ -36,7 +40,9 @@ DROP POLICY IF EXISTS "Only organization admins/owners can delete organizations"
 
 -- Recreate the policy without the maintenance mode condition
 CREATE POLICY "Only organization admins/owners can delete organizations" ON "public"."organizations" FOR DELETE TO "authenticated" USING (
-  "auth"."uid"() IN (
+  (
+    SELECT auth.uid()
+  ) IN (
     SELECT "public"."get_organization_admin_ids"("organizations"."id")
   )
 );
@@ -47,7 +53,11 @@ DROP POLICY IF EXISTS "Only the own user can update it" ON "public"."user_profil
 
 -- Recreate the policy without the maintenance mode condition
 CREATE POLICY "Only the own user can update it" ON "public"."user_profiles" FOR
-UPDATE TO "authenticated" USING ("auth"."uid"() = "id");
+UPDATE TO "authenticated" USING (
+    (
+      SELECT auth.uid()
+    ) = "id"
+  );
 
 
 DROP FUNCTION IF EXISTS public.is_app_not_in_maintenance_mode;

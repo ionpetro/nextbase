@@ -31,7 +31,9 @@ COMMIT;
 -- recreate policies for projects but with only organizations and not teams
 CREATE policy "Enable read access for all organization members" ON "public"."projects" AS permissive FOR
 SELECT TO authenticated USING (
-    auth.uid() IN (
+    (
+      SELECT auth.uid()
+    ) IN (
       SELECT get_organization_member_ids(projects.organization_id) AS get_organization_member_ids
     )
   );
@@ -40,7 +42,9 @@ SELECT TO authenticated USING (
 -- recreate policies for project_comments but with only organizations and not teams
 CREATE policy "All organization members of a project can read project comments" ON "public"."project_comments" AS permissive FOR
 SELECT TO authenticated USING (
-    auth.uid() IN (
+    (
+      SELECT auth.uid()
+    ) IN (
       SELECT get_organization_member_ids(get_organization_id_for_project_id(project_id)) AS get_organization_member_ids
     )
   );
@@ -48,7 +52,9 @@ SELECT TO authenticated USING (
   CREATE policy "All organization members of a project can make project comments" ON "public"."project_comments" AS permissive FOR
 INSERT TO authenticated WITH CHECK (
     (
-      "auth"."uid"() IN (
+      (
+        SELECT auth.uid()
+      ) IN (
         SELECT "public"."get_organization_member_ids"(get_organization_id_for_project_id(project_id)) AS "get_organization_member_ids"
       )
     )

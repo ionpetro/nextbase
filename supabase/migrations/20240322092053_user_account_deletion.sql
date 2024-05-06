@@ -8,13 +8,25 @@ ALTER TABLE public.account_delete_tokens ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "All authenticated users can request deletion" ON public.account_delete_tokens FOR
 INSERT TO authenticated WITH CHECK (TRUE);
 
-CREATE POLICY "User can only delete their own deletion token" ON public.account_delete_tokens FOR DELETE TO authenticated USING (auth.uid() = user_id);
+CREATE POLICY "User can only delete their own deletion token" ON public.account_delete_tokens FOR DELETE TO authenticated USING (
+  (
+    SELECT auth.uid()
+  ) = user_id
+);
 
 CREATE POLICY "User can only update their own deletion token" ON public.account_delete_tokens FOR
-UPDATE TO authenticated USING (auth.uid() = user_id);
+UPDATE TO authenticated USING (
+    (
+      SELECT auth.uid()
+    ) = user_id
+  );
 
 CREATE POLICY "User can only read their own deletion token" ON public.account_delete_tokens FOR
-SELECT TO authenticated USING (auth.uid() = user_id);
+SELECT TO authenticated USING (
+    (
+      SELECT auth.uid()
+    ) = user_id
+  );
 
 ALTER TABLE public.user_private_info DROP CONSTRAINT IF EXISTS user_private_info_id_fkey;
 
@@ -61,3 +73,6 @@ ALTER TABLE public.user_private_info DROP CONSTRAINT IF EXISTS user_private_info
 ALTER TABLE public.user_private_info
 ADD CONSTRAINT user_private_info_default_organization_fkey FOREIGN KEY (default_organization) REFERENCES public.organizations(id) ON DELETE
 SET NULL;
+
+-- covering index for user_private_info
+CREATE INDEX ON user_private_info (default_organization);

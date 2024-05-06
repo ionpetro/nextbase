@@ -53,6 +53,10 @@ CREATE TABLE "public"."customers" (
   "organization_id" "uuid" NOT NULL
 );
 ALTER TABLE "public"."customers" OWNER TO "postgres";
+
+
+
+
 --
 -- Name: organization_join_invitations; Type: TABLE; Schema: public; Owner: supabase_admin
 --
@@ -311,3 +315,37 @@ ADD CONSTRAINT "user_profiles_id_fkey" FOREIGN KEY ("id") REFERENCES "auth"."use
 --
 -- Name: products Active products are visible to everyone; Type: POLICY; Schema: public; Owner: postgres
 --
+
+
+
+-- customers table
+CREATE INDEX customers_organization_id_index ON customers USING btree (organization_id);
+CREATE INDEX customers_stripe_customer_id_index ON customers USING btree (stripe_customer_id);
+
+-- organization_join_invitations table
+CREATE INDEX organization_join_invitations_organization_id_idx ON organization_join_invitations USING btree (organization_id);
+CREATE INDEX organization_join_invitations_inviter_user_id_idx ON organization_join_invitations USING btree (inviter_user_id);
+CREATE INDEX organization_join_invitations_invitee_user_id_idx ON organization_join_invitations USING btree (invitee_user_id);
+CREATE INDEX organization_join_invitations_invitee_user_email_idx ON organization_join_invitations USING btree (invitee_user_email);
+CREATE INDEX organization_join_invitations_status_idx ON organization_join_invitations USING btree (status);
+
+-- organization_members table
+CREATE INDEX organization_members_organization_id_idx ON organization_members USING btree (organization_id);
+CREATE INDEX organization_members_member_id_idx ON organization_members USING btree (member_id);
+CREATE INDEX organization_members_member_role_idx ON organization_members USING btree (member_role);
+
+-- organizations table
+CREATE INDEX organizations_created_by_idx ON organizations USING btree (created_by);
+
+-- prices table
+CREATE INDEX prices_product_id_idx ON prices USING btree (product_id);
+CREATE INDEX prices_active_idx ON prices USING btree (active);
+
+-- products table
+CREATE INDEX products_active_idx ON products USING btree (active);
+
+-- subscriptions table
+CREATE INDEX subscriptions_organization_id_idx ON subscriptions USING btree (organization_id);
+CREATE INDEX subscriptions_price_id_idx ON subscriptions USING btree (price_id);
+CREATE INDEX subscriptions_status_idx ON subscriptions USING btree (status);
+

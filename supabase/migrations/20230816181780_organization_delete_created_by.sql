@@ -16,7 +16,9 @@ COMMIT;
 CREATE policy "All organization members can read organizations v2" ON "public"."organizations" AS permissive FOR
 SELECT TO authenticated USING (
     (
-      auth.uid() IN (
+      (
+        SELECT auth.uid()
+      ) IN (
         SELECT get_organization_member_ids(organizations.id) AS get_organization_member_ids
       )
     )

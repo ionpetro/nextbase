@@ -1,16 +1,12 @@
-import React from 'react';
-import {
-  Html,
-  Head,
-  Heading,
-  Text,
-  Body,
-  Container,
-  Hr,
-  Link,
-  Button,
-  Tailwind,
-} from '@react-email/components';
+import { Body } from '@react-email/body';
+import { Button } from '@react-email/button';
+import { Container } from '@react-email/container';
+import { Head } from '@react-email/head';
+import { Heading } from '@react-email/heading';
+import { Hr } from '@react-email/hr';
+import { Html } from '@react-email/html';
+import { Text } from '@react-email/text';
+import React from "react";
 
 const YourRoleChanged = ({
   appName,
@@ -26,49 +22,32 @@ const YourRoleChanged = ({
   return (
     <Html>
       <Head />
-      <Tailwind>
-        <Body className="bg-gray-200 font-sans font-light">
-          <Container className="bg-white px-12 py-5">
-            <Heading>
-              Your role has changed from junior developer{oldRole} to senior
-              developer{newRole}
-            </Heading>
-            <Hr className="my-5" />
-            <Text className="text-base">Dear Robin{teamMateName},</Text>
-            <Text className="text-base">
-              Max has changed your role from junior developer{oldRole} to senior
-              developer{newRole}
-            </Text>
-            {/* <Text className="text-base">
-              We believe that this change will provide you with new
-              opportunities for growth and development. Your contributions are
-              highly valued, and we have full confidence in your ability to
-              excel in this new role.
-            </Text> */}
-            <Text className="text-base">
-              To see the full details, please click the button below:
-            </Text>
-            <Button
-              className="text-base bg-black font-semibold text-white px-10 py-3 rounded"
-              href={roleDescription}
-            >
-              View Role Description
-            </Button>
-            <Hr className="my-5" />
-            <Text className="text-base">
-              We appreciate your flexibility and dedication throughout this
-              process. Thank you for your continued commitment to our team's
-              success.
-            </Text>
-            <Text className="text-base">Best regards,</Text>
-            <Text className="text-base">
-              Max{senderName}
-              <br />
-              Team Lead{position}
-            </Text>
-          </Container>
-        </Body>
-      </Tailwind>
+      <Body style={{ backgroundColor: '#f0f0f0', fontFamily: 'Arial, sans-serif', fontWeight: 'lighter' }}>
+        <Container style={{ backgroundColor: '#ffffff', padding: '48px', maxWidth: '600px', margin: '0 auto' }}>
+          <Heading>Your role has changed from {oldRole} to {newRole}</Heading>
+          <Hr style={{ margin: '20px 0' }} />
+          <Text style={{ fontSize: '16px' }}>Dear {teamMateName},</Text>
+          <Text style={{ fontSize: '16px' }}>
+            Max has changed your role from {oldRole} to {newRole}.
+          </Text>
+          <Text style={{ fontSize: '16px' }}>
+            To see the full details, please click the button below:
+          </Text>
+          <Button style={{ backgroundColor: '#000000', color: '#ffffff', padding: '12px 20px', borderRadius: '5px', fontSize: '16px', fontWeight: 'bold' }} href={roleDescription}>
+            View Role Description
+          </Button>
+          <Hr style={{ margin: '20px 0' }} />
+          <Text style={{ fontSize: '16px' }}>
+            We appreciate your flexibility and dedication throughout this process. Thank you for your continued commitment to our team's success.
+          </Text>
+          <Text style={{ fontSize: '16px' }}>Best regards,</Text>
+          <Text style={{ fontSize: '16px' }}>
+            {senderName}
+            <br />
+            {position}
+          </Text>
+        </Container>
+      </Body>
     </Html>
   );
 };

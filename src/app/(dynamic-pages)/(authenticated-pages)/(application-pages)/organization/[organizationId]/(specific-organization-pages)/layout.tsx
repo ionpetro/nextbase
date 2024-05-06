@@ -1,6 +1,6 @@
 import { ApplicationLayoutShell } from '@/components/ApplicationLayoutShell/ApplicationLayoutShell';
 import { InternalNavbar } from '@/components/NavigationMenu/InternalNavbar';
-import { Suspense, type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 
 export default async function Layout({
   children,
@@ -12,11 +12,11 @@ export default async function Layout({
   sidebar: ReactNode;
 }) {
   return (
-    <ApplicationLayoutShell sidebar={<Suspense>{sidebar}</Suspense>}>
+    <ApplicationLayoutShell sidebar={sidebar}>
       <div>
         <InternalNavbar>
           <div className="hidden lg:flex w-full justify-between items-center">
-            <Suspense>{navbar}</Suspense>
+            {navbar}
           </div>
         </InternalNavbar>
         <div className="relative flex-1 h-auto w-full overflow-auto">

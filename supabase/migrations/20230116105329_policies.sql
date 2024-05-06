@@ -17,9 +17,9 @@ INSERT TO "authenticated" WITH CHECK ("public"."is_app_not_in_maintenance_mode"(
 CREATE POLICY "All organization members can read organizations" ON "public"."organizations" FOR
 SELECT TO "authenticated" USING (
     (
-      ("auth"."uid"() = "created_by")
+      ((select auth.uid()) = "created_by")
       OR (
-        "auth"."uid"() IN (
+        (select auth.uid()) IN (
           SELECT "public"."get_organization_member_ids"("organizations"."id") AS "get_organization_member_ids"
         )
       )
@@ -33,7 +33,7 @@ CREATE POLICY "All organization members can update organizations" ON "public"."o
 UPDATE TO "authenticated" USING (
     (
       (
-        "auth"."uid"() IN (
+        (select auth.uid()) IN (
           SELECT "public"."get_organization_member_ids"("organizations"."id") AS "get_organization_member_ids"
         )
       )
@@ -52,7 +52,7 @@ SELECT TO "authenticated" USING (
         FROM "public"."organization_members"
         WHERE (
             (
-              "organization_members"."member_id" = "auth"."uid"()
+              "organization_members"."member_id" = (select auth.uid())
             )
             AND (
               "organization_members"."organization_id" IN (
@@ -86,7 +86,7 @@ SELECT USING (TRUE);
 CREATE POLICY "Everyone organization member can view the subscription on  organization" ON "public"."subscriptions" FOR
 SELECT TO "authenticated" USING (
     (
-      "auth"."uid"() IN (
+      (select auth.uid()) IN (
         SELECT "public"."get_organization_member_ids"("subscriptions"."organization_id") AS "get_organization_member_ids"
       )
     )
@@ -98,7 +98,7 @@ SELECT TO "authenticated" USING (
 CREATE POLICY "Only organization admins can insert new members" ON "public"."organization_members" FOR
 INSERT TO "authenticated" WITH CHECK (
     (
-      "auth"."uid"() IN (
+      (select auth.uid()) IN (
         SELECT "public"."get_organization_admin_ids"("organization_members"."organization_id") AS "get_organization_admin_ids"
       )
     )
@@ -111,7 +111,7 @@ CREATE POLICY "Only organization admins can invite other users" ON "public"."org
 INSERT TO "authenticated" WITH CHECK (
     (
       (
-        "auth"."uid"() IN (
+        (select auth.uid()) IN (
           SELECT "public"."get_organization_admin_ids"(
               "organization_join_invitations"."organization_id"
             ) AS "get_organization_admin_ids"
@@ -127,7 +127,7 @@ INSERT TO "authenticated" WITH CHECK (
 CREATE POLICY "Only organization admins can update organization members" ON "public"."organization_members" FOR
 UPDATE TO "authenticated" USING (
     (
-      "auth"."uid"() IN (
+      (select auth.uid()) IN (
         SELECT "public"."get_organization_admin_ids"("organization_members"."organization_id") AS "get_organization_admin_ids"
       )
     )
@@ -139,7 +139,7 @@ UPDATE TO "authenticated" USING (
 CREATE POLICY "Only organization admins/owners can delete organizations" ON "public"."organizations" FOR DELETE TO "authenticated" USING (
   (
     (
-      "auth"."uid"() IN (
+      (select auth.uid()) IN (
         SELECT "public"."get_organization_admin_ids"("organizations"."id") AS "get_organization_admin_ids"
       )
     )
@@ -153,7 +153,7 @@ CREATE POLICY "Only organization admins/owners can delete organizations" ON "pub
 CREATE POLICY "Only organization owners/admins can update private organizations info" ON "public"."organizations_private_info" FOR
 UPDATE TO "authenticated" USING (
     (
-      "auth"."uid"() IN (
+      (select auth.uid()) IN (
         SELECT "public"."get_organization_admin_ids"("organizations_private_info"."id") AS "get_organization_admin_ids"
       )
     )
@@ -165,7 +165,7 @@ UPDATE TO "authenticated" USING (
 CREATE POLICY "Only organization owners/admins can view private organizations info" ON "public"."organizations_private_info" FOR
 SELECT TO "authenticated" USING (
     (
-      "auth"."uid"() IN (
+      (select auth.uid()) IN (
         SELECT "public"."get_organization_admin_ids"("organizations_private_info"."id") AS "get_organization_admin_ids"
       )
     )
@@ -185,7 +185,7 @@ UPDATE TO "authenticated" USING (
 CREATE POLICY "Only the own user can update it" ON "public"."user_profiles" FOR
 UPDATE TO "authenticated" USING (
     (
-      ("auth"."uid"() = "id")
+      ((select auth.uid()) = "id")
       AND "public"."is_app_not_in_maintenance_mode"()
     )
   );
@@ -194,13 +194,13 @@ UPDATE TO "authenticated" USING (
 --
 
 CREATE POLICY "Only the user can update their private information" ON "public"."user_private_info" FOR
-UPDATE TO "authenticated" USING (("auth"."uid"() = "id"));
+UPDATE TO "authenticated" USING (((select auth.uid()) = "id"));
 --
 -- Name: user_private_info Only the user can view their private information; Type: POLICY; Schema: public; Owner: supabase_admin
 --
 
 CREATE POLICY "Only the user can view their private information" ON "public"."user_private_info" FOR
-SELECT TO "authenticated" USING (("auth"."uid"() = "id"));
+SELECT TO "authenticated" USING (((select auth.uid()) = "id"));
 --
 -- Name: prices Prices of active products are visible; Type: POLICY; Schema: public; Owner: postgres
 --
@@ -214,7 +214,7 @@ SELECT USING (TRUE);
 CREATE POLICY "organization members can view other organization members" ON "public"."organization_members" FOR
 SELECT TO "authenticated" USING (
     (
-      "auth"."uid"() IN (
+      (select auth.uid()) IN (
         SELECT "public"."get_organization_member_ids"("organization_members"."organization_id") AS "get_organization_member_ids"
       )
     )

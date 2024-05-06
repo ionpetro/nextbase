@@ -7,10 +7,22 @@ CREATE TABLE "public"."user_onboarding" (
 ALTER TABLE "public"."user_onboarding" enable ROW LEVEL SECURITY;
 
 CREATE policy "Enable insert for authenticated users only" ON "public"."user_onboarding" AS permissive FOR
-INSERT TO authenticated WITH CHECK (auth.uid() = user_id);
+INSERT TO authenticated WITH CHECK (
+    (
+      SELECT auth.uid()
+    ) = user_id
+  );
 
 CREATE policy "Users can view their onboarding status" ON "public"."user_onboarding" AS permissive FOR
-SELECT TO authenticated USING (auth.uid() = user_id);
+SELECT TO authenticated USING (
+    (
+      SELECT auth.uid()
+    ) = user_id
+  );
 
 CREATE policy "Users can update their onboarding status" ON "public"."user_onboarding" AS permissive FOR
-UPDATE TO authenticated USING (auth.uid() = user_id);
+UPDATE TO authenticated USING (
+    (
+      SELECT auth.uid()
+    ) = user_id
+  );

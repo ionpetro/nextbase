@@ -10,7 +10,8 @@ import rehypeToc from 'rehype-toc';
 
 const withBundleAnalyzer = createWithBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
-  openAnalyzer: process.env.ANALYZE === 'true',
+  openAnalyzer:
+    process.env.ANALYZE === 'true' && process.env.OPEN_ANALYZER === 'true',
 });
 
 function rehypeWrapMainContent() {
@@ -115,6 +116,11 @@ const nextConfig = {
     // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/#use-hidden-source-map
     // for more information.
     hideSourceMaps: true,
+  },
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
   },
 };
 
