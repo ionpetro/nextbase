@@ -19,6 +19,7 @@ import {
   uploadPublicUserAvatar,
 } from "@/data/user/user";
 import { useSAToastMutation } from "@/hooks/useSAToastMutation";
+import { useToastMutation } from "@/hooks/useToastMutation";
 import type { Table } from "@/types";
 import { getUserAvatarUrl } from "@/utils/helpers";
 import type { AuthUserMetadata } from "@/utils/zod-schemas/authUserMetadata";
@@ -144,10 +145,10 @@ export function ProfileUpdate({
       successMessage: "Avatar uploaded!",
       errorMessage: "Error uploading avatar",
       onSuccess: (response) => {
-        if (response.status === "success") {
+        if (response.status === 'success') {
           setAvatarUrl(response.data);
         }
-      },
+      }
     },
   );
 
@@ -269,7 +270,7 @@ const createOrganizationSchema = z.object({
 type CreateOrganizationSchema = z.infer<typeof createOrganizationSchema>;
 
 export function OrganizationCreation({ onSuccess }: OrganizationCreationProps) {
-  const { mutate: createOrg, isLoading: isCreatingOrg } = useSAToastMutation(
+  const { mutate: createOrg, isLoading: isCreatingOrg } = useToastMutation(
     async (organizationTitle: string) => {
       const orgId = await createOrganization(organizationTitle, {
         isOnboardingFlow: true,
