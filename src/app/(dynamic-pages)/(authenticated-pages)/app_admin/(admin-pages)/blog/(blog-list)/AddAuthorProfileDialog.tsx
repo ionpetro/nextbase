@@ -20,11 +20,11 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { createAuthorProfile } from "@/data/admin/internal-blog";
-import { useToastMutation } from "@/hooks/useToastMutation";
+import { useSAToastMutation } from "@/hooks/useSAToastMutation";
 import type { Table } from "@/types";
 import { authorProfileSchema } from "@/utils/zod-schemas/internalBlog";
 import { zodResolver } from "@hookform/resolvers/zod";
-import UserIcon from "lucide-react/dist/esm/icons/user-plus";
+import { UserPlus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -32,7 +32,7 @@ import { toast } from "sonner";
 import type { z } from "zod";
 
 type AuthorProfileFormType = z.infer<typeof authorProfileSchema>;
-type CreateAuthorPayload = Omit<
+export type CreateAuthorPayload = Omit<
   Table<"internal_blog_author_profiles">,
   "created_at" | "updated_at"
 >;
@@ -45,7 +45,7 @@ export const AddAuthorProfileDialog = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
-  const { control, handleSubmit, formState, reset } =
+  const { control, handleSubmit, formState, reset, setValue } =
     useForm<AuthorProfileFormType>({
       resolver: zodResolver(authorProfileSchema),
     });
@@ -53,8 +53,8 @@ export const AddAuthorProfileDialog = ({
   const {
     mutate: createAuthorProfileMutation,
     isLoading: isCreatingAuthorProfile,
-  } = useToastMutation<void, unknown, CreateAuthorPayload>(
-    async (payload) => {
+  } = useSAToastMutation(
+    async (payload: CreateAuthorPayload) => {
       return createAuthorProfile(payload);
     },
     {
@@ -64,8 +64,16 @@ export const AddAuthorProfileDialog = ({
         setIsOpen(false);
         reset();
       },
-      onError: () => {
-        toast.error("Failed to create author profile");
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to create author profile ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to create author profile';
+        }
       },
     },
   );
@@ -97,7 +105,7 @@ export const AddAuthorProfileDialog = ({
       <DialogContent>
         <DialogHeader>
           <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 rounded-lg">
-            <UserIcon className="w-6 h-6" />
+            <UserPlus className="w-6 h-6" />
           </div>
           <div className="p-1 mb-4">
             <DialogTitle className="text-lg">Add Author Profile</DialogTitle>

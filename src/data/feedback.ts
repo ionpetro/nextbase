@@ -1,5 +1,6 @@
 'use server';
 
+import type { Tables } from '@/lib/database.types';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 import { supabaseClientBasedOnUserRole } from '@/supabase-clients/user-role-client';
 import type { Enum, ValidSAPayload } from '@/types';
@@ -14,7 +15,7 @@ export async function addCommentToInternalFeedbackThread({
 }: {
   feedbackId: string;
   content: string;
-}) {
+}): Promise<ValidSAPayload<Tables<'internal_feedback_comments'>[]>> {
   const user = await serverGetLoggedInUser();
   const supabaseClient = await supabaseClientBasedOnUserRole();
 
@@ -26,11 +27,17 @@ export async function addCommentToInternalFeedbackThread({
       .maybeSingle();
 
   if (feedbackThreadError) {
-    throw feedbackThreadError;
+    return {
+      status: 'error',
+      message: feedbackThreadError.message,
+    };
   }
 
   if (!feedbackThread?.open_for_public_discussion) {
-    throw new Error('This feedback thread is not open for public discussion');
+    return {
+      status: 'error',
+      message: 'This feedback thread is not open for public discussion',
+    };
   }
 
   const { data, error } = await supabaseClient
@@ -39,12 +46,18 @@ export async function addCommentToInternalFeedbackThread({
     .select('*');
 
   if (error) {
-    throw error;
+    return {
+      status: 'error',
+      message: error.message,
+    };
   }
 
   revalidatePath('/feedback', 'page');
   revalidatePath(`/feedback/${feedbackId}`, 'page');
-  return data;
+  return {
+    status: 'success',
+    data,
+  };
 }
 
 export async function ownerUpdateFeedbackComment({
@@ -57,10 +70,13 @@ export async function ownerUpdateFeedbackComment({
   commentId: string;
   feedbackCommentOwnerId: string;
   content: string;
-}) {
+}): Promise<ValidSAPayload> {
   const user = await serverGetLoggedInUser();
   if (feedbackCommentOwnerId !== user.id) {
-    throw new Error('You are unathorized to perform this action');
+    return {
+      status: 'error',
+      message: 'You are unathorized to perform this action',
+    };
   }
 
   const supabaseClient = await supabaseClientBasedOnUserRole();
@@ -73,11 +89,16 @@ export async function ownerUpdateFeedbackComment({
     .eq('user_id', feedbackCommentOwnerId);
 
   if (error) {
-    throw error;
+    return {
+      status: 'error',
+      message: error.message,
+    };
   }
   revalidatePath('/feedback', 'page');
   revalidatePath(`/feedback/${feedbackId}`, 'page');
-  return data;
+  return {
+    status: 'success',
+  };
 }
 
 export async function muteFeedbackThread({

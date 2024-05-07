@@ -1,9 +1,10 @@
 "use server";
 import { CommentList } from "@/components/Projects/CommentList";
+import type { Tables } from "@/lib/database.types";
 import { supabaseAdminClient } from "@/supabase-clients/admin/supabaseAdminClient";
 import { createSupabaseUserServerActionClient } from "@/supabase-clients/user/createSupabaseUserServerActionClient";
 import { createSupabaseUserServerComponentClient } from "@/supabase-clients/user/createSupabaseUserServerComponentClient";
-import type { CommentWithUser } from "@/types";
+import type { CommentWithUser, ValidSAPayload } from "@/types";
 import { normalizeComment } from "@/utils/comments";
 import { serverGetLoggedInUser } from "@/utils/server/serverGetLoggedInUser";
 import { revalidatePath } from "next/cache";
@@ -54,7 +55,7 @@ export const createProjectAction = async ({
 }: {
   organizationId: string;
   name: string;
-}) => {
+}): Promise<ValidSAPayload<Tables<"projects">>> => {
   "use server";
   const supabaseClient = createSupabaseUserServerActionClient();
   const { data: project, error } = await supabaseClient
@@ -67,13 +68,19 @@ export const createProjectAction = async ({
     .single();
 
   if (error) {
-    throw error;
+    return {
+      status: 'error',
+      message: error.message,
+    };
   }
 
   revalidatePath(`/organization/${organizationId}`, "layout");
   revalidatePath(`/organization/${organizationId}/projects`, "layout");
 
-  return project;
+  return {
+    status: 'success',
+    data: project,
+  };
 };
 
 export const getProjectComments = async (
@@ -95,7 +102,7 @@ export const getProjectComments = async (
 export const createProjectCommentAction = async (
   projectId: string,
   text: string,
-) => {
+): Promise<ValidSAPayload<{ id: number, commentList: React.JSX.Element }>> => {
   const supabaseClient = createSupabaseUserServerActionClient();
   const user = await serverGetLoggedInUser();
   const { data, error } = await supabaseClient
@@ -104,22 +111,24 @@ export const createProjectCommentAction = async (
     .select("*, user_profiles(*)")
     .single();
   if (error) {
-    throw error;
+    return { status: 'error', message: error.message };
   }
   revalidatePath(`/project/${projectId}`, "page");
 
   return {
-    success: true,
-    id: data.id,
-    commentList: (
-      <Suspense>
-        <CommentList comments={[normalizeComment(data)]} />
-      </Suspense>
-    ),
+    status: 'success',
+    data: {
+      id: data.id,
+      commentList: (
+        <Suspense>
+          <CommentList comments={[normalizeComment(data)]} />
+        </Suspense>
+      ),
+    },
   };
 };
 
-export const approveProjectAction = async (projectId: string) => {
+export const approveProjectAction = async (projectId: string): Promise<ValidSAPayload<Tables<"projects">>> => {
   const supabaseClient = createSupabaseUserServerActionClient();
   const { data, error } = await supabaseClient
     .from("projects")
@@ -129,14 +138,14 @@ export const approveProjectAction = async (projectId: string) => {
     .single();
 
   if (error) {
-    throw error;
+    return { status: 'error', message: error.message };
   }
 
   revalidatePath(`/project/${projectId}`, "layout");
-  return data;
+  return { status: 'success', data };
 };
 
-export const rejectProjectAction = async (projectId: string) => {
+export const rejectProjectAction = async (projectId: string): Promise<ValidSAPayload<Tables<"projects">>> => {
   const supabaseClient = createSupabaseUserServerActionClient();
   const { data, error } = await supabaseClient
     .from("projects")
@@ -146,14 +155,16 @@ export const rejectProjectAction = async (projectId: string) => {
     .single();
 
   if (error) {
-    throw error;
+    return { status: 'error', message: error.message };
   }
 
   revalidatePath(`/project/${projectId}`, "layout");
-  return data;
+  return { status: 'success', data };
 };
 
-export const submitProjectForApprovalAction = async (projectId: string) => {
+export const submitProjectForApprovalAction = async (
+  projectId: string,
+): Promise<ValidSAPayload<Tables<"projects">>> => {
   const supabaseClient = createSupabaseUserServerActionClient();
   const { data, error } = await supabaseClient
     .from("projects")
@@ -163,14 +174,14 @@ export const submitProjectForApprovalAction = async (projectId: string) => {
     .single();
 
   if (error) {
-    throw error;
+    return { status: "error", message: error.message };
   }
 
   revalidatePath(`/project/${projectId}`, "layout");
-  return data;
+  return { status: "success", data };
 };
 
-export const markProjectAsCompletedAction = async (projectId: string) => {
+export const markProjectAsCompletedAction = async (projectId: string): Promise<ValidSAPayload<Tables<"projects">>> => {
   const supabaseClient = createSupabaseUserServerActionClient();
   const { data, error } = await supabaseClient
     .from("projects")
@@ -180,11 +191,11 @@ export const markProjectAsCompletedAction = async (projectId: string) => {
     .single();
 
   if (error) {
-    throw error;
+    return { status: 'error', message: error.message };
   }
 
   revalidatePath(`/project/${projectId}`, "layout");
-  return data;
+  return { status: 'success', data };
 };
 
 export const getProjects = async ({
@@ -207,7 +218,7 @@ export const getProjects = async ({
     .range(zeroIndexedPage * limit, (zeroIndexedPage + 1) * limit - 1);
 
   if (query) {
-    supabaseQuery = supabaseQuery.ilike('name', `%${query}%`);
+    supabaseQuery = supabaseQuery.ilike("name", `%${query}%`);
   }
 
   const { data, error } = await supabaseQuery.order("created_at", {
@@ -234,17 +245,16 @@ export const getProjectsTotalCount = async ({
 }) => {
   const zeroIndexedPage = page - 1;
   let supabaseQuery = supabaseAdminClient
-    .from('projects')
-    .select('id', {
-      count: 'exact',
+    .from("projects")
+    .select("id", {
+      count: "exact",
       head: true,
     })
     .eq("organization_id", organizationId)
     .range(zeroIndexedPage * limit, (zeroIndexedPage + 1) * limit - 1);
 
-
   if (query) {
-    supabaseQuery = supabaseQuery.ilike('name', `%${query}%`);
+    supabaseQuery = supabaseQuery.ilike("name", `%${query}%`);
   }
 
   const { count, error } = await supabaseQuery.order("created_at", {
@@ -255,11 +265,9 @@ export const getProjectsTotalCount = async ({
     throw error;
   }
 
-
   if (!count) {
     return 0;
   }
 
   return Math.ceil(count / limit) ?? 0;
 };
-

@@ -18,10 +18,12 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { createInternalFeedback } from '@/data/user/internalFeedback';
-import { useToastMutation } from '@/hooks/useToastMutation';
+import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import type { Enum } from '@/types';
+import { cn } from '@/utils/cn';
 import { zodResolver } from '@hookform/resolvers/zod';
-import FeedbackIcon from 'lucide-react/dist/esm/icons/message-square';
+import { MessageSquare } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -45,12 +47,13 @@ const feedbackSchema = z.object({
 type FeedbackFormType = z.infer<typeof feedbackSchema>;
 
 export const GiveFeedbackDialog = ({
-  isExpanded,
   children,
+  className,
 }: {
-  isExpanded: boolean;
   children?: React.ReactNode;
+  className?: string;
 }) => {
+  const router = useRouter()
   const [isOpen, setIsOpen] = useState(false);
   const { control, handleSubmit, formState, reset } = useForm<FeedbackFormType>(
     {
@@ -64,14 +67,28 @@ export const GiveFeedbackDialog = ({
   const {
     mutate: createInternalFeedbackMutation,
     isLoading: isCreatingInternalFeedback,
-  } = useToastMutation(
+  } = useSAToastMutation(
     async (data: FeedbackFormType) => {
       return await createInternalFeedback(data);
     },
     {
-      onSuccess: () => {
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to create feedback ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to create feedback';
+        }
+      },
+      onSuccess: (response) => {
         setIsOpen(false);
         reset();
+        if (response.status === 'success') {
+          router.push(`/feedback/${response.data?.id}`);
+        }
       },
     },
   );
@@ -90,14 +107,14 @@ export const GiveFeedbackDialog = ({
         setIsOpen(newIsOpen);
       }}
     >
-      <DialogTrigger className="w-full" asChild>
+      <DialogTrigger className={cn('w-full', className)} asChild>
         {children ? children : <Button variant="default">Give Feedback</Button>}
       </DialogTrigger>
 
       <DialogContent>
         <DialogHeader>
           <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 rounded-lg">
-            <FeedbackIcon className="w-6 h-6" />
+            <MessageSquare className="w-6 h-6" />
           </div>
           <div className="p-1 mb-4">
             <DialogTitle className="text-lg">Give Feedback</DialogTitle>

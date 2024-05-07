@@ -1,5 +1,6 @@
 'use server';
 import { PAYMENT_PROVIDER } from '@/constants';
+import type { ValidSAPayload } from '@/types';
 import {
   createCheckoutSessionAction,
   getMRRStripe,
@@ -36,41 +37,58 @@ export const getSubscriptions = async (
 export const createSubscription = async (
   organizationId: string,
   priceId: string,
-) => {
+): Promise<ValidSAPayload<string>> => {
   switch (PAYMENT_PROVIDER) {
-    case 'stripe':
-      return createCheckoutSessionAction({
+    case 'stripe': {
+      const data = await createCheckoutSessionAction({
         organizationId,
         priceId,
       });
+      return { status: 'success', data };
+    }
     case 'lemonsqueezy':
-      throw Error('under development');
-    default:
-      return createCheckoutSessionAction({
+      return { status: 'error', message: 'under development' };
+    default: {
+      const data = await createCheckoutSessionAction({
         organizationId,
         priceId,
       });
+      return { status: 'success', data };
+    }
   }
 };
 
-export const startTrial = async (organizationId: string, priceId: string) => {
+export const startTrial = async (
+  organizationId: string,
+  priceId: string,
+): Promise<ValidSAPayload<string>> => {
   switch (PAYMENT_PROVIDER) {
-    case 'stripe':
-      return startTrialStripe(organizationId, priceId);
+    case 'stripe': {
+      const data = await startTrialStripe(organizationId, priceId);
+      return { status: 'success', data };
+    }
     case 'lemonsqueezy':
-      throw Error('under development');
-    default:
-      return startTrialStripe(organizationId, priceId);
+      return { status: 'error', message: 'under development' };
+    default: {
+      const data = await startTrialStripe(organizationId, priceId);
+      return { status: 'success', data };
+    }
   }
 };
 
-export const manageSubscription = async (organizationId: string) => {
+export const manageSubscription = async (
+  organizationId: string,
+): Promise<ValidSAPayload<string>> => {
   switch (PAYMENT_PROVIDER) {
-    case 'stripe':
-      return manageSubsciptionStripe(organizationId);
+    case 'stripe': {
+      const data = await manageSubsciptionStripe(organizationId);
+      return { status: 'success', data };
+    }
     case 'lemonsqueezy':
-      throw Error('under development');
-    default:
-      return manageSubsciptionStripe(organizationId);
+      return { status: 'error', message: 'under development' };
+    default: {
+      const data = await manageSubsciptionStripe(organizationId);
+      return { status: 'success', data };
+    }
   }
 };

@@ -1,10 +1,10 @@
 'use client';
+import { T } from '@/components/ui/Typography';
 import { Button } from '@/components/ui/button';
 import { SelectSeparator } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { T } from '@/components/ui/Typography';
 import { createProjectCommentAction } from '@/data/user/projects';
-import { useToastMutation } from '@/hooks/useToastMutation';
+import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Fragment, startTransition, useOptimistic } from 'react';
 import { useForm } from 'react-hook-form';
@@ -29,25 +29,37 @@ export const CommentInput = ({ projectId }: { projectId: string }) => {
     return [...statee, newMessage];
   });
 
-  const { mutate: addComment, isLoading } = useToastMutation(
+  const { mutate: addComment, isLoading } = useSAToastMutation(
     async (text: string) => {
       return createProjectCommentAction(projectId, text);
     },
     {
       loadingMessage: 'Adding comment...',
-      errorMessage: 'Failed to add comment',
-      successMessage: 'Comment added!',
-      onSuccess: (data) => {
-        // revalidatePath on the server can take a couple of seconds,
-        // meanwhile we can show the comment as if it was added using our optimistic hook
-        startTransition(() => {
-          addCommentToFlight({
-            children: data.commentList,
-            id: data.id,
-          });
-        });
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to add comment ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to add comment';
+        }
       },
-    },
+      successMessage: 'Comment added!',
+      onSuccess: (response) => {
+        if (response.status === 'success') {
+          startTransition(() => {
+            if (response.data) {
+              addCommentToFlight({
+                children: response.data.commentList,
+                id: response.data.id,
+              });
+            };
+          });
+        }
+      },
+    }
   );
 
   const { handleSubmit, setValue, register } = useForm<AddCommentSchema>({

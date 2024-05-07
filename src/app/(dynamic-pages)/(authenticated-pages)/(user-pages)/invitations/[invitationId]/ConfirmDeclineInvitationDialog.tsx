@@ -10,8 +10,8 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { declineInvitationAction } from '@/data/user/invitation';
-import { useToastMutation } from '@/hooks/useToastMutation';
-import X from 'lucide-react/dist/esm/icons/x';
+import { useSAToastMutation } from '@/hooks/useSAToastMutation';
+import { X } from 'lucide-react';
 import { useState } from 'react';
 
 export const ConfirmDeclineInvitationDialog = ({
@@ -20,10 +20,22 @@ export const ConfirmDeclineInvitationDialog = ({
   invitationId: string;
 }) => {
   const [open, setOpen] = useState(false);
-  const { mutate, isLoading } = useToastMutation(declineInvitationAction, {
+  const { mutate, isLoading } = useSAToastMutation(async (invitationId: string) => {
+    return await declineInvitationAction(invitationId)
+  }, {
     loadingMessage: 'Declining invitation...',
     successMessage: 'Invitation declined!',
-    errorMessage: 'Failed to decline invitation.',
+    errorMessage(error) {
+      try {
+        if (error instanceof Error) {
+          return String(error.message);
+        }
+        return `Failed to decline invitation ${String(error)}`;
+      } catch (_err) {
+        console.warn(_err);
+        return 'Failed to decline invitation';
+      }
+    },
   });
   return (
     <Dialog open={open} onOpenChange={setOpen}>

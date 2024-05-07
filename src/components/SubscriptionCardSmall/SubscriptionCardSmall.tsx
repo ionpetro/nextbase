@@ -7,7 +7,7 @@ import {
 } from '@/components/ui/hover-card';
 import { getNormalizedOrganizationSubscription } from '@/data/user/organizations';
 import { formatNormalizedSubscription } from '@/utils/formatNormalizedSubscription';
-import ArrowUpRightIcon from 'lucide-react/dist/esm/icons/arrow-up-right';
+import { ArrowUpRight } from 'lucide-react';
 import Link from 'next/link';
 import { Card } from '../ui/card';
 
@@ -50,7 +50,7 @@ export async function SubscriptionCardSmall({
         href={`/organization/${organizationId}/settings/billing`}
       >
         <Button variant="default" className="w-full">
-          <ArrowUpRightIcon className="h-5 w-5 mr-2 " />
+          <ArrowUpRight className="h-5 w-5 mr-2 " />
           {sidenote}
         </Button>
       </Link>

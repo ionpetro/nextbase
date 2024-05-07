@@ -67,3 +67,4 @@ export const createAdminNotificationForUserActivity = async (payload: Json) => {
   if (error) throw error;
   return notification;
 };
+

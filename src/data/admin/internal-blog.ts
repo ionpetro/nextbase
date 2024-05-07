@@ -1,4 +1,5 @@
 'use server';
+import type { CreateAuthorPayload } from '@/app/(dynamic-pages)/(authenticated-pages)/app_admin/(admin-pages)/blog/(blog-list)/AddAuthorProfileDialog';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 import type {
   TableInsertPayload,
@@ -7,7 +8,9 @@ import type {
 } from '@/types';
 import { revalidatePath } from 'next/cache';
 
-export const deleteBlogPost = async (blogPostId: string) => {
+export const deleteBlogPost = async (
+  blogPostId: string,
+): Promise<ValidSAPayload> => {
   'use server';
 
   const { error } = await supabaseAdminClient
@@ -16,9 +19,15 @@ export const deleteBlogPost = async (blogPostId: string) => {
     .eq('id', blogPostId);
 
   if (error) {
-    throw error;
+    return {
+      status: 'error',
+      message: error.message,
+    };
   }
   revalidatePath('/', 'layout');
+  return {
+    status: 'success',
+  };
 };
 
 export const getAllBlogPosts = async ({
@@ -149,15 +158,22 @@ export const getAuthor = async (postId: string) => {
 };
 
 export const createAuthorProfile = async (
-  payload: TableInsertPayload<'internal_blog_author_profiles'>,
-) => {
+  payload: CreateAuthorPayload,
+): Promise<ValidSAPayload> => {
   const { error, data } = await supabaseAdminClient
     .from('internal_blog_author_profiles')
     .insert(payload);
 
   if (error) {
-    throw error;
+    return {
+      status: 'error',
+      message: error.message,
+    };
   }
+
+  return {
+    status: 'success',
+  };
 };
 
 export const createBlogPost = async (
@@ -165,6 +181,26 @@ export const createBlogPost = async (
   payload: TableInsertPayload<'internal_blog_posts'>,
   tagIds: number[],
 ): Promise<ValidSAPayload> => {
+  const { data: slugVerify, error: slugError } = await supabaseAdminClient
+    .from('internal_blog_posts')
+    .select('*')
+    .eq('slug', payload.slug)
+    .maybeSingle();
+
+  if (slugError) {
+    return {
+      status: 'error',
+      message: slugError.message,
+    };
+  }
+
+  if (slugVerify) {
+    return {
+      status: 'error',
+      message: 'Slug already exists',
+    };
+  }
+
   const { data, error } = await supabaseAdminClient
     .from('internal_blog_posts')
     .insert(payload)
@@ -188,7 +224,7 @@ export const createBlogPost = async (
 
   await updateBlogTagRelationships(data.id, tagIds);
   revalidatePath(`/app_admin/blog/post/${data.id}/edit`, 'layout');
-  revalidatePath('/app_admin/blog', 'layout');
+  revalidatePath('/app_admin/blog/', 'page');
 
   return {
     status: 'success',
@@ -272,7 +308,7 @@ export const getBlogPostTags = async (postId: string) => {
 export const updateAuthorProfile = async (
   userId: string,
   payload: Partial<TableUpdatePayload<'internal_blog_author_profiles'>>,
-) => {
+): Promise<ValidSAPayload> => {
   const { data, error } = await supabaseAdminClient
     .from('internal_blog_author_profiles')
     .update(payload)
@@ -281,8 +317,15 @@ export const updateAuthorProfile = async (
     .single();
 
   if (error) {
-    throw error;
+    return {
+      status: 'error',
+      message: error.message,
+    };
   }
+
+  return {
+    status: 'success',
+  };
 };
 
 export const updateBlogPost = async (
@@ -340,6 +383,7 @@ export const updateBlogPost = async (
   await updateBlogTagRelationships(data.id, tagIds);
 
   revalidatePath(`/app_admin/blog/post/${data.id}/edit`, 'layout');
+  revalidatePath('/app_admin/blog/', 'page');
 
   return {
     status: 'success',
@@ -379,8 +423,10 @@ export const getAllAuthors = async () => {
 };
 
 export const getAllAppAdmins = async () => {
-  const { data: userIds, error } =
-    await supabaseAdminClient.rpc('get_all_app_admins');
+  const { data: userIds, error } = await supabaseAdminClient
+    .from('organization_members')
+    .select('*')
+    .eq('member_role', 'admin');
 
   if (error) {
     throw error;
@@ -392,7 +438,7 @@ export const getAllAppAdmins = async () => {
     .select('*')
     .in(
       'id',
-      userIds.map((userId) => userId.user_id),
+      userIds.map((user) => user.member_id),
     );
 
   if (error2) {
@@ -402,15 +448,24 @@ export const getAllAppAdmins = async () => {
   return userProfiles;
 };
 
-export const deleteAuthorProfile = async (userId: string) => {
+export const deleteAuthorProfile = async (
+  userId: string,
+): Promise<ValidSAPayload> => {
   const { error } = await supabaseAdminClient
     .from('internal_blog_author_profiles')
     .delete()
     .eq('user_id', userId);
 
   if (error) {
-    throw error;
+    return {
+      status: 'error',
+      message: error.message,
+    };
   }
+
+  return {
+    status: 'success',
+  };
 };
 
 export const createBlogTag = async (
@@ -435,7 +490,7 @@ export const createBlogTag = async (
 export const updateBlogTag = async (
   id: number,
   payload: Partial<TableUpdatePayload<'internal_blog_post_tags'>>,
-) => {
+): Promise<ValidSAPayload> => {
   const { data, error } = await supabaseAdminClient
     .from('internal_blog_post_tags')
     .update(payload)
@@ -444,19 +499,33 @@ export const updateBlogTag = async (
     .single();
 
   if (error) {
-    throw error;
+    return {
+      status: 'error',
+      message: error.message,
+    };
   }
+
+  return {
+    status: 'success',
+  };
 };
 
-export const deleteBlogTag = async (id: number) => {
+export const deleteBlogTag = async (id: number): Promise<ValidSAPayload> => {
   const { error } = await supabaseAdminClient
     .from('internal_blog_post_tags')
     .delete()
     .eq('id', id);
 
   if (error) {
-    throw error;
+    return {
+      status: 'error',
+      message: error.message,
+    };
   }
+
+  return {
+    status: 'success',
+  };
 };
 
 export const getAllBlogTags = async () => {

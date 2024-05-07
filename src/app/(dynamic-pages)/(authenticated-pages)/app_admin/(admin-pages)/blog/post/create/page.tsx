@@ -5,7 +5,7 @@ import {
   getAllAuthors,
   getAllBlogTags
 } from '@/data/admin/internal-blog';
-import ChevronLeft from 'lucide-react/dist/esm/icons/chevron-left';
+import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { BlogForm } from '../../BlogForm';

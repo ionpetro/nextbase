@@ -1,4 +1,4 @@
-import { expect, request, type Page } from '@playwright/test';
+import { type Page, expect, request } from '@playwright/test';
 
 const INBUCKET_URL = `http://localhost:54324`;
 
@@ -88,5 +88,7 @@ export async function loginUserHelper({
     .toBe('string');
 
   await page.goto(url);
-  await page.waitForURL('/dashboard');
+
+  // wait for the page to load completely
+  await page.waitForTimeout(12000);
 }

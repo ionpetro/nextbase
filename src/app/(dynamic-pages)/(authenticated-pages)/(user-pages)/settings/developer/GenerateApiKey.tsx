@@ -3,17 +3,32 @@
 import { Button } from '@/components/ui/button';
 
 import { generateUnkeyToken } from '@/data/user/unkey';
-import { useToastMutation } from '@/hooks/useToastMutation';
+import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { ViewApiKeyDialog } from './ViewApiKeyDialog';
 
 export function GenerateApiKey() {
   const router = useRouter();
-  const { mutate, isLoading } = useToastMutation(generateUnkeyToken, {
-    onSuccess: (data) => {
-      setStep('copy_modal');
-      setKeyPreview(data.key);
+  const { mutate, isLoading } = useSAToastMutation(async () => {
+    return await generateUnkeyToken();
+  }, {
+    onSuccess: (response) => {
+      if (response.status === 'success' && response.data) {
+        setStep('copy_modal');
+        setKeyPreview(response.data.key);
+      }
+    },
+    errorMessage(error) {
+      try {
+        if (error instanceof Error) {
+          return String(error.message);
+        }
+        return `Failed to generate API Key ${String(error)}`;
+      } catch (_err) {
+        console.warn(_err);
+        return 'Failed to generate API Key';
+      }
     },
   });
 

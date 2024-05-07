@@ -3,7 +3,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import lightLogo from '@public/logos/acme-logo-dark.png';
 import darkLogo from '@public/logos/acme-logo-light.png';
-import SidebarIcon from 'lucide-react/dist/esm/icons/sidebar';
+import { PanelLeft } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -59,7 +59,7 @@ export function DocsMobileNavigation() {
           className="relative md:hidden"
           aria-label="Open navigation"
         >
-          <SidebarIcon className="h-6 w-6 stroke-muted-foreground" />
+          <PanelLeft className="h-6 w-6 stroke-muted-foreground" />
         </button>
       </SheetTrigger>
       <SheetContent

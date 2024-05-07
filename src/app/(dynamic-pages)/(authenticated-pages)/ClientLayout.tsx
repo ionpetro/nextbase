@@ -1,22 +1,12 @@
 'use client';
 
 import PostHogProvider from '@/contexts/PostHogProvider';
-import type { Table } from '@/types';
 import dynamic from 'next/dynamic';
 
 import { useState } from 'react';
 import { useWindowSize } from 'rooks';
 
-const UserOnboardingFlow = dynamic(
-  () => import('./UserOnboardingFlow').then((mod) => mod.UserOnboardingFlow),
-  { ssr: false },
-);
 
-export type onBoardProps = {
-  userProfile: Table<'user_profiles'>;
-  defaultOrganizationId: string | null;
-  terms: { accepted_terms: boolean }[];
-};
 const Confetti = dynamic(
   () => import('react-confetti').then((mod) => mod.default),
   { ssr: false },
@@ -24,10 +14,8 @@ const Confetti = dynamic(
 
 export function ClientLayout({
   children,
-  onboardingConditions,
 }: {
   children: React.ReactNode;
-  onboardingConditions: onBoardProps;
 }) {
   const { innerHeight: _innerHeight, innerWidth: _innerWidth } =
     useWindowSize();
@@ -36,18 +24,7 @@ export function ClientLayout({
 
   const [showConfetti, setShowConfetti] = useState<boolean>(false);
 
-  const { userProfile, defaultOrganizationId, terms } = onboardingConditions;
 
-  if (!userProfile.full_name || !defaultOrganizationId || !terms) {
-    return (
-      <UserOnboardingFlow
-        onSuccess={() => {
-          setShowConfetti(true);
-        }}
-        onboardingConditions={onboardingConditions}
-      />
-    );
-  }
 
   return (
     <PostHogProvider>

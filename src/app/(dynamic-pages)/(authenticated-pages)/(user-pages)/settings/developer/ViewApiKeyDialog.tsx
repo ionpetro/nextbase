@@ -8,8 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import CopyIcon from 'lucide-react/dist/esm/icons/copy';
-import CopyCheckedIcon from 'lucide-react/dist/esm/icons/copy-check';
+import { Copy, CopyCheck } from 'lucide-react';
 import { useState } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
@@ -41,7 +40,7 @@ export const ViewApiKeyDialog = ({ apiKey, onCompleted }: Props) => {
                 value={apiKey}
                 className="border rounded p-2 flex-grow cursor-pointer"
               />
-              {isCopied ? <CopyCheckedIcon /> : <CopyIcon />}
+              {isCopied ? <CopyCheck /> : <Copy />}
             </div>
           </CopyToClipboard>
           {isCopied && <span>Copied to clipboard!</span>}

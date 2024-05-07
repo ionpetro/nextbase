@@ -1,8 +1,9 @@
 'use server';
 
+import type { Tables } from '@/lib/database.types';
 import { createSupabaseUserServerActionClient } from '@/supabase-clients/user/createSupabaseUserServerActionClient';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
-import type { Enum } from '@/types';
+import type { Enum, ValidSAPayload } from '@/types';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import { revalidatePath } from 'next/cache';
 import { createReceivedFeedbackNotification } from './notifications';
@@ -281,7 +282,7 @@ export async function createInternalFeedback(payload: {
   title: string;
   content: string;
   type: Enum<'internal_feedback_thread_type'>;
-}) {
+}): Promise<ValidSAPayload<Tables<'internal_feedback_threads'>>> {
   const supabaseClient = createSupabaseUserServerActionClient();
   const user = await serverGetLoggedInUser();
   const { data, error } = await supabaseClient
@@ -292,15 +293,22 @@ export async function createInternalFeedback(payload: {
       type: payload.type,
       user_id: user.id,
     })
-    .select('*');
+    .select('*')
+    .single();
 
   if (error) {
-    throw error;
+    return {
+      status: 'error',
+      message: error.message,
+    };
   }
 
-  const insertedFeedback = data[0];
+  const insertedFeedback = data;
   if (!insertedFeedback) {
-    throw new Error('Failed to create feedback');
+    return {
+      status: 'error',
+      message: 'Failed to create feedback',
+    };
   }
 
   await createReceivedFeedbackNotification({
@@ -311,7 +319,10 @@ export async function createInternalFeedback(payload: {
   revalidatePath('/feedback', 'layout');
   revalidatePath('/app_admin', 'layout');
 
-  return data[0];
+  return {
+    status: 'success',
+    data: insertedFeedback,
+  };
 }
 
 export async function createInternalFeedbackComment(
@@ -323,13 +334,14 @@ export async function createInternalFeedbackComment(
   const { data, error } = await supabaseClient
     .from('internal_feedback_comments')
     .insert({ thread_id: feedbackId, user_id: userId, content })
-    .select('*');
+    .select('*')
+    .single();
 
   if (error) {
     throw error;
   }
 
-  return data[0];
+  return data;
 }
 
 export async function toggleFeedbackThreadVisibility(

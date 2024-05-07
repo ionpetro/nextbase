@@ -15,9 +15,8 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { format } from 'date-fns';
-import CheckIcon from 'lucide-react/dist/esm/icons/check';
-import MailIcon from 'lucide-react/dist/esm/icons/mail';
-import CloseIcon from 'lucide-react/dist/esm/icons/x';
+
+import { Check, Mail, X } from 'lucide-react';
 export const UsersListPreview = () => {
   const users = Array.from({ length: 10 }, (_, i) => ({
     id: i + 1,
@@ -53,18 +52,18 @@ export const UsersListPreview = () => {
               <TableCell>{user.email}</TableCell>
               <TableCell>
                 {user.is_app_admin ? (
-                  <CheckIcon className="text-green-500 dark:text-green-400" />
+                  <Check className="text-green-500 dark:text-green-400" />
                 ) : (
-                  <CloseIcon className="text-red-500 dark:text-red-400" />
+                  <X className="text-red-500 dark:text-red-400" />
                 )}
               </TableCell>
               <TableCell>{format(new Date(user.created_at), 'PPpp')}</TableCell>
               <TableCell>
                 {' '}
                 {user.is_confirmed ? (
-                  <CheckIcon className="text-green-500 dark:text-green-400" />
+                  <Check className="text-green-500 dark:text-green-400" />
                 ) : (
-                  <CloseIcon className="text-red-500 dark:text-red-400" />
+                  <X className="text-red-500 dark:text-red-400" />
                 )}
               </TableCell>
               <TableCell>
@@ -76,7 +75,7 @@ export const UsersListPreview = () => {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <MailIcon className="h-5 w-5 mr-2 " />{' '}
+                    <Mail className="h-5 w-5 mr-2 " />{' '}
                     <T.Small className=" font-medium underline underline-offset-4 ">
                       Contact User by email
                     </T.Small>

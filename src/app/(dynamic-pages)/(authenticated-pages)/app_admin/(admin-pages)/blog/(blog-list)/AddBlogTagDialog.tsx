@@ -19,7 +19,7 @@ import { z } from 'zod';
 import { Textarea } from '@/components/ui/textarea';
 import { createBlogTag } from '@/data/admin/internal-blog';
 import { useSAToastMutation } from '@/hooks/useSAToastMutation';
-import TagsIcon from 'lucide-react/dist/esm/icons/tag';
+import { Tag } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import slugify from 'slugify';
@@ -93,7 +93,7 @@ export const AddBlogTagDialog = () => {
       <DialogContent>
         <DialogHeader>
           <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 rounded-lg">
-            <TagsIcon className="w-6 h-6" />
+            <Tag className="w-6 h-6" />
           </div>
           <div className="p-1 mb-4">
             <DialogTitle className="text-lg">Add blog tag</DialogTitle>

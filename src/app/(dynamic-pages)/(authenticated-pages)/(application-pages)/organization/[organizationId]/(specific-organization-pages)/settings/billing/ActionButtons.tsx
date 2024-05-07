@@ -1,8 +1,8 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
 import { T } from '@/components/ui/Typography';
-import { useToastMutation } from '@/hooks/useToastMutation';
+import { Button } from '@/components/ui/button';
+import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import {
   createSubSuccessCB,
   createTrialSubSuccessCB,
@@ -13,7 +13,7 @@ import {
   manageSubscription,
   startTrial,
 } from '@/lib/payments/paymentUtilsServer';
-import ExternalLinkIcon from 'lucide-react/dist/esm/icons/external-link';
+import { ExternalLink } from 'lucide-react';
 
 export function CreateSubscriptionButton({
   organizationId,
@@ -22,15 +22,29 @@ export function CreateSubscriptionButton({
   organizationId: string;
   priceId: string;
 }) {
-  const { mutate, isLoading } = useToastMutation(
+  const { mutate, isLoading } = useSAToastMutation(
     async () => {
       return await createSubscription(organizationId, priceId);
     },
     {
       loadingMessage: 'Please wait...',
-      errorMessage: 'Failed to create subscription',
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to create subscription ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to create subscription';
+        }
+      },
       successMessage: 'Redirecting...',
-      onSuccess: createSubSuccessCB,
+      onSuccess(response) {
+        response.status === 'success' && response.data
+          ? createSubSuccessCB(response.data)
+          : null;
+      },
     },
   );
 
@@ -54,15 +68,29 @@ export function StartFreeTrialButton({
   organizationId: string;
   priceId: string;
 }) {
-  const { mutate, isLoading } = useToastMutation(
+  const { mutate, isLoading } = useSAToastMutation(
     async () => {
       return await startTrial(organizationId, priceId);
     },
     {
       loadingMessage: 'Please wait...',
-      errorMessage: 'Failed to create subscription',
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to create a trial subscription ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to create a trial subscription';
+        }
+      },
       successMessage: 'Redirecting...',
-      onSuccess: createTrialSubSuccessCB,
+      onSuccess(response) {
+        response.status === 'success' && response.data
+          ? createTrialSubSuccessCB(response.data)
+          : null;
+      },
     },
   );
 
@@ -84,15 +112,29 @@ export function ManageSubscriptionButton({
 }: {
   organizationId: string;
 }) {
-  const { mutate, isLoading } = useToastMutation(
+  const { mutate, isLoading } = useSAToastMutation(
     async () => {
       return await manageSubscription(organizationId);
     },
     {
       loadingMessage: 'Please wait...',
-      errorMessage: 'Failed to get customer portal link',
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to create a trial subscription ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to create a trial subscription';
+        }
+      },
       successMessage: 'Redirecting...',
-      onSuccess: manageSubsSuccessCB,
+      onSuccess(response) {
+        response.status === 'success' && response.data
+          ? manageSubsSuccessCB(response.data)
+          : null;
+      },
     },
   );
 
@@ -106,7 +148,7 @@ export function ManageSubscriptionButton({
         }}
       >
         <span>{isLoading ? 'Loading...' : 'Manage Subscription'} </span>
-        <ExternalLinkIcon aria-hidden="true" className="ml-2 w-5 h-5" />{' '}
+        <ExternalLink aria-hidden="true" className="ml-2 w-5 h-5" />{' '}
       </Button>
       <T.P className="text-gray-500 dark:text-slate-400 text-sm">
         Manage your subscription. You can modify, upgrade or cancel your

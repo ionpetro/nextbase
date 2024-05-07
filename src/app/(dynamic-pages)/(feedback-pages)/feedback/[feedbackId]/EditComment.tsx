@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
 import { ownerUpdateFeedbackComment } from '@/data/feedback';
-import { useToastMutation } from '@/hooks/useToastMutation';
+import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import { PenLine, Send } from 'lucide-react';
 import { useState } from 'react';
 
@@ -29,9 +29,9 @@ function EditComment({
 }) {
   const [open, setOpen] = useState(false);
   const [comment, setComment] = useState(defaultValue);
-  const { mutate, isLoading } = useToastMutation(
+  const { mutate, isLoading } = useSAToastMutation(
     async () => {
-      return ownerUpdateFeedbackComment({
+      return await ownerUpdateFeedbackComment({
         feedbackId,
         feedbackCommentOwnerId: userId,
         commentId,
@@ -41,7 +41,17 @@ function EditComment({
     {
       loadingMessage: 'Adding Comment',
       successMessage: 'Successfully added your comment',
-      errorMessage: 'Failed to add comment',
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to update comment ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to update comment';
+        }
+      },
       onSuccess: () => {
         setComment('');
         setOpen(false);

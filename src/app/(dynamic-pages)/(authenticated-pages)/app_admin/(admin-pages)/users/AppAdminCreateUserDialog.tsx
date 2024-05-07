@@ -12,10 +12,9 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { createUserAction } from '@/data/admin/user';
-import { useToastMutation } from '@/hooks/useToastMutation';
+import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import { getErrorMessage } from '@/utils/getErrorMessage';
-import { User } from '@supabase/supabase-js';
-import Plus from 'lucide-react/dist/esm/icons/plus';
+import { Plus } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useInput } from 'rooks';
@@ -26,18 +25,24 @@ export const AppAdminCreateUserDialog = () => {
   const emailInput = useInput('');
   const [open, setOpen] = useState(false);
   const router = useRouter();
-  const { mutate: createUser, isLoading } = useToastMutation<
-    User,
-    unknown,
-    string
-  >(
-    async (email) => {
+  const { mutate: createUser, isLoading } = useSAToastMutation(
+    async (email: string) => {
       return await createUserAction(email);
     },
     {
       loadingMessage: 'Creating user...',
       successMessage: 'User created!',
-      errorMessage: 'Failed to create user',
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to create user ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to create user';
+        }
+      },
       onSuccess: () => {
         setOpen(false);
         router.refresh();

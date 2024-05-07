@@ -1,14 +1,7 @@
 import { Button } from '@/components/ui/button';
 import type { Enum } from '@/types';
 import { formatFieldValue } from '@/utils/feedback';
-import { EyeIcon } from 'lucide-react';
-import {
-  Bug as BugIcon,
-  Calendar as CalendarIcon,
-  Pencil as EditIcon,
-  Command as FeatureIcon,
-  Info as InfoIcon,
-} from 'lucide-react/dist/esm/icons';
+import { Bug, Calendar, Command, EyeIcon, Info, Pencil } from 'lucide-react';
 import Link from 'next/link';
 import type { HtmlHTMLAttributes } from 'react';
 import { Badge, type BadgeProps } from './ui/badge';
@@ -26,11 +19,11 @@ type InternalRoadmapCardProps = {
 const getIconVariantForTag = (tag: Enum<'internal_feedback_thread_type'>) => {
   switch (tag) {
     case 'bug':
-      return <BugIcon className="mr-2 h-4 w-4" />;
+      return <Bug className="mr-2 h-4 w-4" />;
     case 'general':
-      return <InfoIcon className="mr-2 h-4 w-4" />;
+      return <Info className="mr-2 h-4 w-4" />;
     case 'feature_request':
-      return <FeatureIcon className="mr-2 h-4 w-4" />;
+      return <Command className="mr-2 h-4 w-4" />;
     default:
       return null;
   }
@@ -84,7 +77,7 @@ export default function InternalRoadmapCard({
           </div>
 
           <div className="flex text-sm text-muted-foreground items-center">
-            <CalendarIcon className="mr-2 h-4 w-4" />
+            <Calendar className="mr-2 h-4 w-4" />
             <span className="font-semibold">{date}</span>
           </div>
         </div>
@@ -93,7 +86,7 @@ export default function InternalRoadmapCard({
       <Link href={`/feedback/${feedbackItemId}`} className="mt-1">
         <Button variant={'ghost'} size="icon">
           {isAdmin ? (
-            <EditIcon className="h-4 w-4" />
+            <Pencil className="h-4 w-4" />
           ) : (
             <EyeIcon className="h-4 w-4" />
           )}

@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -6,32 +6,32 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
-import { updateAuthorProfile } from '@/data/admin/internal-blog';
-import { useToastMutation } from '@/hooks/useToastMutation';
-import { Table } from '@/types';
-import { authorProfileSchema } from '@/utils/zod-schemas/internalBlog';
-import { zodResolver } from '@hookform/resolvers/zod';
-import Edit from 'lucide-react/dist/esm/icons/edit';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import { z } from 'zod';
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { updateAuthorProfile } from "@/data/admin/internal-blog";
+import { useSAToastMutation } from "@/hooks/useSAToastMutation";
+import type { Table } from "@/types";
+import { authorProfileSchema } from "@/utils/zod-schemas/internalBlog";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { SquarePen } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import type { z } from "zod";
 
 type AuthorProfileFormType = z.infer<typeof authorProfileSchema>;
-type UpdateAuthorPayload = Omit<
-  Table<'internal_blog_author_profiles'>,
-  'created_at' | 'updated_at'
+export type UpdateAuthorPayload = Omit<
+  Table<"internal_blog_author_profiles">,
+  "created_at" | "updated_at"
 >;
 
 export const EditAuthorProfileDialog = ({
@@ -39,7 +39,7 @@ export const EditAuthorProfileDialog = ({
   appAdmins,
 }: {
   profile: UpdateAuthorPayload;
-  appAdmins: Array<Table<'user_profiles'>>;
+  appAdmins: Array<Table<"user_profiles">>;
 }) => {
   const router = useRouter();
 
@@ -63,14 +63,24 @@ export const EditAuthorProfileDialog = ({
   const {
     mutate: updateAuthorProfileMutation,
     isLoading: isUpdatingAuthorProfile,
-  } = useToastMutation<void, unknown, UpdateAuthorPayload>(
-    async (payload) => {
+  } = useSAToastMutation(
+    async (payload: UpdateAuthorPayload) => {
       return updateAuthorProfile(profile.user_id, payload);
     },
     {
-      loadingMessage: 'Updating author profile...',
-      successMessage: 'Author profile updated!',
-      errorMessage: 'Failed to update author profile',
+      loadingMessage: "Updating author profile...",
+      successMessage: "Author profile updated!",
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to update author profile ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to update author profile';
+        }
+      },
       onSuccess: () => {
         setIsOpen(false);
         router.refresh();
@@ -91,7 +101,7 @@ export const EditAuthorProfileDialog = ({
     <Dialog open={isOpen} onOpenChange={(newIsOpen) => setIsOpen(newIsOpen)}>
       <DialogTrigger asChild>
         <Button variant="ghost" className="shadow-none hover:none">
-          <Edit className="h-5 w-5" />
+          <SquarePen className="h-5 w-5" />
         </Button>
       </DialogTrigger>
 
@@ -120,7 +130,10 @@ export const EditAuthorProfileDialog = ({
                     </SelectTrigger>
                     <SelectContent>
                       {appAdmins.map((admin) => (
-                        <SelectItem key={admin.id} value={admin.id}>
+                        <SelectItem
+                          key={admin.id}
+                          value={admin.id}
+                        >
                           {admin.full_name || `User ${admin.id}`}
                         </SelectItem>
                       ))}
@@ -216,8 +229,8 @@ export const EditAuthorProfileDialog = ({
             className="w-full"
           >
             {isLoading || isUpdatingAuthorProfile
-              ? 'Submitting...'
-              : 'Update Profile'}
+              ? "Submitting..."
+              : "Update Profile"}
           </Button>
         </form>
       </DialogContent>

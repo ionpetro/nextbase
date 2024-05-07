@@ -2,7 +2,7 @@
 import { T } from '@/components/ui/Typography';
 import { Skeleton } from '@/components/ui/skeleton';
 import { getProjectById } from '@/data/user/projects';
-import ProjectIcon from 'lucide-react/dist/esm/icons/layers';
+import { Layers } from 'lucide-react';
 import Link from 'next/link';
 
 import { Suspense } from 'react';
@@ -16,7 +16,7 @@ async function Title({ projectId }: { projectId: string }) {
   const project = await getProjectById(projectId);
   return (
     <div className="flex items-center gap-2">
-      <ProjectIcon className="w-4 h-4" />
+      <Layers className="w-4 h-4" />
       <T.P>{project.name}</T.P>
       <div className="flex items-center gap-2 border-gray-600 dark:border-slate-300 px-2 p-0.5 border rounded-full font-normal text-gray-600 text-xs dark:text-slate-300 uppercase">
         Project

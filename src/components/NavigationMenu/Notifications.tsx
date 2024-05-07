@@ -7,13 +7,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { useToastMutation } from '@/hooks/useToastMutation';
+import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import { supabaseUserClientComponentClient } from '@/supabase-clients/user/supabaseUserClientComponentClient';
 import type { Table } from '@/types';
 import { parseNotification } from '@/utils/parseNotification';
 import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query';
-import NotificationIcon from 'lucide-react/dist/esm/icons/bell';
-import CheckIcon from 'lucide-react/dist/esm/icons/check';
+import { Bell, Check } from 'lucide-react';
 import moment from 'moment';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect } from 'react';
@@ -179,14 +178,24 @@ function Notification({
 
 export const useReadAllNotifications = (userId: string) => {
   const router = useRouter();
-  return useToastMutation(
+  return useSAToastMutation(
     async () => {
       return readAllNotifications(userId);
     },
     {
       loadingMessage: 'Marking all notifications as read...',
       successMessage: 'All notifications marked as read',
-      errorMessage: 'Failed to mark all notifications as read',
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to mark all notifications as read ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to mark all notifications as read';
+        }
+      },
       onSuccess: () => {
         router.refresh();
       },
@@ -205,14 +214,24 @@ export const Notifications = ({ userId }: { userId: string }) => {
     isFetchingNextPage,
     isLoading,
   } = useNotifications(userId);
-  const { mutate } = useToastMutation(
+  const { mutate } = useSAToastMutation(
     async () => {
       return readAllNotifications(userId);
     },
     {
       loadingMessage: 'Marking all notifications as read...',
       successMessage: 'All notifications marked as read',
-      errorMessage: 'Failed to mark all notifications as read',
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to mark all notifications as read ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to mark all notifications as read';
+        }
+      },
       onSuccess: () => {
         router.refresh();
       },
@@ -221,7 +240,7 @@ export const Notifications = ({ userId }: { userId: string }) => {
   return (
     <Popover>
       <PopoverTrigger className="relative focus:ring-none">
-        <NotificationIcon className="px-0 w-5 h-5 text-muted-foreground hover:text-black dark:hover:text-white" />
+        <Bell className="px-0 w-5 h-5 text-muted-foreground hover:text-black dark:hover:text-white" />
         {unseenNotificationCount > 0 && (
           <span className="-top-1.5 -right-2 absolute bg-red-500 px-1.5 rounded-full font-bold text-white text-xs">
             {unseenNotificationCount}
@@ -239,10 +258,15 @@ export const Notifications = ({ userId }: { userId: string }) => {
               <div className="flex space-x-1 mt-2 font-medium text-sm cursor-pointer group">
                 {unseenNotificationCount ? (
                   <>
-                    <CheckIcon className="dark:group-hover:text-gray-400 w-5 h-5 text-muted-foreground" />{' '}
+                    <Check className="dark:group-hover:text-gray-400 w-5 h-5 text-muted-foreground" />{' '}
                     <span
                       onClick={() => {
                         mutate();
+                      }}
+                      onKeyUp={(e) => {
+                        if (e.key === 'Enter') {
+                          mutate();
+                        }
                       }}
                       className="dark:group-hover:text-gray-400 text-muted-foreground underline underline-offset-4"
                     >

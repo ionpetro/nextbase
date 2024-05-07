@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { createChangelog } from '@/data/admin/internal-changelog';
 import { uploadImage } from '@/data/admin/user';
-import { useToastMutation } from '@/hooks/useToastMutation';
+import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader } from 'lucide-react';
 import Image from 'next/image';
@@ -31,7 +31,7 @@ export const CreateChangelogForm = () => {
   const router = useRouter();
   const [isUploading, setIsUploading] = useState<boolean>(false);
 
-  const { mutate: upload } = useToastMutation(
+  const { mutate: upload } = useSAToastMutation(
     async (file: File) => {
       const formData = new FormData();
       formData.append('file', file);
@@ -41,14 +41,26 @@ export const CreateChangelogForm = () => {
     },
     {
       loadingMessage: 'Uploading changelog banner image...',
-      errorMessage: 'Failed to upload changelog banner image',
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to upload changelog banner image ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to upload changelog banner image';
+        }
+      },
       successMessage: 'Changelog banner image uploaded!',
-      onSuccess: (data) => {
+      onSuccess: (response) => {
         setIsUploading(false);
-        setValue('changelog_image', {
-          name: 'changelog_image',
-          url: data,
-        });
+        if (response.status === 'success' && response.data) {
+          setValue('changelog_image', {
+            name: 'changelog_image',
+            url: response.data,
+          });
+        }
       },
     },
   );

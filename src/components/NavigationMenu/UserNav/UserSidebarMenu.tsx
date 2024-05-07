@@ -1,10 +1,6 @@
 import { GiveFeedbackDialog } from '@/app/(dynamic-pages)/(feedback-pages)/feedback/[feedbackId]/GiveFeedbackDialog';
 import { cn } from '@/utils/cn';
-import ComputerIcon from 'lucide-react/dist/esm/icons/computer';
-import SecurityIcon from 'lucide-react/dist/esm/icons/lock';
-import LogoutIcon from 'lucide-react/dist/esm/icons/log-out';
-import MailIcon from 'lucide-react/dist/esm/icons/mail';
-import AccountsIcon from 'lucide-react/dist/esm/icons/user';
+import { Computer, Lock, LogOut, Mail, User } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
@@ -63,7 +59,7 @@ export function UserSidebarMenu({
           'flex gap-2 items-center py-2 text-sm',
         )}
       >
-        <AccountsIcon className="text-lg" /> Account settings
+        <User className="text-lg" /> Account settings
       </Link>
       <Link
         href="/settings/developer"
@@ -72,7 +68,7 @@ export function UserSidebarMenu({
           'flex gap-2 items-center py-2 text-sm',
         )}
       >
-        <ComputerIcon className="text-lg" /> Developer Settings
+        <Computer className="text-lg" /> Developer Settings
       </Link>
       <Link
         href="/settings/security"
@@ -81,13 +77,13 @@ export function UserSidebarMenu({
           'flex gap-2 items-center py-2 text-sm',
         )}
       >
-        <SecurityIcon className="text-lg" /> Security Settings
+        <Lock className="text-lg" /> Security Settings
       </Link>
 
       {appAdminSidebarLink}
       <div className="h-px bg-gray-200 dark:bg-gray-700  my-2" />
       <FeatureViewModal />
-      <GiveFeedbackDialog isExpanded={false}>
+      <GiveFeedbackDialog>
         <div
           data-testid="feedback-link"
           className={cn(
@@ -95,7 +91,7 @@ export function UserSidebarMenu({
             'flex gap-2 items-center py-2 text-sm cursor-pointer',
           )}
         >
-          <MailIcon className="text-lg" />
+          <Mail className="text-lg" />
           Feedback
         </div>
       </GiveFeedbackDialog>
@@ -109,7 +105,7 @@ export function UserSidebarMenu({
           'flex gap-2 items-center py-2 text-sm',
         )}
       >
-        <LogoutIcon className="text-lg" />
+        <LogOut className="text-lg" />
         Log out
       </Link>
     </div>

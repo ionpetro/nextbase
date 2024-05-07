@@ -3,7 +3,7 @@ import { Button } from '@/components/Button';
 import { T } from '@/components/ui/Typography';
 import { Input } from '@/components/ui/input';
 import { updateOrganizationTitle } from '@/data/user/organizations';
-import { useToastMutation } from '@/hooks/useToastMutation';
+import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import { useState, useTransition } from 'react';
 
 export function EditOrganizationForm({
@@ -15,14 +15,24 @@ export function EditOrganizationForm({
 }) {
   const [pending, startTransition] = useTransition();
 
-  const { mutate, isLoading } = useToastMutation(
+  const { mutate, isLoading } = useSAToastMutation(
     async (organizationTitle: string) => {
       return await updateOrganizationTitle(organizationId, organizationTitle);
     },
     {
       loadingMessage: 'Updating organization title...',
       successMessage: 'Organization title updated!',
-      errorMessage: 'Failed to update organization title',
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to update organization title ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to update organization title';
+        }
+      },
     },
   );
 

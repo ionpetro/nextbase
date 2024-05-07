@@ -8,7 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import Check from 'lucide-react/dist/esm/icons/check';
+import { Check } from 'lucide-react';
 import { useState } from 'react';
 
 type Props = {
