@@ -12,7 +12,6 @@ import UserIcon from 'lucide-react/dist/esm/icons/user-2';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 
-import { OrganizationSwitcher } from '@/components/SidebarComponents/OrganizationSwitcher';
 import { DesktopSidebarFallback } from '@/components/SidebarComponents/SidebarFallback';
 import { SwitcherAndToggle } from '@/components/SidebarComponents/SidebarLogo';
 import { organizationParamSchema } from '@/utils/zod-schemas/params';
@@ -79,15 +78,7 @@ async function OrganizationSidebarInternal({
           <SubscriptionCardSmall organizationId={organizationId} />
         </Suspense>
 
-        <div className="flex flex-col gap-1">
-          <p className="text-sm font-normal text-gray-500 dark:text-slate-400">
-            Select organization
-          </p>
-          <OrganizationSwitcher
-            currentOrganizationId={organizationId}
-            slimOrganizations={slimOrganizations}
-          />
-        </div>
+
       </div>
     </div>
   );
