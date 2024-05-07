@@ -8,7 +8,7 @@ export async function onboardUserHelper({
   name: string;
 }) {
   const viewTermsDialog = await page.waitForSelector(
-    'div[role="dialog"] div[data-testid="accept-terms-onboarding"]',
+    'div[data-testid="view-terms-onboarding"]',
   );
 
   if (!viewTermsDialog) {
@@ -39,7 +39,7 @@ export async function onboardUserHelper({
   await page.waitForSelector('text=Terms accepted!');
 
   const form = await page.waitForSelector(
-    'div[role="dialog"] form[data-testid="user-onboarding-form"]',
+    'form[data-testid="create-new-profile"]',
   );
   if (!form) {
     throw new Error('form not found');
@@ -57,17 +57,17 @@ export async function onboardUserHelper({
   // wait for text "Profile updated!"
   await page.waitForSelector('text=Profile updated!');
 
-  await page.waitForTimeout(6000);
-
   const createOrganizationForm = await page.waitForSelector(
-    'div[role="dialog"] form[data-testid="create-organization-form"]',
+    'form[data-testid="create-new-organization"]',
   );
 
   if (!createOrganizationForm) {
     throw new Error('createOrganizationForm not found');
   }
 
-  const inputCreateOrg = await createOrganizationForm.waitForSelector('input');
+  const inputCreateOrg = await createOrganizationForm.waitForSelector(
+    'input[name="organizationTitle"]',
+  );
 
   if (!inputCreateOrg) {
     throw new Error('inputCreateOrg not found');

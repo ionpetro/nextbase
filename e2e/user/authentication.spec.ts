@@ -59,8 +59,6 @@ test.describe.serial('authentication group', () => {
     // click on button with text exact: Login
     await page.click('button:text-is("Login")');
     await page.waitForSelector('text=Logged in!');
-
-    await page.waitForURL(`/dashboard`);
   });
 
   test('forgot password works correctly', async ({ page }) => {

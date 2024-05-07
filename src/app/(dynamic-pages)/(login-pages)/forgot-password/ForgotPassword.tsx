@@ -1,6 +1,7 @@
 'use client';
 import ConfirmationPendingCard from '@/components/Auth/ConfirmationPendingCard';
 import { Email } from '@/components/Auth/Email';
+import { Card } from '@/components/ui/card';
 import { T } from '@/components/ui/Typography';
 import { resetPassword } from '@/data/auth/auth';
 import { useSAToastMutation } from '@/hooks/useSAToastMutation';
@@ -44,7 +45,7 @@ export function ForgotPassword() {
           resetSuccessMessage={setSuccessMessage}
         />
       ) : (
-        <div className="container h-full grid items-center text-left max-w-lg mx-auto overflow-auto">
+        <Card className="container h-full grid items-center text-left max-w-lg mx-auto overflow-auto">
           <div className="space-y-4">
             {/* <Auth providers={['twitter']} supabaseClient={supabase} /> */}
             <T.H4>Forgot Password</T.H4>
@@ -58,7 +59,7 @@ export function ForgotPassword() {
               view="forgot-password"
             />
           </div>
-        </div>
+        </Card>
       )}
     </>
   );
