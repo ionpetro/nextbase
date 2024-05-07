@@ -1,5 +1,6 @@
 'use server';
 import { T } from '@/components/ui/Typography';
+import { Skeleton } from '@/components/ui/skeleton';
 import {
   Table as ShadcnTable,
   TableBody,
@@ -53,7 +54,7 @@ async function TeamMembers({ organizationId }: { organizationId: string }) {
         ) : null}
       </div>
 
-      <div className="rounded-lg border  shadow-sm overflow-hidden">
+      <div className="shadow-sm border rounded-lg overflow-hidden">
         <ShadcnTable data-testid="members-table">
           <TableHeader>
             <TableRow>
@@ -112,7 +113,7 @@ async function TeamInvitations({ organizationId }: { organizationId: string }) {
   return (
     <div className="space-y-4 max-w-4xl">
       <T.H3>Invitations</T.H3>
-      <div className="rounded-lg border  shadow-sm overflow-hidden">
+      <div className="shadow-sm border rounded-lg overflow-hidden">
         <ShadcnTable>
           <TableHeader>
             <TableRow>
@@ -163,10 +164,10 @@ export default async function OrganizationPage({
   const { organizationId } = organizationParamSchema.parse(params);
   return (
     <div className="space-y-12">
-      <Suspense fallback={<T.Subtle>Loading team members...</T.Subtle>}>
+      <Suspense fallback={<Skeleton className="w-2/3 h-8" />}>
         <TeamMembers organizationId={organizationId} />
       </Suspense>
-      <Suspense fallback={<T.Subtle>Loading invitations...</T.Subtle>}>
+      <Suspense fallback={<Skeleton className="w-2/3 h-8" />}>
         <TeamInvitations organizationId={organizationId} />
       </Suspense>
     </div>

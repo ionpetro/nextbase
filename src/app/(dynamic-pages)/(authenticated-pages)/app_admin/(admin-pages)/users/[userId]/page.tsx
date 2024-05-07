@@ -1,3 +1,4 @@
+import { Skeleton } from '@/components/ui/skeleton';
 import {
   Table as ShadcnTable,
   TableBody,
@@ -43,7 +44,7 @@ export default async function AdminUserPage({ params }: { params: unknown }) {
   const { userId } = paramsSchema.parse(params);
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Skeleton className="w-full h-6" />}>
       <OrganizationsTable userId={userId} />
     </Suspense>
   );

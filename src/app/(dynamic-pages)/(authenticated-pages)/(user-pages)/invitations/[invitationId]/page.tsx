@@ -1,4 +1,5 @@
 import { T } from '@/components/ui/Typography';
+import { Skeleton } from '@/components/ui/skeleton';
 import { getInvitationById } from '@/data/user/invitation';
 import type { Table } from '@/types';
 import { notFound } from 'next/navigation';
@@ -26,7 +27,7 @@ async function Invitation({ invitationId }: { invitationId: string }) {
     }
 
     return (
-      <div className="max-w-300px mx-auto space-y-2">
+      <div className="space-y-2 mx-auto max-w-300px">
         <T.H2>Invitation from {inviter.full_name}</T.H2>
         <div className="space-y-2">
           <T.P>
@@ -50,7 +51,7 @@ export default async function InvitationPage({ params }: { params: unknown }) {
   const { invitationId } = paramsSchema.parse(params);
 
   return (
-    <Suspense fallback={<T.Subtle>Loading...</T.Subtle>}>
+    <Suspense fallback={<Skeleton className="w-16 h-6" />}>
       <Invitation invitationId={invitationId} />
     </Suspense>
   );

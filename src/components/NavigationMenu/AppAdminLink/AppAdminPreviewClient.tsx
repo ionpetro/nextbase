@@ -15,7 +15,7 @@ export function AppAdminPreviewLink() {
       data-testid="admin-panel-link"
       href="/app_admin_preview"
       className={classNames(
-        `flex px-4 w-max cursor-pointer items-center group py-1 rounded-lg transition hover:cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-800 `,
+        `flex px-4 gap-2 w-max cursor-pointer items-center group py-1 rounded-lg transition hover:cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-800 `,
         isActive ? ' bg-gray-100  dark:bg-slate-800  ' : ' bg-transparent',
       )}
     >
@@ -27,7 +27,7 @@ export function AppAdminPreviewLink() {
             : ' text-gray-500 dark:text-slate-400 group-hover:text-gray-700 dark:group-hover:text-slate-300',
         )}
       >
-        <Server className="h-4 w-4 text-gray-500 dark:text-slate-400 group-hover:text-gray-700 dark:group-hover:text-slate-300" />
+        <Server className="group-hover:text-gray-700 dark:group-hover:text-slate-300 w-4 h-4 text-gray-500 dark:text-slate-400" />
       </span>
 
       <span

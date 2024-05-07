@@ -1,10 +1,7 @@
-import { T } from '@/components/ui/Typography';
-import { cn } from '@/utils/cn';
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function NavbarLoading() {
   return (
-    <div className={cn('hidden lg:block', 'relative ')}>
-      <T.Subtle>Loading...</T.Subtle>
-    </div>
+    <Skeleton className='flex justify-center items-center w-16 h-6' />
   );
 }

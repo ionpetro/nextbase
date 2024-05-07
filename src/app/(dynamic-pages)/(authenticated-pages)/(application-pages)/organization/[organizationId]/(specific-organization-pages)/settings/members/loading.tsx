@@ -2,6 +2,9 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 export default function Loading() {
   return (
-    <Skeleton className="w-16 h-6" />
+    <div>
+      <Skeleton className="w-2/3 h-6" />
+      <Skeleton className="w-2/3 h-6" />
+    </div>
   );
 }

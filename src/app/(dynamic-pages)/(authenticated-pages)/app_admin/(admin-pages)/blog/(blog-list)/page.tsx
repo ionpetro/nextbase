@@ -23,6 +23,7 @@ import { z } from "zod";
 import { sortSchema } from "./schema";
 
 import { Pagination } from '@/components/Pagination';
+import { Skeleton } from "@/components/ui/skeleton";
 import { SmallBlogPostList } from "./RecentlyList";
 
 async function ActionButtons() {
@@ -32,17 +33,17 @@ async function ActionButtons() {
     getAllBlogTags(),
   ]);
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4 content-start">
+    <div className="content-start gap-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1">
       <div className="flex flex-col gap-4">
         <ManageAuthorsDialog appAdmins={appAdmins} authorProfiles={authors} />
       </div>
-      <p className="text-xs text-muted-foreground">Hint :  Attach a blog post to an author so that they are all visible in that author's dedicated page publicly</p>
+      <p className="text-muted-foreground text-xs">Hint :  Attach a blog post to an author so that they are all visible in that author's dedicated page publicly</p>
       <ManageBlogTagsDialog blogTags={blogTags} />
 
       {/* {authors.length ? ( */}
       <Link href="/app_admin/blog/post/create">
-        <Button variant="default" className="w-full justify-start">
-          <PenSquareIcon className="size-4 mr-2" /> Create blog post
+        <Button variant="default" className="justify-start w-full">
+          <PenSquareIcon className="mr-2 size-4" /> Create blog post
         </Button>
       </Link>
       {/* ) : null} */}
@@ -74,14 +75,14 @@ export default async function BlogListPage({ searchParams }: { searchParams: unk
 
 
   return (
-    <div className="space-y-4 w-full grid grid-cols-1 lg:grid-cols-6 gap-12">
-      <div className="space-y-2 lg:row-start-1 row-start-2 lg:col-span-4 col-span-1">
+    <div className="gap-12 space-y-4 grid grid-cols-1 lg:grid-cols-6 w-full">
+      <div className="space-y-2 col-span-1 lg:col-span-4 row-start-2 lg:row-start-1">
         <div className="flex justify-between items-baseline">
           <div className="flex-1 mt-4">
             <T.H2 className="border-none">All posts</T.H2>
           </div>
         </div>
-        <Suspense fallback={<p>Loading...</p>}>
+        <Suspense fallback={<Skeleton className="w-16 h-6" />}>
           <div className="flex flex-col gap-4 lg:w-1/3">
             <Search placeholder="Search posts... " />
             <BlogFacetedFilters tags={tags.map(tag => tag.name)} />
@@ -95,20 +96,20 @@ export default async function BlogListPage({ searchParams }: { searchParams: unk
       <div className="space-y-8 col-span-1 lg:col-span-2 row-start-1">
         <div className="space-y-4">
           <Label className="text-md">Blog settings</Label>
-          <Suspense fallback={<T.P>Loading...</T.P>}>
+          <Suspense fallback={<Skeleton className="w-16 h-6" />}>
             <ActionButtons />
           </Suspense>
         </div>
-        <div className="hidden lg:flex flex-col gap-4">
+        <div className="lg:flex flex-col gap-4 hidden">
           <div className="space-y-4">
             <Label className="text-md">Recently published</Label>
-            <Suspense fallback={<T.P>Loading...</T.P>}>
+            <Suspense fallback={<Skeleton className="w-16 h-6" />}>
               <SmallBlogPostList typeList={"published"} />
             </Suspense>
           </div>
           <div className="space-y-4">
             <Label className="text-md">Drafted posts</Label>
-            <Suspense fallback={<T.P>Loading...</T.P>}>
+            <Suspense fallback={<Skeleton className="w-16 h-6" />}>
               <SmallBlogPostList typeList={"draft"} />
             </Suspense>
           </div>
