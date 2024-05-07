@@ -24,7 +24,7 @@ import { useSAToastMutation } from "@/hooks/useSAToastMutation";
 import type { Table } from "@/types";
 import { authorProfileSchema } from "@/utils/zod-schemas/internalBlog";
 import { zodResolver } from "@hookform/resolvers/zod";
-import UserIcon from "lucide-react/dist/esm/icons/user-plus";
+import { UserPlus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -105,7 +105,7 @@ export const AddAuthorProfileDialog = ({
       <DialogContent>
         <DialogHeader>
           <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 rounded-lg">
-            <UserIcon className="w-6 h-6" />
+            <UserPlus className="w-6 h-6" />
           </div>
           <div className="p-1 mb-4">
             <DialogTitle className="text-lg">Add Author Profile</DialogTitle>

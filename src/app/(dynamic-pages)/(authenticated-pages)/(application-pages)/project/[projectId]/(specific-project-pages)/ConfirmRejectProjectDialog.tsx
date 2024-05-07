@@ -8,7 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import TrashIcon from 'lucide-react/dist/esm/icons/trash';
+import { Trash } from 'lucide-react';
 import { useState } from 'react';
 
 type Props = {
@@ -22,13 +22,13 @@ export const ConfirmRejectProjectDialog = ({ onConfirm }: Props) => {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="destructive" size="default">
-          <TrashIcon className="mr-2 h-5 w-5" /> Reject Project
+          <Trash className="mr-2 h-5 w-5" /> Reject Project
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 rounded-lg">
-            <TrashIcon className="w-6 h-6" />
+            <Trash className="w-6 h-6" />
           </div>
           <div className="p-1">
             <DialogTitle className="text-lg">Reject Project</DialogTitle>

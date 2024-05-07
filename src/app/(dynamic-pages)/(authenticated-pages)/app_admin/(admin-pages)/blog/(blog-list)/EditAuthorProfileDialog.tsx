@@ -22,7 +22,7 @@ import { useSAToastMutation } from "@/hooks/useSAToastMutation";
 import type { Table } from "@/types";
 import { authorProfileSchema } from "@/utils/zod-schemas/internalBlog";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Edit from "lucide-react/dist/esm/icons/edit";
+import { SquarePen } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -101,7 +101,7 @@ export const EditAuthorProfileDialog = ({
     <Dialog open={isOpen} onOpenChange={(newIsOpen) => setIsOpen(newIsOpen)}>
       <DialogTrigger asChild>
         <Button variant="ghost" className="shadow-none hover:none">
-          <Edit className="h-5 w-5" />
+          <SquarePen className="h-5 w-5" />
         </Button>
       </DialogTrigger>
 

@@ -19,7 +19,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { updateBlogTag } from "@/data/admin/internal-blog";
 import { useSAToastMutation } from "@/hooks/useSAToastMutation";
 import type { Table } from "@/types";
-import Edit from "lucide-react/dist/esm/icons/edit";
+import { SquarePen } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import slugify from "slugify";
@@ -95,7 +95,7 @@ export const EditBlogTagDialog = ({
     <Dialog open={isOpen} onOpenChange={(newIsOpen) => setIsOpen(newIsOpen)}>
       <DialogTrigger asChild>
         <Button variant="ghost" className="shadow-none hover:none">
-          <Edit className="h-5 w-5" />
+          <SquarePen className="h-5 w-5" />
         </Button>
       </DialogTrigger>
 

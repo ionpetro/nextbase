@@ -1,6 +1,6 @@
 'use client';
 import { classNames } from '@/utils/classNames';
-import ServerIcon from 'lucide-react/dist/esm/icons/server';
+import { Server } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { match } from 'path-to-regexp';
@@ -27,7 +27,7 @@ export function AppAdminLinkClient() {
             : ' text-gray-500 dark:text-slate-400 ',
         )}
       >
-        <ServerIcon className="h-4 w-4" />
+        <Server className="h-4 w-4" />
       </span>
 
       <span

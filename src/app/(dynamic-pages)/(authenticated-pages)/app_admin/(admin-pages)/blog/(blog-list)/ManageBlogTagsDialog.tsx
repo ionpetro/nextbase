@@ -11,8 +11,7 @@ import {
 import { deleteBlogTag } from "@/data/admin/internal-blog";
 import { useSAToastMutation } from "@/hooks/useSAToastMutation";
 import type { Table } from "@/types";
-import TagsIcon from "lucide-react/dist/esm/icons/tag";
-import Trash from "lucide-react/dist/esm/icons/trash";
+import { Tag, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { AddBlogTagDialog } from "./AddBlogTagDialog";
@@ -55,7 +54,7 @@ export const ManageBlogTagsDialog = ({
     <Dialog open={isOpen} onOpenChange={(newIsOpen) => setIsOpen(newIsOpen)}>
       <DialogTrigger asChild>
         <Button variant="outline" className="text-start justify-start">
-          <TagsIcon className="mr-2 w-5 h-5" />
+          <Tag className="mr-2 w-5 h-5" />
           Manage blog tags
         </Button>
       </DialogTrigger>
@@ -63,7 +62,7 @@ export const ManageBlogTagsDialog = ({
       <DialogContent>
         <DialogHeader>
           <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 rounded-lg">
-            <TagsIcon className="size-4" />
+            <Tag className="size-4" />
           </div>
           <div className="p-1 mb-4">
             <DialogTitle className="text-lg">Manage blog tags</DialogTitle>

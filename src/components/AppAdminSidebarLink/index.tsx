@@ -1,6 +1,6 @@
 import { getIsAppAdmin } from '@/data/user/user';
 import { cn } from '@/utils/cn';
-import ServerIcon from 'lucide-react/dist/esm/icons/server';
+import { Server } from 'lucide-react';
 import Link from 'next/link';
 
 export async function AppAdminSidebarLink() {
@@ -15,7 +15,7 @@ export async function AppAdminSidebarLink() {
             'flex gap-2 items-center py-2 text-sm',
           )}
         >
-          <ServerIcon className="text-lg" /> Admin Panel
+          <Server className="text-lg" /> Admin Panel
         </Link>
       ) : (
         <Link
@@ -25,7 +25,7 @@ export async function AppAdminSidebarLink() {
             'flex gap-2 items-center py-2 text-sm',
           )}
         >
-          <ServerIcon className="text-lg" /> Admin Panel Preview
+          <Server className="text-lg" /> Admin Panel Preview
         </Link>
       )}
     </>

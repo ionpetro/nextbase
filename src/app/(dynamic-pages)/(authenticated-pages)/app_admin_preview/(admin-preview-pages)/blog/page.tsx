@@ -1,6 +1,6 @@
 import { PageHeading } from '@/components/PageHeading';
 import { Button } from '@/components/ui/button';
-import PenSquareIcon from 'lucide-react/dist/esm/icons/pen-tool';
+import { PenSquare } from 'lucide-react';
 import { BlogListPreview } from '../../../app_admin/(admin-pages)/blog/(blog-list)/BlogListPreview';
 
 export default function AdminBlogList() {
@@ -12,7 +12,7 @@ export default function AdminBlogList() {
         actions={
           <div className="space-x-2 flex items-center">
             <Button variant="default" className="text-sm">
-              <PenSquareIcon className="mr-2 w-5 h-5" /> Create blog post
+              <PenSquare className="mr-2 w-5 h-5" /> Create blog post
             </Button>
             <Button variant="default" className="text-sm">
               Manage Authors

@@ -1,5 +1,5 @@
 import { T } from '@/components/ui/Typography';
-import LayersIcon from 'lucide-react/dist/esm/icons/layers';
+import { Layers } from 'lucide-react';
 import { Suspense } from 'react';
 import { z } from 'zod';
 import { CommentInput } from './CommentInput';
@@ -20,7 +20,7 @@ export default function ProjectPage({ params }: { params: unknown }) {
         >
           <div className="bg-white dark:bg-slate-900 items-center px-4 pl-2 flex space-x-3 py-2 shadow-sm border border-gray-300 dark:border-gray-600/50 rounded-xl">
             <div className="p-3 w-fit bg-gray-200/50 dark:bg-slate-700/40 rounded-lg">
-              <LayersIcon className=" w-6 h-6" />
+              <Layers className=" w-6 h-6" />
             </div>
             <div className="flex flex-col justify-center space-y-1.5">
               <T.Small className=" leading-none m-0">

@@ -1,7 +1,7 @@
 // https://github.com/vercel/next.js/issues/58272
 import { T } from '@/components/ui/Typography';
 import { getProjectById } from '@/data/user/projects';
-import ProjectIcon from 'lucide-react/dist/esm/icons/layers';
+import { Layers } from 'lucide-react';
 import Link from 'next/link';
 
 import { Suspense } from 'react';
@@ -15,7 +15,7 @@ async function Title({ projectId }: { projectId: string }) {
   const project = await getProjectById(projectId);
   return (
     <div className="flex items-center gap-2">
-      <ProjectIcon className="w-4 h-4" />
+      <Layers className="w-4 h-4" />
       <T.P>{project.name}</T.P>
       <div className="flex items-center gap-2 p-0.5 px-2 rounded-full text-xs font-normal  text-gray-600 dark:text-slate-300 border border-gray-600 dark:border-slate-300  uppercase ">
         Project

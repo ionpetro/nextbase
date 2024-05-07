@@ -6,9 +6,7 @@ import { fetchSlimOrganizations } from '@/data/user/organizations';
 import { getSlimProjectById } from '@/data/user/projects';
 import { cn } from '@/utils/cn';
 import { projectParamSchema } from '@/utils/zod-schemas/params';
-import ArrowLeftIcon from 'lucide-react/dist/esm/icons/arrow-left';
-import ProjectIcon from 'lucide-react/dist/esm/icons/layers';
-import SettingsIcon from 'lucide-react/dist/esm/icons/settings';
+import { ArrowLeft, Layers, Settings } from 'lucide-react';
 import { Suspense } from 'react';
 
 async function ProjectSidebarInternal({ projectId }: { projectId: string }) {
@@ -31,24 +29,24 @@ async function ProjectSidebarInternal({ projectId }: { projectId: string }) {
           <SidebarLink
             label="Back to organization"
             href={`/organization/${organizationId}`}
-            icon={<ArrowLeftIcon className="h-5 w-5" />}
+            icon={<ArrowLeft className="h-5 w-5" />}
           />
           {project.team_id && (
             <SidebarLink
               label="Back to team"
               href={`/organization/${organizationId}/team/${project.team_id}`}
-              icon={<ArrowLeftIcon className="h-5 w-5" />}
+              icon={<ArrowLeft className="h-5 w-5" />}
             />
           )}
           <SidebarLink
             label="Project Home"
             href={`/project/${projectId}`}
-            icon={<ProjectIcon className="h-5 w-5" />}
+            icon={<Layers className="h-5 w-5" />}
           />
           <SidebarLink
             label="Project Settings"
             href={`/project/${projectId}/settings`}
-            icon={<SettingsIcon className="h-5 w-5" />}
+            icon={<Settings className="h-5 w-5" />}
           />
         </div>
       </div>

@@ -14,7 +14,7 @@ import { Label } from '@/components/ui/label';
 import { createUserAction } from '@/data/admin/user';
 import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import { getErrorMessage } from '@/utils/getErrorMessage';
-import Plus from 'lucide-react/dist/esm/icons/plus';
+import { Plus } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useInput } from 'rooks';

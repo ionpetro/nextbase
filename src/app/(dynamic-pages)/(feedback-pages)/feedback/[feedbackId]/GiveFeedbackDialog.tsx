@@ -22,7 +22,7 @@ import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import type { Enum } from '@/types';
 import { cn } from '@/utils/cn';
 import { zodResolver } from '@hookform/resolvers/zod';
-import FeedbackIcon from 'lucide-react/dist/esm/icons/message-square';
+import { MessageSquare } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -114,7 +114,7 @@ export const GiveFeedbackDialog = ({
       <DialogContent>
         <DialogHeader>
           <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 rounded-lg">
-            <FeedbackIcon className="w-6 h-6" />
+            <MessageSquare className="w-6 h-6" />
           </div>
           <div className="p-1 mb-4">
             <DialogTitle className="text-lg">Give Feedback</DialogTitle>

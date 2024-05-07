@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/dialog';
 import { sendLoginLinkAction } from '@/data/admin/user';
 import { useSAToastMutation } from '@/hooks/useSAToastMutation';
-import SendLinkIcon from 'lucide-react/dist/esm/icons/send';
+import { Send } from 'lucide-react';
 import { useState } from 'react';
 
 export const ConfirmSendLoginLinkDialog = ({
@@ -40,7 +40,7 @@ export const ConfirmSendLoginLinkDialog = ({
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 mb-2 rounded-lg">
-            <SendLinkIcon className=" w-6 h-6" />
+            <Send className=" w-6 h-6" />
           </div>
           <div className="p-1">
             <DialogTitle className="text-lg">Send Login Link</DialogTitle>

@@ -6,12 +6,12 @@ import {
   getBlogPostById,
   getBlogTagRelationships,
 } from "@/data/admin/internal-blog";
-import ChevronLeft from "lucide-react/dist/esm/icons/chevron-left";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { z } from "zod";
 import { BlogForm, type EditBlogFormProps } from "../../../BlogForm";
+import { ChevronLeft } from "lucide-react";
 
 const paramsSchema = z.object({
   postId: z.string(),

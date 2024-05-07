@@ -1,22 +1,17 @@
 import { Enum } from '@/types';
 import { formatFieldValue } from '@/utils/feedback';
+import { Bug, Calendar, Command, Info } from 'lucide-react';
 
-import {
-  Bug as BugIcon,
-  Calendar as CalendarIcon,
-  Command as FeatureIcon,
-  Info as InfoIcon,
-} from 'lucide-react/dist/esm/icons';
 import { Badge, BadgeProps } from './ui/badge';
 
 const getIconVariantForTag = (tag: Enum<'internal_feedback_thread_type'>) => {
   switch (tag) {
     case 'bug':
-      return <BugIcon className="mr-2 h-4 w-4" />;
+      return <Bug className="mr-2 h-4 w-4" />;
     case 'general':
-      return <InfoIcon className="mr-2 h-4 w-4" />;
+      return <Info className="mr-2 h-4 w-4" />;
     case 'feature_request':
-      return <FeatureIcon className="mr-2 h-4 w-4" />;
+      return <Command className="mr-2 h-4 w-4" />;
     default:
       return null;
   }
@@ -86,7 +81,7 @@ export default function RoadmapCard({
         </div>
 
         <div className="flex text-sm text-muted-foreground items-center">
-          <CalendarIcon className="mr-2 h-4 w-4" />
+          <Calendar className="mr-2 h-4 w-4" />
           <span className="font-semibold">{date}</span>
         </div>
       </div>

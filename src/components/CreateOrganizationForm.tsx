@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import OrganizationIcon from 'lucide-react/dist/esm/icons/network';
+import { Network } from 'lucide-react';
 import { redirect } from 'next/navigation';
 import { useState } from 'react';
 
@@ -40,7 +40,7 @@ export function CreateOrganizationForm({
         <DialogContent>
           <DialogHeader>
             <div className="p-3 w-fit bg-gray-200/50 dark:bg-gray-700/40 mb-2 rounded-lg">
-              <OrganizationIcon className=" w-6 h-6" />
+              <Network className=" w-6 h-6" />
             </div>
             <div className="p-1">
               <DialogTitle className="text-lg">Create Organization</DialogTitle>
