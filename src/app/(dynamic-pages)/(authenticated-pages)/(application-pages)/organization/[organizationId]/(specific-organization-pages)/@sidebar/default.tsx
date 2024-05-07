@@ -11,7 +11,7 @@ import { OrganizationSwitcher } from '@/components/SidebarComponents/Organizatio
 import { DesktopSidebarFallback } from '@/components/SidebarComponents/SidebarFallback';
 import { SwitcherAndToggle } from '@/components/SidebarComponents/SidebarLogo';
 import { organizationParamSchema } from '@/utils/zod-schemas/params';
-import { DollarSign, FileBox, Home, Settings, UserRound } from 'lucide-react';
+import { DollarSign, FileBox, Home, Layers, Settings, UserRound } from 'lucide-react';
 
 async function OrganizationSidebarInternal({
   organizationId,

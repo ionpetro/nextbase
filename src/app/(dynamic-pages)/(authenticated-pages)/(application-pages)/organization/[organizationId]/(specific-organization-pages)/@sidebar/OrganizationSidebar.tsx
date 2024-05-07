@@ -10,7 +10,7 @@ import { DesktopSidebarFallback } from '@/components/SidebarComponents/SidebarFa
 import { SwitcherAndToggle } from '@/components/SidebarComponents/SidebarLogo';
 import { SubscriptionCardSmall } from '@/components/SubscriptionCardSmall';
 import { T } from '@/components/ui/Typography';
-import { DollarSign, FileBox, Home, Settings, UserRound } from 'lucide-react';
+import { DollarSign, FileBox, Home, Layers, Settings, UserRound } from 'lucide-react';
 
 async function OrganizationSidebarInternal({
   organizationId,
