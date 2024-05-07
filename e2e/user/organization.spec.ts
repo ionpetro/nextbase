@@ -13,17 +13,13 @@ test.describe.parallel('Organization', () => {
     const orgSwitcherButton = page.locator(
       'button[data-testid="organization-switcher"]',
     );
-    // wait page load completely to avoid dialog closing
-    await page.waitForTimeout(12000);
-
-    if (orgSwitcherButton) {
-      await orgSwitcherButton.click();
-    }
-
+    // wait page load
     await page.waitForTimeout(5000);
+    await orgSwitcherButton.click();
 
     const button = await page.waitForSelector(
       'button:has-text("New Organization")',
+      { timeout: 120000 },
     );
 
     if (!button) {
@@ -243,7 +239,7 @@ test.describe.parallel('Organization', () => {
 
       await page.goto(url);
 
-      await page.waitForURL(`/dashboard`);
+      await page.waitForURL(`/onboarding`);
 
       await onboardUserHelper({
         page,

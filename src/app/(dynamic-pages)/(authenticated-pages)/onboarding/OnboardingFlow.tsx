@@ -58,7 +58,7 @@ function TermsAcceptance({ onSuccess }: TermsAcceptanceProps) {
   );
 
   return (
-    <Card className="max-w-[400px]" data-testid="accept-terms-onboarding">
+    <Card className="max-w-[400px]" data-testid="view-terms-onboarding">
       <CardHeader>
         <CardTitle>🎉 Welcome Aboard!</CardTitle>
         <CardDescription>
@@ -165,6 +165,7 @@ export function ProfileUpdate({
           e.preventDefault();
           updateProfile();
         }}
+        data-testid="create-new-profile"
       >
         <CardHeader>
           <div className="space-y-0">
@@ -297,7 +298,7 @@ export function OrganizationCreation({ onSuccess }: OrganizationCreationProps) {
 
   return (
     <Card>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} data-testid={'create-new-organization'}>
         <CardHeader>
           <CardTitle>Create Organization</CardTitle>
           <CardDescription>
