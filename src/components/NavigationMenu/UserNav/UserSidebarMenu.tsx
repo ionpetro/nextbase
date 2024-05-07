@@ -87,7 +87,7 @@ export function UserSidebarMenu({
       {appAdminSidebarLink}
       <div className="h-px bg-gray-200 dark:bg-gray-700  my-2" />
       <FeatureViewModal />
-      <GiveFeedbackDialog isExpanded={false}>
+      <GiveFeedbackDialog>
         <div
           data-testid="feedback-link"
           className={cn(

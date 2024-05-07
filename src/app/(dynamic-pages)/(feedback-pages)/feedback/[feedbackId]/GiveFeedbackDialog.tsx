@@ -20,8 +20,10 @@ import {
 import { createInternalFeedback } from '@/data/user/internalFeedback';
 import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import type { Enum } from '@/types';
+import { cn } from '@/utils/cn';
 import { zodResolver } from '@hookform/resolvers/zod';
 import FeedbackIcon from 'lucide-react/dist/esm/icons/message-square';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -45,12 +47,13 @@ const feedbackSchema = z.object({
 type FeedbackFormType = z.infer<typeof feedbackSchema>;
 
 export const GiveFeedbackDialog = ({
-  isExpanded,
   children,
+  className,
 }: {
-  isExpanded: boolean;
   children?: React.ReactNode;
+  className?: string;
 }) => {
+  const router = useRouter()
   const [isOpen, setIsOpen] = useState(false);
   const { control, handleSubmit, formState, reset } = useForm<FeedbackFormType>(
     {
@@ -80,9 +83,12 @@ export const GiveFeedbackDialog = ({
           return 'Failed to create feedback';
         }
       },
-      onSuccess: () => {
+      onSuccess: (response) => {
         setIsOpen(false);
         reset();
+        if (response.status === 'success') {
+          router.push(`/feedback/${response.data?.id}`);
+        }
       },
     },
   );
@@ -101,7 +107,7 @@ export const GiveFeedbackDialog = ({
         setIsOpen(newIsOpen);
       }}
     >
-      <DialogTrigger className="w-full" asChild>
+      <DialogTrigger className={cn('w-full', className)} asChild>
         {children ? children : <Button variant="default">Give Feedback</Button>}
       </DialogTrigger>
 

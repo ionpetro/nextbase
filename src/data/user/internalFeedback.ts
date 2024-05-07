@@ -303,7 +303,7 @@ export async function createInternalFeedback(payload: {
     };
   }
 
-  const insertedFeedback = data[0];
+  const insertedFeedback = data;
   if (!insertedFeedback) {
     return {
       status: 'error',
@@ -334,13 +334,14 @@ export async function createInternalFeedbackComment(
   const { data, error } = await supabaseClient
     .from('internal_feedback_comments')
     .insert({ thread_id: feedbackId, user_id: userId, content })
-    .select('*');
+    .select('*')
+    .single();
 
   if (error) {
     throw error;
   }
 
-  return data[0];
+  return data;
 }
 
 export async function toggleFeedbackThreadVisibility(
