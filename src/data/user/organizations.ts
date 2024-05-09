@@ -28,7 +28,7 @@ export const createOrganization = async (
 
   const organizationId = uuid();
 
-  const { error } = await supabaseClient.from('organizations').insert({
+  const { error, } = await supabaseClient.from('organizations').insert({
     title: name,
     id: organizationId,
   });
@@ -36,6 +36,7 @@ export const createOrganization = async (
   if (error) {
     return { status: 'error', message: error.message };
   }
+
 
   const { error: orgMemberErrors } = await supabaseAdminClient
     .from('organization_members')
@@ -52,6 +53,28 @@ export const createOrganization = async (
   }
 
   if (isOnboardingFlow) {
+
+    // insert 3 dummy projects
+
+    const { error: projectError } = await supabaseClient.from('projects').insert([
+      {
+        organization_id: organizationId,
+        name: 'Project 1',
+      },
+      {
+        organization_id: organizationId,
+        name: 'Project 2',
+      },
+      {
+        organization_id: organizationId,
+        name: 'Project 3',
+      },
+    ]);
+
+    if (projectError) {
+      return { status: 'error', message: projectError.message };
+    }
+
     const { error: updateError } = await supabaseClient
       .from('user_private_info')
       .update({ default_organization: organizationId })
@@ -60,6 +83,7 @@ export const createOrganization = async (
     if (updateError) {
       return { status: 'error', message: updateError.message };
     }
+
 
     const updateUserMetadataPayload: Partial<AuthUserMetadata> = {
       onboardingHasCreatedOrganization: true,

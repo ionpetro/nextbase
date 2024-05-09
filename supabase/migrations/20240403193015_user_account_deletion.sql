@@ -44,3 +44,10 @@ ALTER TABLE public.user_private_info
 ADD CONSTRAINT user_private_info_default_organization_fkey FOREIGN KEY (default_organization) REFERENCES public.organizations(id) ON DELETE
 SET NULL;
 
+ALTER TABLE ONLY "public"."organization_credits"
+DROP CONSTRAINT IF EXISTS "organization_credits_organization_id_fkey";
+
+ALTER TABLE ONLY "public"."organization_credits"
+ADD CONSTRAINT "organization_credits_organization_id_fkey" FOREIGN KEY ("organization_id") REFERENCES "public"."organizations"("id") ON DELETE CASCADE;
+
+
