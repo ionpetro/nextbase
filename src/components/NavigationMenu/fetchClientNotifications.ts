@@ -52,7 +52,7 @@ export const getPaginatedNotifications = async (
   const { data: notifications, error } = await supabaseUserClientComponentClient
     .from('user_notifications')
     .select('*')
-    .match({ user_id: userId })
+    .match({ user_id: userId})
     .order('created_at', { ascending: false })
     .range(pageNumber * limit, (pageNumber + 1) * limit - 1);
   if (error) throw error;

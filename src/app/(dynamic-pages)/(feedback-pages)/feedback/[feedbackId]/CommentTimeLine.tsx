@@ -13,7 +13,7 @@ function FeedbackCommentsFallback() {
   return (
     <ol className="relative border-l border-gray-200 dark:border-gray-700">
       <li className="mb-10 ms-4">
-        <div className="absolute bg-red-200 mt-1.5 -start-1.5 border">
+        <div className="absolute mt-1.5 -start-1.5 border">
           <div className="flex items-center space-x-4">
             <Skeleton className="w-6 h-6 rounded-full" />
             <Skeleton className="w-40 h-6 rounded-md" />

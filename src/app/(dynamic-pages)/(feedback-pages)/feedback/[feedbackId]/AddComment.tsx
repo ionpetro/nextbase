@@ -10,11 +10,9 @@ import { useState } from 'react';
 
 function AddComment({
   feedbackId,
-  isOpenToComments,
   defaultValue = '',
 }: {
   feedbackId: string;
-  isOpenToComments: boolean;
   defaultValue?: string;
 }) {
   const [content, setContent] = useState(defaultValue);
@@ -50,7 +48,7 @@ function AddComment({
         className='resize-none'
         placeholder="Type your message here."
         value={content}
-        disabled={isLoading || !isOpenToComments}
+        disabled={isLoading}
         onChange={(e) => setContent(e.target.value)}
       />
       <Button

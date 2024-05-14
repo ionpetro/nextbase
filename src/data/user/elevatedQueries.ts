@@ -41,7 +41,15 @@ export async function getInvitationOrganizationDetails(organizationId: string) {
  * This function is called createAdminNotificationForUserActivity because
  * it is used to notify admins when a logged in user performs an activity.
  * */
-export const createAdminNotificationForUserActivity = async (payload: Json) => {
+
+/**
+ * Creates notifications for all admins when a user performs an activity.
+ * 
+ * @param payload - JSON object containing notification data.
+ * @param excludedAdminUserId - (Optional) ID of the admin user to exclude from receiving the notification.
+ * @returns Returns a Promise resolving to the notification data.
+ */
+export const createAdminNotification = async ({ payload, excludedAdminUserId }: { payload: Json, excludedAdminUserId?: string }) => {
   async function getAllAdminUserIds() {
     const { data, error } = await supabaseAdminClient
       .from('user_roles')
@@ -54,17 +62,20 @@ export const createAdminNotificationForUserActivity = async (payload: Json) => {
 
     return data.map((row) => row.user_id);
   }
+  let adminUserIdsToNotify = await getAllAdminUserIds();
 
-  const adminUserIds = await getAllAdminUserIds();
+  if (excludedAdminUserId && adminUserIdsToNotify.includes(excludedAdminUserId)) {
+    adminUserIdsToNotify = adminUserIdsToNotify?.filter((userId) => userId != excludedAdminUserId);
+  }
+
   const { data: notification, error } = await supabaseAdminClient
     .from('user_notifications')
     .insert(
-      adminUserIds.map((userId) => ({
+      adminUserIdsToNotify.map((userId) => ({
         user_id: userId,
         payload,
-      })),
+      }))
     );
   if (error) throw error;
   return notification;
 };
-

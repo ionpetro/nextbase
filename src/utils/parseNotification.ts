@@ -18,7 +18,7 @@ type NormalizedNotification = {
       actionType: 'button';
     }
   );
-
+ 
 export const parseNotification = (
   notificationPayload: unknown,
 ): NormalizedNotification => {
@@ -57,10 +57,73 @@ export const parseNotification = (
       case 'receivedFeedback':
         return {
           title: `${PRODUCT_NAME} received new feedback`,
-          description: `A user said: ${notification.feedbackTitle}`,
+          description: `${notification.feedbackCreatorFullName} said: ${notification.feedbackTitle}`,
           image: '/logos/logo-black.png',
           actionType: 'link',
-          href: `/app_admin/feedback/${notification.feedbackId}`,
+          href: `/feedback/${notification.feedbackId}`,
+          type: notification.type,
+        };
+      case 'feedbackReceivedComment':
+        return {
+          title: `New comment on ${notification.feedbackTitle}`,
+          description: `${notification.commenterName} says: ${notification.comment.slice(0, 50) + '...'}`,
+          image: '/logos/logo-black.png',
+          actionType: 'link',
+          href: `/feedback/${notification.feedbackId}`,
+          type: notification.type,
+        };
+      case 'feedbackStatusChanged':
+        return {
+          title: `Your feedback was updated.`,
+          description: `Your feedback status was updated from ${notification.oldStatus} to ${notification.newStatus}`,
+          image: '/logos/logo-black.png',
+          actionType: 'link',
+          href: `/feedback/${notification.feedbackId}`,
+          type: notification.type,
+        };
+      case 'feedbackPriorityChanged':
+        return {
+          title: `Your feedback was updated.`,
+          description: `Your feedback priority was updated from ${notification.oldPriority} to ${notification.newPriority}`,
+          image: '/logos/logo-black.png',
+          actionType: 'link',
+          href: `/feedback/${notification.feedbackId}`,
+          type: notification.type,
+        };
+      case 'feedbackTypeUpdated':
+        return {
+          title: `Your feedback was updated.`,
+          description: `Your feedback priority was updated from ${notification.oldType} to ${notification.newType}`,
+          image: '/logos/logo-black.png',
+          actionType: 'link',
+          href: `/feedback/${notification.feedbackId}`,
+          type: notification.type,
+        };
+      case 'feedbackIsInRoadmapUpdated':
+        return {
+          title: `Your feedback was updated.`,
+          description: `Your feedback is now ${notification.isInRoadmap ? 'added to' : 'removed from'} roadmap.`,
+          image: '/logos/logo-black.png',
+          actionType: 'link',
+          href: `/feedback/${notification.feedbackId}`,
+          type: notification.type,
+        };
+      case 'feedbackVisibilityUpdated':
+        return {
+          title: `Your feedback was updated.`,
+          description: `Your feedback is now ${notification.isPubliclyVisible ? 'visible to' : 'hidden from'} public.`,
+          image: '/logos/logo-black.png',
+          actionType: 'link',
+          href: `/feedback/${notification.feedbackId}`,
+          type: notification.type,
+        };
+      case 'feedbackFeedbackOpenForCommentUpdated':
+        return {
+          title: `Your feedback was updated.`,
+          description: `Your feedback is now ${notification.isOpenForComments ? 'open' : 'closed to'} comments.`,
+          image: '/logos/logo-black.png',
+          actionType: 'link',
+          href: `/feedback/${notification.feedbackId}`,
           type: notification.type,
         };
       default: {

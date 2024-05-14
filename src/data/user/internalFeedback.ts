@@ -7,6 +7,7 @@ import type { Enum, ValidSAPayload } from '@/types';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import { revalidatePath } from 'next/cache';
 import { createReceivedFeedbackNotification } from './notifications';
+import { getUserFullName } from './user';
 
 export async function getLoggedInUserFeedbackList({
   query = '',
@@ -36,7 +37,7 @@ export async function getLoggedInUserFeedbackList({
     .from('internal_feedback_threads')
     .select('*')
     .or(
-      'added_to_roadmap.eq.true,open_for_public_discussion.eq.true,is_publicly_visible.eq.true',
+      `added_to_roadmap.eq.true,open_for_public_discussion.eq.true,is_publicly_visible.eq.true,user_id.eq.${userId}`,
     )
     .range(zeroIndexedPage * limit, (zeroIndexedPage + 1) * limit - 1);
 
@@ -311,9 +312,12 @@ export async function createInternalFeedback(payload: {
     };
   }
 
+  const userFullName = await getUserFullName(user.id)
   await createReceivedFeedbackNotification({
     feedbackId: insertedFeedback.id,
     feedbackTitle: insertedFeedback.title,
+    feedbackCreatorFullName: userFullName || 'User',
+    feedbackCreatorId: user.id
   });
 
   revalidatePath('/feedback', 'layout');

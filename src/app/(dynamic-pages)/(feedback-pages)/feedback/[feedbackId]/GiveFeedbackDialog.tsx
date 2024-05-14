@@ -84,9 +84,9 @@ export const GiveFeedbackDialog = ({
         }
       },
       onSuccess: (response) => {
-        setIsOpen(false);
-        reset();
         if (response.status === 'success') {
+          reset({}, { keepDefaultValues: false, keepValues: false });
+          setIsOpen(false);
           router.push(`/feedback/${response.data?.id}`);
         }
       },

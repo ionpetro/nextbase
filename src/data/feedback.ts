@@ -8,6 +8,9 @@ import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import { serverGetUserType } from '@/utils/server/serverGetUserType';
 import { userRoles } from '@/utils/userTypes';
 import { revalidatePath } from 'next/cache';
+import { createFeedbackAddedToRoadmapUpdatedNotification, createFeedbackPriorityChangedNotification, createFeedbackReceivedCommentNotification, createFeedbackStatusChangedNotification, createFeedbackTypeUpdatedNotification, createFeedbackVisibilityUpdatedNotification, createUpdateFeedbackOpenForCommentsNotification } from './user/notifications';
+import { getUserFullName } from './user/user';
+
 
 export async function addCommentToInternalFeedbackThread({
   feedbackId,
@@ -16,48 +19,71 @@ export async function addCommentToInternalFeedbackThread({
   feedbackId: string;
   content: string;
 }): Promise<ValidSAPayload<Tables<'internal_feedback_comments'>[]>> {
-  const user = await serverGetLoggedInUser();
-  const supabaseClient = await supabaseClientBasedOnUserRole();
+  try {
+    const user = await serverGetLoggedInUser();
+    const userRoleType = await serverGetUserType();
+    const supabaseClient = await supabaseClientBasedOnUserRole();
 
-  const { data: feedbackThread, error: feedbackThreadError } =
-    await supabaseAdminClient
-      .from('internal_feedback_threads')
-      .select('*')
-      .eq('id', feedbackId)
-      .maybeSingle();
+    const { data: feedbackThread, error: feedbackThreadError } =
+      await supabaseAdminClient
+        .from('internal_feedback_threads')
+        .select('*')
+        .eq('id', feedbackId)
+        .maybeSingle();
 
-  if (feedbackThreadError) {
+    if (feedbackThreadError) {
+      return {
+        status: 'error',
+        message: feedbackThreadError.message,
+      };
+    }
+
+    /**
+     * App admins can comment on all the feedbacks
+     * normal user can comment on their own feedback and the one's with open for public
+     */
+    if (!(feedbackThread?.open_for_public_discussion || feedbackThread?.user_id == user.id || userRoleType == userRoles.ADMIN)) {
+      return {
+        status: 'error',
+        message: 'This feedback thread is not open for public discussion',
+      };
+    }
+
+    const { data, error } = await supabaseClient
+      .from('internal_feedback_comments')
+      .insert({ thread_id: feedbackId, user_id: user.id, content })
+      .select('*');
+
+    if (error) {
+      return {
+        status: 'error',
+        message: error.message,
+      };
+    }
+
+    const userFullName = await getUserFullName(user.id)
+
+    await createFeedbackReceivedCommentNotification({
+      feedbackId,
+      feedbackTitle: feedbackThread?.title || '',
+      comment: content,
+      commenterId: user.id,
+      commenterName: userFullName ?? 'User',
+    })
+
+    revalidatePath('/feedback', 'layout');
+    revalidatePath(`/feedback/${feedbackId}`, 'layout');
     return {
-      status: 'error',
-      message: feedbackThreadError.message,
+      status: 'success',
+      data,
     };
-  }
 
-  if (!feedbackThread?.open_for_public_discussion) {
-    return {
-      status: 'error',
-      message: 'This feedback thread is not open for public discussion',
-    };
-  }
-
-  const { data, error } = await supabaseClient
-    .from('internal_feedback_comments')
-    .insert({ thread_id: feedbackId, user_id: user.id, content })
-    .select('*');
-
-  if (error) {
+  } catch (error) {
     return {
       status: 'error',
       message: error.message,
     };
   }
-
-  revalidatePath('/feedback', 'page');
-  revalidatePath(`/feedback/${feedbackId}`, 'page');
-  return {
-    status: 'success',
-    data,
-  };
 }
 
 export async function ownerUpdateFeedbackComment({
@@ -127,25 +153,48 @@ export async function adminUpdateFeedbackStatus({
 }: {
   feedbackId: string;
   status: Enum<'internal_feedback_thread_status'>;
-}) {
+}): Promise<ValidSAPayload<unknown>> {
   const userRoleType = await serverGetUserType();
+  const user = await serverGetLoggedInUser();
 
   if (userRoleType !== userRoles.ADMIN) {
     throw new Error('You are unathorized to perform this action');
   }
 
-  const { data, error } = await supabaseAdminClient
+  const { data: feedbackThread, error: feedbackThreadError } =
+    await supabaseAdminClient
+      .from('internal_feedback_threads')
+      .select('user_id, status')
+      .eq('id', feedbackId)
+      .single()
+
+  if (feedbackThreadError) {
+    return {
+      status: 'error',
+      message: feedbackThreadError.message,
+    };
+  }
+  const { error } = await supabaseAdminClient
     .from('internal_feedback_threads')
     .update({ status })
-    .eq('id', feedbackId);
+    .eq('id', feedbackId)
 
   if (error) {
-    throw error;
+    return { status: 'error', message: error.message };
   }
+
+  await createFeedbackStatusChangedNotification({
+    feedbackId,
+    newStatus: status,
+    oldStatus: feedbackThread.status,
+    feedbackOwnerId: feedbackThread.user_id,
+    statusUpdaterId: user.id,
+  });
 
   revalidatePath('/feedback', 'page');
   revalidatePath(`/feedback/${feedbackId}`, 'page');
-  return data;
+
+  return { status: 'success' };
 }
 
 export async function adminUpdateFeedbackType({
@@ -156,9 +205,24 @@ export async function adminUpdateFeedbackType({
   type: Enum<'internal_feedback_thread_type'>;
 }): Promise<ValidSAPayload> {
   const userRoleType = await serverGetUserType();
+  const user = await serverGetLoggedInUser();
 
   if (userRoleType !== userRoles.ADMIN) {
     throw new Error('You are unathorized to perform this action');
+  }
+
+  const { data: feedbackThread, error: feedbackThreadError } =
+    await supabaseAdminClient
+      .from('internal_feedback_threads')
+      .select('user_id, type')
+      .eq('id', feedbackId)
+      .single()
+
+  if (feedbackThreadError) {
+    return {
+      status: 'error',
+      message: feedbackThreadError.message,
+    };
   }
 
   const { error } = await supabaseAdminClient
@@ -170,6 +234,15 @@ export async function adminUpdateFeedbackType({
     return { status: 'error', message: error.message };
   }
 
+  await createFeedbackTypeUpdatedNotification({
+    feedbackId,
+    newType: type,
+    oldType: feedbackThread.type,
+    feedbackOwnerId: feedbackThread.user_id,
+    typeUpdaterId: user.id,
+  });
+
+  revalidatePath('/feedback', 'page');
   revalidatePath(`/feedback/${feedbackId}`, 'page');
 
   return { status: 'success' };
@@ -183,9 +256,24 @@ export async function adminUpdateFeedbackPriority({
   priority: Enum<'internal_feedback_thread_priority'>;
 }): Promise<ValidSAPayload> {
   const userRoleType = await serverGetUserType();
+  const user = await serverGetLoggedInUser();
 
   if (userRoleType !== userRoles.ADMIN) {
     throw new Error('You are unathorized to perform this action');
+  }
+
+  const { data: feedbackThread, error: feedbackThreadError } =
+    await supabaseAdminClient
+      .from('internal_feedback_threads')
+      .select('user_id, priority')
+      .eq('id', feedbackId)
+      .single()
+
+  if (feedbackThreadError) {
+    return {
+      status: 'error',
+      message: feedbackThreadError.message,
+    };
   }
 
   const { error } = await supabaseAdminClient
@@ -196,6 +284,14 @@ export async function adminUpdateFeedbackPriority({
   if (error) {
     return { status: 'error', message: error.message };
   }
+
+  await createFeedbackPriorityChangedNotification({
+    feedbackId,
+    newPriority: priority,
+    oldPriority: feedbackThread.priority,
+    feedbackOwnerId: feedbackThread.user_id,
+    priorityUpdaterId: user.id,
+  });
 
   revalidatePath('/feedback', 'page');
   revalidatePath(`/feedback/${feedbackId}`, 'page');
@@ -211,6 +307,7 @@ export async function adminToggleFeedbackFromRoadmap({
   isInRoadmap: boolean;
 }): Promise<ValidSAPayload> {
   const userRoleType = await serverGetUserType();
+  const user = await serverGetLoggedInUser();
 
   if (userRoleType !== userRoles.ADMIN) {
     throw new Error('You are unathorized to perform this action');
@@ -232,6 +329,12 @@ export async function adminToggleFeedbackFromRoadmap({
     });
   }
 
+  await createFeedbackAddedToRoadmapUpdatedNotification({
+    feedbackId,
+    isInRoadmap,
+    updaterId: user.id
+  })
+
   revalidatePath('/feedback', 'page');
   revalidatePath(`/feedback/${feedbackId}`, 'page');
 
@@ -246,6 +349,7 @@ export async function adminToggleFeedbackOpenForComments({
   isOpenForComments: boolean;
 }): Promise<ValidSAPayload> {
   const userRoleType = await serverGetUserType();
+  const user = await serverGetLoggedInUser();
 
   if (userRoleType !== userRoles.ADMIN) {
     throw new Error('You are unathorized to perform this action');
@@ -267,6 +371,12 @@ export async function adminToggleFeedbackOpenForComments({
     });
   }
 
+  await createUpdateFeedbackOpenForCommentsNotification({
+    feedbackId,
+    isOpenForComments,
+    updaterId: user.id
+  })
+
   revalidatePath('/feedback', 'page');
   revalidatePath(`/feedback/${feedbackId}`, 'page');
 
@@ -281,6 +391,7 @@ export async function adminToggleFeedbackVisibility({
   isPubliclyVisible: boolean;
 }): Promise<ValidSAPayload> {
   const userRoleType = await serverGetUserType();
+  const user = await serverGetLoggedInUser();
 
   if (userRoleType !== userRoles.ADMIN) {
     throw new Error('You are unathorized to perform this action');
@@ -295,8 +406,57 @@ export async function adminToggleFeedbackVisibility({
     return { status: 'error', message: error.message };
   }
 
+  await createFeedbackVisibilityUpdatedNotification({
+    feedbackId,
+    isPubliclyVisible,
+    updaterId: user.id
+  })
+
   revalidatePath('/feedback', 'page');
   revalidatePath(`/feedback/${feedbackId}`, 'page');
 
   return { status: 'success' };
+}
+
+export async function getFeedbackStakeholdersExceptMentionedUser({ feedbackId, excludedUserId }: { feedbackId: string, excludedUserId?: string }): Promise<string[]> {
+  // return all the user ids that are concerned with the feedback conversation including owner
+  // except the one mentioned, the mentioned user could be owner of the feedback thread or the commentator or logged in user
+  try {
+    const supabaseClient = await supabaseClientBasedOnUserRole();
+
+    const feedbackOwnerQuery = supabaseClient
+      .from('internal_feedback_threads')
+      .select('user_id')
+      .eq('id', feedbackId);
+    const feedbackCommentatorsQuery = supabaseClient
+      .from('internal_feedback_comments')
+      .select('user_id')
+      .eq('thread_id', feedbackId)
+
+    const [feedbackOwnerResult, feedbackCommentatorsResult] = await Promise.all([
+      feedbackOwnerQuery,
+      feedbackCommentatorsQuery
+    ]);
+
+    if (feedbackOwnerResult.error) throw feedbackOwnerResult.error;
+    if (feedbackCommentatorsResult.error) throw feedbackCommentatorsResult.error;
+
+    const stakeholders = new Set<string>();
+
+    if (feedbackOwnerResult.data.length > 0) {
+      stakeholders.add(feedbackOwnerResult.data[0].user_id);
+    }
+
+    feedbackCommentatorsResult.data.forEach(comment => {
+      stakeholders.add(comment.user_id);
+    });
+
+    if (excludedUserId) {
+      stakeholders.delete(excludedUserId);
+    }
+
+    return Array.from(stakeholders);
+  } catch (error) {
+    throw error;
+  }
 }

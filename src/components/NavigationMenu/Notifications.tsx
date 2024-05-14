@@ -23,7 +23,7 @@ import {
   getPaginatedNotifications,
   getUnseenNotificationIds,
   readAllNotifications,
-  seeNotification,
+  seeNotification
 } from './fetchClientNotifications';
 
 const NOTIFICATIONS_PAGE_SIZE = 10;
@@ -63,11 +63,11 @@ const useUnseenNotificationIds = (userId: string) => {
           filter: 'user_id=eq.' + userId,
         },
         (payload) => {
-          console.log(payload);
           refetch();
         },
       )
       .subscribe();
+
     return () => {
       channel.unsubscribe();
     };
@@ -77,7 +77,7 @@ const useUnseenNotificationIds = (userId: string) => {
 };
 
 export const useNotifications = (userId: string) => {
-  const { data, isFetchingNextPage, isLoading, fetchNextPage, hasNextPage } =
+  const { data, isFetchingNextPage, isLoading, fetchNextPage, hasNextPage, refetch } =
     useInfiniteQuery(
       ['paginatedNotifications', userId],
       async ({ pageParam }) => {
@@ -111,6 +111,7 @@ export const useNotifications = (userId: string) => {
     isLoading,
     fetchNextPage,
     hasNextPage,
+    refetch,
   };
 };
 
@@ -123,10 +124,8 @@ function NextPageLoader({ onMount }: { onMount: () => void }) {
 
 function Notification({
   notification,
-  isSeen,
 }: {
   notification: Table<'user_notifications'>;
-  isSeen: boolean;
 }) {
   const router = useRouter();
   const notificationPayload = parseNotification(notification.payload);
@@ -165,10 +164,10 @@ function Notification({
       }
       image={notificationPayload.image}
       isRead={notification.is_read}
-      isNew={!isSeen}
+      isNew={!notification.is_seen}
       notificationId={notification.id}
       onHover={() => {
-        if (!isSeen) {
+        if (!notification.is_seen) {
           mutateSeeMutation();
         }
       }}
@@ -205,14 +204,13 @@ export const useReadAllNotifications = (userId: string) => {
 
 export const Notifications = ({ userId }: { userId: string }) => {
   const unseenNotificationIds = useUnseenNotificationIds(userId);
-  const unseenNotificationCount = unseenNotificationIds.length;
-  const router = useRouter();
   const {
     notifications,
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
     isLoading,
+    refetch,
   } = useNotifications(userId);
   const { mutate } = useSAToastMutation(
     async () => {
@@ -233,22 +231,27 @@ export const Notifications = ({ userId }: { userId: string }) => {
         }
       },
       onSuccess: () => {
-        router.refresh();
+        refetch()
       },
     },
   );
+
+  useEffect(() => {
+    refetch()
+  }, [unseenNotificationIds])
+
   return (
     <Popover>
       <PopoverTrigger className="relative focus:ring-none">
         <Bell className="px-0 w-5 h-5 text-muted-foreground hover:text-black dark:hover:text-white" />
-        {unseenNotificationCount > 0 && (
+        {unseenNotificationIds?.length > 0 && (
           <span className="-top-1.5 -right-2 absolute bg-red-500 px-1.5 rounded-full font-bold text-white text-xs">
-            {unseenNotificationCount}
+            {unseenNotificationIds?.length}
           </span>
         )}
       </PopoverTrigger>
 
-      {notifications.length ? (
+      {notifications.length > 0 || unseenNotificationIds?.length > 0 ? (
         <PopoverContent className="bg-white dark:bg-slate-950 mr-12 p-0 rounded-xl w-[560px] overflow-hidden">
           <div className="shadow-lg px-6 pb-2 border-b-2">
             <div className="flex justify-between mt-7 mb-3">
@@ -256,7 +259,7 @@ export const Notifications = ({ userId }: { userId: string }) => {
                 Notifications
               </T.H3>
               <div className="flex space-x-1 mt-2 font-medium text-sm cursor-pointer group">
-                {unseenNotificationCount ? (
+                {unseenNotificationIds?.length > 0 ? (
                   <>
                     <Check className="dark:group-hover:text-gray-400 w-5 h-5 text-muted-foreground" />{' '}
                     <span
@@ -281,14 +284,11 @@ export const Notifications = ({ userId }: { userId: string }) => {
             {isLoading ? (
               <Skeleton className="py-4 w-16 h-6" />
             ) : (
-              notifications.map((notification) => {
+              notifications?.map((notification) => {
                 return (
                   <Notification
                     key={notification.id}
                     notification={notification}
-                    isSeen={unseenNotificationIds.every(
-                      (n) => n.id !== notification.id,
-                    )}
                   />
                 );
               })

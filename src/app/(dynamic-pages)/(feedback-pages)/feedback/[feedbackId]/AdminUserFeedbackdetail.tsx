@@ -30,7 +30,7 @@ async function AdminUserFeedbackdetail({ feedbackId }) {
             <div className='flex gap-2 items-center ml-2'>
               <Calendar className="h-4 w-4 text-muted-foreground" />
               <span className="text-muted-foreground text-sm lg:text-base">
-                {format(new Date(feedback.created_at), 'do MMMM yyyy')}
+                {format(new Date(feedback?.created_at), 'do MMMM yyyy')}
               </span>
             </div>
 
@@ -57,15 +57,15 @@ async function AdminUserFeedbackdetail({ feedbackId }) {
         <div className="flex gap-4 items-center">
 
           <Badge variant="outline" className="px-3 py-2 capitalize w-fit">
-            Status: {feedback.status}
+            Status: {feedback?.status}
           </Badge>
 
           <Badge variant="outline" className="px-3 py-2 capitalize w-fit">
-            Type: {feedback.type}
+            Type: {feedback?.type}
           </Badge>
 
           <Badge variant="outline" className="px-3 py-2 capitalize w-fit">
-            Priority: {feedback.priority}
+            Priority: {feedback?.priority}
           </Badge>
         </div>
       </div>
@@ -76,13 +76,10 @@ async function AdminUserFeedbackdetail({ feedbackId }) {
           comment={feedback?.content}
           postedAt={feedback?.created_at}
         />
-        <SuspendedFeedbackComments feedbackId={feedback.id} />
+        <SuspendedFeedbackComments feedbackId={feedback?.id} />
       </div>
       <div className="border-t p-4">
-        <AddComment
-          feedbackId={feedback.id}
-          isOpenToComments={feedback.open_for_public_discussion}
-        />
+        <AddComment feedbackId={feedback?.id} />
       </div>
     </div>
   );

@@ -3,6 +3,7 @@ import { adminGetInternalFeedbackById } from '@/data/admin/internal-feedback';
 
 import { SuspensedUserAvatarWithFullname } from '@/components/UserAvatar';
 import { Badge } from '@/components/ui/badge';
+import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import { serverGetUserType } from '@/utils/server/serverGetUserType';
 import { format } from 'date-fns';
 import { Calendar } from 'lucide-react';
@@ -15,6 +16,7 @@ import FeedbackActionsDropdown from './FeedbackActionsDropdown';
 
 async function LoggedInUserFeedbackdetail({ feedbackId }) {
   const userRoleType = await serverGetUserType();
+  const user = await serverGetLoggedInUser();
   const feedback = await adminGetInternalFeedbackById(feedbackId);
 
   return (
@@ -62,12 +64,11 @@ async function LoggedInUserFeedbackdetail({ feedbackId }) {
         />
         <SuspendedFeedbackComments feedbackId={feedback.id} />
       </div>
-      <div className="border-t p-4">
-        <AddComment
-          feedbackId={feedback.id}
-          isOpenToComments={feedback.open_for_public_discussion}
-        />
-      </div>
+      {(feedback.open_for_public_discussion || feedback.user_id == user.id) ?
+        (<div className="border-t p-4">
+          <AddComment feedbackId={feedback.id} />
+        </div>)
+        : null}
     </div>
   );
 }

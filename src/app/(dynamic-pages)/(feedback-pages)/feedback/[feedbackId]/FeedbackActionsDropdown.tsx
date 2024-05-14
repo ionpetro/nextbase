@@ -64,28 +64,24 @@ function FeedbackActionsDropdown({
       feedbackId: string;
       status: Tables<'internal_feedback_threads'>['status'];
     }) => {
-      await adminUpdateFeedbackStatus({ feedbackId, status });
-      return await adminToggleFeedbackFromRoadmap({
-        feedbackId,
-        isInRoadmap: true,
-      });
+      return await adminUpdateFeedbackStatus({ feedbackId, status })
     },
     {
       loadingMessage(variables) {
         return `Updating status to ${variables.status}`;
       },
       successMessage(data, variables) {
-        return `Status updated to ${variables.status}`;
+        return `Status has been updated to ${variables.status}`;
       },
       errorMessage(error) {
         try {
           if (error instanceof Error) {
             return String(error.message);
           }
-          return `Failed to create post ${String(error)}`;
+          return `Failed to update status ${String(error)}`;
         } catch (_err) {
           console.warn(_err);
-          return 'Failed to create post';
+          return 'Failed to update status';
         }
       },
     },

@@ -22,20 +22,15 @@ const receivedFeedbackPayload = z.object({
   type: z.literal('receivedFeedback'),
   feedbackId: z.string(),
   feedbackTitle: z.string(),
+  feedbackCreatorFullName: z.string(),
 });
 
 const feedbackReceivedCommentPayload = z.object({
   type: z.literal('feedbackReceivedComment'),
+  feedbackTitle: z.string(),
   feedbackId: z.string(),
-  commentId: z.string(),
   commenterName: z.string(),
-});
-
-const userCommentedOnFeedbackPayload = z.object({
-  type: z.literal('userCommentedOnFeedback'),
-  feedbackId: z.string(),
-  commentId: z.string(),
-  commenterName: z.string(),
+  comment: z.string()
 });
 
 const feedbackStatusChangedPayload = z.object({
@@ -52,6 +47,7 @@ const feedbackPriorityChangedPayload = z.object({
   newPriority: z.string(),
 });
 
+
 const feedbackTypeUpdatedPayload = z.object({
   type: z.literal('feedbackTypeUpdated'),
   feedbackId: z.string(),
@@ -59,16 +55,22 @@ const feedbackTypeUpdatedPayload = z.object({
   newType: z.string(),
 });
 
-const feedbackAddedToRoadmapPayload = z.object({
-  type: z.literal('feedbackAddedToRoadmap'),
+const feedbackIsInRoadmapUpdatedPayload = z.object({
+  type: z.literal('feedbackIsInRoadmapUpdated'),
   feedbackId: z.string(),
-  roadmapTitle: z.string(),
+  isInRoadmap: z.boolean()
 });
 
-const feedbackVisibilityChangedPayload = z.object({
-  type: z.literal('feedbackVisibilityChanged'),
+const feedbackVisibilityUpdatedPayload = z.object({
+  type: z.literal('feedbackVisibilityUpdated'),
   feedbackId: z.string(),
-  visibility: z.enum(['public', 'private', 'internal']),
+  isPubliclyVisible: z.boolean()
+});
+
+const feedbackFeedbackOpenForCommentUpdatedPayload = z.object({
+  type: z.literal('feedbackFeedbackOpenForCommentUpdated'),
+  feedbackId: z.string(),
+  isOpenForComments: z.boolean()
 });
 
 export const userNotificationPayloadSchema = z.union([
@@ -77,12 +79,12 @@ export const userNotificationPayloadSchema = z.union([
   welcomeNotificationPayload,
   receivedFeedbackPayload,
   feedbackReceivedCommentPayload,
-  userCommentedOnFeedbackPayload,
   feedbackStatusChangedPayload,
   feedbackPriorityChangedPayload,
   feedbackTypeUpdatedPayload,
-  feedbackAddedToRoadmapPayload,
-  feedbackVisibilityChangedPayload,
+  feedbackIsInRoadmapUpdatedPayload,
+  feedbackVisibilityUpdatedPayload,
+  feedbackFeedbackOpenForCommentUpdatedPayload
 ]);
 
 export type UserNotification = z.infer<typeof userNotificationPayloadSchema>;
