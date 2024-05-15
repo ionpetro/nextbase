@@ -21,7 +21,7 @@ interface IConfirmationPendingCardProps {
   resendEmail?: () => void;
 }
 
-export default function ConfirmationPendingCard({
+export function EmailConfirmationPendingCard({
   message,
   heading,
   type,

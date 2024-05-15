@@ -1,7 +1,7 @@
 'use client';
-import ConfirmationPendingCard from '@/components/Auth/ConfirmationPendingCard';
 import { Email } from '@/components/Auth/Email';
 import { EmailAndPassword } from '@/components/Auth/EmailAndPassword';
+import { EmailConfirmationPendingCard } from '@/components/Auth/EmailConfirmationPendingCard';
 import { RenderProviders } from '@/components/Auth/RenderProviders';
 import {
   Card,
@@ -120,7 +120,7 @@ export function SignUp({
       className="container data-[success]:flex items-center data-[success]:justify-center text-left max-w-lg mx-auto overflow-auto data-[success]:h-full min-h-[470px]"
     >
       {successMessage ? (
-        <ConfirmationPendingCard
+        <EmailConfirmationPendingCard
           type={'sign-up'}
           heading={"Confirmation Link Sent"}
           message={successMessage}

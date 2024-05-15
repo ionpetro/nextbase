@@ -1,4 +1,5 @@
 'use server';
+import { RESTRICTED_SLUG_NAMES, SLUG_PATTERN } from '@/constants';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 import { createSupabaseUserServerActionClient } from '@/supabase-clients/user/createSupabaseUserServerActionClient';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
@@ -492,3 +493,31 @@ export async function deleteOrganization(
     data: `Organization ${organizationId} deleted successfully`,
   };
 }
+
+
+
+export const updateOrganizationSlug = async (
+  organizationId: string,
+  newSlug: string,
+): Promise<ValidSAPayload<string>> => {
+  if (RESTRICTED_SLUG_NAMES.includes(newSlug)) {
+    return { status: 'error', message: 'Slug is restricted' };
+  }
+
+  if (!SLUG_PATTERN.test(newSlug)) {
+    return { status: 'error', message: 'Slug does not match the required pattern' };
+  }
+
+  const supabaseClient = createSupabaseUserServerActionClient();
+  const { error } = await supabaseClient
+    .from('organizations')
+    .update({ slug: newSlug })
+    .eq('id', organizationId);
+
+  if (error) {
+    return { status: 'error', message: error.message };
+  }
+
+  revalidatePath(`/organization/${organizationId}`, 'layout');
+  return { status: 'success', data: `Slug updated to ${newSlug}` };
+};

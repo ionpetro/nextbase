@@ -268,6 +268,7 @@ type OrganizationCreationProps = {
 
 const createOrganizationSchema = z.object({
   organizationTitle: z.string().min(1),
+  organizationSlug: z.string().min(1),
 });
 
 type CreateOrganizationSchema = z.infer<typeof createOrganizationSchema>;
@@ -314,6 +315,17 @@ export function OrganizationCreation({ onSuccess }: OrganizationCreationProps) {
             <Input
               id="organizationTitle"
               {...register("organizationTitle")}
+              required
+              placeholder="Organization Name"
+              disabled={isCreatingOrg}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="organizationTitle">Organization Slug</Label>
+            <Input
+              id="organizationTitle"
+              disabled
+              {...register("organizationSlug")}
               required
               placeholder="Organization Name"
               disabled={isCreatingOrg}
