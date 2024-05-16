@@ -1,23 +1,25 @@
-import { useLoggedInUser } from '@/hooks/useLoggedInUser';
-import posthog from 'posthog-js';
-import { PostHogProvider } from 'posthog-js/react';
-import { ReactNode, useEffect, useState } from 'react';
-import { useGetIsMounted } from 'rooks';
+import { useLoggedInUser } from "@/hooks/useLoggedInUser";
+import posthog from "posthog-js";
+import { PostHogProvider } from "posthog-js/react";
+import { useEffect, useState, type ReactNode } from "react";
+import { useGetIsMounted } from "rooks";
 
 const useInitPostHog = () => {
   const user = useLoggedInUser();
   const [hasInit, setHasInit] = useState<boolean>(false);
   const getIsMounted = useGetIsMounted();
   useEffect(() => {
-    posthog.init(process.env.NEXT_PUBLIC_POSTHOG_API_KEY, {
-      loaded: () => {
-        console.log('posthog loaded');
-        if (getIsMounted()) {
-          setHasInit(true);
-        }
-      },
-      api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
-    });
+    if (process.env.NEXT_PUBLIC_POSTHOG_API_KEY !== "NEXT_PUBLIC_POSTHOG_API_KEY") {
+      posthog.init(process.env.NEXT_PUBLIC_POSTHOG_API_KEY, {
+        loaded: () => {
+          console.log("posthog loaded");
+          if (getIsMounted()) {
+            setHasInit(true);
+          }
+        },
+        api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
+      });
+    }
   }, [getIsMounted]);
 
   useEffect(() => {
