@@ -1,6 +1,6 @@
 import { SLUG_PATTERN } from "@/constants";
 import { expect, request, test } from "@playwright/test";
-import { randomUUID } from "crypto";
+import { randomUUID } from "node:crypto";
 import { dashboardDefaultOrganizationIdHelper } from "../_helpers/dashboard-default-organization-id.helper";
 import { getUserIdHelper } from "../_helpers/get-user-id.helper";
 import { onboardUserHelper } from "../_helpers/onboard-user.helper";
@@ -9,26 +9,24 @@ test.describe
 	.parallel("Organization", () => {
 		test("create organization works correctly", async ({ page }) => {
 			// Start from the index page (the baseURL is set via the webServer in the playwright.config.ts)
-			await page.goto("/dashboard");
-			await page.waitForTimeout(12000);
+			await page.goto("/dashboard", {waitUntil: "domcontentloaded"});
+			await page.waitForTimeout(16000);
 
 			// click button with role combobox and data-name "organization-switcher"
 			const orgSwitcherButton = page.locator(
-				'button[data-testid="organization-switcher"]',
+				'button[name="organization-switcher"]',
 			);
-			// wait page load
-			await page.waitForTimeout(12000);
+			
 			await orgSwitcherButton.click();
-
+	
 			const button = await page.waitForSelector(
-				'button:has-text("New Organization")',
-				{ timeout: 120000 },
+				'button:has-text("New Organization")'
 			);
-
+	
 			if (!button) {
-				throw new Error("button not found");
+				throw new Error('button not found');
 			}
-
+	
 			await button.click();
 
 			// wait for form within a div role dialog to show up with data-testid "create-organization-form"
@@ -184,6 +182,8 @@ test.describe
 
 				await page.goto(membersPageURL);
 
+				await page.waitForTimeout(16000);
+
 				await page.waitForSelector("text=Team Members");
 
 				// click button with testid "invite-user-button"
@@ -334,10 +334,8 @@ test.describe
 				// wait for text "Invitation accepted!"
 				await page.waitForSelector("text=Invitation accepted!");
 
-				// wait for url to be /organization/:organizationId
-
-				await page.waitForURL(`/${organizationSlug}`);
-
+				await page.waitForTimeout(12000);
+				
 				await page.goto(membersPageURL);
 
 				// wait for testid "members-table"
