@@ -228,7 +228,7 @@ export function OrganizationGraphs({ organizationSlug, children }: Props) {
             title="Team members"
             subTitle="Members within organizations"
           >
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 max-h-64 overflow-y-auto">
               <Button variant={"ghost"} asChild className="self-end border border-muted-foreground">
                 <Link href={`/${organizationSlug}/settings/members`}>View all</Link>
               </Button>

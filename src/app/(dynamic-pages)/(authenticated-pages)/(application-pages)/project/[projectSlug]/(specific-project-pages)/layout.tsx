@@ -1,7 +1,8 @@
 import { ApplicationLayoutShell } from '@/components/ApplicationLayoutShell';
 import { InternalNavbar } from '@/components/NavigationMenu/InternalNavbar';
 import { PageHeading } from '@/components/PageHeading';
-import { getProjectTitleById } from '@/data/user/projects';
+import { getProjectIdBySlug, getProjectTitleById } from '@/data/user/projects';
+import { projectSlugParamSchema } from '@/utils/zod-schemas/params';
 import { Suspense, type ReactNode } from 'react';
 import { z } from 'zod';
 import { ApprovalControls } from './ApprovalControls';
@@ -35,7 +36,8 @@ export default async function ProjectLayout({
   navbar: ReactNode;
   sidebar: ReactNode;
 }) {
-  const { projectId } = paramsSchema.parse(params);
+  const { projectSlug } = projectSlugParamSchema.parse(params);
+  const project = await getProjectIdBySlug(projectSlug);
 
   return (
     <ApplicationLayoutShell sidebar={sidebar}>
@@ -48,7 +50,7 @@ export default async function ProjectLayout({
         <div className="space-y-8 m-6">
           <div className="space-y-0">
             <Suspense>
-              <ProjectPageHeading projectId={projectId} />
+              <ProjectPageHeading projectId={project.id} />
             </Suspense>
           </div>
           {children}

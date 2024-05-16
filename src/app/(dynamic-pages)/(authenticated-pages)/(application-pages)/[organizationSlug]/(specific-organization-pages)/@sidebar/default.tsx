@@ -32,7 +32,7 @@ async function OrganizationSidebarInternal({
         <div className="flex justify-between items-center">
           <SwitcherAndToggle organizationId={organizationId} slimOrganizations={slimOrganizations} />
         </div>
-        <div className="flex flex-col gap-6 h-full overflow-y-auto">
+        <div className="flex flex-col gap-6 h-full overflow-y-auto mt-4">
           <div>
             <SidebarLink
               label="Home"

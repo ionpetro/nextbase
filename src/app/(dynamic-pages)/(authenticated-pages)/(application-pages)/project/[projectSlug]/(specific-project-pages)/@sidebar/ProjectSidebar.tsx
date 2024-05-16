@@ -2,19 +2,20 @@ import { OrganizationSwitcher } from '@/components/SidebarComponents/Organizatio
 import { DesktopSidebarFallback } from '@/components/SidebarComponents/SidebarFallback';
 import { SwitcherAndToggle } from '@/components/SidebarComponents/SidebarLogo';
 import { SidebarLink } from '@/components/SidebarLink';
-import { fetchSlimOrganizations } from '@/data/user/organizations';
-import { getSlimProjectById } from '@/data/user/projects';
+import { fetchSlimOrganizations, getOrganizationSlugByOrganizationId } from '@/data/user/organizations';
+import { getProjectIdBySlug, getSlimProjectById } from '@/data/user/projects';
 import { cn } from '@/utils/cn';
-import { organizationSlugParamSchema, projectParamSchema } from '@/utils/zod-schemas/params';
+import { projectSlugParamSchema } from '@/utils/zod-schemas/params';
 import { ArrowLeft, Layers, Settings } from 'lucide-react';
 import { Suspense } from 'react';
 
-async function ProjectSidebarInternal({ projectId, organizationSlug }: { projectId: string; organizationSlug: string }) {
+async function ProjectSidebarInternal({ projectId, projectSlug }: { projectId: string; projectSlug: string }) {
   const [slimOrganizations, project] = await Promise.all([
     fetchSlimOrganizations(),
     getSlimProjectById(projectId),
   ]);
   const organizationId = project.organization_id;
+  const organizationSlug = await getOrganizationSlugByOrganizationId(organizationId);
 
   return (
     <div
@@ -40,12 +41,12 @@ async function ProjectSidebarInternal({ projectId, organizationSlug }: { project
           )}
           <SidebarLink
             label="Project Home"
-            href={`/project/${projectId}`}
+            href={`/project/${projectSlug}`}
             icon={<Layers className="h-5 w-5" />}
           />
           <SidebarLink
             label="Project Settings"
-            href={`/project/${projectId}/settings`}
+            href={`/project/${projectSlug}/settings`}
             icon={<Settings className="h-5 w-5" />}
           />
         </div>
@@ -59,11 +60,11 @@ async function ProjectSidebarInternal({ projectId, organizationSlug }: { project
 }
 
 export async function ProjectSidebar({ params }: { params: unknown }) {
-  const { organizationSlug } = organizationSlugParamSchema.parse(params);
-  const { projectId } = projectParamSchema.parse(params);
+  const { projectSlug } = projectSlugParamSchema.parse(params);
+  const project = await getProjectIdBySlug(projectSlug);
   return (
     <Suspense fallback={<DesktopSidebarFallback />}>
-      <ProjectSidebarInternal projectId={projectId} organizationSlug={organizationSlug} />
+      <ProjectSidebarInternal projectId={project.id} projectSlug={project.slug} />
     </Suspense>
   );
 }

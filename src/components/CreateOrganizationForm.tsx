@@ -88,26 +88,32 @@ export function CreateOrganizationForm({
             onSubmit={handleSubmit(onSubmit)}
             data-testid="create-organization-form"
           >
-            <div className="mb-8">
-              <Label className="text-muted-foreground">Organization Name</Label>
+            <div className="mb-8 space-y-2">
+              <div>
+                <Label className="text-muted-foreground">Organization Name</Label>
+                <Input
+                  {...register("organizationTitle")}
+                  required
+                  className="mt-1.5 shadow appearance-none border h-11 rounded-lg w-full py-2 px-3 focus:ring-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-base"
+                  id="name"
+                  type="text"
+                  placeholder="Organization Name"
+                  onChange={(e) => setValue("organizationTitle", generateSlug(e.target.value))}
+                  disabled={isCreatingOrg}
+                />
+              </div>
+
+            </div>
+            <div>
+              <Label>Organization Slug</Label>
               <Input
-                {...register("organizationTitle")}
+                {...register("organizationSlug")}
                 required
                 className="mt-1.5 shadow appearance-none border h-11 rounded-lg w-full py-2 px-3 focus:ring-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-base"
-                id="name"
-                type="text"
-                placeholder="Organization Name"
-                onChange={(e) => setValue("organizationTitle", generateSlug(e.target.value))}
-                disabled={isCreatingOrg}
+                disabled
               />
             </div>
-            <Label>Organization Slug</Label>
-            <Input
-              {...register("organizationSlug")}
-              required
-              className="mt-1.5 shadow appearance-none border h-11 rounded-lg w-full py-2 px-3 focus:ring-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-base"
-              disabled
-            />
+
 
             <DialogFooter>
               <Button

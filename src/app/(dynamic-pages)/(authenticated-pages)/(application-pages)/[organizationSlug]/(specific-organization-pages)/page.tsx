@@ -99,7 +99,7 @@ export default async function OrganizationPage({
           </div>
         </div>
       </div>
-      <div>
+      <div >
         <GraphContainer organizationSlug={organizationSlug} >
           <Suspense>
             <TeamMembers />

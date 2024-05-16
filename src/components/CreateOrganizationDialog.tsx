@@ -115,29 +115,34 @@ export function CreateOrganizationDialog({
             </div>
           </DialogHeader>
           <form onSubmit={handleSubmit(onSubmit)} data-testid="create-organization-form">
-            <div className="mb-8">
-              <Label className="text-muted-foreground">Organization Name</Label>
-              <Input
-                {...register("organizationTitle")}
-                className="mt-1.5 shadow appearance-none border h-11 rounded-lg w-full py-2 px-3 focus:ring-0 leading-tight focus:outline-none focus:shadow-outline text-base"
-                id="name"
-                type="text"
-                onChange={(e) => {
-                  setValue("organizationSlug", generateSlug(e.target.value), { shouldValidate: true });
-                  setValue("organizationTitle", e.target.value, { shouldValidate: true });
-                }}
-                placeholder="Organization Name"
-                disabled={isCreatingOrg}
-              />
+            <div className="mb-8 space-y-2">
+              <div>
+                <Label>Organization Name</Label>
+                <Input
+                  {...register("organizationTitle")}
+                  className="mt-1.5 shadow appearance-none border h-11 rounded-lg w-full py-2 px-3 focus:ring-0 leading-tight focus:outline-none focus:shadow-outline text-base"
+                  id="name"
+                  type="text"
+                  onChange={(e) => {
+                    setValue("organizationSlug", generateSlug(e.target.value), { shouldValidate: true });
+                    setValue("organizationTitle", e.target.value, { shouldValidate: true });
+                  }}
+                  placeholder="Organization Name"
+                  disabled={isCreatingOrg}
+                />
+              </div>
 
-              <Label>Organization Slug</Label>
-              <Input
-                {...register("organizationSlug")}
-                className="mt-1.5 shadow appearance-none border h-11 rounded-lg w-full py-2 px-3 focus:ring-0 leading-tight focus:outline-none focus:shadow-outline text-base"
-                id="slug"
-                type="text"
-                placeholder="Organization Slug"
-              />
+              <div>
+                <Label>Organization Slug</Label>
+                <Input
+                  {...register("organizationSlug")}
+                  className="mt-1.5 shadow appearance-none border h-11 rounded-lg w-full py-2 px-3 focus:ring-0 leading-tight focus:outline-none focus:shadow-outline text-base"
+                  id="slug"
+                  type="text"
+                  placeholder="Organization Slug"
+                />
+              </div>
+
             </div>
 
             <DialogFooter>

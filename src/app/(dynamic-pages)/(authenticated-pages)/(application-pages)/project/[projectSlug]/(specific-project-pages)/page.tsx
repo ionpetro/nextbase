@@ -1,16 +1,15 @@
 import { T } from '@/components/ui/Typography';
+import { getProjectIdBySlug } from '@/data/user/projects';
+import { projectSlugParamSchema } from '@/utils/zod-schemas/params';
 import { Layers } from 'lucide-react';
 import { Suspense } from 'react';
-import { z } from 'zod';
 import { CommentInput } from './CommentInput';
 import { ProjectComments } from './ProjectComments';
 
-const paramsSchema = z.object({
-  projectId: z.string(),
-});
 
-export default function ProjectPage({ params }: { params: unknown }) {
-  const { projectId } = paramsSchema.parse(params);
+export default async function ProjectPage({ params }: { params: unknown }) {
+  const { projectSlug } = projectSlugParamSchema.parse(params);
+  const project = await getProjectIdBySlug(projectSlug);
   return (
     <div className="space-y-6">
       <div className="mb-10">
@@ -36,9 +35,9 @@ export default function ProjectPage({ params }: { params: unknown }) {
           <T.H4>Comments</T.H4>
           <div className="space-y-2 mb-10">
             <div className="space-y-4 mt-4 mb-10">
-              <CommentInput projectId={projectId} />
+              <CommentInput projectId={project.id} />
               <Suspense>
-                <ProjectComments projectId={projectId} />
+                <ProjectComments projectId={project.id} />
               </Suspense>
             </div>
           </div>

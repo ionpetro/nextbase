@@ -38,7 +38,7 @@ export function OrganizationProjectsTable({ projects }: Props) {
     {
       accessorKey: 'name',
       cell: ({ row }) => {
-        return <Link href={`/project/${row.original.id}`} className='hover:underline'>
+        return <Link href={`/project/${row.original.slug}`} className='hover:underline'>
           {row.getValue('name')}
         </Link>
       },

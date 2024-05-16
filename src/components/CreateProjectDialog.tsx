@@ -1,5 +1,5 @@
-'use client';
-import { Button } from '@/components/ui/button';
+"use client";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -8,14 +8,23 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { createProjectAction } from '@/data/user/projects';
-import { useSAToastMutation } from '@/hooks/useSAToastMutation';
-import { Layers } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { createProjectAction } from "@/data/user/projects";
+import { useSAToastMutation } from "@/hooks/useSAToastMutation";
+import { generateSlug } from "@/lib/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Layers } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import { z } from "zod";
+
+const createProjectFormSchema = z.object({
+  name: z.string().min(1),
+  slug: z.string().min(1),
+});
 
 type CreateProjectDialogProps = {
   organizationId: string;
@@ -24,29 +33,41 @@ type CreateProjectDialogProps = {
 export function CreateProjectDialog({
   organizationId,
 }: CreateProjectDialogProps) {
-  const [projectTitle, setProjectTitle] = useState<string>('');
+  const { register, handleSubmit, setValue } = useForm({
+    resolver: zodResolver(createProjectFormSchema),
+    defaultValues: {
+      name: "",
+      slug: "",
+    },
+  });
+
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const createProjectMutation = useSAToastMutation(
-    async ({ organizationId, name }: { organizationId: string; name: string }) =>
-      await createProjectAction({ organizationId, name }),
+    async ({
+      organizationId,
+      name,
+      slug,
+    }: { organizationId: string; name: string; slug: string }) =>
+      await createProjectAction({ organizationId, name, slug }),
     {
-      loadingMessage: 'Creating project...',
-      successMessage: 'Project created!',
-      errorMessage: 'Failed to create project',
+      loadingMessage: "Creating project...",
+      successMessage: "Project created!",
+      errorMessage: "Failed to create project",
       onSuccess: (response) => {
         setOpen(false);
-        if (response.status === 'success' && response.data) {
-          router.push(`/project/${response.data.id}`);
+        if (response.status === "success" && response.data) {
+          router.push(`/project/${response.data.slug}`);
         }
       },
-    });
+    },
+  );
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSubmit: SubmitHandler<{ name: string; slug: string }> = (data) => {
     createProjectMutation.mutate({
       organizationId,
-      name: projectTitle,
+      name: data.name,
+      slug: data.slug,
     });
   };
 
@@ -71,19 +92,32 @@ export function CreateProjectDialog({
               </DialogDescription>
             </div>
           </DialogHeader>
-          <form onSubmit={handleSubmit}>
-            <div className="mb-8">
-              <Label className="text-muted-foreground">Project Name</Label>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <div>
+              <Label>Project Name</Label>
               <Input
-                value={projectTitle}
-                onChange={(event) => {
-                  setProjectTitle(event.target.value);
+                {...register("name")}
+                className="mt-1.5 shadow appearance-none border rounded-lg w-full"
+                onChange={(e) => {
+                  setValue("name", e.target.value);
+                  setValue("slug", generateSlug(e.target.value), {
+                    shouldValidate: true,
+                  });
                 }}
-                required
-                className="mt-1.5 shadow appearance-none border h-11 rounded-lg w-full py-2 px-3 focus:ring-0 text-gray-700 dark:text-gray-400 leading-tight focus:outline-none focus:shadow-outline text-base"
                 id="name"
                 type="text"
                 placeholder="Project Name"
+                disabled={createProjectMutation.isLoading}
+              />
+            </div>
+            <div>
+              <Label>Project Slug</Label>
+              <Input
+                {...register("slug")}
+                className="mt-1.5 shadow appearance-none border rounded-lg w-full"
+                id="slug"
+                type="text"
+                placeholder="project-slug"
                 disabled={createProjectMutation.isLoading}
               />
             </div>
@@ -107,8 +141,8 @@ export function CreateProjectDialog({
                 disabled={createProjectMutation.isLoading}
               >
                 {createProjectMutation.isLoading
-                  ? 'Creating project...'
-                  : 'Create Project'}
+                  ? "Creating project..."
+                  : "Create Project"}
               </Button>
             </DialogFooter>
           </form>
