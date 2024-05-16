@@ -81,7 +81,6 @@ export const createOrganization = async (
     return { status: 'error', message: error.message };
   }
 
-
   const { error: orgMemberErrors } = await supabaseAdminClient
     .from('organization_members')
     .insert([
@@ -291,9 +290,10 @@ export const getLoggedInUserOrganizationRole = async (
   return data.member_role;
 };
 
-export const updateOrganizationTitle = async (
+export const updateOrganizationInfo = async (
   organizationId: string,
   title: string,
+  slug: string,
 ): Promise<ValidSAPayload<Table<'organizations'>>> => {
   'use server';
   const supabase = createSupabaseUserServerActionClient();
@@ -301,6 +301,7 @@ export const updateOrganizationTitle = async (
     .from('organizations')
     .update({
       title,
+      slug,
     })
     .eq('id', organizationId)
     .select('*')

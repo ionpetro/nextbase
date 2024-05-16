@@ -95,7 +95,6 @@ export function CreateOrganizationForm({
                 required
                 className="mt-1.5 shadow appearance-none border h-11 rounded-lg w-full py-2 px-3 focus:ring-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-base"
                 id="name"
-                name="name"
                 type="text"
                 placeholder="Organization Name"
                 onChange={(e) => setValue("organizationTitle", generateSlug(e.target.value))}

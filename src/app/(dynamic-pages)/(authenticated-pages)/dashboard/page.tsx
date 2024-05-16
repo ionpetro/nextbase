@@ -1,6 +1,7 @@
 import {
   fetchSlimOrganizations,
   getDefaultOrganization,
+  getOrganizationSlugByOrganizationId,
 } from '@/data/user/organizations';
 import { notFound, redirect } from 'next/navigation';
 
@@ -9,10 +10,11 @@ async function getOrganizationToRedirectTo(): Promise<string> {
     fetchSlimOrganizations(),
     getDefaultOrganization(),
   ]);
+
   const firstOrganization = slimOrganizations[0];
 
   if (defaultOrganizationId) {
-    return defaultOrganizationId;
+    return await getOrganizationSlugByOrganizationId(defaultOrganizationId);
   }
 
   // this condition is unreachable as the parent ../layout component ensures at least
@@ -20,6 +22,7 @@ async function getOrganizationToRedirectTo(): Promise<string> {
   if (!firstOrganization) {
     return notFound();
   }
+
 
   return firstOrganization.slug;
 }

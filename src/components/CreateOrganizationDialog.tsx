@@ -85,8 +85,6 @@ export function CreateOrganizationDialog({
       },
     });
 
-  console.log(errors);
-
   return (
     <>
       <Dialog
@@ -121,14 +119,12 @@ export function CreateOrganizationDialog({
               <Label className="text-muted-foreground">Organization Name</Label>
               <Input
                 {...register("organizationTitle")}
-                required
                 className="mt-1.5 shadow appearance-none border h-11 rounded-lg w-full py-2 px-3 focus:ring-0 leading-tight focus:outline-none focus:shadow-outline text-base"
                 id="name"
-                name="name"
                 type="text"
                 onChange={(e) => {
-                  setValue("organizationSlug", generateSlug(e.target.value));
-                  setValue("organizationTitle", e.target.value);
+                  setValue("organizationSlug", generateSlug(e.target.value), { shouldValidate: true });
+                  setValue("organizationTitle", e.target.value, { shouldValidate: true });
                 }}
                 placeholder="Organization Name"
                 disabled={isCreatingOrg}
@@ -137,14 +133,10 @@ export function CreateOrganizationDialog({
               <Label>Organization Slug</Label>
               <Input
                 {...register("organizationSlug")}
-                value={watch("organizationSlug")}
-                required
                 className="mt-1.5 shadow appearance-none border h-11 rounded-lg w-full py-2 px-3 focus:ring-0 leading-tight focus:outline-none focus:shadow-outline text-base"
                 id="slug"
-                name="slug"
                 type="text"
                 placeholder="Organization Slug"
-                disabled
               />
             </div>
 

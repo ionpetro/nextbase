@@ -2,6 +2,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import {
   getLoggedInUserOrganizationRole,
   getOrganizationIdBySlug,
+  getOrganizationSlugByOrganizationId,
   getOrganizationTitle,
 } from '@/data/user/organizations';
 import { organizationSlugParamSchema } from '@/utils/zod-schemas/params';
@@ -16,10 +17,12 @@ async function EditOrganization({
   organizationId: string;
 }) {
   const organizationTitle = await getOrganizationTitle(organizationId);
+  const organizationSlug = await getOrganizationSlugByOrganizationId(organizationId);
   return (
     <EditOrganizationForm
       organizationId={organizationId}
       initialTitle={organizationTitle}
+      initialSlug={organizationSlug}
     />
   );
 }

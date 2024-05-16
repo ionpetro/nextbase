@@ -1,6 +1,6 @@
-'use client';
-import { OrganizationMemberRoleSelect } from '@/components/OrganizationMemberRoleSelect';
-import { Button } from '@/components/ui/button';
+"use client";
+import { OrganizationMemberRoleSelect } from "@/components/OrganizationMemberRoleSelect";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -9,15 +9,15 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Enum } from '@/types';
-import { UserPlus } from 'lucide-react';
-import { useState } from 'react';
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import type { Enum } from "@/types";
+import { UserPlus } from "lucide-react";
+import { useState } from "react";
 
 type Props = {
-  onInvite: (email: string, role: Enum<'organization_member_role'>) => void;
+  onInvite: (email: string, role: Enum<"organization_member_role">) => void;
   isLoading: boolean;
 };
 
@@ -26,8 +26,8 @@ export const InviteOrganizationMemberDialog = ({
   isLoading,
 }: Props) => {
   const [open, setOpen] = useState(false);
-  const [email, setEmail] = useState('');
-  const [role, setRole] = useState<Enum<'organization_member_role'>>('member');
+  const [email, setEmail] = useState("");
+  const [role, setRole] = useState<Enum<"organization_member_role">>("member");
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -58,7 +58,7 @@ export const InviteOrganizationMemberDialog = ({
           onSubmit={(event) => {
             event.preventDefault();
             onInvite(email, role);
-            setEmail('');
+            setEmail("");
             setOpen(false);
           }}
         >
@@ -72,7 +72,7 @@ export const InviteOrganizationMemberDialog = ({
             </div>
             <Label className="text-muted-foreground">Enter Email</Label>
             <Input
-              className="mt-1.5 shadow appearance-none border h-11 rounded-lg w-full py-2 px-3 focus:ring-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-base"
+              className="mt-1.5 shadow appearance-none border h-11 rounded-lg w-full py-2 px-3 focus:ring-0 leading-tight focus:outline-none focus:shadow-outline text-base"
               id="email"
               value={email}
               name="email"
@@ -100,7 +100,7 @@ export const InviteOrganizationMemberDialog = ({
               className="w-full"
               disabled={isLoading}
             >
-              {isLoading ? 'Inviting User' : 'Invite'}
+              {isLoading ? "Inviting User" : "Invite"}
             </Button>
           </DialogFooter>
         </form>

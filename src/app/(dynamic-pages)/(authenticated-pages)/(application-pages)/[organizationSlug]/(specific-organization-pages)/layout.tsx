@@ -14,7 +14,7 @@ export default async function Layout({
   return (
     <ApplicationLayoutShell sidebar={sidebar}>
       <div>
-        <InternalNavbar>
+        <InternalNavbar >
           <div className="hidden lg:flex w-full justify-between items-center">
             {navbar}
           </div>

@@ -275,7 +275,7 @@ export const createOrganizationSchema = z.object({
 export type CreateOrganizationSchema = z.infer<typeof createOrganizationSchema>;
 
 export function OrganizationCreation({ onSuccess }: OrganizationCreationProps) {
-  const { mutate: createOrg, isLoading: isCreatingOrg } = useSAToastMutation(
+  const { mutate: createOrg, isLoading: isCreatingOrg = false } = useSAToastMutation(
     async ({ organizationTitle, organizationSlug }: { organizationTitle: string, organizationSlug: string }) => {
       const orgId = await createOrganization(organizationTitle, organizationSlug, {
         isOnboardingFlow: true,
@@ -296,11 +296,9 @@ export function OrganizationCreation({ onSuccess }: OrganizationCreationProps) {
   const { register, formState, handleSubmit, setValue } =
     useForm<CreateOrganizationSchema>({
       resolver: zodResolver(createOrganizationSchema),
-      defaultValues: {
-        organizationTitle: "",
-        organizationSlug: "",
-      },
     });
+
+  console.log(formState.errors, formState.isValid);
 
   return (
     <Card>
@@ -311,16 +309,16 @@ export function OrganizationCreation({ onSuccess }: OrganizationCreationProps) {
             Please provide a name for your first organization.
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="space-y-2">
           <div className="space-y-2">
             <Label htmlFor="organizationTitle">Organization Name</Label>
             <Input
               id="organizationTitle"
               {...register("organizationTitle")}
-              required
               placeholder="Organization Name"
               onChange={(event) => {
-                setValue("organizationSlug", generateSlug(event.target.value));
+                setValue("organizationSlug", generateSlug(event.target.value), { shouldValidate: true });
+                setValue("organizationTitle", event.target.value, { shouldValidate: true });
               }}
               disabled={isCreatingOrg}
             />
@@ -330,9 +328,7 @@ export function OrganizationCreation({ onSuccess }: OrganizationCreationProps) {
             <Input
               id="organizationTitle"
               {...register("organizationSlug")}
-              required
               placeholder="Organization Name"
-              disabled
             />
           </div>
         </CardContent>

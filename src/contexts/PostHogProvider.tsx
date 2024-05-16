@@ -9,17 +9,17 @@ const useInitPostHog = () => {
   const [hasInit, setHasInit] = useState<boolean>(false);
   const getIsMounted = useGetIsMounted();
   useEffect(() => {
-    if (process.env.NEXT_PUBLIC_POSTHOG_API_KEY !== "NEXT_PUBLIC_POSTHOG_API_KEY") {
-      posthog.init(process.env.NEXT_PUBLIC_POSTHOG_API_KEY, {
-        loaded: () => {
-          console.log("posthog loaded");
-          if (getIsMounted()) {
-            setHasInit(true);
-          }
-        },
-        api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
-      });
-    }
+
+    posthog.init(process.env.NEXT_PUBLIC_POSTHOG_API_KEY, {
+      loaded: () => {
+        console.log("posthog loaded");
+        if (getIsMounted()) {
+          setHasInit(true);
+        }
+      },
+      api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
+    });
+
   }, [getIsMounted]);
 
   useEffect(() => {

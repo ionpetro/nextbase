@@ -1,43 +1,75 @@
-'use client';
-import { Button } from '@/components/Button';
-import { T } from '@/components/ui/Typography';
-import { Input } from '@/components/ui/input';
-import { updateOrganizationTitle } from '@/data/user/organizations';
-import { useSAToastMutation } from '@/hooks/useSAToastMutation';
-import { useState, useTransition } from 'react';
+"use client";
+import { createOrganizationSchema } from "@/app/(dynamic-pages)/(authenticated-pages)/onboarding/OnboardingFlow";
+import { Button } from "@/components/Button";
+import { T } from "@/components/ui/Typography";
+import { Input } from "@/components/ui/input";
+import { updateOrganizationInfo } from "@/data/user/organizations";
+import { useSAToastMutation } from "@/hooks/useSAToastMutation";
+import { generateSlug } from "@/lib/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import { useForm, type SubmitHandler } from "react-hook-form";
 
 export function EditOrganizationForm({
   initialTitle,
   organizationId,
+  initialSlug,
 }: {
   initialTitle: string;
   organizationId: string;
+  initialSlug: string;
 }) {
-  const [pending, startTransition] = useTransition();
+
+  const router = useRouter()
+
+  const { register, handleSubmit, formState, setValue } = useForm<{
+    organizationTitle: string;
+    organizationSlug: string;
+  }>({
+    resolver: zodResolver(createOrganizationSchema),
+    defaultValues: {
+      organizationTitle: initialTitle,
+      organizationSlug: initialSlug,
+    },
+  });
 
   const { mutate, isLoading } = useSAToastMutation(
-    async (organizationTitle: string) => {
-      return await updateOrganizationTitle(organizationId, organizationTitle);
+    async ({ organizationTitle, organizationSlug }: { organizationTitle: string, organizationSlug: string }) => {
+      return await updateOrganizationInfo(
+        organizationId,
+        organizationTitle,
+        organizationSlug,
+      );
     },
     {
-      loadingMessage: 'Updating organization title...',
-      successMessage: 'Organization title updated!',
+      loadingMessage: "Updating organization information...",
+      successMessage: "Organization information updated!",
       errorMessage(error) {
         try {
           if (error instanceof Error) {
             return String(error.message);
           }
-          return `Failed to update organization title ${String(error)}`;
+          return `Failed to update organization information ${String(error)}`;
         } catch (_err) {
           console.warn(_err);
-          return 'Failed to update organization title';
+          return "Failed to update organization information";
+        }
+      },
+      onSuccess(response) {
+        if (response.status === "success" && response.data) {
+          router.push(`/${response.data.slug}/settings`)
         }
       },
     },
   );
 
-  const [organizationTitle, setOrganizationTitle] =
-    useState<string>(initialTitle);
+  const onSubmit: SubmitHandler<{
+    organizationTitle: string;
+    organizationSlug: string;
+  }> = (data) => {
+    mutate(data);
+  };
+
   return (
     <div className="space-y-4">
       <div className="space-y-2">
@@ -48,30 +80,37 @@ export function EditOrganizationForm({
       </div>
       <form
         data-testid="edit-organization-title-form"
-        onSubmit={(event) => {
-          event.preventDefault();
-          startTransition(() => {
-            mutate(organizationTitle);
-          });
-        }}
+        onSubmit={handleSubmit(onSubmit)}
         className="space-y-4 max-w-md"
       >
         <Input
-          value={organizationTitle}
           type="text"
-          name="organization-title"
           id="organization-title"
+          {...register("organizationTitle")}
           onChange={(e) => {
-            setOrganizationTitle(e.target.value);
+            setValue("organizationTitle", e.target.value, { shouldValidate: true });
+            setValue("organizationSlug", generateSlug(e.target.value), { shouldValidate: true });
           }}
+        />
+        <div className="space-y-2">
+          <T.H4>Edit Organization Slug</T.H4>
+          <T.P className="text-muted-foreground">
+            This is the slug that will be displayed in the URL.
+          </T.P>
+        </div>
+        <Input
+
+          type="text"
+          id="organization-slug"
+          {...register("organizationSlug")}
         />
         <div className="inline-block">
           <Button
-            disabled={isLoading}
+            disabled={isLoading || !formState.isValid}
             type="submit"
             id="update-organization-title-button"
           >
-            {isLoading ? 'Updating...' : 'Update'}
+            {isLoading ? "Updating..." : "Update"}
           </Button>
         </div>
       </form>
