@@ -43,5 +43,5 @@ export const RESTRICTED_SLUG_NAMES = [
 ]
 
 // starts with a letter, ends with a letter or number, and can contain letters, numbers, and hyphens
-export const SLUG_PATTERN = /^[a-zA-Z][a-zA-Z0-9-]*[a-zA-Z0-9]$/;
+export const SLUG_PATTERN = /([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})|(^[a-zA-Z][a-zA-Z0-9-]*[a-zA-Z0-9])$/;
 

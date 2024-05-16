@@ -1,342 +1,361 @@
-import { expect, request, test } from '@playwright/test';
-import { dashboardDefaultOrganizationIdHelper } from '../_helpers/dashboard-default-organization-id.helper';
-import { getUserIdHelper } from '../_helpers/get-user-id.helper';
-import { onboardUserHelper } from '../_helpers/onboard-user.helper';
+import { SLUG_PATTERN } from "@/constants";
+import { expect, request, test } from "@playwright/test";
+import { randomUUID } from "crypto";
+import { dashboardDefaultOrganizationIdHelper } from "../_helpers/dashboard-default-organization-id.helper";
+import { getUserIdHelper } from "../_helpers/get-user-id.helper";
+import { onboardUserHelper } from "../_helpers/onboard-user.helper";
 
-test.describe.parallel('Organization', () => {
-  test('create organization works correctly', async ({ page }) => {
-    // Start from the index page (the baseURL is set via the webServer in the playwright.config.ts)
-    await page.goto('/dashboard');
-    await page.waitForTimeout(5000);
+test.describe
+	.parallel("Organization", () => {
+		test("create organization works correctly", async ({ page }) => {
+			// Start from the index page (the baseURL is set via the webServer in the playwright.config.ts)
+			await page.goto("/dashboard");
+			await page.waitForTimeout(12000);
 
-    // click button with role combobox and data-name "organization-switcher"
-    const orgSwitcherButton = page.locator(
-      'button[data-testid="organization-switcher"]',
-    );
-    // wait page load
-    await page.waitForTimeout(5000);
-    await orgSwitcherButton.click();
+			// click button with role combobox and data-name "organization-switcher"
+			const orgSwitcherButton = page.locator(
+				'button[data-testid="organization-switcher"]',
+			);
+			// wait page load
+			await page.waitForTimeout(12000);
+			await orgSwitcherButton.click();
 
-    const button = await page.waitForSelector(
-      'button:has-text("New Organization")',
-      { timeout: 120000 },
-    );
+			const button = await page.waitForSelector(
+				'button:has-text("New Organization")',
+				{ timeout: 120000 },
+			);
 
-    if (!button) {
-      throw new Error('button not found');
-    }
+			if (!button) {
+				throw new Error("button not found");
+			}
 
-    await button.click();
+			await button.click();
 
-    // wait for form within a div role dialog to show up with data-testid "create-organization-form"
-    const form = await page.waitForSelector(
-      'form:has-text("Create Organization")',
-    );
+			// wait for form within a div role dialog to show up with data-testid "create-organization-form"
+			const form = await page.waitForSelector(
+				'form:has-text("Create Organization")',
+			);
 
-    // find input with name "name" and type "Lorem Ipsum"
-    const input = await form.waitForSelector('input');
+			// find input with name "name" and type "Lorem Ipsum"
+			const input = await form.waitForSelector("input[name='organizationTitle']");
 
-    if (!input) {
-      throw new Error('input not found');
-    }
+			if (!input) {
+				throw new Error("input not found");
+			}
 
-    await input.fill('Lorem Ipsum');
+			await input.fill("Lorem Ipsum");
 
-    // click on button with text "Create Organization"
-
-    const submitButton = await form.waitForSelector(
-      'button:has-text("Create Organization")',
-    );
-
-    if (!submitButton) {
-      throw new Error('submitButton not found');
-    }
-
-    await submitButton.click();
-
-    // wait for url to change to /organization/<organizationUUID>
-
-    let organizationId;
-    await page.waitForURL((url) => {
-      const match = url
-        .toString()
-        .match(
-          /\/organization\/([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})/,
-        );
-      if (match) {
-        organizationId = match[1];
-        return true;
-      }
-      return false;
-    });
-
-    if (!organizationId) {
-      throw new Error('organizationId creation failed');
-    }
-
-    // go to /organization/<organizationUUID>/settings
-
-    const settingsPageURL = `/organization/${organizationId}/settings`;
-    await page.goto(settingsPageURL);
-
-    // wait for data-testid "edit-organization-title-form"
-    const editOrganizationTitleForm = await page.waitForSelector(
-      'form[data-testid="edit-organization-title-form"]',
-    );
-
-    // fill input with name "organization-title"
-    const titleInput = await editOrganizationTitleForm.waitForSelector(
-      'input[name="organization-title"]',
-    );
-    if (!titleInput) {
-      throw new Error('titleInput not found');
-    }
-
-    await titleInput.fill('Lorem Ipsum 2');
-
-    // click on button with text "Update"
-    const updateButton = await editOrganizationTitleForm.waitForSelector(
-      'button:has-text("Update")',
-    );
-
-    if (!updateButton) {
-      throw new Error('updateButton not found');
-    }
-
-    await updateButton.click();
-
-    // wait for text "Organization title updated!"
-
-    await page.waitForSelector('text=Organization title updated!');
-  });
-
-  test.describe('Organization invite', () => {
-    function getInviteeIdentifier(): string {
-      return `johnInvitee` + Date.now().toString().slice(-4);
-    }
-
-    const INBUCKET_URL = `http://localhost:54324`;
-
-    // eg endpoint: https://api.testmail.app/api/json?apikey=${APIKEY}&namespace=${NAMESPACE}&pretty=true
-    async function getInvitationEmail(username: string): Promise<{
-      url: string;
-    }> {
-      const requestContext = await request.newContext();
-      const messages = await requestContext
-        .get(`${INBUCKET_URL}/api/v1/mailbox/${username}`)
-        .then((res) => res.json())
-        // InBucket doesn't have any params for sorting, so here
-        // we're sorting the messages by date
-        .then((items) =>
-          [...items].sort((a, b) => {
-            if (a.date < b.date) {
-              return 1;
-            }
-
-            if (a.date > b.date) {
-              return -1;
-            }
-
-            return 0;
-          }),
-        );
-
-      const latestMessageId = messages[0]?.id;
-
-      if (latestMessageId) {
-        const message = await requestContext
-          .get(`${INBUCKET_URL}/api/v1/mailbox/${username}/${latestMessageId}`)
-          .then((res) => res.json());
-
-        const url = message.body.text.match(/View Invitation \( (.+) \)/)[1];
-
-        return { url };
+      const orgSwitcherSlug = await form.waitForSelector('input[name="organizationSlug"]');
+  
+      if (!orgSwitcherSlug) {
+        throw new Error('organizationSlugInput not found');
       }
 
-      throw new Error('No email received');
-    }
+      await orgSwitcherSlug.fill(randomUUID());
 
-    test('invite user to an organization', async ({ page }) => {
-      const organizationId = await dashboardDefaultOrganizationIdHelper({
-        page,
-      });
+			// click on button with text "Create Organization"
 
-      const membersPageURL = `/organization/${organizationId}/settings/members`;
+			const submitButton = await form.waitForSelector(
+				'button:has-text("Create Organization")',
+			);
 
-      await page.goto(membersPageURL);
+			if (!submitButton) {
+				throw new Error("submitButton not found");
+			}
 
-      await page.waitForSelector('text=Team Members');
+			await submitButton.click();
 
-      // click button with testid "invite-user-button"
-      const inviteUserButton = await page.waitForSelector(
-        'button[data-testid="invite-user-button"]',
-      );
-      if (!inviteUserButton) {
-        throw new Error('inviteUserButton not found');
+			// wait for url to change to /organization/<organizationUUID>
+
+			let organizationSlug;
+			await page.waitForURL((url) => {
+				const match = url
+					.toString()
+					.match(SLUG_PATTERN);
+				if (match) {
+					organizationSlug = match[1];
+					return true;
+				}
+				return false;
+			});
+
+			if (!organizationSlug) {
+				throw new Error("organizationSlug creation failed");
+			}
+
+			// go to /organization/<organizationUUID>/settings
+
+			const settingsPageURL = `/${organizationSlug}/settings`;
+			await page.goto(settingsPageURL);
+
+			// wait for data-testid "edit-organization-title-form"
+			const editOrganizationTitleForm = await page.waitForSelector(
+				'form[data-testid="edit-organization-title-form"]',
+			);
+
+			// fill input with name "organization-title"
+			const titleInput = await editOrganizationTitleForm.waitForSelector(
+				'input[name="organizationTitle"]',
+			);
+			if (!titleInput) {
+				throw new Error("titleInput not found");
+			}
+
+			await titleInput.fill("Lorem Ipsum 2");
+
+      const organizationSlugInput = await editOrganizationTitleForm.waitForSelector('input[name="organizationSlug"]');
+
+      if (!organizationSlugInput) {
+        throw new Error("organizationSlugInput not found");
       }
 
-      await inviteUserButton.click();
+      organizationSlugInput.fill(randomUUID());
 
-      // wait for data-testid "invite-user-form"
-      const inviteUserForm = await page.waitForSelector(
-        'form[data-testid="invite-user-form"]',
-      );
-      if (!inviteUserForm) {
-        throw new Error('inviteUserForm not found');
-      }
+			// click on button with text "Update"
+			const updateButton = await editOrganizationTitleForm.waitForSelector(
+				'button:has-text("Update")',
+			);
 
-      const inviteeIdentifier = getInviteeIdentifier();
-      const inviteeEmail = inviteeIdentifier + '@myapp.com';
+			if (!updateButton) {
+				throw new Error("updateButton not found");
+			}
 
-      // fill input with name "email"
-      const emailInput = await inviteUserForm.waitForSelector(
-        'input[name="email"]',
-      );
+			await updateButton.click();
 
-      if (!emailInput) {
-        throw new Error('emailInput not found');
-      }
+			// wait for text "Organization title updated!"
 
-      await emailInput.fill(inviteeEmail);
+			await page.waitForSelector("text=Organization information updated!");
+		});
 
-      // click on button with text "Invite"
-      const inviteButton = await inviteUserForm.waitForSelector(
-        'button:has-text("Invite")',
-      );
+		test.describe("Organization invite", () => {
+			function getInviteeIdentifier(): string {
+				return `johnInvitee` + Date.now().toString().slice(-4);
+			}
 
-      if (!inviteButton) {
-        throw new Error('inviteButton not found');
-      }
+			const INBUCKET_URL = `http://localhost:54324`;
 
-      await inviteButton.click();
+			// eg endpoint: https://api.testmail.app/api/json?apikey=${APIKEY}&namespace=${NAMESPACE}&pretty=true
+			async function getInvitationEmail(username: string): Promise<{
+				url: string;
+			}> {
+				const requestContext = await request.newContext();
+				const messages = await requestContext
+					.get(`${INBUCKET_URL}/api/v1/mailbox/${username}`)
+					.then((res) => res.json())
+					// InBucket doesn't have any params for sorting, so here
+					// we're sorting the messages by date
+					.then((items) =>
+						[...items].sort((a, b) => {
+							if (a.date < b.date) {
+								return 1;
+							}
 
-      // wait for text "User invited!"
-      await page.waitForSelector('text=User invited!');
+							if (a.date > b.date) {
+								return -1;
+							}
 
-      // logout user
-      await page.goto('/logout');
+							return 0;
+						}),
+					);
 
-      // open invite link
-      let url;
-      await expect
-        .poll(
-          async () => {
-            try {
-              const { url: urlFromCheck } =
-                await getInvitationEmail(inviteeIdentifier);
-              url = urlFromCheck;
-              return typeof urlFromCheck;
-            } catch (e) {
-              return null;
-            }
-          },
-          {
-            message: 'make sure the email is received',
-            intervals: [1000, 2000, 5000, 10000, 20000],
-          },
-        )
-        .toBe('string');
+				const latestMessageId = messages[0]?.id;
 
-      await page.goto(url);
+				if (latestMessageId) {
+					const message = await requestContext
+						.get(
+							`${INBUCKET_URL}/api/v1/mailbox/${username}/${latestMessageId}`,
+						)
+						.then((res) => res.json());
 
-      await page.waitForURL(`/onboarding`);
+					const url = message.body.text.match(/View Invitation \( (.+) \)/)[1];
 
-      await onboardUserHelper({
-        page,
-        name: 'Invitee John ' + inviteeIdentifier,
-      });
+					return { url };
+				}
 
-      const inviteeUserId = await getUserIdHelper({ page });
+				throw new Error("No email received");
+			}
 
-      await page.goto('/invitations');
+			test("invite user to an organization", async ({ page }) => {
+				const organizationSlug = await dashboardDefaultOrganizationIdHelper({
+					page,
+				});
 
-      // click on anchor with text "View Invitation"
-      const viewInvitationAnchor = await page.waitForSelector(
-        'a:has-text("View Invitation")',
-      );
+				const membersPageURL = `/${organizationSlug}/settings/members`;
 
-      if (!viewInvitationAnchor) {
-        throw new Error('viewInvitationAnchor not found');
-      }
+				await page.goto(membersPageURL);
 
-      await viewInvitationAnchor.click();
+				await page.waitForSelector("text=Team Members");
 
-      // expect url to be /invitations/:invitationId
+				// click button with testid "invite-user-button"
+				const inviteUserButton = await page.waitForSelector(
+					'button[data-testid="invite-user-button"]',
+				);
+				if (!inviteUserButton) {
+					throw new Error("inviteUserButton not found");
+				}
 
-      let invitationId;
-      await page.waitForURL((url) => {
-        const match = url
-          .toString()
-          .match(
-            /\/invitations\/([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})/,
-          );
-        if (match) {
-          invitationId = match[1];
-          return true;
-        }
-        return false;
-      });
+				await inviteUserButton.click();
 
-      if (!invitationId) {
-        throw new Error('invitationId creation failed');
-      }
+				// wait for data-testid "invite-user-form"
+				const inviteUserForm = await page.waitForSelector(
+					'form[data-testid="invite-user-form"]',
+				);
+				if (!inviteUserForm) {
+					throw new Error("inviteUserForm not found");
+				}
 
-      // click on button with data-testid accept-dialog-trigger
-      const acceptDialogTriggerButton = await page.waitForSelector(
-        'button:has-text("Accept Invitation")',
-      );
+				const inviteeIdentifier = getInviteeIdentifier();
+				const inviteeEmail = `${inviteeIdentifier}@myapp.com`;
 
-      if (!acceptDialogTriggerButton) {
-        throw new Error('acceptDialogTriggerButton not found');
-      }
+				// fill input with name "email"
+				const emailInput = await inviteUserForm.waitForSelector(
+					'input[name="email"]',
+				);
 
-      await acceptDialogTriggerButton.click();
+				if (!emailInput) {
+					throw new Error("emailInput not found");
+				}
 
-      // wait for div with data-testid dialog-accept-invitation-content
-      const acceptDialog = await page.waitForSelector(
-        'div[data-testid="dialog-accept-invitation-content"]',
-      );
+				await emailInput.fill(inviteeEmail);
 
-      if (!acceptDialog) {
-        throw new Error('acceptDialog not found');
-      }
+				// click on button with text "Invite"
+				const inviteButton = await inviteUserForm.waitForSelector(
+					'button:has-text("Invite")',
+				);
 
-      // click on button with data-testid confirm
-      const confirmButton = await acceptDialog.waitForSelector(
-        'button[data-testid="confirm"]',
-      );
+				if (!inviteButton) {
+					throw new Error("inviteButton not found");
+				}
 
-      if (!confirmButton) {
-        throw new Error('confirmButton not found');
-      }
+				await inviteButton.click();
 
-      await confirmButton.click();
+				// wait for text "User invited!"
+				await page.waitForSelector("text=User invited!");
 
-      // wait for text "Invitation accepted!"
-      await page.waitForSelector('text=Invitation accepted!');
+				// logout user
+				await page.goto("/logout");
 
-      // wait for url to be /organization/:organizationId
+				// open invite link
+				let url;
+				await expect
+					.poll(
+						async () => {
+							try {
+								const { url: urlFromCheck } =
+									await getInvitationEmail(inviteeIdentifier);
+								url = urlFromCheck;
+								return typeof urlFromCheck;
+							} catch (e) {
+								return null;
+							}
+						},
+						{
+							message: "make sure the email is received",
+							intervals: [1000, 2000, 5000, 10000, 20000],
+						},
+					)
+					.toBe("string");
 
-      await page.waitForURL(`/organization/${organizationId}`);
+				await page.goto(url);
 
-      await page.goto(membersPageURL);
+				await page.waitForURL(`/onboarding`);
 
-      // wait for testid "members-table"
-      const membersTable = await page.waitForSelector(
-        'table[data-testid="members-table"]',
-      );
+				await onboardUserHelper({
+					page,
+					name: "Invitee John " + inviteeIdentifier,
+				});
 
-      if (!membersTable) {
-        throw new Error('membersTable not found');
-      }
+				const inviteeUserId = await getUserIdHelper({ page });
 
-      // wait for tr with data-user-id matching inviteeUserId
-      const memberRow = await membersTable.waitForSelector(
-        `tr[data-user-id="${inviteeUserId}"]`,
-      );
+				await page.goto("/invitations");
 
-      // expect memberRow to be visible
-      expect(await memberRow.isVisible()).toBe(true);
-    });
-  });
-});
+				// click on anchor with text "View Invitation"
+				const viewInvitationAnchor = await page.waitForSelector(
+					'a:has-text("View Invitation")',
+				);
+
+				if (!viewInvitationAnchor) {
+					throw new Error("viewInvitationAnchor not found");
+				}
+
+				await viewInvitationAnchor.click();
+
+				// expect url to be /invitations/:invitationId
+
+				let invitationId;
+				await page.waitForURL((url) => {
+					const match = url
+						.toString()
+						.match(
+							/\/invitations\/([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})/,
+						);
+					if (match) {
+						invitationId = match[1];
+						return true;
+					}
+					return false;
+				});
+
+				if (!invitationId) {
+					throw new Error("invitationId creation failed");
+				}
+
+				// click on button with data-testid accept-dialog-trigger
+				const acceptDialogTriggerButton = await page.waitForSelector(
+					'button:has-text("Accept Invitation")',
+				);
+
+				if (!acceptDialogTriggerButton) {
+					throw new Error("acceptDialogTriggerButton not found");
+				}
+
+				await acceptDialogTriggerButton.click();
+
+				// wait for div with data-testid dialog-accept-invitation-content
+				const acceptDialog = await page.waitForSelector(
+					'div[data-testid="dialog-accept-invitation-content"]',
+				);
+
+				if (!acceptDialog) {
+					throw new Error("acceptDialog not found");
+				}
+
+				// click on button with data-testid confirm
+				const confirmButton = await acceptDialog.waitForSelector(
+					'button[data-testid="confirm"]',
+				);
+
+				if (!confirmButton) {
+					throw new Error("confirmButton not found");
+				}
+
+				await confirmButton.click();
+
+				// wait for text "Invitation accepted!"
+				await page.waitForSelector("text=Invitation accepted!");
+
+				// wait for url to be /organization/:organizationId
+
+				await page.waitForURL(`/${organizationSlug}`);
+
+				await page.goto(membersPageURL);
+
+				// wait for testid "members-table"
+				const membersTable = await page.waitForSelector(
+					'table[data-testid="members-table"]',
+				);
+
+				if (!membersTable) {
+					throw new Error("membersTable not found");
+				}
+
+				// wait for tr with data-user-id matching inviteeUserId
+				const memberRow = await membersTable.waitForSelector(
+					`tr[data-user-id="${inviteeUserId}"]`,
+				);
+
+				// expect memberRow to be visible
+				expect(await memberRow.isVisible()).toBe(true);
+			});
+		});
+	});

@@ -1,4 +1,5 @@
 import type { Page } from '@playwright/test';
+import { randomUUID } from 'crypto';
 
 export async function onboardUserHelper({
   page,
@@ -47,6 +48,7 @@ export async function onboardUserHelper({
   const input = await form.waitForSelector('input[name="name"]');
   // enter text in the input field
   await input.fill(name);
+
   // get button with text "save"
   const submitButton = await form.waitForSelector('button:has-text("Save")');
   if (!submitButton) {
@@ -73,7 +75,19 @@ export async function onboardUserHelper({
     throw new Error('inputCreateOrg not found');
   }
 
+  
   await inputCreateOrg.fill('My Organization');
+
+  const inputSlug = await createOrganizationForm.waitForSelector(
+    'input[name="organizationSlug"]',
+  );
+
+  if (!inputSlug) {
+    throw new Error('inputSlug not found');
+  }
+
+
+  await inputSlug.fill(randomUUID());
 
   const createOrganizationButton = await createOrganizationForm.waitForSelector(
     'button:has-text("Create Organization")',

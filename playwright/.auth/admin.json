@@ -2,20 +2,20 @@
   "cookies": [
     {
       "name": "sb-localhost-auth-token",
-      "value": "%5B%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJtYWdpY2xpbmsiLCJ0aW1lc3RhbXAiOjE3MTUwNTM3MzJ9XSwiYXBwX21ldGFkYXRhIjp7InByb3ZpZGVyIjoiZW1haWwiLCJwcm92aWRlcnMiOlsiZW1haWwiXX0sImF1ZCI6ImF1dGhlbnRpY2F0ZWQiLCJlbWFpbCI6ImFkbWluam9lNTU4NUBteWFwcC5jb20iLCJleHAiOjE3MTUwNTczMzIsImlhdCI6MTcxNTA1MzczMiwiaXNfYW5vbnltb3VzIjpmYWxzZSwiaXNzIjoiaHR0cDovLzEyNy4wLjAuMTo1NDMyMS9hdXRoL3YxIiwicGhvbmUiOiIiLCJyb2xlIjoiYXV0aGVudGljYXRlZCIsInNlc3Npb25faWQiOiJiZDY0NmQ1MS0wMTg1LTRhOGYtYjJkNi0zOTAxNDM4MDA2YjUiLCJzdWIiOiI4YmRjNDAwZi1kNDI3LTQ4OGQtYjQ0NC1jNzY5OTFjMDEyNjMiLCJ1c2VyX21ldGFkYXRhIjp7ImVtYWlsIjoiYWRtaW5qb2U1NTg1QG15YXBwLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwib25ib2FyZGluZ0hhc0FjY2VwdGVkVGVybXMiOnRydWUsIm9uYm9hcmRpbmdIYXNDb21wbGV0ZWRQcm9maWxlIjp0cnVlLCJvbmJvYXJkaW5nSGFzQ3JlYXRlZE9yZ2FuaXphdGlvbiI6dHJ1ZSwicGhvbmVfdmVyaWZpZWQiOmZhbHNlLCJzdWIiOiI4YmRjNDAwZi1kNDI3LTQ4OGQtYjQ0NC1jNzY5OTFjMDEyNjMifSwidXNlcl9yb2xlIjoiYWRtaW4ifQ.0EY7agy5071_UJaONoS8LqRRFTpg_RvGkzvJArPb7K8%22%2C%226SCnK_4e1NlrT_7C9yccNQ%22%2Cnull%2Cnull%2Cnull%5D",
+      "value": "%5B%22eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJtYWdpY2xpbmsiLCJ0aW1lc3RhbXAiOjE3MTU4Nzg0MzN9XSwiYXBwX21ldGFkYXRhIjp7InByb3ZpZGVyIjoiZW1haWwiLCJwcm92aWRlcnMiOlsiZW1haWwiXX0sImF1ZCI6ImF1dGhlbnRpY2F0ZWQiLCJlbWFpbCI6ImFkbWluam9lNjA4MEBteWFwcC5jb20iLCJleHAiOjE3MTU4ODIwMzMsImlhdCI6MTcxNTg3ODQzMywiaXNfYW5vbnltb3VzIjpmYWxzZSwiaXNzIjoiaHR0cDovLzEyNy4wLjAuMTo1NDMyMS9hdXRoL3YxIiwicGhvbmUiOiIiLCJyb2xlIjoiYXV0aGVudGljYXRlZCIsInNlc3Npb25faWQiOiI4NDlhY2YzZS0wODVlLTRlOTctOWQyNS1hNzUxOTc1NGZkZDciLCJzdWIiOiI4ZDAzNWE3NC00ODc2LTRlZTMtYTk3Ny00NGYwNmZkYjgzY2IiLCJ1c2VyX21ldGFkYXRhIjp7ImVtYWlsIjoiYWRtaW5qb2U2MDgwQG15YXBwLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwib25ib2FyZGluZ0hhc0FjY2VwdGVkVGVybXMiOnRydWUsIm9uYm9hcmRpbmdIYXNDb21wbGV0ZWRQcm9maWxlIjp0cnVlLCJvbmJvYXJkaW5nSGFzQ3JlYXRlZE9yZ2FuaXphdGlvbiI6dHJ1ZSwicGhvbmVfdmVyaWZpZWQiOmZhbHNlLCJzdWIiOiI4ZDAzNWE3NC00ODc2LTRlZTMtYTk3Ny00NGYwNmZkYjgzY2IifSwidXNlcl9yb2xlIjoiYWRtaW4ifQ.R9dEzuK0afL8gVpsLrmEuOFOXzHRo8ViRZHZQyfaTbc%22%2C%22EynzNtjdy9hYNDucF7HJCw%22%2Cnull%2Cnull%2Cnull%5D",
       "domain": "localhost",
       "path": "/",
-      "expires": 1749613732.510595,
+      "expires": 1750438433.639689,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
     },
     {
       "name": "ph_NEXT_PUBLIC_POSTHOG_API_KEY_posthog",
-      "value": "%7B%22distinct_id%22%3A%228bdc400f-d427-488d-b444-c76991c01263%22%2C%22%24sesid%22%3A%5B1715053735587%2C%22018f512a-ac2a-7825-9e76-cf4d7add20cf%22%2C1715053702186%5D%2C%22%24epp%22%3Atrue%7D",
+      "value": "%7B%22distinct_id%22%3A%228d035a74-4876-4ee3-a977-44f06fdb83cb%22%2C%22%24sesid%22%3A%5B1715878434579%2C%22018f8252-d4db-7310-af3d-286539222934%22%2C1715878417627%5D%2C%22%24epp%22%3Atrue%7D",
       "domain": "localhost",
       "path": "/",
-      "expires": 1746589735,
+      "expires": 1747414434,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
@@ -27,7 +27,7 @@
       "localStorage": [
         {
           "name": "ph_NEXT_PUBLIC_POSTHOG_API_KEY_posthog",
-          "value": "{\"distinct_id\":\"8bdc400f-d427-488d-b444-c76991c01263\",\"$sesid\":[1715053735587,\"018f512a-ac2a-7825-9e76-cf4d7add20cf\",1715053702186],\"$epp\":true,\"$device_id\":\"018f512a-ac07-7dac-925e-33d9bee6f975\",\"$user_state\":\"identified\",\"$capture_rate_limit\":{\"tokens\":99,\"last\":1715053735586},\"$initial_campaign_params\":{},\"$initial_referrer_info\":{\"$referrer\":\"$direct\",\"$referring_domain\":\"$direct\"},\"$client_session_props\":{\"sessionId\":\"018f512a-ac2a-7825-9e76-cf4d7add20cf\",\"props\":{\"initialPathName\":\"/onboarding\",\"referringDomain\":\"$direct\"}},\"$user_id\":\"8bdc400f-d427-488d-b444-c76991c01263\",\"$stored_person_properties\":{\"email\":\"adminjoe5585@myapp.com\"}}"
+          "value": "{\"distinct_id\":\"8d035a74-4876-4ee3-a977-44f06fdb83cb\",\"$sesid\":[1715878434579,\"018f8252-d4db-7310-af3d-286539222934\",1715878417627],\"$epp\":true,\"$device_id\":\"018f8252-d4c3-76c9-9fa8-74ddb925a73e\",\"$user_state\":\"identified\",\"$capture_rate_limit\":{\"tokens\":98.28,\"last\":1715878434579},\"$initial_campaign_params\":{},\"$initial_referrer_info\":{\"$referrer\":\"$direct\",\"$referring_domain\":\"$direct\"},\"$client_session_props\":{\"sessionId\":\"018f8252-d4db-7310-af3d-286539222934\",\"props\":{\"initialPathName\":\"/onboarding\",\"referringDomain\":\"$direct\"}},\"$user_id\":\"8d035a74-4876-4ee3-a977-44f06fdb83cb\",\"$stored_person_properties\":{\"email\":\"adminjoe6080@myapp.com\"}}"
         }
       ]
     }

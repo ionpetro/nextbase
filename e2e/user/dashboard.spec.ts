@@ -2,10 +2,10 @@ import { test } from '@playwright/test';
 import { dashboardDefaultOrganizationIdHelper } from '../_helpers/dashboard-default-organization-id.helper';
 
 test('dashboard for a user with profile', async ({ page }) => {
-  const organizationId = await dashboardDefaultOrganizationIdHelper({ page });
-  const settingsPageURL = `/organization/${organizationId}/settings`;
-  const billingPageURL = `/organization/${organizationId}/settings/billing`;
-  const membersPageURL = `/organization/${organizationId}/settings/members`;
+  const organizationSlug = await dashboardDefaultOrganizationIdHelper({ page });
+  const settingsPageURL = `/${organizationSlug}/settings`;
+  const billingPageURL = `/${organizationSlug}/settings/billing`;
+  const membersPageURL = `/${organizationSlug}/settings/members`;
 
   // check for the presence of the settings page
   await page.goto(settingsPageURL);
