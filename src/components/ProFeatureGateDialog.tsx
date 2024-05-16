@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import Image from 'next/image';
-import Link from 'next/link';
-import { ReactNode, useState } from 'react';
-import { Button } from './Button';
-import { T, Typography } from './ui/Typography';
-import { AspectRatio } from './ui/aspect-ratio';
-import { Dialog, DialogContent, DialogTrigger } from './ui/dialog';
+import { motion } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
+import { useState, type ReactNode } from "react";
+import { Button } from "./Button";
+import { T, Typography } from "./ui/Typography";
+import { AspectRatio } from "./ui/aspect-ratio";
+import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
 
 export function ProFeatureGateDialog({
-  organizationId,
+  organizationSlug,
   label,
   icon,
 }: {
-  organizationId: string;
+  organizationSlug: string;
   label: string;
   icon: ReactNode;
 }) {
@@ -43,8 +43,8 @@ export function ProFeatureGateDialog({
           className="rounded-lg overflow-hidden relative h-full "
         >
           <motion.div
-            initial={{ scale: 5, filter: 'blur(5px)' }}
-            animate={{ scale: 1, filter: 'blur(0px)' }}
+            initial={{ scale: 5, filter: "blur(5px)" }}
+            animate={{ scale: 1, filter: "blur(0px)" }}
             transition={{ duration: 0.8, ease: [0.22, 0.61, 0.36, 1] }}
             className="absolute inset-0 w-full h-full z-20 flex place-content-center"
           >
@@ -56,8 +56,8 @@ export function ProFeatureGateDialog({
             />
           </motion.div>
           <motion.div
-            initial={{ scale: 2, filter: 'blur(2px)' }}
-            animate={{ scale: 1, filter: 'blur(0px)' }}
+            initial={{ scale: 2, filter: "blur(2px)" }}
+            animate={{ scale: 1, filter: "blur(0px)" }}
             transition={{ duration: 0.8, ease: [0.22, 0.61, 0.36, 1] }}
             className="absolute inset-0 w-full h-full flex place-content-center"
           >
@@ -80,7 +80,7 @@ export function ProFeatureGateDialog({
           workspace and more.
         </Typography.P>
         <Link
-          href={`/organization/${organizationId}/settings/billing`}
+          href={`/${organizationSlug}/settings/billing`}
           className="w-full"
           onClick={() => setIsDialogOpen(false)}
         >

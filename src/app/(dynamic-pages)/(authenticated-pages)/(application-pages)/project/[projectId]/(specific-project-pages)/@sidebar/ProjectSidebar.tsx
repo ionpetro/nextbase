@@ -5,11 +5,11 @@ import { SidebarLink } from '@/components/SidebarLink';
 import { fetchSlimOrganizations } from '@/data/user/organizations';
 import { getSlimProjectById } from '@/data/user/projects';
 import { cn } from '@/utils/cn';
-import { projectParamSchema } from '@/utils/zod-schemas/params';
+import { organizationSlugParamSchema, projectParamSchema } from '@/utils/zod-schemas/params';
 import { ArrowLeft, Layers, Settings } from 'lucide-react';
 import { Suspense } from 'react';
 
-async function ProjectSidebarInternal({ projectId }: { projectId: string }) {
+async function ProjectSidebarInternal({ projectId, organizationSlug }: { projectId: string; organizationSlug: string }) {
   const [slimOrganizations, project] = await Promise.all([
     fetchSlimOrganizations(),
     getSlimProjectById(projectId),
@@ -28,13 +28,13 @@ async function ProjectSidebarInternal({ projectId }: { projectId: string }) {
         <div className="flex flex-col">
           <SidebarLink
             label="Back to organization"
-            href={`/organization/${organizationId}`}
+            href={`/${organizationSlug}`}
             icon={<ArrowLeft className="h-5 w-5" />}
           />
           {project.team_id && (
             <SidebarLink
               label="Back to team"
-              href={`/organization/${organizationId}/team/${project.team_id}`}
+              href={`/${organizationSlug}/team/${project.team_id}`}
               icon={<ArrowLeft className="h-5 w-5" />}
             />
           )}
@@ -59,10 +59,11 @@ async function ProjectSidebarInternal({ projectId }: { projectId: string }) {
 }
 
 export async function ProjectSidebar({ params }: { params: unknown }) {
+  const { organizationSlug } = organizationSlugParamSchema.parse(params);
   const { projectId } = projectParamSchema.parse(params);
   return (
     <Suspense fallback={<DesktopSidebarFallback />}>
-      <ProjectSidebarInternal projectId={projectId} />
+      <ProjectSidebarInternal projectId={projectId} organizationSlug={organizationSlug} />
     </Suspense>
   );
 }

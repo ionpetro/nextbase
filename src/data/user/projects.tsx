@@ -74,8 +74,8 @@ export const createProjectAction = async ({
     };
   }
 
-  revalidatePath(`/organization/${organizationId}`, "layout");
-  revalidatePath(`/organization/${organizationId}/projects`, "layout");
+  revalidatePath("/[organizationSlug]", "layout");
+  revalidatePath("/[organizationSlug]/projects", "layout");
 
   return {
     status: 'success',

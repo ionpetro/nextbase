@@ -6,7 +6,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const generateSlug = async (title: string): Promise<string> => {
+export const generateSlug = (title: string) => {
   const slug = slugify(title, {
     lower: true,
     strict: true,

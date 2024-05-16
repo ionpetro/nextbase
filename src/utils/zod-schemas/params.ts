@@ -4,6 +4,10 @@ export const organizationParamSchema = z.object({
   organizationId: z.string().uuid(),
 });
 
+export const organizationSlugParamSchema = z.object({
+  organizationSlug: z.string(),
+});
+
 export const projectsfilterSchema = z.object({
   page: z.coerce.number().optional(),
   query: z.string().optional(),

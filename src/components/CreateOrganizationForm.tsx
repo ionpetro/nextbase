@@ -1,5 +1,9 @@
-'use client';
-import { Button } from '@/components/ui/button';
+"use client";
+import {
+  createOrganizationSchema,
+  type CreateOrganizationSchema,
+} from "@/app/(dynamic-pages)/(authenticated-pages)/onboarding/OnboardingFlow";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -7,32 +11,63 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Network } from 'lucide-react';
-import { redirect } from 'next/navigation';
-import { useState } from 'react';
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { createOrganization } from "@/data/user/organizations";
+import { useSAToastMutation } from "@/hooks/useSAToastMutation";
+import { generateSlug } from "@/lib/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Network } from "lucide-react";
+import { redirect } from "next/navigation";
+import { useForm } from "react-hook-form";
 
 type CreateOrganizationDialogProps = {
-  onConfirm: (organizationTitle: string) => void;
-  isLoading: boolean;
   className?: string;
   isDialogOpen: boolean;
 };
 
 export function CreateOrganizationForm({
-  onConfirm,
-  isLoading,
   isDialogOpen,
 }: CreateOrganizationDialogProps) {
-  const [organizationTitle, setOrganizationTitle] = useState<string>('');
-  // const [open, setOpen] = useState(false);
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    onConfirm(organizationTitle);
-    redirect('/dashboard');
+  const { mutate: createOrg, isLoading: isCreatingOrg } = useSAToastMutation(
+    async ({
+      organizationTitle,
+      organizationSlug,
+    }: { organizationTitle: string; organizationSlug: string }) => {
+      const orgId = await createOrganization(
+        organizationTitle,
+        organizationSlug,
+        {
+          isOnboardingFlow: true,
+        },
+      );
+      return orgId;
+    },
+    {
+      successMessage: "Organization created!",
+      errorMessage: "Failed to create organization",
+      onSuccess: (orgId) => {
+        redirect("/dashboard");
+      },
+    },
+  );
+
+  const onSubmit = (data: CreateOrganizationSchema) => {
+    createOrg({
+      organizationTitle: data.organizationTitle,
+      organizationSlug: data.organizationSlug,
+    });
   };
+
+  const { register, formState, handleSubmit, setValue } =
+    useForm<CreateOrganizationSchema>({
+      resolver: zodResolver(createOrganizationSchema),
+      defaultValues: {
+        organizationTitle: "",
+        organizationSlug: "",
+      },
+    });
 
   return (
     <>
@@ -49,30 +84,38 @@ export function CreateOrganizationForm({
               </DialogDescription>
             </div>
           </DialogHeader>
-          <form onSubmit={handleSubmit} data-testid="create-organization-form">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            data-testid="create-organization-form"
+          >
             <div className="mb-8">
               <Label className="text-muted-foreground">Organization Name</Label>
               <Input
-                value={organizationTitle}
-                onChange={(event) => {
-                  setOrganizationTitle(event.target.value);
-                }}
+                {...register("organizationTitle")}
                 required
                 className="mt-1.5 shadow appearance-none border h-11 rounded-lg w-full py-2 px-3 focus:ring-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-base"
                 id="name"
                 name="name"
                 type="text"
                 placeholder="Organization Name"
-                disabled={isLoading}
+                onChange={(e) => setValue("organizationTitle", generateSlug(e.target.value))}
+                disabled={isCreatingOrg}
               />
             </div>
+            <Label>Organization Slug</Label>
+            <Input
+              {...register("organizationSlug")}
+              required
+              className="mt-1.5 shadow appearance-none border h-11 rounded-lg w-full py-2 px-3 focus:ring-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-base"
+              disabled
+            />
 
             <DialogFooter>
               <Button
                 variant="default"
                 type="submit"
                 className="w-full"
-                disabled={isLoading}
+                disabled={isCreatingOrg}
               >
                 Create Organization
               </Button>

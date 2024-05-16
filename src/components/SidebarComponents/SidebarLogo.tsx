@@ -8,12 +8,12 @@ import { OrganizationSwitcher } from './OrganizationSwitcher';
 import { SidebarClose } from './SidebarClose';
 type Props = {
   organizationId?: string;
-  slimOrganizations?: { id: string, title: string }[];
+  slimOrganizations?: { id: string, title: string, slug: string }[];
 };
 
 export function SwitcherAndToggle({ organizationId, slimOrganizations }: Props) {
   return (
-    <div className="flex items-center w-full mb-20 gap-4 justify-between">
+    <div className="flex items-center w-full gap-4 justify-between">
       {organizationId && slimOrganizations ? (
         <OrganizationSwitcher
           currentOrganizationId={organizationId}

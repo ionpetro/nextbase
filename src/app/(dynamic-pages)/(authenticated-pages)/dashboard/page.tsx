@@ -21,12 +21,12 @@ async function getOrganizationToRedirectTo(): Promise<string> {
     return notFound();
   }
 
-  return firstOrganization.id;
+  return firstOrganization.slug;
 }
 
 async function RedirectToDefaultOrg() {
   const firstOrganizationId = await getOrganizationToRedirectTo();
-  return redirect(`/organization/${firstOrganizationId}`);
+  return redirect(`/${firstOrganizationId}`);
 }
 
 export default async function DashboardPage() {

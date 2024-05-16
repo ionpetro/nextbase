@@ -42,7 +42,7 @@ export const ConfirmAcceptInvitationDialog = ({
       },
       onSuccess: (response) => {
         if (response.status === 'success') {
-          router.push(`/organization/${response.data}`);
+          router.push(`/${response.data}`);
         }
       },
     });

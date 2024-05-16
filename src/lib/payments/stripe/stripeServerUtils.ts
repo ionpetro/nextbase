@@ -1,7 +1,7 @@
 'use server';
 
 import { createOrRetrieveCustomer } from '@/data/admin/stripe';
-import { getOrganizationTitle } from '@/data/user/organizations';
+import { getOrganizationSlugByOrganizationId, getOrganizationTitle } from '@/data/user/organizations';
 import { createSupabaseUserServerActionClient } from '@/supabase-clients/user/createSupabaseUserServerActionClient';
 import { toSiteURL } from '@/utils/helpers';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
@@ -21,6 +21,7 @@ export async function createCheckoutSessionAction({
   const user = await serverGetLoggedInUser();
 
   const organizationTitle = await getOrganizationTitle(organizationId);
+  const organizationSlug = await getOrganizationSlugByOrganizationId(organizationId);
 
   const customer = await createOrRetrieveCustomer({
     organizationId: organizationId,
@@ -51,13 +52,13 @@ export async function createCheckoutSessionAction({
         metadata: {},
       },
       success_url: toSiteURL(
-        `/organization/${organizationId}/settings/billing`,
+        `/${organizationSlug}/settings/billing`,
       ),
-      cancel_url: toSiteURL(`/organization/${organizationId}/settings/billing`),
+      cancel_url: toSiteURL(`/${organizationSlug}/settings/billing`),
     });
 
     return stripeSession.id;
-  } else {
+  }
     const stripeSession = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       billing_address_collection: 'required',
@@ -79,13 +80,12 @@ export async function createCheckoutSessionAction({
       },
       metadata: {},
       success_url: toSiteURL(
-        `/organization/${organizationId}/settings/billing`,
+        `/${organizationSlug}/settings/billing`,
       ),
-      cancel_url: toSiteURL(`/organization/${organizationId}/settings/billing`),
+      cancel_url: toSiteURL(`/${organizationSlug}/settings/billing`),
     });
 
     return stripeSession.id;
-  }
 }
 
 export async function createCustomerPortalLinkAction(organizationId: string) {
@@ -112,10 +112,12 @@ export async function createCustomerPortalLinkAction(organizationId: string) {
     email: user.email || '',
   });
 
+  const organizationSlug = await getOrganizationSlugByOrganizationId(organizationId);
+
   if (!customer) throw Error('Could not get customer');
   const { url } = await stripe.billingPortal.sessions.create({
     customer,
-    return_url: toSiteURL(`/organization/${organizationId}/settings/billing`),
+    return_url: toSiteURL(`/${organizationSlug}/settings/billing`),
   });
 
   return url;
