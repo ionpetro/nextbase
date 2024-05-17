@@ -312,6 +312,7 @@ export const updateOrganizationInfo = async (
   }
 
   revalidatePath("/[organizationSlug]", 'layout');
+  
   return { status: 'success', data };
 };
 
