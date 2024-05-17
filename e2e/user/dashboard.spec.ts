@@ -14,11 +14,18 @@ test('dashboard for a user with profile', async ({ page }) => {
 
   // check for the presence of the members page
   await page.goto(membersPageURL);
+
+  // wait for page load completely
+  await page.waitForTimeout(12000);
   // wait for text Team Members
   await page.waitForSelector('text=Team Members');
 
   // check for the presence of the billing page
   await page.goto(billingPageURL);
+
+  // wait for page load completely
+  await page.waitForTimeout(12000);
+
   // wait for text Subscription
   await page.waitForSelector('text=Subscription');
 });
