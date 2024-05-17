@@ -8,7 +8,6 @@ export async function OrganizationPageHeading({
   organizationId: string;
   organizationSlug: string;
 }) {
-  await new Promise((resolve) => setTimeout(resolve, 2000))
   const organizationTitle = await getOrganizationTitle(organizationId);
   return (
     <PageHeading

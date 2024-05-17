@@ -12,6 +12,7 @@ import { Layers } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
 import type { z } from "zod";
+import { DashboardLoadingFallback } from "./DashboardLoadingFallback";
 import { TeamMembers } from "./TeamMembers";
 import { ExportPDF } from "./_exportPdf/ExportPdf";
 import { GraphContainer } from "./_graphs/GraphContainer";
@@ -29,14 +30,7 @@ async function Projects({
 
 }
 
-export default async function OrganizationPage({
-  params,
-  searchParams,
-}: {
-  params: unknown;
-  searchParams: unknown;
-}) {
-  await new Promise(resolve => setTimeout(resolve, 3000));
+async function Dashboard({ params, searchParams }: { params: unknown, searchParams: unknown }) {
   const { organizationSlug } = organizationSlugParamSchema.parse(params);
   const organizationId = await getOrganizationIdBySlug(organizationSlug);
   const validatedSearchParams = projectsfilterSchema.parse(searchParams);
@@ -71,12 +65,10 @@ export default async function OrganizationPage({
           </div>
 
           <div className="flex flex-col gap-2">
-            {/* <Suspense fallback={<ProjectsLoadingFallback quantity={3} />}> */}
             <Projects
               organizationId={organizationId}
               filters={validatedSearchParams}
             />
-            {/* </Suspense> */}
             {validatedSearchParams.query && <p className="mt-4 ml-2 text-sm">Searching for <span className="font-bold">{validatedSearchParams.query}</span></p>}
           </div>
         </div>
@@ -90,4 +82,17 @@ export default async function OrganizationPage({
       </div>
     </div>
   );
+
+}
+
+export default async function OrganizationPage({
+  params,
+  searchParams,
+}: {
+  params: unknown;
+  searchParams: unknown;
+}) {
+  return <Suspense fallback={<DashboardLoadingFallback />}>
+    <Dashboard params={params} searchParams={searchParams} />
+  </Suspense>
 }

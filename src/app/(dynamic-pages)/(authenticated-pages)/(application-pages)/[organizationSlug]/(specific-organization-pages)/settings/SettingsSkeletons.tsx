@@ -30,11 +30,3 @@ export const SettingsFormSkeleton = () => {
   )
 }
 
-export const SettingsSkeleton = () => {
-  return (
-    <div>
-      <SettingsFormSkeleton />
-    </div>
-
-  )
-}

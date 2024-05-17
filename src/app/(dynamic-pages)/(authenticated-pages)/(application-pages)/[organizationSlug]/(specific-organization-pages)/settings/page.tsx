@@ -56,7 +56,6 @@ export default async function EditOrganizationPage({
     organizationSlug: string;
   };
 }) {
-  await new Promise((resolve) => setTimeout(resolve, 3000));
   const { organizationSlug } = organizationSlugParamSchema.parse(params);
   const organizationId = await getOrganizationIdBySlug(organizationSlug)
 
