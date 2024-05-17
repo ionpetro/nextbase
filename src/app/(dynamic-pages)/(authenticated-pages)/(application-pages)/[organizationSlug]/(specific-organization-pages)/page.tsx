@@ -1,5 +1,4 @@
 import { CreateProjectDialog } from "@/components/CreateProjectDialog";
-import { PageHeading } from "@/components/PageHeading";
 import { ProjectsCardList } from "@/components/Projects/ProjectsCardList";
 import { Search } from "@/components/Search";
 import { Button } from "@/components/ui/button";
@@ -13,8 +12,7 @@ import { Layers } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
 import type { z } from "zod";
-import { OrganizationPageHeading } from "./OrganizationPageHeading";
-import ProjectsLoadingFallback from "./ProjectsLoadingFallback";
+import { DashboardLoadingFallback } from "./DashboardLoadingFallback";
 import { TeamMembers } from "./TeamMembers";
 import { ExportPDF } from "./_exportPdf/ExportPdf";
 import { GraphContainer } from "./_graphs/GraphContainer";
@@ -28,49 +26,27 @@ async function Projects({
     organizationId,
     ...filters,
   });
-  await new Promise((resolve) => setTimeout(resolve, 2000))
   return <ProjectsCardList projects={projects} />
 
 }
 
-export default async function OrganizationPage({
-  params,
-  searchParams,
-}: {
-  params: unknown;
-  searchParams: unknown;
-}) {
+async function Dashboard({ params, searchParams }: { params: unknown, searchParams: unknown }) {
   const { organizationSlug } = organizationSlugParamSchema.parse(params);
-  const organizationId = await getOrganizationIdBySlug(organizationSlug)
-
+  const organizationId = await getOrganizationIdBySlug(organizationSlug);
   const validatedSearchParams = projectsfilterSchema.parse(searchParams);
-  new Promise(() => setTimeout(() => { }, 20000));
+
   return (
     <div>
-      <div className="block space-y-0 lg:hidden">
-        <Suspense
-          fallback={
-            <PageHeading
-              title={"Loading..."}
-              isLoading
-              titleHref={`/${organizationSlug}`}
-            />
-          }
-        >
-          <OrganizationPageHeading organizationId={organizationId} organizationSlug={organizationSlug} />
-        </Suspense>
-      </div>
       <div className="mt-8 w-full">
-
         <div className="flex flex-col">
-          <div className="flex justify-between mb-6 w-full">
+          <div className="flex justify-between w-full">
             <h1 className="font-semibold text-2xl">Dashboard</h1>
             <div className="flex gap-4">
               <ExportPDF />
               <CreateProjectDialog organizationId={organizationId} />
             </div>
           </div>
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center mt-6">
             <h2 className="font-semibold text-xl">Recent Projects</h2>
             <div className="flex gap-4">
               <Search placeholder="Search projects" />
@@ -89,18 +65,16 @@ export default async function OrganizationPage({
           </div>
 
           <div className="flex flex-col gap-2">
-            <Suspense fallback={<ProjectsLoadingFallback quantity={3} />}>
-              <Projects
-                organizationId={organizationId}
-                filters={validatedSearchParams}
-              />
-            </Suspense>
+            <Projects
+              organizationId={organizationId}
+              filters={validatedSearchParams}
+            />
             {validatedSearchParams.query && <p className="mt-4 ml-2 text-sm">Searching for <span className="font-bold">{validatedSearchParams.query}</span></p>}
           </div>
         </div>
       </div>
       <div >
-        <GraphContainer organizationSlug={organizationSlug} >
+        <GraphContainer organizationSlug={organizationSlug}>
           <Suspense>
             <TeamMembers />
           </Suspense>
@@ -108,4 +82,17 @@ export default async function OrganizationPage({
       </div>
     </div>
   );
+
+}
+
+export default async function OrganizationPage({
+  params,
+  searchParams,
+}: {
+  params: unknown;
+  searchParams: unknown;
+}) {
+  return <Suspense fallback={<DashboardLoadingFallback />}>
+    <Dashboard params={params} searchParams={searchParams} />
+  </Suspense>
 }

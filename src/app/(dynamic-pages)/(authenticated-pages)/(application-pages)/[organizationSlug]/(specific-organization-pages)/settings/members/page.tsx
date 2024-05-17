@@ -1,6 +1,5 @@
 "use server";
 import { T } from "@/components/ui/Typography";
-import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table as ShadcnTable,
   TableBody,
@@ -21,6 +20,7 @@ import {
 } from "@/utils/zod-schemas/params";
 import moment from "moment";
 import { Suspense } from "react";
+import ProjectsTableLoadingFallback from "../../projects/loading";
 import { InviteUser } from "./InviteUser";
 import { RevokeInvitationDialog } from "./RevokeInvitationDialog";
 
@@ -168,10 +168,10 @@ export default async function OrganizationPage({
   const organizationId = await getOrganizationIdBySlug(organizationSlug);
   return (
     <div className="space-y-12">
-      <Suspense fallback={<Skeleton className="w-2/3 h-8" />}>
+      <Suspense fallback={<ProjectsTableLoadingFallback />}>
         <TeamMembers organizationId={organizationId} />
       </Suspense>
-      <Suspense fallback={<Skeleton className="w-2/3 h-8" />}>
+      <Suspense fallback={<ProjectsTableLoadingFallback />}>
         <TeamInvitations organizationId={organizationId} />
       </Suspense>
     </div>

@@ -22,13 +22,13 @@ export const TeamMembers = async () => {
   const organizations = await getAllOrganizationsForUser(user.id)
   const organizationsMembers = organizations.flatMap(organization => organization.organization_members)
   return (
-    <div className='flex flex-col overflow-y-auto'>
+    <div className='flex flex-col overflow-y-auto gap-2'>
       {organizationsMembers.map((member) => (
-        <div key={member.id} className="flex items-center justify-between px-8">
+        <div key={member.id} className="flex items-center justify-between px-8 ">
           <div className='flex items-center gap-4'>
             <Avatar>
               <AvatarImage src={member.user_profiles?.avatar_url || ''} />
-              <AvatarFallback>
+              <AvatarFallback className="bg-secondary">
                 <span>{member.user_profiles?.full_name?.charAt(0) || ''}</span>
               </AvatarFallback>
             </Avatar>
