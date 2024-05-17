@@ -229,7 +229,7 @@ export const getProjects = async ({
 }) => {
   const zeroIndexedPage = page - 1;
   const supabase = createSupabaseUserServerComponentClient();
-  let supabaseQuery = supabaseAdminClient
+  let supabaseQuery = supabase
     .from("projects")
     .select("*")
     .eq("organization_id", organizationId)

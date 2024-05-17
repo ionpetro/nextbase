@@ -35,6 +35,5 @@ async function RedirectToDefaultOrg() {
 export default async function DashboardPage() {
   return (
     <RedirectToDefaultOrg />
-
   );
 }

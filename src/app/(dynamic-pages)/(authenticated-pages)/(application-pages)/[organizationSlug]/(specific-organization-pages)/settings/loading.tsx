@@ -1,8 +1,10 @@
-import { Skeleton } from '@/components/ui/skeleton';
+import { SettingsSkeleton } from './SettingsSkeletons';
 
 export default function Loading() {
-  new Promise(() => setTimeout(() => { }, 20000));
+
   return (
-    <Skeleton className="w-16 h-6" />
+    <div className='w-full max-w-md'>
+      <SettingsSkeleton />
+    </div>
   );
 }

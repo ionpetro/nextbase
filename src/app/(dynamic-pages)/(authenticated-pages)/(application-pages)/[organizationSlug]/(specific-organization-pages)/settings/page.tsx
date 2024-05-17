@@ -1,4 +1,3 @@
-import { Skeleton } from '@/components/ui/skeleton';
 import {
   getLoggedInUserOrganizationRole,
   getOrganizationIdBySlug,
@@ -10,6 +9,7 @@ import { Suspense } from 'react';
 import { DeleteOrganization } from './DeleteOrganization';
 import { EditOrganizationForm } from './EditOrganizationForm';
 import { SetDefaultOrganizationPreference } from './SetDefaultOrganizationPreference';
+import { SettingsFormSkeleton } from './SettingsSkeletons';
 
 async function EditOrganization({
   organizationId,
@@ -56,18 +56,19 @@ export default async function EditOrganizationPage({
     organizationSlug: string;
   };
 }) {
+  await new Promise((resolve) => setTimeout(resolve, 3000));
   const { organizationSlug } = organizationSlugParamSchema.parse(params);
   const organizationId = await getOrganizationIdBySlug(organizationSlug)
 
   return (
     <div className="space-y-4">
-      <Suspense fallback={<Skeleton className="w-2/3 h-8" />}>
+      <Suspense fallback={<SettingsFormSkeleton />}>
         <EditOrganization organizationId={organizationId} />
       </Suspense>
-      <Suspense fallback={<Skeleton className="w-2/3 h-8" />}>
+      <Suspense fallback={<SettingsFormSkeleton />}>
         <SetDefaultOrganizationPreference organizationId={organizationId} />
       </Suspense>
-      <Suspense fallback={null}>
+      <Suspense fallback={<SettingsFormSkeleton />}>
         <DeleteOrganizationIfAdmin organizationId={organizationId} />
       </Suspense>
     </div>

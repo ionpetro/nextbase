@@ -34,7 +34,7 @@ export default async function Page({ params, searchParams }: { params: unknown; 
 
 
   return (
-    <div className="flex flex-col gap-4 w-full">
+    <div className="flex flex-col gap-4 w-full mt-8">
       <PageHeading title="Projects" subTitle='You can create projects within teams, or within your organization.' />
       <div className="flex justify-between gap-2">
         <div className="md:w-1/3">

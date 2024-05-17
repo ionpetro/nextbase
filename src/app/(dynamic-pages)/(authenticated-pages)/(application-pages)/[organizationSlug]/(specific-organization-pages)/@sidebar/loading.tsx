@@ -1,6 +1,6 @@
 import { Skeleton } from '@/components/ui/skeleton';
 
-export default function NavbarLoading() {
+export default function LoadingSidebarRoot() {
   return <div className="space-y-4 p-4">
     <Skeleton className="w-full h-12" />
     <Skeleton className="w-full h-12" />
@@ -8,3 +8,4 @@ export default function NavbarLoading() {
     <Skeleton className="w-full h-12" />
   </div>
 }
+
