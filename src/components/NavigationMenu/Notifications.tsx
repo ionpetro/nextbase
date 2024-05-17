@@ -202,7 +202,7 @@ export const useReadAllNotifications = (userId: string) => {
   );
 };
 
-export const Notifications = ({ userId }: { userId: string }) => {
+export const Notifications = ({ userId, }: { userId: string }) => {
   const unseenNotificationIds = useUnseenNotificationIds(userId);
   const {
     notifications,

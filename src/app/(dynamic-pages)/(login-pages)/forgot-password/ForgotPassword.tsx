@@ -1,8 +1,8 @@
 'use client';
-import ConfirmationPendingCard from '@/components/Auth/ConfirmationPendingCard';
 import { Email } from '@/components/Auth/Email';
-import { Card } from '@/components/ui/card';
+import { EmailConfirmationPendingCard } from '@/components/Auth/EmailConfirmationPendingCard';
 import { T } from '@/components/ui/Typography';
+import { Card } from '@/components/ui/card';
 import { resetPassword } from '@/data/auth/auth';
 import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import { useState } from 'react';
@@ -38,7 +38,7 @@ export function ForgotPassword() {
   return (
     <>
       {successMessage ? (
-        <ConfirmationPendingCard
+        <EmailConfirmationPendingCard
           message={successMessage}
           heading="Reset password link sent"
           type="reset-password"

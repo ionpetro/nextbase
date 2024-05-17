@@ -1,7 +1,8 @@
 'use client';
-import ConfirmationPendingCard from '@/components/Auth/ConfirmationPendingCard';
 import { Email } from '@/components/Auth/Email';
 import { EmailAndPassword } from '@/components/Auth/EmailAndPassword';
+import { EmailConfirmationPendingCard } from '@/components/Auth/EmailConfirmationPendingCard';
+import { RedirectingPleaseWaitCard } from '@/components/Auth/RedirectingPleaseWaitCard';
 import { RenderProviders } from '@/components/Auth/RenderProviders';
 import {
   Card,
@@ -28,7 +29,8 @@ export function Login({
   next?: string;
   nextActionType?: string;
 }) {
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [emailSentSuccessMessage, setEmailSentSuccessMessage] = useState<string | null>(null);
+  const [redirectInProgress, setRedirectInProgress] = useState(false);
 
   const router = useRouter();
 
@@ -59,7 +61,7 @@ export function Login({
       },
       successMessage: 'A magic link has been sent to your email!',
       onSuccess: () => {
-        setSuccessMessage('A magic link has been sent to your email!');
+        setEmailSentSuccessMessage('A magic link has been sent to your email!');
       },
     },
   );
@@ -68,7 +70,10 @@ export function Login({
       return await signInWithPassword(email, password);
     },
     {
-      onSuccess: redirectToDashboard,
+      onSuccess: () => {
+        redirectToDashboard();
+        setRedirectInProgress(true);
+      },
       loadingMessage: 'Logging in...',
       errorMessage(error) {
         try {
@@ -96,15 +101,20 @@ export function Login({
   );
   return (
     <div
-      data-success={successMessage}
+      data-success={emailSentSuccessMessage}
       className="container data-[success]:flex items-center data-[success]:justify-center text-left max-w-lg mx-auto overflow-auto data-[success]:h-full min-h-[470px]"
     >
-      {successMessage ? (
-        <ConfirmationPendingCard
+      {emailSentSuccessMessage ? (
+        <EmailConfirmationPendingCard
           type={'login'}
           heading={"Confirmation Link Sent"}
-          message={successMessage}
-          resetSuccessMessage={setSuccessMessage}
+          message={emailSentSuccessMessage}
+          resetSuccessMessage={setEmailSentSuccessMessage}
+        />
+      ) : redirectInProgress ? (
+        <RedirectingPleaseWaitCard
+          message="Please wait while we redirect you to your dashboard."
+          heading="Redirecting to Dashboard"
         />
       ) : (
         <div className="space-y-8 bg-background p-6 rounded-lg shadow dark:border">

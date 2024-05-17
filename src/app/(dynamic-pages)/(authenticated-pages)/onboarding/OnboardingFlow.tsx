@@ -19,6 +19,7 @@ import {
   uploadPublicUserAvatar,
 } from "@/data/user/user";
 import { useSAToastMutation } from "@/hooks/useSAToastMutation";
+import { generateSlug } from "@/lib/utils";
 import type { Table } from "@/types";
 import { getUserAvatarUrl } from "@/utils/helpers";
 import type { AuthUserMetadata } from "@/utils/zod-schemas/authUserMetadata";
@@ -266,16 +267,17 @@ type OrganizationCreationProps = {
   onSuccess: () => void;
 };
 
-const createOrganizationSchema = z.object({
+export const createOrganizationSchema = z.object({
   organizationTitle: z.string().min(1),
+  organizationSlug: z.string().min(1),
 });
 
-type CreateOrganizationSchema = z.infer<typeof createOrganizationSchema>;
+export type CreateOrganizationSchema = z.infer<typeof createOrganizationSchema>;
 
 export function OrganizationCreation({ onSuccess }: OrganizationCreationProps) {
-  const { mutate: createOrg, isLoading: isCreatingOrg } = useSAToastMutation(
-    async (organizationTitle: string) => {
-      const orgId = await createOrganization(organizationTitle, {
+  const { mutate: createOrg, isLoading: isCreatingOrg = false } = useSAToastMutation(
+    async ({ organizationTitle, organizationSlug }: { organizationTitle: string, organizationSlug: string }) => {
+      const orgId = await createOrganization(organizationTitle, organizationSlug, {
         isOnboardingFlow: true,
       });
       return orgId;
@@ -288,16 +290,15 @@ export function OrganizationCreation({ onSuccess }: OrganizationCreationProps) {
   );
 
   const onSubmit = (data: CreateOrganizationSchema) => {
-    createOrg(data.organizationTitle);
+    createOrg({ organizationTitle: data.organizationTitle, organizationSlug: data.organizationSlug });
   };
 
-  const { register, formState, handleSubmit } =
+  const { register, formState, handleSubmit, setValue } =
     useForm<CreateOrganizationSchema>({
       resolver: zodResolver(createOrganizationSchema),
-      defaultValues: {
-        organizationTitle: "",
-      },
     });
+
+  console.log(formState.errors, formState.isValid);
 
   return (
     <Card>
@@ -308,15 +309,26 @@ export function OrganizationCreation({ onSuccess }: OrganizationCreationProps) {
             Please provide a name for your first organization.
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="space-y-2">
           <div className="space-y-2">
             <Label htmlFor="organizationTitle">Organization Name</Label>
             <Input
               id="organizationTitle"
               {...register("organizationTitle")}
-              required
               placeholder="Organization Name"
+              onChange={(event) => {
+                setValue("organizationSlug", generateSlug(event.target.value), { shouldValidate: true });
+                setValue("organizationTitle", event.target.value, { shouldValidate: true });
+              }}
               disabled={isCreatingOrg}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="organizationTitle">Organization Slug</Label>
+            <Input
+              id="organizationTitle"
+              {...register("organizationSlug")}
+              placeholder="Organization Name"
             />
           </div>
         </CardContent>
@@ -414,7 +426,7 @@ export function UserOnboardingFlow({
       // Redirect to dashboard
       replace("/dashboard");
     }
-  }, [currentStep]);
+  }, [currentStep, replace]);
 
   return (
     <>

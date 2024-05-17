@@ -1,4 +1,5 @@
 'use server';
+import { RESTRICTED_SLUG_NAMES, SLUG_PATTERN } from '@/constants';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 import { createSupabaseUserServerActionClient } from '@/supabase-clients/user/createSupabaseUserServerActionClient';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
@@ -15,8 +16,40 @@ import { revalidatePath } from 'next/cache';
 import { v4 as uuid } from 'uuid';
 import { refreshSessionAction } from './session';
 
+export const getOrganizationIdBySlug = async (slug: string) => {
+  const supabaseClient = createSupabaseUserServerComponentClient();
+
+  const { data, error } = await supabaseClient
+    .from('organizations')
+    .select('*')
+    .eq('slug', slug)
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  return data.id;
+}
+
+export const getOrganizationSlugByOrganizationId = async (organizationId: string) => {
+  const supabaseClient = createSupabaseUserServerComponentClient();
+  const { data, error } = await supabaseClient
+    .from('organizations')
+    .select('slug')
+    .eq('id', organizationId)
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  return data.slug;
+}
+
 export const createOrganization = async (
   name: string,
+  slug: string,
   {
     isOnboardingFlow = false,
   }: {
@@ -28,15 +61,25 @@ export const createOrganization = async (
 
   const organizationId = uuid();
 
+  if (RESTRICTED_SLUG_NAMES.includes(slug)) {
+    return { status: 'error', message: 'Slug is restricted' };
+  }
+
+  if (!SLUG_PATTERN.test(slug)) {
+    return { status: 'error', message: 'Slug does not match the required pattern' };
+  }
+
   const { error, } = await supabaseClient.from('organizations').insert({
     title: name,
     id: organizationId,
+    slug: slug
   });
+
+  revalidatePath("/[organizationSlug]", 'layout');
 
   if (error) {
     return { status: 'error', message: error.message };
   }
-
 
   const { error: orgMemberErrors } = await supabaseAdminClient
     .from('organization_members')
@@ -108,7 +151,7 @@ export const createOrganization = async (
 
   return {
     status: 'success',
-    data: organizationId,
+    data: slug,
   };
 };
 
@@ -127,7 +170,7 @@ export async function fetchSlimOrganizations() {
 
   const { data, error } = await supabaseClient
     .from('organizations')
-    .select('id,title')
+    .select('id,title,slug')
     .in(
       'id',
       organizations.map((org) => org.organization_id),
@@ -247,9 +290,10 @@ export const getLoggedInUserOrganizationRole = async (
   return data.member_role;
 };
 
-export const updateOrganizationTitle = async (
+export const updateOrganizationInfo = async (
   organizationId: string,
   title: string,
+  slug: string,
 ): Promise<ValidSAPayload<Table<'organizations'>>> => {
   'use server';
   const supabase = createSupabaseUserServerActionClient();
@@ -257,6 +301,7 @@ export const updateOrganizationTitle = async (
     .from('organizations')
     .update({
       title,
+      slug,
     })
     .eq('id', organizationId)
     .select('*')
@@ -266,7 +311,7 @@ export const updateOrganizationTitle = async (
     return { status: 'error', message: error.message };
   }
 
-  revalidatePath(`/organization/${organizationId}`, 'layout');
+  revalidatePath("/[organizationSlug]", 'layout');
   return { status: 'success', data };
 };
 
@@ -469,7 +514,7 @@ export async function setDefaultOrganization(
     return { status: 'error', message: updateError.message };
   }
 
-  revalidatePath(`/organization/${organizationId}`, 'layout');
+  revalidatePath("/[organizationSlug]", 'layout');
   return { status: 'success' };
 }
 
@@ -486,9 +531,37 @@ export async function deleteOrganization(
     return { status: 'error', message: error.message };
   }
 
-  revalidatePath(`/organization/${organizationId}`, 'layout');
+  revalidatePath("/[organizationSlug]", 'layout');
   return {
     status: 'success',
     data: `Organization ${organizationId} deleted successfully`,
   };
 }
+
+
+
+export const updateOrganizationSlug = async (
+  organizationId: string,
+  newSlug: string,
+): Promise<ValidSAPayload<string>> => {
+  if (RESTRICTED_SLUG_NAMES.includes(newSlug)) {
+    return { status: 'error', message: 'Slug is restricted' };
+  }
+
+  if (!SLUG_PATTERN.test(newSlug)) {
+    return { status: 'error', message: 'Slug does not match the required pattern' };
+  }
+
+  const supabaseClient = createSupabaseUserServerActionClient();
+  const { error } = await supabaseClient
+    .from('organizations')
+    .update({ slug: newSlug })
+    .eq('id', organizationId);
+
+  if (error) {
+    return { status: 'error', message: error.message };
+  }
+
+  revalidatePath("/[organizationSlug]", 'layout');
+  return { status: 'success', data: `Slug updated to ${newSlug}` };
+};

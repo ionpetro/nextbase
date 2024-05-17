@@ -9,8 +9,6 @@ import {
   CommandList,
   CommandSeparator,
 } from '@/components/ui/command';
-import { createOrganization } from '@/data/user/organizations';
-import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import { cn } from '@/utils/cn';
 import {
   Popover,
@@ -28,6 +26,7 @@ export function OrganizationSwitcher({
   slimOrganizations: Array<{
     id: string;
     title: string;
+    slug: string;
   }>;
   currentOrganizationId: string;
 }) {
@@ -37,34 +36,6 @@ export function OrganizationSwitcher({
   const currentOrganization = slimOrganizations.find(
     (organization) => organization.id === currentOrganizationId,
   );
-  const { mutate, isLoading } = useSAToastMutation(
-    async (organizationTitle: string) => {
-      return await createOrganization(organizationTitle);
-    },
-    {
-      loadingMessage: 'Creating organization...',
-      errorMessage(error) {
-        try {
-          if (error instanceof Error) {
-            return String(error.message);
-          }
-          return `Failed to create organization ${String(error)}`;
-        } catch (_err) {
-          console.warn(_err);
-          return 'Failed to create organization';
-        }
-      },
-      successMessage: 'Organization created!',
-      onSuccess: (organization) => {
-        router.push(`/organization/${organization}`);
-      },
-    },
-  );
-
-  const onConfirm = (organizationTitle: string) => {
-    mutate(organizationTitle);
-  };
-
   return (
     <Popover
       open={isPopoverOpen}
@@ -79,7 +50,7 @@ export function OrganizationSwitcher({
         <Button
           variant="ghost"
           size="sm"
-          data-testid="organization-switcher"
+          name="organization-switcher"
           role="combobox"
           className="mx-0 px-2 py-5 border hover:border-neutral-700 dark:hover:border-gray-500 hover:bg-transparent rounded-sm font-normal text-gray-500 dark:text-gray-300 text-sm justify-between truncate w-full "
         >
@@ -104,7 +75,7 @@ export function OrganizationSwitcher({
                   key={organization.id}
                   onSelect={() => {
                     setIsPopoverOpen(false);
-                    router.push(`/organization/${organization.id}`);
+                    router.push(`/${organization.slug}`);
                   }}
                   className="text-sm flex items-start"
                 >
@@ -128,8 +99,6 @@ export function OrganizationSwitcher({
             <CommandGroup>
               <CommandItem className="px-1 py-0 w-full">
                 <CreateOrganizationDialog
-                  isLoading={isLoading}
-                  onConfirm={onConfirm}
                   variant="ghost"
                   className="p-0 py-0 focus:ring-0 dark:focus:ring-0 hover:bg-transparent w-full"
                   isDialogOpen={isDialogOpen}

@@ -16,6 +16,7 @@ import {
   createAcceptedOrgInvitationNotification,
   createNotification,
 } from "./notifications";
+import { getOrganizationSlugByOrganizationId } from "./organizations";
 import { getUserProfile } from "./user";
 
 // This function allows an application admin with service_role
@@ -215,7 +216,7 @@ export async function createInvitationHandler({
     invitationId: invitationResponse.data.id,
   });
 
-  revalidatePath("/organization/[organizationId]");
+  revalidatePath("/[organizationSlug]/settings/members", "layout");
 
   return { status: 'success', data: invitationResponse.data };
 }
@@ -252,7 +253,8 @@ export async function acceptInvitationAction(
   );
 
   revalidatePath("/", "layout");
-  return { status: 'success', data: invitationResponse.data.organization_id };
+  const organizationSlug = await getOrganizationSlugByOrganizationId(invitationResponse.data.organization_id);
+  return { status: 'success', data: organizationSlug };
 }
 
 export async function declineInvitationAction(invitationId: string): Promise<ValidSAPayload> {

@@ -6,6 +6,7 @@ import { SidebarOpen } from "./SidebarOpen";
 import { UserNav } from "./UserNav";
 
 export async function InternalNavbar({ children }: { children: ReactNode }) {
+
   return (
     <header className="sticky top-0 w-full z-10 backdrop-blur">
       <div

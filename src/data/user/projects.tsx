@@ -14,8 +14,21 @@ export async function getSlimProjectById(projectId: string) {
   const supabaseClient = createSupabaseUserServerComponentClient();
   const { data, error } = await supabaseClient
     .from("projects")
-    .select("id,name,project_status,organization_id,team_id") // specify the columns you need
+    .select("id,name,project_status,organization_id,team_id")
     .eq("id", projectId)
+    .single();
+  if (error) {
+    throw error;
+  }
+  return data;
+}
+
+export const getProjectIdBySlug = async (projectSlug: string) => {
+  const supabaseClient = createSupabaseUserServerComponentClient();
+  const { data, error } = await supabaseClient
+    .from("projects")
+    .select("id, slug")
+    .eq("slug", projectSlug)
     .single();
   if (error) {
     throw error;
@@ -27,7 +40,7 @@ export async function getProjectById(projectId: string) {
   const supabaseClient = createSupabaseUserServerComponentClient();
   const { data, error } = await supabaseClient
     .from("projects")
-    .select("*") // specify the columns you need
+    .select("*")
     .eq("id", projectId)
     .single();
   if (error) {
@@ -40,7 +53,7 @@ export async function getProjectTitleById(projectId: string) {
   const supabaseClient = createSupabaseUserServerComponentClient();
   const { data, error } = await supabaseClient
     .from("projects")
-    .select("name") // specify the columns you need
+    .select("name")
     .eq("id", projectId)
     .single();
   if (error) {
@@ -52,9 +65,11 @@ export async function getProjectTitleById(projectId: string) {
 export const createProjectAction = async ({
   organizationId,
   name,
+  slug,
 }: {
   organizationId: string;
   name: string;
+  slug: string;
 }): Promise<ValidSAPayload<Tables<"projects">>> => {
   "use server";
   const supabaseClient = createSupabaseUserServerActionClient();
@@ -63,9 +78,11 @@ export const createProjectAction = async ({
     .insert({
       organization_id: organizationId,
       name,
+      slug,
     })
     .select("*")
     .single();
+
 
   if (error) {
     return {
@@ -74,8 +91,9 @@ export const createProjectAction = async ({
     };
   }
 
-  revalidatePath(`/organization/${organizationId}`, "layout");
-  revalidatePath(`/organization/${organizationId}/projects`, "layout");
+
+  revalidatePath("/[organizationSlug]", "layout");
+  revalidatePath("/[organizationSlug]/projects", "layout");
 
   return {
     status: 'success',
