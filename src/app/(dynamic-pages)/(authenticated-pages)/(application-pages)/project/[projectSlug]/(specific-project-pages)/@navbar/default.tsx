@@ -1,7 +1,7 @@
 // https://github.com/vercel/next.js/issues/58272
 import { T } from '@/components/ui/Typography';
 import { Skeleton } from '@/components/ui/skeleton';
-import { getProjectById, getProjectIdBySlug } from '@/data/user/projects';
+import { getProjectById, getSlimProjectBySlug } from '@/data/user/projects';
 import { projectSlugParamSchema } from '@/utils/zod-schemas/params';
 import { Layers } from 'lucide-react';
 import Link from 'next/link';
@@ -23,7 +23,7 @@ async function Title({ projectId }: { projectId: string }) {
 
 export default async function ProjectNavbar({ params }: { params: unknown }) {
   const { projectSlug } = projectSlugParamSchema.parse(params);
-  const project = await getProjectIdBySlug(projectSlug);
+  const project = await getSlimProjectBySlug(projectSlug);
   return (
     <div className="flex items-center">
       <Link href={`/project/${project.id}`}>

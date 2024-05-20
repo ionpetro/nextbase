@@ -2,17 +2,19 @@ import { CreateProjectDialog } from "@/components/CreateProjectDialog";
 import { ProjectsCardList } from "@/components/Projects/ProjectsCardList";
 import { Search } from "@/components/Search";
 import { Button } from "@/components/ui/button";
-import { getOrganizationIdBySlug } from "@/data/user/organizations";
+import { getOrganizationIdBySlug, getOrganizationTitle } from "@/data/user/organizations";
 import { getProjects } from "@/data/user/projects";
 import {
   organizationSlugParamSchema,
-  projectsfilterSchema
+  projectsfilterSchema,
 } from "@/utils/zod-schemas/params";
 import { Layers } from "lucide-react";
+import type { Metadata } from 'next';
 import Link from "next/link";
 import { Suspense } from "react";
 import type { z } from "zod";
 import { DashboardLoadingFallback } from "./DashboardLoadingFallback";
+import ProjectsLoadingFallback from "./ProjectsLoadingFallback";
 import { TeamMembers } from "./TeamMembers";
 import { ExportPDF } from "./_exportPdf/ExportPdf";
 import { GraphContainer } from "./_graphs/GraphContainer";
@@ -26,11 +28,18 @@ async function Projects({
     organizationId,
     ...filters,
   });
-  return <ProjectsCardList projects={projects} />
-
+  return <ProjectsCardList projects={projects} />;
 }
 
-async function Dashboard({ params, searchParams }: { params: unknown, searchParams: unknown }) {
+export type DashboardProps = {
+  params: { organizationSlug: string };
+  searchParams: unknown;
+};
+
+async function Dashboard({
+  params,
+  searchParams,
+}: DashboardProps) {
   const { organizationSlug } = organizationSlugParamSchema.parse(params);
   const organizationId = await getOrganizationIdBySlug(organizationSlug);
   const validatedSearchParams = projectsfilterSchema.parse(searchParams);
@@ -61,38 +70,61 @@ async function Dashboard({ params, searchParams }: { params: unknown, searchPara
                 </Link>
               </Button>
             </div>
-
           </div>
 
           <div className="flex flex-col gap-2">
-            <Projects
-              organizationId={organizationId}
-              filters={validatedSearchParams}
-            />
-            {validatedSearchParams.query && <p className="mt-4 ml-2 text-sm">Searching for <span className="font-bold">{validatedSearchParams.query}</span></p>}
+            <Suspense fallback={<ProjectsLoadingFallback quantity={3} />}>
+              <Projects
+                organizationId={organizationId}
+                filters={validatedSearchParams}
+              />
+              {validatedSearchParams.query && (
+                <p className="mt-4 ml-2 text-sm">
+                  Searching for{" "}
+                  <span className="font-bold">
+                    {validatedSearchParams.query}
+                  </span>
+                </p>
+              )}
+            </Suspense>
           </div>
         </div>
       </div>
-      <div >
+      <div>
         <GraphContainer organizationSlug={organizationSlug}>
-          <Suspense>
+          <Suspense fallback={<div>Loading...</div>}>
             <TeamMembers />
           </Suspense>
         </GraphContainer>
       </div>
     </div>
   );
+}
 
+
+export async function generateMetadata(
+  {
+    params,
+  }: DashboardProps
+): Promise<Metadata> {
+
+  const { organizationSlug } = organizationSlugParamSchema.parse(params);
+  const organizationId = await getOrganizationIdBySlug(organizationSlug);
+  const title = await getOrganizationTitle(organizationId);
+
+  return {
+    title: `Dashboard | ${title}`,
+    description: `View your projects and team members for ${title}`,
+  };
 }
 
 export default async function OrganizationPage({
   params,
   searchParams,
-}: {
-  params: unknown;
-  searchParams: unknown;
-}) {
-  return <Suspense fallback={<DashboardLoadingFallback />}>
-    <Dashboard params={params} searchParams={searchParams} />
-  </Suspense>
+}: DashboardProps) {
+  return (
+    <Suspense fallback={<DashboardLoadingFallback />}>
+      <Dashboard params={params} searchParams={searchParams} />
+    </Suspense>
+  );
 }

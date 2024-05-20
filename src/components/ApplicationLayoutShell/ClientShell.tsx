@@ -1,7 +1,7 @@
 "use client";
 import { SidebarVisibilityContext } from "@/contexts/SidebarVisibilityContext";
 import { cn } from "@/utils/cn";
-import { useContext, type ReactNode } from "react";
+import { useContext } from "react";
 import { SidebarShell } from "./SidebarShell/SidebarShell";
 
 export function ClientShell({
@@ -22,7 +22,7 @@ export function ClientShell({
       )}
     >
       <SidebarShell>{sidebar}</SidebarShell>
-      <div className="h-full overflow-y-auto" >
+      <div className="h-full overflow-y-auto bg-muted" >
         <div className="relative flex-1 h-auto w-full overflow-auto" id="export-container" >
           {children}
         </div>

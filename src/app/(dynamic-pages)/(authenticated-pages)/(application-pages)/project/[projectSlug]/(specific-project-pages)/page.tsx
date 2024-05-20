@@ -1,15 +1,34 @@
-import { T } from '@/components/ui/Typography';
-import { getProjectIdBySlug } from '@/data/user/projects';
-import { projectSlugParamSchema } from '@/utils/zod-schemas/params';
-import { Layers } from 'lucide-react';
-import { Suspense } from 'react';
-import { CommentInput } from './CommentInput';
-import { ProjectComments } from './ProjectComments';
+import { T } from "@/components/ui/Typography";
+import { getSlimProjectBySlug } from "@/data/user/projects";
+import { projectSlugParamSchema } from "@/utils/zod-schemas/params";
+import { Layers } from "lucide-react";
+import type { Metadata } from "next";
+import { Suspense } from "react";
+import { CommentInput } from "./CommentInput";
+import { ProjectComments } from "./ProjectComments";
 
+type ProjectPageProps = {
+  params: {
+    projectSlug: string;
+  };
+};
+
+export async function generateMetadata({
+  params,
+}: ProjectPageProps): Promise<Metadata> {
+  const { projectSlug } = projectSlugParamSchema.parse(params);
+  const project = await getSlimProjectBySlug(projectSlug);
+
+
+  return {
+    title: `Project | ${project.name}`,
+    description: `View and manage your project ${project.name}`,
+  };
+}
 
 export default async function ProjectPage({ params }: { params: unknown }) {
   const { projectSlug } = projectSlugParamSchema.parse(params);
-  const project = await getProjectIdBySlug(projectSlug);
+  const project = await getSlimProjectBySlug(projectSlug);
   return (
     <div className="space-y-6">
       <div className="mb-10">

@@ -23,11 +23,11 @@ export async function getSlimProjectById(projectId: string) {
   return data;
 }
 
-export const getProjectIdBySlug = async (projectSlug: string) => {
+export const getSlimProjectBySlug = async (projectSlug: string) => {
   const supabaseClient = createSupabaseUserServerComponentClient();
   const { data, error } = await supabaseClient
     .from("projects")
-    .select("id, slug")
+    .select("id, slug, name")
     .eq("slug", projectSlug)
     .single();
   if (error) {
