@@ -7,6 +7,7 @@ import { h } from 'hastscript';
 import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeSlug from 'rehype-slug';
 import rehypeToc from 'rehype-toc';
+import remarkGfm from 'remark-gfm';
 
 const withBundleAnalyzer = createWithBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
@@ -37,8 +38,9 @@ function rehypeWrapMainContent() {
 }
 
 const withMDX = createWithMdx({
+
   options: {
-    remarkPlugins: [],
+    remarkPlugins: [remarkGfm],
     rehypePlugins: [
       rehypeSlug,
       [
