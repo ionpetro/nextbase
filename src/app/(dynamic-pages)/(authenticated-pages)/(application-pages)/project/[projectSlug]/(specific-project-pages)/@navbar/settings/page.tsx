@@ -1,4 +1,4 @@
-import { getProjectIdBySlug } from '@/data/user/projects';
+import { getSlimProjectBySlug } from '@/data/user/projects';
 import { cn } from '@/utils/cn';
 import { projectSlugParamSchema } from '@/utils/zod-schemas/params';
 import { ArrowLeftIcon } from '@radix-ui/react-icons';
@@ -8,7 +8,7 @@ import Link from 'next/link';
 
 export default async function ProjectSettingsNavbar({ params }: { params: unknown }) {
   const { projectSlug } = projectSlugParamSchema.parse(params);
-  const project = await getProjectIdBySlug(projectSlug);
+  const project = await getSlimProjectBySlug(projectSlug);
   return (
     <div className={cn('hidden lg:block', 'relative ')}>
       <Link

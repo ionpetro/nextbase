@@ -3,13 +3,14 @@ import {
   getOrganizationIdBySlug,
   getOrganizationSlugByOrganizationId,
   getOrganizationTitle,
-} from '@/data/user/organizations';
-import { organizationSlugParamSchema } from '@/utils/zod-schemas/params';
-import { Suspense } from 'react';
-import { DeleteOrganization } from './DeleteOrganization';
-import { EditOrganizationForm } from './EditOrganizationForm';
-import { SetDefaultOrganizationPreference } from './SetDefaultOrganizationPreference';
-import { SettingsFormSkeleton } from './SettingsSkeletons';
+} from "@/data/user/organizations";
+import { organizationSlugParamSchema } from "@/utils/zod-schemas/params";
+import type { Metadata } from "next";
+import { Suspense } from "react";
+import { DeleteOrganization } from "./DeleteOrganization";
+import { EditOrganizationForm } from "./EditOrganizationForm";
+import { SetDefaultOrganizationPreference } from "./SetDefaultOrganizationPreference";
+import { SettingsFormSkeleton } from "./SettingsSkeletons";
 
 async function EditOrganization({
   organizationId,
@@ -17,7 +18,8 @@ async function EditOrganization({
   organizationId: string;
 }) {
   const organizationTitle = await getOrganizationTitle(organizationId);
-  const organizationSlug = await getOrganizationSlugByOrganizationId(organizationId);
+  const organizationSlug =
+    await getOrganizationSlugByOrganizationId(organizationId);
   return (
     <EditOrganizationForm
       organizationId={organizationId}
@@ -37,7 +39,7 @@ async function DeleteOrganizationIfAdmin({
     getLoggedInUserOrganizationRole(organizationId),
   ]);
   const isOrganizationAdmin =
-    organizationRole === 'admin' || organizationRole === 'owner';
+    organizationRole === "admin" || organizationRole === "owner";
   if (!isOrganizationAdmin) {
     return null;
   }
@@ -49,6 +51,11 @@ async function DeleteOrganizationIfAdmin({
   );
 }
 
+export const metadata: Metadata = {
+  title: "Settings",
+  description: "You can edit your organization's settings here.",
+};
+
 export default async function EditOrganizationPage({
   params,
 }: {
@@ -57,7 +64,7 @@ export default async function EditOrganizationPage({
   };
 }) {
   const { organizationSlug } = organizationSlugParamSchema.parse(params);
-  const organizationId = await getOrganizationIdBySlug(organizationSlug)
+  const organizationId = await getOrganizationIdBySlug(organizationSlug);
 
   return (
     <div className="space-y-4">

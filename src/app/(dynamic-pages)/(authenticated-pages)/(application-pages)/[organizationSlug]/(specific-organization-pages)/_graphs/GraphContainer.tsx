@@ -1,7 +1,6 @@
 "use client"
 
 import dynamic from 'next/dynamic';
-import { Suspense } from 'react';
 
 const OrganizationGraphs = dynamic(() => import('./OrganizationGraphs').then(m => m.OrganizationGraphs), {
   ssr: false
@@ -15,9 +14,8 @@ export async function GraphContainer({
   organizationSlug: string;
 }) {
 
-  return <Suspense>
-    <OrganizationGraphs
-      organizationSlug={organizationSlug}
-    >{children}</OrganizationGraphs>
-  </Suspense>;
+  return <OrganizationGraphs
+    organizationSlug={organizationSlug}
+  >{children}</OrganizationGraphs>
+
 }

@@ -3,7 +3,7 @@ import { DesktopSidebarFallback } from '@/components/SidebarComponents/SidebarFa
 import { SwitcherAndToggle } from '@/components/SidebarComponents/SidebarLogo';
 import { SidebarLink } from '@/components/SidebarLink';
 import { fetchSlimOrganizations, getOrganizationSlugByOrganizationId } from '@/data/user/organizations';
-import { getProjectIdBySlug, getSlimProjectById } from '@/data/user/projects';
+import { getSlimProjectById, getSlimProjectBySlug } from '@/data/user/projects';
 import { cn } from '@/utils/cn';
 import { projectSlugParamSchema } from '@/utils/zod-schemas/params';
 import { ArrowLeft, Layers, Settings } from 'lucide-react';
@@ -61,7 +61,7 @@ async function ProjectSidebarInternal({ projectId, projectSlug }: { projectId: s
 
 export async function ProjectSidebar({ params }: { params: unknown }) {
   const { projectSlug } = projectSlugParamSchema.parse(params);
-  const project = await getProjectIdBySlug(projectSlug);
+  const project = await getSlimProjectBySlug(projectSlug);
   return (
     <Suspense fallback={<DesktopSidebarFallback />}>
       <ProjectSidebarInternal projectId={project.id} projectSlug={project.slug} />

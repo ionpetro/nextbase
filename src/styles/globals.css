@@ -1,5 +1,6 @@
 @tailwind base;
 @tailwind utilities;
+@tailwind components;
 
 @layer base {
   :root {
@@ -82,9 +83,11 @@
 }
 
 .docs-main-contents {
-  @apply min-w-0 max-w-2xl flex-auto px-4 py-16 lg:max-w-none lg:pl-8 lg:pr-0 xl:px-16;
+  @apply min-w-0 max-w-2xl text-red-400 flex-auto px-4 py-16 lg:max-w-none lg:pl-8 lg:pr-0 xl:px-16;
 }
 
 .docs-main-contents > div {
   @apply max-w-[720px] mx-auto;
 }
+
+

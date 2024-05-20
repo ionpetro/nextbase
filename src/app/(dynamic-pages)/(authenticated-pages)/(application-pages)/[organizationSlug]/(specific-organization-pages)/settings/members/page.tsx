@@ -1,4 +1,3 @@
-"use server";
 import { T } from "@/components/ui/Typography";
 import {
   Table as ShadcnTable,
@@ -15,14 +14,18 @@ import {
   getTeamMembersInOrganization,
 } from "@/data/user/organizations";
 import type { TeamMembersTableProps } from "@/types";
-import {
-  organizationSlugParamSchema
-} from "@/utils/zod-schemas/params";
+import { organizationSlugParamSchema } from "@/utils/zod-schemas/params";
 import moment from "moment";
+import type { Metadata } from "next";
 import { Suspense } from "react";
 import ProjectsTableLoadingFallback from "../../projects/loading";
 import { InviteUser } from "./InviteUser";
 import { RevokeInvitationDialog } from "./RevokeInvitationDialog";
+
+export const metadata: Metadata = {
+  title: "Members",
+  description: "You can edit your organization's members here.",
+};
 
 async function TeamMembers({ organizationId }: { organizationId: string }) {
   const members = await getTeamMembersInOrganization(organizationId);
