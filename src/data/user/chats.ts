@@ -1,10 +1,13 @@
 "use server";
+import { supabaseAdminClient } from "@/supabase-clients/admin/supabaseAdminClient";
 import { createSupabaseUserServerActionClient } from "@/supabase-clients/user/createSupabaseUserServerActionClient";
 import { createSupabaseUserServerComponentClient } from "@/supabase-clients/user/createSupabaseUserServerComponentClient";
-import type { Table, ValidSAPayload } from "@/types";
+import type { SupabaseFileUploadOptions, Table, ValidSAPayload } from "@/types";
 import { serverGetLoggedInUser } from "@/utils/server/serverGetLoggedInUser";
 import type { Message } from "ai";
-import { revalidatePath } from "next/cache";
+import { nanoid } from "nanoid";
+import slugify from "slugify";
+import urlJoin from "url-join";
 
 export const insertChat = async (
 	projectId: string,
@@ -21,7 +24,7 @@ export const insertChat = async (
 				id: chatId,
 				project_id: projectId,
 				user_id: user.id,
-				payload: JSON.stringify({messages: payload}),
+				payload: JSON.stringify({ messages: payload }),
 			},
 			{ onConflict: "id" },
 		)
@@ -34,8 +37,6 @@ export const insertChat = async (
 			message: error.message,
 		};
 	}
-
-	revalidatePath("/project/[projectSlug]", "layout")
 
 	return {
 		status: "success",
@@ -55,7 +56,7 @@ export const getChatById = async (chatId: string): Promise<Table<"chats">> => {
 		throw error;
 	}
 
-	console.log
+	console.log;
 
 	return data;
 };
@@ -84,13 +85,16 @@ export const getChats = async (userId: string): Promise<Table<"chats">[]> => {
 	return data;
 };
 
-export const getChatsHistory = async (projectId: string, userId: string): Promise<Table<"chats">[]> => {
+export const getChatsHistory = async (
+	projectId: string,
+	userId: string,
+): Promise<Table<"chats">[]> => {
 	const supabase = createSupabaseUserServerComponentClient();
 	const { data, error } = await supabase
 		.from("chats")
 		.select("*")
 		.eq("project_id", projectId)
-		.eq("user_id", userId)
+		.eq("user_id", userId);
 
 	if (error) {
 		throw error;
@@ -99,3 +103,87 @@ export const getChatsHistory = async (projectId: string, userId: string): Promis
 	return data;
 };
 
+export const convertAndUploadOpenAiImage = async (b64_json: string): Promise<ValidSAPayload<string>> => {
+  const byteCharacters = atob(b64_json);
+  const byteNumbers = new Array(byteCharacters.length);
+  for (let i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.charCodeAt(i);
+  }
+  const byteArray = new Uint8Array(byteNumbers);
+
+	const file = new File([byteArray], nanoid(), { type: "image/png" });
+	const formData = new FormData();
+	formData.append("file", file);
+
+  const response = await uploadOpenAiImage(formData, file.name, {
+    upsert: true,
+  });
+
+	if (response.status === "error") {
+		return {
+			status: "error",
+			message: response.message,
+		};
+	}
+
+  if (response.status === "success") {
+    return {
+      status: "success",
+      data: response.data,
+    };
+  }
+
+  return {
+    status: "error",
+    message: "Unknown error",
+  };
+};
+
+export const uploadOpenAiImage = async (
+  formData: FormData,
+  fileName: string,
+  fileOptions?: SupabaseFileUploadOptions | undefined,
+): Promise<ValidSAPayload<string>> => {
+  "use server";
+  const file = formData.get("file");
+  if (!file) {
+    return {
+      status: "error",
+      message: "File is empty",
+    };
+  }
+  const slugifiedFilename = slugify(fileName, {
+    lower: true,
+    strict: true,
+    replacement: "-",
+  });
+
+  const user = await serverGetLoggedInUser();
+  const userId = user.id;
+  const userImagesPath = `${userId}/images/${slugifiedFilename}`;
+
+  const { data, error } = await supabaseAdminClient.storage
+    .from("openai-images")
+    .upload(userImagesPath, file, fileOptions);
+
+  if (error) {
+    return {
+      status: "error",
+      message: error.message,
+    };
+  }
+
+  const { path } = data;
+
+  const filePath = path.split(",")[0];
+  const supabaseFileUrl = urlJoin(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    "/storage/v1/object/public/openai-images",
+    filePath,
+  );
+
+  return {
+    status: "success",
+    data: supabaseFileUrl,
+  };
+};

@@ -14,7 +14,7 @@ export function ChatList({ messages }: ChatList) {
   }
 
   return (
-    <div className="relative mx-auto px-4 max-w-3xl">
+    <div className="relative mx-auto px-4 max-w-3xl mb-32">
       <ScrollArea className="h-[calc(100vh-350px)]">
         {messages.map((message, index) => (
           <div key={message.id}>

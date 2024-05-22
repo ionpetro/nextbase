@@ -20,7 +20,6 @@ export interface ChatProps extends React.ComponentProps<'div'> {
 }
 
 
-
 export function ChatContainer({ id, initialMessages, className, project }: ChatProps) {
   const { mutate } = useSAToastMutation(async ({ chatId, projectId, content }: { chatId: string, projectId: string, content: Message[] }) => {
     return await insertChat(projectId, content, chatId);
@@ -57,8 +56,6 @@ export function ChatContainer({ id, initialMessages, className, project }: ChatP
           content,
           id: nanoid(),
         });
-
-        console.log(pathname);
 
         if (pathname === `/project/${project.slug}`) {
           const chatPath = `/project/${project.slug}/chats/${id}`;
