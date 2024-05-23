@@ -3,7 +3,10 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
   darkMode: ['class'],
-  content: ['./src/**/*.{js,ts,jsx,tsx,mdx}', './node_modules/@tremor/**/*.{js,ts,jsx,tsx,mdx}' ],
+  content: [
+    './src/**/*.{js,ts,jsx,tsx,mdx}',
+    './node_modules/@tremor/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
 
   prefix: '',
   theme: {
@@ -196,6 +199,6 @@ module.exports = {
     require('tailwindcss-animate'),
     require('@tailwindcss/typography'),
     require('@headlessui/tailwindcss'),
-    // require('@tailwindcss/forms'),
+    require('@tailwindcss/forms'),
   ],
 };

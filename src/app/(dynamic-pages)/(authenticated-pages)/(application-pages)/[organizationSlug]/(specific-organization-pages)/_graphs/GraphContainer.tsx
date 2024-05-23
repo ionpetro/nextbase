@@ -6,7 +6,7 @@ const OrganizationGraphs = dynamic(() => import('./OrganizationGraphs').then(m =
   ssr: false
 });
 
-export async function GraphContainer({
+export function GraphContainer({
   children,
   organizationSlug
 }: {
