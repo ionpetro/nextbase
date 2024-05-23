@@ -52,7 +52,7 @@ export default async function BlogPostPage({ params }: { params: unknown }) {
                       <div className="mt-5 flex items-center gap-x-4 text-xs">
                         <time
                           dateTime={internal_blog_posts?.created_at}
-                          className="text-gray-500 dark:text-slate-300 uppercase"
+                          className="text-muted-foreground dark:text-secondary-foreground uppercase"
                         >
                           {moment(internal_blog_posts?.created_at).format(
                             'MMM D, YYYY',
@@ -60,13 +60,13 @@ export default async function BlogPostPage({ params }: { params: unknown }) {
                         </time>
                       </div>
                       <div className="group relative">
-                        <h3 className="mt-2 text-2xl font-semibold text-gray-900 dark:text-slate-50 group-hover:text-gray-600 dark:group:hover:text-slate-200">
+                        <h3 className="mt-2 text-2xl font-semibold text-foreground dark:text-card-foreground group-hover:text-muted-foreground dark:group-hover:text-secondary-foreground">
                           <a href={`/blog/${internal_blog_posts?.slug}`}>
                             <span className="absolute inset-0" />
                             {internal_blog_posts?.title}
                           </a>
                         </h3>
-                        <p className="mt-2 line-clamp-3 text-base text-gray-600 dark:text-slate-400">
+                        <p className="mt-2 line-clamp-3 text-base text-muted-foreground dark:text-muted-foreground">
                           {internal_blog_posts?.summary}
                         </p>
                       </div>

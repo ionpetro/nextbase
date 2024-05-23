@@ -72,6 +72,7 @@ async function Dashboard({
             </div>
           </div>
 
+
           <div className="flex flex-col gap-2">
             <Suspense fallback={<ProjectsLoadingFallback quantity={3} />}>
               <Projects

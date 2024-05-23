@@ -2,7 +2,7 @@ const TrustedCompanies = () => {
   return (
     <section className="md:container my-24">
       <div className="mx-auto">
-        <h2 className="mb-8 text-base font-medium text-center text-gray-900 dark:text-slate-400">
+        <h2 className="mb-8 text-base font-medium text-center text-foreground">
           You’ll be in good company
         </h2>
         <div className="grid grid-cols-2 gap-4 w-full xl:flex xl:flex-row xl:justify-between xl:items-center md:grid md:grid-cols-4 lg:grid-cols-6 md:gap-12 text-gray-500 dark:text-gray-400">

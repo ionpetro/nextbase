@@ -67,13 +67,13 @@ const MainFeatures = () => {
                         : 'bg-muted',
                     )}
                   >
-                    <div className="flex items-center justify-center border border-gray-300 dark:border-slate-700 bg-muted dark:bg-slate-800 w-10 h-10 rounded-lg mb-4 bg-primary-100 dark:bg-primary-900">
+                    <div className="flex items-center justify-center border border-neutral-300 bg-muted dark:bg-neutral-800 w-10 h-10 rounded-lg mb-4 bg-primary-100 dark:bg-primary-900">
                       <Home className="size-6" />
                     </div>
                     <T.P className="font-semibold text-xl leading-[30px] mb-2">
                       Lorem ipsum dolor sit amet
                     </T.P>
-                    <T.P className="text-gray-600 dark:text-slate-400 text-base">
+                    <T.P className="text-neutral-600 dark:text-neutral-400 text-base">
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                       sed do eiusmod tempor incididunt ut labore et dolore magna
                       aliqua.
@@ -96,13 +96,13 @@ const MainFeatures = () => {
                         : 'bg-muted',
                     )}
                   >
-                    <div className="flex items-center justify-center border border-gray-300 dark:border-slate-700 bg-muted dark:bg-slate-800 w-10 h-10 rounded-lg mb-4 bg-primary-100 dark:bg-primary-900">
+                    <div className="flex items-center justify-center border border-neutral-300 dark:border-neutral-700 bg-muted dark:bg-neutral-800 w-10 h-10 rounded-lg mb-4 bg-primary-100 dark:bg-primary-900">
                       <User className="size-6" />
                     </div>
                     <T.P className="font-semibold text-xl leading-[30px] mb-2">
                       Lorem ipsum dolor sit amet
                     </T.P>
-                    <T.P className="text-gray-600 dark:text-slate-400 text-base">
+                    <T.P className="text-neutral-600 dark:text-neutral-400 text-base">
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                       sed do eiusmod tempor incididunt ut labore et dolore magna
                       aliqua.
@@ -125,13 +125,13 @@ const MainFeatures = () => {
                         : 'bg-muted',
                     )}
                   >
-                    <div className="flex items-center justify-center border border-gray-300 dark:border-slate-700 bg-muted dark:bg-slate-800 w-10 h-10 rounded-lg mb-4 bg-primary-100 dark:bg-primary-900">
+                    <div className="flex items-center justify-center border border-neutral-300 dark:border-neutral-700 bg-muted dark:bg-neutral-800 w-10 h-10 rounded-lg mb-4 bg-primary-100 dark:bg-primary-900">
                       <Briefcase className="size-6" />
                     </div>
                     <T.P className="font-semibold text-xl leading-[30px] mb-2">
                       Lorem ipsum dolor sit amet
                     </T.P>
-                    <T.P className="text-gray-600 dark:text-slate-400 text-base">
+                    <T.P className="text-neutral-600 dark:text-neutral-400 text-base">
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                       sed do eiusmod tempor incididunt ut labore et dolore magna
                       aliqua.

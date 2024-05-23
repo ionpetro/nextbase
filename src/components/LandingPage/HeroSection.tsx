@@ -20,7 +20,7 @@ export default function HeroSection({
       <div className="px-4 md:px-6 grid mx-auto md:container lg:gap-8 xl:gap-0 lg:grid-cols-12">
         <div className="place-self-center max-w-2xl space-y-6 mr-auto mb-16 lg:col-span-7">
           <div className="flex flex-col gap-4 items-start justify-start">
-            <h1 className="font-semibold max-w-2xl tracking-tight text-4xl leading-[44px] md:text-5xl xl:text-6xl xl:leading-[72px] text-gray-900 dark:text-slate-50">
+            <h1 className="font-semibold max-w-2xl tracking-tight text-4xl leading-[44px] md:text-5xl xl:text-6xl xl:leading-[72px] text-foreground">
               {title}
             </h1>
           </div>
@@ -51,7 +51,7 @@ export default function HeroSection({
             </Link>
             <Link href="/">
               <Button
-                variant="ghost"
+                variant="secondary"
                 size="lg"
                 className="group mt-3 px-6 w-full md:w-fit"
               >
