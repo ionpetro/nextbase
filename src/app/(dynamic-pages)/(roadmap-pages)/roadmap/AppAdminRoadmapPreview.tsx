@@ -42,10 +42,10 @@ export function AppAdminRoadmapPreview() {
     <div className="space-y-10 [&_a]:pointer-events-none">
       <div className="grid grid-cols-3 gap-10">
         {/* Planned */}
-        <div className="h-screen space-y-6 bg-gray-100 dark:bg-slate-950/40 px-6 py-5 rounded-xl border">
+        <div className="h-screen space-y-6 bg-background-base px-6 py-5 rounded-xl border">
           <div>
-            <p className="text-lg dark:text-slate-300 font-[600]">Planned</p>
-            <p className="text-base font-[500] text-muted-foreground">
+            <p className="text-lg text-text-primary font-[600]">Planned</p>
+            <p className="text-base font-[500] text-text-secondary">
               {' '}
               These are Planned
             </p>
@@ -67,12 +67,12 @@ export function AppAdminRoadmapPreview() {
         </div>
 
         {/* In Review */}
-        <div className="h-screen space-y-6 bg-gray-100 dark:bg-slate-950/40 px-6 py-5 rounded-xl border">
+        <div className="h-screen space-y-6 bg-background-base px-6 py-5 rounded-xl border">
           <div>
-            <p className="text-lg  dark:text-slate-300  font-[600]">
+            <p className="text-lg text-text-primary font-[600]">
               In Progress
             </p>
-            <p className="text-base font-[500] text-muted-foreground">
+            <p className="text-base font-[500] text-text-secondary">
               {' '}
               These are in progress
             </p>
@@ -94,12 +94,12 @@ export function AppAdminRoadmapPreview() {
         </div>
 
         {/* Completed */}
-        <div className="h-screen space-y-6 bg-gray-100 dark:bg-slate-950/40 px-6 py-5 rounded-xl border">
+        <div className="h-screen space-y-6 bg-background-base px-6 py-5 rounded-xl border">
           <div>
-            <p className="text-lg  dark:text-slate-300  font-[600]">
+            <p className="text-lg text-text-primary font-[600]">
               Completed
             </p>
-            <p className="text-base font-[500] text-muted-foreground">
+            <p className="text-base font-[500] text-text-secondary">
               {' '}
               These are Completed
             </p>

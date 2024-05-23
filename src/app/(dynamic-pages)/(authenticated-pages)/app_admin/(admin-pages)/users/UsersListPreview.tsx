@@ -85,7 +85,7 @@ export const UsersListPreview = () => {
               <TableCell>
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Button className="text-sm font-medium underline underline-offset-4 ">
+                    <Button variant="ghost">
                       Send login link
                     </Button>
                   </DialogTrigger>
@@ -110,9 +110,7 @@ export const UsersListPreview = () => {
               <TableCell>
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Button className="text-sm font-medium underline underline-offset-4 ">
-                      Get login link
-                    </Button>
+                    <Button variant="ghost">Get login link</Button>
                   </DialogTrigger>
                   <DialogContent>
                     <div className="space-y-2">

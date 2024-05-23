@@ -90,16 +90,13 @@ async function ChoosePricingTable({
                   <div>
                     <div className="mb-6 p-7 pt-6 flex items-center border-b">
                       <div>
-                        <T.H4 className="mt-0 mb-4 dark:text-slate-300">
-                          {' '}
+                        <T.H4 className="mt-0 mb-4 text-primary-text">
                           {product.name}
                         </T.H4>
                         <span>
-                          <T.H1 className="dark:text-slate-50" key={priceId}>
-                            {' '}
+                          <T.H1 className="text-primary-text" key={priceId}>
                             {product.priceString}
                             <span className="text-base tracking-normal text-muted-foreground font-medium">
-                              {' '}
                               per {product.price.interval}
                             </span>
                           </T.H1>
@@ -152,7 +149,7 @@ async function ChoosePricingTable({
                         />
                       </>
                     ) : (
-                      <T.P className=" py-2 px-4 bg-gray-100 dark:bg-slate-400/20 text-sm text-gray-900 dark:text-slate-100 rounded-lg">
+                      <T.P className="py-2 px-4 bg-primary-background dark:bg-dark-primary-background text-sm text-primary-text dark:text-dark-primary-text rounded-lg">
                         Contact your administrator to upgrade plan
                       </T.P>
                     )}
@@ -204,10 +201,10 @@ export async function OrganizationSubscripionDetails({
   return (
     <div className="space-y-4">
       <div className="space-y-1">
-        <T.H3 className="text-gray-900 dark:text-slate-100 ">Subscription</T.H3>
+        <T.H3 className="text-foreground dark:text-dark-foreground">Subscription</T.H3>
         <T.P className="text-muted-foreground">
           You are currently on the{' '}
-          <span className="text-blue-500 dark:text-blue-400">
+          <span className="text-primary">
             {subscriptionDetails.title}{' '}
             <span>{subscriptionDetails.sidenote}</span>
           </span>
@@ -218,7 +215,7 @@ export async function OrganizationSubscripionDetails({
       {isOrganizationAdmin ? (
         <ManageSubscriptionButton organizationId={organizationId} />
       ) : (
-        <T.P className=" py-2 px-4 bg-gray-100 dark:bg-slate-400/20 text-sm text-gray-900 dark:text-slate-100 rounded-lg">
+        <T.P className="py-2 px-4 bg-background dark:bg-dark-background text-sm text-foreground dark:text-dark-foreground rounded-lg">
           Contact your administrator to upgrade plan.
         </T.P>
       )}

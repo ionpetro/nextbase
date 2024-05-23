@@ -252,7 +252,7 @@ export const Notifications = ({ userId, }: { userId: string }) => {
       </PopoverTrigger>
 
       {notifications.length > 0 || unseenNotificationIds?.length > 0 ? (
-        <PopoverContent className="bg-white dark:bg-slate-950 mr-12 p-0 rounded-xl w-[560px] overflow-hidden">
+        <PopoverContent className="bg-background dark:bg-dark-background mr-12 p-0 rounded-xl w-[560px] overflow-hidden">
           <div className="shadow-lg px-6 pb-2 border-b-2">
             <div className="flex justify-between mt-7 mb-3">
               <T.H3 className="mt-0 dark:text-white leading-7">

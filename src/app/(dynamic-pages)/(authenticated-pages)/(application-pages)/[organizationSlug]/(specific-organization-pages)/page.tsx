@@ -60,7 +60,7 @@ async function Dashboard({
             <div className="flex gap-4">
               <Search placeholder="Search projects" />
               <Button
-                variant={"outline"}
+                variant={"secondary"}
                 asChild
                 className="flex gap-2 self-end"
               >

@@ -150,7 +150,7 @@ export function ManageSubscriptionButton({
         <span>{isLoading ? 'Loading...' : 'Manage Subscription'} </span>
         <ExternalLink aria-hidden="true" className="ml-2 w-5 h-5" />{' '}
       </Button>
-      <T.P className="text-gray-500 dark:text-slate-400 text-sm">
+      <T.P className="text-neutral-500 text-sm">
         Manage your subscription. You can modify, upgrade or cancel your
         membership from here.
       </T.P>

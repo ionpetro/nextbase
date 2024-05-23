@@ -14,7 +14,7 @@ async function Title({ projectId }: { projectId: string }) {
     <div className="flex items-center gap-2">
       <Layers className="w-4 h-4" />
       <T.P>{project.name}</T.P>
-      <div className="flex items-center gap-2 border-gray-600 dark:border-slate-300 px-2 p-0.5 border rounded-full font-normal text-gray-600 text-xs dark:text-slate-300 uppercase">
+      <div className="flex items-center gap-2 border-neutral-300 px-2 p-0.5 border rounded-full font-normal text-neutral-600 text-xs uppercase">
         Project
       </div>
     </div>

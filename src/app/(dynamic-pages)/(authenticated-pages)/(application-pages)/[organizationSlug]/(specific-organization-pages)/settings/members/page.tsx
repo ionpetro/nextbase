@@ -1,4 +1,5 @@
 import { T } from "@/components/ui/Typography";
+import { Card } from "@/components/ui/card";
 import {
   Table as ShadcnTable,
   TableBody,
@@ -60,7 +61,7 @@ async function TeamMembers({ organizationId }: { organizationId: string }) {
         ) : null}
       </div>
 
-      <div className="shadow-sm border rounded-lg overflow-hidden">
+      <Card>
         <ShadcnTable data-testid="members-table">
           <TableHeader>
             <TableRow>
@@ -87,7 +88,7 @@ async function TeamMembers({ organizationId }: { organizationId: string }) {
             })}
           </TableBody>
         </ShadcnTable>
-      </div>
+      </Card>
     </div>
   );
 }

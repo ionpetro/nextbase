@@ -51,70 +51,70 @@ export const ChangelogPosts = ({ changelogs }: Props) => {
                       component: 'h1',
                       props: {
                         className:
-                          'prose prose-slate max-w-screen-lg break-words dark:prose-invert dark:text-foreground prose-headings:scroll-mt-28 prose-headings:font-display prose-headings:font-normal lg:prose-headings:scroll-mt-[8.5rem]',
+                          'prose max-w-screen-lg break-words dark:prose-invert dark:text-foreground prose-headings:scroll-mt-28 prose-headings:font-display prose-headings:font-normal lg:prose-headings:scroll-mt-[8.5rem]',
                       },
                     },
                     h2: {
                       component: 'h2',
                       props: {
                         className:
-                          'prose prose-slate max-w-screen-lg break-words dark:prose-invert dark:text-foreground prose-headings:scroll-mt-28 prose-headings:font-display prose-headings:font-normal lg:prose-headings:scroll-mt-[8.5rem]',
+                          'prose max-w-screen-lg break-words dark:prose-invert dark:text-foreground prose-headings:scroll-mt-28 prose-headings:font-display prose-headings:font-normal lg:prose-headings:scroll-mt-[8.5rem]',
                       },
                     },
                     h3: {
                       component: 'h3',
                       props: {
                         className:
-                          'prose prose-slate max-w-screen-lg break-words dark:prose-invert dark:text-foreground prose-headings:scroll-mt-28 prose-headings:font-display prose-headings:font-normal lg:prose-headings:scroll-mt-[8.5rem]',
+                          'prose max-w-screen-lg break-words dark:prose-invert dark:text-foreground prose-headings:scroll-mt-28 prose-headings:font-display prose-headings:font-normal lg:prose-headings:scroll-mt-[8.5rem]',
                       },
                     },
                     h4: {
                       component: 'h4',
                       props: {
                         className:
-                          'prose prose-slate max-w-screen-lg break-wordsdark:prose-invert dark:text-foreground prose-headings:scroll-mt-28 prose-headings:font-display prose-headings:font-normal lg:prose-headings:scroll-mt-[8.5rem]',
+                          'prose max-w-screen-lg break-words dark:prose-invert dark:text-foreground prose-headings:scroll-mt-28 prose-headings:font-display prose-headings:font-normal lg:prose-headings:scroll-mt-[8.5rem]',
                       },
                     },
                     h5: {
                       component: 'h5',
                       props: {
                         className:
-                          'prose prose-slate max-w-screen-lg break-wordsdark:prose-invert dark:text-foreground prose-headings:scroll-mt-28 prose-headings:font-display prose-headings:font-normal lg:prose-headings:scroll-mt-[8.5rem]',
+                          'prose max-w-screen-lg break-words dark:prose-invert dark:text-foreground prose-headings:scroll-mt-28 prose-headings:font-display prose-headings:font-normal lg:prose-headings:scroll-mt-[8.5rem]',
                       },
                     },
                     h6: {
                       component: 'h6',
                       props: {
                         className:
-                          'prose prose-slate max-w-screen-lg break-words dark:prose-invert dark:text-foreground prose-headings:scroll-mt-28 prose-headings:font-display prose-headings:font-normal lg:prose-headings:scroll-mt-[8.5rem]',
+                          'prose max-w-screen-lg break-words dark:prose-invert dark:text-foreground prose-headings:scroll-mt-28 prose-headings:font-display prose-headings:font-normal lg:prose-headings:scroll-mt-[8.5rem]',
                       },
                     },
                     p: {
                       component: 'p',
                       props: {
                         className:
-                          'prose prose-slate dark:prose-invert dark:text-foreground prose-lead:text-foreground max-w-screen-lg break-words',
+                          'prose max-w-screen-lg break-words dark:prose-invert dark:text-foreground',
                       },
                     },
                     a: {
                       component: 'a',
                       props: {
                         className:
-                          'prose prose-slate max-w-screen-lg break-words dark:prose-invert dark:text-foreground prose-a:font-semibold dark:prose-a:text-sky-400 prose-a:no-underline hover:prose-a:[--tw-prose-underline-size:6px]',
+                          'prose max-w-screen-lg break-words dark:prose-invert dark:text-foreground prose-a:font-semibold dark:prose-a:text-sky-400 prose-a:no-underline hover:prose-a:[--tw-prose-underline-size:6px]',
                       },
                     },
                     ul: {
                       component: 'ul',
                       props: {
                         className:
-                          'list-disc prose prose-slate max-w-screen-lg break-words dark:prose-invert dark:text-foreground',
+                          'list-disc prose max-w-screen-lg break-words dark:prose-invert dark:text-foreground',
                       },
                     },
                     ol: {
                       component: 'ol',
                       props: {
                         className:
-                          'prose prose-slate max-w-screen-lg break-words dark:prose-invert dark:text-foreground',
+                          'prose max-w-screen-lg break-words dark:prose-invert dark:text-foreground',
                       },
                     },
                     li: {
@@ -125,19 +125,19 @@ export const ChangelogPosts = ({ changelogs }: Props) => {
                       component: 'pre',
                       props: {
                         className:
-                          'prose-pre:rounded-xl prose-pre:bg-slate-900 prose-pre:shadow-lg dark:prose-pre:bg-slate-800/60 dark:prose-pre:shadow-none dark:prose-pre:ring-1 dark:prose-pre:ring-slate-300/10',
+                          'prose-pre:rounded-xl prose-pre:bg-background prose-pre:shadow-lg dark:prose-pre:bg-background dark:prose-pre:shadow-none dark:prose-pre:ring-1 dark:prose-pre:ring-foreground',
                       },
                     },
                     code: {
                       component: 'code',
                       props: {
                         className:
-                          'prose prose-slate max-w-screen-lg break-wordsdark:prose-invert dark:text-foreground',
+                          'prose max-w-screen-lg break-words dark:prose-invert dark:text-foreground',
                       },
                     },
                     hr: {
                       component: 'hr',
-                      props: { className: 'dark:prose-hr:border-slate-800' },
+                      props: { className: 'dark:prose-hr:border-neutral-800' },
                     },
                     img: {
                       component: 'img',
