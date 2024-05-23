@@ -23,9 +23,11 @@ declare global {
       UNKEY_ROOT_KEY: string;
       UNKEY_API_ID: string;
       TESTMAIL_PREFIX?: string;
+      OPENAI_API_KEY?: string;
     }
   }
 }
 
 // eslint-disable-next-line prettier/prettier
-export {};
+export { };
+
