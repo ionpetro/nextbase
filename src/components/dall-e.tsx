@@ -4,8 +4,9 @@ import { updateUserProfileNameAndAvatar } from "@/data/user/user";
 import { useSAToastMutation } from "@/hooks/useSAToastMutation";
 import type { ValidSAPayload } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
-import { CircleUserRound, Copy } from "lucide-react";
+import { CircleUserRound, Copy, Loader } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { Controller, useForm, type SubmitHandler } from "react-hook-form";
@@ -41,7 +42,7 @@ export const DallE = () => {
     errorMessage: "Error updating profile picture"
   });
 
-  const { mutate: generateImageMutation, isLoading } = useSAToastMutation(
+  const { mutate: generateImageMutation, isLoading } = useMutation(
     async (data: { prompt: string; size: string }): Promise<ValidSAPayload<OpenAIImageList>> => {
       try {
         const { data: response } = await axios.post("/api/generate-image", {
@@ -75,9 +76,6 @@ export const DallE = () => {
           }
         }
       },
-      loadingMessage: "Generating image...",
-      errorMessage: "Error generating image",
-      successMessage: "Image generated successfully"
     },
   );
 
@@ -127,20 +125,22 @@ export const DallE = () => {
         </div>
         <Button className="col-span-2" type="submit">Generate</Button>
       </form>
+      {!images.length && <div>
+        Your images will be rendered here!
+      </div>}
       {!isLoading ? <div className="flex flex-row gap-4">
-        {!images.length && <div>
-          Your images will be rendered here!
-        </div>}
         {images.map((image) => (
           <div key={image} className="flex flex-col gap-4">
-            <Image
-              src={image}
-              className="rounded-lg"
-              alt="Generated Image"
-              key={image}
-              width={500}
-              height={500}
-            />
+            <div className="relative h-96 w-96 max-w-screen">
+              <Image
+                src={image}
+                className="rounded-lg"
+                alt="Generated Image"
+                key={image}
+                fill
+              />
+            </div>
+
             <div className="w-full flex flex-row gap-4">
               <Button className="flex flex-row gap-2" onClick={() => {
                 navigator.clipboard.writeText(image)
@@ -152,9 +152,14 @@ export const DallE = () => {
         ))}
       </div> : <div className="flex flex-row gap-4">
         <div className="col-span-8">
-          <Skeleton className="w-96 h-96 max-w-screen" />
+          <Skeleton className="w-96 h-96 bg-background max-w-screen flex gap-2 items-center justify-center" >
+            <Loader className="size-4 animate-spin" />
+            <p>Generating...</p>
+          </Skeleton>
         </div>
       </div>}
+
+
     </div>
   );
 };

@@ -8,6 +8,9 @@ test.describe('Admin can create a new changelog', () => {
     const adminPage = await adminContext.newPage();
 
     await adminPage.goto('/changelog');
+
+    await adminPage.waitForTimeout(12000); 
+    
     const createChangelogButton = await adminPage.waitForSelector(
       '[name="create-changelog-button"]',
     );
@@ -29,6 +32,8 @@ test.describe('Admin can create a new changelog', () => {
     await submitChangelogButton.click();
 
     await adminPage.goto('/changelog');
+
+    await adminPage.waitForTimeout(12000);
 
     const changelog = await adminPage.waitForSelector('text=Changelog Title');
 
