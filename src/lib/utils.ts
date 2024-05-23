@@ -1,4 +1,5 @@
 import { clsx, type ClassValue } from 'clsx';
+import { customAlphabet } from 'nanoid';
 import slugify from 'slugify';
 import { twMerge } from 'tailwind-merge';
 
@@ -14,3 +15,8 @@ export const generateSlug = (title: string) => {
   });
   return slug
 }
+
+export const nanoid = customAlphabet(
+  '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
+  7,
+); //

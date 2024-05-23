@@ -14,11 +14,11 @@ const getDeltaType = (percentage: string): string => {
   const percentageValue = Number.parseFloat(percentage.replace("%", ""));
   if (percentageValue <= -50) {
     return "decrease";
-  } else if (-50 < percentageValue && percentageValue < 0) {
+  } if (-50 < percentageValue && percentageValue < 0) {
     return "moderateDecrease";
-  } else if (percentageValue === 0) {
+  } if (percentageValue === 0) {
     return "unchanged";
-  } else if (0 < percentageValue && percentageValue <= 50) {
+  } if (0 < percentageValue && percentageValue <= 50) {
     return "moderateIncrease";
   }
   return "increase";
