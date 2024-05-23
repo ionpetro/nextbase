@@ -63,7 +63,7 @@ export function OrganizationProjectsTable({ projects }: Props) {
       cell: ({ row }) => {
         const status = row.getValue('project_status') as ProjectStatus
         return (
-          <ProjectBadge variant={row.getValue('project_status')} className='min-w-32 items-center justify-center'>
+          <ProjectBadge variant={row.getValue('project_status')} className='items-center justify-center'>
             {ProjectStatus[status]}
           </ProjectBadge>
         )

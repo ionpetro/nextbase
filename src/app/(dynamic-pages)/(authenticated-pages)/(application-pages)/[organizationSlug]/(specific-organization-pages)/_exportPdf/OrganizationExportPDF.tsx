@@ -44,7 +44,7 @@ export const OrganizationExportPDF = () => {
     }
   };
   return (
-    <Button variant={"outline"} onClick={exportPDF} className="mb-4 flex gap-4 items-center" disabled={disabled}>
+    <Button variant="ghost" onClick={exportPDF} className="mb-4 flex gap-2 items-center" disabled={disabled}>
       <Upload className='size-4' />
       {loading ? "Exporting..." : "Export PDF"}
     </Button>

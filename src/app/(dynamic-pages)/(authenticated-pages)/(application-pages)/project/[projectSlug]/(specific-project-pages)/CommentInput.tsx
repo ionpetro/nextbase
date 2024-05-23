@@ -80,7 +80,7 @@ export const CommentInput = ({ projectId }: { projectId: string }) => {
           <Textarea
             id="text"
             placeholder="Share your thoughts"
-            className="bg-gray-200/50 dark:bg-gray-700/50 border-none dark:text-muted-foreground text-gray-700 p-3 h-24 rounded-lg"
+            className="p-3 h-24 rounded-lg"
             {...register('text')}
           />
           <div className="flex justify-end space-x-2">

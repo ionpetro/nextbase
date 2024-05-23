@@ -22,7 +22,7 @@ export async function InternalNavbar({ children }: { children: ReactNode }) {
             </div>
             <AppAdminLink />
           </div>
-          <div className="w-px h-5 mr-4 ml-2 bg-gray-300 dark:bg-slate-700" />
+          <div className="w-px h-5 mr-4 ml-2 bg-neutral-200 dark:bg-neutral-700" />
           <div className="relative w-max flex items-center space-x-3">
             <Suspense>
               <UserNav />

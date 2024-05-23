@@ -41,7 +41,7 @@ export const GetLoginLinkDialog = ({ userId }: { userId: string }) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" aria-disabled={isLoading}>
+        <Button variant="ghost" aria-disabled={isLoading}>
           Get login link
         </Button>
       </DialogTrigger>

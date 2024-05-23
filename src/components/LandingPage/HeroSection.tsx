@@ -1,5 +1,4 @@
 import { Button } from '@/components/ui/button';
-import { T } from '@/components/ui/Typography';
 import { ChevronRightIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -21,24 +20,11 @@ export default function HeroSection({
       <div className="px-4 md:px-6 grid mx-auto md:container lg:gap-8 xl:gap-0 lg:grid-cols-12">
         <div className="place-self-center max-w-2xl space-y-6 mr-auto mb-16 lg:col-span-7">
           <div className="flex flex-col gap-4 items-start justify-start">
-            <div className="flex gap-x-2 md:gap-x-3 border group items-center pr-2 border-gray-300 dark:border-gray-700 rounded-xl shadow-sm p-[2px]">
-              <div className="flex items-center border border-gray-300 bg-muted dark:bg-slate-800 dark:border-gray-700 rounded-lg shadow-sm px-2 py-[2px]">
-                <T.Small className="text-xs md:text-sm text-gray-600 dark:text-slate-400">
-                  What's new?
-                </T.Small>
-              </div>
-              <div className="flex items-center">
-                <T.Small className="text-xs md:text-sm text-gray-600 dark:text-slate-400">
-                  New Feature now available
-                </T.Small>
-                <ChevronRightIcon className="w-5 h-5 group-hover:translate-x-1 transition" />
-              </div>
-            </div>
             <h1 className="font-semibold max-w-2xl tracking-tight text-4xl leading-[44px] md:text-5xl xl:text-6xl xl:leading-[72px] text-gray-900 dark:text-slate-50">
               {title}
             </h1>
           </div>
-          <p className="max-w-xl font-normal text-gray-600 lg:mb-8 md:text-lg lg:text-xl dark:text-slate-400">
+          <p className="max-w-xl font-normal lg:mb-8 md:text-lg lg:text-xl text-muted-foreground">
             {description}
           </p>
           <div className="space-y-3 md:space-x-3">
@@ -65,7 +51,7 @@ export default function HeroSection({
             </Link>
             <Link href="/">
               <Button
-                variant="outline"
+                variant="ghost"
                 size="lg"
                 className="group mt-3 px-6 w-full md:w-fit"
               >

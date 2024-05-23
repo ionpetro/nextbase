@@ -23,7 +23,7 @@ export default async function Layout({
           <div className="pl-6 pr-12 space-y-6 pb-10">
             <Alert
               variant="default"
-              className="hover:bg-gray-50 dark:hover:bg-slate-800/50 bg-gray-50 dark:bg-slate-800/50 text-gray-600 dark:text-slate-400"
+              className="hover:bg-primary-100 dark:hover:bg-primary-700 bg-primary-100 dark:bg-primary-700 text-primary-600 dark:text-primary-300"
             >
               All sections of this area are protected and only accessible by
               Application Admins.

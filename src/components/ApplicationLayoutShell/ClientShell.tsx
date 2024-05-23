@@ -21,7 +21,7 @@ export function ClientShell({
       )}
     >
       <SidebarShell>{sidebar}</SidebarShell>
-      <div className="h-full overflow-y-auto bg-muted">
+      <div className="h-full overflow-y-auto bg-muted/40">
         <div
           className="relative flex-1 h-auto w-full overflow-auto"
           id="export-container"

@@ -13,26 +13,15 @@ export default async function OrganizationSettingsNavbar({
   return (
     <div className={cn('hidden ', 'relative flex gap-2 items-center ')}>
       <Link
-        className="flex gap-1.5 py-1.5 px-3 cursor-pointer items-center group rounded-md transition hover:cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-800"
+        className="flex gap-1.5 py-1.5 px-3 cursor-pointer items-center group rounded-md transition hover:cursor-pointer hover:bg-neutral-100 dark:hover:bg-neutral-800"
         href={`/${organizationSlug}`}
       >
-        <ArrowLeftIcon className="w-4 h-4 text-gray-500 dark:text-slate-400 group-hover:text-gray-700 dark:group-hover:text-slate-300" />
-        <p className="text-gray-500 dark:text-slate-400 group-hover:text-gray-700 dark:group-hover:text-slate-300 text-sm font-normal">
+        <ArrowLeftIcon className="w-4 h-4 text-neutral-500 dark:text-neutral-400 group-hover:text-neutral-700 dark:group-hover:text-neutral-300" />
+        <p className="text-neutral-500 dark:text-neutral-400 group-hover:text-neutral-700 dark:group-hover:text-neutral-300 text-sm font-normal">
           Back to Organization
         </p>
       </Link>
-      {/* <p className="text-gray-500 dark:text-slate-400  text-sm font-normal">
-        /
-      </p>
-      <p className="text-gray-500 px-2 dark:text-slate-400  text-sm font-normal">
-        Settings
-      </p>
-      <p className="text-gray-500 dark:text-slate-400  text-sm font-normal">
-        /
-      </p>
-      <p className="text-gray-500 px-2 dark:text-slate-400  text-sm font-normal">
-        General
-      </p> */}
+
     </div>
   );
 }

@@ -23,7 +23,7 @@ export function DocsNavigation({ className, setIsOpen }: NavigationProps) {
       <ul role="list" className="space-y-9">
         {navigation.map((section) => (
           <li key={section.title} onClick={handleClick}>
-            <h2 className="font-display font-medium text-slate-900 dark:text-white">
+            <h2 className="font-display font-bold text-xs  text-neutral-800 tracking-wider dark:text-neutral-500 uppercase">
               {section.title}
             </h2>
             <ul role="list" className="mt-2 space-y-2 lg:mt-2 lg:space-y-2.5">
@@ -34,8 +34,8 @@ export function DocsNavigation({ className, setIsOpen }: NavigationProps) {
                     className={clsx(
                       'block w-full',
                       link.href === pathname
-                        ? 'font-semibold text-blue-500 dark:text-blue-400 before:bg-blue-500 dark:before:bg-blue-400'
-                        : 'text-slate-500 before:hidden before:bg-slate-300 hover:text-slate-600 hover:before:block dark:text-slate-400 dark:before:bg-slate-700 dark:hover:text-slate-300',
+                        ? 'font-semibold text-primary dark:text-white dark:underline before:bg-neutral-500 dark:before:bg-neutral-400'
+                        : 'text-neutral-600 before:hidden before:bg-neutral-300 hover:text-neutral-600 hover:before:block dark:text-neutral-300 dark:before:bg-neutral-700 dark:hover:text-neutral-300',
                     )}
                   >
                     {link.title}
