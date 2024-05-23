@@ -38,7 +38,6 @@ function rehypeWrapMainContent() {
 }
 
 const withMDX = createWithMdx({
-
   options: {
     remarkPlugins: [remarkGfm],
     rehypePlugins: [
@@ -68,6 +67,11 @@ const withMDX = createWithMdx({
 });
 
 const nextConfig = {
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "10mb"
+    }
+  },
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
   images: {
     domains: ['localhost'],
@@ -99,6 +103,12 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'github.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'oaidalleapiprodscus.blob.core.windows.net',
         port: '',
         pathname: '/**',
       },

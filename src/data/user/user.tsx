@@ -9,6 +9,7 @@ import { serverGetLoggedInUser } from "@/utils/server/serverGetLoggedInUser";
 import type { AuthUserMetadata } from "@/utils/zod-schemas/authUserMetadata";
 import { renderAsync } from "@react-email/render";
 import ConfirmAccountDeletionEmail from "emails/account-deletion-request";
+import { revalidatePath } from "next/cache";
 import slugify from "slugify";
 import urlJoin from "url-join";
 import { refreshSessionAction } from "./session";
@@ -193,6 +194,8 @@ export const updateUserProfileNameAndAvatar = async (
     if (refreshSessionResponse.status === "error") {
       return refreshSessionResponse;
     }
+
+    revalidatePath("/", "layout");
   }
 
   return {

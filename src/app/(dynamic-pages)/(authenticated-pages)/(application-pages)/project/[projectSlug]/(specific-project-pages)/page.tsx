@@ -38,7 +38,7 @@ export default async function ProjectPage({ params }: { params: unknown }) {
         <div
           className="border dotted-bg dark:dotted-bg-dark border-gray-400/50 dark:border-gray-600/50 rounded-xl bg-gray-200/20 dark:bg-slate-950/40 flex justify-center items-center h-full"
         >
-          <div className="h-[700px] w-full relative">
+          <div className="h-[800px] w-full relative">
             <ChatContainer id={newChatId} project={project} />
           </div>
 
