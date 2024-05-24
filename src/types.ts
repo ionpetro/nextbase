@@ -162,7 +162,10 @@ export type SAErrorPayload = {
   message: string;
 };
 
-export type ValidSAPayload<TData = undefined> = SASuccessPayload<TData> | SAErrorPayload;
+/**
+ * Server Action Payload
+ */
+export type SAPayload<TData = undefined> = SASuccessPayload<TData> | SAErrorPayload;
 
 
 export type Message = CoreMessage & {

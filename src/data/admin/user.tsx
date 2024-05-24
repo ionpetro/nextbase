@@ -1,6 +1,6 @@
 "use server";
 import { supabaseAdminClient } from "@/supabase-clients/admin/supabaseAdminClient";
-import type { SupabaseFileUploadOptions, Table, ValidSAPayload } from "@/types";
+import type { SAPayload, SupabaseFileUploadOptions, Table } from "@/types";
 import { sendEmail } from "@/utils/api-routes/utils";
 import { serverGetLoggedInUser } from "@/utils/server/serverGetLoggedInUser";
 import { renderAsync } from "@react-email/render";
@@ -31,7 +31,7 @@ export const uploadImage = async (
   formData: FormData,
   fileName: string,
   fileOptions?: SupabaseFileUploadOptions | undefined,
-): Promise<ValidSAPayload<string>> => {
+): Promise<SAPayload<string>> => {
   "use server";
   const file = formData.get("file");
   if (!file) {
@@ -76,7 +76,7 @@ export const uploadImage = async (
   };
 };
 
-export async function appAdminGetUserImpersonationUrl(userId: string): Promise<ValidSAPayload<URL>> {
+export async function appAdminGetUserImpersonationUrl(userId: string): Promise<SAPayload<URL>> {
   ensureAppAdmin();
   const response = await supabaseAdminClient.auth.admin.getUserById(userId);
 
@@ -147,7 +147,7 @@ export async function appAdminGetUserImpersonationUrl(userId: string): Promise<V
   };
 }
 
-export async function createUserAction(email: string): Promise<ValidSAPayload<User>> {
+export async function createUserAction(email: string): Promise<SAPayload<User>> {
   const response = await supabaseAdminClient.auth.admin.createUser({
     email,
   });
@@ -172,7 +172,7 @@ export async function createUserAction(email: string): Promise<ValidSAPayload<Us
   throw new Error("User not created");
 }
 
-export async function sendLoginLinkAction(email: string): Promise<ValidSAPayload> {
+export async function sendLoginLinkAction(email: string): Promise<SAPayload> {
   const response = await supabaseAdminClient.auth.admin.generateLink({
     email,
     type: "magiclink",
@@ -287,7 +287,7 @@ export const uploadBlogImage = async (
   formData: FormData,
   fileName: string,
   fileOptions?: SupabaseFileUploadOptions | undefined,
-): Promise<ValidSAPayload<string>> => {
+): Promise<SAPayload<string>> => {
   "use server";
   const file = formData.get("file");
   if (!file) {

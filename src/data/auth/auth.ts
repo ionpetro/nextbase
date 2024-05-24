@@ -1,12 +1,12 @@
 'use server';
 import { createSupabaseUserServerActionClient } from '@/supabase-clients/user/createSupabaseUserServerActionClient';
-import type { AuthProvider, ValidSAPayload } from '@/types';
+import type { AuthProvider, SAPayload } from '@/types';
 import { toSiteURL } from '@/utils/helpers';
 
 export const signUp = async (
   email: string,
   password: string,
-): Promise<ValidSAPayload> => {
+): Promise<SAPayload> => {
   const supabase = createSupabaseUserServerActionClient();
 
   const { data, error } = await supabase.auth.signUp({
@@ -27,7 +27,7 @@ export const signUp = async (
 export const signInWithPassword = async (
   email: string,
   password: string,
-): Promise<ValidSAPayload> => {
+): Promise<SAPayload> => {
   const supabase = createSupabaseUserServerActionClient();
 
   const { error } = await supabase.auth.signInWithPassword({
@@ -45,7 +45,7 @@ export const signInWithPassword = async (
 export const signInWithMagicLink = async (
   email: string,
   next?: string,
-): Promise<ValidSAPayload> => {
+): Promise<SAPayload> => {
   const supabase = createSupabaseUserServerActionClient();
   const redirectUrl = new URL(toSiteURL('/auth/callback'));
   if (next) {
@@ -68,7 +68,7 @@ export const signInWithMagicLink = async (
 export const signInWithProvider = async (
   provider: AuthProvider,
   next?: string,
-): Promise<ValidSAPayload<{
+): Promise<SAPayload<{
   url: string;
 }>> => {
   const supabase = createSupabaseUserServerActionClient();
@@ -98,7 +98,7 @@ export const signInWithProvider = async (
   };
 };
 
-export const resetPassword = async (email: string): Promise<ValidSAPayload> => {
+export const resetPassword = async (email: string): Promise<SAPayload> => {
   const supabase = createSupabaseUserServerActionClient();
   const redirectToURL = new URL(toSiteURL('/auth/callback'));
   redirectToURL.searchParams.set('next', '/update-password');

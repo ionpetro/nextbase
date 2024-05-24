@@ -3,7 +3,7 @@
 import type { Tables } from '@/lib/database.types';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 import { supabaseClientBasedOnUserRole } from '@/supabase-clients/user-role-client';
-import type { Enum, ValidSAPayload } from '@/types';
+import type { Enum, SAPayload } from '@/types';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import { serverGetUserType } from '@/utils/server/serverGetUserType';
 import { userRoles } from '@/utils/userTypes';
@@ -18,7 +18,7 @@ export async function addCommentToInternalFeedbackThread({
 }: {
   feedbackId: string;
   content: string;
-}): Promise<ValidSAPayload<Tables<'internal_feedback_comments'>[]>> {
+}): Promise<SAPayload<Tables<'internal_feedback_comments'>[]>> {
   try {
     const user = await serverGetLoggedInUser();
     const userRoleType = await serverGetUserType();
@@ -96,7 +96,7 @@ export async function ownerUpdateFeedbackComment({
   commentId: string;
   feedbackCommentOwnerId: string;
   content: string;
-}): Promise<ValidSAPayload> {
+}): Promise<SAPayload> {
   const user = await serverGetLoggedInUser();
   if (feedbackCommentOwnerId !== user.id) {
     return {
@@ -153,7 +153,7 @@ export async function adminUpdateFeedbackStatus({
 }: {
   feedbackId: string;
   status: Enum<'internal_feedback_thread_status'>;
-}): Promise<ValidSAPayload> {
+}): Promise<SAPayload> {
   const userRoleType = await serverGetUserType();
   const user = await serverGetLoggedInUser();
 
@@ -203,7 +203,7 @@ export async function adminUpdateFeedbackType({
 }: {
   feedbackId: string;
   type: Enum<'internal_feedback_thread_type'>;
-}): Promise<ValidSAPayload> {
+}): Promise<SAPayload> {
   const userRoleType = await serverGetUserType();
   const user = await serverGetLoggedInUser();
 
@@ -254,7 +254,7 @@ export async function adminUpdateFeedbackPriority({
 }: {
   feedbackId: string;
   priority: Enum<'internal_feedback_thread_priority'>;
-}): Promise<ValidSAPayload> {
+}): Promise<SAPayload> {
   const userRoleType = await serverGetUserType();
   const user = await serverGetLoggedInUser();
 
@@ -305,7 +305,7 @@ export async function adminToggleFeedbackFromRoadmap({
 }: {
   feedbackId: string;
   isInRoadmap: boolean;
-}): Promise<ValidSAPayload> {
+}): Promise<SAPayload> {
   const userRoleType = await serverGetUserType();
   const user = await serverGetLoggedInUser();
 
@@ -347,7 +347,7 @@ export async function adminToggleFeedbackOpenForComments({
 }: {
   feedbackId: string;
   isOpenForComments: boolean;
-}): Promise<ValidSAPayload> {
+}): Promise<SAPayload> {
   const userRoleType = await serverGetUserType();
   const user = await serverGetLoggedInUser();
 
@@ -389,7 +389,7 @@ export async function adminToggleFeedbackVisibility({
 }: {
   feedbackId: string;
   isPubliclyVisible: boolean;
-}): Promise<ValidSAPayload> {
+}): Promise<SAPayload> {
   const userRoleType = await serverGetUserType();
   const user = await serverGetLoggedInUser();
 

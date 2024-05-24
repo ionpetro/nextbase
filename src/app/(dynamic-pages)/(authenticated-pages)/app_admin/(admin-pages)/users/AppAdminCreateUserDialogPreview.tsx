@@ -12,7 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useSAToastMutation } from "@/hooks/useSAToastMutation";
-import type { ValidSAPayload } from "@/types";
+import type { SAPayload } from "@/types";
 import { Plus } from "lucide-react";
 import { useState } from "react";
 
@@ -21,7 +21,7 @@ export const AppAdminCreateUserDialogPreview = () => {
   const [email, setEmail] = useState("");
 
   const { mutate: createUser, isLoading } = useSAToastMutation(
-    async (email: string): Promise<ValidSAPayload<{ email: string }>> => {
+    async (email: string): Promise<SAPayload<{ email: string }>> => {
       // Simulate a delay
       await new Promise((resolve) => setTimeout(resolve, 2000));
       return {

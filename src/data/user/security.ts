@@ -1,10 +1,10 @@
 'use server';
 import { createSupabaseUserServerActionClient } from '@/supabase-clients/user/createSupabaseUserServerActionClient';
-import type { ValidSAPayload } from '@/types';
+import type { SAPayload } from '@/types';
 
 export async function updatePasswordAction(
   password: string,
-): Promise<ValidSAPayload<true>> {
+): Promise<SAPayload<true>> {
   const supabaseClient = createSupabaseUserServerActionClient();
   const { error } = await supabaseClient.auth.updateUser({
     password,
@@ -25,7 +25,7 @@ export async function updatePasswordAction(
 
 export async function updateEmailAction(
   email: string,
-): Promise<ValidSAPayload> {
+): Promise<SAPayload> {
   const supabaseClient = createSupabaseUserServerActionClient();
   const { error } = await supabaseClient.auth.updateUser({
     email,

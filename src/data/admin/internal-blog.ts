@@ -2,15 +2,15 @@
 import type { CreateAuthorPayload } from '@/app/(dynamic-pages)/(authenticated-pages)/app_admin/(admin-pages)/blog/(blog-list)/AddAuthorProfileDialog';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 import type {
+  SAPayload,
   TableInsertPayload,
   TableUpdatePayload,
-  ValidSAPayload,
 } from '@/types';
 import { revalidatePath } from 'next/cache';
 
 export const deleteBlogPost = async (
   blogPostId: string,
-): Promise<ValidSAPayload> => {
+): Promise<SAPayload> => {
   'use server';
 
   const { error } = await supabaseAdminClient
@@ -159,7 +159,7 @@ export const getAuthor = async (postId: string) => {
 
 export const createAuthorProfile = async (
   payload: CreateAuthorPayload,
-): Promise<ValidSAPayload> => {
+): Promise<SAPayload> => {
   const { error, data } = await supabaseAdminClient
     .from('internal_blog_author_profiles')
     .insert(payload);
@@ -180,7 +180,7 @@ export const createBlogPost = async (
   authorId: string | undefined,
   payload: TableInsertPayload<'internal_blog_posts'>,
   tagIds: number[],
-): Promise<ValidSAPayload> => {
+): Promise<SAPayload> => {
   const { data: slugVerify, error: slugError } = await supabaseAdminClient
     .from('internal_blog_posts')
     .select('*')
@@ -308,7 +308,7 @@ export const getBlogPostTags = async (postId: string) => {
 export const updateAuthorProfile = async (
   userId: string,
   payload: Partial<TableUpdatePayload<'internal_blog_author_profiles'>>,
-): Promise<ValidSAPayload> => {
+): Promise<SAPayload> => {
   const { data, error } = await supabaseAdminClient
     .from('internal_blog_author_profiles')
     .update(payload)
@@ -333,7 +333,7 @@ export const updateBlogPost = async (
   postId: string,
   payload: Partial<TableUpdatePayload<'internal_blog_posts'>>,
   tagIds: number[],
-): Promise<ValidSAPayload> => {
+): Promise<SAPayload> => {
   const { data, error } = await supabaseAdminClient
     .from('internal_blog_posts')
     .update(payload)
@@ -450,7 +450,7 @@ export const getAllAppAdmins = async () => {
 
 export const deleteAuthorProfile = async (
   userId: string,
-): Promise<ValidSAPayload> => {
+): Promise<SAPayload> => {
   const { error } = await supabaseAdminClient
     .from('internal_blog_author_profiles')
     .delete()
@@ -470,7 +470,7 @@ export const deleteAuthorProfile = async (
 
 export const createBlogTag = async (
   payload: TableInsertPayload<'internal_blog_post_tags'>,
-): Promise<ValidSAPayload> => {
+): Promise<SAPayload> => {
   const { error, data } = await supabaseAdminClient
     .from('internal_blog_post_tags')
     .insert(payload);
@@ -490,7 +490,7 @@ export const createBlogTag = async (
 export const updateBlogTag = async (
   id: number,
   payload: Partial<TableUpdatePayload<'internal_blog_post_tags'>>,
-): Promise<ValidSAPayload> => {
+): Promise<SAPayload> => {
   const { data, error } = await supabaseAdminClient
     .from('internal_blog_post_tags')
     .update(payload)
@@ -510,7 +510,7 @@ export const updateBlogTag = async (
   };
 };
 
-export const deleteBlogTag = async (id: number): Promise<ValidSAPayload> => {
+export const deleteBlogTag = async (id: number): Promise<SAPayload> => {
   const { error } = await supabaseAdminClient
     .from('internal_blog_post_tags')
     .delete()

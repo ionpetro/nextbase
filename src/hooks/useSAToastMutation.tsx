@@ -1,5 +1,5 @@
 "use client";
-import type { SASuccessPayload, ValidSAPayload } from "@/types";
+import type { SAPayload, SASuccessPayload } from "@/types";
 import {
   useMutation,
   type MutationFunction,
@@ -39,14 +39,14 @@ export function useSAToastMutation<
   TError extends Error = Error,
   TVariables = void,
 >(
-  mutationFn: MutationFn<ValidSAPayload<TData>, TVariables>,
-  options?: Omit<ToastMutationOptions<ValidSAPayload<TData>, TError, TVariables>, 'onSuccess' | 'onError'> & {
+  mutationFn: MutationFn<SAPayload<TData>, TVariables>,
+  options?: Omit<ToastMutationOptions<SAPayload<TData>, TError, TVariables>, 'onSuccess' | 'onError'> & {
     onSuccess?: (data: SASuccessPayload<TData>, variables: TVariables, context: unknown) => void;
     onError?: (error: Error, variables: TVariables, context: unknown) => void;
   },
-): UseMutationResult<ValidSAPayload<TData>, TError, TVariables> {
+): UseMutationResult<SAPayload<TData>, TError, TVariables> {
   const toastIdRef = useRef<string | number | null>(null);
-  return useMutation<ValidSAPayload<TData>, TError, TVariables>(mutationFn, {
+  return useMutation<SAPayload<TData>, TError, TVariables>(mutationFn, {
     ...options,
     onMutate: async (variables) => {
       const loadingMessage = options?.loadingMessage

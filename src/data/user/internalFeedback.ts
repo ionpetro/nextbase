@@ -3,7 +3,7 @@
 import type { Tables } from '@/lib/database.types';
 import { createSupabaseUserServerActionClient } from '@/supabase-clients/user/createSupabaseUserServerActionClient';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
-import type { Enum, ValidSAPayload } from '@/types';
+import type { Enum, SAPayload } from '@/types';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import { revalidatePath } from 'next/cache';
 import { createReceivedFeedbackNotification } from './notifications';
@@ -283,7 +283,7 @@ export async function createInternalFeedback(payload: {
   title: string;
   content: string;
   type: Enum<'internal_feedback_thread_type'>;
-}): Promise<ValidSAPayload<Tables<'internal_feedback_threads'>>> {
+}): Promise<SAPayload<Tables<'internal_feedback_threads'>>> {
   const supabaseClient = createSupabaseUserServerActionClient();
   const user = await serverGetLoggedInUser();
   const { data, error } = await supabaseClient

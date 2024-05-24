@@ -2,7 +2,7 @@
 import { createSupabaseUserRouteHandlerClient } from '@/supabase-clients/user/createSupabaseUserRouteHandlerClient';
 import { createSupabaseUserServerActionClient } from '@/supabase-clients/user/createSupabaseUserServerActionClient';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
-import type { ValidSAPayload } from '@/types';
+import type { SAPayload } from '@/types';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import axios from 'axios';
 import { revalidatePath } from 'next/cache';
@@ -21,7 +21,7 @@ function maskKey(key: string): string {
 }
 
 export async function generateUnkeyToken(): Promise<
-  ValidSAPayload<{ keyId: string; key: string; createdAt: string }>
+  SAPayload<{ keyId: string; key: string; createdAt: string }>
 > {
   const user = await serverGetLoggedInUser();
   const supabaseClient = createSupabaseUserRouteHandlerClient();
@@ -67,7 +67,7 @@ export async function generateUnkeyToken(): Promise<
 
 export async function revokeUnkeyToken(
   keyId: string,
-): Promise<ValidSAPayload<{ ok: boolean }>> {
+): Promise<SAPayload<{ ok: boolean }>> {
   const response = await axios.delete(
     `https://api.unkey.dev/v1/keys/${keyId}`,
     {

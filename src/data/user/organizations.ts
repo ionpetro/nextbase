@@ -6,9 +6,9 @@ import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user
 import type {
   Enum,
   NormalizedSubscription,
+  SAPayload,
   Table,
   UnwrapPromise,
-  ValidSAPayload,
 } from '@/types';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import type { AuthUserMetadata } from '@/utils/zod-schemas/authUserMetadata';
@@ -55,7 +55,7 @@ export const createOrganization = async (
   }: {
     isOnboardingFlow?: boolean;
   } = {},
-): Promise<ValidSAPayload<string>> => {
+): Promise<SAPayload<string>> => {
   const supabaseClient = createSupabaseUserServerActionClient();
   const user = await serverGetLoggedInUser();
 
@@ -294,7 +294,7 @@ export const updateOrganizationInfo = async (
   organizationId: string,
   title: string,
   slug: string,
-): Promise<ValidSAPayload<Table<'organizations'>>> => {
+): Promise<SAPayload<Table<'organizations'>>> => {
   'use server';
   const supabase = createSupabaseUserServerActionClient();
   const { data, error } = await supabase
@@ -312,7 +312,7 @@ export const updateOrganizationInfo = async (
   }
 
   revalidatePath("/[organizationSlug]", 'layout');
-  
+
   return { status: 'success', data };
 };
 
@@ -502,7 +502,7 @@ export const getDefaultOrganizationId = async () => {
 
 export async function setDefaultOrganization(
   organizationId: string,
-): Promise<ValidSAPayload> {
+): Promise<SAPayload> {
   const supabaseClient = createSupabaseUserServerComponentClient();
   const user = await serverGetLoggedInUser();
 
@@ -521,7 +521,7 @@ export async function setDefaultOrganization(
 
 export async function deleteOrganization(
   organizationId: string,
-): Promise<ValidSAPayload<string>> {
+): Promise<SAPayload<string>> {
   const supabaseClient = createSupabaseUserServerActionClient();
   const { error } = await supabaseClient
     .from('organizations')
@@ -544,7 +544,7 @@ export async function deleteOrganization(
 export const updateOrganizationSlug = async (
   organizationId: string,
   newSlug: string,
-): Promise<ValidSAPayload<string>> => {
+): Promise<SAPayload<string>> => {
   if (RESTRICTED_SLUG_NAMES.includes(newSlug)) {
     return { status: 'error', message: 'Slug is restricted' };
   }

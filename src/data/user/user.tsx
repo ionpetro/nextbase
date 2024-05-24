@@ -2,7 +2,7 @@
 import { PRODUCT_NAME } from "@/constants";
 import { createSupabaseUserServerActionClient } from "@/supabase-clients/user/createSupabaseUserServerActionClient";
 import { createSupabaseUserServerComponentClient } from "@/supabase-clients/user/createSupabaseUserServerComponentClient";
-import type { SupabaseFileUploadOptions, Table, ValidSAPayload } from "@/types";
+import type { SAPayload, SupabaseFileUploadOptions, Table } from "@/types";
 import { sendEmail } from "@/utils/api-routes/utils";
 import { toSiteURL } from "@/utils/helpers";
 import { serverGetLoggedInUser } from "@/utils/server/serverGetLoggedInUser";
@@ -104,7 +104,7 @@ export const uploadPublicUserAvatar = async (
   formData: FormData,
   fileName: string,
   fileOptions?: SupabaseFileUploadOptions | undefined,
-): Promise<ValidSAPayload<string>> => {
+): Promise<SAPayload<string>> => {
   "use server";
   const file = formData.get("file");
   if (!file) {
@@ -153,7 +153,7 @@ export const updateUserProfileNameAndAvatar = async (
   }: {
     isOnboardingFlow?: boolean;
   } = {},
-): Promise<ValidSAPayload<Table<"user_profiles">>> => {
+): Promise<SAPayload<Table<"user_profiles">>> => {
   "use server";
   const supabaseClient = createSupabaseUserServerActionClient();
   const user = await serverGetLoggedInUser();
@@ -206,7 +206,7 @@ export const updateUserProfileNameAndAvatar = async (
 
 export const acceptTermsOfService = async (
   accepted: boolean,
-): Promise<ValidSAPayload<boolean>> => {
+): Promise<SAPayload<boolean>> => {
   const supabaseClient = createSupabaseUserServerComponentClient();
 
   const updateUserMetadataPayload: Partial<AuthUserMetadata> = {
@@ -236,7 +236,7 @@ export const acceptTermsOfService = async (
 };
 
 export async function requestAccountDeletion(): Promise<
-  ValidSAPayload<Table<"account_delete_tokens">>
+  SAPayload<Table<"account_delete_tokens">>
 > {
   const supabaseClient = createSupabaseUserServerActionClient();
   const user = await serverGetLoggedInUser();
@@ -280,7 +280,7 @@ export async function requestAccountDeletion(): Promise<
 }
 
 export async function setOnboardingStatus(): Promise<
-  ValidSAPayload<undefined>
+  SAPayload<undefined>
 > {
   const user = await serverGetLoggedInUser();
   const userId = user.id;

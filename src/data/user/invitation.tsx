@@ -3,7 +3,7 @@ import type { Tables } from "@/lib/database.types";
 import { supabaseAdminClient } from "@/supabase-clients/admin/supabaseAdminClient";
 import { createSupabaseUserServerActionClient } from "@/supabase-clients/user/createSupabaseUserServerActionClient";
 import { createSupabaseUserServerComponentClient } from "@/supabase-clients/user/createSupabaseUserServerComponentClient";
-import type { Enum, ValidSAPayload } from "@/types";
+import type { Enum, SAPayload } from "@/types";
 import { sendEmail } from "@/utils/api-routes/utils";
 import { toSiteURL } from "@/utils/helpers";
 import { serverGetLoggedInUser } from "@/utils/server/serverGetLoggedInUser";
@@ -125,7 +125,7 @@ export async function createInvitationHandler({
   organizationId: string;
   email: string;
   role: Enum<"organization_member_role">;
-}): Promise<ValidSAPayload<Tables<"organization_join_invitations">>> {
+}): Promise<SAPayload<Tables<"organization_join_invitations">>> {
   "use server";
   const supabaseClient = createSupabaseUserServerActionClient();
   const user = await serverGetLoggedInUser();
@@ -223,7 +223,7 @@ export async function createInvitationHandler({
 
 export async function acceptInvitationAction(
   invitationId: string,
-): Promise<ValidSAPayload<string>> {
+): Promise<SAPayload<string>> {
   "use server";
   const supabaseClient = createSupabaseUserServerActionClient();
   const user = await serverGetLoggedInUser();
@@ -257,7 +257,7 @@ export async function acceptInvitationAction(
   return { status: 'success', data: organizationSlug };
 }
 
-export async function declineInvitationAction(invitationId: string): Promise<ValidSAPayload> {
+export async function declineInvitationAction(invitationId: string): Promise<SAPayload> {
   "use server";
   const supabaseClient = createSupabaseUserServerActionClient();
   const user = await serverGetLoggedInUser();
@@ -357,7 +357,7 @@ export async function getPendingInvitationCountOfUser() {
   return idInvitationsCount;
 }
 
-export async function revokeInvitation(invitationId: string): Promise<ValidSAPayload<Tables<"organization_join_invitations">>> {
+export async function revokeInvitation(invitationId: string): Promise<SAPayload<Tables<"organization_join_invitations">>> {
   "use server";
   const supabaseClient = createSupabaseUserServerActionClient();
 

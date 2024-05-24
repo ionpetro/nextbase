@@ -2,7 +2,7 @@
 import { convertAndUploadOpenAiImage } from "@/data/user/chats";
 import { updateUserProfileNameAndAvatar } from "@/data/user/user";
 import { useSAToastMutation } from "@/hooks/useSAToastMutation";
-import type { ValidSAPayload } from "@/types";
+import type { SAPayload } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
@@ -43,7 +43,7 @@ export const DallE = () => {
   });
 
   const { mutate: generateImageMutation, isLoading } = useMutation(
-    async (data: { prompt: string; size: string }): Promise<ValidSAPayload<OpenAIImageList>> => {
+    async (data: { prompt: string; size: string }): Promise<SAPayload<OpenAIImageList>> => {
       try {
         const { data: response } = await axios.post("/api/generate-image", {
           prompt: data.prompt,

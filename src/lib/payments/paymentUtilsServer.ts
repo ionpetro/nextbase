@@ -1,6 +1,6 @@
 'use server';
 import { PAYMENT_PROVIDER } from '@/constants';
-import type { ValidSAPayload } from '@/types';
+import type { SAPayload } from '@/types';
 import {
   createCheckoutSessionAction,
   getMRRStripe,
@@ -37,7 +37,7 @@ export const getSubscriptions = async (
 export const createSubscription = async (
   organizationId: string,
   priceId: string,
-): Promise<ValidSAPayload<string>> => {
+): Promise<SAPayload<string>> => {
   switch (PAYMENT_PROVIDER) {
     case 'stripe': {
       const data = await createCheckoutSessionAction({
@@ -61,7 +61,7 @@ export const createSubscription = async (
 export const startTrial = async (
   organizationId: string,
   priceId: string,
-): Promise<ValidSAPayload<string>> => {
+): Promise<SAPayload<string>> => {
   switch (PAYMENT_PROVIDER) {
     case 'stripe': {
       const data = await startTrialStripe(organizationId, priceId);
@@ -78,7 +78,7 @@ export const startTrial = async (
 
 export const manageSubscription = async (
   organizationId: string,
-): Promise<ValidSAPayload<string>> => {
+): Promise<SAPayload<string>> => {
   switch (PAYMENT_PROVIDER) {
     case 'stripe': {
       const data = await manageSubsciptionStripe(organizationId);

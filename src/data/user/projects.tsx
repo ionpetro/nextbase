@@ -4,7 +4,7 @@ import type { Tables } from "@/lib/database.types";
 import { supabaseAdminClient } from "@/supabase-clients/admin/supabaseAdminClient";
 import { createSupabaseUserServerActionClient } from "@/supabase-clients/user/createSupabaseUserServerActionClient";
 import { createSupabaseUserServerComponentClient } from "@/supabase-clients/user/createSupabaseUserServerComponentClient";
-import type { CommentWithUser, ValidSAPayload } from "@/types";
+import type { CommentWithUser, SAPayload } from "@/types";
 import { normalizeComment } from "@/utils/comments";
 import { serverGetLoggedInUser } from "@/utils/server/serverGetLoggedInUser";
 import { revalidatePath } from "next/cache";
@@ -70,7 +70,7 @@ export const createProjectAction = async ({
   organizationId: string;
   name: string;
   slug: string;
-}): Promise<ValidSAPayload<Tables<"projects">>> => {
+}): Promise<SAPayload<Tables<"projects">>> => {
   "use server";
   const supabaseClient = createSupabaseUserServerActionClient();
   const { data: project, error } = await supabaseClient
@@ -120,7 +120,7 @@ export const getProjectComments = async (
 export const createProjectCommentAction = async (
   projectId: string,
   text: string,
-): Promise<ValidSAPayload<{ id: number, commentList: React.JSX.Element }>> => {
+): Promise<SAPayload<{ id: number, commentList: React.JSX.Element }>> => {
   const supabaseClient = createSupabaseUserServerActionClient();
   const user = await serverGetLoggedInUser();
   const { data, error } = await supabaseClient
@@ -146,7 +146,7 @@ export const createProjectCommentAction = async (
   };
 };
 
-export const approveProjectAction = async (projectId: string): Promise<ValidSAPayload<Tables<"projects">>> => {
+export const approveProjectAction = async (projectId: string): Promise<SAPayload<Tables<"projects">>> => {
   const supabaseClient = createSupabaseUserServerActionClient();
   const { data, error } = await supabaseClient
     .from("projects")
@@ -163,7 +163,7 @@ export const approveProjectAction = async (projectId: string): Promise<ValidSAPa
   return { status: 'success', data };
 };
 
-export const rejectProjectAction = async (projectId: string): Promise<ValidSAPayload<Tables<"projects">>> => {
+export const rejectProjectAction = async (projectId: string): Promise<SAPayload<Tables<"projects">>> => {
   const supabaseClient = createSupabaseUserServerActionClient();
   const { data, error } = await supabaseClient
     .from("projects")
@@ -182,7 +182,7 @@ export const rejectProjectAction = async (projectId: string): Promise<ValidSAPay
 
 export const submitProjectForApprovalAction = async (
   projectId: string,
-): Promise<ValidSAPayload<Tables<"projects">>> => {
+): Promise<SAPayload<Tables<"projects">>> => {
   const supabaseClient = createSupabaseUserServerActionClient();
   const { data, error } = await supabaseClient
     .from("projects")
@@ -199,7 +199,7 @@ export const submitProjectForApprovalAction = async (
   return { status: "success", data };
 };
 
-export const markProjectAsCompletedAction = async (projectId: string): Promise<ValidSAPayload<Tables<"projects">>> => {
+export const markProjectAsCompletedAction = async (projectId: string): Promise<SAPayload<Tables<"projects">>> => {
   const supabaseClient = createSupabaseUserServerActionClient();
   const { data, error } = await supabaseClient
     .from("projects")
