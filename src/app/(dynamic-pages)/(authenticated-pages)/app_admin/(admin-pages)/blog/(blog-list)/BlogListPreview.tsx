@@ -10,7 +10,10 @@ function DeleteBlogPostPreview({ blogPostId }: { blogPostId: string }) {
   const { mutate, isLoading } = useSAToastMutation(
     async () => {
       // Simulate a delay to mimic the deletion process
-      return new Promise((resolve) => setTimeout(resolve, 1000));
+      return {
+        status: 'success',
+        data: new Promise((resolve) => setTimeout(resolve, 1000))
+      };
     },
     {
       loadingMessage: 'Deleting blog post...',

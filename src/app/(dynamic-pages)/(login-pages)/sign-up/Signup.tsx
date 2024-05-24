@@ -112,6 +112,9 @@ export function SignUp({
       loadingMessage: 'Requesting login...',
       successMessage: 'Redirecting...',
       errorMessage: 'Failed to login',
+      onSuccess: (payload) => {
+        window.location.href = payload.data.url;
+      }
     },
   );
   return (

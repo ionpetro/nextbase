@@ -153,7 +153,7 @@ export async function adminUpdateFeedbackStatus({
 }: {
   feedbackId: string;
   status: Enum<'internal_feedback_thread_status'>;
-}): Promise<ValidSAPayload<unknown>> {
+}): Promise<ValidSAPayload> {
   const userRoleType = await serverGetUserType();
   const user = await serverGetLoggedInUser();
 

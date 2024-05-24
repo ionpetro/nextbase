@@ -68,24 +68,34 @@ export const signInWithMagicLink = async (
 export const signInWithProvider = async (
   provider: AuthProvider,
   next?: string,
-): Promise<ValidSAPayload> => {
+): Promise<ValidSAPayload<{
+  url: string;
+}>> => {
   const supabase = createSupabaseUserServerActionClient();
   const redirectToURL = new URL(toSiteURL('/auth/callback'));
   if (next) {
     redirectToURL.searchParams.set('next', next);
   }
-  const { error } = await supabase.auth.signInWithOAuth({
+  const { error, data } = await supabase.auth.signInWithOAuth({
     provider,
     options: {
       redirectTo: redirectToURL.toString(),
     },
   });
 
+
   if (error) {
     return { status: 'error', message: error.message };
   }
 
-  return { status: 'success' };
+  const providerUrl = data.url;
+
+  return {
+    status: 'success',
+    data: {
+      url: providerUrl
+    }
+  };
 };
 
 export const resetPassword = async (email: string): Promise<ValidSAPayload> => {

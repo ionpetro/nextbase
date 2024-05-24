@@ -3,7 +3,7 @@
 import { createSupabaseUserServerActionClient } from "@/supabase-clients/user/createSupabaseUserServerActionClient";
 import { ValidSAPayload } from "@/types";
 
-export async function refreshSessionAction(): Promise<ValidSAPayload<void>> {
+export async function refreshSessionAction(): Promise<ValidSAPayload> {
   const supabaseClient = createSupabaseUserServerActionClient();
   const refreshSessionResponse = await supabaseClient.auth.refreshSession();
 

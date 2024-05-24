@@ -1,5 +1,5 @@
 "use client";
-import type { ValidSAPayload } from "@/types";
+import type { SASuccessPayload, ValidSAPayload } from "@/types";
 import {
   useMutation,
   type MutationFunction,
@@ -40,7 +40,10 @@ export function useSAToastMutation<
   TVariables = void,
 >(
   mutationFn: MutationFn<ValidSAPayload<TData>, TVariables>,
-  options?: ToastMutationOptions<ValidSAPayload<TData>, TError, TVariables>,
+  options?: Omit<ToastMutationOptions<ValidSAPayload<TData>, TError, TVariables>, 'onSuccess' | 'onError'> & {
+    onSuccess?: (data: SASuccessPayload<TData>, variables: TVariables, context: unknown) => void;
+    onError?: (error: Error, variables: TVariables, context: unknown) => void;
+  },
 ): UseMutationResult<ValidSAPayload<TData>, TError, TVariables> {
   const toastIdRef = useRef<string | number | null>(null);
   return useMutation<ValidSAPayload<TData>, TError, TVariables>(mutationFn, {
