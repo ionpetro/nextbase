@@ -191,8 +191,7 @@ export async function adminUpdateFeedbackStatus({
     statusUpdaterId: user.id,
   });
 
-  revalidatePath('/feedback', 'page');
-  revalidatePath(`/feedback/${feedbackId}`, 'page');
+  revalidatePath('/', 'layout');
 
   return { status: 'success' };
 }

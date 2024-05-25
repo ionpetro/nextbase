@@ -19,17 +19,22 @@ async function FeedbackPage({
   return (
     <>
       {userRoleType === userRoles.ANON && (
-        <AnonUserFeedbackPage
-          feedbackId={params?.feedbackId}
-          filters={validatedSearchParams}
-        />
+        <>
+          <AnonUserFeedbackPage
+            feedbackId={params?.feedbackId}
+            filters={validatedSearchParams}
+          />
+        </>
       )}
+
+
       {userRoleType === userRoles.USER && (
         <LoggedInUserFeedbackPage
           feedbackId={params?.feedbackId}
           filters={validatedSearchParams}
         />
       )}
+
       {userRoleType === userRoles.ADMIN && (
         <AdminUserFeedbackPage
           feedbackId={params?.feedbackId}

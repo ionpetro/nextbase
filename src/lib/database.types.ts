@@ -37,21 +37,18 @@ export type Database = {
           created_at: string
           id: string
           payload: Json | null
-          project_id: string | null
           user_id: string | null
         }
         Insert: {
           created_at?: string
           id: string
           payload?: Json | null
-          project_id?: string | null
           user_id?: string | null
         }
         Update: {
           created_at?: string
           id?: string
           payload?: Json | null
-          project_id?: string | null
           user_id?: string | null
         }
         Relationships: [
@@ -60,13 +57,6 @@ export type Database = {
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "public_chats_project_id_fkey"
-            columns: ["project_id"]
-            isOneToOne: false
-            referencedRelation: "projects"
             referencedColumns: ["id"]
           },
         ]

@@ -47,7 +47,7 @@ const links = [
   },
   {
     label: 'Roadmap',
-    href: `/app_admin/internal-roadmap`,
+    href: "/roadmap",
     icon: <Map className="h-5 w-5" />,
   },
 ];

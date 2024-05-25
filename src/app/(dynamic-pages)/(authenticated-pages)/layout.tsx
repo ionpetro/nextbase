@@ -5,7 +5,7 @@ import { SidebarVisibilityProvider } from '@/contexts/SidebarVisibilityContext';
 import { errors } from '@/utils/errors';
 import { verifySession } from '@/utils/server/verifySession';
 import { cookies } from 'next/headers';
-import { type ReactNode, Suspense } from 'react';
+import { Suspense, type ReactNode } from 'react';
 import { ClientLayout } from './ClientLayout';
 
 function getSidebarVisibility() {
@@ -17,13 +17,8 @@ function getSidebarVisibility() {
   return true;
 }
 
-
-
-
-
 async function AuthenticatedLayout({ children }: { children: ReactNode }) {
   const user = await verifySession();
-
   try {
     const sidebarVisibility = getSidebarVisibility();
 

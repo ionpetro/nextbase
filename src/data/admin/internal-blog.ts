@@ -36,7 +36,7 @@ export const getAllBlogPosts = async ({
   page = 1,
   limit = 5,
   sort = 'desc',
-  status = 'published',
+  status = undefined
 }: {
   query?: string;
   keywords?: string[];
@@ -46,6 +46,7 @@ export const getAllBlogPosts = async ({
   status?: 'draft' | 'published';
 }) => {
   const zeroIndexedPage = page - 1;
+
   let supabaseQuery = supabaseAdminClient
     .from('internal_blog_posts')
     .select('*')
@@ -54,8 +55,10 @@ export const getAllBlogPosts = async ({
   if (query) {
     supabaseQuery = supabaseQuery.ilike('title', `%${query}%`);
   }
+
   if (sort === 'asc') {
     supabaseQuery = supabaseQuery.order('created_at', { ascending: true });
+
   } else {
     supabaseQuery = supabaseQuery.order('created_at', { ascending: false });
   }
@@ -223,8 +226,7 @@ export const createBlogPost = async (
   }
 
   await updateBlogTagRelationships(data.id, tagIds);
-  revalidatePath(`/app_admin/blog/post/${data.id}/edit`, 'layout');
-  revalidatePath('/app_admin/blog/', 'page');
+  revalidatePath("/", 'layout');
 
   return {
     status: 'success',

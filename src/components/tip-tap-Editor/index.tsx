@@ -33,7 +33,7 @@ export function TipTapEditor({
       onClick={() => {
         editor?.chain().focus().run();
       }}
-      className="relative min-h-[500px] w-full max-w-screen-lg border bg-white p-12 px-8 sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:px-12 sm:shadow-lg"
+      className="relative min-h-[500px] w-full max-w-screen-lg border p-12 px-8 sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:px-12 sm:shadow-lg"
     >
       {/* {editor && <EditorBubbleMenu editor={editor} />} */}
       <Toolbar editor={editor} />

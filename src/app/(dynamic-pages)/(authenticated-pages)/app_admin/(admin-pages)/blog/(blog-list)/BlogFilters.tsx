@@ -12,11 +12,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import {
-  sortSchema
-} from "@/app/(dynamic-pages)/(feedback-pages)/feedback/[feedbackId]/schema";
+
 import type { BlogFiltersSchema } from "./page";
-import type { BlogSortSchema } from "./schema";
+import { sortSchema, type BlogSortSchema } from "./schema";
 
 type BlogFacetedFiltersProps = {
   tags: string[];

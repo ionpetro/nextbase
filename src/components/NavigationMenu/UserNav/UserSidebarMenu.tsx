@@ -1,4 +1,5 @@
-import { GiveFeedbackDialog } from '@/app/(dynamic-pages)/(feedback-pages)/feedback/[feedbackId]/GiveFeedbackDialog';
+
+import { GiveFeedbackDialog } from '@/app/(dynamic-pages)/(public-pages)/feedback/[feedbackId]/GiveFeedbackDialog';
 import { cn } from '@/utils/cn';
 import { Computer, Lock, LogOut, Mail, User } from 'lucide-react';
 import Image from 'next/image';
