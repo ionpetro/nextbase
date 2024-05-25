@@ -1,6 +1,6 @@
 import {
-	createMiddlewareClient,
-	type User,
+  createMiddlewareClient,
+  type User,
 } from "@supabase/auth-helpers-nextjs";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
@@ -19,98 +19,99 @@ const onboardingPaths = `/onboarding/(.*)?`;
 // or other expensive operations are run if the user is not authorized.
 
 const unprotectedPagePrefixes = [
-	`/`,
-	`/changelog`,
-	`/feedback(/.*)?`, 
-	`/auth(/.*)?`,
-	`/confirm-delete-user(/.*)?`,
-	`/forgot-password(/.*)?`,
-	`/login(/.*)?`,
-	`/sign-up(/.*)?`,
-	`/update-password(/.*)?`,
-	`/roadmap/`,
-	`/version2`,
-	`/blog(/.*)?`,
-	`/docs(/.*)?`,
-	`/terms`,
-	`/waitlist(/.*)?`,
+  `/`,
+  `/changelog`,
+  `/feedback(/.*)?`,
+  `/roadmap`,
+  `/auth(/.*)?`,
+  `/confirm-delete-user(/.*)?`,
+  `/forgot-password(/.*)?`,
+  `/login(/.*)?`,
+  `/sign-up(/.*)?`,
+  `/update-password(/.*)?`,
+  `/roadmap/`,
+  `/version2`,
+  `/blog(/.*)?`,
+  `/docs(/.*)?`,
+  `/terms`,
+  `/waitlist(/.*)?`,
 ];
 
 function isUnprotectedPage(pathname: string) {
-	return unprotectedPagePrefixes.some((prefix) => {
-		const matchPath = match(prefix);
-		return matchPath(pathname);
-	});
+  return unprotectedPagePrefixes.some((prefix) => {
+    const matchPath = match(prefix);
+    return matchPath(pathname);
+  });
 }
 
 function shouldOnboardUser(pathname: string, user: User | undefined) {
-	const matchOnboarding = match(onboardingPaths);
-	const isOnboardingRoute = matchOnboarding(pathname);
-	if (!isUnprotectedPage(pathname) && user && !isOnboardingRoute) {
-		const userMetadata = authUserMetadataSchema.parse(user.user_metadata);
-		const {
-			onboardingHasAcceptedTerms,
-			onboardingHasCompletedProfile,
-			onboardingHasCreatedOrganization,
-		} = userMetadata;
-		if (
-			!onboardingHasAcceptedTerms ||
-			!onboardingHasCompletedProfile ||
-			!onboardingHasCreatedOrganization
-		) {
-			return true;
-		}
-	}
-	return false;
+  const matchOnboarding = match(onboardingPaths);
+  const isOnboardingRoute = matchOnboarding(pathname);
+  if (!isUnprotectedPage(pathname) && user && !isOnboardingRoute) {
+    const userMetadata = authUserMetadataSchema.parse(user.user_metadata);
+    const {
+      onboardingHasAcceptedTerms,
+      onboardingHasCompletedProfile,
+      onboardingHasCreatedOrganization,
+    } = userMetadata;
+    if (
+      !onboardingHasAcceptedTerms ||
+      !onboardingHasCompletedProfile ||
+      !onboardingHasCreatedOrganization
+    ) {
+      return true;
+    }
+  }
+  return false;
 }
 
 // this middleware refreshes the user's session and must be run
 // for any Server Component route that uses `createServerComponentSupabaseClient`
 export async function middleware(req: NextRequest) {
-	const res = NextResponse.next();
-	const supabase = createMiddlewareClient<Database>({ req, res });
-	const sessionResponse = await supabase.auth.getSession();
-	const maybeUser = sessionResponse?.data.session?.user;
-	if (shouldOnboardUser(req.nextUrl.pathname, maybeUser)) {
-		console.log("redirecting to onboarding");
-		return NextResponse.redirect(toSiteURL("/onboarding"));
-	}
-	if (!isUnprotectedPage(req.nextUrl.pathname) && maybeUser) {
-		// user is possibly logged in, but lets validate session
-		const user = await supabase.auth.getUser();
-		if (user.error) {
-			return NextResponse.redirect(toSiteURL("/login"));
-		}
-	}
-	if (!isUnprotectedPage(req.nextUrl.pathname) && !maybeUser) {
-		return NextResponse.redirect(toSiteURL("/login"));
-	}
-	if (
-		!req.nextUrl.pathname.startsWith(`/app_admin_preview`) &&
-		req.nextUrl.pathname.startsWith("/app_admin")
-	) {
-		if (
-			!(
-				maybeUser &&
-				"user_role" in maybeUser &&
-				maybeUser.user_role === "admin"
-			)
-		) {
-			return NextResponse.redirect(toSiteURL("/dashboard"));
-		}
-	}
-	return res;
+  const res = NextResponse.next();
+  const supabase = createMiddlewareClient<Database>({ req, res });
+  const sessionResponse = await supabase.auth.getSession();
+  const maybeUser = sessionResponse?.data.session?.user;
+  if (shouldOnboardUser(req.nextUrl.pathname, maybeUser)) {
+    console.log("redirecting to onboarding");
+    return NextResponse.redirect(toSiteURL("/onboarding"));
+  }
+  if (!isUnprotectedPage(req.nextUrl.pathname) && maybeUser) {
+    // user is possibly logged in, but lets validate session
+    const user = await supabase.auth.getUser();
+    if (user.error) {
+      return NextResponse.redirect(toSiteURL("/login"));
+    }
+  }
+  if (!isUnprotectedPage(req.nextUrl.pathname) && !maybeUser) {
+    return NextResponse.redirect(toSiteURL("/login"));
+  }
+  if (
+    !req.nextUrl.pathname.startsWith(`/app_admin_preview`) &&
+    req.nextUrl.pathname.startsWith("/app_admin")
+  ) {
+    if (
+      !(
+        maybeUser &&
+        "user_role" in maybeUser &&
+        maybeUser.user_role === "admin"
+      )
+    ) {
+      return NextResponse.redirect(toSiteURL("/dashboard"));
+    }
+  }
+  return res;
 }
 
 export const config = {
-	matcher: [
-		/*
-		 * Match all request paths except for the ones starting with:
-		 * - _next/static (static files)
-		 * - _next/image (image optimization files)
-		 * - favicon.ico (favicon file)
-		 * Feel free to modify this pattern to include more paths.
-		 */
-		"/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
-	],
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * Feel free to modify this pattern to include more paths.
+     */
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+  ],
 };
