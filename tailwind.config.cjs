@@ -3,7 +3,10 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
   darkMode: ['class'],
-  content: ['./src/**/*.tsx', './node_modules/@tremor/**/*.{js,ts,jsx,tsx}'],
+  content: [
+    './src/**/*.{js,ts,jsx,tsx,mdx}',
+    './node_modules/@tremor/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
 
   prefix: '',
   theme: {

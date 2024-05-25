@@ -1,12 +1,11 @@
-'use client';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { AppProgressBar as ProgressBar } from 'next-nprogress-bar';
-import React, { Suspense } from 'react';
-import { Toaster as HotToaster } from 'react-hot-toast';
-import ReactNoSSR from 'react-no-ssr';
-import { Toaster as SonnerToaster } from 'sonner';
-import { ThemeProvider } from './ThemeProvider';
-import { useMyReportWebVitals } from './reportWebVitals';
+"use client";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
+import type React from "react";
+import { Suspense } from "react";
+import { Toaster as SonnerToaster } from "sonner";
+import { ThemeProvider } from "./ThemeProvider";
+import { useMyReportWebVitals } from "./reportWebVitals";
 
 // Create a client
 const queryClient = new QueryClient();
@@ -30,10 +29,7 @@ export function AppProviders({
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <QueryClientProvider client={queryClient}>
           {children}
-          <ReactNoSSR>
-            <SonnerToaster theme={'light'} />
-            <HotToaster />
-          </ReactNoSSR>
+          <SonnerToaster theme={"light"} />
           <Suspense>
             <ProgressBar
               height="4px"

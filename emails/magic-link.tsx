@@ -1,55 +1,49 @@
+import { Body } from '@react-email/body';
+import { Container } from '@react-email/container';
+import { Head } from '@react-email/head';
+import { Heading } from '@react-email/heading';
+import { Hr } from '@react-email/hr';
+import { Html } from '@react-email/html';
+import { Link } from '@react-email/link';
+import { Text } from '@react-email/text';
 import React from "react";
-import {
-  Head,
-  Heading,
-  Html,
-  Link,
-  Text,
-  Body,
-  Tailwind,
-  Container,
-  Hr,
-} from "@react-email/components";
 
-interface MagicLinkProps{
-  appName:string;
-  userName:string;
-  supportEmail:string;
-  magicLink:string;
+interface MagicLinkProps {
+  appName: string;
+  userName: string;
+  supportEmail: string;
+  magicLink: string;
 }
 
-const MagicLink = ({ appName, userName, supportEmail, magicLink }:MagicLinkProps) => {
+const MagicLink = ({ appName, userName, supportEmail, magicLink }: MagicLinkProps) => {
   return (
     <Html>
       <Head />
-      <Tailwind>
-        <Body className="bg-gray-200 font-light font-sans">
-          <Container className="bg-white px-12 py-5 mx-auto">
-            <Heading>Magic link from acme {appName}</Heading>
-            <Hr className="my-5" />
-            <Text className="text-base">Hello John{userName},</Text>
-            <Text className="text-base">
-              You've requested a magic link to sign into Acme{appName}. Please
-              find it below:
-            </Text>
-            <Link href={magicLink}>Magic Link</Link>
-            <Text className="text-base">
-              Clicking on this link will instantly log you into your account.
-              For your security, please note that this link will expire in 24
-              hours, or once you've used it to log in
-            </Text>
-            <Hr className="my-5" />
-            <Text className="text-base">
-              If you didn't request this link or if you have any questions,
-              please us at <Link href={supportEmail}>support.acme.co.in</Link>
-            </Text>
-            <Text className="text-base">Enjoy exploring Acme{appName}!</Text>
-            <Text className="text-base">{appName}Acme team</Text>
-          </Container>
-        </Body>
-      </Tailwind>
+      <Body style={{ backgroundColor: '#E5E7EB', fontWeight: 300, fontFamily: 'sans-serif' }}>
+        <Container style={{ backgroundColor: 'white', padding: '48px 60px', margin: 'auto' }}>
+          <Heading>Magic link from acme {appName}</Heading>
+          <Hr style={{ margin: '20px 0' }} />
+          <Text style={{ fontSize: '16px' }}>Hello John{userName},</Text>
+          <Text style={{ fontSize: '16px' }}>
+            You've requested a magic link to sign into Acme{appName}. Please
+            find it below:
+          </Text>
+          <Link href={magicLink}>Magic Link</Link>
+          <Text style={{ fontSize: '16px' }}>
+            Clicking on this link will instantly log you into your account.
+            For your security, please note that this link will expire in 24
+            hours, or once you've used it to log in
+          </Text>
+          <Hr style={{ margin: '20px 0' }} />
+          <Text style={{ fontSize: '16px' }}>
+            If you didn't request this link or if you have any questions,
+            please us at <Link href={supportEmail}>support.acme.co.in</Link>
+          </Text>
+          <Text style={{ fontSize: '16px' }}>Enjoy exploring Acme{appName}!</Text>
+          <Text style={{ fontSize: '16px' }}>{appName}Acme team</Text>
+        </Container>
+      </Body>
     </Html>
   );
 };
-
 export default MagicLink;

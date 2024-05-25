@@ -1,6 +1,6 @@
-import { T } from '@/components/ui/Typography';
-import { cn } from '@/utils/cn';
-import { BadgeDelta } from '@tremor/react';
+import { T } from "@/components/ui/Typography";
+import { cn } from "@/utils/cn";
+import { BadgeDelta } from "@tremor/react";
 
 type GraphContainerProps = {
   title: string;
@@ -11,17 +11,17 @@ type GraphContainerProps = {
 };
 
 const getDeltaType = (percentage: string): string => {
-  const percentageValue = parseFloat(percentage.replace('%', ''));
+  const percentageValue = Number.parseFloat(percentage.replace("%", ""));
   if (percentageValue <= -50) {
-    return 'decrease';
-  } else if (-50 < percentageValue && percentageValue < 0) {
-    return 'moderateDecrease';
-  } else if (percentageValue === 0) {
-    return 'unchanged';
-  } else if (0 < percentageValue && percentageValue <= 50) {
-    return 'moderateIncrease';
+    return "decrease";
+  } if (-50 < percentageValue && percentageValue < 0) {
+    return "moderateDecrease";
+  } if (percentageValue === 0) {
+    return "unchanged";
+  } if (0 < percentageValue && percentageValue <= 50) {
+    return "moderateIncrease";
   }
-  return 'increase';
+  return "increase";
 };
 
 export function GraphContainer({
@@ -32,7 +32,7 @@ export function GraphContainer({
   badgeValue,
 }: GraphContainerProps) {
   return (
-    <div className={cn('bg-card border rounded-xl overflow-hidden', classname)}>
+    <div className={cn("bg-card border rounded-xl overflow-hidden", classname)}>
       <div className="px-[18px] flex justify-between py-4 w-full ">
         <div className="">
           <T.H4 className="mt-0 text-card-foreground text-base">{title}</T.H4>

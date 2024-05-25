@@ -1,5 +1,5 @@
 import { ExternalNavigation } from '@/components/NavigationMenu/ExternalNavbar/ExternalNavigation';
-
+import './layout.css';
 export const dynamic = 'force-static';
 export const revalidate = 60;
 

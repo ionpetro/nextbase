@@ -1,5 +1,4 @@
 import AllFeatures from './AllFeatures';
-import CTA from './CTA';
 import Footer from './Footer';
 import HeroSection from './HeroSection';
 import MainFeatures from './MainFeatures';
@@ -18,7 +17,6 @@ export const LandingPage = () => {
       <AllFeatures />
       <MainFeatures />
       <Testimonials />
-      <CTA />
       <Footer />
     </>
   );

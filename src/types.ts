@@ -1,23 +1,24 @@
-import { SupabaseClient } from '@supabase/supabase-js';
-import { Database } from './lib/database.types';
+import type { SupabaseClient } from "@supabase/supabase-js";
+import type { CoreMessage } from "ai";
+import type { Database } from "./lib/database.types";
 
 export type AppSupabaseClient = SupabaseClient<Database>;
-export type Table<T extends keyof Database['public']['Tables']> =
-  Database['public']['Tables'][T]['Row'];
-export type TableInsertPayload<T extends keyof Database['public']['Tables']> =
-  Database['public']['Tables'][T]['Insert'];
-export type TableUpdatePayload<T extends keyof Database['public']['Tables']> =
-  Database['public']['Tables'][T]['Update'];
+export type Table<T extends keyof Database["public"]["Tables"]> =
+  Database["public"]["Tables"][T]["Row"];
+export type TableInsertPayload<T extends keyof Database["public"]["Tables"]> =
+  Database["public"]["Tables"][T]["Insert"];
+export type TableUpdatePayload<T extends keyof Database["public"]["Tables"]> =
+  Database["public"]["Tables"][T]["Update"];
 
-export type View<T extends keyof Database['public']['Views']> =
-  Database['public']['Views'][T]['Row'];
-export type DBFunction<T extends keyof Database['public']['Functions']> =
-  Database['public']['Functions'][T]['Returns'];
+export type View<T extends keyof Database["public"]["Views"]> =
+  Database["public"]["Views"][T]["Row"];
+export type DBFunction<T extends keyof Database["public"]["Functions"]> =
+  Database["public"]["Functions"][T]["Returns"];
 
 export type UnwrapPromise<T> = T extends Promise<infer U> ? U : T;
 
-export type Enum<T extends keyof Database['public']['Enums']> =
-  Database['public']['Enums'][T];
+export type Enum<T extends keyof Database["public"]["Enums"]> =
+  Database["public"]["Enums"][T];
 
 export interface SupabaseFileUploadOptions {
   /**
@@ -36,22 +37,22 @@ export interface SupabaseFileUploadOptions {
 
 /** One of the providers supported by GoTrue. */
 export type AuthProvider =
-  | 'apple'
-  | 'azure'
-  | 'bitbucket'
-  | 'discord'
-  | 'facebook'
-  | 'github'
-  | 'gitlab'
-  | 'google'
-  | 'keycloak'
-  | 'linkedin'
-  | 'notion'
-  | 'slack'
-  | 'spotify'
-  | 'twitch'
-  | 'twitter'
-  | 'workos';
+  | "apple"
+  | "azure"
+  | "bitbucket"
+  | "discord"
+  | "facebook"
+  | "github"
+  | "gitlab"
+  | "google"
+  | "keycloak"
+  | "linkedin"
+  | "notion"
+  | "slack"
+  | "spotify"
+  | "twitch"
+  | "twitter"
+  | "workos";
 
 export type DropzoneFile = File & {
   path: string;
@@ -61,70 +62,70 @@ export type DropzoneFileWithDuration = DropzoneFile & {
   duration: number;
 };
 
-export type CommentWithUser = Table<'project_comments'> & {
-  user_profile: Table<'user_profiles'>;
+export type CommentWithUser = Table<"project_comments"> & {
+  user_profile: Table<"user_profiles">;
 };
 
 export type NoSubscription = {
-  type: 'no-subscription';
+  type: "no-subscription";
 };
 
 export type TrialSubscription = {
-  type: 'trialing';
+  type: "trialing";
   trialStart: string;
   trialEnd: string;
-  product: Table<'products'>;
-  price: Table<'prices'>;
-  subscription: Table<'subscriptions'>;
+  product: Table<"products">;
+  price: Table<"prices">;
+  subscription: Table<"subscriptions">;
 };
 
 export type ActiveSubscription = {
-  type: 'active';
-  product: Table<'products'>;
-  price: Table<'prices'>;
-  subscription: Table<'subscriptions'>;
+  type: "active";
+  product: Table<"products">;
+  price: Table<"prices">;
+  subscription: Table<"subscriptions">;
 };
 
 export type PastDueSubscription = {
-  type: 'past_due';
-  product: Table<'products'>;
-  price: Table<'prices'>;
-  subscription: Table<'subscriptions'>;
+  type: "past_due";
+  product: Table<"products">;
+  price: Table<"prices">;
+  subscription: Table<"subscriptions">;
 };
 
 export type CanceledSubscription = {
-  type: 'canceled';
-  product: Table<'products'>;
-  price: Table<'prices'>;
-  subscription: Table<'subscriptions'>;
+  type: "canceled";
+  product: Table<"products">;
+  price: Table<"prices">;
+  subscription: Table<"subscriptions">;
 };
 
 export type PausedSubscription = {
-  type: 'paused';
-  product: Table<'products'>;
-  price: Table<'prices'>;
-  subscription: Table<'subscriptions'>;
+  type: "paused";
+  product: Table<"products">;
+  price: Table<"prices">;
+  subscription: Table<"subscriptions">;
 };
 
 export type IncompleteSubscription = {
-  type: 'incomplete';
-  product: Table<'products'>;
-  price: Table<'prices'>;
-  subscription: Table<'subscriptions'>;
+  type: "incomplete";
+  product: Table<"products">;
+  price: Table<"prices">;
+  subscription: Table<"subscriptions">;
 };
 
 export type IncompleteExpiredSubscription = {
-  type: 'incomplete_expired';
-  product: Table<'products'>;
-  price: Table<'prices'>;
-  subscription: Table<'subscriptions'>;
+  type: "incomplete_expired";
+  product: Table<"products">;
+  price: Table<"prices">;
+  subscription: Table<"subscriptions">;
 };
 
 export type UnpaidSubscription = {
-  type: 'unpaid';
-  product: Table<'products'>;
-  price: Table<'prices'>;
-  subscription: Table<'subscriptions'>;
+  type: "unpaid";
+  product: Table<"products">;
+  price: Table<"prices">;
+  subscription: Table<"subscriptions">;
 };
 
 export type NormalizedSubscription =
@@ -152,12 +153,21 @@ export type TeamMembersTableProps = {
   organizationId: string;
 };
 
-export type ValidSAPayload<TData = undefined> =
-  | {
-      status: 'success';
-      data?: TData;
-    }
-  | {
-      status: 'error';
-      message: string;
-    };
+export type SASuccessPayload<TData = undefined> = {
+  status: "success";
+} & (TData extends undefined ? { data?: TData } : { data: TData });
+
+export type SAErrorPayload = {
+  status: "error";
+  message: string;
+};
+
+/**
+ * Server Action Payload
+ */
+export type SAPayload<TData = undefined> = SASuccessPayload<TData> | SAErrorPayload;
+
+
+export type Message = CoreMessage & {
+  id: string;
+};

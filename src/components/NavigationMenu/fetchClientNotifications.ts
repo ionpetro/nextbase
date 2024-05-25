@@ -1,6 +1,6 @@
 'use client';
 import { supabaseUserClientComponentClient } from '@/supabase-clients/user/supabaseUserClientComponentClient';
-import { AppSupabaseClient, Table } from '@/types';
+import type { SAPayload, Table } from '@/types';
 
 export const readNotification = async (notificationId: string) => {
   const { data: notification, error } = await supabaseUserClientComponentClient
@@ -12,13 +12,26 @@ export const readNotification = async (notificationId: string) => {
   return notification;
 };
 
-export const readAllNotifications = async (userId: string) => {
+export const readAllNotifications = async (
+  userId: string,
+): Promise<SAPayload<Table<'user_notifications'>[]>> => {
   const { data: notifications, error } = await supabaseUserClientComponentClient
     .from('user_notifications')
     .update({ is_read: true, is_seen: true })
-    .match({ user_id: userId });
-  if (error) throw error;
-  return notifications;
+    .match({ user_id: userId })
+    .select('*');
+
+  if (error) {
+    return {
+      status: 'error',
+      message: error.message,
+    };
+  }
+
+  return {
+    status: 'success',
+    data: notifications,
+  };
 };
 
 export const seeNotification = async (notificationId: string) => {

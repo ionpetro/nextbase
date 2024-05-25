@@ -1,10 +1,10 @@
 'use client';
 
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
-import Check from 'lucide-react/dist/esm/icons/check';
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
+import { Check } from 'lucide-react';
 
 const Checkbox = React.forwardRef<
   React.ElementRef<typeof CheckboxPrimitive.Root>,

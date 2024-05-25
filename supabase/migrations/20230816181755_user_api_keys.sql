@@ -12,10 +12,26 @@ CREATE TABLE "public"."user_api_keys" (
 ALTER TABLE "public"."user_api_keys" ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "User can select their own keys" ON "public"."user_api_keys" FOR
-SELECT USING (auth.uid() = user_id);
+SELECT USING (
+    (
+      SELECT auth.uid()
+    ) = user_id
+  );
 
 CREATE POLICY "User can insert their own keys" ON "public"."user_api_keys" FOR
-INSERT WITH CHECK (auth.uid() = user_id);
+INSERT WITH CHECK (
+    (
+      SELECT auth.uid()
+    ) = user_id
+  );
 
 CREATE POLICY "User can update their own keys" ON "public"."user_api_keys" FOR
-UPDATE USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
+UPDATE USING (
+    (
+      SELECT auth.uid()
+    ) = user_id
+  ) WITH CHECK (
+    (
+      SELECT auth.uid()
+    ) = user_id
+  );

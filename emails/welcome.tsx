@@ -1,26 +1,22 @@
-import {
-  Html,
-  Head,
-  Heading,
-  Body,
-  Button,
-  Text,
-  Container,
-  Tailwind,
-  Hr,
-  Link,
-} from "@react-email/components";
+import { Body } from '@react-email/body';
+import { Button } from '@react-email/button';
+import { Container } from '@react-email/container';
+import { Head } from '@react-email/head';
+import { Heading } from '@react-email/heading';
+import { Hr } from '@react-email/hr';
+import { Html } from '@react-email/html';
+import { Text } from '@react-email/text';
 import React from "react";
 
-interface welcomeEmailProps{
-  appName:string;
-  userName:string;
-  purposeOfApp:string;
-  makerName:string;
-  positionInTeam:string;
-  linkToApp:string;
-  supportEmail:string;
-  socialMediaLinks:string;
+interface WelcomeEmailProps {
+  appName: string;
+  userName: string;
+  purposeOfApp: string;
+  makerName: string;
+  positionInTeam: string;
+  linkToApp: string;
+  supportEmail: string;
+  socialMediaLinks: string;
 }
 
 const WelcomeEmail = ({
@@ -32,61 +28,43 @@ const WelcomeEmail = ({
   linkToApp,
   supportEmail,
   socialMediaLinks,
-}:welcomeEmailProps) => {
+}: WelcomeEmailProps) => {
   return (
     <Html>
       <Head />
-      <Tailwind>
-        <Body className="bg-gray-100 font-sans font-light">
-          <Container className="bg-white py-5 px-12 mx-auto">
-            <Heading>Welcome to {appName} acme</Heading>
-            <Hr className="my-5" />
-            <Text className="text-base">Dear John {userName},</Text>
-            <Text className="text-base">Greetings!</Text>
-            <Text className="text-base">
-              We're thrilled to welcome you to {appName} acme. Your account has
-              been successfully created and is ready to use.
-            </Text>
-            <Text className="text-base">
-              Through {appName} acme, our goal is to help you Lorem ipsum dolor
-              sit amet consectetur adipisicing elit. {purposeOfApp}.
-            </Text>
-            <Text className="text-base">Click the button to get stated</Text>
+      <Body style={{ backgroundColor: '#f0f0f0', fontFamily: 'Arial, sans-serif', fontWeight: 'lighter' }}>
+        <Container style={{ backgroundColor: '#ffffff', padding: '48px', maxWidth: '600px', margin: '0 auto' }}>
+          <Heading>Welcome to {appName}</Heading>
+          <Hr style={{ margin: '20px 0' }} />
+          <Text style={{ fontSize: '16px' }}>Dear {userName},</Text>
+          <Text style={{ fontSize: '16px' }}>Greetings!</Text>
+          <Text style={{ fontSize: '16px' }}>
+            We're thrilled to welcome you to {appName}. Your account has been successfully created and is ready to use.
+          </Text>
+          <Text style={{ fontSize: '16px' }}>
+            Through {appName}, our goal is to help you {purposeOfApp}.
+          </Text>
+          <Text style={{ fontSize: '16px' }}>Click the button below to get started:</Text>
 
-            <Button
-              href={linkToApp}
-              className=" w-11/12 font-semibold text-center bg-black text-white p-2.5 rounded-lg"
-            >
-              Get Started
-            </Button>
-            <Hr className="my-5" />
-            <Text className="text-base">
-              Should you need any assistance or further information, feel free
-              to reach out to our support team at{" "}
-              <Link href={supportEmail}>support@acme.co.in</Link> or visit our
-              FAQ section.
-            </Text>
-            <Text className="text-base">
-              Stay connected with us on our social media platforms for the
-              latest updates: {socialMediaLinks}{" "}
-              <Link href={socialMediaLinks}>Twitter</Link>,{" "}
-              <Link href={socialMediaLinks}>FaceBook</Link>.
-            </Text>
-            {/* <Text className="text-base">
-              Your opinions matter to us. To share your thoughts and experience
-              with acme, please follow this link: [Link to Feedback Form]. We
-              appreciate your input and look forward to hearing from you.
-            </Text> */}
-            <Text className="text-base">
-              Thank you for choosing acme. We're excited to have you on board!
-            </Text>
-            <Text className="text-base">Best Regards,</Text>
-            <Text className="mb-0 text-base">Dany{makerName}</Text>
-            <Text className="my-0 text-base">CEO {positionInTeam}</Text>
-            <Text className="my-0 text-base">Acme {appName}</Text>
-          </Container>
-        </Body>
-      </Tailwind>
+          <Button style={{ width: '100%', fontWeight: 'bold', textAlign: 'center', backgroundColor: '#000000', color: '#ffffff', padding: '10px', borderRadius: '5px' }} href={linkToApp}>
+            Get Started
+          </Button>
+          <Hr style={{ margin: '20px 0' }} />
+          <Text style={{ fontSize: '16px' }}>
+            Should you need any assistance or further information, feel free to reach out to our support team at <Link href={`mailto:${supportEmail}`}>{supportEmail}</Link> or visit our FAQ section.
+          </Text>
+          <Text style={{ fontSize: '16px' }}>
+            Stay connected with us on our social media platforms for the latest updates: <Link href={socialMediaLinks}>Twitter</Link>, <Link href={socialMediaLinks}>Facebook</Link>.
+          </Text>
+          <Text style={{ fontSize: '16px' }}>
+            Thank you for choosing {appName}. We're excited to have you on board!
+          </Text>
+          <Text style={{ fontSize: '16px' }}>Best Regards,</Text>
+          <Text style={{ fontSize: '16px' }}>{makerName}</Text>
+          <Text style={{ fontSize: '16px' }}>{positionInTeam}</Text>
+          <Text style={{ fontSize: '16px' }}>{appName} Team</Text>
+        </Container>
+      </Body>
     </Html>
   );
 };

@@ -1,25 +1,21 @@
+import { Body } from '@react-email/body';
+import { Button } from '@react-email/button';
+import { Container } from '@react-email/container';
+import { Head } from '@react-email/head';
+import { Heading } from '@react-email/heading';
+import { Hr } from '@react-email/hr';
+import { Html } from '@react-email/html';
+import { Text } from '@react-email/text';
 import React from "react";
-import {
-  Html,
-  Head,
-  Heading,
-  Body,
-  Tailwind,
-  Container,
-  Text,
-  Button,
-  Hr,
-  Link
-} from "@react-email/components";
 
-interface newTeamMemberProps{
-  teamLeaderName:string;
-  newTeamMemberName:string;
-  newMemberProfile:string;
-  positionInTeam:string;
-  newMember_firstName:string;
-  managerEmail:string;
-  appName:string;
+interface newTeamMemberProps {
+  teamLeaderName: string;
+  newTeamMemberName: string;
+  newMemberProfile: string;
+  positionInTeam: string;
+  newMember_firstName: string;
+  managerEmail: string;
+  appName: string;
 }
 
 const NewTeamMember = ({
@@ -34,40 +30,28 @@ const NewTeamMember = ({
   return (
     <Html>
       <Head />
-      <Tailwind>
-        <Body className="bg-gray-200 font-sans font-light">
-          <Container className="bg-white px-12 py-5">
-            <Heading>New team member</Heading>
-            <Hr className="my-5" />
-            <Text className="text-base">Dear{teamLeaderName} Sam W. ,</Text>
-            <Text className="text-base">
-             Robert has joined your team as a {positionInTeam}senior developer
-            </Text>
-            <Hr className="my-5" />
-            <Text className="text-base ">
-              Please click the button below to view the entire team
-            </Text>
-            
-              <Button
-                href={newMemberProfile}
-                className="text-base px-10 py-3 bg-black font-semibold text-white rounded"
-              >
-                View Profile
-              </Button>
-            
-            {/* <Text className="text-base">
-              If you have any questions or need further information, please
-              don't hesitate to reach out. For any specific inquiries related to
-              Robert's{newMember_firstName} onboarding or project assignments, we
-              encourage you, as the team leader, to contact our manager,
-              Clara, at <Link href={managerEmail}>clara@acme.co.in</Link>.
-            </Text> */}
-            <Text className="text-base">Acme {appName}</Text>
-          </Container>
-        </Body>
-      </Tailwind>
+      <Body style={{ backgroundColor: '#E5E7EB', fontFamily: 'sans-serif', fontWeight: 300 }}>
+        <Container style={{ backgroundColor: 'white', padding: '48px 60px' }}>
+          <Heading>New team member</Heading>
+          <Hr style={{ margin: '20px 0' }} />
+          <Text style={{ fontSize: '16px' }}>Dear {teamLeaderName},</Text>
+          <Text style={{ fontSize: '16px' }}>
+            {newTeamMemberName} has joined your team as a {positionInTeam}
+          </Text>
+          <Hr style={{ margin: '20px 0' }} />
+          <Text style={{ fontSize: '16px' }}>
+            Please click the button below to view the entire team
+          </Text>
+          <Button
+            href={newMemberProfile}
+            style={{ fontSize: '16px', padding: '12px 40px', backgroundColor: 'black', fontWeight: 600, color: 'white', borderRadius: '4px' }}
+          >
+            View Profile
+          </Button>
+          <Text style={{ fontSize: '16px' }}>Acme {appName}</Text>
+        </Container>
+      </Body>
     </Html>
   );
 };
-
 export default NewTeamMember;

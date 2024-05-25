@@ -1,30 +1,158 @@
 'use server';
+import { RESTRICTED_SLUG_NAMES, SLUG_PATTERN } from '@/constants';
+import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 import { createSupabaseUserServerActionClient } from '@/supabase-clients/user/createSupabaseUserServerActionClient';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
-import { Enum, NormalizedSubscription, Table, UnwrapPromise } from '@/types';
-import { toSiteURL } from '@/utils/helpers';
+import type {
+  Enum,
+  NormalizedSubscription,
+  SAPayload,
+  Table,
+  UnwrapPromise,
+} from '@/types';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
-import { stripe } from '@/utils/stripe';
+import type { AuthUserMetadata } from '@/utils/zod-schemas/authUserMetadata';
 import { revalidatePath } from 'next/cache';
-import { createOrRetrieveCustomer } from '../admin/stripe';
+import { v4 as uuid } from 'uuid';
+import { refreshSessionAction } from './session';
 
-export const createOrganization = async (name: string) => {
-  const supabase = createSupabaseUserServerComponentClient();
-  const user = await serverGetLoggedInUser();
-  const { data, error } = await supabase
+export const getOrganizationIdBySlug = async (slug: string) => {
+  const supabaseClient = createSupabaseUserServerComponentClient();
+
+  const { data, error } = await supabaseClient
     .from('organizations')
-    .insert({
-      title: name,
-      created_by: user.id,
-    })
     .select('*')
+    .eq('slug', slug)
     .single();
 
   if (error) {
     throw error;
   }
 
-  return data;
+  return data.id;
+}
+
+export const getOrganizationSlugByOrganizationId = async (organizationId: string) => {
+  const supabaseClient = createSupabaseUserServerComponentClient();
+  const { data, error } = await supabaseClient
+    .from('organizations')
+    .select('slug')
+    .eq('id', organizationId)
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  return data.slug;
+}
+
+export const createOrganization = async (
+  name: string,
+  slug: string,
+  {
+    isOnboardingFlow = false,
+  }: {
+    isOnboardingFlow?: boolean;
+  } = {},
+): Promise<SAPayload<string>> => {
+  const supabaseClient = createSupabaseUserServerActionClient();
+  const user = await serverGetLoggedInUser();
+
+  const organizationId = uuid();
+
+  if (RESTRICTED_SLUG_NAMES.includes(slug)) {
+    return { status: 'error', message: 'Slug is restricted' };
+  }
+
+  if (!SLUG_PATTERN.test(slug)) {
+    return { status: 'error', message: 'Slug does not match the required pattern' };
+  }
+
+  const { error, } = await supabaseClient.from('organizations').insert({
+    title: name,
+    id: organizationId,
+    slug: slug
+  });
+
+  revalidatePath("/[organizationSlug]", 'layout');
+
+  if (error) {
+    return { status: 'error', message: error.message };
+  }
+
+  const { error: orgMemberErrors } = await supabaseAdminClient
+    .from('organization_members')
+    .insert([
+      {
+        member_id: user.id,
+        organization_id: organizationId,
+        member_role: 'owner',
+      },
+    ]);
+
+  if (orgMemberErrors) {
+    return { status: 'error', message: orgMemberErrors.message };
+  }
+
+  if (isOnboardingFlow) {
+
+    // insert 3 dummy projects
+
+    const { error: projectError } = await supabaseClient.from('projects').insert([
+      {
+        organization_id: organizationId,
+        name: 'Project 1',
+      },
+      {
+        organization_id: organizationId,
+        name: 'Project 2',
+      },
+      {
+        organization_id: organizationId,
+        name: 'Project 3',
+      },
+    ]);
+
+    if (projectError) {
+      return { status: 'error', message: projectError.message };
+    }
+
+    const { error: updateError } = await supabaseClient
+      .from('user_private_info')
+      .update({ default_organization: organizationId })
+      .eq('id', user.id);
+
+    if (updateError) {
+      return { status: 'error', message: updateError.message };
+    }
+
+
+    const updateUserMetadataPayload: Partial<AuthUserMetadata> = {
+      onboardingHasCreatedOrganization: true,
+    };
+
+    const updateUserMetadataResponse = await supabaseClient.auth.updateUser({
+      data: updateUserMetadataPayload,
+    });
+
+    if (updateUserMetadataResponse.error) {
+      return {
+        status: 'error',
+        message: updateUserMetadataResponse.error.message,
+      };
+    }
+
+    const refreshSessionResponse = await refreshSessionAction();
+    if (refreshSessionResponse.status === 'error') {
+      return refreshSessionResponse;
+    }
+  }
+
+  return {
+    status: 'success',
+    data: slug,
+  };
 };
 
 export async function fetchSlimOrganizations() {
@@ -42,7 +170,7 @@ export async function fetchSlimOrganizations() {
 
   const { data, error } = await supabaseClient
     .from('organizations')
-    .select('id,title')
+    .select('id,title,slug')
     .in(
       'id',
       organizations.map((org) => org.organization_id),
@@ -162,27 +290,30 @@ export const getLoggedInUserOrganizationRole = async (
   return data.member_role;
 };
 
-export const updateOrganizationTitle = async (
+export const updateOrganizationInfo = async (
   organizationId: string,
   title: string,
-): Promise<Table<'organizations'>> => {
+  slug: string,
+): Promise<SAPayload<Table<'organizations'>>> => {
   'use server';
   const supabase = createSupabaseUserServerActionClient();
   const { data, error } = await supabase
     .from('organizations')
     .update({
       title,
+      slug,
     })
     .eq('id', organizationId)
     .select('*')
     .single();
 
   if (error) {
-    throw error;
+    return { status: 'error', message: error.message };
   }
 
-  revalidatePath(`/organization/${organizationId}`);
-  return data;
+  revalidatePath("/[organizationSlug]", 'layout');
+
+  return { status: 'success', data };
 };
 
 export const getNormalizedOrganizationSubscription = async (
@@ -253,120 +384,6 @@ export const getNormalizedOrganizationSubscription = async (
     };
   }
 };
-
-export async function createCustomerPortalLinkAction(organizationId: string) {
-  'use server';
-  const user = await serverGetLoggedInUser();
-  const supabaseClient = createSupabaseUserServerActionClient();
-  const { data, error } = await supabaseClient
-    .from('organizations')
-    .select('id, title')
-    .eq('id', organizationId)
-    .single();
-
-  if (error) {
-    throw error;
-  }
-
-  if (!data) {
-    throw new Error('Organization not found');
-  }
-
-  const customer = await createOrRetrieveCustomer({
-    organizationId: organizationId,
-    organizationTitle: data.title,
-    email: user.email || '',
-  });
-
-  if (!customer) throw Error('Could not get customer');
-  const { url } = await stripe.billingPortal.sessions.create({
-    customer,
-    return_url: toSiteURL(`/organization/${organizationId}/settings/billing`),
-  });
-
-  return url;
-}
-
-export async function createCheckoutSessionAction({
-  organizationId,
-  priceId,
-  isTrial = false,
-}: {
-  organizationId: string;
-  priceId: string;
-  isTrial?: boolean;
-}) {
-  'use server';
-  const TRIAL_DAYS = 14;
-  const user = await serverGetLoggedInUser();
-
-  const organizationTitle = await getOrganizationTitle(organizationId);
-
-  const customer = await createOrRetrieveCustomer({
-    organizationId: organizationId,
-    organizationTitle: organizationTitle,
-    email: user.email || '',
-  });
-  if (!customer) throw Error('Could not get customer');
-  if (isTrial) {
-    const stripeSession = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      billing_address_collection: 'required',
-      customer,
-      line_items: [
-        {
-          price: priceId,
-          quantity: 1,
-        },
-      ],
-      mode: 'subscription',
-      allow_promotion_codes: true,
-      subscription_data: {
-        trial_period_days: TRIAL_DAYS,
-        trial_settings: {
-          end_behavior: {
-            missing_payment_method: 'cancel',
-          },
-        },
-        metadata: {},
-      },
-      success_url: toSiteURL(
-        `/organization/${organizationId}/settings/billing`,
-      ),
-      cancel_url: toSiteURL(`/organization/${organizationId}/settings/billing`),
-    });
-
-    return stripeSession.id;
-  } else {
-    const stripeSession = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      billing_address_collection: 'required',
-      customer,
-      line_items: [
-        {
-          price: priceId,
-          quantity: 1,
-        },
-      ],
-      mode: 'subscription',
-      allow_promotion_codes: true,
-      subscription_data: {
-        trial_settings: {
-          end_behavior: {
-            missing_payment_method: 'cancel',
-          },
-        },
-      },
-      metadata: {},
-      success_url: toSiteURL(
-        `/organization/${organizationId}/settings/billing`,
-      ),
-      cancel_url: toSiteURL(`/organization/${organizationId}/settings/billing`),
-    });
-
-    return stripeSession.id;
-  }
-}
 
 export const getActiveProductsWithPrices = async () => {
   const supabase = createSupabaseUserServerComponentClient();
@@ -452,7 +469,7 @@ export const getOrganizationAdmins = async (organizationId: string) => {
 export const getDefaultOrganization = async () => {
   const supabaseClient = createSupabaseUserServerComponentClient();
   const user = await serverGetLoggedInUser();
-  const { data: preferences, error } = await supabaseClient
+  const { data, error } = await supabaseClient
     .from('user_private_info')
     .select('id, default_organization')
     .eq('id', user.id)
@@ -462,20 +479,90 @@ export const getDefaultOrganization = async () => {
     throw error;
   }
 
-  return preferences.default_organization;
+  return data.default_organization;
 };
 
-export async function setDefaultOrganization(organizationId: string) {
+export const getDefaultOrganizationId = async () => {
+  const supabaseClient = createSupabaseUserServerComponentClient();
+  const { data, error } = await supabaseClient
+    .from('user_private_info')
+    .select('default_organization')
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  if (!data.default_organization) {
+    return null;
+  }
+
+  return data.default_organization;
+};
+
+export async function setDefaultOrganization(
+  organizationId: string,
+): Promise<SAPayload> {
   const supabaseClient = createSupabaseUserServerComponentClient();
   const user = await serverGetLoggedInUser();
+
   const { error: updateError } = await supabaseClient
     .from('user_private_info')
     .update({ default_organization: organizationId })
     .eq('id', user.id);
 
   if (updateError) {
-    throw updateError;
+    return { status: 'error', message: updateError.message };
   }
 
-  revalidatePath('/');
+  revalidatePath("/[organizationSlug]", 'layout');
+  return { status: 'success' };
 }
+
+export async function deleteOrganization(
+  organizationId: string,
+): Promise<SAPayload<string>> {
+  const supabaseClient = createSupabaseUserServerActionClient();
+  const { error } = await supabaseClient
+    .from('organizations')
+    .delete()
+    .eq('id', organizationId);
+
+  if (error) {
+    return { status: 'error', message: error.message };
+  }
+
+  revalidatePath("/[organizationSlug]", 'layout');
+  return {
+    status: 'success',
+    data: `Organization ${organizationId} deleted successfully`,
+  };
+}
+
+
+
+export const updateOrganizationSlug = async (
+  organizationId: string,
+  newSlug: string,
+): Promise<SAPayload<string>> => {
+  if (RESTRICTED_SLUG_NAMES.includes(newSlug)) {
+    return { status: 'error', message: 'Slug is restricted' };
+  }
+
+  if (!SLUG_PATTERN.test(newSlug)) {
+    return { status: 'error', message: 'Slug does not match the required pattern' };
+  }
+
+  const supabaseClient = createSupabaseUserServerActionClient();
+  const { error } = await supabaseClient
+    .from('organizations')
+    .update({ slug: newSlug })
+    .eq('id', organizationId);
+
+  if (error) {
+    return { status: 'error', message: error.message };
+  }
+
+  revalidatePath("/[organizationSlug]", 'layout');
+  return { status: 'success', data: `Slug updated to ${newSlug}` };
+};

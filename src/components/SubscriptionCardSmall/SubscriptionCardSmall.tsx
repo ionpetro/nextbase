@@ -6,19 +6,21 @@ import {
   HoverCardTrigger,
 } from '@/components/ui/hover-card';
 import { getNormalizedOrganizationSubscription } from '@/data/user/organizations';
-import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
 import { formatNormalizedSubscription } from '@/utils/formatNormalizedSubscription';
-import ArrowUpRightIcon from 'lucide-react/dist/esm/icons/arrow-up-right';
+import { ArrowUpRight } from 'lucide-react';
 import Link from 'next/link';
+import { Card } from '../ui/card';
 
 export async function SubscriptionCardSmall({
   organizationId,
+  organizationSlug,
 }: {
   organizationId: string;
+  organizationSlug: string;
 }) {
-  const supabaseClient = createSupabaseUserServerComponentClient();
   const normalizedSubscription =
     await getNormalizedOrganizationSubscription(organizationId);
+
 
   const { title, sidenote, description } = formatNormalizedSubscription(
     normalizedSubscription,
@@ -28,7 +30,7 @@ export async function SubscriptionCardSmall({
     return (
       <HoverCard>
         <HoverCardTrigger asChild>
-          <Link href={`/organization/${organizationId}/settings/billing`}>
+          <Link href={`/${organizationSlug}/settings/billing`}>
             <div className="group cursor-pointer flex flex-col gap-1 items-start p-2 py-2 pb-3 border     w-full rounded-lg">
               <T.P className="font-semibold ">{title} Pro</T.P>
               {sidenote ? (
@@ -42,22 +44,19 @@ export async function SubscriptionCardSmall({
         <HoverCardContent className="w-60">{description}</HoverCardContent>
       </HoverCard>
     );
-  } else {
-    return (
-      <HoverCard>
-        <HoverCardTrigger asChild>
-          <Link
-            className="w-full cursor-pointer flex mr-2 gap-2 items-center mt-1 rounded-lg"
-            href={`/organization/${organizationId}/settings/billing`}
-          >
-            <Button variant="default" className="w-full">
-              <ArrowUpRightIcon className="h-5 w-5 mr-2 " />
-              {sidenote}
-            </Button>
-          </Link>
-        </HoverCardTrigger>
-        <HoverCardContent className="w-60">{description}</HoverCardContent>
-      </HoverCard>
-    );
   }
+  return (
+    <Card className='p-6 bg-secondary flex flex-col gap-4'>
+      <p>{description}</p>
+      <Link
+        className="w-full cursor-pointer flex mr-2 gap-2 items-center mt-1 rounded-lg"
+        href={`/${organizationSlug}/settings/billing`}
+      >
+        <Button variant="default" className="w-full">
+          <ArrowUpRight className="h-5 w-5 mr-2 " />
+          {sidenote}
+        </Button>
+      </Link>
+    </Card >
+  );
 }

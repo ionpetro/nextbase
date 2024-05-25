@@ -11,3 +11,12 @@ playwright/.auth/user.json
 ./test-results/
 supabase/.temp
 /test-results/*
+.yarn
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+analyze
+
+# Local Netlify folder
+.netlify

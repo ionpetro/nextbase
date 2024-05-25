@@ -2,20 +2,30 @@
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { updatePasswordAction } from '@/data/user/security';
-import { useToastMutation } from '@/hooks/useToastMutation';
+import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import { classNames } from '@/utils/classNames';
 import { useInput } from 'rooks';
 
 export const UpdatePassword = () => {
   const passwordInput = useInput('');
-  const { mutate: updatePassword, isLoading } = useToastMutation(
+  const { mutate: updatePassword, isLoading } = useSAToastMutation(
     async () => {
-      await updatePasswordAction(passwordInput.value);
+      return await updatePasswordAction(passwordInput.value);
     },
     {
       loadingMessage: 'Updating password...',
       successMessage: 'Password updated!',
-      errorMessage: 'Failed to update password',
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Update password failed ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Update password failed';
+        }
+      },
     },
   );
 

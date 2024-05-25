@@ -2,11 +2,9 @@ import { useRef, useState } from 'react';
 
 import { T } from '@/components/ui/Typography';
 import { Label } from '@/components/ui/label';
-import { useLoggedInUserEmail } from '@/hooks/useLoggedInUserEmail';
-import { classNames } from '@/utils/classNames';
 import { getUserAvatarUrl } from '@/utils/helpers';
 import { motion } from 'framer-motion';
-import CameraIcon from 'lucide-react/dist/esm/icons/camera';
+import { Camera } from 'lucide-react';
 import Image from 'next/image';
 import { Button } from '../Button';
 import { PageHeading } from '../PageHeading';
@@ -21,6 +19,8 @@ export function UpdateAvatarAndNameBody({
   profileFullname,
   isNewAvatarImageLoading,
   setIsNewAvatarImageLoading,
+  userEmail,
+  userId
 }: {
   profileAvatarUrl: string | undefined;
   isUploading: boolean;
@@ -30,13 +30,14 @@ export function UpdateAvatarAndNameBody({
   profileFullname: string | undefined;
   isNewAvatarImageLoading: boolean;
   setIsNewAvatarImageLoading: (value: boolean) => void;
+  userEmail: string | undefined;
+  userId: string;
 }) {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const email = useLoggedInUserEmail();
-  const [fullName, setFullName] = useState(profileFullname ?? email);
+  const [fullName, setFullName] = useState(profileFullname ?? userEmail ?? `User ${userId}`);
   const avatarURL = getUserAvatarUrl({
     profileAvatarUrl,
-    email,
+    email: userEmail,
   });
   return (
     <div className="space-y-6 max-w-sm">
@@ -104,7 +105,7 @@ export function UpdateAvatarAndNameBody({
                   accept="image/*"
                 />
                 <div className="bg-gray-900 group-hover:bg-gray-800  absolute -bottom-[calc(100%-64px)] right-[calc(100%-64px)]  border border-muted-foreground rounded-full p-1">
-                  <CameraIcon className="h-4 w-4 group-hover:fill-white/30 text-white" />
+                  <Camera className="h-4 w-4 group-hover:fill-white/30 text-white" />
                 </div>
               </Label>
             </div>
@@ -128,12 +129,8 @@ export function UpdateAvatarAndNameBody({
           </div>
           <div className="flex justify-start space-x-2">
             <Button
-              className={classNames(
-                'flex w-full justify-center rounded-lg border border-transparent py-2 text-white dark:text-black px-4 text-sm font-medium  shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2',
-                isLoading
-                  ? 'bg-yellow-300 dark:bg-yellow-700 '
-                  : 'bg-black dark:bg-white hover:bg-gray-900 dark:hover:bg-gray-100  ',
-              )}
+              className="w-full"
+              variant={'default'}
               type="submit"
               disabled={isLoading}
             >

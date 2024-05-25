@@ -1,9 +1,9 @@
 'use server';
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
-import { Enum } from '@/types';
-import { revalidatePath } from 'next/cache';
-import { ensureAppAdmin } from './security';
+import type { Enum } from '@/types';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
+import { revalidatePath } from 'next/cache';
+import { adminToggleFeedbackOpenForComments } from '../feedback';
 
 export const getPaginatedInternalFeedbackList = async ({
   query = '',
@@ -51,6 +51,7 @@ export const getPaginatedInternalFeedbackList = async ({
   }
 
   const { data, error } = await supabaseQuery;
+
   if (error) {
     throw error;
   }
@@ -115,7 +116,7 @@ export async function getInternalFeedbackTotalPages({
     return 0;
   }
 
-  return Math.ceil(count / limit);
+  return Math.ceil(count / limit) ?? 0;
 }
 
 export async function updateInternalFeedbackStatus(
@@ -218,7 +219,10 @@ export async function toggleFeedbackThreadVisibility(
     throw error;
   }
 
-  return data;
+  await adminToggleFeedbackOpenForComments({
+    feedbackId: threadId,
+    isOpenForComments: isVisible,
+  });
 }
 
 export async function toggleFeedbackThreadDiscussion(
@@ -305,7 +309,7 @@ export async function adminUpdateInternalFeedbackType({
     throw error;
   }
   revalidatePath('/feedback');
-  revalidatePath('/app_admin/feedback');
+  revalidatePath('/feedback');
   return data;
 }
 
@@ -327,7 +331,7 @@ export async function adminUpdateInternalFeedbackStatus({
     throw error;
   }
   revalidatePath('/feedback');
-  revalidatePath('/app_admin/feedback');
+  revalidatePath('/feedback');
   return data;
 }
 
@@ -348,8 +352,7 @@ export async function adminUpdateInternalFeedbackPriority({
   if (error) {
     throw error;
   }
-  revalidatePath('/feedback');
-  revalidatePath('/app_admin/feedback');
+  revalidatePath('/feedback', 'layout');
   return data;
 }
 
@@ -370,8 +373,7 @@ export const adminUpdateInternalFeedbackAddedToRoadmap = async ({
     throw error;
   }
 
-  revalidatePath('/feedback');
-  revalidatePath('/app_admin/feedback');
+  revalidatePath('/feedback', 'layout');
   return data;
 };
 
@@ -392,8 +394,7 @@ export const adminUpdateInternalFeedbackVisibility = async ({
     throw error;
   }
 
-  revalidatePath('/feedback');
-  revalidatePath('/app_admin/feedback');
+  revalidatePath('/feedback', 'layout');
   return data;
 };
 

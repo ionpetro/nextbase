@@ -7,10 +7,12 @@ import { h } from 'hastscript';
 import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeSlug from 'rehype-slug';
 import rehypeToc from 'rehype-toc';
+import remarkGfm from 'remark-gfm';
 
 const withBundleAnalyzer = createWithBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
-  openAnalyzer: process.env.ANALYZE === 'true',
+  openAnalyzer:
+    process.env.ANALYZE === 'true' && process.env.OPEN_ANALYZER === 'true',
 });
 
 function rehypeWrapMainContent() {
@@ -37,7 +39,7 @@ function rehypeWrapMainContent() {
 
 const withMDX = createWithMdx({
   options: {
-    remarkPlugins: [],
+    remarkPlugins: [remarkGfm],
     rehypePlugins: [
       rehypeSlug,
       [
@@ -65,8 +67,14 @@ const withMDX = createWithMdx({
 });
 
 const nextConfig = {
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "10mb"
+    }
+  },
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
   images: {
+    domains: ['localhost'],
     remotePatterns: [
       {
         protocol: 'https',
@@ -83,6 +91,24 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: '*.gravatar.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'github.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'oaidalleapiprodscus.blob.core.windows.net',
         port: '',
         pathname: '/**',
       },
@@ -108,6 +134,11 @@ const nextConfig = {
     // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/#use-hidden-source-map
     // for more information.
     hideSourceMaps: true,
+  },
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
   },
 };
 

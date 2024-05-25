@@ -1,10 +1,11 @@
 'use client';
 
-import Image from 'next/image';
-import { Transition } from '@headlessui/react';
-import { useEffect, useRef, useState } from 'react';
 import { T } from '@/components/ui/Typography';
 import { classNames } from '@/utils/classNames';
+import { Transition } from '@headlessui/react';
+import { Briefcase, Home, User } from 'lucide-react';
+import Image from 'next/image';
+import { useEffect, useRef, useState } from 'react';
 
 const MainFeatures = () => {
   const [tab, setTab] = useState<number>(1);
@@ -26,15 +27,15 @@ const MainFeatures = () => {
         <div className="pt-12 md:pt-20">
           {/* Section header */}
           <div className="max-w-3xl pb-12 md:pb-16">
-            <div className="mb-4 w-fit px-2 py-[2px]  border border-gray-300 bg-muted dark:bg-slate-800 dark:border-gray-700 rounded-lg shadow-sm ">
-              <T.Small className="text-gray-600 dark:text-slate-400">
+            <div className="mb-4 w-fit px-2 py-[2px] border border-neutral-300 bg-neutral-100 rounded-lg shadow-sm">
+              <T.Small className="text-neutral-600">
                 Main features
               </T.Small>
             </div>
-            <h2 className="mb-5 text-4xl leading-[44px]  font-semibold text-gray-900 dark:text-white">
+            <h2 className="mb-5 text-4xl leading-[44px]  font-semibold text-foreground">
               Lorem ipsum dolor sit amets
             </h2>
-            <p className="text-gray-500 sm:text-xl sm:leading-[30px] dark:text-slate-400">
+            <p className="text-muted-foreground sm:text-xl sm:leading-[30px]">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis
               ipsum suspendisse ultrices gravida. Risus commodo
@@ -63,22 +64,16 @@ const MainFeatures = () => {
                       'px-6 py-6 max-w-4xl md:max-w-xl rounded-xl transition duration-300 ease-in-out',
                       tab !== 1
                         ? 'group-hover:cursor-pointer'
-                        : 'bg-gray-100 dark:bg-slate-800',
+                        : 'bg-muted',
                     )}
                   >
-                    <div className="flex items-center justify-center border border-gray-300 dark:border-slate-700 bg-muted dark:bg-slate-800 w-10 h-10 rounded-lg mb-4 bg-primary-100 dark:bg-primary-900">
-                      <svg
-                        className="w-3 h-3 fill-current"
-                        viewBox="0 0 12 12"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path d="M11.953 4.29a.5.5 0 00-.454-.292H6.14L6.984.62A.5.5 0 006.12.173l-6 7a.5.5 0 00.379.825h5.359l-.844 3.38a.5.5 0 00.864.445l6-7a.5.5 0 00.075-.534z" />
-                      </svg>
+                    <div className="flex items-center justify-center border border-neutral-300 bg-muted dark:bg-neutral-800 w-10 h-10 rounded-lg mb-4 bg-primary-100 dark:bg-primary-900">
+                      <Home className="size-6" />
                     </div>
                     <T.P className="font-semibold text-xl leading-[30px] mb-2">
                       Lorem ipsum dolor sit amet
                     </T.P>
-                    <T.P className="text-gray-600 dark:text-slate-400 text-base">
+                    <T.P className="text-neutral-600 dark:text-neutral-400 text-base">
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                       sed do eiusmod tempor incididunt ut labore et dolore magna
                       aliqua.
@@ -98,25 +93,16 @@ const MainFeatures = () => {
                       'px-6 py-6 max-w-4xl md:max-w-xl rounded-xl transition duration-300 ease-in-out',
                       tab !== 2
                         ? 'group-hover:cursor-pointer'
-                        : 'bg-gray-100 dark:bg-slate-800',
+                        : 'bg-muted',
                     )}
                   >
-                    <div className="flex items-center justify-center border border-gray-300 dark:border-slate-700 bg-muted dark:bg-slate-800 w-10 h-10 rounded-lg mb-4 bg-primary-100 dark:bg-primary-900">
-                      <svg
-                        className="w-3 h-3 fill-current"
-                        viewBox="0 0 12 12"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M11.854.146a.5.5 0 00-.525-.116l-11 4a.5.5 0 00-.015.934l4.8 1.921 1.921 4.8A.5.5 0 007.5 12h.008a.5.5 0 00.462-.329l4-11a.5.5 0 00-.116-.525z"
-                          fillRule="nonzero"
-                        />
-                      </svg>
+                    <div className="flex items-center justify-center border border-neutral-300 dark:border-neutral-700 bg-muted dark:bg-neutral-800 w-10 h-10 rounded-lg mb-4 bg-primary-100 dark:bg-primary-900">
+                      <User className="size-6" />
                     </div>
                     <T.P className="font-semibold text-xl leading-[30px] mb-2">
                       Lorem ipsum dolor sit amet
                     </T.P>
-                    <T.P className="text-gray-600 dark:text-slate-400 text-base">
+                    <T.P className="text-neutral-600 dark:text-neutral-400 text-base">
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                       sed do eiusmod tempor incididunt ut labore et dolore magna
                       aliqua.
@@ -136,26 +122,16 @@ const MainFeatures = () => {
                       'px-6 py-6 max-w-4xl md:max-w-xl rounded-xl transition duration-300 ease-in-out',
                       tab !== 3
                         ? 'group-hover:cursor-pointer'
-                        : 'bg-gray-100 dark:bg-slate-800',
+                        : 'bg-muted',
                     )}
                   >
-                    <div className="flex items-center justify-center border border-gray-300 dark:border-slate-700 bg-muted dark:bg-slate-800 w-10 h-10 rounded-lg mb-4 bg-primary-100 dark:bg-primary-900">
-                      <svg
-                        className="w-3 h-3 fill-current"
-                        viewBox="0 0 12 12"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M11.334 8.06a.5.5 0 00-.421-.237 6.023 6.023 0 01-5.905-6c0-.41.042-.82.125-1.221a.5.5 0 00-.614-.586 6 6 0 106.832 8.529.5.5 0 00-.017-.485z"
-                          fill="#191919"
-                          fillRule="nonzero"
-                        />
-                      </svg>
+                    <div className="flex items-center justify-center border border-neutral-300 dark:border-neutral-700 bg-muted dark:bg-neutral-800 w-10 h-10 rounded-lg mb-4 bg-primary-100 dark:bg-primary-900">
+                      <Briefcase className="size-6" />
                     </div>
                     <T.P className="font-semibold text-xl leading-[30px] mb-2">
                       Lorem ipsum dolor sit amet
                     </T.P>
-                    <T.P className="text-gray-600 dark:text-slate-400 text-base">
+                    <T.P className="text-neutral-600 dark:text-neutral-400 text-base">
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                       sed do eiusmod tempor incididunt ut labore et dolore magna
                       aliqua.

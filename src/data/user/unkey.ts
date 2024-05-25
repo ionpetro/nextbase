@@ -2,6 +2,7 @@
 import { createSupabaseUserRouteHandlerClient } from '@/supabase-clients/user/createSupabaseUserRouteHandlerClient';
 import { createSupabaseUserServerActionClient } from '@/supabase-clients/user/createSupabaseUserServerActionClient';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
+import type { SAPayload } from '@/types';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import axios from 'axios';
 import { revalidatePath } from 'next/cache';
@@ -19,7 +20,9 @@ function maskKey(key: string): string {
   return start + masked + end;
 }
 
-export async function generateUnkeyToken() {
+export async function generateUnkeyToken(): Promise<
+  SAPayload<{ keyId: string; key: string; createdAt: string }>
+> {
   const user = await serverGetLoggedInUser();
   const supabaseClient = createSupabaseUserRouteHandlerClient();
   const response = await axios.post(
@@ -49,17 +52,22 @@ export async function generateUnkeyToken() {
       .single();
 
   if (insertKeyError) {
-    throw insertKeyError;
+    return { status: 'error', message: insertKeyError.message };
   }
 
   return {
-    keyId,
-    key,
-    createdAt: insertKeyResponse.created_at,
+    status: 'success',
+    data: {
+      keyId,
+      key,
+      createdAt: insertKeyResponse.created_at,
+    },
   };
 }
 
-export async function revokeUnkeyToken(keyId: string) {
+export async function revokeUnkeyToken(
+  keyId: string,
+): Promise<SAPayload<{ ok: boolean }>> {
   const response = await axios.delete(
     `https://api.unkey.dev/v1/keys/${keyId}`,
     {
@@ -80,14 +88,12 @@ export async function revokeUnkeyToken(keyId: string) {
     .single();
 
   if (error) {
-    throw error;
+    return { status: 'error', message: error.message };
   }
 
-  revalidatePath('/');
+  revalidatePath('/', 'layout');
 
-  return {
-    ok: true,
-  };
+  return { status: 'success', data: { ok: true } };
 }
 
 export const getActiveDeveloperKeys = async () => {

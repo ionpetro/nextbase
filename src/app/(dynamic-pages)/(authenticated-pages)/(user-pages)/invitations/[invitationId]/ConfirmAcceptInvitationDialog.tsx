@@ -10,8 +10,8 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { acceptInvitationAction } from '@/data/user/invitation';
-import { useToastMutation } from '@/hooks/useToastMutation';
-import Check from 'lucide-react/dist/esm/icons/check';
+import { useSAToastMutation } from '@/hooks/useSAToastMutation';
+import { Check } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -22,14 +22,30 @@ export const ConfirmAcceptInvitationDialog = ({
 }) => {
   const [open, setOpen] = useState(false);
   const router = useRouter();
-  const { mutate, isLoading } = useToastMutation(acceptInvitationAction, {
-    loadingMessage: 'Accepting invitation...',
-    successMessage: 'Invitation accepted!',
-    errorMessage: 'Failed to accept invitation.',
-    onSuccess: (organizationId) => {
-      router.push(`/organization/${organizationId}`);
+  const { mutate, isLoading } = useSAToastMutation(
+    async (invitationId: string) => {
+      return await acceptInvitationAction(invitationId);
     },
-  });
+    {
+      loadingMessage: 'Accepting invitation...',
+      successMessage: 'Invitation accepted!',
+      errorMessage(error) {
+        try {
+          if (error instanceof Error) {
+            return String(error.message);
+          }
+          return `Failed to accept invitation ${String(error)}`;
+        } catch (_err) {
+          console.warn(_err);
+          return 'Failed to accept invitation';
+        }
+      },
+      onSuccess: (response) => {
+        if (response.status === 'success') {
+          router.push(`/${response.data}`);
+        }
+      },
+    });
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>

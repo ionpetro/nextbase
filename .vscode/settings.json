@@ -9,7 +9,6 @@
   },
   "eslint.codeActionsOnSave.rules": ["!@typescript-eslint/*", "*"],
   "typescript.tsdk": "node_modules/typescript/lib",
-  "eslint.packageManager": "yarn",
   "eslint.validate": [
     "javascript",
     "javascriptreact",

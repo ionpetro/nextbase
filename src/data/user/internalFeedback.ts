@@ -1,10 +1,148 @@
 'use server';
 
+import type { Tables } from '@/lib/database.types';
 import { createSupabaseUserServerActionClient } from '@/supabase-clients/user/createSupabaseUserServerActionClient';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
-import { Enum } from '@/types';
+import type { Enum, SAPayload } from '@/types';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import { revalidatePath } from 'next/cache';
+import { createReceivedFeedbackNotification } from './notifications';
+import { getUserFullName } from './user';
+
+export async function getLoggedInUserFeedbackList({
+  query = '',
+  types = [],
+  statuses = [],
+  priorities = [],
+  page = 1,
+  limit = 10,
+  sort = 'desc',
+  myFeedbacks = 'false',
+}: {
+  page?: number;
+  limit?: number;
+  query?: string;
+  types?: Array<Enum<'internal_feedback_thread_type'>>;
+  statuses?: Array<Enum<'internal_feedback_thread_status'>>;
+  priorities?: Array<Enum<'internal_feedback_thread_priority'>>;
+  sort?: 'asc' | 'desc';
+  myFeedbacks?: string;
+}) {
+  console.log('myFeedbacks', myFeedbacks);
+  const zeroIndexedPage = page - 1;
+  const supabaseClient = createSupabaseUserServerComponentClient();
+  const userId = (await serverGetLoggedInUser()).id;
+
+  let supabaseQuery = supabaseClient
+    .from('internal_feedback_threads')
+    .select('*')
+    .or(
+      `added_to_roadmap.eq.true,open_for_public_discussion.eq.true,is_publicly_visible.eq.true,user_id.eq.${userId}`,
+    )
+    .range(zeroIndexedPage * limit, (zeroIndexedPage + 1) * limit - 1);
+
+  if (query) {
+    supabaseQuery = supabaseQuery.ilike('title', `%${query}%`);
+  }
+
+  if (types.length > 0) {
+    supabaseQuery = supabaseQuery.in('type', types);
+  }
+
+  if (statuses.length > 0) {
+    supabaseQuery = supabaseQuery.in('status', statuses);
+  }
+
+  if (priorities.length > 0) {
+    supabaseQuery = supabaseQuery.in('priority', priorities);
+  }
+
+  if (sort === 'asc') {
+    supabaseQuery = supabaseQuery.order('created_at', { ascending: true });
+  } else {
+    supabaseQuery = supabaseQuery.order('created_at', { ascending: false });
+  }
+
+  if (myFeedbacks === 'true') {
+    supabaseQuery = supabaseQuery.eq('user_id', userId);
+  }
+
+  const { data, error } = await supabaseQuery;
+  if (error) {
+    throw error;
+  }
+
+  return data;
+}
+
+export async function getLoggedInUserFeedbackTotalPages({
+  query = '',
+  types = [],
+  statuses = [],
+  priorities = [],
+  page = 1,
+  limit = 10,
+  sort = 'desc',
+  myFeedbacks = 'false',
+}: {
+  page?: number;
+  limit?: number;
+  query?: string;
+  types?: Array<Enum<'internal_feedback_thread_type'>>;
+  statuses?: Array<Enum<'internal_feedback_thread_status'>>;
+  priorities?: Array<Enum<'internal_feedback_thread_priority'>>;
+  sort?: 'asc' | 'desc';
+  myFeedbacks?: string;
+}) {
+  const zeroIndexedPage = page - 1;
+  const supabaseClient = createSupabaseUserServerComponentClient();
+  const userId = (await serverGetLoggedInUser()).id;
+
+  let supabaseQuery = supabaseClient
+    .from('internal_feedback_threads')
+    .select('*')
+    .or(
+      'added_to_roadmap.eq.true,open_for_public_discussion.eq.true,is_publicly_visible.eq.true',
+    )
+    .range(zeroIndexedPage * limit, (zeroIndexedPage + 1) * limit - 1);
+
+  if (query) {
+    supabaseQuery = supabaseQuery.ilike('title', `%${query}%`);
+  }
+
+  if (types.length > 0) {
+    supabaseQuery = supabaseQuery.in('type', types);
+  }
+
+  if (statuses.length > 0) {
+    supabaseQuery = supabaseQuery.in('status', statuses);
+  }
+
+  if (priorities.length > 0) {
+    supabaseQuery = supabaseQuery.in('priority', priorities);
+  }
+
+  if (sort === 'asc') {
+    supabaseQuery = supabaseQuery.order('created_at', { ascending: true });
+  } else {
+    supabaseQuery = supabaseQuery.order('created_at', { ascending: false });
+  }
+
+  if (myFeedbacks === 'true') {
+    supabaseQuery = supabaseQuery.eq('user_id', userId);
+  }
+
+  const { count, error } = await supabaseQuery;
+  if (error) {
+    throw error;
+  }
+
+  if (!count) {
+    return 0;
+  }
+
+  return Math.ceil(count / limit);
+}
 
 export async function getAllInternalFeedbackForLoggedInUser() {
   const user = await serverGetLoggedInUser();
@@ -145,7 +283,7 @@ export async function createInternalFeedback(payload: {
   title: string;
   content: string;
   type: Enum<'internal_feedback_thread_type'>;
-}) {
+}): Promise<SAPayload<Tables<'internal_feedback_threads'>>> {
   const supabaseClient = createSupabaseUserServerActionClient();
   const user = await serverGetLoggedInUser();
   const { data, error } = await supabaseClient
@@ -156,16 +294,39 @@ export async function createInternalFeedback(payload: {
       type: payload.type,
       user_id: user.id,
     })
-    .select('*');
+    .select('*')
+    .single();
 
   if (error) {
-    throw error;
+    return {
+      status: 'error',
+      message: error.message,
+    };
   }
+
+  const insertedFeedback = data;
+  if (!insertedFeedback) {
+    return {
+      status: 'error',
+      message: 'Failed to create feedback',
+    };
+  }
+
+  const userFullName = await getUserFullName(user.id)
+  await createReceivedFeedbackNotification({
+    feedbackId: insertedFeedback.id,
+    feedbackTitle: insertedFeedback.title,
+    feedbackCreatorFullName: userFullName || 'User',
+    feedbackCreatorId: user.id
+  });
 
   revalidatePath('/feedback', 'layout');
   revalidatePath('/app_admin', 'layout');
 
-  return data[0];
+  return {
+    status: 'success',
+    data: insertedFeedback,
+  };
 }
 
 export async function createInternalFeedbackComment(
@@ -177,13 +338,14 @@ export async function createInternalFeedbackComment(
   const { data, error } = await supabaseClient
     .from('internal_feedback_comments')
     .insert({ thread_id: feedbackId, user_id: userId, content })
-    .select('*');
+    .select('*')
+    .single();
 
   if (error) {
     throw error;
   }
 
-  return data[0];
+  return data;
 }
 
 export async function toggleFeedbackThreadVisibility(
@@ -394,6 +556,6 @@ export async function userUpdateInternalFeedbackType({
     throw error;
   }
   revalidatePath('/feedback');
-  revalidatePath('/app_admin/feedback');
+  revalidatePath('/feedback');
   return data;
 }

@@ -3,7 +3,7 @@ import { Button } from '@/components/Button';
 import { T } from '@/components/ui/Typography';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { PropsOf } from '@headlessui/react/dist/types';
+import type { PropsOf } from '@headlessui/react/dist/types';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 

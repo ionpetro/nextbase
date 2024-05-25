@@ -1,5 +1,5 @@
 import { PageHeading } from '@/components/PageHeading';
-import { T } from '@/components/ui/Typography';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Suspense } from 'react';
 import { PendingInvitationsList } from './PendingInvitationsList';
 
@@ -10,7 +10,7 @@ export default async function DashboardPage() {
         title="Pending Invitations"
         subTitle="Manage pending invitations here."
       />
-      <Suspense fallback={<T.Subtle>Loading...</T.Subtle>}>
+      <Suspense fallback={<Skeleton className="w-16 h-6" />}>
         <PendingInvitationsList />
       </Suspense>
     </div>

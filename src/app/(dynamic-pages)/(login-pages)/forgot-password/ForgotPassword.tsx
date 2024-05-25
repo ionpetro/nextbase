@@ -1,6 +1,8 @@
 'use client';
 import { Email } from '@/components/Auth/Email';
+import { EmailConfirmationPendingCard } from '@/components/Auth/EmailConfirmationPendingCard';
 import { T } from '@/components/ui/Typography';
+import { Card } from '@/components/ui/card';
 import { resetPassword } from '@/data/auth/auth';
 import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import { useState } from 'react';
@@ -27,31 +29,38 @@ export function ForgotPassword() {
       successMessage: 'Password reset link sent!',
       onSuccess: () => {
         setSuccessMessage(
-          'A  password reset link has been sent to your email!',
+          'A password reset link has been sent to your email!',
         );
       },
     },
   );
 
   return (
-    <div className="container h-full grid items-center text-left max-w-lg mx-auto overflow-auto">
-      <div className="space-y-8 ">
-        {/* <Auth providers={['twitter']} supabaseClient={supabase} /> */}
-        <div className="flex flex-col items-start gap-0 w-[320px]">
-          <T.H4>Forgot Password</T.H4>
-          <T.P className="text-muted-foreground">
-            Enter your email to recieve a Magic Link to reset your password.
-          </T.P>
-        </div>
-        {successMessage ? (
-          <T.P className="text-blue-500 text-sm">{successMessage}</T.P>
-        ) : null}
-        <Email
-          onSubmit={(email) => magicLinkMutation.mutate(email)}
-          isLoading={magicLinkMutation.isLoading}
-          view="forgot-password"
+    <>
+      {successMessage ? (
+        <EmailConfirmationPendingCard
+          message={successMessage}
+          heading="Reset password link sent"
+          type="reset-password"
+          resetSuccessMessage={setSuccessMessage}
         />
-      </div>
-    </div>
+      ) : (
+        <Card className="container h-full grid items-center text-left max-w-lg mx-auto overflow-auto">
+          <div className="space-y-4">
+            {/* <Auth providers={['twitter']} supabaseClient={supabase} /> */}
+            <T.H4>Forgot Password</T.H4>
+            <T.P className="text-muted-foreground">
+              Enter your email to recieve a Magic Link to reset your password.
+            </T.P>
+
+            <Email
+              onSubmit={(email) => magicLinkMutation.mutate(email)}
+              isLoading={magicLinkMutation.isLoading}
+              view="forgot-password"
+            />
+          </div>
+        </Card>
+      )}
+    </>
   );
 }
