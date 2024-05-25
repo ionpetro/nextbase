@@ -2,7 +2,7 @@
 import { supabaseAdminClient } from '@/supabase-clients/admin/supabaseAdminClient';
 import { createSupabaseUserServerActionClient } from '@/supabase-clients/user/createSupabaseUserServerActionClient';
 import { createSupabaseUserServerComponentClient } from '@/supabase-clients/user/createSupabaseUserServerComponentClient';
-import type { SupabaseFileUploadOptions, Table, ValidSAPayload } from '@/types';
+import type { SAPayload, SupabaseFileUploadOptions, Table } from '@/types';
 import { serverGetLoggedInUser } from '@/utils/server/serverGetLoggedInUser';
 import type { Message } from 'ai';
 import { nanoid } from 'nanoid';
@@ -13,7 +13,7 @@ export const insertChat = async (
   projectId: string,
   payload: Message[],
   chatId: string,
-): Promise<ValidSAPayload<Table<'chats'>>> => {
+): Promise<SAPayload<Table<'chats'>>> => {
   const supabase = createSupabaseUserServerActionClient();
   const user = await serverGetLoggedInUser();
 
@@ -104,20 +104,20 @@ export const getChatsHistory = async (
 };
 
 export const convertAndUploadOpenAiImage = async (b64_json: string): Promise<SAPayload<string>> => {
-	const byteCharacters = atob(b64_json);
-	const byteNumbers = new Array(byteCharacters.length);
-	for (let i = 0; i < byteCharacters.length; i++) {
-		byteNumbers[i] = byteCharacters.charCodeAt(i);
-	}
-	const byteArray = new Uint8Array(byteNumbers);
+  const byteCharacters = atob(b64_json);
+  const byteNumbers = new Array(byteCharacters.length);
+  for (let i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.charCodeAt(i);
+  }
+  const byteArray = new Uint8Array(byteNumbers);
 
   const file = new File([byteArray], nanoid(), { type: 'image/png' });
   const formData = new FormData();
   formData.append('file', file);
 
-	const response = await uploadOpenAiImage(formData, file.name, {
-		upsert: true,
-	});
+  const response = await uploadOpenAiImage(formData, file.name, {
+    upsert: true,
+  });
 
   if (response.status === 'error') {
     return {
@@ -127,64 +127,64 @@ export const convertAndUploadOpenAiImage = async (b64_json: string): Promise<SAP
   }
 
 
-	if (response.status === "success") {
-		return {
-			status: "success",
-			data: response.data,
-		};
-	}
+  if (response.status === "success") {
+    return {
+      status: "success",
+      data: response.data,
+    };
+  }
 
-	return {
-		status: "error",
-		message: "Unknown error",
-	};
+  return {
+    status: "error",
+    message: "Unknown error",
+  };
 };
 
 export const uploadOpenAiImage = async (
-	formData: FormData,
-	fileName: string,
-	fileOptions?: SupabaseFileUploadOptions | undefined,
+  formData: FormData,
+  fileName: string,
+  fileOptions?: SupabaseFileUploadOptions | undefined,
 ): Promise<SAPayload<string>> => {
-	"use server";
-	const file = formData.get("file");
-	if (!file) {
-		return {
-			status: "error",
-			message: "File is empty",
-		};
-	}
-	const slugifiedFilename = slugify(fileName, {
-		lower: true,
-		strict: true,
-		replacement: "-",
-	});
+  "use server";
+  const file = formData.get("file");
+  if (!file) {
+    return {
+      status: "error",
+      message: "File is empty",
+    };
+  }
+  const slugifiedFilename = slugify(fileName, {
+    lower: true,
+    strict: true,
+    replacement: "-",
+  });
 
-	const user = await serverGetLoggedInUser();
-	const userId = user.id;
-	const userImagesPath = `${userId}/images/${slugifiedFilename}`;
+  const user = await serverGetLoggedInUser();
+  const userId = user.id;
+  const userImagesPath = `${userId}/images/${slugifiedFilename}`;
 
-	const { data, error } = await supabaseAdminClient.storage
-		.from("openai-images")
-		.upload(userImagesPath, file, fileOptions);
+  const { data, error } = await supabaseAdminClient.storage
+    .from("openai-images")
+    .upload(userImagesPath, file, fileOptions);
 
-	if (error) {
-		return {
-			status: "error",
-			message: error.message,
-		};
-	}
+  if (error) {
+    return {
+      status: "error",
+      message: error.message,
+    };
+  }
 
-	const { path } = data;
+  const { path } = data;
 
-	const filePath = path.split(",")[0];
-	const supabaseFileUrl = urlJoin(
-		process.env.NEXT_PUBLIC_SUPABASE_URL,
-		"/storage/v1/object/public/openai-images",
-		filePath,
-	);
+  const filePath = path.split(",")[0];
+  const supabaseFileUrl = urlJoin(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    "/storage/v1/object/public/openai-images",
+    filePath,
+  );
 
-	return {
-		status: "success",
-		data: supabaseFileUrl,
-	};
+  return {
+    status: "success",
+    data: supabaseFileUrl,
+  };
 };
