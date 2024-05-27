@@ -11,7 +11,6 @@ import {
 import FeedbackDetailWrapper from './FeedbackDetail';
 import { FeedbackFacetedFilters } from './FeedbackFacetedFilters';
 import { FeedbackItem } from './FeedbackItem';
-import { FeedbackDetailFallback } from './FeedbackPageFallbackUI';
 
 async function AnonUserFeedbackPage({
   filters,
@@ -23,19 +22,20 @@ async function AnonUserFeedbackPage({
   const feedbacks = await getAnonUserFeedbackList(filters);
   const totalFeedbackPages = await getAnonUserFeedbackTotalPages(filters);
 
+
   return (
-    <div className="h-full flex md:gap-2">
+    <div className="h-full w-full flex md:gap-2">
       <div
         className={clsx(
           feedbackId && 'hidden',
-          'md:flex flex-col flex-1 h-full',
+          'md:flex flex-col flex-1 h-full w-full max-w-[40rem]',
         )}
       >
         <div className="flex flex-col gap-2 mb-4">
           <Search placeholder="Search Feedback... " />
           <FeedbackFacetedFilters />
         </div>
-        <div className="flex flex-col  flex-1 overflow-y-auto gap-2 mb-4">
+        <div className="flex flex-col h-full overflow-y-auto gap-2 mb-4">
           {feedbacks.length > 0 ? (
             feedbacks?.map((feedback) => (
               <FeedbackItem
@@ -49,8 +49,18 @@ async function AnonUserFeedbackPage({
               />
             ))
           ) : (
-            <div className="flex h-80 border rounded-lg shadow-md items-center justify-center gap-2 mb-4">
-              <h2>No feedbacks available</h2>
+            <div
+              className="flex h-full w-full items-center justify-center rounded-lg border border-dashed shadow-sm" x-chunk="dashboard-02-chunk-1"
+            >
+              <div className="flex flex-col items-center gap-1 text-center">
+                <h3 className="text-2xl font-bold tracking-tight">
+                  No feedbacks available
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  You must be logged in to view feedback.
+                </p>
+
+              </div>
             </div>
           )}
         </div>
@@ -60,13 +70,13 @@ async function AnonUserFeedbackPage({
       </div>
       <Separator orientation="vertical" className="hidden md:block" />
       <div
-        className={clsx(!feedbackId && 'hidden', 'md:block flex-1 relative')}
+        className={clsx(!feedbackId && '!hidden', 'md:block flex-1 relative')}
       >
-        {feedbacks.length > 0 ? (
-          <FeedbackDetailWrapper feedbackId={feedbackId ?? feedbacks[0]?.id} />
-        ) : (
-          <FeedbackDetailFallback />
-        )}
+        {
+          feedbacks.length > 0 && (
+            <FeedbackDetailWrapper feedbackId={feedbackId ?? feedbacks[0]?.id} />
+          )
+        }
       </div>
     </div>
   );
