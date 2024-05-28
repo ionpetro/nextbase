@@ -1,5 +1,5 @@
 import { PageHeading } from '@/components/PageHeading';
-import { TooltipGeneral } from '@/components/tooltip-general';
+import { GiveFeedbackAnonUser } from '@/components/give-feedback-anon-use';
 import { Button } from '@/components/ui/button';
 import { serverGetUserType } from '@/utils/server/serverGetUserType';
 import { userRoles } from '@/utils/userTypes';
@@ -18,9 +18,9 @@ async function FeedbackLayout({ children }) {
 
           {
             userRoleType === userRoles.ANON ? (
-              <TooltipGeneral content="You must be logged in to give feedback">
-                <Button variant="secondary" className='hover:cursor-not-allowed '>Create Feedback</Button>
-              </TooltipGeneral>
+              <GiveFeedbackAnonUser className='w-fit'>
+                <Button variant="secondary">Create Feedback</Button>
+              </GiveFeedbackAnonUser>
             ) : (
               <GiveFeedbackDialog className='w-fit'>
                 <Button variant="secondary">Create Feedback</Button>
