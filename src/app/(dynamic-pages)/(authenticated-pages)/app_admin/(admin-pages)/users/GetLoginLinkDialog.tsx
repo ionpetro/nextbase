@@ -21,8 +21,8 @@ export const GetLoginLinkDialog = ({ userId }: { userId: string }) => {
       return await appAdminGetUserImpersonationUrl(userId);
     },
     {
-      onSuccess: (url) => {
-        navigator.clipboard.writeText(url.toString());
+      onSuccess: (payload) => {
+        navigator.clipboard.writeText((payload.data).toString());
       },
       loadingMessage: 'Generating login link...',
       errorMessage(error) {
