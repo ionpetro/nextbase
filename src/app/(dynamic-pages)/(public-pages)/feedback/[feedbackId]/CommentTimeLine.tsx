@@ -4,7 +4,7 @@ import { getInternalFeedbackComments } from '@/data/user/internalFeedback';
 import { serverGetUserType } from '@/utils/server/serverGetUserType';
 import { userRoles } from '@/utils/userTypes';
 
-import { SuspensedUserAvatarWithFullname } from '@/components/UserAvatar';
+import { SuspendedUserAvatarWithFullname } from '@/components/UserAvatarForAnonViewers';
 import { Separator } from '@/components/ui/separator';
 import { format } from 'date-fns';
 import { Suspense } from 'react';
@@ -37,7 +37,7 @@ export async function CommentTimeLineItem({
   return (
     <div>
       <div className="flex space-x-2 items-center">
-        <SuspensedUserAvatarWithFullname userId={userId} size={32} />
+        <SuspendedUserAvatarWithFullname userId={userId} size={32} />
         <Separator orientation="vertical" className="h-4" />
         <time className="text-sm text-muted-foreground">
           {format(new Date(postedAt), 'do MMMM yyyy')}

@@ -44,7 +44,7 @@ export async function getInvitationOrganizationDetails(organizationId: string) {
 
 /**
  * Creates notifications for all admins when a user performs an activity.
- * 
+ *
  * @param payload - JSON object containing notification data.
  * @param excludedAdminUserId - (Optional) ID of the admin user to exclude from receiving the notification.
  * @returns Returns a Promise resolving to the notification data.
@@ -78,4 +78,51 @@ export const createAdminNotification = async ({ payload, excludedAdminUserId }: 
     );
   if (error) throw error;
   return notification;
+};
+
+/**
+ * [Elevated Query]
+ * Reason: The user details are not visible to anonymous viewers by default.
+ * Get user full name and avatar url for anonymous viewers
+ * @param userId
+ * @returns user full name and avatar url
+ */
+export const anonGetUserProfile = async (userId: string) => {
+  const getUserFullName = async (userId: string) => {
+    const { data, error } = await supabaseAdminClient
+      .from("user_profiles")
+      .select("full_name")
+      .eq("id", userId)
+      .single();
+
+    if (error) {
+      throw error;
+    }
+
+    return data.full_name;
+  };
+
+  const getUserAvatarUrl = async (userId: string) => {
+    const { data, error } = await supabaseAdminClient
+      .from("user_profiles")
+      .select("avatar_url")
+      .eq("id", userId)
+      .single();
+
+    if (error) {
+      throw error;
+    }
+
+    return data.avatar_url;
+  };
+
+  const [
+    fullName,
+    avatarUrl
+  ] = await Promise.all([
+    getUserFullName(userId),
+    getUserAvatarUrl(userId)
+  ]);
+
+  return { fullName, avatarUrl };
 };

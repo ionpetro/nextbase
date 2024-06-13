@@ -1,7 +1,7 @@
 import { Separator } from '@/components/ui/separator';
 import { adminGetInternalFeedbackById } from '@/data/admin/internal-feedback';
 
-import { SuspensedUserAvatarWithFullname } from '@/components/UserAvatar';
+import { SuspendedUserAvatarWithFullname } from '@/components/UserAvatarForAnonViewers';
 import { Badge } from '@/components/ui/badge';
 import { format } from 'date-fns';
 import { Calendar } from 'lucide-react';
@@ -18,7 +18,7 @@ async function AnonUserFeedbackdetail({ feedbackId }) {
       <div className="p-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <SuspensedUserAvatarWithFullname
+            <SuspendedUserAvatarWithFullname
               userId={feedback?.user_id}
               size={32}
             />

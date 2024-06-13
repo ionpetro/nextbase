@@ -1,4 +1,4 @@
-import { SuspensedUserAvatarWithFullname } from '@/components/UserAvatar';
+import { SuspendedUserAvatarWithFullname } from '@/components/UserAvatarForAnonViewers';
 import { Badge } from '@/components/ui/badge';
 import type { Table } from '@/types';
 import { LightningBoltIcon } from '@radix-ui/react-icons';
@@ -44,7 +44,7 @@ export async function FeedbackItem({
       >
         <div className="flex flex-col gap-4">
           <div className='flex justify-between'>
-            <SuspensedUserAvatarWithFullname
+            <SuspendedUserAvatarWithFullname
               userId={feedback?.user_id}
               size={32}
             />
