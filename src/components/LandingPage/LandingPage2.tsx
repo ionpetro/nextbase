@@ -1,9 +1,10 @@
-import AllFeatures from './AllFeatures';
-import Footer from './Footer';
-import HeroSection2 from './HeroSection2';
-import MainFeatures from './MainFeatures';
-import Testimonials from './Testimonials';
-import TrustedCompanies from './TrustedCompanies';
+import AllFeatures from "./AllFeatures2";
+import { Footer } from "./Footer";
+import HeroSection2 from "./HeroSection2";
+import MainFeatures from "./MainFeatures2";
+import Testimonials from "./Testimonials2";
+import TrustedCompanies from "./TrustedCompanies2";
+
 
 export const LandingPage2 = () => {
   return (
