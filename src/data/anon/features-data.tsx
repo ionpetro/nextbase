@@ -1,4 +1,5 @@
 import { AnimatedBeamMultiple } from '@/components/animated-beam-multiple';
+import Globe from '@/components/magicui/globe';
 import Marquee from '@/components/magicui/marquee';
 
 import { Calendar } from '@/components/ui/calendar';
@@ -11,7 +12,6 @@ import {
   CommandList,
 } from '@/components/ui/command';
 import { cn } from '@/lib/utils';
-import { Globe } from 'lucide-react';
 
 const files = [
   {
