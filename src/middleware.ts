@@ -1,14 +1,14 @@
 import {
   createMiddlewareClient,
   type User,
-} from "@supabase/auth-helpers-nextjs";
-import type { NextRequest } from "next/server";
-import { NextResponse } from "next/server";
+} from '@supabase/auth-helpers-nextjs';
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 // const matchAppAdmin = match('/app_admin_preview/(.*)?');
-import { match } from "path-to-regexp";
-import type { Database } from "./lib/database.types";
-import { toSiteURL } from "./utils/helpers";
-import { authUserMetadataSchema } from "./utils/zod-schemas/authUserMetadata";
+import { match } from 'path-to-regexp';
+import type { Database } from './lib/database.types';
+import { toSiteURL } from './utils/helpers';
+import { authUserMetadataSchema } from './utils/zod-schemas/authUserMetadata';
 
 const onboardingPaths = `/onboarding/(.*)?`;
 // Using a middleware to protect pages from unauthorized access
@@ -73,31 +73,31 @@ export async function middleware(req: NextRequest) {
   const sessionResponse = await supabase.auth.getSession();
   const maybeUser = sessionResponse?.data.session?.user;
   if (shouldOnboardUser(req.nextUrl.pathname, maybeUser)) {
-    console.log("redirecting to onboarding");
-    return NextResponse.redirect(toSiteURL("/onboarding"));
+    console.log('redirecting to onboarding');
+    return NextResponse.redirect(toSiteURL('/onboarding'));
   }
   if (!isUnprotectedPage(req.nextUrl.pathname) && maybeUser) {
     // user is possibly logged in, but lets validate session
     const user = await supabase.auth.getUser();
     if (user.error) {
-      return NextResponse.redirect(toSiteURL("/login"));
+      return NextResponse.redirect(toSiteURL('/login'));
     }
   }
   if (!isUnprotectedPage(req.nextUrl.pathname) && !maybeUser) {
-    return NextResponse.redirect(toSiteURL("/login"));
+    return NextResponse.redirect(toSiteURL('/login'));
   }
   if (
     !req.nextUrl.pathname.startsWith(`/app_admin_preview`) &&
-    req.nextUrl.pathname.startsWith("/app_admin")
+    req.nextUrl.pathname.startsWith('/app_admin')
   ) {
     if (
       !(
         maybeUser &&
-        "user_role" in maybeUser &&
-        maybeUser.user_role === "admin"
+        'user_role' in maybeUser &&
+        maybeUser.user_role === 'admin'
       )
     ) {
-      return NextResponse.redirect(toSiteURL("/dashboard"));
+      return NextResponse.redirect(toSiteURL('/dashboard'));
     }
   }
   return res;
@@ -110,8 +110,9 @@ export const config = {
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
+     * - api (API routes)
      * Feel free to modify this pattern to include more paths.
      */
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    '/((?!_next/static|_next/image|favicon.ico|api|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],
 };
