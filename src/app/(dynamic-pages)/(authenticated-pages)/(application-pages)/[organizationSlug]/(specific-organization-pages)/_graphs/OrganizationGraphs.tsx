@@ -1,136 +1,141 @@
 "use client";
 
+import { AreaChartComponent } from "@/components/AreaChart";
+import { BarChartComponent } from "@/components/BarChart";
+import { DonutChartComponent } from "@/components/DonutChart";
 import { GraphContainer } from "@/components/GraphContainer";
-import { customTooltip } from "@/components/GraphCustomToolTip";
 import { PageHeading } from "@/components/PageHeading";
 import { Button } from "@/components/ui/button";
-import { AreaChart, BarChart, DonutChart, Legend } from "@tremor/react";
 import Link from "next/link";
 
 const chartDataForMonth = [
   {
-    Month: "January",
-    "Time Spent": 2890,
+    name: "January",
+    value: 2890,
   },
   {
-    Month: "February",
-    "Time Spent": 2756,
+    name: "February",
+    value: 2756,
   },
   {
-    Month: "March",
-    "Time Spent": 3322,
+    name: "March",
+    value: 3322,
   },
   {
-    Month: "April",
-    "Time Spent": 3470,
+    name: "April",
+    value: 3470,
   },
   {
-    Month: "May",
-    "Time Spent": 3475,
+    name: "May",
+    value: 3475,
   },
   {
-    Month: "June",
-    "Time Spent": 3129,
+    name: "June",
+    value: 3129,
   },
   {
-    Month: "July",
-    "Time Spent": 3482,
+    name: "July",
+    value: 3482,
   },
   {
-    Month: "August",
-    "Time Spent": 2412,
+    name: "August",
+    value: 2412,
   },
   {
-    Month: "September",
-    "Time Spent": 2678,
+    name: "September",
+    value: 2678,
   },
   {
-    Month: "October",
-    "Time Spent": 2190,
+    name: "October",
+    value: 2190,
   },
   {
-    Month: "November",
-    "Time Spent": 2498,
+    name: "November",
+    value: 2498,
   },
   {
-    Month: "December",
-    "Time Spent": 2598,
+    name: "December",
+    value: 2598,
   },
 ];
 
 const chartDataForWeek = [
   {
-    week: 1,
-    "Time Spent": 2890,
+    name: "1",
+    value: 2890,
+    fill: "hsl(var(--chart-1))"
   },
   {
-    week: 2,
-    "Time Spent": 2756,
+    name: "2",
+    value: 2756,
+    fill: "hsl(var(--chart-3))"
   },
   {
-    week: 3,
-    "Time Spent": 3322,
+    name: "3",
+    value: 3322,
+    fill: "hsl(var(--chart-4))"
   },
   {
-    week: 4,
-    "Time Spent": 3470,
+    name: "4",
+    value: 3470,
+    fill: "hsl(var(--chart-5))"
   },
 ];
 
 const chartDataForYears = [
   {
-    Month: "January",
-    "Time Spent": 1500,
+    name: "January",
+    value: 1500,
   },
   {
-    Month: "February",
-    "Time Spent": 4000,
+    name: "February",
+    value: 4000,
   },
   {
-    Month: "March",
-    "Time Spent": 2800,
+    name: "March",
+    value: 2800,
   },
   {
-    Month: "April",
-    "Time Spent": 2500,
+    name: "April",
+    value: 2500,
   },
   {
-    Month: "May",
-    "Time Spent": 3400,
+    name: "May",
+    value: 3400,
   },
   {
-    Month: "June",
-    "Time Spent": 3200,
+    name: "June",
+    value: 3200,
   },
   {
-    Month: "July",
-    "Time Spent": 2300,
+    name: "July",
+    value: 2300,
   },
   {
-    Month: "August",
-    "Time Spent": 2500,
+    name: "August",
+    value: 2500,
   },
   {
-    Month: "September",
-    "Time Spent": 2800,
+    name: "September",
+    value: 2800,
   },
   {
-    Month: "October",
-    "Time Spent": 3000,
+    name: "October",
+    value: 3000,
   },
   {
-    Month: "November",
-    "Time Spent": 4200,
+    name: "November",
+    value: 4200,
   },
   {
-    Month: "December",
-    "Time Spent": 4800,
+    name: "December",
+    value: 4800,
   },
 ];
 
 const calculateBadgeValue = (data) => {
-  const lastMonth = data[data.length - 1]["Time Spent"];
-  const secondLastMonth = data[data.length - 2]["Time Spent"];
+  const lastMonth = data[data.length - 1].value;
+  const secondLastMonth = data[data.length - 2].value;
   const percentageChange =
     ((lastMonth - secondLastMonth) / secondLastMonth) * 100;
   return {
@@ -167,21 +172,9 @@ export function OrganizationGraphs({ organizationSlug, children }: Props) {
           title="Revenue per year"
           subTitle="Detailed analysis on time spent in a month"
           badgeValue={badgeValueForYear}
+
         >
-          <AreaChart
-            className="h-72 mt-8"
-            data={chartDataForYears}
-            index="Month"
-            categories={["Time Spent"]}
-            colors={["blue-700"]}
-            curveType="natural"
-            customTooltip={customTooltip}
-            showAnimation={true}
-            showYAxis={false}
-
-            yAxisWidth={100}
-          />
-
+          <AreaChartComponent chartData={chartDataForYears} classname="h-72 w-full" />
         </GraphContainer>
 
         <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 grid-flow-row auto-rows-max gap-6">
@@ -190,21 +183,7 @@ export function OrganizationGraphs({ organizationSlug, children }: Props) {
             subTitle="Analysis of product price for the week"
             badgeValue={badgeValueforWeek}
           >
-            <div className="flex gap-4 items-center px-8 mt-16">
-              <Legend
-                categories={["Week 1", "Week 2", "Week 3", "Week 4"]}
-                colors={["blue", "cyan", "indigo", "violet", "fuchsia"]}
-                className="max-w-xs"
-              />
-              <DonutChart
-                data={chartDataForWeek}
-                category="Time Spent"
-                index="name"
-                valueFormatter={valueFormatter}
-                colors={["blue", "cyan", "indigo", "violet", "fuchsia"]}
-                className="w-40"
-              />
-            </div>
+            <DonutChartComponent chartData={chartDataForWeek} text="Values" />
           </GraphContainer>
           <GraphContainer
             title="Time spent per month"
@@ -212,15 +191,7 @@ export function OrganizationGraphs({ organizationSlug, children }: Props) {
             badgeValue={badgeValueForMonth}
           >
             <div className="px-8 overflow-x-auto">
-              <BarChart
-                className="mt-4 h-72"
-                data={chartDataForMonth}
-                index="Month"
-                categories={["Time Spent"]}
-                colors={["blue"]}
-                yAxisWidth={50}
-                customTooltip={customTooltip}
-              />
+              <BarChartComponent chartData={chartDataForMonth} />
             </div>
           </GraphContainer>
 

@@ -151,6 +151,7 @@
     "react-resizable-panels": "^2.0.4",
     "react-select": "^5.7.3",
     "react-syntax-highlighter": "^15.5.0",
+    "recharts": "^2.12.7",
     "rehype-pretty-code": "^0.12.4",
     "rehype-toc": "^3.0.2",
     "remark-frontmatter": "^5.0.0",
