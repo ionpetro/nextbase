@@ -1,11 +1,11 @@
 "use client";
-import { createOrganizationSchema } from "@/app/(dynamic-pages)/(authenticated-pages)/onboarding/OnboardingFlow";
 import { Button } from "@/components/Button";
 import { T } from "@/components/ui/Typography";
 import { Input } from "@/components/ui/input";
 import { updateOrganizationInfo } from "@/data/user/organizations";
 import { useSAToastMutation } from "@/hooks/useSAToastMutation";
 import { generateSlug } from "@/lib/utils";
+import { createOrganizationSchema } from "@/utils/zod-schemas/organization";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm, type SubmitHandler } from "react-hook-form";

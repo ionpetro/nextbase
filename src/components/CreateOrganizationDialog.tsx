@@ -1,5 +1,4 @@
 "use client";
-import { createOrganizationSchema, type CreateOrganizationSchema } from "@/app/(dynamic-pages)/(authenticated-pages)/onboarding/OnboardingFlow";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -15,6 +14,7 @@ import { Label } from "@/components/ui/label";
 import { createOrganization } from "@/data/user/organizations";
 import { useSAToastMutation } from "@/hooks/useSAToastMutation";
 import { generateSlug } from "@/lib/utils";
+import { CreateOrganizationSchema, createOrganizationSchema } from "@/utils/zod-schemas/organization";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Network, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
