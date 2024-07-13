@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button';
 import { getIsAppAdmin } from '@/data/user/user';
 import { cn } from '@/utils/cn';
 import { Server } from 'lucide-react';
@@ -5,29 +6,21 @@ import Link from 'next/link';
 
 export async function AppAdminSidebarLink() {
   const isUserAppAdmin = await getIsAppAdmin();
+
   return (
-    <>
-      {isUserAppAdmin ? (
-        <Link
-          href="/app_admin"
-          className={cn(
-            'hover:bg-gray-100 hover:text-gray-900 text-gray-700 rounded-sm dark:text-gray-400 dark:hover:bg-gray-700/50',
-            'flex gap-2 items-center py-2 text-sm',
-          )}
-        >
-          <Server className="text-lg" /> Admin Panel
-        </Link>
-      ) : (
-        <Link
-          href="/app_admin_preview"
-          className={cn(
-            'hover:bg-gray-100 hover:text-gray-900 text-gray-700 rounded-sm dark:text-gray-400 dark:hover:bg-gray-700/50',
-            'flex gap-2 items-center py-2 text-sm',
-          )}
-        >
-          <Server className="text-lg" /> Admin Panel Preview
-        </Link>
+
+    <Button
+      variant="ghost"
+      className={cn(
+        "w-full justify-start",
+        !isUserAppAdmin && "text-muted-foreground"
       )}
-    </>
+      asChild
+    >
+      <Link href={isUserAppAdmin ? "/app_admin" : "/app_admin_preview"}>
+        <Server className="mr-2 h-4 w-4" />
+        {isUserAppAdmin ? "Admin Panel" : "Admin Panel Preview"}
+      </Link>
+    </Button>
   );
 }

@@ -21,6 +21,7 @@ import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import type { AuthProvider } from '@/types';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { useDidMount } from 'rooks';
 
 export function Login({
   next,
@@ -33,6 +34,11 @@ export function Login({
   const [redirectInProgress, setRedirectInProgress] = useState(false);
 
   const router = useRouter();
+
+  useDidMount(() => {
+    console.log('prefetching dashboard')
+    router.prefetch('/dashboard')
+  })
 
   function redirectToDashboard() {
     router.refresh();

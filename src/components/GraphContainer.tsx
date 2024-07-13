@@ -32,11 +32,11 @@ export function GraphContainer({
   badgeValue,
 }: GraphContainerProps) {
   return (
-    <div className={cn("bg-card border rounded-xl overflow-hidden", classname)}>
+    <div className={cn("overflow-hidden", classname)}>
       <div className="px-[18px] flex justify-between py-4 w-full ">
         <div className="">
-          <T.H4 className="mt-0 text-card-foreground text-base">{title}</T.H4>
-          <T.P className="text-muted-foreground text-base">{subTitle}</T.P>
+          <T.H4 >{title}</T.H4>
+          <T.P >{subTitle}</T.P>
         </div>
         {badgeValue && (
           <BadgeDelta
@@ -49,7 +49,7 @@ export function GraphContainer({
         )}
       </div>
       <div className="px-5 pb-6 h-full ">
-        <div className="dark h-full ">{children}</div>
+        <div className="h-full ">{children}</div>
       </div>
     </div>
   );

@@ -1,10 +1,11 @@
 'use client';
 
 import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
 
-export function Search({ placeholder }: { placeholder: string }) {
+export function Search({ placeholder, className }: { placeholder: string, className?: string }) {
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   const pathname = usePathname();
@@ -25,7 +26,7 @@ export function Search({ placeholder }: { placeholder: string }) {
   }, 300);
 
   return (
-    <div className="relative flex flex-1">
+    <div className={cn("relative flex flex-1", className)}>
       <label htmlFor="search" className="sr-only">
         Search
       </label>

@@ -2,28 +2,30 @@ import { CreateProjectDialog } from "@/components/CreateProjectDialog";
 import { ProjectsCardList } from "@/components/Projects/ProjectsCardList";
 import { Search } from "@/components/Search";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getOrganizationIdBySlug, getOrganizationTitle } from "@/data/user/organizations";
 import { getProjects } from "@/data/user/projects";
 import {
   organizationSlugParamSchema,
   projectsfilterSchema,
 } from "@/utils/zod-schemas/params";
-import { Layers } from "lucide-react";
+import { FileText, Layers } from "lucide-react";
 import type { Metadata } from 'next';
 import Link from "next/link";
 import { Suspense } from "react";
 import type { z } from "zod";
+import { DashboardClientWrapper } from "./DashboardClientWrapper";
 import { DashboardLoadingFallback } from "./DashboardLoadingFallback";
 import ProjectsLoadingFallback from "./ProjectsLoadingFallback";
-import { TeamMembers } from "./TeamMembers";
-import { ExportPDF } from "./_exportPdf/ExportPdf";
-import { GraphContainer } from "./_graphs/GraphContainer";
-
+import { OrganizationGraphs } from "./_graphs/OrganizationGraphs";
 
 async function Projects({
   organizationId,
   filters,
-}: { organizationId: string; filters: z.infer<typeof projectsfilterSchema> }) {
+}: {
+  organizationId: string;
+  filters: z.infer<typeof projectsfilterSchema>;
+}) {
   const projects = await getProjects({
     organizationId,
     ...filters,
@@ -36,79 +38,57 @@ export type DashboardProps = {
   searchParams: unknown;
 };
 
-async function Dashboard({
-  params,
-  searchParams,
-}: DashboardProps) {
+async function Dashboard({ params, searchParams }: DashboardProps) {
   const { organizationSlug } = organizationSlugParamSchema.parse(params);
   const organizationId = await getOrganizationIdBySlug(organizationSlug);
   const validatedSearchParams = projectsfilterSchema.parse(searchParams);
 
   return (
-    <div>
-      <div className="mt-8 w-full">
-        <div className="flex flex-col">
-          <div className="flex justify-between w-full">
-            <h1 className="font-semibold text-2xl">Dashboard</h1>
-            <div className="flex gap-4">
-              <ExportPDF />
-              <CreateProjectDialog organizationId={organizationId} />
-            </div>
+    <DashboardClientWrapper>
+      <Card >
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-6">
+          <CardTitle className="text-3xl font-bold tracking-tight">Dashboard</CardTitle>
+          <div className="flex space-x-4">
+            <Button variant="outline" size="sm">
+              <FileText className="mr-2 h-4 w-4" />
+              Export PDF
+            </Button>
+            <CreateProjectDialog organizationId={organizationId} />
           </div>
-          <div className="flex justify-between items-center mt-6">
-            <h2 className="font-semibold text-xl">Recent Projects</h2>
-            <div className="flex gap-4">
-              <Search placeholder="Search projects" />
-              <Button
-                variant={"secondary"}
-                asChild
-                className="flex gap-2 self-end"
-              >
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-semibold tracking-tight">Recent Projects</h2>
+            <div className="flex items-center space-x-4">
+              <Search className="w-[200px]" placeholder="Search projects" />
+              <Button variant="secondary" size="sm" asChild>
                 <Link href={`/${organizationSlug}/projects`}>
-                  <Layers className="w-4 h-4" />
+                  <Layers className="mr-2 h-4 w-4" />
                   View all projects
                 </Link>
               </Button>
             </div>
           </div>
-
-
-          <div className="flex flex-col gap-2">
-            <Suspense fallback={<ProjectsLoadingFallback quantity={3} />}>
-              <Projects
-                organizationId={organizationId}
-                filters={validatedSearchParams}
-              />
-              {validatedSearchParams.query && (
-                <p className="mt-4 ml-2 text-sm">
-                  Searching for{" "}
-                  <span className="font-bold">
-                    {validatedSearchParams.query}
-                  </span>
-                </p>
-              )}
-            </Suspense>
-          </div>
-        </div>
-      </div>
-      <div>
-        <GraphContainer organizationSlug={organizationSlug}>
-          <Suspense fallback={<div>Loading...</div>}>
-            <TeamMembers />
+          <Suspense fallback={<ProjectsLoadingFallback quantity={3} />}>
+            <Projects
+              organizationId={organizationId}
+              filters={validatedSearchParams}
+            />
+            {validatedSearchParams.query && (
+              <p className="mt-4 text-sm text-muted-foreground">
+                Searching for{" "}
+                <span className="font-medium">{validatedSearchParams.query}</span>
+              </p>
+            )}
           </Suspense>
-        </GraphContainer>
-      </div>
-    </div>
+        </CardContent>
+      </Card>
+      <OrganizationGraphs />
+    </DashboardClientWrapper>
   );
 }
 
-
-export async function generateMetadata(
-  {
-    params,
-  }: DashboardProps
-): Promise<Metadata> {
-
+export async function generateMetadata({ params }: DashboardProps): Promise<Metadata> {
   const { organizationSlug } = organizationSlugParamSchema.parse(params);
   const organizationId = await getOrganizationIdBySlug(organizationSlug);
   const title = await getOrganizationTitle(organizationId);
@@ -119,10 +99,7 @@ export async function generateMetadata(
   };
 }
 
-export default async function OrganizationPage({
-  params,
-  searchParams,
-}: DashboardProps) {
+export default async function OrganizationPage({ params, searchParams }: DashboardProps) {
   return (
     <Suspense fallback={<DashboardLoadingFallback />}>
       <Dashboard params={params} searchParams={searchParams} />
