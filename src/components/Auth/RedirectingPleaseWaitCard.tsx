@@ -26,9 +26,7 @@ export function RedirectingPleaseWaitCard({
           <CardTitle className="text-center">{heading}</CardTitle>
           <CardDescription className="text-center">{message}</CardDescription>
         </CardHeader>
-
       </Card>
-
     </div>
   );
 }

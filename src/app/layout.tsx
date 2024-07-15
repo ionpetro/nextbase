@@ -1,10 +1,11 @@
 import '@/styles/globals.css';
 import '@/styles/prosemirror.css';
 import { GeistSans } from 'geist/font/sans';
+import { Metadata } from 'next';
 import 'server-only';
 import { AppProviders } from './AppProviders';
 
-export const metadata = {
+export const metadata: Metadata = {
   icons: {
     icon: '/images/logo-black-main.ico',
   },

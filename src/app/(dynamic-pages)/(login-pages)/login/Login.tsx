@@ -17,8 +17,10 @@ import {
   signInWithPassword,
   signInWithProvider,
 } from '@/data/auth/auth';
+import { getInitialOrganizationToRedirectTo } from '@/data/user/organizations';
 import { useSAToastMutation } from '@/hooks/useSAToastMutation';
 import type { AuthProvider } from '@/types';
+import { PrefetchKind } from 'next/dist/client/components/router-reducer/router-reducer-types';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useDidMount } from 'rooks';
@@ -37,15 +39,29 @@ export function Login({
 
   useDidMount(() => {
     console.log('prefetching dashboard')
-    router.prefetch('/dashboard')
+    router.prefetch('/dashboard', {
+      kind: PrefetchKind.AUTO
+    })
   })
 
+  const initialOrgRedirectMutation = useSAToastMutation(getInitialOrganizationToRedirectTo, {
+    loadingMessage: 'Loading your dashboard...',
+    errorMessage: 'Failed to load dashboard',
+    successMessage: 'Redirecting to your dashboard...',
+    onSuccess: (successPayload) => {
+      router.push(`/${successPayload.data}`);
+    },
+    onError: (errorPayload) => {
+      console.error(errorPayload);
+    },
+  });
+
+
   function redirectToDashboard() {
-    router.refresh();
     if (next) {
       router.push(`/auth/callback?next=${next}`);
     } else {
-      router.push('/auth/callback');
+      initialOrgRedirectMutation.mutate();
     }
   }
   const magicLinkMutation = useSAToastMutation(

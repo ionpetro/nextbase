@@ -566,3 +566,40 @@ export const updateOrganizationSlug = async (
   revalidatePath("/[organizationSlug]", 'layout');
   return { status: 'success', data: `Slug updated to ${newSlug}` };
 };
+
+
+
+/**
+ * This is the organization that the user will be redirected to once they login
+ * or when they go to the /dashboard page
+ */
+export async function getInitialOrganizationToRedirectTo(): Promise<SAPayload<string>> {
+  const [slimOrganizations, defaultOrganizationId] = await Promise.all([
+    fetchSlimOrganizations(),
+    getDefaultOrganization(),
+  ]);
+
+  const firstOrganization = slimOrganizations[0];
+
+  if (defaultOrganizationId) {
+    const slug = await getOrganizationSlugByOrganizationId(defaultOrganizationId);
+    return {
+      data: slug,
+      status: 'success',
+    };
+  }
+
+  // this condition is unreachable as the parent ../layout component ensures at least
+  // one organization exists
+  if (!firstOrganization) {
+    return {
+      message: 'No organizations found',
+      status: 'error',
+    };
+  }
+
+  return {
+    data: firstOrganization.slug,
+    status: 'success',
+  };
+}
